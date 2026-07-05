@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct FilteringTagAction : IEquatable<FilteringTagAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FilteringTagAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FilteringTagAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IncludeValue = "Include";
         private const string ExcludeValue = "Exclude";
 
-        /// <summary> Include. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilteringTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FilteringTagAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Include. </summary>
         public static FilteringTagAction Include { get; } = new FilteringTagAction(IncludeValue);
-        /// <summary> Exclude. </summary>
+
+        /// <summary> Gets the Exclude. </summary>
         public static FilteringTagAction Exclude { get; } = new FilteringTagAction(ExcludeValue);
+
         /// <summary> Determines if two <see cref="FilteringTagAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FilteringTagAction left, FilteringTagAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FilteringTagAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FilteringTagAction left, FilteringTagAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FilteringTagAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FilteringTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FilteringTagAction(string value) => new FilteringTagAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FilteringTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FilteringTagAction?(string value) => value == null ? null : new FilteringTagAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FilteringTagAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FilteringTagAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

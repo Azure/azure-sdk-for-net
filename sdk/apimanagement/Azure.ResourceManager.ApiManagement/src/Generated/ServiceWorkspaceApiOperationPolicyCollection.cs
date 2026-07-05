@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ServiceWorkspaceApiOperationPolicyCollection : ArmCollection, IEnumerable<ServiceWorkspaceApiOperationPolicyResource>, IAsyncEnumerable<ServiceWorkspaceApiOperationPolicyResource>
     {
-        private readonly ClientDiagnostics _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics;
-        private readonly WorkspaceApiOperationPolicyRestOperations _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient;
+        private readonly ClientDiagnostics _workspaceApiOperationPolicyClientDiagnostics;
+        private readonly WorkspaceApiOperationPolicy _workspaceApiOperationPolicyRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceApiOperationPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceWorkspaceApiOperationPolicyCollection for mocking. </summary>
         protected ServiceWorkspaceApiOperationPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceWorkspaceApiOperationPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceWorkspaceApiOperationPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceWorkspaceApiOperationPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiOperationPolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceWorkspaceApiOperationPolicyResource.ResourceType, out string serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyApiVersion);
-            _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient = new WorkspaceApiOperationPolicyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ServiceWorkspaceApiOperationPolicyResource.ResourceType, out string serviceWorkspaceApiOperationPolicyApiVersion);
+            _workspaceApiOperationPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceWorkspaceApiOperationPolicyResource.ResourceType.Namespace, Diagnostics);
+            _workspaceApiOperationPolicyRestClient = new WorkspaceApiOperationPolicy(_workspaceApiOperationPolicyClientDiagnostics, Pipeline, Endpoint, serviceWorkspaceApiOperationPolicyApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ServiceWorkspaceApiOperationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceWorkspaceApiOperationResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ServiceWorkspaceApiOperationResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates policy configuration for the API Operation level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,20 +78,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspaceApiOperationPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceWorkspaceApiOperationPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceApiOperationPolicyResource>(Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), PolicyContractData.ToRequestContent(data), ifMatch, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceApiOperationPolicyResource> operation = new ApiManagementArmOperation<ServiceWorkspaceApiOperationPolicyResource>(Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// Creates or updates policy configuration for the API Operation level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,20 +132,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspaceApiOperationPolicyResource> CreateOrUpdate(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceWorkspaceApiOperationPolicyResource> CreateOrUpdate(WaitUntil waitUntil, PolicyName policyId, PolicyContractData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, data, ifMatch, cancellationToken);
-                var uri = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, data, ifMatch);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceApiOperationPolicyResource>(Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), PolicyContractData.ToRequestContent(data), ifMatch, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiManagementArmOperation<ServiceWorkspaceApiOperationPolicyResource> operation = new ApiManagementArmOperation<ServiceWorkspaceApiOperationPolicyResource>(Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -156,35 +167,39 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the policy configuration at the API Operation level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceWorkspaceApiOperationPolicyResource>> GetAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceWorkspaceApiOperationPolicyResource>> GetAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Get");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,35 +213,39 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the policy configuration at the API Operation level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceWorkspaceApiOperationPolicyResource> Get(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceWorkspaceApiOperationPolicyResource> Get(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Get");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyContractData> response = Response.FromValue(PolicyContractData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,50 +259,53 @@ namespace Azure.ResourceManager.ApiManagement
         /// Get the list of policy configuration at the API Operation level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_ListByOperation</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_ListByOperation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceWorkspaceApiOperationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceWorkspaceApiOperationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceWorkspaceApiOperationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics, Pipeline, "ServiceWorkspaceApiOperationPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PolicyContractData, ServiceWorkspaceApiOperationPolicyResource>(new WorkspaceApiOperationPolicyGetByOperationAsyncCollectionResultOfT(
+                _workspaceApiOperationPolicyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ServiceWorkspaceApiOperationPolicyCollection.GetAll"), data => new ServiceWorkspaceApiOperationPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Get the list of policy configuration at the API Operation level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_ListByOperation</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_ListByOperation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,42 +313,67 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ServiceWorkspaceApiOperationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceWorkspaceApiOperationPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceWorkspaceApiOperationPolicyResource(Client, PolicyContractData.DeserializePolicyContractData(e)), _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics, Pipeline, "ServiceWorkspaceApiOperationPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PolicyContractData, ServiceWorkspaceApiOperationPolicyResource>(new WorkspaceApiOperationPolicyGetByOperationCollectionResultOfT(
+                _workspaceApiOperationPolicyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Parent.Name,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ServiceWorkspaceApiOperationPolicyCollection.GetAll"), data => new ServiceWorkspaceApiOperationPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,33 +387,47 @@ namespace Azure.ResourceManager.ApiManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Exists");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -380,35 +441,51 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<ServiceWorkspaceApiOperationPolicyResource>> GetIfExistsAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ServiceWorkspaceApiOperationPolicyResource>> GetIfExistsAsync(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceWorkspaceApiOperationPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -422,35 +499,51 @@ namespace Azure.ResourceManager.ApiManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaces/{workspaceId}/apis/{apiId}/operations/{operationId}/policies/{policyId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceApiOperationPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceApiOperationPolicy_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceWorkspaceApiOperationPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<ServiceWorkspaceApiOperationPolicyResource> GetIfExists(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ServiceWorkspaceApiOperationPolicyResource> GetIfExists(PolicyName policyId, PolicyExportFormat? format = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceApiOperationPolicyClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiOperationPolicyWorkspaceApiOperationPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceApiOperationPolicyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId.ToString(), format?.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyContractData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyContractData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyContractData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceWorkspaceApiOperationPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceWorkspaceApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -470,6 +563,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ServiceWorkspaceApiOperationPolicyResource> IAsyncEnumerable<ServiceWorkspaceApiOperationPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NspProfilesGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NspProfileGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspProfileGet.json
             // this example is just showing the usage of "NetworkSecurityPerimeterProfiles_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NspProfilesDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NspProfileDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspProfileDelete.json
             // this example is just showing the usage of "NetworkSecurityPerimeterProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkSecurityPerimeterProfileResource networkSecurityPerimeterProfile = client.GetNetworkSecurityPerimeterProfileResource(networkSecurityPerimeterProfileResourceId);
 
             // invoke the operation
-            await networkSecurityPerimeterProfile.DeleteAsync(WaitUntil.Completed);
+            await networkSecurityPerimeterProfile.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NspProfilesPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NspProfilePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspProfilePut.json
             // this example is just showing the usage of "NetworkSecurityPerimeterProfiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             NetworkSecurityPerimeterProfileData data = new NetworkSecurityPerimeterProfileData();
-            ArmOperation<NetworkSecurityPerimeterProfileResource> lro = await networkSecurityPerimeterProfile.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkSecurityPerimeterProfileResource> lro = await networkSecurityPerimeterProfile.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkSecurityPerimeterProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

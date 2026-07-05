@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.ContentSafety
 {
     /// <summary> ContentSafety model factory. </summary>
-    [CodeGenModel("AIContentSafetyModelFactory")]
+    [CodeGenType("AIContentSafetyModelFactory")]
     public static partial class ContentSafetyModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistItem"/>. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     public readonly partial struct CollectorProvisioningState : IEquatable<CollectorProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="CollectorProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CollectorProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static CollectorProvisioningState Succeeded { get; } = new CollectorProvisioningState(SucceededValue);
+
         /// <summary> Updating. </summary>
         public static CollectorProvisioningState Updating { get; } = new CollectorProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static CollectorProvisioningState Deleting { get; } = new CollectorProvisioningState(DeletingValue);
+
         /// <summary> Failed. </summary>
         public static CollectorProvisioningState Failed { get; } = new CollectorProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="CollectorProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CollectorProvisioningState left, CollectorProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CollectorProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CollectorProvisioningState left, CollectorProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CollectorProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CollectorProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CollectorProvisioningState(string value) => new CollectorProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CollectorProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CollectorProvisioningState?(string value) => value == null ? null : new CollectorProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CollectorProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CollectorProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

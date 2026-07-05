@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A Class representing an ImageVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ImageVersionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetImageVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterImageResource"/> using the GetImageVersion method.
+    /// A class representing a ImageVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ImageVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterImageResource"/> using the GetImageVersions method.
     /// </summary>
     public partial class ImageVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ImageVersionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="devCenterName"> The devCenterName. </param>
-        /// <param name="galleryName"> The galleryName. </param>
-        /// <param name="imageName"> The imageName. </param>
-        /// <param name="versionName"> The versionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, string versionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _imageVersionClientDiagnostics;
-        private readonly ImageVersionsRestOperations _imageVersionRestClient;
+        private readonly ClientDiagnostics _imageVersionsClientDiagnostics;
+        private readonly ImageVersions _imageVersionsRestClient;
         private readonly ImageVersionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/galleries/images/versions";
 
-        /// <summary> Initializes a new instance of the <see cref="ImageVersionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ImageVersionResource for mocking. </summary>
         protected ImageVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImageVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ImageVersionResource(ArmClient client, ImageVersionData data) : this(client, data.Id)
@@ -56,71 +43,95 @@ namespace Azure.ResourceManager.DevCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImageVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImageVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _imageVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string imageVersionApiVersion);
-            _imageVersionRestClient = new ImageVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, imageVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _imageVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            _imageVersionsRestClient = new ImageVersions(_imageVersionsClientDiagnostics, Pipeline, Endpoint, imageVersionApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ImageVersionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="devCenterName"> The devCenterName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
+        /// <param name="imageName"> The imageName. </param>
+        /// <param name="versionName"> The versionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, string versionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an image version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImageVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ImageVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionResource.Get");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _imageVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ImageVersionData> response = Response.FromValue(ImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.DevCenter
         /// Gets an image version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ImageVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ImageVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImageVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImageVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ImageVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _imageVersionClientDiagnostics.CreateScope("ImageVersionResource.Get");
+            using DiagnosticScope scope = _imageVersionsClientDiagnostics.CreateScope("ImageVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _imageVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imageVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ImageVersionData> response = Response.FromValue(ImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

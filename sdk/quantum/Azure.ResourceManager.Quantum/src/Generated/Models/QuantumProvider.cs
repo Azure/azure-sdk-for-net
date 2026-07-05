@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Quantum.Models
     /// <summary> Information about a Provider. A Provider is an entity that offers Targets to run Azure Quantum Jobs. </summary>
     public partial class QuantumProvider
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QuantumProvider"/>. </summary>
         public QuantumProvider()
@@ -57,8 +28,9 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="applicationName"> The provider's marketplace application display name. </param>
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="resourceUsageId"> Id to track resource usage for the provider. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuantumProvider(string providerId, string providerSku, Uri instanceUri, string applicationName, ProviderProvisioningStatus? provisioningState, string resourceUsageId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="quotas"> Quota allocations associated with this provider. Available only for special providers. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuantumProvider(string providerId, string providerSku, Uri instanceUri, string applicationName, QuantumProvisioningStatus? provisioningState, string resourceUsageId, QuantumQuotaAllocations quotas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderId = providerId;
             ProviderSku = providerSku;
@@ -66,20 +38,29 @@ namespace Azure.ResourceManager.Quantum.Models
             ApplicationName = applicationName;
             ProvisioningState = provisioningState;
             ResourceUsageId = resourceUsageId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Quotas = quotas;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique id of this provider. </summary>
         public string ProviderId { get; set; }
+
         /// <summary> The sku associated with pricing information for this provider. </summary>
         public string ProviderSku { get; set; }
+
         /// <summary> A Uri identifying the specific instance of this provider. </summary>
         public Uri InstanceUri { get; set; }
+
         /// <summary> The provider's marketplace application display name. </summary>
         public string ApplicationName { get; set; }
+
         /// <summary> Provisioning status field. </summary>
-        public ProviderProvisioningStatus? ProvisioningState { get; set; }
+        public QuantumProvisioningStatus? ProvisioningState { get; set; }
+
         /// <summary> Id to track resource usage for the provider. </summary>
         public string ResourceUsageId { get; set; }
+
+        /// <summary> Quota allocations associated with this provider. Available only for special providers. </summary>
+        public QuantumQuotaAllocations Quotas { get; set; }
     }
 }

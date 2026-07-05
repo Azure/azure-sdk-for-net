@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingEnrollmentAccountRoleDefinitionCollection : ArmCollection, IEnumerable<BillingEnrollmentAccountRoleDefinitionResource>, IAsyncEnumerable<BillingEnrollmentAccountRoleDefinitionResource>
     {
-        private readonly ClientDiagnostics _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics;
-        private readonly BillingRoleDefinitionRestOperations _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient;
+        private readonly ClientDiagnostics _billingRoleDefinitionClientDiagnostics;
+        private readonly BillingRoleDefinition _billingRoleDefinitionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingEnrollmentAccountRoleDefinitionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingEnrollmentAccountRoleDefinitionCollection for mocking. </summary>
         protected BillingEnrollmentAccountRoleDefinitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingEnrollmentAccountRoleDefinitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingEnrollmentAccountRoleDefinitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingEnrollmentAccountRoleDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingEnrollmentAccountRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingEnrollmentAccountRoleDefinitionResource.ResourceType, out string billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionApiVersion);
-            _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient = new BillingRoleDefinitionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingEnrollmentAccountRoleDefinitionResource.ResourceType, out string billingEnrollmentAccountRoleDefinitionApiVersion);
+            _billingRoleDefinitionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingEnrollmentAccountRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _billingRoleDefinitionRestClient = new BillingRoleDefinition(_billingRoleDefinitionClientDiagnostics, Pipeline, Endpoint, billingEnrollmentAccountRoleDefinitionApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingEnrollmentAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingEnrollmentAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingEnrollmentAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the definition for a role on an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BillingEnrollmentAccountRoleDefinitionResource>> GetAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Get");
+            using DiagnosticScope scope = _billingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.GetByEnrollmentAccountAsync(Id.Parent.Name, Id.Name, roleDefinitionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingEnrollmentAccountRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets the definition for a role on an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BillingEnrollmentAccountRoleDefinitionResource> Get(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Get");
+            using DiagnosticScope scope = _billingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.GetByEnrollmentAccount(Id.Parent.Name, Id.Name, roleDefinitionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingRoleDefinitionData> response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingEnrollmentAccountRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,44 @@ namespace Azure.ResourceManager.Billing
         /// List the definition for an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_ListByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_ListByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingEnrollmentAccountRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingEnrollmentAccountRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingEnrollmentAccountRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.CreateListByEnrollmentAccountRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.CreateListByEnrollmentAccountNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingEnrollmentAccountRoleDefinitionResource(Client, BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(e)), _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics, Pipeline, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingRoleDefinitionData, BillingEnrollmentAccountRoleDefinitionResource>(new BillingRoleDefinitionGetByEnrollmentAccountAsyncCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll"), data => new BillingEnrollmentAccountRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
         /// List the definition for an enrollment account. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_ListByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_ListByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +201,61 @@ namespace Azure.ResourceManager.Billing
         /// <returns> A collection of <see cref="BillingEnrollmentAccountRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingEnrollmentAccountRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.CreateListByEnrollmentAccountRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.CreateListByEnrollmentAccountNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingEnrollmentAccountRoleDefinitionResource(Client, BillingRoleDefinitionData.DeserializeBillingRoleDefinitionData(e)), _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics, Pipeline, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingRoleDefinitionData, BillingEnrollmentAccountRoleDefinitionResource>(new BillingRoleDefinitionGetByEnrollmentAccountCollectionResultOfT(_billingRoleDefinitionRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountRoleDefinitionCollection.GetAll"), data => new BillingEnrollmentAccountRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Exists");
+            using DiagnosticScope scope = _billingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.GetByEnrollmentAccountAsync(Id.Parent.Name, Id.Name, roleDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +269,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Exists");
+            using DiagnosticScope scope = _billingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.GetByEnrollmentAccount(Id.Parent.Name, Id.Name, roleDefinitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +326,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BillingEnrollmentAccountRoleDefinitionResource>> GetIfExistsAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _billingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.GetByEnrollmentAccountAsync(Id.Parent.Name, Id.Name, roleDefinitionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingEnrollmentAccountRoleDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingEnrollmentAccountRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +387,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}/billingRoleDefinitions/{roleDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByEnrollmentAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingRoleDefinitionByEnrollmentAccount_GetByEnrollmentAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingEnrollmentAccountRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BillingEnrollmentAccountRoleDefinitionResource> GetIfExists(string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _billingRoleDefinitionClientDiagnostics.CreateScope("BillingEnrollmentAccountRoleDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingEnrollmentAccountRoleDefinitionBillingRoleDefinitionRestClient.GetByEnrollmentAccount(Id.Parent.Name, Id.Name, roleDefinitionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingRoleDefinitionRestClient.CreateGetByEnrollmentAccountRequest(Id.Parent.Name, Id.Name, roleDefinitionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingEnrollmentAccountRoleDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingEnrollmentAccountRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +454,7 @@ namespace Azure.ResourceManager.Billing
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingEnrollmentAccountRoleDefinitionResource> IAsyncEnumerable<BillingEnrollmentAccountRoleDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

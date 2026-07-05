@@ -113,9 +113,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState left, Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState (string value) { throw null; }
@@ -131,9 +129,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         public StorageDiscoveryResourceKind(string value) { throw null; }
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryResourceKind StorageAccounts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryResourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryResourceKind left, Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryResourceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryResourceKind (string value) { throw null; }
@@ -167,9 +163,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku Free { get { throw null; } }
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku left, Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku (string value) { throw null; }

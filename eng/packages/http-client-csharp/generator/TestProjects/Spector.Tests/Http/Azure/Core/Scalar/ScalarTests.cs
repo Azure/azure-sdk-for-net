@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using _Specs_.Azure.Core.Scalar;
+using Specs.Azure.Core.Scalar;
 using Azure.Core;
 using NUnit.Framework;
 

@@ -11,18 +11,6 @@ trigger:
     - sdk/ai/ci.inference.yml
     - sdk/ai/Azure.AI.Inference
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/ai/ci.inference.yml
-    - sdk/ai/Azure.AI.Inference
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

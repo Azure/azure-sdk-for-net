@@ -1,6 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Diagnostics;
+using System.Diagnostics.Tracing;
+using System.IO;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
@@ -10,11 +15,6 @@ using Azure.ResourceManager.StorageSync.Tests.CustomPolicy;
 using Azure.ResourceManager.TestFramework;
 using Castle.DynamicProxy;
 using NUnit.Framework;
-using System;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.StorageSync.Tests
 {

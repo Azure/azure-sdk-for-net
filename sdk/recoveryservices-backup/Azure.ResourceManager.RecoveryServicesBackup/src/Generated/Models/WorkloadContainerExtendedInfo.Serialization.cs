@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class WorkloadContainerExtendedInfo : IUtf8JsonSerializable, IJsonModel<WorkloadContainerExtendedInfo>
+    /// <summary> Extended information of the container. </summary>
+    public partial class WorkloadContainerExtendedInfo : IJsonModel<WorkloadContainerExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadContainerExtendedInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkloadContainerExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWorkloadContainerExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WorkloadContainerExtendedInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadContainerExtendedInfo IPersistableModel<WorkloadContainerExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkloadContainerExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkloadContainerExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(HostServerName))
             {
                 writer.WritePropertyName("hostServerName"u8);
@@ -48,21 +88,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("nodesList"u8);
                 writer.WriteStartArray();
-                foreach (var item in NodesList)
+                foreach (DistributedNodesInfo item in NodesList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +111,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        WorkloadContainerExtendedInfo IJsonModel<WorkloadContainerExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkloadContainerExtendedInfo IJsonModel<WorkloadContainerExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WorkloadContainerExtendedInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWorkloadContainerExtendedInfo(document.RootElement, options);
         }
 
-        internal static WorkloadContainerExtendedInfo DeserializeWorkloadContainerExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WorkloadContainerExtendedInfo DeserializeWorkloadContainerExtendedInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,32 +139,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string hostServerName = default;
             WorkloadContainerInquiryInfo inquiryInfo = default;
             IList<DistributedNodesInfo> nodesList = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("hostServerName"u8))
+                if (prop.NameEquals("hostServerName"u8))
                 {
-                    hostServerName = property.Value.GetString();
+                    hostServerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("inquiryInfo"u8))
+                if (prop.NameEquals("inquiryInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(property.Value, options);
+                    inquiryInfo = WorkloadContainerInquiryInfo.DeserializeWorkloadContainerInquiryInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nodesList"u8))
+                if (prop.NameEquals("nodesList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
@@ -128,42 +172,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new WorkloadContainerExtendedInfo(hostServerName, inquiryInfo, nodesList ?? new ChangeTrackingList<DistributedNodesInfo>(), serializedAdditionalRawData);
+            return new WorkloadContainerExtendedInfo(hostServerName, inquiryInfo, nodesList ?? new ChangeTrackingList<DistributedNodesInfo>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<WorkloadContainerExtendedInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WorkloadContainerExtendedInfo IPersistableModel<WorkloadContainerExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WorkloadContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWorkloadContainerExtendedInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WorkloadContainerExtendedInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WorkloadContainerExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

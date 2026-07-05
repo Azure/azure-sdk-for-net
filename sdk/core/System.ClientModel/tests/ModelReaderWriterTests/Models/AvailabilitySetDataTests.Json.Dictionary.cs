@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Collections.Generic;
 using System.IO;
 using Azure.Core;
 using NUnit.Framework;
@@ -285,7 +286,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.IsTrue(model2.Items.ContainsKey("testAS-3376"));
             Assert.AreEqual(null, model2.Items["testAS-3375"].Name);
             Assert.AreEqual("testAS-3376", model2.Items["testAS-3376"].Name);
-            Assert.Throws<InvalidOperationException>(() => model2.Patch.GetString("$.testAS-3375.name"u8));
+            Assert.Throws<KeyNotFoundException>(() => model2.Patch.GetString("$.testAS-3375.name"u8));
             Assert.AreEqual("testAS-3376", model2.Patch.GetString("$.testAS-3376.name"u8));
         }
     }

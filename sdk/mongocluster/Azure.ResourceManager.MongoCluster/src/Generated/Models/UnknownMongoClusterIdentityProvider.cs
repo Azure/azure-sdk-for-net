@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Unknown version of MongoClusterIdentityProvider. </summary>
     internal partial class UnknownMongoClusterIdentityProvider : MongoClusterIdentityProvider
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMongoClusterIdentityProvider"/>. </summary>
         /// <param name="type"> The type of identity provider that the user belongs to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMongoClusterIdentityProvider(IdentityProviderType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMongoClusterIdentityProvider"/> for deserialization. </summary>
-        internal UnknownMongoClusterIdentityProvider()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMongoClusterIdentityProvider(IdentityProviderType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

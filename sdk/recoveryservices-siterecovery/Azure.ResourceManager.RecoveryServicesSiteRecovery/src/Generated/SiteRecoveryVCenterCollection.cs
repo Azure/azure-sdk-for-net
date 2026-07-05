@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
@@ -25,73 +26,84 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryVCenterCollection : ArmCollection, IEnumerable<SiteRecoveryVCenterResource>, IAsyncEnumerable<SiteRecoveryVCenterResource>
     {
-        private readonly ClientDiagnostics _siteRecoveryVCenterReplicationvCentersClientDiagnostics;
-        private readonly ReplicationvCentersRestOperations _siteRecoveryVCenterReplicationvCentersRestClient;
+        private readonly ClientDiagnostics _replicationvCentersClientDiagnostics;
+        private readonly ReplicationvCenters _replicationvCentersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryVCenterCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryVCenterCollection for mocking. </summary>
         protected SiteRecoveryVCenterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryVCenterCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryVCenterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteRecoveryVCenterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteRecoveryVCenterReplicationvCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryVCenterResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteRecoveryVCenterResource.ResourceType, out string siteRecoveryVCenterReplicationvCentersApiVersion);
-            _siteRecoveryVCenterReplicationvCentersRestClient = new ReplicationvCentersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryVCenterReplicationvCentersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SiteRecoveryVCenterResource.ResourceType, out string siteRecoveryVCenterApiVersion);
+            _replicationvCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryVCenterResource.ResourceType.Namespace, Diagnostics);
+            _replicationvCentersRestClient = new ReplicationvCenters(_replicationvCentersClientDiagnostics, Pipeline, Endpoint, siteRecoveryVCenterApiVersion ?? "2026-02-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SiteRecoveryFabricResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryFabricResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryFabricResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The operation to create a vCenter object..
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="content"> The input to the add vCenter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteRecoveryVCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vCenterName, SiteRecoveryVCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<SiteRecoveryVCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vcenterName, SiteRecoveryVCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryVCenterReplicationvCentersRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(new SiteRecoveryVCenterOperationSource(Client), _siteRecoveryVCenterReplicationvCentersClientDiagnostics, Pipeline, _siteRecoveryVCenterReplicationvCentersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(
+                    new SiteRecoveryVCenterResourceOperationSource(Client),
+                    _replicationvCentersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,42 +117,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to create a vCenter object..
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="content"> The input to the add vCenter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SiteRecoveryVCenterResource> CreateOrUpdate(WaitUntil waitUntil, string vCenterName, SiteRecoveryVCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<SiteRecoveryVCenterResource> CreateOrUpdate(WaitUntil waitUntil, string vcenterName, SiteRecoveryVCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteRecoveryVCenterReplicationvCentersRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(new SiteRecoveryVCenterOperationSource(Client), _siteRecoveryVCenterReplicationvCentersClientDiagnostics, Pipeline, _siteRecoveryVCenterReplicationvCentersRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, SiteRecoveryVCenterCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryVCenterResource>(
+                    new SiteRecoveryVCenterResourceOperationSource(Client),
+                    _replicationvCentersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of a registered vCenter server(Add vCenter server).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
-        public virtual async Task<Response<SiteRecoveryVCenterResource>> GetAsync(string vCenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SiteRecoveryVCenterResource>> GetAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Get");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryVCenterReplicationvCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteRecoveryVCenterData> response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryVCenterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of a registered vCenter server(Add vCenter server).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
-        public virtual Response<SiteRecoveryVCenterResource> Get(string vCenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SiteRecoveryVCenterResource> Get(string vcenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Get");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteRecoveryVCenterReplicationvCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteRecoveryVCenterData> response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryVCenterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Lists the vCenter servers registered in a fabric.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_ListByReplicationFabrics</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_ListByReplicationFabrics. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryVCenterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryVCenterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVCenterReplicationvCentersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryVCenterReplicationvCentersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVCenterResource(Client, SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(e)), _siteRecoveryVCenterReplicationvCentersClientDiagnostics, Pipeline, "SiteRecoveryVCenterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SiteRecoveryVCenterData, SiteRecoveryVCenterResource>(new ReplicationvCentersGetByReplicationFabricsAsyncCollectionResultOfT(
+                _replicationvCentersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SiteRecoveryVCenterCollection.GetAll"), data => new SiteRecoveryVCenterResource(Client, data));
         }
 
         /// <summary>
         /// Lists the vCenter servers registered in a fabric.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_ListByReplicationFabrics</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_ListByReplicationFabrics. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +325,68 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="SiteRecoveryVCenterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryVCenterResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryVCenterReplicationvCentersRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryVCenterReplicationvCentersRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryVCenterResource(Client, SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(e)), _siteRecoveryVCenterReplicationvCentersClientDiagnostics, Pipeline, "SiteRecoveryVCenterCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SiteRecoveryVCenterData, SiteRecoveryVCenterResource>(new ReplicationvCentersGetByReplicationFabricsCollectionResultOfT(
+                _replicationvCentersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SiteRecoveryVCenterCollection.GetAll"), data => new SiteRecoveryVCenterResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string vCenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Exists");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryVCenterReplicationvCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteRecoveryVCenterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryVCenterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +400,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
-        public virtual Response<bool> Exists(string vCenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string vcenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Exists");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteRecoveryVCenterReplicationvCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteRecoveryVCenterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryVCenterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +457,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SiteRecoveryVCenterResource>> GetIfExistsAsync(string vCenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryVCenterResource>> GetIfExistsAsync(string vcenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryVCenterReplicationvCentersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteRecoveryVCenterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryVCenterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteRecoveryVCenterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryVCenterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +518,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VCenters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vCenterName"> vcenter name. </param>
+        /// <param name="vcenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
-        public virtual NullableResponse<SiteRecoveryVCenterResource> GetIfExists(string vCenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SiteRecoveryVCenterResource> GetIfExists(string vcenterName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
+            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
 
-            using var scope = _siteRecoveryVCenterReplicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationvCentersClientDiagnostics.CreateScope("SiteRecoveryVCenterCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _siteRecoveryVCenterReplicationvCentersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vCenterName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationvCentersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, vcenterName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteRecoveryVCenterData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryVCenterData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryVCenterData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteRecoveryVCenterResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryVCenterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +585,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SiteRecoveryVCenterResource> IAsyncEnumerable<SiteRecoveryVCenterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

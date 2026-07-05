@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct HcxEnterpriseSiteStatus : IEquatable<HcxEnterpriseSiteStatus>
     {
         private readonly string _value;
+        /// <summary> is available. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> is consumed. </summary>
+        private const string ConsumedValue = "Consumed";
+        /// <summary> is deactivated. </summary>
+        private const string DeactivatedValue = "Deactivated";
+        /// <summary> is deleted. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="HcxEnterpriseSiteStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HcxEnterpriseSiteStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailableValue = "Available";
-        private const string ConsumedValue = "Consumed";
-        private const string DeactivatedValue = "Deactivated";
-        private const string DeletedValue = "Deleted";
+            _value = value;
+        }
 
         /// <summary> is available. </summary>
         public static HcxEnterpriseSiteStatus Available { get; } = new HcxEnterpriseSiteStatus(AvailableValue);
+
         /// <summary> is consumed. </summary>
         public static HcxEnterpriseSiteStatus Consumed { get; } = new HcxEnterpriseSiteStatus(ConsumedValue);
+
         /// <summary> is deactivated. </summary>
         public static HcxEnterpriseSiteStatus Deactivated { get; } = new HcxEnterpriseSiteStatus(DeactivatedValue);
+
         /// <summary> is deleted. </summary>
         public static HcxEnterpriseSiteStatus Deleted { get; } = new HcxEnterpriseSiteStatus(DeletedValue);
+
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HcxEnterpriseSiteStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HcxEnterpriseSiteStatus left, HcxEnterpriseSiteStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HcxEnterpriseSiteStatus(string value) => new HcxEnterpriseSiteStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HcxEnterpriseSiteStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HcxEnterpriseSiteStatus?(string value) => value == null ? null : new HcxEnterpriseSiteStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HcxEnterpriseSiteStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HcxEnterpriseSiteStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

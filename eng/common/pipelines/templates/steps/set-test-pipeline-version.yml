@@ -14,9 +14,9 @@ parameters:
 - name: TestPipeline
   type: boolean
   default: false
-- name: ArtifactsJson
-  type: string
-  default: ''
+- name: Artifacts
+  type: object
+  default: []
 
 steps:
 - ${{ if eq(parameters.TestPipeline, true) }}:
@@ -31,5 +31,5 @@ steps:
           -PackageNames '${{ coalesce(parameters.PackageName, parameters.PackageNames) }}'
           -ServiceDirectory '${{ parameters.ServiceDirectory }}'
           -TagSeparator '${{ parameters.TagSeparator }}'
-          -ArtifactsJson '${{ parameters.ArtifactsJson }}'
+          -Artifacts @('${{ replace(convertToJson(parameters.Artifacts), '''', '`''') }}' | ConvertFrom-Json)
         pwsh: true

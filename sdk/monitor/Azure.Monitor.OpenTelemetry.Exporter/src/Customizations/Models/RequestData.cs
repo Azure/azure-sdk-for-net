@@ -14,9 +14,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public RequestData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
         {
             string? responseCode = null;
+            string? requestName = null;
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
 
+            // Process based on operation type
             switch (activityTagsProcessor.activityType)
             {
                 case OperationType.Http | OperationType.V2:
@@ -30,6 +32,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
+            // Check for Microsoft override attributes only if present (avoids overhead for standalone OTel usage)
+            if (activityTagsProcessor.HasOverrideAttributes)
+            {
+                var overrideUrl = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestUrl)?.ToString();
+                var overrideName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestName)?.ToString();
+                var overrideSource = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestSource)?.ToString();
+                var overrideResultCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestResultCode)?.ToString();
+
+                // Apply overrides if present (these take precedence)
+                if (!string.IsNullOrEmpty(overrideUrl))
+                {
+                    Url = overrideUrl.Truncate(SchemaConstants.RequestData_Url_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideName))
+                {
+                    requestName = overrideName;
+                }
+
+                if (!string.IsNullOrEmpty(overrideSource))
+                {
+                    Source = overrideSource.Truncate(SchemaConstants.RequestData_Source_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideResultCode))
+                {
+                    responseCode = overrideResultCode;
+                }
+            }
+
+            Name = requestName?.Truncate(SchemaConstants.RequestData_Name_MaxLength);
             Id = activity.Context.SpanId.ToHexString();
             Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)

@@ -6,42 +6,47 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class VpnLinkConnectionsRestOperations
+    internal partial class VpnLinkConnections
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of VpnLinkConnectionsRestOperations. </summary>
+        /// <summary> Initializes a new instance of VpnLinkConnections for mocking. </summary>
+        protected VpnLinkConnections()
+        {
+        }
+
+        /// <summary> Initializes a new instance of VpnLinkConnections. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VpnLinkConnectionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal VpnLinkConnections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-01-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateResetConnectionRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetSharedKeyRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
@@ -50,208 +55,25 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(connectionName, true);
             uri.AppendPath("/vpnLinkConnections/", false);
             uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/resetconnection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateResetConnectionRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections/", false);
-            uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/resetconnection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/sharedKeys/default", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Resets the VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ResetConnectionAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateResetConnectionRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Resets the VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ResetConnection(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateResetConnectionRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetAllSharedKeysRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections/", false);
-            uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/sharedKeys", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAllSharedKeysRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections/", false);
-            uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/sharedKeys", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists all shared keys of VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionSharedKeyResultList>> GetAllSharedKeysAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateSetOrInitDefaultSharedKeyRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetAllSharedKeysRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConnectionSharedKeyResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionSharedKeyResultList.DeserializeConnectionSharedKeyResultList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all shared keys of VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionSharedKeyResultList> GetAllSharedKeys(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetAllSharedKeysRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConnectionSharedKeyResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectionSharedKeyResultList.DeserializeConnectionSharedKeyResultList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetDefaultSharedKeyRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
@@ -261,221 +83,76 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/vpnLinkConnections/", false);
             uri.AppendPath(linkConnectionName, true);
             uri.AppendPath("/sharedKeys/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetDefaultSharedKeyRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections/", false);
-            uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/sharedKeys/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets the shared key of VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VpnLinkConnectionSharedKeyData>> GetDefaultSharedKeyAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetDefaultSharedKeyRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VpnLinkConnectionSharedKeyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VpnLinkConnectionSharedKeyData.DeserializeVpnLinkConnectionSharedKeyData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((VpnLinkConnectionSharedKeyData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the shared key of VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VpnLinkConnectionSharedKeyData> GetDefaultSharedKey(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetDefaultSharedKeyRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VpnLinkConnectionSharedKeyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VpnLinkConnectionSharedKeyData.DeserializeVpnLinkConnectionSharedKeyData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((VpnLinkConnectionSharedKeyData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateSetOrInitDefaultSharedKeyRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, VpnLinkConnectionSharedKeyData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections/", false);
-            uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/sharedKeys/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateSetOrInitDefaultSharedKeyRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, VpnLinkConnectionSharedKeyData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections/", false);
-            uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/sharedKeys/default", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Sets or auto generates the shared key based on the user input. If users give a shared key value, it does the set operation. If key length is given, the operation creates a random key of the pre-defined length. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="data"> Parameters supplied to set or auto generate the shared key for the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, <paramref name="linkConnectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> SetOrInitDefaultSharedKeyAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, VpnLinkConnectionSharedKeyData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetAllSharedKeysRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateSetOrInitDefaultSharedKeyRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Sets or auto generates the shared key based on the user input. If users give a shared key value, it does the set operation. If key length is given, the operation creates a random key of the pre-defined length. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the VpnGateway. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="data"> Parameters supplied to set or auto generate the shared key for the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/>, <paramref name="linkConnectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response SetOrInitDefaultSharedKey(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, VpnLinkConnectionSharedKeyData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateSetOrInitDefaultSharedKeyRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListDefaultSharedKeyRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections/", false);
+            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/vpnLinkConnections/", false);
+            uri.AppendPath(linkConnectionName, true);
+            uri.AppendPath("/sharedKeys", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetAllSharedKeysRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDefaultSharedKeyRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
@@ -485,19 +162,72 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/vpnLinkConnections/", false);
             uri.AppendPath(linkConnectionName, true);
             uri.AppendPath("/sharedKeys/default/listSharedKey", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateListDefaultSharedKeyRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
+        internal HttpMessage CreateGetByVpnConnectionRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
+            uri.AppendPath(gatewayName, true);
+            uri.AppendPath("/vpnConnections/", false);
+            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/vpnLinkConnections", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetByVpnConnectionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateResetConnectionRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
@@ -506,86 +236,24 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(connectionName, true);
             uri.AppendPath("/vpnLinkConnections/", false);
             uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/sharedKeys/default/listSharedKey", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendPath("/resetconnection", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
             return message;
         }
 
-        /// <summary> Gets the value of the shared key of VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VpnLinkConnectionSharedKeyData>> ListDefaultSharedKeyAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetIkeSasRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateListDefaultSharedKeyRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VpnLinkConnectionSharedKeyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VpnLinkConnectionSharedKeyData.DeserializeVpnLinkConnectionSharedKeyData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets the value of the shared key of VpnLink connection specified. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VpnLinkConnectionSharedKeyData> ListDefaultSharedKey(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateListDefaultSharedKeyRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VpnLinkConnectionSharedKeyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VpnLinkConnectionSharedKeyData.DeserializeVpnLinkConnectionSharedKeyData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetIkeSasRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
@@ -595,373 +263,16 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/vpnLinkConnections/", false);
             uri.AppendPath(linkConnectionName, true);
             uri.AppendPath("/getikesas", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetIkeSasRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections/", false);
-            uri.AppendPath(linkConnectionName, true);
-            uri.AppendPath("/getikesas", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Lists IKE Security Associations for Vpn Site Link Connection in the specified resource group. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetIkeSasAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetIkeSasRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists IKE Security Associations for Vpn Site Link Connection in the specified resource group. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetIkeSas(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetIkeSasRequest(subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByVpnConnectionRequestUri(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByVpnConnectionRequest(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/vpnGateways/", false);
-            uri.AppendPath(gatewayName, true);
-            uri.AppendPath("/vpnConnections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/vpnLinkConnections", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the vpn gateway. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListVpnSiteLinkConnectionsResult>> ListByVpnConnectionAsync(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var message = CreateListByVpnConnectionRequest(subscriptionId, resourceGroupName, gatewayName, connectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListVpnSiteLinkConnectionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ListVpnSiteLinkConnectionsResult.DeserializeListVpnSiteLinkConnectionsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the vpn gateway. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListVpnSiteLinkConnectionsResult> ListByVpnConnection(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var message = CreateListByVpnConnectionRequest(subscriptionId, resourceGroupName, gatewayName, connectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListVpnSiteLinkConnectionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ListVpnSiteLinkConnectionsResult.DeserializeListVpnSiteLinkConnectionsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetAllSharedKeysNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetAllSharedKeysNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists all shared keys of VpnLink connection specified. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionSharedKeyResultList>> GetAllSharedKeysNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetAllSharedKeysNextPageRequest(nextLink, subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConnectionSharedKeyResultList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionSharedKeyResultList.DeserializeConnectionSharedKeyResultList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all shared keys of VpnLink connection specified. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="linkConnectionName"> The name of the vpn link connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/>, <paramref name="connectionName"/> or <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionSharedKeyResultList> GetAllSharedKeysNextPage(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-            Argument.AssertNotNullOrEmpty(linkConnectionName, nameof(linkConnectionName));
-
-            using var message = CreateGetAllSharedKeysNextPageRequest(nextLink, subscriptionId, resourceGroupName, gatewayName, connectionName, linkConnectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ConnectionSharedKeyResultList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectionSharedKeyResultList.DeserializeConnectionSharedKeyResultList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByVpnConnectionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByVpnConnectionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the vpn gateway. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListVpnSiteLinkConnectionsResult>> ListByVpnConnectionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var message = CreateListByVpnConnectionNextPageRequest(nextLink, subscriptionId, resourceGroupName, gatewayName, connectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListVpnSiteLinkConnectionsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ListVpnSiteLinkConnectionsResult.DeserializeListVpnSiteLinkConnectionsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieves all vpn site link connections for a particular virtual wan vpn gateway vpn connection. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify the Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The resource group name of the vpn gateway. </param>
-        /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the vpn connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gatewayName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListVpnSiteLinkConnectionsResult> ListByVpnConnectionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var message = CreateListByVpnConnectionNextPageRequest(nextLink, subscriptionId, resourceGroupName, gatewayName, connectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListVpnSiteLinkConnectionsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ListVpnSiteLinkConnectionsResult.DeserializeListVpnSiteLinkConnectionsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

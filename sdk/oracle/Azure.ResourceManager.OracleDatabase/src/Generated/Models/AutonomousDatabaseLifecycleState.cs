@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,95 +15,152 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AutonomousDatabaseLifecycleState : IEquatable<AutonomousDatabaseLifecycleState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Indicates that resource in Available state. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Indicates that resource in Stopping state. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Indicates that resource in Stopped state. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Indicates that resource in Starting state. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Indicates that resource in Terminating state. </summary>
+        private const string TerminatingValue = "Terminating";
+        /// <summary> Indicates that resource in Terminated state. </summary>
+        private const string TerminatedValue = "Terminated";
+        /// <summary> Indicates that resource in Unavailable state. </summary>
+        private const string UnavailableValue = "Unavailable";
+        /// <summary> Indicates that resource in RestoreInProgress state. </summary>
+        private const string RestoreInProgressValue = "RestoreInProgress";
+        /// <summary> Indicates that resource in RestoreFailed state. </summary>
+        private const string RestoreFailedValue = "RestoreFailed";
+        /// <summary> Indicates that resource in BackupInProgress state. </summary>
+        private const string BackupInProgressValue = "BackupInProgress";
+        /// <summary> Indicates that resource in ScaleInProgress state. </summary>
+        private const string ScaleInProgressValue = "ScaleInProgress";
+        /// <summary> Indicates that resource is available but needs attention. </summary>
+        private const string AvailableNeedsAttentionValue = "AvailableNeedsAttention";
+        /// <summary> Indicates that resource in Updating state. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Indicates that resource maintenance in progress state. </summary>
+        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
+        /// <summary> Indicates that resource in Restarting state. </summary>
+        private const string RestartingValue = "Restarting";
+        /// <summary> Indicates that resource in Recreating state. </summary>
+        private const string RecreatingValue = "Recreating";
+        /// <summary> Indicates that resource role change in progress state. </summary>
+        private const string RoleChangeInProgressValue = "RoleChangeInProgress";
+        /// <summary> Indicates that resource in Upgrading state. </summary>
+        private const string UpgradingValue = "Upgrading";
+        /// <summary> IIndicates that resource in Inaccessible state. </summary>
+        private const string InaccessibleValue = "Inaccessible";
+        /// <summary> Indicates that resource in Standby state. </summary>
+        private const string StandbyValue = "Standby";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutonomousDatabaseLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProvisioningValue = "Provisioning";
-        private const string AvailableValue = "Available";
-        private const string StoppingValue = "Stopping";
-        private const string StoppedValue = "Stopped";
-        private const string StartingValue = "Starting";
-        private const string TerminatingValue = "Terminating";
-        private const string TerminatedValue = "Terminated";
-        private const string UnavailableValue = "Unavailable";
-        private const string RestoreInProgressValue = "RestoreInProgress";
-        private const string RestoreFailedValue = "RestoreFailed";
-        private const string BackupInProgressValue = "BackupInProgress";
-        private const string ScaleInProgressValue = "ScaleInProgress";
-        private const string AvailableNeedsAttentionValue = "AvailableNeedsAttention";
-        private const string UpdatingValue = "Updating";
-        private const string MaintenanceInProgressValue = "MaintenanceInProgress";
-        private const string RestartingValue = "Restarting";
-        private const string RecreatingValue = "Recreating";
-        private const string RoleChangeInProgressValue = "RoleChangeInProgress";
-        private const string UpgradingValue = "Upgrading";
-        private const string InaccessibleValue = "Inaccessible";
-        private const string StandbyValue = "Standby";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static AutonomousDatabaseLifecycleState Provisioning { get; } = new AutonomousDatabaseLifecycleState(ProvisioningValue);
+
         /// <summary> Indicates that resource in Available state. </summary>
         public static AutonomousDatabaseLifecycleState Available { get; } = new AutonomousDatabaseLifecycleState(AvailableValue);
+
         /// <summary> Indicates that resource in Stopping state. </summary>
         public static AutonomousDatabaseLifecycleState Stopping { get; } = new AutonomousDatabaseLifecycleState(StoppingValue);
+
         /// <summary> Indicates that resource in Stopped state. </summary>
         public static AutonomousDatabaseLifecycleState Stopped { get; } = new AutonomousDatabaseLifecycleState(StoppedValue);
+
         /// <summary> Indicates that resource in Starting state. </summary>
         public static AutonomousDatabaseLifecycleState Starting { get; } = new AutonomousDatabaseLifecycleState(StartingValue);
+
         /// <summary> Indicates that resource in Terminating state. </summary>
         public static AutonomousDatabaseLifecycleState Terminating { get; } = new AutonomousDatabaseLifecycleState(TerminatingValue);
+
         /// <summary> Indicates that resource in Terminated state. </summary>
         public static AutonomousDatabaseLifecycleState Terminated { get; } = new AutonomousDatabaseLifecycleState(TerminatedValue);
+
         /// <summary> Indicates that resource in Unavailable state. </summary>
         public static AutonomousDatabaseLifecycleState Unavailable { get; } = new AutonomousDatabaseLifecycleState(UnavailableValue);
+
         /// <summary> Indicates that resource in RestoreInProgress state. </summary>
         public static AutonomousDatabaseLifecycleState RestoreInProgress { get; } = new AutonomousDatabaseLifecycleState(RestoreInProgressValue);
+
         /// <summary> Indicates that resource in RestoreFailed state. </summary>
         public static AutonomousDatabaseLifecycleState RestoreFailed { get; } = new AutonomousDatabaseLifecycleState(RestoreFailedValue);
+
         /// <summary> Indicates that resource in BackupInProgress state. </summary>
         public static AutonomousDatabaseLifecycleState BackupInProgress { get; } = new AutonomousDatabaseLifecycleState(BackupInProgressValue);
+
         /// <summary> Indicates that resource in ScaleInProgress state. </summary>
         public static AutonomousDatabaseLifecycleState ScaleInProgress { get; } = new AutonomousDatabaseLifecycleState(ScaleInProgressValue);
+
         /// <summary> Indicates that resource is available but needs attention. </summary>
         public static AutonomousDatabaseLifecycleState AvailableNeedsAttention { get; } = new AutonomousDatabaseLifecycleState(AvailableNeedsAttentionValue);
+
         /// <summary> Indicates that resource in Updating state. </summary>
         public static AutonomousDatabaseLifecycleState Updating { get; } = new AutonomousDatabaseLifecycleState(UpdatingValue);
+
         /// <summary> Indicates that resource maintenance in progress state. </summary>
         public static AutonomousDatabaseLifecycleState MaintenanceInProgress { get; } = new AutonomousDatabaseLifecycleState(MaintenanceInProgressValue);
+
         /// <summary> Indicates that resource in Restarting state. </summary>
         public static AutonomousDatabaseLifecycleState Restarting { get; } = new AutonomousDatabaseLifecycleState(RestartingValue);
+
         /// <summary> Indicates that resource in Recreating state. </summary>
         public static AutonomousDatabaseLifecycleState Recreating { get; } = new AutonomousDatabaseLifecycleState(RecreatingValue);
+
         /// <summary> Indicates that resource role change in progress state. </summary>
         public static AutonomousDatabaseLifecycleState RoleChangeInProgress { get; } = new AutonomousDatabaseLifecycleState(RoleChangeInProgressValue);
+
         /// <summary> Indicates that resource in Upgrading state. </summary>
         public static AutonomousDatabaseLifecycleState Upgrading { get; } = new AutonomousDatabaseLifecycleState(UpgradingValue);
+
         /// <summary> IIndicates that resource in Inaccessible state. </summary>
         public static AutonomousDatabaseLifecycleState Inaccessible { get; } = new AutonomousDatabaseLifecycleState(InaccessibleValue);
+
         /// <summary> Indicates that resource in Standby state. </summary>
         public static AutonomousDatabaseLifecycleState Standby { get; } = new AutonomousDatabaseLifecycleState(StandbyValue);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutonomousDatabaseLifecycleState left, AutonomousDatabaseLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutonomousDatabaseLifecycleState left, AutonomousDatabaseLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutonomousDatabaseLifecycleState(string value) => new AutonomousDatabaseLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutonomousDatabaseLifecycleState?(string value) => value == null ? null : new AutonomousDatabaseLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutonomousDatabaseLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutonomousDatabaseLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
     /// <summary> Response of availability of the requested address space. </summary>
     public partial class CheckAddressSpaceAvailabilityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CheckAddressSpaceAvailabilityResult"/>. </summary>
         /// <param name="isAvailable"> Boolean representing whether the address space is available. </param>
@@ -54,16 +25,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
 
         /// <summary> Initializes a new instance of <see cref="CheckAddressSpaceAvailabilityResult"/>. </summary>
         /// <param name="isAvailable"> Boolean representing whether the address space is available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckAddressSpaceAvailabilityResult(bool isAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CheckAddressSpaceAvailabilityResult(bool isAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsAvailable = isAvailable;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CheckAddressSpaceAvailabilityResult"/> for deserialization. </summary>
-        internal CheckAddressSpaceAvailabilityResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Boolean representing whether the address space is available. </summary>

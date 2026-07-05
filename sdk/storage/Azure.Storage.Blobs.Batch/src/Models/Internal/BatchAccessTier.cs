@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Blobs.Batch.Models
 {
-    internal partial struct BatchAccessTier {}
+    internal partial struct BatchAccessTier { }
 }

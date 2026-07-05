@@ -7,7 +7,7 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class SharepointGroundingToolParameters
     {
-        public SharepointGroundingToolParameters( string connectionId )
+        public SharepointGroundingToolParameters(string connectionId)
         {
             // Additional initialization logic if needed
             var toolConnection = new ToolConnection

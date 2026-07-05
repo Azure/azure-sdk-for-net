@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SubscriptionGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Subscriptions/SBSubscriptionGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Subscriptions/SBSubscriptionGet.json
             // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusSubscriptionResource created on azure
             // for more information of creating ServiceBusSubscriptionResource, please refer to the document of ServiceBusSubscriptionResource
-            string subscriptionId = "Subscriptionid";
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-1349";
             string topicName = "sdk-Topics-8740";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_SubscriptionDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Subscriptions/SBSubscriptionDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Subscriptions/SBSubscriptionDelete.json
             // this example is just showing the usage of "Subscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusSubscriptionResource created on azure
             // for more information of creating ServiceBusSubscriptionResource, please refer to the document of ServiceBusSubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-5882";
             string topicName = "sdk-Topics-1804";
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_SubscriptionCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Subscriptions/SBSubscriptionCreate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Subscriptions/SBSubscriptionCreate.json
             // this example is just showing the usage of "Subscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusSubscriptionResource created on azure
             // for more information of creating ServiceBusSubscriptionResource, please refer to the document of ServiceBusSubscriptionResource
-            string subscriptionId = "Subscriptionid";
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "ResourceGroup";
             string namespaceName = "sdk-Namespace-1349";
             string topicName = "sdk-Topics-8740";

@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
-    /// <summary> The MaintenanceModeConfigurationModelJustification. </summary>
+    /// <summary></summary>
     public readonly partial struct VirtualEnclaveMaintenanceJustification : IEquatable<VirtualEnclaveMaintenanceJustification>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMaintenanceJustification"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualEnclaveMaintenanceJustification(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NetworkingValue = "Networking";
         private const string GovernanceValue = "Governance";
         private const string OffValue = "Off";
 
-        /// <summary> Networking. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveMaintenanceJustification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VirtualEnclaveMaintenanceJustification(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Networking. </summary>
         public static VirtualEnclaveMaintenanceJustification Networking { get; } = new VirtualEnclaveMaintenanceJustification(NetworkingValue);
-        /// <summary> Governance. </summary>
+
+        /// <summary> Gets the Governance. </summary>
         public static VirtualEnclaveMaintenanceJustification Governance { get; } = new VirtualEnclaveMaintenanceJustification(GovernanceValue);
-        /// <summary> Off. </summary>
+
+        /// <summary> Gets the Off. </summary>
         public static VirtualEnclaveMaintenanceJustification Off { get; } = new VirtualEnclaveMaintenanceJustification(OffValue);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveMaintenanceJustification"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualEnclaveMaintenanceJustification left, VirtualEnclaveMaintenanceJustification right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualEnclaveMaintenanceJustification"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualEnclaveMaintenanceJustification left, VirtualEnclaveMaintenanceJustification right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualEnclaveMaintenanceJustification"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveMaintenanceJustification"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualEnclaveMaintenanceJustification(string value) => new VirtualEnclaveMaintenanceJustification(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualEnclaveMaintenanceJustification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualEnclaveMaintenanceJustification?(string value) => value == null ? null : new VirtualEnclaveMaintenanceJustification(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualEnclaveMaintenanceJustification other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualEnclaveMaintenanceJustification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

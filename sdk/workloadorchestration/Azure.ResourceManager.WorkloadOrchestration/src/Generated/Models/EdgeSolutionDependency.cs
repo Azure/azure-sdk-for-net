@@ -8,55 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Solution Dependency Context. </summary>
     public partial class EdgeSolutionDependency
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeSolutionDependency"/>. </summary>
         /// <param name="solutionVersionId"> Solution Version Id. </param>
         /// <param name="solutionTemplateVersionId"> Solution Template Version Id. </param>
         /// <param name="targetId"> Target Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionVersionId"/>, <paramref name="solutionTemplateVersionId"/> or <paramref name="targetId"/> is null. </exception>
         internal EdgeSolutionDependency(ResourceIdentifier solutionVersionId, ResourceIdentifier solutionTemplateVersionId, ResourceIdentifier targetId)
         {
-            Argument.AssertNotNull(solutionVersionId, nameof(solutionVersionId));
-            Argument.AssertNotNull(solutionTemplateVersionId, nameof(solutionTemplateVersionId));
-            Argument.AssertNotNull(targetId, nameof(targetId));
-
             SolutionVersionId = solutionVersionId;
             SolutionTemplateVersionId = solutionTemplateVersionId;
             TargetId = targetId;
@@ -69,30 +36,29 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="solutionTemplateVersionId"> Solution Template Version Id. </param>
         /// <param name="targetId"> Target Id. </param>
         /// <param name="dependencies"> Solution dependencies. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionDependency(ResourceIdentifier solutionVersionId, string solutionInstanceName, ResourceIdentifier solutionTemplateVersionId, ResourceIdentifier targetId, IReadOnlyList<EdgeSolutionDependency> dependencies, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeSolutionDependency(ResourceIdentifier solutionVersionId, string solutionInstanceName, ResourceIdentifier solutionTemplateVersionId, ResourceIdentifier targetId, IReadOnlyList<EdgeSolutionDependency> dependencies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionVersionId = solutionVersionId;
             SolutionInstanceName = solutionInstanceName;
             SolutionTemplateVersionId = solutionTemplateVersionId;
             TargetId = targetId;
             Dependencies = dependencies;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeSolutionDependency"/> for deserialization. </summary>
-        internal EdgeSolutionDependency()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Solution Version Id. </summary>
         public ResourceIdentifier SolutionVersionId { get; }
+
         /// <summary> Solution Instance Name. </summary>
         public string SolutionInstanceName { get; }
+
         /// <summary> Solution Template Version Id. </summary>
         public ResourceIdentifier SolutionTemplateVersionId { get; }
+
         /// <summary> Target Id. </summary>
         public ResourceIdentifier TargetId { get; }
+
         /// <summary> Solution dependencies. </summary>
         public IReadOnlyList<EdgeSolutionDependency> Dependencies { get; }
     }

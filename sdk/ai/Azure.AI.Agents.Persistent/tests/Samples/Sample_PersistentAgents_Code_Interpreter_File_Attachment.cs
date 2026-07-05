@@ -30,7 +30,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AgentsCreateAgentWithInterpreterTool
-        List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+        List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
         // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
@@ -58,7 +58,7 @@ public partial class Sample_PersistentAgents_Code_Interpreter_File_Attachment : 
             threadId: thread.Id,
             role: MessageRole.User,
             content: "Can you give me the documented codes for 'banana' and 'orange'?",
-            attachments: [ attachment ]
+            attachments: [attachment]
         );
         #endregion
         #region Snippet:AgentsCodeInterpreterFileAttachment_CreateRun

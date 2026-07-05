@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableAttestationArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAttestationArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAttestationArmClient for mocking. </summary>
         protected MockableAttestationArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAttestationArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAttestationArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAttestationArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableAttestationArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="AttestationProviderResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttestationProviderResource.CreateResourceIdentifier" /> to create an <see cref="AttestationProviderResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="AttestationProviderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AttestationProviderResource"/> object. </returns>
         public virtual AttestationProviderResource GetAttestationProviderResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
             return new AttestationProviderResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="AttestationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AttestationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttestationPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="AttestationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AttestationPrivateEndpointConnectionResource"/> object. </returns>
         public virtual AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(ResourceIdentifier id)

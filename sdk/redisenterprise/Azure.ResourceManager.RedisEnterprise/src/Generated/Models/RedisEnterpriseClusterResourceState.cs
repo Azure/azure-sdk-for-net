@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,77 +15,122 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseClusterResourceState : IEquatable<RedisEnterpriseClusterResourceState>
     {
         private readonly string _value;
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> CreateFailed. </summary>
+        private const string CreateFailedValue = "CreateFailed";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> UpdateFailed. </summary>
+        private const string UpdateFailedValue = "UpdateFailed";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> DeleteFailed. </summary>
+        private const string DeleteFailedValue = "DeleteFailed";
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> EnableFailed. </summary>
+        private const string EnableFailedValue = "EnableFailed";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> DisableFailed. </summary>
+        private const string DisableFailedValue = "DisableFailed";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Scaling. </summary>
+        private const string ScalingValue = "Scaling";
+        /// <summary> ScalingFailed. </summary>
+        private const string ScalingFailedValue = "ScalingFailed";
+        /// <summary> Moving. </summary>
+        private const string MovingValue = "Moving";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseClusterResourceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RunningValue = "Running";
-        private const string CreatingValue = "Creating";
-        private const string CreateFailedValue = "CreateFailed";
-        private const string UpdatingValue = "Updating";
-        private const string UpdateFailedValue = "UpdateFailed";
-        private const string DeletingValue = "Deleting";
-        private const string DeleteFailedValue = "DeleteFailed";
-        private const string EnablingValue = "Enabling";
-        private const string EnableFailedValue = "EnableFailed";
-        private const string DisablingValue = "Disabling";
-        private const string DisableFailedValue = "DisableFailed";
-        private const string DisabledValue = "Disabled";
-        private const string ScalingValue = "Scaling";
-        private const string ScalingFailedValue = "ScalingFailed";
-        private const string MovingValue = "Moving";
+            _value = value;
+        }
 
         /// <summary> Running. </summary>
         public static RedisEnterpriseClusterResourceState Running { get; } = new RedisEnterpriseClusterResourceState(RunningValue);
+
         /// <summary> Creating. </summary>
         public static RedisEnterpriseClusterResourceState Creating { get; } = new RedisEnterpriseClusterResourceState(CreatingValue);
+
         /// <summary> CreateFailed. </summary>
         public static RedisEnterpriseClusterResourceState CreateFailed { get; } = new RedisEnterpriseClusterResourceState(CreateFailedValue);
+
         /// <summary> Updating. </summary>
         public static RedisEnterpriseClusterResourceState Updating { get; } = new RedisEnterpriseClusterResourceState(UpdatingValue);
+
         /// <summary> UpdateFailed. </summary>
         public static RedisEnterpriseClusterResourceState UpdateFailed { get; } = new RedisEnterpriseClusterResourceState(UpdateFailedValue);
+
         /// <summary> Deleting. </summary>
         public static RedisEnterpriseClusterResourceState Deleting { get; } = new RedisEnterpriseClusterResourceState(DeletingValue);
+
         /// <summary> DeleteFailed. </summary>
         public static RedisEnterpriseClusterResourceState DeleteFailed { get; } = new RedisEnterpriseClusterResourceState(DeleteFailedValue);
+
         /// <summary> Enabling. </summary>
         public static RedisEnterpriseClusterResourceState Enabling { get; } = new RedisEnterpriseClusterResourceState(EnablingValue);
+
         /// <summary> EnableFailed. </summary>
         public static RedisEnterpriseClusterResourceState EnableFailed { get; } = new RedisEnterpriseClusterResourceState(EnableFailedValue);
+
         /// <summary> Disabling. </summary>
         public static RedisEnterpriseClusterResourceState Disabling { get; } = new RedisEnterpriseClusterResourceState(DisablingValue);
+
         /// <summary> DisableFailed. </summary>
         public static RedisEnterpriseClusterResourceState DisableFailed { get; } = new RedisEnterpriseClusterResourceState(DisableFailedValue);
+
         /// <summary> Disabled. </summary>
         public static RedisEnterpriseClusterResourceState Disabled { get; } = new RedisEnterpriseClusterResourceState(DisabledValue);
+
         /// <summary> Scaling. </summary>
         public static RedisEnterpriseClusterResourceState Scaling { get; } = new RedisEnterpriseClusterResourceState(ScalingValue);
+
         /// <summary> ScalingFailed. </summary>
         public static RedisEnterpriseClusterResourceState ScalingFailed { get; } = new RedisEnterpriseClusterResourceState(ScalingFailedValue);
+
         /// <summary> Moving. </summary>
         public static RedisEnterpriseClusterResourceState Moving { get; } = new RedisEnterpriseClusterResourceState(MovingValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseClusterResourceState left, RedisEnterpriseClusterResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseClusterResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseClusterResourceState left, RedisEnterpriseClusterResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseClusterResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseClusterResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseClusterResourceState(string value) => new RedisEnterpriseClusterResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseClusterResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseClusterResourceState?(string value) => value == null ? null : new RedisEnterpriseClusterResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseClusterResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseClusterResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OracleDatabaseEditionType : IEquatable<OracleDatabaseEditionType>
     {
         private readonly string _value;
+        /// <summary> Standard edition. </summary>
+        private const string StandardEditionValue = "StandardEdition";
+        /// <summary> Enterprise edition. </summary>
+        private const string EnterpriseEditionValue = "EnterpriseEdition";
 
         /// <summary> Initializes a new instance of <see cref="OracleDatabaseEditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleDatabaseEditionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardEditionValue = "StandardEdition";
-        private const string EnterpriseEditionValue = "EnterpriseEdition";
+            _value = value;
+        }
 
         /// <summary> Standard edition. </summary>
         public static OracleDatabaseEditionType StandardEdition { get; } = new OracleDatabaseEditionType(StandardEditionValue);
+
         /// <summary> Enterprise edition. </summary>
         public static OracleDatabaseEditionType EnterpriseEdition { get; } = new OracleDatabaseEditionType(EnterpriseEditionValue);
+
         /// <summary> Determines if two <see cref="OracleDatabaseEditionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleDatabaseEditionType left, OracleDatabaseEditionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleDatabaseEditionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleDatabaseEditionType left, OracleDatabaseEditionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDatabaseEditionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleDatabaseEditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleDatabaseEditionType(string value) => new OracleDatabaseEditionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleDatabaseEditionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleDatabaseEditionType?(string value) => value == null ? null : new OracleDatabaseEditionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleDatabaseEditionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleDatabaseEditionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

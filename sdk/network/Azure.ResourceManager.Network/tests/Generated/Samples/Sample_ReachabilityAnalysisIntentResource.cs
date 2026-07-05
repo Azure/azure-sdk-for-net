@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ReachabilityAnalysisIntentGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ReachabilityAnalysisIntentGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ReachabilityAnalysisIntentGet.json
             // this example is just showing the usage of "ReachabilityAnalysisIntents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ReachabilityAnalysisIntentDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ReachabilityAnalysisIntentDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ReachabilityAnalysisIntentDelete.json
             // this example is just showing the usage of "ReachabilityAnalysisIntents_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Samples
             ReachabilityAnalysisIntentResource reachabilityAnalysisIntent = client.GetReachabilityAnalysisIntentResource(reachabilityAnalysisIntentResourceId);
 
             // invoke the operation
-            await reachabilityAnalysisIntent.DeleteAsync(WaitUntil.Completed);
+            await reachabilityAnalysisIntent.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ReachabilityAnalysisIntentCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ReachabilityAnalysisIntentPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ReachabilityAnalysisIntentPut.json
             // this example is just showing the usage of "ReachabilityAnalysisIntents_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Description = "A sample reachability analysis intent",
             });
-            ArmOperation<ReachabilityAnalysisIntentResource> lro = await reachabilityAnalysisIntent.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ReachabilityAnalysisIntentResource> lro = await reachabilityAnalysisIntent.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ReachabilityAnalysisIntentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

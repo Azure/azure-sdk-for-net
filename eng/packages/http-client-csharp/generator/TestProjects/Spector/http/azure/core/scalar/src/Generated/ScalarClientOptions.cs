@@ -5,15 +5,20 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
-namespace _Specs_.Azure.Core.Scalar
+namespace Specs.Azure.Core.Scalar
 {
     public partial class ScalarClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01_Preview;
 
         public ScalarClientOptions(ServiceVersion version = LatestVersion) => throw null;
+
+        [Experimental("SCME0002")]
+        internal ScalarClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

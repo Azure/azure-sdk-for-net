@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
+    /// <summary></summary>
     public partial class DiagnosticProactiveLogCollectionSettingResource : IJsonModel<DiagnosticProactiveLogCollectionSettingData>
     {
-        private static DiagnosticProactiveLogCollectionSettingData s_dataDeserializationInstance;
-        private static DiagnosticProactiveLogCollectionSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DiagnosticProactiveLogCollectionSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DiagnosticProactiveLogCollectionSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiagnosticProactiveLogCollectionSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiagnosticProactiveLogCollectionSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticProactiveLogCollectionSettingData>)Data).Write(writer, options);
 
-        DiagnosticProactiveLogCollectionSettingData IJsonModel<DiagnosticProactiveLogCollectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticProactiveLogCollectionSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiagnosticProactiveLogCollectionSettingData IJsonModel<DiagnosticProactiveLogCollectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticProactiveLogCollectionSettingData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DiagnosticProactiveLogCollectionSettingData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticProactiveLogCollectionSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

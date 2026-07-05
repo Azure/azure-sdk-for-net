@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     internal readonly partial struct SearchSortEnum : IEquatable<SearchSortEnum>
     {
         private readonly string _value;
+        /// <summary> asc. </summary>
+        private const string AscValue = "asc";
+        /// <summary> desc. </summary>
+        private const string DescValue = "desc";
 
         /// <summary> Initializes a new instance of <see cref="SearchSortEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SearchSortEnum(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AscValue = "asc";
-        private const string DescValue = "desc";
+            _value = value;
+        }
 
         /// <summary> asc. </summary>
         public static SearchSortEnum Asc { get; } = new SearchSortEnum(AscValue);
+
         /// <summary> desc. </summary>
         public static SearchSortEnum Desc { get; } = new SearchSortEnum(DescValue);
+
         /// <summary> Determines if two <see cref="SearchSortEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SearchSortEnum left, SearchSortEnum right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SearchSortEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SearchSortEnum left, SearchSortEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchSortEnum"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SearchSortEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SearchSortEnum(string value) => new SearchSortEnum(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SearchSortEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SearchSortEnum?(string value) => value == null ? null : new SearchSortEnum(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SearchSortEnum other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SearchSortEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

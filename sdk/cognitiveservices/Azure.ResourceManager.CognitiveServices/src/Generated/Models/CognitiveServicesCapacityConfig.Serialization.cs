@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesCapacityConfig : IUtf8JsonSerializable, IJsonModel<CognitiveServicesCapacityConfig>
+    /// <summary> The capacity configuration. </summary>
+    public partial class CognitiveServicesCapacityConfig : IJsonModel<CognitiveServicesCapacityConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesCapacityConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CognitiveServicesCapacityConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCognitiveServicesCapacityConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesCapacityConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesCapacityConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CognitiveServicesCapacityConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CognitiveServicesCapacityConfig IPersistableModel<CognitiveServicesCapacityConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CognitiveServicesCapacityConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CognitiveServicesCapacityConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesCapacityConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Minimum))
             {
                 writer.WritePropertyName("minimum"u8);
@@ -60,21 +98,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllowedValues)
+                foreach (int item in AllowedValues)
                 {
                     writer.WriteNumberValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,22 +121,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        CognitiveServicesCapacityConfig IJsonModel<CognitiveServicesCapacityConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CognitiveServicesCapacityConfig IJsonModel<CognitiveServicesCapacityConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CognitiveServicesCapacityConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesCapacityConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCognitiveServicesCapacityConfig(document.RootElement, options);
         }
 
-        internal static CognitiveServicesCapacityConfig DeserializeCognitiveServicesCapacityConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CognitiveServicesCapacityConfig DeserializeCognitiveServicesCapacityConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,54 +151,53 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             int? step = default;
             int? @default = default;
             IList<int> allowedValues = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("minimum"u8))
+                if (prop.NameEquals("minimum"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minimum = property.Value.GetInt32();
+                    minimum = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maximum"u8))
+                if (prop.NameEquals("maximum"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maximum = property.Value.GetInt32();
+                    maximum = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("step"u8))
+                if (prop.NameEquals("step"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    step = property.Value.GetInt32();
+                    step = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("default"u8))
+                if (prop.NameEquals("default"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @default = property.Value.GetInt32();
+                    @default = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allowedValues"u8))
+                if (prop.NameEquals("allowedValues"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<int> array = new List<int>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetInt32());
                     }
@@ -164,148 +206,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesCapacityConfig(
                 minimum,
                 maximum,
                 step,
                 @default,
                 allowedValues ?? new ChangeTrackingList<int>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minimum: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Minimum))
-                {
-                    builder.Append("  minimum: ");
-                    builder.AppendLine($"{Minimum.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maximum: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Maximum))
-                {
-                    builder.Append("  maximum: ");
-                    builder.AppendLine($"{Maximum.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Step), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  step: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Step))
-                {
-                    builder.Append("  step: ");
-                    builder.AppendLine($"{Step.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  default: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Default))
-                {
-                    builder.Append("  default: ");
-                    builder.AppendLine($"{Default.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedValues), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  allowedValues: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AllowedValues))
-                {
-                    if (AllowedValues.Any())
-                    {
-                        builder.Append("  allowedValues: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AllowedValues)
-                        {
-                            builder.AppendLine($"    {item}");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CognitiveServicesCapacityConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesCapacityConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CognitiveServicesCapacityConfig IPersistableModel<CognitiveServicesCapacityConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesCapacityConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCognitiveServicesCapacityConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesCapacityConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CognitiveServicesCapacityConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

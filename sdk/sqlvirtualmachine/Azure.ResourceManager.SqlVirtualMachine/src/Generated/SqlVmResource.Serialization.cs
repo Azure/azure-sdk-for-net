@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
+    /// <summary></summary>
     public partial class SqlVmResource : IJsonModel<SqlVmData>
     {
-        private static SqlVmData s_dataDeserializationInstance;
-        private static SqlVmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlVmData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlVmData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlVmData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmData>)Data).Write(writer, options);
 
-        SqlVmData IJsonModel<SqlVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlVmData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlVmData IJsonModel<SqlVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlVmData>(Data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlVmData IPersistableModel<SqlVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlVmData>(data, options, AzureResourceManagerSqlVirtualMachineContext.Default);
 
-        string IPersistableModel<SqlVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlVmData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

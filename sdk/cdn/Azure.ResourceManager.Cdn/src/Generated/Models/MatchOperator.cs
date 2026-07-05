@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: Operator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct MatchOperator : IEquatable<MatchOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MatchOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MatchOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string IPMatchValue = "IPMatch";
         private const string GeoMatchValue = "GeoMatch";
@@ -38,83 +28,82 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string EndsWithValue = "EndsWith";
         private const string RegExValue = "RegEx";
 
-        /// <summary>
-        /// Any
-        /// Serialized Name: Operator.Any
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="MatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MatchOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static MatchOperator Any { get; } = new MatchOperator(AnyValue);
-        /// <summary>
-        /// IPMatch
-        /// Serialized Name: Operator.IPMatch
-        /// </summary>
+
+        /// <summary> Gets the IPMatch. </summary>
         public static MatchOperator IPMatch { get; } = new MatchOperator(IPMatchValue);
-        /// <summary>
-        /// GeoMatch
-        /// Serialized Name: Operator.GeoMatch
-        /// </summary>
+
+        /// <summary> Gets the GeoMatch. </summary>
         public static MatchOperator GeoMatch { get; } = new MatchOperator(GeoMatchValue);
-        /// <summary>
-        /// Equal
-        /// Serialized Name: Operator.Equal
-        /// </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static MatchOperator Equal { get; } = new MatchOperator(EqualValue);
-        /// <summary>
-        /// Contains
-        /// Serialized Name: Operator.Contains
-        /// </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static MatchOperator Contains { get; } = new MatchOperator(ContainsValue);
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: Operator.LessThan
-        /// </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static MatchOperator LessThan { get; } = new MatchOperator(LessThanValue);
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: Operator.GreaterThan
-        /// </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static MatchOperator GreaterThan { get; } = new MatchOperator(GreaterThanValue);
-        /// <summary>
-        /// LessThanOrEqual
-        /// Serialized Name: Operator.LessThanOrEqual
-        /// </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static MatchOperator LessThanOrEqual { get; } = new MatchOperator(LessThanOrEqualValue);
-        /// <summary>
-        /// GreaterThanOrEqual
-        /// Serialized Name: Operator.GreaterThanOrEqual
-        /// </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static MatchOperator GreaterThanOrEqual { get; } = new MatchOperator(GreaterThanOrEqualValue);
-        /// <summary>
-        /// BeginsWith
-        /// Serialized Name: Operator.BeginsWith
-        /// </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static MatchOperator BeginsWith { get; } = new MatchOperator(BeginsWithValue);
-        /// <summary>
-        /// EndsWith
-        /// Serialized Name: Operator.EndsWith
-        /// </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static MatchOperator EndsWith { get; } = new MatchOperator(EndsWithValue);
-        /// <summary>
-        /// RegEx
-        /// Serialized Name: Operator.RegEx
-        /// </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static MatchOperator RegEx { get; } = new MatchOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="MatchOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MatchOperator left, MatchOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MatchOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MatchOperator left, MatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MatchOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MatchOperator(string value) => new MatchOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MatchOperator?(string value) => value == null ? null : new MatchOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MatchOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MatchOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterStorageType : IEquatable<MongoClusterStorageType>
     {
         private readonly string _value;
+        /// <summary> Premium SSD for high performance workloads. </summary>
+        private const string PremiumSSDValue = "PremiumSSD";
+        /// <summary> Premium SSD v2 for very IO-intensive workloads. This is a preview option and has additional limitations. </summary>
+        private const string PremiumSSDv2Value = "PremiumSSDv2";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterStorageType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PremiumSSDValue = "PremiumSSD";
-        private const string PremiumSSDv2Value = "PremiumSSDv2";
+            _value = value;
+        }
 
         /// <summary> Premium SSD for high performance workloads. </summary>
         public static MongoClusterStorageType PremiumSSD { get; } = new MongoClusterStorageType(PremiumSSDValue);
+
         /// <summary> Premium SSD v2 for very IO-intensive workloads. This is a preview option and has additional limitations. </summary>
         public static MongoClusterStorageType PremiumSSDv2 { get; } = new MongoClusterStorageType(PremiumSSDv2Value);
+
         /// <summary> Determines if two <see cref="MongoClusterStorageType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterStorageType left, MongoClusterStorageType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterStorageType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterStorageType left, MongoClusterStorageType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterStorageType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterStorageType(string value) => new MongoClusterStorageType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterStorageType?(string value) => value == null ? null : new MongoClusterStorageType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterStorageType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterStorageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

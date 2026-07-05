@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Elastic;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Elastic.Models
     public readonly partial struct ElasticFilterType : IEquatable<ElasticFilterType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ElasticFilterType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ElasticFilterType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IPValue = "ip";
         private const string AzurePrivateEndpointValue = "azure_private_endpoint";
 
-        /// <summary> ip. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ElasticFilterType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the IP. </summary>
         public static ElasticFilterType IP { get; } = new ElasticFilterType(IPValue);
-        /// <summary> azure_private_endpoint. </summary>
+
+        /// <summary> Gets the AzurePrivateEndpoint. </summary>
         public static ElasticFilterType AzurePrivateEndpoint { get; } = new ElasticFilterType(AzurePrivateEndpointValue);
+
         /// <summary> Determines if two <see cref="ElasticFilterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ElasticFilterType left, ElasticFilterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ElasticFilterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ElasticFilterType left, ElasticFilterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticFilterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ElasticFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ElasticFilterType(string value) => new ElasticFilterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ElasticFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ElasticFilterType?(string value) => value == null ? null : new ElasticFilterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ElasticFilterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ElasticFilterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

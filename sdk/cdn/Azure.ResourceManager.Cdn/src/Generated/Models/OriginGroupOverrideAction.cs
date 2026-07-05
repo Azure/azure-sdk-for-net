@@ -7,54 +7,34 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the origin group override action for the delivery rule.
-    /// Serialized Name: OriginGroupOverrideAction
-    /// </summary>
+    /// <summary> Defines the origin group override action for the delivery rule. </summary>
     public partial class OriginGroupOverrideAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/>. </summary>
-        /// <param name="properties">
-        /// Defines the parameters for the action.
-        /// Serialized Name: OriginGroupOverrideAction.parameters
-        /// </param>
+        /// <param name="properties"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public OriginGroupOverrideAction(OriginGroupOverrideActionProperties properties)
+        public OriginGroupOverrideAction(OriginGroupOverrideActionProperties properties) : base(DeliveryRuleActionName.OriginGroupOverride)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
-            Name = DeliveryRuleActionType.OriginGroupOverride;
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/>. </summary>
-        /// <param name="name">
-        /// The name of the action for the delivery rule.
-        /// Serialized Name: DeliveryRuleAction.name
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// Defines the parameters for the action.
-        /// Serialized Name: OriginGroupOverrideAction.parameters
-        /// </param>
-        internal OriginGroupOverrideAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverrideActionProperties properties) : base(name, serializedAdditionalRawData)
+        /// <param name="name"> The name of the action for the delivery rule. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        internal OriginGroupOverrideAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupOverrideActionProperties properties) : base(name, additionalBinaryDataProperties)
         {
             Properties = properties;
-            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/> for deserialization. </summary>
-        internal OriginGroupOverrideAction()
-        {
-        }
-
-        /// <summary>
-        /// Defines the parameters for the action.
-        /// Serialized Name: OriginGroupOverrideAction.parameters
-        /// </summary>
+        /// <summary> Defines the parameters for the action. </summary>
+        [WirePath("parameters")]
         public OriginGroupOverrideActionProperties Properties { get; set; }
     }
 }

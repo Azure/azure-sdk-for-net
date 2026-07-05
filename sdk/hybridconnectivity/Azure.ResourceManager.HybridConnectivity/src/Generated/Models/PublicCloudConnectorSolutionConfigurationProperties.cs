@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> Solution configuration resource. </summary>
     public partial class PublicCloudConnectorSolutionConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorSolutionConfigurationProperties"/>. </summary>
         /// <param name="solutionType"> The type of the solution. </param>
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="status"> The status of solution configurations. </param>
         /// <param name="statusDetails"> The detailed message of status details. </param>
         /// <param name="lastSyncedOn"> The last time resources were inventoried. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState, string solutionType, PublicCloudConnectorSolutionSettings solutionSettings, PublicCloudConnectorSolutionConfigurationStatus? status, string statusDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState, string solutionType, PublicCloudConnectorSolutionSettings solutionSettings, PublicCloudConnectorSolutionConfigurationStatus? status, string statusDetails, DateTimeOffset? lastSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SolutionType = solutionType;
@@ -71,25 +43,35 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             Status = status;
             StatusDetails = statusDetails;
             LastSyncedOn = lastSyncedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorSolutionConfigurationProperties"/> for deserialization. </summary>
-        internal PublicCloudConnectorSolutionConfigurationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource provisioning state. </summary>
         public PublicCloudResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> The type of the solution. </summary>
         public string SolutionType { get; set; }
-        /// <summary> Solution settings. </summary>
-        public PublicCloudConnectorSolutionSettings SolutionSettings { get; set; }
+
         /// <summary> The status of solution configurations. </summary>
         public PublicCloudConnectorSolutionConfigurationStatus? Status { get; }
+
         /// <summary> The detailed message of status details. </summary>
         public string StatusDetails { get; }
+
         /// <summary> The last time resources were inventoried. </summary>
         public DateTimeOffset? LastSyncedOn { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, string> SolutionAdditionalProperties
+        {
+            get
+            {
+                if (SolutionSettings is null)
+                {
+                    SolutionSettings = new PublicCloudConnectorSolutionSettings();
+                }
+                return SolutionSettings.AdditionalProperties;
+            }
+        }
     }
 }

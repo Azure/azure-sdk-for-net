@@ -6,9 +6,9 @@ This document outlines how to generate and maintain the inventory of libraries i
 
 The library inventory helps us:
 
-1. Track all libraries in the repository
+1. Track all Azure.* libraries in the repository (legacy non-Azure.* libraries are excluded)
 2. Categorize them as data plane or management plane
-3. Identify which generator (Swagger or TypeSpec) they use
+3. Identify which generator (New Emitter, Autorest, or Old TypeSpec) they use
 4. Plan migrations to newer generators
 
 ## Generating the Inventory
@@ -23,8 +23,9 @@ pwsh doc/GeneratorMigration/Library_Inventory.ps1
 
 2. The script will:
    - Scan all libraries in the `sdk/` directory
+   - Filter out libraries that don't start with "Azure.*" (legacy libraries)
    - Categorize them by type (data plane or management plane)
-   - Identify the generator used (Swagger or TypeSpec)
+   - Identify the generator used (New Emitter, Autorest, or Old TypeSpec)
    - Generate a markdown report (`doc/GeneratorMigration/Library_Inventory.md`)
 
 3. If you need JSON output for programmatic use, use the `-Json` flag:
@@ -66,13 +67,37 @@ If none of these TypeSpec indicators are found but there is evidence of code gen
 
 The inventory markdown file provides:
 
-1. Overall summary counts
-2. Tables for each category:
-   - Data Plane libraries using TypeSpec
-   - Data Plane libraries using Swagger
-   - Management Plane libraries using TypeSpec
-   - Management Plane libraries using Swagger
-   - Libraries with unknown generator
+1. **Table of Contents**: Quick navigation links to all sections
+2. **Overall summary counts** with breakdown by generator type
+3. Two main tables for libraries with TypeSpec (tsp-location.yaml):
+   - **Data Plane Libraries (DPG) - Migrated to New Emitter**: Client APIs using TypeSpec
+     - Columns: Service, Library, New Emitter
+     - Migration status shows: migrated / total TypeSpec libraries (e.g., "16 / 32 (50%)")
+     - **Only includes libraries with tsp-location.yaml file**
+     - Shows ✅ for libraries using new emitters, blank for old TypeSpec
+   - **Management Plane Libraries (MPG) - Migrated to New Emitter**: Resource management APIs using TypeSpec
+     - Columns: Service, Library, New Emitter
+     - Migration status shows: migrated / total TypeSpec libraries (e.g., "24 / 66 (36.4%)")
+     - **Only includes libraries with tsp-location.yaml file**
+     - Shows ✅ for libraries using new emitters, blank for old TypeSpec
+4. Two separate tables for libraries still on Swagger:
+   - **Data Plane Libraries (DPG) - Still on Swagger**: Libraries not yet migrated to TypeSpec
+     - Columns: Service, Library
+   - **Management Plane Libraries (MPG) - Still on Swagger**: Libraries not yet migrated to TypeSpec
+     - Columns: Service, Library
+5. Libraries with no generator (listed separately)
+
+The migration tables use ✅ emoji to indicate the generator type:
+- **New Emitter** column: ✅ for libraries using new TypeSpec emitters (@azure-typespec/http-client-csharp, @azure-typespec/http-client-csharp-mgmt, or @typespec/http-client-csharp)
+- **No checkmark**: Libraries using old TypeSpec (TSP-Old) with tsp-location.yaml but not yet migrated to new emitter
+
+**Important**: 
+- Migration tables only include libraries that have a `tsp-location.yaml` file. Libraries without this file are not included in the migration tracking tables.
+- Migration status percentages are calculated as: (libraries with new emitter) / (total libraries with tsp-location.yaml in that table) × 100
+
+Libraries still on Swagger/Autorest are listed in separate "Still on Swagger" tables and are not included in the migration tables.
+
+The migration status shows the number of libraries migrated to the new emitter out of the total, along with the percentage.
 
 ## Updating the Inventory
 

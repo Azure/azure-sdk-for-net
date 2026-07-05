@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PortalServicesCopilot.Models;
 
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot
     [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingPatch))]
     [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingResource))]
     [ModelReaderWriterBuildable(typeof(PortalServicesCopilotSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerPortalServicesCopilotContext : ModelReaderWriterContext
     {

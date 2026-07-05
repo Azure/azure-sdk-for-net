@@ -1,0 +1,35 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+#region Snippet:QuestionAnsweringAuthoringClient_Namespace_Authoring
+using Azure.AI.Language.QuestionAnswering.Authoring;
+#endregion
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using Azure.Core;
+
+namespace Azure.AI.Language.QuestionAnswering.Authoring.Tests.Samples
+{
+    public partial class QuestionAnsweringAuthoringClientSamples
+    {
+        public void CreateQuestionAnsweringAuthoringClient()
+        {
+            #region Snippet:QuestionAnsweringAuthoringClient_Create_Authoring
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            #endregion
+        }
+        public void CreateQuestionAnsweringAuthoringClient_withDefaultCredential()
+        {
+            #region Snippet:QuestionAnsweringAuthoringClient_CreateWithDefaultCredential_Authoring
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+            TokenCredential credential = new DefaultAzureCredential();
+
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential, new QuestionAnsweringAuthoringClientOptions());
+            #endregion
+        }
+    }
+}

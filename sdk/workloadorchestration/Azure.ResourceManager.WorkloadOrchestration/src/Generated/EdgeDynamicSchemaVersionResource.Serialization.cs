@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
+    /// <summary></summary>
     public partial class EdgeDynamicSchemaVersionResource : IJsonModel<EdgeDynamicSchemaVersionData>
     {
-        private static EdgeDynamicSchemaVersionData s_dataDeserializationInstance;
-        private static EdgeDynamicSchemaVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EdgeDynamicSchemaVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EdgeDynamicSchemaVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EdgeDynamicSchemaVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeDynamicSchemaVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeDynamicSchemaVersionData>)Data).Write(writer, options);
 
-        EdgeDynamicSchemaVersionData IJsonModel<EdgeDynamicSchemaVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeDynamicSchemaVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeDynamicSchemaVersionData IJsonModel<EdgeDynamicSchemaVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EdgeDynamicSchemaVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeDynamicSchemaVersionData>(Data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EdgeDynamicSchemaVersionData IPersistableModel<EdgeDynamicSchemaVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeDynamicSchemaVersionData>(data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
-        string IPersistableModel<EdgeDynamicSchemaVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeDynamicSchemaVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeDynamicSchemaVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

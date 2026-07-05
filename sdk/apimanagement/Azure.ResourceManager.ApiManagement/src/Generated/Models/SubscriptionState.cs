@@ -7,20 +7,20 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
+    /// <summary> Subscription state. Possible states are <i> active – the subscription is active, </i> suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, <i> submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, </i> rejected – the subscription request has been denied by an administrator, <i> cancelled – the subscription has been cancelled by the developer or administrator, </i> expired – the subscription reached its expiration date and was deactivated. </summary>
     public enum SubscriptionState
     {
-        /// <summary> suspended. </summary>
+        /// <summary> Suspended. </summary>
         Suspended,
-        /// <summary> active. </summary>
+        /// <summary> Active. </summary>
         Active,
-        /// <summary> expired. </summary>
+        /// <summary> Expired. </summary>
         Expired,
-        /// <summary> submitted. </summary>
+        /// <summary> Submitted. </summary>
         Submitted,
-        /// <summary> rejected. </summary>
+        /// <summary> Rejected. </summary>
         Rejected,
-        /// <summary> cancelled. </summary>
+        /// <summary> Cancelled. </summary>
         Cancelled
     }
 }

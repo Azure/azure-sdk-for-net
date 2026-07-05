@@ -11,11 +11,13 @@
     <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
+
+    <!-- Needed to override the bundled version in Microsoft.Azure.WebJobs -->
+    <PackageReference Include="Microsoft.Extensions.Hosting"/>
   </ItemGroup>
 
   <ItemGroup>

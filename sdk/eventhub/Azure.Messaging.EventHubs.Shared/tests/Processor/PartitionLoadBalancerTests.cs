@@ -250,7 +250,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Ensure that there is exactly one more than the minimum number of partitions available to be owned.
 
             var unownedPartitions = partitionIds.Except(completeOwnership.Select(p => p.PartitionId));
-            Assert.That(unownedPartitions.Count(), Is.EqualTo(MinimumPartitionCount + 1), $"There should be { MinimumPartitionCount + 1 } partitions left unowned.");
+            Assert.That(unownedPartitions.Count(), Is.EqualTo(MinimumPartitionCount + 1), $"There should be {MinimumPartitionCount + 1} partitions left unowned.");
 
             // Run load balancing cycles until the load balancer believes that the state is balanced or the minimum count is quadrupled.
 

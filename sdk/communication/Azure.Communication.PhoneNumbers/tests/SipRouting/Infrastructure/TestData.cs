@@ -51,7 +51,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
                 name: "Rule without trunks",
                 description: "Handle all numbers'",
                 numberPattern: @"\+[1-9][0-9]{3,23}",
-                trunks: new List<string> ());
+                trunks: new List<string>());
             RuleWithoutTrunks2 = new SipTrunkRoute(
                 name: "Rule without trunks 2",
                 description: "Handle all numbers'",

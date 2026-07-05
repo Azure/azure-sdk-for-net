@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.IotHub;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotHub.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableIotHubResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableIotHubResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableIotHubResourceGroupResource for mocking. </summary>
         protected MockableIotHubResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableIotHubResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableIotHubResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableIotHubResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of IotHubDescriptionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IotHubDescriptionResources and their operations over a IotHubDescriptionResource. </returns>
+        /// <summary> Gets a collection of IotHubDescriptions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IotHubDescriptions and their operations over a IotHubDescriptionResource. </returns>
         public virtual IotHubDescriptionCollection GetIotHubDescriptions()
         {
             return GetCachedClient(client => new IotHubDescriptionCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// Get the non-security related metadata of an IoT hub.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotHubResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotHubDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.IotHub.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<IotHubDescriptionResource>> GetIotHubDescriptionAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return await GetIotHubDescriptions().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// Get the non-security related metadata of an IoT hub.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IotHubResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IotHubDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.IotHub.Mocking
         [ForwardsClientCalls]
         public virtual Response<IotHubDescriptionResource> GetIotHubDescription(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return GetIotHubDescriptions().Get(resourceName, cancellationToken);
         }
     }

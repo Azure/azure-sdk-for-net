@@ -16,7 +16,7 @@ namespace Azure.Communication.PhoneNumbers
             => _operation = operation;
 
         /// <summary> Initializes a new instance of <see cref="PurchasePhoneNumbersOperation" /> for mocking. </summary>
-        protected PurchasePhoneNumbersOperation() {}
+        protected PurchasePhoneNumbersOperation() { }
 
         /// <inheritdoc />
         public override string Id => _operation.Id;

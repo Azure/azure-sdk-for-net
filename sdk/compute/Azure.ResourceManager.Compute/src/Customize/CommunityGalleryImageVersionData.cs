@@ -3,16 +3,48 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
+    // Backward compatibility: the previously shipped SDK exposed this data type in the root namespace.
+    // The generated TypeSpec model is otherwise placed under Models; CodeGenType keeps the public API shape.
+    // Suppress the generated parent resource-key helper because the Swagger payload has no parentName property
+    // and the old SDK did not expose it.
+    [CodeGenType("CommunityGalleryImageVersionData")]
+    [CodeGenSuppress("ParentName")]
     public partial class CommunityGalleryImageVersionData
     {
+        // we also must add back this property to avoid breaking changes, but its payload never have this property.
+        /// <summary>
+        /// The resource identifier.
+        ///
+        /// This property is depracated and will be removed in a future release.
+        /// There is possibility that this property will be null.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier Id { get; internal set; }
+
+        // Backward-compat shim (get-only). v1.14.0 baseline exposed both `ExcludeFromLatest`
+        // and `IsExcludedFromLatest`; the Is* form is the new canonical name.
         /// <summary>
         /// If set to true, Virtual Machines deployed from the latest version of the Image Definition won&apos;t use this Image Version.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? ExcludeFromLatest { get => IsExcludedFromLatest; }
+
+        // Backward compatibility: the previously shipped SDK exposed ArtifactTags as IReadOnlyDictionary.
+        // Suppress the generated IDictionary property and keep the read-only return type to avoid a binary break.
+        /// <summary> The artifact tags of a shared gallery resource. </summary>
+        public IReadOnlyDictionary<string, string> ArtifactTags
+        {
+            get
+            {
+                return Properties is null ? new ChangeTrackingDictionary<string, string>() : Properties.ArtifactTags as IReadOnlyDictionary<string, string>;
+            }
+        }
     }
 }

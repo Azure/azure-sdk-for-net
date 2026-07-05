@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Grafana.Models
     public readonly partial struct GrafanaCreatorCanAdmin : IEquatable<GrafanaCreatorCanAdmin>
     {
         private readonly string _value;
+        /// <summary> Creator admin access is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Creator admin access is enabled. </summary>
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Initializes a new instance of <see cref="GrafanaCreatorCanAdmin"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GrafanaCreatorCanAdmin(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+            _value = value;
+        }
 
         /// <summary> Creator admin access is disabled. </summary>
         public static GrafanaCreatorCanAdmin Disabled { get; } = new GrafanaCreatorCanAdmin(DisabledValue);
+
         /// <summary> Creator admin access is enabled. </summary>
         public static GrafanaCreatorCanAdmin Enabled { get; } = new GrafanaCreatorCanAdmin(EnabledValue);
+
         /// <summary> Determines if two <see cref="GrafanaCreatorCanAdmin"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GrafanaCreatorCanAdmin left, GrafanaCreatorCanAdmin right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GrafanaCreatorCanAdmin"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GrafanaCreatorCanAdmin left, GrafanaCreatorCanAdmin right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaCreatorCanAdmin"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GrafanaCreatorCanAdmin"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GrafanaCreatorCanAdmin(string value) => new GrafanaCreatorCanAdmin(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GrafanaCreatorCanAdmin"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GrafanaCreatorCanAdmin?(string value) => value == null ? null : new GrafanaCreatorCanAdmin(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GrafanaCreatorCanAdmin other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GrafanaCreatorCanAdmin other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

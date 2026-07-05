@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsAvailabilityStatus : IEquatable<DevOpsAvailabilityStatus>
     {
         private readonly string _value;
+        /// <summary> The name is available. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> The name is unavailable. </summary>
+        private const string UnavailableValue = "Unavailable";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsAvailabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsAvailabilityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailableValue = "Available";
-        private const string UnavailableValue = "Unavailable";
+            _value = value;
+        }
 
         /// <summary> The name is available. </summary>
         public static DevOpsAvailabilityStatus Available { get; } = new DevOpsAvailabilityStatus(AvailableValue);
+
         /// <summary> The name is unavailable. </summary>
         public static DevOpsAvailabilityStatus Unavailable { get; } = new DevOpsAvailabilityStatus(UnavailableValue);
+
         /// <summary> Determines if two <see cref="DevOpsAvailabilityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsAvailabilityStatus left, DevOpsAvailabilityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsAvailabilityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsAvailabilityStatus left, DevOpsAvailabilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsAvailabilityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsAvailabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsAvailabilityStatus(string value) => new DevOpsAvailabilityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsAvailabilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsAvailabilityStatus?(string value) => value == null ? null : new DevOpsAvailabilityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsAvailabilityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsAvailabilityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

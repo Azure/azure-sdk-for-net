@@ -21,7 +21,7 @@ public partial class AzureOpenAISamples
 
         // The Assistants feature area is in beta, with API specifics subject to change.
         // Suppress the [Experimental] warning via .csproj or, as here, in the code to acknowledge.
-        #pragma warning disable OPENAI001
+#pragma warning disable OPENAI001
         AssistantClient assistantClient = azureClient.GetAssistantClient();
         #endregion
 

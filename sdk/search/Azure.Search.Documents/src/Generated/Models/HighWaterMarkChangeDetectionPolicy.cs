@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="HighWaterMarkChangeDetectionPolicy"/>. </summary>
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="highWaterMarkColumnName"/> is null. </exception>
-        public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName)
+        public HighWaterMarkChangeDetectionPolicy(string highWaterMarkColumnName) : base("#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy")
         {
             Argument.AssertNotNull(highWaterMarkColumnName, nameof(highWaterMarkColumnName));
 
             HighWaterMarkColumnName = highWaterMarkColumnName;
-            ODataType = "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="HighWaterMarkChangeDetectionPolicy"/>. </summary>
-        /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
-        internal HighWaterMarkChangeDetectionPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string highWaterMarkColumnName) : base(oDataType, serializedAdditionalRawData)
+        internal HighWaterMarkChangeDetectionPolicy(string odataType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string highWaterMarkColumnName) : base(odataType, additionalBinaryDataProperties)
         {
             HighWaterMarkColumnName = highWaterMarkColumnName;
-            ODataType = oDataType ?? "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HighWaterMarkChangeDetectionPolicy"/> for deserialization. </summary>
-        internal HighWaterMarkChangeDetectionPolicy()
-        {
         }
 
         /// <summary> The name of the high water mark column. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterReplicationState : IEquatable<MongoClusterReplicationState>
     {
         private readonly string _value;
+        /// <summary> Replication link is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Replica is catching-up with the primary. This can occur after the replica is created or after a promotion is triggered. </summary>
+        private const string CatchupValue = "Catchup";
+        /// <summary> Replica and replication link to the primary is being created. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Replication link is being updated due to a change on the replica or an upgrade. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Replication link is broken and the replica may need to be recreated. </summary>
+        private const string BrokenValue = "Broken";
+        /// <summary> Replication link is re-configuring due to a promotion event. </summary>
+        private const string ReconfiguringValue = "Reconfiguring";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterReplicationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string CatchupValue = "Catchup";
-        private const string ProvisioningValue = "Provisioning";
-        private const string UpdatingValue = "Updating";
-        private const string BrokenValue = "Broken";
-        private const string ReconfiguringValue = "Reconfiguring";
+            _value = value;
+        }
 
         /// <summary> Replication link is active. </summary>
         public static MongoClusterReplicationState Active { get; } = new MongoClusterReplicationState(ActiveValue);
+
         /// <summary> Replica is catching-up with the primary. This can occur after the replica is created or after a promotion is triggered. </summary>
         public static MongoClusterReplicationState Catchup { get; } = new MongoClusterReplicationState(CatchupValue);
+
         /// <summary> Replica and replication link to the primary is being created. </summary>
         public static MongoClusterReplicationState Provisioning { get; } = new MongoClusterReplicationState(ProvisioningValue);
+
         /// <summary> Replication link is being updated due to a change on the replica or an upgrade. </summary>
         public static MongoClusterReplicationState Updating { get; } = new MongoClusterReplicationState(UpdatingValue);
+
         /// <summary> Replication link is broken and the replica may need to be recreated. </summary>
         public static MongoClusterReplicationState Broken { get; } = new MongoClusterReplicationState(BrokenValue);
+
         /// <summary> Replication link is re-configuring due to a promotion event. </summary>
         public static MongoClusterReplicationState Reconfiguring { get; } = new MongoClusterReplicationState(ReconfiguringValue);
+
         /// <summary> Determines if two <see cref="MongoClusterReplicationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterReplicationState left, MongoClusterReplicationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterReplicationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterReplicationState left, MongoClusterReplicationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterReplicationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterReplicationState(string value) => new MongoClusterReplicationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterReplicationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterReplicationState?(string value) => value == null ? null : new MongoClusterReplicationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterReplicationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterReplicationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

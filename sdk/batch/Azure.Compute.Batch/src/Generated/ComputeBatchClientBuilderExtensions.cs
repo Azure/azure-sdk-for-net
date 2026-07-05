@@ -7,30 +7,41 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Azure;
 using Azure.Compute.Batch;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="BatchClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class ComputeBatchClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="BatchClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Batch account endpoint (for example: https://batchaccount.eastus2.batch.azure.com). </param>
-        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
+        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureNamedKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<BatchClient, BatchClientOptions>((options, cred) => new BatchClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<BatchClient, BatchClientOptions>(options => new BatchClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="BatchClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
+        /// <param name="endpoint"></param>
+        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<BatchClient, BatchClientOptions>((options, credential) => new BatchClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<BatchClient, BatchClientOptions>(configuration);
         }

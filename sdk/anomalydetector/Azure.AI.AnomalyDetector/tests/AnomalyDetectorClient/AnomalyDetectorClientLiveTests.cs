@@ -34,7 +34,7 @@ namespace Azure.AI.AnomalyDetector.Tests
             var request = TestData.TestPointSeries;
             request.MaxAnomalyRatio = 0.25F;
             request.Sensitivity = 95;
-            var response = await client.GetUnivariateClient().DetectUnivariateEntireSeriesAsync(request.ToRequestContent());
+            var response = await client.GetUnivariateClient().DetectUnivariateEntireSeriesAsync(request);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Assert.IsNotNull(result.GetProperty("expectedValues"));

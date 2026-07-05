@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AppConfiguration;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppConfiguration.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAppConfigurationResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAppConfigurationResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAppConfigurationResourceGroupResource for mocking. </summary>
         protected MockableAppConfigurationResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppConfigurationResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAppConfigurationResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAppConfigurationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of AppConfigurationStoreResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AppConfigurationStoreResources and their operations over a AppConfigurationStoreResource. </returns>
+        /// <summary> Gets a collection of AppConfigurationStores in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AppConfigurationStores and their operations over a AppConfigurationStoreResource. </returns>
         public virtual AppConfigurationStoreCollection GetAppConfigurationStores()
         {
             return GetCachedClient(client => new AppConfigurationStoreCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// Gets the properties of the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationStoreResource>> GetAppConfigurationStoreAsync(string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
             return await GetAppConfigurationStores().GetAsync(configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// Gets the properties of the specified configuration store.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationStores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConfigurationStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationStoreResource> GetAppConfigurationStore(string configStoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(configStoreName, nameof(configStoreName));
+
             return GetAppConfigurationStores().Get(configStoreName, cancellationToken);
         }
     }

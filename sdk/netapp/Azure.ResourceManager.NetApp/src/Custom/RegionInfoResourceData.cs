@@ -1,0 +1,40 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// Backward-compat: AvailabilityZoneMappings was IList in the old API but is IReadOnlyList on
+// the generated RegionInfoResourceData.Properties. Re-expose it as IList for source
+// compatibility (the underlying generated property still controls serialization).
+
+#nullable disable
+
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using Azure.ResourceManager.NetApp.Models;
+
+namespace Azure.ResourceManager.NetApp
+{
+    /// <summary> RegionInfoResource data. </summary>
+    public partial class RegionInfoResourceData
+    {
+        // Generated RegionInfoResource.Serialization.cs creates a RegionInfoResourceData
+        // instance as its IJsonModel deserialization helper, but the generated data type only
+        // has an internal full-parameter constructor. Keep this public parameterless ctor
+        // because it also preserves the GA API surface.
+        /// <summary> Initializes a new instance of <see cref="RegionInfoResourceData"/>. </summary>
+        public RegionInfoResourceData()
+        {
+        }
+
+        /// <summary> Provides logical-to-physical mapping of availability zones for the subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<AvailabilityZoneMapping> AvailabilityZoneMappings
+        {
+            get
+            {
+                var list = Properties?.AvailabilityZoneMappings;
+                return list is null ? null : list.ToList();
+            }
+        }
+    }
+}

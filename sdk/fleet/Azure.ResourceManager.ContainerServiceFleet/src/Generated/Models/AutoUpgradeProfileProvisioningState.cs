@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct AutoUpgradeProfileProvisioningState : IEquatable<AutoUpgradeProfileProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="AutoUpgradeProfileProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutoUpgradeProfileProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static AutoUpgradeProfileProvisioningState Succeeded { get; } = new AutoUpgradeProfileProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static AutoUpgradeProfileProvisioningState Failed { get; } = new AutoUpgradeProfileProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static AutoUpgradeProfileProvisioningState Canceled { get; } = new AutoUpgradeProfileProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="AutoUpgradeProfileProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutoUpgradeProfileProvisioningState left, AutoUpgradeProfileProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutoUpgradeProfileProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutoUpgradeProfileProvisioningState left, AutoUpgradeProfileProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutoUpgradeProfileProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutoUpgradeProfileProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutoUpgradeProfileProvisioningState(string value) => new AutoUpgradeProfileProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutoUpgradeProfileProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutoUpgradeProfileProvisioningState?(string value) => value == null ? null : new AutoUpgradeProfileProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutoUpgradeProfileProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutoUpgradeProfileProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

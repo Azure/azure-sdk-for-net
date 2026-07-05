@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,38 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class RegistryEndpointArtifactPullSecretAuthentication : RegistryEndpointAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>. </summary>
-        /// <param name="artifactPullSecretSettings"> Artifact Pull Secret authentication properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactPullSecretSettings"/> is null. </exception>
-        public RegistryEndpointArtifactPullSecretAuthentication(RegistryEndpointArtifactPullSecretSettings artifactPullSecretSettings)
+        /// <param name="secretRef"> The name of the kubernetes secret that contains the artifact pull secret. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretRef"/> is null. </exception>
+        public RegistryEndpointArtifactPullSecretAuthentication(string secretRef) : base(RegistryEndpointAuthenticationMethod.ArtifactPullSecret)
         {
-            Argument.AssertNotNull(artifactPullSecretSettings, nameof(artifactPullSecretSettings));
+            Argument.AssertNotNull(secretRef, nameof(secretRef));
 
-            ArtifactPullSecretSettings = artifactPullSecretSettings;
-            Method = RegistryEndpointAuthenticationMethod.ArtifactPullSecret;
+            ArtifactPullSecretSettings = new RegistryEndpointArtifactPullSecretSettings(secretRef);
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactPullSecretSettings"> Artifact Pull Secret authentication properties. </param>
-        internal RegistryEndpointArtifactPullSecretAuthentication(RegistryEndpointAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, RegistryEndpointArtifactPullSecretSettings artifactPullSecretSettings) : base(method, serializedAdditionalRawData)
+        internal RegistryEndpointArtifactPullSecretAuthentication(RegistryEndpointAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegistryEndpointArtifactPullSecretSettings artifactPullSecretSettings) : base(@method, additionalBinaryDataProperties)
         {
             ArtifactPullSecretSettings = artifactPullSecretSettings;
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RegistryEndpointArtifactPullSecretAuthentication"/> for deserialization. </summary>
-        internal RegistryEndpointArtifactPullSecretAuthentication()
-        {
         }
 
         /// <summary> Artifact Pull Secret authentication properties. </summary>
         internal RegistryEndpointArtifactPullSecretSettings ArtifactPullSecretSettings { get; set; }
+
         /// <summary> The name of the kubernetes secret that contains the artifact pull secret. </summary>
         public string SecretRef
         {
-            get => ArtifactPullSecretSettings is null ? default : ArtifactPullSecretSettings.SecretRef;
-            set => ArtifactPullSecretSettings = new RegistryEndpointArtifactPullSecretSettings(value);
+            get
+            {
+                return ArtifactPullSecretSettings is null ? default : ArtifactPullSecretSettings.SecretRef;
+            }
+            set
+            {
+                ArtifactPullSecretSettings = new RegistryEndpointArtifactPullSecretSettings(value);
+            }
         }
     }
 }

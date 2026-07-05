@@ -7,57 +7,74 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary>
     /// FeatureFlags is the supported features of Azure SignalR service.
-    /// - ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.
-    /// - EnableConnectivityLogs: "true"/"false", to enable/disable the connectivity log category respectively.
-    /// - EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.
-    /// - EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.
+    /// <list type="bullet"><item><description>ServiceMode: Flag for backend server for SignalR service. Values allowed: "Default": have your own backend server; "Serverless": your application doesn't have a backend server; "Classic": for backward compatibility. Support both Default and Serverless mode but not recommended; "PredefinedOnly": for future use.</description></item><item><description>EnableConnectivityLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableMessagingLogs: "true"/"false", to enable/disable the connectivity log category respectively.</description></item><item><description>EnableLiveTrace: Live Trace allows you to know what's happening inside Azure SignalR service, it will give you live traces in real time, it will be helpful when you developing your own Azure SignalR based web application or self-troubleshooting some issues. Please note that live traces are counted as outbound messages that will be charged. Values allowed: "true"/"false", to enable/disable live trace feature.</description></item></list>
     /// </summary>
     public readonly partial struct SignalRFeatureFlag : IEquatable<SignalRFeatureFlag>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SignalRFeatureFlag"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SignalRFeatureFlag(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ServiceModeValue = "ServiceMode";
         private const string EnableConnectivityLogsValue = "EnableConnectivityLogs";
         private const string EnableMessagingLogsValue = "EnableMessagingLogs";
         private const string EnableLiveTraceValue = "EnableLiveTrace";
 
-        /// <summary> ServiceMode. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRFeatureFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SignalRFeatureFlag(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ServiceMode. </summary>
         public static SignalRFeatureFlag ServiceMode { get; } = new SignalRFeatureFlag(ServiceModeValue);
-        /// <summary> EnableConnectivityLogs. </summary>
+
+        /// <summary> Gets the EnableConnectivityLogs. </summary>
         public static SignalRFeatureFlag EnableConnectivityLogs { get; } = new SignalRFeatureFlag(EnableConnectivityLogsValue);
-        /// <summary> EnableMessagingLogs. </summary>
+
+        /// <summary> Gets the EnableMessagingLogs. </summary>
         public static SignalRFeatureFlag EnableMessagingLogs { get; } = new SignalRFeatureFlag(EnableMessagingLogsValue);
-        /// <summary> EnableLiveTrace. </summary>
+
+        /// <summary> Gets the EnableLiveTrace. </summary>
         public static SignalRFeatureFlag EnableLiveTrace { get; } = new SignalRFeatureFlag(EnableLiveTraceValue);
+
         /// <summary> Determines if two <see cref="SignalRFeatureFlag"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SignalRFeatureFlag left, SignalRFeatureFlag right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SignalRFeatureFlag"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SignalRFeatureFlag left, SignalRFeatureFlag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRFeatureFlag"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SignalRFeatureFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SignalRFeatureFlag(string value) => new SignalRFeatureFlag(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SignalRFeatureFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SignalRFeatureFlag?(string value) => value == null ? null : new SignalRFeatureFlag(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SignalRFeatureFlag other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SignalRFeatureFlag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

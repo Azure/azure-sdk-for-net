@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [RecordedTest]
         public async Task DatabaseTests()
         {
-            var databaseDataCreate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1};
-            var databaseDataUpdate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2};
+            var databaseDataCreate = new KustoReadWriteDatabase { Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1 };
+            var databaseDataUpdate = new KustoReadWriteDatabase { Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2 };
             await RunDatabaseTests("sdkRWDatabase", databaseDataCreate, databaseDataUpdate);
         }
 
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [RecordedTest]
         public async Task DatabaseCmkTests()
         {
-            var keyVaultProperties = new KustoKeyVaultProperties {KeyName = KeyName, KeyVaultUri = KeyVaultUri, KeyVersion = KeyVersion, UserIdentity = UserAssignedIdentityId};
-            var databaseDataCreate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1, KeyVaultProperties = keyVaultProperties};
-            var databaseDataUpdate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2, KeyVaultProperties = keyVaultProperties};
+            var keyVaultProperties = new KustoKeyVaultProperties { KeyName = KeyName, KeyVaultUri = KeyVaultUri, KeyVersion = KeyVersion, UserIdentity = UserAssignedIdentityId };
+            var databaseDataCreate = new KustoReadWriteDatabase { Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1, KeyVaultProperties = keyVaultProperties };
+            var databaseDataUpdate = new KustoReadWriteDatabase { Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2, KeyVaultProperties = keyVaultProperties };
             await RunDatabaseTests("sdkCMKDatabase", databaseDataCreate, databaseDataUpdate);
         }
 

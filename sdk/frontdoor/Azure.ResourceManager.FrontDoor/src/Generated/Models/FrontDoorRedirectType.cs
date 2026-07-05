@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorRedirectType : IEquatable<FrontDoorRedirectType>
     {
         private readonly string _value;
+        /// <summary> Moved. </summary>
+        private const string MovedValue = "Moved";
+        /// <summary> Found. </summary>
+        private const string FoundValue = "Found";
+        /// <summary> TemporaryRedirect. </summary>
+        private const string TemporaryRedirectValue = "TemporaryRedirect";
+        /// <summary> PermanentRedirect. </summary>
+        private const string PermanentRedirectValue = "PermanentRedirect";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorRedirectType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MovedValue = "Moved";
-        private const string FoundValue = "Found";
-        private const string TemporaryRedirectValue = "TemporaryRedirect";
-        private const string PermanentRedirectValue = "PermanentRedirect";
+            _value = value;
+        }
 
         /// <summary> Moved. </summary>
         public static FrontDoorRedirectType Moved { get; } = new FrontDoorRedirectType(MovedValue);
+
         /// <summary> Found. </summary>
         public static FrontDoorRedirectType Found { get; } = new FrontDoorRedirectType(FoundValue);
+
         /// <summary> TemporaryRedirect. </summary>
         public static FrontDoorRedirectType TemporaryRedirect { get; } = new FrontDoorRedirectType(TemporaryRedirectValue);
+
         /// <summary> PermanentRedirect. </summary>
         public static FrontDoorRedirectType PermanentRedirect { get; } = new FrontDoorRedirectType(PermanentRedirectValue);
+
         /// <summary> Determines if two <see cref="FrontDoorRedirectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorRedirectType left, FrontDoorRedirectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorRedirectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorRedirectType left, FrontDoorRedirectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorRedirectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorRedirectType(string value) => new FrontDoorRedirectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorRedirectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorRedirectType?(string value) => value == null ? null : new FrontDoorRedirectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorRedirectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorRedirectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

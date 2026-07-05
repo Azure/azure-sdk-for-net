@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NotificationHubs;
 
 namespace Azure.ResourceManager.NotificationHubs.Models
 {
     /// <summary> Description of a NotificationHub AdmCredential. </summary>
     public partial class NotificationHubAdmCredential
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
         /// <param name="clientId"> Gets or sets the client identifier. </param>
@@ -56,29 +28,70 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Argument.AssertNotNull(clientSecret, nameof(clientSecret));
             Argument.AssertNotNull(authTokenUri, nameof(authTokenUri));
 
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            AuthTokenUri = authTokenUri;
+            Properties = new AdmCredentialProperties(clientId, clientSecret, authTokenUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
-        /// <param name="clientId"> Gets or sets the client identifier. </param>
-        /// <param name="clientSecret"> Gets or sets the credential secret access key. </param>
-        /// <param name="authTokenUri"> Gets or sets the URL of the authorization token. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationHubAdmCredential(string clientId, string clientSecret, Uri authTokenUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Description of a NotificationHub AdmCredential. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationHubAdmCredential(AdmCredentialProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClientId = clientId;
-            ClientSecret = clientSecret;
-            AuthTokenUri = authTokenUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Description of a NotificationHub AdmCredential. </summary>
+        internal AdmCredentialProperties Properties { get; set; }
+
         /// <summary> Gets or sets the client identifier. </summary>
-        public string ClientId { get; set; }
+        public string ClientId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdmCredentialProperties();
+                }
+                Properties.ClientId = value;
+            }
+        }
+
         /// <summary> Gets or sets the credential secret access key. </summary>
-        public string ClientSecret { get; set; }
+        public string ClientSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdmCredentialProperties();
+                }
+                Properties.ClientSecret = value;
+            }
+        }
+
         /// <summary> Gets or sets the URL of the authorization token. </summary>
-        public Uri AuthTokenUri { get; set; }
+        public Uri AuthTokenUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthTokenUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdmCredentialProperties();
+                }
+                Properties.AuthTokenUri = value;
+            }
+        }
     }
 }

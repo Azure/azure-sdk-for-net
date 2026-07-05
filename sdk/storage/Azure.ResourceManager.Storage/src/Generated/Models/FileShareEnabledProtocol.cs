@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct FileShareEnabledProtocol : IEquatable<FileShareEnabledProtocol>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FileShareEnabledProtocol"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FileShareEnabledProtocol(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SmbValue = "SMB";
         private const string NfsValue = "NFS";
 
-        /// <summary> SMB. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareEnabledProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FileShareEnabledProtocol(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Smb. </summary>
         public static FileShareEnabledProtocol Smb { get; } = new FileShareEnabledProtocol(SmbValue);
-        /// <summary> NFS. </summary>
+
+        /// <summary> Gets the Nfs. </summary>
         public static FileShareEnabledProtocol Nfs { get; } = new FileShareEnabledProtocol(NfsValue);
+
         /// <summary> Determines if two <see cref="FileShareEnabledProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileShareEnabledProtocol left, FileShareEnabledProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FileShareEnabledProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileShareEnabledProtocol left, FileShareEnabledProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareEnabledProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FileShareEnabledProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FileShareEnabledProtocol(string value) => new FileShareEnabledProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FileShareEnabledProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FileShareEnabledProtocol?(string value) => value == null ? null : new FileShareEnabledProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FileShareEnabledProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FileShareEnabledProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

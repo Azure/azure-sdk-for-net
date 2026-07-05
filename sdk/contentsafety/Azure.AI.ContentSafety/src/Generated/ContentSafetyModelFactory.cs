@@ -8,166 +8,215 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ContentSafetyModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageOptions"/>. </summary>
+        /// <summary> The image analysis request. </summary>
         /// <param name="image"> The image to be analyzed. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="outputType"> This refers to the type of image analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
         /// <returns> A new <see cref="ContentSafety.AnalyzeImageOptions"/> instance for mocking. </returns>
-        public static AnalyzeImageOptions AnalyzeImageOptions(ContentSafetyImageData image = null, IEnumerable<ImageCategory> categories = null, AnalyzeImageOutputType? outputType = null)
+        public static AnalyzeImageOptions AnalyzeImageOptions(ContentSafetyImageData image = default, IEnumerable<ImageCategory> categories = default, AnalyzeImageOutputType? outputType = default)
         {
-            categories ??= new List<ImageCategory>();
+            categories ??= new ChangeTrackingList<ImageCategory>();
 
-            return new AnalyzeImageOptions(image, categories?.ToList(), outputType, serializedAdditionalRawData: null);
+            return new AnalyzeImageOptions(image, categories.ToList(), outputType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeImageResult"/>. </summary>
+        /// <summary> The image can be either base64 encoded bytes or a blob URL. You can choose only one of these options. If both are provided, the request will be refused. The maximum image size is 2048 x 2048 pixels and should not exceed 4 MB, while the minimum image size is 50 x 50 pixels. </summary>
+        /// <param name="content"> The Base64 encoding of the image. </param>
+        /// <param name="blobUri"> The blob url of the image. </param>
+        /// <returns> A new <see cref="ContentSafety.ContentSafetyImageData"/> instance for mocking. </returns>
+        public static ContentSafetyImageData ContentSafetyImageData(BinaryData content = default, Uri blobUri = default)
+        {
+            return new ContentSafetyImageData(content, blobUri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The image analysis response. </summary>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         /// <returns> A new <see cref="ContentSafety.AnalyzeImageResult"/> instance for mocking. </returns>
-        public static AnalyzeImageResult AnalyzeImageResult(IEnumerable<ImageCategoriesAnalysis> categoriesAnalysis = null)
+        public static AnalyzeImageResult AnalyzeImageResult(IEnumerable<ImageCategoriesAnalysis> categoriesAnalysis = default)
         {
-            categoriesAnalysis ??= new List<ImageCategoriesAnalysis>();
+            categoriesAnalysis ??= new ChangeTrackingList<ImageCategoriesAnalysis>();
 
-            return new AnalyzeImageResult(categoriesAnalysis?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeImageResult(categoriesAnalysis.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.ImageCategoriesAnalysis"/>. </summary>
+        /// <summary> Image analysis result. </summary>
         /// <param name="category"> The image analysis category. </param>
         /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6. </param>
         /// <returns> A new <see cref="ContentSafety.ImageCategoriesAnalysis"/> instance for mocking. </returns>
-        public static ImageCategoriesAnalysis ImageCategoriesAnalysis(ImageCategory category = default, int? severity = null)
+        public static ImageCategoriesAnalysis ImageCategoriesAnalysis(ImageCategory category = default, int? severity = default)
         {
-            return new ImageCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
+            return new ImageCategoriesAnalysis(category, severity, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeTextOptions"/>. </summary>
+        /// <summary> The text analysis request. </summary>
         /// <param name="text"> The text to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>
         /// <param name="blocklistNames"> The names of blocklists. </param>
         /// <param name="haltOnBlocklistHit"> When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit. </param>
         /// <param name="outputType"> This refers to the type of text analysis output. If no value is assigned, the default value will be "FourSeverityLevels". </param>
         /// <returns> A new <see cref="ContentSafety.AnalyzeTextOptions"/> instance for mocking. </returns>
-        public static AnalyzeTextOptions AnalyzeTextOptions(string text = null, IEnumerable<TextCategory> categories = null, IEnumerable<string> blocklistNames = null, bool? haltOnBlocklistHit = null, AnalyzeTextOutputType? outputType = null)
+        public static AnalyzeTextOptions AnalyzeTextOptions(string text = default, IEnumerable<TextCategory> categories = default, IEnumerable<string> blocklistNames = default, bool? haltOnBlocklistHit = default, AnalyzeTextOutputType? outputType = default)
         {
-            categories ??= new List<TextCategory>();
-            blocklistNames ??= new List<string>();
+            categories ??= new ChangeTrackingList<TextCategory>();
+            blocklistNames ??= new ChangeTrackingList<string>();
 
             return new AnalyzeTextOptions(
                 text,
-                categories?.ToList(),
-                blocklistNames?.ToList(),
+                categories.ToList(),
+                blocklistNames.ToList(),
                 haltOnBlocklistHit,
                 outputType,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeTextResult"/>. </summary>
+        /// <summary> The text analysis response. </summary>
         /// <param name="blocklistsMatch"> The blocklist match details. </param>
         /// <param name="categoriesAnalysis"> Analysis result for categories. </param>
         /// <returns> A new <see cref="ContentSafety.AnalyzeTextResult"/> instance for mocking. </returns>
-        public static AnalyzeTextResult AnalyzeTextResult(IEnumerable<TextBlocklistMatch> blocklistsMatch = null, IEnumerable<TextCategoriesAnalysis> categoriesAnalysis = null)
+        public static AnalyzeTextResult AnalyzeTextResult(IEnumerable<TextBlocklistMatch> blocklistsMatch = default, IEnumerable<TextCategoriesAnalysis> categoriesAnalysis = default)
         {
-            blocklistsMatch ??= new List<TextBlocklistMatch>();
-            categoriesAnalysis ??= new List<TextCategoriesAnalysis>();
+            blocklistsMatch ??= new ChangeTrackingList<TextBlocklistMatch>();
+            categoriesAnalysis ??= new ChangeTrackingList<TextCategoriesAnalysis>();
 
-            return new AnalyzeTextResult(blocklistsMatch?.ToList(), categoriesAnalysis?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextResult(blocklistsMatch.ToList(), categoriesAnalysis.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistMatch"/>. </summary>
+        /// <summary> The result of blocklist match. </summary>
         /// <param name="blocklistName"> The name of the matched blocklist. </param>
         /// <param name="blocklistItemId"> The ID of the matched item. </param>
         /// <param name="blocklistItemText"> The content of the matched item. </param>
         /// <returns> A new <see cref="ContentSafety.TextBlocklistMatch"/> instance for mocking. </returns>
-        public static TextBlocklistMatch TextBlocklistMatch(string blocklistName = null, string blocklistItemId = null, string blocklistItemText = null)
+        public static TextBlocklistMatch TextBlocklistMatch(string blocklistName = default, string blocklistItemId = default, string blocklistItemText = default)
         {
-            return new TextBlocklistMatch(blocklistName, blocklistItemId, blocklistItemText, serializedAdditionalRawData: null);
+            return new TextBlocklistMatch(blocklistName, blocklistItemId, blocklistItemText, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextCategoriesAnalysis"/>. </summary>
+        /// <summary> Text analysis result. </summary>
         /// <param name="category"> The text analysis category. </param>
         /// <param name="severity"> The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7. </param>
         /// <returns> A new <see cref="ContentSafety.TextCategoriesAnalysis"/> instance for mocking. </returns>
-        public static TextCategoriesAnalysis TextCategoriesAnalysis(TextCategory category = default, int? severity = null)
+        public static TextCategoriesAnalysis TextCategoriesAnalysis(TextCategory category = default, int? severity = default)
         {
-            return new TextCategoriesAnalysis(category, severity, serializedAdditionalRawData: null);
+            return new TextCategoriesAnalysis(category, severity, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.DetectTextProtectedMaterialResult"/>. </summary>
+        /// <summary> The request of detecting potential protected material present in the given text. </summary>
+        /// <param name="text"> The text to be analyzed, which may contain protected material. The characters will be counted in Unicode code points. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectTextProtectedMaterialOptions"/> instance for mocking. </returns>
+        public static DetectTextProtectedMaterialOptions DetectTextProtectedMaterialOptions(string text = default)
+        {
+            return new DetectTextProtectedMaterialOptions(text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The combined detection results of potential protected material. </summary>
         /// <param name="protectedMaterialAnalysis"> Analysis result for the given text. </param>
         /// <returns> A new <see cref="ContentSafety.DetectTextProtectedMaterialResult"/> instance for mocking. </returns>
-        public static DetectTextProtectedMaterialResult DetectTextProtectedMaterialResult(TextProtectedMaterialAnalysisResult protectedMaterialAnalysis = null)
+        public static DetectTextProtectedMaterialResult DetectTextProtectedMaterialResult(TextProtectedMaterialAnalysisResult protectedMaterialAnalysis = default)
         {
-            return new DetectTextProtectedMaterialResult(protectedMaterialAnalysis, serializedAdditionalRawData: null);
+            return new DetectTextProtectedMaterialResult(protectedMaterialAnalysis, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextProtectedMaterialAnalysisResult"/>. </summary>
+        /// <summary> The individual detection result of potential protected material. </summary>
         /// <param name="detected"> Whether potential protected material is detected or not. </param>
         /// <returns> A new <see cref="ContentSafety.TextProtectedMaterialAnalysisResult"/> instance for mocking. </returns>
         public static TextProtectedMaterialAnalysisResult TextProtectedMaterialAnalysisResult(bool detected = default)
         {
-            return new TextProtectedMaterialAnalysisResult(detected, serializedAdditionalRawData: null);
+            return new TextProtectedMaterialAnalysisResult(detected, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.ShieldPromptResult"/>. </summary>
+        /// <summary> The request of analyzing potential direct or indirect injection attacks. </summary>
+        /// <param name="userPrompt"> The user prompt to be analyzed, which may contain direct injection attacks. </param>
+        /// <param name="documents"> The documents to be analyzed, which may contain direct or indirect injection attacks. </param>
+        /// <returns> A new <see cref="ContentSafety.ShieldPromptOptions"/> instance for mocking. </returns>
+        public static ShieldPromptOptions ShieldPromptOptions(string userPrompt = default, IEnumerable<string> documents = default)
+        {
+            documents ??= new ChangeTrackingList<string>();
+
+            return new ShieldPromptOptions(userPrompt, documents.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The combined analysis results of potential direct or indirect injection attacks. </summary>
         /// <param name="userPromptAnalysis"> Direct injection attacks analysis result for the given user prompt. </param>
         /// <param name="documentsAnalysis"> Direct and indirect injection attacks analysis result for the given documents. </param>
         /// <returns> A new <see cref="ContentSafety.ShieldPromptResult"/> instance for mocking. </returns>
-        public static ShieldPromptResult ShieldPromptResult(UserPromptInjectionAnalysisResult userPromptAnalysis = null, IEnumerable<DocumentInjectionAnalysisResult> documentsAnalysis = null)
+        public static ShieldPromptResult ShieldPromptResult(UserPromptInjectionAnalysisResult userPromptAnalysis = default, IEnumerable<DocumentInjectionAnalysisResult> documentsAnalysis = default)
         {
-            documentsAnalysis ??= new List<DocumentInjectionAnalysisResult>();
+            documentsAnalysis ??= new ChangeTrackingList<DocumentInjectionAnalysisResult>();
 
-            return new ShieldPromptResult(userPromptAnalysis, documentsAnalysis?.ToList(), serializedAdditionalRawData: null);
+            return new ShieldPromptResult(userPromptAnalysis, documentsAnalysis.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.UserPromptInjectionAnalysisResult"/>. </summary>
+        /// <summary> The individual analysis result of potential injection attacks in the given user prompt. </summary>
         /// <param name="attackDetected"> Whether a potential injection attack is detected or not. </param>
         /// <returns> A new <see cref="ContentSafety.UserPromptInjectionAnalysisResult"/> instance for mocking. </returns>
         public static UserPromptInjectionAnalysisResult UserPromptInjectionAnalysisResult(bool attackDetected = default)
         {
-            return new UserPromptInjectionAnalysisResult(attackDetected, serializedAdditionalRawData: null);
+            return new UserPromptInjectionAnalysisResult(attackDetected, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.DocumentInjectionAnalysisResult"/>. </summary>
+        /// <summary> The individual analysis result of potential injection attacks in the given documents. </summary>
         /// <param name="attackDetected"> Whether a potential injection attack is detected or not. </param>
         /// <returns> A new <see cref="ContentSafety.DocumentInjectionAnalysisResult"/> instance for mocking. </returns>
         public static DocumentInjectionAnalysisResult DocumentInjectionAnalysisResult(bool attackDetected = default)
         {
-            return new DocumentInjectionAnalysisResult(attackDetected, serializedAdditionalRawData: null);
+            return new DocumentInjectionAnalysisResult(attackDetected, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklistItem"/>. </summary>
+        /// <summary> The request to add blocklistItems to a text blocklist. </summary>
+        /// <param name="blocklistItems"> Array of blocklistItems to add. </param>
+        /// <returns> A new <see cref="ContentSafety.AddOrUpdateTextBlocklistItemsOptions"/> instance for mocking. </returns>
+        public static AddOrUpdateTextBlocklistItemsOptions AddOrUpdateTextBlocklistItemsOptions(IEnumerable<TextBlocklistItem> blocklistItems = default)
+        {
+            blocklistItems ??= new ChangeTrackingList<TextBlocklistItem>();
+
+            return new AddOrUpdateTextBlocklistItemsOptions(blocklistItems.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Item in a TextBlocklist. </summary>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="description"> BlocklistItem description. </param>
         /// <param name="text"> BlocklistItem content. The length is counted using Unicode code point. </param>
         /// <param name="isRegex"> An optional properties indicating whether this item is to be matched as a regular expression. </param>
         /// <returns> A new <see cref="ContentSafety.TextBlocklistItem"/> instance for mocking. </returns>
-        public static TextBlocklistItem TextBlocklistItem(string blocklistItemId = null, string description = null, string text = null, bool? isRegex = null)
+        public static TextBlocklistItem TextBlocklistItem(string blocklistItemId = default, string description = default, string text = default, bool? isRegex = default)
         {
-            return new TextBlocklistItem(blocklistItemId, description, text, isRegex, serializedAdditionalRawData: null);
+            return new TextBlocklistItem(blocklistItemId, description, text, isRegex, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.AddOrUpdateTextBlocklistItemsResult"/>. </summary>
+        /// <summary> The response of adding blocklistItems to the text blocklist. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems have been added. </param>
         /// <returns> A new <see cref="ContentSafety.AddOrUpdateTextBlocklistItemsResult"/> instance for mocking. </returns>
-        public static AddOrUpdateTextBlocklistItemsResult AddOrUpdateTextBlocklistItemsResult(IEnumerable<TextBlocklistItem> blocklistItems = null)
+        public static AddOrUpdateTextBlocklistItemsResult AddOrUpdateTextBlocklistItemsResult(IEnumerable<TextBlocklistItem> blocklistItems = default)
         {
-            blocklistItems ??= new List<TextBlocklistItem>();
+            blocklistItems ??= new ChangeTrackingList<TextBlocklistItem>();
 
-            return new AddOrUpdateTextBlocklistItemsResult(blocklistItems?.ToList(), serializedAdditionalRawData: null);
+            return new AddOrUpdateTextBlocklistItemsResult(blocklistItems.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentSafety.TextBlocklist"/>. </summary>
+        /// <summary> Text Blocklist. </summary>
         /// <param name="name"> Text blocklist name. </param>
         /// <param name="description"> Text blocklist description. </param>
         /// <returns> A new <see cref="ContentSafety.TextBlocklist"/> instance for mocking. </returns>
-        public static TextBlocklist TextBlocklist(string name = null, string description = null)
+        public static TextBlocklist TextBlocklist(string name = default, string description = default)
         {
-            return new TextBlocklist(name, description, serializedAdditionalRawData: null);
+            return new TextBlocklist(name, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The request to remove blocklistItems from a text blocklist. </summary>
+        /// <param name="blocklistItemIds"> Array of blocklistItemIds to remove. </param>
+        /// <returns> A new <see cref="ContentSafety.RemoveTextBlocklistItemsOptions"/> instance for mocking. </returns>
+        public static RemoveTextBlocklistItemsOptions RemoveTextBlocklistItemsOptions(IEnumerable<string> blocklistItemIds = default)
+        {
+            blocklistItemIds ??= new ChangeTrackingList<string>();
+
+            return new RemoveTextBlocklistItemsOptions(blocklistItemIds.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

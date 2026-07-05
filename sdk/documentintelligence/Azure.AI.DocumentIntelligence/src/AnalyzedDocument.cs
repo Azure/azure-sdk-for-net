@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.DocumentIntelligence
 {

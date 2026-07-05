@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.BotService
 {
+    /// <summary></summary>
     public partial class BotResource : IJsonModel<BotData>
     {
-        private static BotData s_dataDeserializationInstance;
-        private static BotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BotData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BotData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BotData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BotData>)Data).Write(writer, options);
 
-        BotData IJsonModel<BotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BotData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BotData IJsonModel<BotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BotData>(Data, options, AzureResourceManagerBotServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BotData IPersistableModel<BotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BotData>(data, options, AzureResourceManagerBotServiceContext.Default);
 
-        string IPersistableModel<BotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BotData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

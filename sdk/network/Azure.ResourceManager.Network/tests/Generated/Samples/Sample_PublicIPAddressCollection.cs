@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPAddressDNS()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressCreateDns.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressCreateDns.json
             // this example is just showing the usage of "PublicIPAddresses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Samples
                 },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data);
+            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPAddressResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPAddressDNSWithDomainNameLabelScope()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressCreateDnsWithDomainNameLabelScope.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressCreateDnsWithDomainNameLabelScope.json
             // this example is just showing the usage of "PublicIPAddresses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Samples
                 },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data);
+            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPAddressResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPAddressAllocationMethod()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressCreateCustomizedValues.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressCreateCustomizedValues.json
             // this example is just showing the usage of "PublicIPAddresses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,6 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Sku = new PublicIPAddressSku
                 {
-                    Name = PublicIPAddressSkuName.Standard,
                     Tier = PublicIPAddressSkuTier.Global,
                 },
                 PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Network.Samples
                 IdleTimeoutInMinutes = 10,
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data);
+            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPAddressResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPAddressDefaults()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressCreateDefaults.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressCreateDefaults.json
             // this example is just showing the usage of "PublicIPAddresses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data);
+            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPAddressResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePublicIPAddressDefaultsWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressCreateDefaultsStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressCreateDefaultsStandardV2Sku.json
             // this example is just showing the usage of "PublicIPAddresses_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data);
+            ArmOperation<PublicIPAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPAddressName, data, cancellationToken: System.Threading.CancellationToken.None);
             PublicIPAddressResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPublicIPAddress()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressGet.json
             // this example is just showing the usage of "PublicIPAddresses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPublicIPAddressWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressGetStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressGetStandardV2Sku.json
             // this example is just showing the usage of "PublicIPAddresses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListResourceGroupPublicIPAddresses()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressList.json
             // this example is just showing the usage of "PublicIPAddresses_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -329,7 +328,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPublicIPAddress()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressGet.json
             // this example is just showing the usage of "PublicIPAddresses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -358,7 +357,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPublicIPAddressWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressGetStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressGetStandardV2Sku.json
             // this example is just showing the usage of "PublicIPAddresses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -387,7 +386,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPublicIPAddress()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressGet.json
             // this example is just showing the usage of "PublicIPAddresses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -428,7 +427,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPublicIPAddressWithStandardV2Sku()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PublicIpAddressGetStandardV2Sku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PublicIpAddressGetStandardV2Sku.json
             // this example is just showing the usage of "PublicIPAddresses_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

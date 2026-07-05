@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct ProductLengthHeightWidthUnit : IEquatable<ProductLengthHeightWidthUnit>
     {
         private readonly string _value;
+        /// <summary> Inch, applicable for West US. </summary>
+        private const string INValue = "IN";
+        /// <summary> Centimeter. </summary>
+        private const string CMValue = "CM";
 
         /// <summary> Initializes a new instance of <see cref="ProductLengthHeightWidthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProductLengthHeightWidthUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string INValue = "IN";
-        private const string CMValue = "CM";
+            _value = value;
+        }
 
         /// <summary> Inch, applicable for West US. </summary>
         public static ProductLengthHeightWidthUnit IN { get; } = new ProductLengthHeightWidthUnit(INValue);
+
         /// <summary> Centimeter. </summary>
         public static ProductLengthHeightWidthUnit CM { get; } = new ProductLengthHeightWidthUnit(CMValue);
+
         /// <summary> Determines if two <see cref="ProductLengthHeightWidthUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProductLengthHeightWidthUnit left, ProductLengthHeightWidthUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProductLengthHeightWidthUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProductLengthHeightWidthUnit left, ProductLengthHeightWidthUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductLengthHeightWidthUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProductLengthHeightWidthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProductLengthHeightWidthUnit(string value) => new ProductLengthHeightWidthUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProductLengthHeightWidthUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProductLengthHeightWidthUnit?(string value) => value == null ? null : new ProductLengthHeightWidthUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProductLengthHeightWidthUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProductLengthHeightWidthUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

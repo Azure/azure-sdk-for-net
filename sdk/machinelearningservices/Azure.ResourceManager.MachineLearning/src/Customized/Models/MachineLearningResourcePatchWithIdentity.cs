@@ -1,0 +1,23 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.MachineLearning.Models
+{
+    // Customized: restore GA identity model type over the generated patch identity shape.
+    [CodeGenSuppress("Identity")]
+    public partial class MachineLearningResourcePatchWithIdentity
+    {
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public MachineLearningPartialManagedServiceIdentity Identity { get; set; }
+    }
+}

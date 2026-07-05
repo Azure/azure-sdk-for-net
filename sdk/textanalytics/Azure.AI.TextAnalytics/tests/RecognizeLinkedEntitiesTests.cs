@@ -308,7 +308,7 @@ namespace Azure.AI.TextAnalytics.Tests
 
         private void ValidateBatchDocumentsResult(
             RecognizeLinkedEntitiesResultCollection results,
-            Dictionary<string,List<string>> minimumExpectedOutput,
+            Dictionary<string, List<string>> minimumExpectedOutput,
             bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);

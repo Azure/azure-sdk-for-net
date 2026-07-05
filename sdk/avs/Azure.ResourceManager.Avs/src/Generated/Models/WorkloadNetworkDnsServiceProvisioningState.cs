@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct WorkloadNetworkDnsServiceProvisioningState : IEquatable<WorkloadNetworkDnsServiceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> is building. </summary>
+        private const string BuildingValue = "Building";
+        /// <summary> is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> is updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadNetworkDnsServiceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string BuildingValue = "Building";
-        private const string DeletingValue = "Deleting";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Succeeded { get; } = new WorkloadNetworkDnsServiceProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Failed { get; } = new WorkloadNetworkDnsServiceProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Canceled { get; } = new WorkloadNetworkDnsServiceProvisioningState(CanceledValue);
+
         /// <summary> is building. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Building { get; } = new WorkloadNetworkDnsServiceProvisioningState(BuildingValue);
+
         /// <summary> is deleting. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Deleting { get; } = new WorkloadNetworkDnsServiceProvisioningState(DeletingValue);
+
         /// <summary> is updating. </summary>
         public static WorkloadNetworkDnsServiceProvisioningState Updating { get; } = new WorkloadNetworkDnsServiceProvisioningState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsServiceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadNetworkDnsServiceProvisioningState left, WorkloadNetworkDnsServiceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadNetworkDnsServiceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadNetworkDnsServiceProvisioningState left, WorkloadNetworkDnsServiceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadNetworkDnsServiceProvisioningState(string value) => new WorkloadNetworkDnsServiceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadNetworkDnsServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadNetworkDnsServiceProvisioningState?(string value) => value == null ? null : new WorkloadNetworkDnsServiceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadNetworkDnsServiceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadNetworkDnsServiceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

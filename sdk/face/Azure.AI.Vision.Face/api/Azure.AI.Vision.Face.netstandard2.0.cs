@@ -22,9 +22,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.AccessoryType Headwear { get { throw null; } }
         public static Azure.AI.Vision.Face.AccessoryType Mask { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.AccessoryType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.AccessoryType left, Azure.AI.Vision.Face.AccessoryType right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.AccessoryType (string value) { throw null; }
@@ -140,9 +138,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.BlurLevel Low { get { throw null; } }
         public static Azure.AI.Vision.Face.BlurLevel Medium { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.BlurLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.BlurLevel left, Azure.AI.Vision.Face.BlurLevel right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.BlurLevel (string value) { throw null; }
@@ -243,9 +239,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.ExposureLevel OverExposure { get { throw null; } }
         public static Azure.AI.Vision.Face.ExposureLevel UnderExposure { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.ExposureLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.ExposureLevel left, Azure.AI.Vision.Face.ExposureLevel right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.ExposureLevel (string value) { throw null; }
@@ -318,9 +312,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceAttributeType QualityForRecognition { get { throw null; } }
         public static Azure.AI.Vision.Face.FaceAttributeType Smile { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FaceAttributeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FaceAttributeType left, Azure.AI.Vision.Face.FaceAttributeType right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FaceAttributeType (string value) { throw null; }
@@ -402,9 +394,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceDetectionModel Detection02 { get { throw null; } }
         public static Azure.AI.Vision.Face.FaceDetectionModel Detection03 { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FaceDetectionModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FaceDetectionModel left, Azure.AI.Vision.Face.FaceDetectionModel right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FaceDetectionModel (string value) { throw null; }
@@ -485,9 +475,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceImageType Depth { get { throw null; } }
         public static Azure.AI.Vision.Face.FaceImageType Infrared { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FaceImageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FaceImageType left, Azure.AI.Vision.Face.FaceImageType right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FaceImageType (string value) { throw null; }
@@ -541,9 +529,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceLivenessDecision SpoofFace { get { throw null; } }
         public static Azure.AI.Vision.Face.FaceLivenessDecision Uncertain { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FaceLivenessDecision other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FaceLivenessDecision left, Azure.AI.Vision.Face.FaceLivenessDecision right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FaceLivenessDecision (string value) { throw null; }
@@ -561,9 +547,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceOperationStatus Running { get { throw null; } }
         public static Azure.AI.Vision.Face.FaceOperationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FaceOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FaceOperationStatus left, Azure.AI.Vision.Face.FaceOperationStatus right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FaceOperationStatus (string value) { throw null; }
@@ -581,9 +565,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceRecognitionModel Recognition03 { get { throw null; } }
         public static Azure.AI.Vision.Face.FaceRecognitionModel Recognition04 { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FaceRecognitionModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FaceRecognitionModel left, Azure.AI.Vision.Face.FaceRecognitionModel right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FaceRecognitionModel (string value) { throw null; }
@@ -665,9 +647,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FaceSessionStatus ResultAvailable { get { throw null; } }
         public static Azure.AI.Vision.Face.FaceSessionStatus Started { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FaceSessionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FaceSessionStatus left, Azure.AI.Vision.Face.FaceSessionStatus right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FaceSessionStatus (string value) { throw null; }
@@ -723,9 +703,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.FindSimilarMatchMode MatchFace { get { throw null; } }
         public static Azure.AI.Vision.Face.FindSimilarMatchMode MatchPerson { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.FindSimilarMatchMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.FindSimilarMatchMode left, Azure.AI.Vision.Face.FindSimilarMatchMode right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.FindSimilarMatchMode (string value) { throw null; }
@@ -743,9 +721,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.GlassesType Sunglasses { get { throw null; } }
         public static Azure.AI.Vision.Face.GlassesType SwimmingGoggles { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.GlassesType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.GlassesType left, Azure.AI.Vision.Face.GlassesType right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.GlassesType (string value) { throw null; }
@@ -779,9 +755,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.HairColorType UnknownHairColor { get { throw null; } }
         public static Azure.AI.Vision.Face.HairColorType White { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.HairColorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.HairColorType left, Azure.AI.Vision.Face.HairColorType right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.HairColorType (string value) { throw null; }
@@ -1011,9 +985,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.LivenessModel V20221015Preview04 { get { throw null; } }
         public static Azure.AI.Vision.Face.LivenessModel V20231220Preview06 { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.LivenessModel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.LivenessModel left, Azure.AI.Vision.Face.LivenessModel right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.LivenessModel (string value) { throw null; }
@@ -1029,9 +1001,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.LivenessOperationMode Passive { get { throw null; } }
         public static Azure.AI.Vision.Face.LivenessOperationMode PassiveActive { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.LivenessOperationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.LivenessOperationMode left, Azure.AI.Vision.Face.LivenessOperationMode right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.LivenessOperationMode (string value) { throw null; }
@@ -1187,9 +1157,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.MaskType OtherMaskOrOcclusion { get { throw null; } }
         public static Azure.AI.Vision.Face.MaskType Uncertain { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.MaskType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.MaskType left, Azure.AI.Vision.Face.MaskType right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.MaskType (string value) { throw null; }
@@ -1206,9 +1174,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.NoiseLevel Low { get { throw null; } }
         public static Azure.AI.Vision.Face.NoiseLevel Medium { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.NoiseLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.NoiseLevel left, Azure.AI.Vision.Face.NoiseLevel right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.NoiseLevel (string value) { throw null; }
@@ -1250,9 +1216,7 @@ namespace Azure.AI.Vision.Face
         public static Azure.AI.Vision.Face.QualityForRecognition Low { get { throw null; } }
         public static Azure.AI.Vision.Face.QualityForRecognition Medium { get { throw null; } }
         public bool Equals(Azure.AI.Vision.Face.QualityForRecognition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Vision.Face.QualityForRecognition left, Azure.AI.Vision.Face.QualityForRecognition right) { throw null; }
         public static implicit operator Azure.AI.Vision.Face.QualityForRecognition (string value) { throw null; }

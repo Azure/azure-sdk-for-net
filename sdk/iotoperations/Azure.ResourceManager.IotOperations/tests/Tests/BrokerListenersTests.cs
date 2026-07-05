@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 )
                 {
                     ServiceName = "aio-dmqtt-frontend-test",
-                    ServiceType = "LoadBalancer",
+                    ListenerServiceType = "LoadBalancer",
                 },
             };
         }

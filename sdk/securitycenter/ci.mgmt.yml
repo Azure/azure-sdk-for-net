@@ -1,18 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/securitycenter/ci.mgmt.yml
-    - sdk/securitycenter/Azure.ResourceManager.SecurityCenter/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -21,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SecurityCenter
       safeName: AzureResourceManagerSecurityCenter
+    - name: Azure.Provisioning.SecurityCenter
+      safeName: AzureProvisioningSecurityCenter

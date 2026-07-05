@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Astro.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,30 +19,32 @@ namespace Azure.ResourceManager.Astro
     /// <summary> A class to add extension methods to Azure.ResourceManager.Astro. </summary>
     public static partial class AstroExtensions
     {
+        /// <param name="client"></param>
         private static MockableAstroArmClient GetMockableAstroArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableAstroArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableAstroArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableAstroResourceGroupResource GetMockableAstroResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableAstroResourceGroupResource GetMockableAstroResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableAstroResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableAstroResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableAstroSubscriptionResource GetMockableAstroSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableAstroSubscriptionResource GetMockableAstroSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableAstroSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableAstroSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AstroOrganizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AstroOrganizationResource.CreateResourceIdentifier" /> to create an <see cref="AstroOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="AstroOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAstroArmClient.GetAstroOrganizationResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAstroArmClient.GetAstroOrganizationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="AstroOrganizationResource"/> object. </returns>
@@ -52,15 +56,15 @@ namespace Azure.ResourceManager.Astro
         }
 
         /// <summary>
-        /// Gets a collection of AstroOrganizationResources in the ResourceGroupResource.
+        /// Gets a collection of AstroOrganizations in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAstroResourceGroupResource.GetAstroOrganizations()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAstroResourceGroupResource.GetAstroOrganizations()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AstroOrganizationResources and their operations over a AstroOrganizationResource. </returns>
+        /// <returns> An object representing collection of AstroOrganizations and their operations over a AstroOrganizationResource. </returns>
         public static AstroOrganizationCollection GetAstroOrganizations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -70,34 +74,15 @@ namespace Azure.ResourceManager.Astro
 
         /// <summary>
         /// Get a OrganizationResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAstroResourceGroupResource.GetAstroOrganizationAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAstroResourceGroupResource.GetAstroOrganizationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<AstroOrganizationResource>> GetAstroOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
@@ -108,34 +93,15 @@ namespace Azure.ResourceManager.Astro
 
         /// <summary>
         /// Get a OrganizationResource
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Astronomer.Astro/organizations/{organizationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAstroResourceGroupResource.GetAstroOrganization(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAstroResourceGroupResource.GetAstroOrganization(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<AstroOrganizationResource> GetAstroOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
@@ -146,33 +112,15 @@ namespace Azure.ResourceManager.Astro
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Astronomer.Astro/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAstroSubscriptionResource.GetAstroOrganizations(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAstroSubscriptionResource.GetAstroOrganizationsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AstroOrganizationResource> GetAstroOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -182,30 +130,12 @@ namespace Azure.ResourceManager.Astro
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Astronomer.Astro/organizations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Organizations_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AstroOrganizationResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAstroSubscriptionResource.GetAstroOrganizations(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAstroSubscriptionResource.GetAstroOrganizations(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>

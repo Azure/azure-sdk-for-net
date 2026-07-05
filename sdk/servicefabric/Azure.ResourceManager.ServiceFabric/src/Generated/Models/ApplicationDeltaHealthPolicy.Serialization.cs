@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ApplicationDeltaHealthPolicy : IUtf8JsonSerializable, IJsonModel<ApplicationDeltaHealthPolicy>
+    /// <summary> Defines a delta health policy used to evaluate the health of an application or one of its child entities when upgrading the cluster. </summary>
+    public partial class ApplicationDeltaHealthPolicy : IJsonModel<ApplicationDeltaHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationDeltaHealthPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationDeltaHealthPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationDeltaHealthPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationDeltaHealthPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationDeltaHealthPolicy IPersistableModel<ApplicationDeltaHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationDeltaHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationDeltaHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
@@ -50,15 +90,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,93 +107,65 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
         }
 
-        ApplicationDeltaHealthPolicy IJsonModel<ApplicationDeltaHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationDeltaHealthPolicy IJsonModel<ApplicationDeltaHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationDeltaHealthPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationDeltaHealthPolicy(document.RootElement, options);
         }
 
-        internal static ApplicationDeltaHealthPolicy DeserializeApplicationDeltaHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationDeltaHealthPolicy DeserializeApplicationDeltaHealthPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ServiceTypeDeltaHealthPolicy defaultServiceTypeDeltaHealthPolicy = default;
             IDictionary<string, ServiceTypeDeltaHealthPolicy> serviceTypeDeltaHealthPolicies = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultServiceTypeDeltaHealthPolicy"u8))
+                if (prop.NameEquals("defaultServiceTypeDeltaHealthPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultServiceTypeDeltaHealthPolicy = ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property.Value, options);
+                    defaultServiceTypeDeltaHealthPolicy = ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serviceTypeDeltaHealthPolicies"u8))
+                if (prop.NameEquals("serviceTypeDeltaHealthPolicies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ServiceTypeDeltaHealthPolicy> dictionary = new Dictionary<string, ServiceTypeDeltaHealthPolicy>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property0.Value, options));
+                        dictionary.Add(prop0.Name, ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(prop0.Value, options));
                     }
                     serviceTypeDeltaHealthPolicies = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy, serviceTypeDeltaHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>(), serializedAdditionalRawData);
+            return new ApplicationDeltaHealthPolicy(defaultServiceTypeDeltaHealthPolicy, serviceTypeDeltaHealthPolicies ?? new ChangeTrackingDictionary<string, ServiceTypeDeltaHealthPolicy>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ApplicationDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationDeltaHealthPolicy IPersistableModel<ApplicationDeltaHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationDeltaHealthPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationDeltaHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

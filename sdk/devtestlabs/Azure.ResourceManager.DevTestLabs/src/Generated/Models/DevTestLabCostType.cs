@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public readonly partial struct DevTestLabCostType : IEquatable<DevTestLabCostType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabCostType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabCostType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnavailableValue = "Unavailable";
         private const string ReportedValue = "Reported";
         private const string ProjectedValue = "Projected";
 
-        /// <summary> Unavailable. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCostType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabCostType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unavailable. </summary>
         public static DevTestLabCostType Unavailable { get; } = new DevTestLabCostType(UnavailableValue);
-        /// <summary> Reported. </summary>
+
+        /// <summary> Gets the Reported. </summary>
         public static DevTestLabCostType Reported { get; } = new DevTestLabCostType(ReportedValue);
-        /// <summary> Projected. </summary>
+
+        /// <summary> Gets the Projected. </summary>
         public static DevTestLabCostType Projected { get; } = new DevTestLabCostType(ProjectedValue);
+
         /// <summary> Determines if two <see cref="DevTestLabCostType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevTestLabCostType left, DevTestLabCostType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevTestLabCostType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevTestLabCostType left, DevTestLabCostType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabCostType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevTestLabCostType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevTestLabCostType(string value) => new DevTestLabCostType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevTestLabCostType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabCostType?(string value) => value == null ? null : new DevTestLabCostType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevTestLabCostType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevTestLabCostType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

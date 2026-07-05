@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkInterfaceTapConfigurations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceTapConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceTapConfigurationGet.json
             // this example is just showing the usage of "NetworkInterfaceTapConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteTapConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceTapConfigurationDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceTapConfigurationDelete.json
             // this example is just showing the usage of "NetworkInterfaceTapConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceTapConfigurationResource networkInterfaceTapConfiguration = client.GetNetworkInterfaceTapConfigurationResource(networkInterfaceTapConfigurationResourceId);
 
             // invoke the operation
-            await networkInterfaceTapConfiguration.DeleteAsync(WaitUntil.Completed);
+            await networkInterfaceTapConfiguration.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateNetworkInterfaceTapConfigurations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkInterfaceTapConfigurationCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkInterfaceTapConfigurationCreate.json
             // this example is just showing the usage of "NetworkInterfaceTapConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Samples
                     Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testrg/providers/Microsoft.Network/virtualNetworkTaps/testvtap"),
                 },
             };
-            ArmOperation<NetworkInterfaceTapConfigurationResource> lro = await networkInterfaceTapConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkInterfaceTapConfigurationResource> lro = await networkInterfaceTapConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkInterfaceTapConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

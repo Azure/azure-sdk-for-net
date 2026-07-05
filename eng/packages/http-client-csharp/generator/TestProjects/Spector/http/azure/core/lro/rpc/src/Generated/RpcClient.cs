@@ -6,19 +6,25 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Core.Lro.Rpc
+namespace Specs.Azure.Core.Lro.Rpc
 {
     public partial class RpcClient
     {
         public RpcClient() : this(new Uri("http://localhost:3000"), new RpcClientOptions()) => throw null;
 
-        public RpcClient(Uri endpoint, RpcClientOptions options) => throw null;
+        internal RpcClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, RpcClientOptions options) => throw null;
+
+        public RpcClient(Uri endpoint, RpcClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public RpcClient(RpcClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

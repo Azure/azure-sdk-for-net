@@ -27,12 +27,6 @@ namespace Azure.Security.CodeTransparency.Receipt
     public class CcfReceiptVerifier
     {
         /// <summary>
-        /// SHA-256 hash function.
-        /// Reference: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/ section 9.2.2. Hash Algorithms.
-        /// </summary>
-        private static readonly SHA256 s_sha256 = SHA256.Create();
-
-        /// <summary>
         /// Verify a CCF SCITT receipt.
         /// If the verification fails, an exception is thrown explaining in which step the verification failed.
         /// #1 Reference: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
@@ -44,7 +38,8 @@ namespace Azure.Security.CodeTransparency.Receipt
         /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
         public static void VerifyTransparentStatementReceipt(JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes)
         {
-            byte[] claimsDigest = s_sha256.ComputeHash(signedStatementBytes);
+            using SHA256 sha256 = SHA256.Create();
+            byte[] claimsDigest = sha256.ComputeHash(signedStatementBytes);
 
             // Extract the expected KID from the public key used for verification,
             // and check it against the value set in the COSE header before using
@@ -151,21 +146,21 @@ namespace Azure.Security.CodeTransparency.Receipt
                 // Deserialize the ProofPaths into a List of ProofElement
                 List<ProofElement> proofElements = GetProofElements(proofPaths);
 
-                byte[] accumulator = s_sha256.ComputeHash(
+                byte[] accumulator = sha256.ComputeHash(
                     CombineByteArrays(
                         leaf.InternalTransactionHash,
-                        s_sha256.ComputeHash(Encoding.UTF8.GetBytes(leaf.InternalEvidence)),
+                        sha256.ComputeHash(Encoding.UTF8.GetBytes(leaf.InternalEvidence)),
                         leaf.DataHash));
 
                 foreach (ProofElement proofElement in proofElements)
                 {
                     if (proofElement.Left)
                     {
-                        accumulator = s_sha256.ComputeHash(CombineByteArrays(proofElement.Hash, accumulator));
+                        accumulator = sha256.ComputeHash(CombineByteArrays(proofElement.Hash, accumulator));
                     }
                     else
                     {
-                        accumulator = s_sha256.ComputeHash(CombineByteArrays(accumulator, proofElement.Hash));
+                        accumulator = sha256.ComputeHash(CombineByteArrays(accumulator, proofElement.Hash));
                     }
                 }
 

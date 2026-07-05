@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct OrderItemCancellationStatus : IEquatable<OrderItemCancellationStatus>
     {
         private readonly string _value;
+        /// <summary> Order item can be cancelled without fee. </summary>
+        private const string CancellableValue = "Cancellable";
+        /// <summary> Order item can be cancelled with fee. </summary>
+        private const string CancellableWithFeeValue = "CancellableWithFee";
+        /// <summary> Order item not cancellable. </summary>
+        private const string NotCancellableValue = "NotCancellable";
 
         /// <summary> Initializes a new instance of <see cref="OrderItemCancellationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OrderItemCancellationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CancellableValue = "Cancellable";
-        private const string CancellableWithFeeValue = "CancellableWithFee";
-        private const string NotCancellableValue = "NotCancellable";
+            _value = value;
+        }
 
         /// <summary> Order item can be cancelled without fee. </summary>
         public static OrderItemCancellationStatus Cancellable { get; } = new OrderItemCancellationStatus(CancellableValue);
+
         /// <summary> Order item can be cancelled with fee. </summary>
         public static OrderItemCancellationStatus CancellableWithFee { get; } = new OrderItemCancellationStatus(CancellableWithFeeValue);
+
         /// <summary> Order item not cancellable. </summary>
         public static OrderItemCancellationStatus NotCancellable { get; } = new OrderItemCancellationStatus(NotCancellableValue);
+
         /// <summary> Determines if two <see cref="OrderItemCancellationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OrderItemCancellationStatus left, OrderItemCancellationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OrderItemCancellationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OrderItemCancellationStatus left, OrderItemCancellationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OrderItemCancellationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OrderItemCancellationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OrderItemCancellationStatus(string value) => new OrderItemCancellationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OrderItemCancellationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OrderItemCancellationStatus?(string value) => value == null ? null : new OrderItemCancellationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OrderItemCancellationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OrderItemCancellationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

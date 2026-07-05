@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 using NUnit.Framework;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             try
             {
                 ArmOperation<OperationStatusResult> result = await resource.StopAsync(WaitUntil.Completed);
-                Console.WriteLine("Stopped resource with Payload " + await getObjectAsString(result.Value.Status));
+                Console.WriteLine("Stopped resource with Payload " + GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 ArmOperation<OperationStatusResult> result =
                     await resource.StartAsync(WaitUntil.Completed);
                 Console.WriteLine("Starting resource with Payload " +
-                    await getObjectAsString(result.Value.Status));
+                    GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 ArmOperation<OperationStatusResult> result =
                     await applicationServer.StopAsync(WaitUntil.Completed);
                 Console.WriteLine("Stopped application server resource with Payload "
-                    + await getObjectAsString(result.Value.Status));
+                    + GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -77,7 +79,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 ArmOperation<OperationStatusResult> result =
                     await centralServer.StopAsync(WaitUntil.Completed);
                 Console.WriteLine("Stopped central server resource with Payload "
-                    + await getObjectAsString(result.Value.Status));
+                    + GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 ArmOperation<OperationStatusResult> result =
                     await databseServer.StopAsync(WaitUntil.Completed);
                 Console.WriteLine("Stopped database server resource with Payload "
-                    + await getObjectAsString(result.Value.Status));
+                    + GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 ArmOperation<OperationStatusResult> result =
                     await applicationServer.StartAsync(WaitUntil.Completed);
                 Console.WriteLine("Started application server resource with Payload "
-                    + await getObjectAsString(result.Value.Status));
+                    + GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 ArmOperation<OperationStatusResult> result =
                     await centralServer.StartAsync(WaitUntil.Completed);
                 Console.WriteLine("Started central server resource with Payload "
-                    + await getObjectAsString(result.Value.Status));
+                    + GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -133,7 +135,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 ArmOperation<OperationStatusResult> result =
                     await databseServer.StartAsync(WaitUntil.Completed);
                 Console.WriteLine("Started database server resource with Payload "
-                    + await getObjectAsString(result.Value.Status));
+                    + GetObjectAsString(result.Value));
             }
             catch (Exception ex)
             {
@@ -155,8 +157,8 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             SapVirtualInstanceResource result = null;
             // Create SAP VIS
             JsonDocument jsonElement = GetJsonElement(filePath);
-            var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement);
-            sviData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
+            var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement, ModelReaderWriterOptions.Json);
+            sviData.Properties.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
             {
                 Name = Recording.GenerateAssetName(resourceName + "mrg-")
             };
@@ -171,7 +173,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 appRgName,
                 AzureLocation.EastUS2);
 
-            Console.WriteLine("Creating resource with Payload " + await getObjectAsString(sviData));
+            Console.WriteLine("Creating resource with Payload " + GetObjectAsString(sviData));
             try
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances()
@@ -181,21 +183,21 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                         sviData);
 
                 Assert.AreEqual(resourceName, resource.Value.Data.Name);
-                Console.WriteLine("Created resource with Payload " + await getObjectAsString(resource.Value.Data));
+                Console.WriteLine("Created resource with Payload " + GetObjectAsString(resource.Value.Data));
 
                 // Get SAP VIS
                 Response<SapVirtualInstanceResource> vis = await rg.GetSapVirtualInstanceAsync(resourceName);
                 Assert.AreEqual(resourceName, vis.Value.Data.Name);
-                Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(vis.Value.Data));
+                Console.WriteLine("Fetched resource with Payload " + GetObjectAsString(vis.Value.Data));
 
                 //Patch SAP VIS
                 var visPatch = new SapVirtualInstancePatch();
                 visPatch.Tags.Add("Key1", "TestPatchValue");
-                Console.WriteLine("Patching resource with Payload " + await getObjectAsString(visPatch));
+                Console.WriteLine("Patching resource with Payload " + GetObjectAsString(visPatch));
                 ArmOperation<SapVirtualInstanceResource> updresult =
                     await vis.Value.UpdateAsync(WaitUntil.Completed, visPatch);
                 Assert.AreEqual(resourceName, vis.Value.Data.Name);
-                Console.WriteLine("Patched resource with Payload " + await getObjectAsString(vis.Value.Data));
+                Console.WriteLine("Patched resource with Payload " + GetObjectAsString(vis.Value.Data));
                 result = vis.Value;
             }
             catch (Exception ex)
@@ -208,10 +210,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             var softwareConfiguration =
                 SapInstallWithoutOSConfigSoftwareConfiguration.
                 DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(
-                    installJsonElement.RootElement);
+                    installJsonElement.RootElement, ModelReaderWriterOptions.Json);
             deploymentWithOSConfiguration.SoftwareConfiguration = softwareConfiguration;
 
-            Console.WriteLine("Installing resource with Payload " + await getObjectAsString(sviData));
+            Console.WriteLine("Installing resource with Payload " + GetObjectAsString(sviData));
             try
             {
                 ArmOperation<SapVirtualInstanceResource> resource = await rg.GetSapVirtualInstances()
@@ -221,12 +223,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                         sviData);
 
                 Assert.AreEqual(resourceName, resource.Value.Data.Name);
-                Console.WriteLine("Install resource with Payload " + await getObjectAsString(resource.Value.Data));
+                Console.WriteLine("Install resource with Payload " + GetObjectAsString(resource.Value.Data));
 
                 // Get SAP VIS
                 Response<SapVirtualInstanceResource> vis = await rg.GetSapVirtualInstanceAsync(resourceName);
                 Assert.AreEqual(resourceName, vis.Value.Data.Name);
-                Console.WriteLine("Fetched resource with Payload " + await getObjectAsString(vis.Value.Data));
+                Console.WriteLine("Fetched resource with Payload " + GetObjectAsString(vis.Value.Data));
             }
             catch (Exception ex)
             {
@@ -240,7 +242,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             IAsyncEnumerator<SapVirtualInstanceResource> asyncVisEnumerator = visResourceList.GetAsyncEnumerator();
             while (await asyncVisEnumerator.MoveNextAsync())
             {
-                Console.WriteLine("Fetched Resource: " + await getObjectAsString(asyncVisEnumerator.Current.Data));
+                Console.WriteLine("Fetched Resource: " + GetObjectAsString(asyncVisEnumerator.Current.Data));
             }
             Console.WriteLine("Listed all resources");
 
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 while (await asyncAppEnumerator.MoveNextAsync())
                 {
                     Console.WriteLine("Fetched Resource: " +
-                        await getObjectAsString(asyncAppEnumerator.Current.Data));
+                        GetObjectAsString(asyncAppEnumerator.Current.Data));
                 }
                 Console.WriteLine("Listed all resources");
                 //List SAP DbInstances
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 while (await asyncDbEnumerator.MoveNextAsync())
                 {
                     Console.WriteLine("Fetched Resource: " +
-                        await getObjectAsString(asyncDbEnumerator.Current.Data));
+                        GetObjectAsString(asyncDbEnumerator.Current.Data));
                 }
                 Console.WriteLine("Listed all resources");
                 //List SAP Central Instances
@@ -282,7 +284,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
                 while (await asyncCentralEnumerator.MoveNextAsync())
                 {
                     Console.WriteLine("Fetched Resource: " +
-                        await getObjectAsString(asyncCentralEnumerator.Current.Data));
+                        GetObjectAsString(asyncCentralEnumerator.Current.Data));
                 }
                 Console.WriteLine("Listed all resources");
             }

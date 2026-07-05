@@ -7,10 +7,8 @@ namespace Azure.Core.Amqp
         private readonly int _dummyPrimitive;
         public AmqpAddress(string address) { throw null; }
         public bool Equals(Azure.Core.Amqp.AmqpAddress other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public bool Equals(string other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Amqp.AmqpAddress left, Azure.Core.Amqp.AmqpAddress right) { throw null; }
         public static bool operator !=(Azure.Core.Amqp.AmqpAddress left, Azure.Core.Amqp.AmqpAddress right) { throw null; }
@@ -32,7 +30,6 @@ namespace Azure.Core.Amqp
     }
     public partial class AmqpMessageBody
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AmqpMessageBody(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { }
         public Azure.Core.Amqp.AmqpMessageBodyType BodyType { get { throw null; } }
         public static Azure.Core.Amqp.AmqpMessageBody FromData(System.Collections.Generic.IEnumerable<System.ReadOnlyMemory<byte>> data) { throw null; }
@@ -64,10 +61,8 @@ namespace Azure.Core.Amqp
         private readonly int _dummyPrimitive;
         public AmqpMessageId(string messageId) { throw null; }
         public bool Equals(Azure.Core.Amqp.AmqpMessageId other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         public bool Equals(string other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Amqp.AmqpMessageId left, Azure.Core.Amqp.AmqpMessageId right) { throw null; }
         public static bool operator !=(Azure.Core.Amqp.AmqpMessageId left, Azure.Core.Amqp.AmqpMessageId right) { throw null; }

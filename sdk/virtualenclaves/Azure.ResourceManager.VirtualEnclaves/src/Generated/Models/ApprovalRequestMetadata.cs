@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Request Metadata for approvals request. </summary>
     public partial class ApprovalRequestMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApprovalRequestMetadata"/>. </summary>
         /// <param name="resourceAction"> Resource Action of the item being approved or declined. </param>
@@ -60,27 +32,25 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="approvalCallbackRoute"> Route name for the approval callback. </param>
         /// <param name="approvalCallbackPayload"> Payload to be sent upon any action on approval request. </param>
         /// <param name="approvalStatus"> Status of the approval. Uses ApprovalStatus enum. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalRequestMetadata(string resourceAction, string approvalCallbackRoute, string approvalCallbackPayload, VirtualEnclaveApprovalStatus? approvalStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApprovalRequestMetadata(string resourceAction, string approvalCallbackRoute, string approvalCallbackPayload, VirtualEnclaveApprovalStatus? approvalStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceAction = resourceAction;
             ApprovalCallbackRoute = approvalCallbackRoute;
             ApprovalCallbackPayload = approvalCallbackPayload;
             ApprovalStatus = approvalStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApprovalRequestMetadata"/> for deserialization. </summary>
-        internal ApprovalRequestMetadata()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource Action of the item being approved or declined. </summary>
         public string ResourceAction { get; set; }
+
         /// <summary> Route name for the approval callback. </summary>
         public string ApprovalCallbackRoute { get; set; }
+
         /// <summary> Payload to be sent upon any action on approval request. </summary>
         public string ApprovalCallbackPayload { get; set; }
+
         /// <summary> Status of the approval. Uses ApprovalStatus enum. </summary>
         public VirtualEnclaveApprovalStatus? ApprovalStatus { get; set; }
     }

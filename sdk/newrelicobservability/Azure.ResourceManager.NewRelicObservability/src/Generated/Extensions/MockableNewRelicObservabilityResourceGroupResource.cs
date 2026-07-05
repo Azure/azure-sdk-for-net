@@ -8,32 +8,30 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NewRelicObservability;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NewRelicObservability.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableNewRelicObservabilityResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableNewRelicObservabilityResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNewRelicObservabilityResourceGroupResource for mocking. </summary>
         protected MockableNewRelicObservabilityResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNewRelicObservabilityResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNewRelicObservabilityResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNewRelicObservabilityResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of NewRelicMonitorResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NewRelicMonitorResources in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of NewRelicMonitorResources and their operations over a NewRelicMonitorResource. </returns>
         public virtual NewRelicMonitorResourceCollection GetNewRelicMonitorResources()
         {
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// Retrieves the properties and configuration details of a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NewRelicMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NewRelicMonitorResource>> GetNewRelicMonitorResourceAsync(string monitorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
             return await GetNewRelicMonitorResources().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// Retrieves the properties and configuration details of a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Monitors_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NewRelicMonitorResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         [ForwardsClientCalls]
         public virtual Response<NewRelicMonitorResource> GetNewRelicMonitorResource(string monitorName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
             return GetNewRelicMonitorResources().Get(monitorName, cancellationToken);
         }
     }

@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
 
         private StorageDiscoveryWorkspaces StorageDiscoveryWorkspacesRestClient => _storageDiscoveryWorkspacesRestClient ??= new StorageDiscoveryWorkspaces(StorageDiscoveryWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> List StorageDiscoveryWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List StorageDiscoveryWorkspace resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageDiscoveryWorkspaceResource> GetStorageDiscoveryWorkspacesAsync(CancellationToken cancellationToken = default)
@@ -47,10 +63,26 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetBySubscriptionAsyncCollectionResultOfT(StorageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageDiscoveryWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetBySubscriptionAsyncCollectionResultOfT(StorageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageDiscoverySubscriptionResource.GetStorageDiscoveryWorkspaces"), data => new StorageDiscoveryWorkspaceResource(Client, data));
         }
 
-        /// <summary> List StorageDiscoveryWorkspace resources by subscription ID. </summary>
+        /// <summary>
+        /// List StorageDiscoveryWorkspace resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.StorageDiscovery/storageDiscoveryWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageDiscoveryWorkspaces_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageDiscoveryWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageDiscoveryWorkspaceResource> GetStorageDiscoveryWorkspaces(CancellationToken cancellationToken = default)
@@ -59,7 +91,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetBySubscriptionCollectionResultOfT(StorageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new StorageDiscoveryWorkspaceResource(Client, data));
+            return new PageableWrapper<StorageDiscoveryWorkspaceData, StorageDiscoveryWorkspaceResource>(new StorageDiscoveryWorkspacesGetBySubscriptionCollectionResultOfT(StorageDiscoveryWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageDiscoverySubscriptionResource.GetStorageDiscoveryWorkspaces"), data => new StorageDiscoveryWorkspaceResource(Client, data));
         }
     }
 }

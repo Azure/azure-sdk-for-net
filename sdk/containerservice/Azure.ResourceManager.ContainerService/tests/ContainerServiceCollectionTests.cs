@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
         [RecordedTest]
         public async Task Update()
         {
-            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testaksrg", AzureLocation.EastUS);
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testaksrg", AzureLocation.WestUS3);
             var clusterCollection = rg.GetContainerServiceManagedClusters();
             string clusterName = Recording.GenerateAssetName("akscluster");
             // Create

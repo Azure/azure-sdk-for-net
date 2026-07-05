@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> The properties of DbNodeResource. </summary>
     public partial class CloudVmClusterDBNodeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeProperties"/>. </summary>
         /// <param name="dbNodeOcid"> DbNode OCID. </param>
@@ -51,13 +22,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="dbNodeLifecycleState"> The current state of the database node. </param>
         /// <param name="createdOn"> The date and time that the database node was created. </param>
         /// <param name="vnicOcid"> The OCID of the VNIC. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbNodeOcid"/>, <paramref name="dbSystemOcid"/> or <paramref name="vnicOcid"/> is null. </exception>
         internal CloudVmClusterDBNodeProperties(string dbNodeOcid, string dbSystemOcid, DBNodeProvisioningState dbNodeLifecycleState, DateTimeOffset createdOn, string vnicOcid)
         {
-            Argument.AssertNotNull(dbNodeOcid, nameof(dbNodeOcid));
-            Argument.AssertNotNull(dbSystemOcid, nameof(dbSystemOcid));
-            Argument.AssertNotNull(vnicOcid, nameof(vnicOcid));
-
             DBNodeOcid = dbNodeOcid;
             DBSystemOcid = dbSystemOcid;
             DBNodeLifecycleState = dbNodeLifecycleState;
@@ -89,8 +55,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="vnic2Ocid"> The OCID of the second VNIC. </param>
         /// <param name="vnicOcid"> The OCID of the VNIC. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterDBNodeProperties(string dbNodeOcid, string additionalDetails, string backupIPOcid, string backupVnic2Ocid, string backupVnicOcid, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, string dbServerOcid, string dbSystemOcid, string faultDomain, string hostIPOcid, string hostname, DBNodeProvisioningState dbNodeLifecycleState, string lifecycleDetails, DBNodeMaintenanceType? maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset createdOn, DateTimeOffset? timeMaintenanceWindowEnd, DateTimeOffset? timeMaintenanceWindowStart, string vnic2Ocid, string vnicOcid, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudVmClusterDBNodeProperties(string dbNodeOcid, string additionalDetails, string backupIPOcid, string backupVnic2Ocid, string backupVnicOcid, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, string dbServerOcid, string dbSystemOcid, string faultDomain, string hostIPOcid, string hostname, DBNodeProvisioningState dbNodeLifecycleState, string lifecycleDetails, DBNodeMaintenanceType? maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset createdOn, DateTimeOffset? timeMaintenanceWindowEnd, DateTimeOffset? timeMaintenanceWindowStart, string vnic2Ocid, string vnicOcid, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DBNodeOcid = dbNodeOcid;
             AdditionalDetails = additionalDetails;
@@ -115,58 +81,75 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Vnic2Ocid = vnic2Ocid;
             VnicOcid = vnicOcid;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeProperties"/> for deserialization. </summary>
-        internal CloudVmClusterDBNodeProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> DbNode OCID. </summary>
         public string DBNodeOcid { get; }
+
         /// <summary> Additional information about the planned maintenance. </summary>
         public string AdditionalDetails { get; }
+
         /// <summary> The OCID of the backup IP address associated with the database node. </summary>
         public string BackupIPOcid { get; }
+
         /// <summary> The OCID of the second backup VNIC. </summary>
         public string BackupVnic2Ocid { get; }
+
         /// <summary> The OCID of the backup VNIC. </summary>
         public string BackupVnicOcid { get; }
+
         /// <summary> The number of CPU cores enabled on the Db node. </summary>
         public int? CpuCoreCount { get; }
+
         /// <summary> The allocated local node storage in GBs on the Db node. </summary>
         public int? DBNodeStorageSizeInGbs { get; }
+
         /// <summary> The OCID of the Exacc Db server associated with the database node. </summary>
         public string DBServerOcid { get; }
+
         /// <summary> The OCID of the DB system. </summary>
         public string DBSystemOcid { get; }
+
         /// <summary> The name of the Fault Domain the instance is contained in. </summary>
         public string FaultDomain { get; }
+
         /// <summary> The OCID of the host IP address associated with the database node. </summary>
         public string HostIPOcid { get; }
+
         /// <summary> The host name for the database node. </summary>
         public string Hostname { get; }
+
         /// <summary> The current state of the database node. </summary>
         public DBNodeProvisioningState DBNodeLifecycleState { get; }
+
         /// <summary> Lifecycle details of Db Node. </summary>
         public string LifecycleDetails { get; }
+
         /// <summary> The type of database node maintenance. </summary>
         public DBNodeMaintenanceType? MaintenanceType { get; }
+
         /// <summary> The allocated memory in GBs on the Db node. </summary>
         public int? MemorySizeInGbs { get; }
+
         /// <summary> The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. </summary>
         public int? SoftwareStorageSizeInGb { get; }
+
         /// <summary> The date and time that the database node was created. </summary>
         public DateTimeOffset CreatedOn { get; }
+
         /// <summary> End date and time of maintenance window. </summary>
         public DateTimeOffset? TimeMaintenanceWindowEnd { get; }
+
         /// <summary> Start date and time of maintenance window. </summary>
         public DateTimeOffset? TimeMaintenanceWindowStart { get; }
+
         /// <summary> The OCID of the second VNIC. </summary>
         public string Vnic2Ocid { get; }
+
         /// <summary> The OCID of the VNIC. </summary>
         public string VnicOcid { get; }
+
         /// <summary> Azure resource provisioning state. </summary>
         public OracleDatabaseResourceProvisioningState? ProvisioningState { get; }
     }

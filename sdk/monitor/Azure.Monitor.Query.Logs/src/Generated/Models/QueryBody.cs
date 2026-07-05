@@ -18,11 +18,8 @@ namespace Azure.Monitor.Query.Logs.Models
 
         /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
         /// <param name="query"> The query to execute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public QueryBody(string query)
         {
-            Argument.AssertNotNull(query, nameof(query));
-
             Query = query;
             Workspaces = new ChangeTrackingList<string>();
         }

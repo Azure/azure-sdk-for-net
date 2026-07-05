@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountDeploymentProperties : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountDeploymentProperties>
+    /// <summary> Properties of Cognitive Services account deployment. </summary>
+    public partial class CognitiveServicesAccountDeploymentProperties : IJsonModel<CognitiveServicesAccountDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CognitiveServicesAccountDeploymentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCognitiveServicesAccountDeploymentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CognitiveServicesAccountDeploymentProperties IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CognitiveServicesAccountDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CognitiveServicesAccountDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -58,6 +96,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 foreach (var item in Capabilities)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -76,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("rateLimits"u8);
                 writer.WriteStartArray();
-                foreach (var item in RateLimits)
+                foreach (ServiceAccountThrottlingRule item in RateLimits)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -112,15 +155,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("spilloverDeploymentName"u8);
                 writer.WriteStringValue(SpilloverDeploymentName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(ServiceTier))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("serviceTier"u8);
+                writer.WriteStringValue(ServiceTier.Value.ToString());
+            }
+            if (Optional.IsDefined(DeploymentState))
+            {
+                writer.WritePropertyName("deploymentState"u8);
+                writer.WriteStringValue(DeploymentState.Value.ToString());
+            }
+            if (Optional.IsDefined(Routing))
+            {
+                writer.WritePropertyName("routing"u8);
+                writer.WriteObjectValue(Routing, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -129,22 +187,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        CognitiveServicesAccountDeploymentProperties IJsonModel<CognitiveServicesAccountDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CognitiveServicesAccountDeploymentProperties IJsonModel<CognitiveServicesAccountDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CognitiveServicesAccountDeploymentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCognitiveServicesAccountDeploymentProperties(document.RootElement, options);
         }
 
-        internal static CognitiveServicesAccountDeploymentProperties DeserializeCognitiveServicesAccountDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CognitiveServicesAccountDeploymentProperties DeserializeCognitiveServicesAccountDeploymentProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -157,136 +220,173 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ServiceAccountCallRateLimit callRateLimit = default;
             IReadOnlyList<ServiceAccountThrottlingRule> rateLimits = default;
             DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
-            bool? dynamicThrottlingEnabled = default;
+            bool? isDynamicThrottlingEnabled = default;
             int? currentCapacity = default;
             DeploymentCapacitySettings capacitySettings = default;
             string parentDeploymentName = default;
             string spilloverDeploymentName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            CognitiveServicesDeploymentServiceTier? serviceTier = default;
+            CognitiveServicesDeploymentState? deploymentState = default;
+            CognitiveServicesDeploymentRouting routing = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new CognitiveServicesAccountDeploymentProvisioningState(property.Value.GetString());
+                    provisioningState = new CognitiveServicesAccountDeploymentProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("model"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
+                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("scaleSettings"u8))
+                if (prop.NameEquals("scaleSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(property.Value, options);
+                    scaleSettings = CognitiveServicesAccountDeploymentScaleSettings.DeserializeCognitiveServicesAccountDeploymentScaleSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("capabilities"u8))
+                if (prop.NameEquals("capabilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     capabilities = dictionary;
                     continue;
                 }
-                if (property.NameEquals("raiPolicyName"u8))
+                if (prop.NameEquals("raiPolicyName"u8))
                 {
-                    raiPolicyName = property.Value.GetString();
+                    raiPolicyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("callRateLimit"u8))
+                if (prop.NameEquals("callRateLimit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value, options);
+                    callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("rateLimits"u8))
+                if (prop.NameEquals("rateLimits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item, options));
                     }
                     rateLimits = array;
                     continue;
                 }
-                if (property.NameEquals("versionUpgradeOption"u8))
+                if (prop.NameEquals("versionUpgradeOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    versionUpgradeOption = new DeploymentModelVersionUpgradeOption(property.Value.GetString());
+                    versionUpgradeOption = new DeploymentModelVersionUpgradeOption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dynamicThrottlingEnabled"u8))
+                if (prop.NameEquals("dynamicThrottlingEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dynamicThrottlingEnabled = property.Value.GetBoolean();
+                    isDynamicThrottlingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("currentCapacity"u8))
+                if (prop.NameEquals("currentCapacity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    currentCapacity = property.Value.GetInt32();
+                    currentCapacity = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("capacitySettings"u8))
+                if (prop.NameEquals("capacitySettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacitySettings = DeploymentCapacitySettings.DeserializeDeploymentCapacitySettings(property.Value, options);
+                    capacitySettings = DeploymentCapacitySettings.DeserializeDeploymentCapacitySettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("parentDeploymentName"u8))
+                if (prop.NameEquals("parentDeploymentName"u8))
                 {
-                    parentDeploymentName = property.Value.GetString();
+                    parentDeploymentName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("spilloverDeploymentName"u8))
+                if (prop.NameEquals("spilloverDeploymentName"u8))
                 {
-                    spilloverDeploymentName = property.Value.GetString();
+                    spilloverDeploymentName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serviceTier"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        serviceTier = null;
+                        continue;
+                    }
+                    serviceTier = new CognitiveServicesDeploymentServiceTier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("deploymentState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        deploymentState = null;
+                        continue;
+                    }
+                    deploymentState = new CognitiveServicesDeploymentState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("routing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routing = CognitiveServicesDeploymentRouting.DeserializeCognitiveServicesDeploymentRouting(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
@@ -296,310 +396,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 callRateLimit,
                 rateLimits ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(),
                 versionUpgradeOption,
-                dynamicThrottlingEnabled,
+                isDynamicThrottlingEnabled,
                 currentCapacity,
                 capacitySettings,
                 parentDeploymentName,
                 spilloverDeploymentName,
-                serializedAdditionalRawData);
+                serviceTier,
+                deploymentState,
+                routing,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  model: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Model))
-                {
-                    builder.Append("  model: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Model, options, 2, false, "  model: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scaleSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleSettings))
-                {
-                    builder.Append("  scaleSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ScaleSettings, options, 2, false, "  scaleSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  capabilities: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Capabilities))
-                {
-                    if (Capabilities.Any())
-                    {
-                        builder.Append("  capabilities: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Capabilities)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RaiPolicyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  raiPolicyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RaiPolicyName))
-                {
-                    builder.Append("  raiPolicyName: ");
-                    if (RaiPolicyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RaiPolicyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RaiPolicyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallRateLimit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  callRateLimit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CallRateLimit))
-                {
-                    builder.Append("  callRateLimit: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CallRateLimit, options, 2, false, "  callRateLimit: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RateLimits), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rateLimits: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RateLimits))
-                {
-                    if (RateLimits.Any())
-                    {
-                        builder.Append("  rateLimits: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RateLimits)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  rateLimits: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VersionUpgradeOption), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  versionUpgradeOption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VersionUpgradeOption))
-                {
-                    builder.Append("  versionUpgradeOption: ");
-                    builder.AppendLine($"'{VersionUpgradeOption.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDynamicThrottlingEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dynamicThrottlingEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDynamicThrottlingEnabled))
-                {
-                    builder.Append("  dynamicThrottlingEnabled: ");
-                    var boolValue = IsDynamicThrottlingEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentCapacity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  currentCapacity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CurrentCapacity))
-                {
-                    builder.Append("  currentCapacity: ");
-                    builder.AppendLine($"{CurrentCapacity.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapacitySettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  capacitySettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CapacitySettings))
-                {
-                    builder.Append("  capacitySettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CapacitySettings, options, 2, false, "  capacitySettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParentDeploymentName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  parentDeploymentName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ParentDeploymentName))
-                {
-                    builder.Append("  parentDeploymentName: ");
-                    if (ParentDeploymentName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ParentDeploymentName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ParentDeploymentName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpilloverDeploymentName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  spilloverDeploymentName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SpilloverDeploymentName))
-                {
-                    builder.Append("  spilloverDeploymentName: ");
-                    if (SpilloverDeploymentName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SpilloverDeploymentName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SpilloverDeploymentName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CognitiveServicesAccountDeploymentProperties IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCognitiveServicesAccountDeploymentProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CognitiveServicesAccountDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

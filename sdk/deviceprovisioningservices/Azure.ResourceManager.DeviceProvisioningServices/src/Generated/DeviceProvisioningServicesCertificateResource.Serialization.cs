@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    public partial class DeviceProvisioningServicesCertificateResource : IJsonModel<DeviceProvisioningServicesCertificateData>
+    /// <summary></summary>
+    public partial class DeviceProvisioningServicesCertificateResource : ArmResource, IJsonModel<DeviceProvisioningServicesCertificateData>
     {
-        private static DeviceProvisioningServicesCertificateData s_dataDeserializationInstance;
-        private static DeviceProvisioningServicesCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeviceProvisioningServicesCertificateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeviceProvisioningServicesCertificateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeviceProvisioningServicesCertificateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceProvisioningServicesCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesCertificateData>)Data).Write(writer, options);
 
-        DeviceProvisioningServicesCertificateData IJsonModel<DeviceProvisioningServicesCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesCertificateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceProvisioningServicesCertificateData IJsonModel<DeviceProvisioningServicesCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeviceProvisioningServicesCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceProvisioningServicesCertificateData>(Data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeviceProvisioningServicesCertificateData IPersistableModel<DeviceProvisioningServicesCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesCertificateData>(data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        string IPersistableModel<DeviceProvisioningServicesCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServicesCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceProvisioningServicesCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

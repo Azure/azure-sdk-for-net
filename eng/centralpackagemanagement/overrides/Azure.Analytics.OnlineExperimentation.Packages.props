@@ -1,0 +1,9 @@
+<Project>
+  <!--
+    FluentAssertions is approved only for legacy use. Azure SDK test projects should
+    use NUnit assertions.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
+  </ItemGroup>
+</Project>

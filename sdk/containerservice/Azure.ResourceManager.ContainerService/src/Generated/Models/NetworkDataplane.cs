@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct NetworkDataplane : IEquatable<NetworkDataplane>
     {
         private readonly string _value;
+        /// <summary> Use Azure network dataplane. </summary>
+        private const string AzureValue = "azure";
+        /// <summary> Use Cilium network dataplane. See [Azure CNI Powered by Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium) for more information. </summary>
+        private const string CiliumValue = "cilium";
 
         /// <summary> Initializes a new instance of <see cref="NetworkDataplane"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkDataplane(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureValue = "azure";
-        private const string CiliumValue = "cilium";
+            _value = value;
+        }
 
         /// <summary> Use Azure network dataplane. </summary>
         public static NetworkDataplane Azure { get; } = new NetworkDataplane(AzureValue);
+
         /// <summary> Use Cilium network dataplane. See [Azure CNI Powered by Cilium](https://learn.microsoft.com/azure/aks/azure-cni-powered-by-cilium) for more information. </summary>
         public static NetworkDataplane Cilium { get; } = new NetworkDataplane(CiliumValue);
+
         /// <summary> Determines if two <see cref="NetworkDataplane"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkDataplane left, NetworkDataplane right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkDataplane"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkDataplane left, NetworkDataplane right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDataplane"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkDataplane"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkDataplane(string value) => new NetworkDataplane(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkDataplane"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkDataplane?(string value) => value == null ? null : new NetworkDataplane(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkDataplane other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkDataplane other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,11 +6,79 @@ namespace Azure.ResourceManager.NetworkCloud
         public static Azure.ResourceManager.NetworkCloud.AzureResourceManagerNetworkCloudContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    public partial class NetworkCloudAccessBridgeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>, System.Collections.IEnumerable
+    {
+        protected NetworkCloudAccessBridgeCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> Get(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetAll(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetAllAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> GetAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetIfExists(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> GetIfExistsAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class NetworkCloudAccessBridgeData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>
+    {
+        public NetworkCloudAccessBridgeData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkId, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus? DetailedStatus { get { throw null; } }
+        public string DetailedStatusMessage { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint> Endpoints { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public string Ipv4ConnectedPrefix { get { throw null; } set { } }
+        public string Ipv6ConnectedPrefix { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier NetworkId { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol? Protocol { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule> SecurityRules { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkCloudAccessBridgeResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected NetworkCloudAccessBridgeResource() { }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class NetworkCloudAgentPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudAgentPoolCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string agentPoolName, Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string agentPoolName, Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string agentPoolName, Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string agentPoolName, Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string agentPoolName, Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string agentPoolName, Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -44,11 +112,13 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode Mode { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> Taints { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string UpgradeMaxSurge { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings UpgradeSettings { get { throw null; } set { } }
         public string VmSkuName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -64,11 +134,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string agentPoolName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -83,8 +153,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -108,13 +180,16 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudBareMetalMachineData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>
     {
         public NetworkCloudBareMetalMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.ActionState> ActionStates { get { throw null; } }
+        public NetworkCloudBareMetalMachineData(Azure.Core.AzureLocation location, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState> ActionStates { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public string BmcConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials BmcCredentials { get { throw null; } set { } }
+        public string BmcIpv4Address { get { throw null; } }
+        public string BmcIpv6Address { get { throw null; } }
         public string BmcMacAddress { get { throw null; } set { } }
         public string BootMacAddress { get { throw null; } set { } }
-        public Azure.ResourceManager.NetworkCloud.Models.CertificateInfo CaCertificate { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo CACertificate { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? CordonStatus { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? DetailedStatus { get { throw null; } }
@@ -131,6 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public string MachineName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> MachineRoles { get { throw null; } }
         public string MachineSkuId { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus MonitoringConfigurationStatus { get { throw null; } }
         public System.Net.IPAddress OamIPv4Address { get { throw null; } }
         public string OamIPv6Address { get { throw null; } }
         public string OSImage { get { throw null; } }
@@ -144,7 +220,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public string SerialNumber { get { throw null; } set { } }
         public string ServiceTag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> VirtualMachinesAssociatedIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -154,8 +233,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudBareMetalMachineKeySetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudBareMetalMachineKeySetCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bareMetalMachineKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bareMetalMachineKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bareMetalMachineKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bareMetalMachineKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bareMetalMachineKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bareMetalMachineKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string bareMetalMachineKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -175,6 +256,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudBareMetalMachineKeySetData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>
     {
         public NetworkCloudBareMetalMachineKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) { }
+        public NetworkCloudBareMetalMachineKeySetData(Azure.Core.AzureLocation location, string azureGroupId, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AzureGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -189,7 +271,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> UserList { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> UserListStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -205,11 +290,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string bareMetalMachineKeySetName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -224,8 +309,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -244,8 +331,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> PowerOff(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> PowerOffAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Reimage(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> ReimageAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Reimage(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Reimage(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> ReimageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> ReimageAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Replace(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -255,11 +344,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> RunCommand(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> RunCommandAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> RunDataExtracts(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> RunDataExtracts(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> RunDataExtractsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> RunDataExtractsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> RunDataExtractsRestricted(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsRestrictedParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> RunDataExtractsRestrictedAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters bareMetalMachineRunDataExtractsRestrictedParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> RunDataExtractsRestricted(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> RunDataExtractsRestrictedAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> RunReadCommands(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> RunReadCommandsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -273,16 +360,20 @@ namespace Azure.ResourceManager.NetworkCloud
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Uncordon(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> UncordonAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudBmcKeySetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudBmcKeySetCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bmcKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bmcKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string bmcKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bmcKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bmcKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string bmcKeySetName, Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string bmcKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -302,6 +393,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudBmcKeySetData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>
     {
         public NetworkCloudBmcKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) { }
+        public NetworkCloudBmcKeySetData(Azure.Core.AzureLocation location, string azureGroupId, System.DateTimeOffset expireOn, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AzureGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -313,7 +405,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> UserList { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> UserListStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -329,11 +424,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string bmcKeySetName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -348,16 +443,20 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudCloudServicesNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudCloudServicesNetworkCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string cloudServicesNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string cloudServicesNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string cloudServicesNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string cloudServicesNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string cloudServicesNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string cloudServicesNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string cloudServicesNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -392,7 +491,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions StorageOptions { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus StorageStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> VirtualMachinesAssociatedIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -408,11 +510,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -427,16 +529,20 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudClusterCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -456,7 +562,8 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>
     {
         public NetworkCloudClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.Core.ResourceIdentifier networkFabricId) { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.ActionState> ActionStates { get { throw null; } }
+        public NetworkCloudClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.Core.ResourceIdentifier networkFabricId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState> ActionStates { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings AnalyticsOutputSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AnalyticsWorkspaceId { get { throw null; } set { } }
@@ -479,10 +586,14 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation HybridAksExtendedLocation { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType? Kind { get { throw null; } set { } }
+        public System.DateTimeOffset? LastSuccessfulVersionUpdateOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ManagedCredentials { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get { throw null; } set { } }
         public long? ManualActionCount { get { throw null; } }
         public Azure.Core.ResourceIdentifier NetworkFabricId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? RuntimeProtectionEnforcementLevel { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive SecretArchive { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings SecretArchiveSettings { get { throw null; } set { } }
@@ -490,7 +601,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy UpdateStrategy { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? VulnerabilityScanningContainerScan { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> WorkloadResourceIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -500,8 +614,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudClusterManagerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudClusterManagerCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterManagerName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterManagerName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string clusterManagerName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterManagerName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterManagerName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string clusterManagerName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string clusterManagerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -529,11 +645,16 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.ResourceIdentifier FabricControllerId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ManagerExtendedLocation { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier RelayNamespaceId { get { throw null; } }
         public string VmSize { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -549,11 +670,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterManagerName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -568,16 +689,22 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> UpdateRelayPrivateEndpointConnection(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> UpdateRelayPrivateEndpointConnectionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkCloudClusterMetricsConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudClusterMetricsConfigurationCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string metricsConfigurationName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string metricsConfigurationName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string metricsConfigurationName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string metricsConfigurationName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string metricsConfigurationName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string metricsConfigurationName, Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string metricsConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -597,6 +724,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudClusterMetricsConfigurationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>
     {
         public NetworkCloudClusterMetricsConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long collectionInterval) { }
+        public NetworkCloudClusterMetricsConfigurationData(Azure.Core.AzureLocation location, long collectionInterval, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public long CollectionInterval { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -605,7 +733,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -621,11 +752,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string metricsConfigurationName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -640,8 +771,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -656,11 +789,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> ContinueUpdateVersion(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> ContinueUpdateVersionAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -677,8 +810,12 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> GetNetworkCloudClusterMetricsConfiguration(string metricsConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> GetNetworkCloudClusterMetricsConfigurationAsync(string metricsConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationCollection GetNetworkCloudClusterMetricsConfigurations() { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Inspect(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> InspectAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> RotateCredential(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> RotateCredentialAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> ScanRuntime(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> ScanRuntimeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -688,8 +825,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> UpdateVersion(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -697,6 +836,12 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public static partial class NetworkCloudExtensions
     {
+        public static Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource GetNetworkCloudAccessBridgeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeCollection GetNetworkCloudAccessBridges(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridges(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridgesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -742,6 +887,12 @@ namespace Azure.ResourceManager.NetworkCloud
         public static Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersion(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> GetNetworkCloudKubernetesVersionAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource GetNetworkCloudKubernetesVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionCollection GetNetworkCloudKubernetesVersions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -807,8 +958,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudKubernetesClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudKubernetesClusterCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string kubernetesClusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string kubernetesClusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string kubernetesClusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string kubernetesClusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string kubernetesClusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string kubernetesClusterName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -827,6 +980,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudKubernetesClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>
     {
+        public NetworkCloudKubernetesClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudKubernetesClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration) { }
         public System.Collections.Generic.IList<string> AadAdminGroupObjectIds { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration AdministratorConfiguration { get { throw null; } set { } }
@@ -847,7 +1001,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration NetworkConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode> Nodes { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -857,8 +1014,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudKubernetesClusterFeatureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudKubernetesClusterFeatureCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string featureName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string featureName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string featureName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string featureName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string featureName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string featureName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -886,7 +1045,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired? Required { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -902,8 +1064,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesClusterName, string featureName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -917,8 +1081,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -931,11 +1097,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesClusterName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -958,16 +1124,79 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class NetworkCloudKubernetesVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>, System.Collections.IEnumerable
+    {
+        protected NetworkCloudKubernetesVersionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string kubernetesVersionName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string kubernetesVersionName, Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> Get(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetAll(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetAllAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> GetAsync(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetIfExists(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> GetIfExistsAsync(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class NetworkCloudKubernetesVersionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>
+    {
+        public NetworkCloudKubernetesVersionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue> Values { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkCloudKubernetesVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected NetworkCloudKubernetesVersionResource() { }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string kubernetesVersionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetworkCloudL2NetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudL2NetworkCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string l2NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string l2NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string l2NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string l2NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string l2NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string l2NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -986,6 +1215,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudL2NetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>
     {
+        public NetworkCloudL2NetworkData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier l2IsolationDomainId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudL2NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l2IsolationDomainId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
@@ -999,7 +1229,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.Core.ResourceIdentifier L2IsolationDomainId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> VirtualMachinesAssociatedIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1015,8 +1248,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string l2NetworkName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1032,16 +1267,20 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudL3NetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudL3NetworkCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string l3NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string l3NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string l3NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string l3NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string l3NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string l3NetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string l3NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1060,6 +1299,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudL3NetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>
     {
+        public NetworkCloudL3NetworkData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier l3IsolationDomainId, long vlan, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudL3NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l3IsolationDomainId, long vlan) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
@@ -1078,7 +1318,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> VirtualMachinesAssociatedIds { get { throw null; } }
         public long Vlan { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1094,11 +1337,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string l3NetworkName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1113,8 +1356,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -1138,6 +1383,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudRackData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>
     {
         public NetworkCloudRackData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string availabilityZone, string rackLocation, string rackSerialNumber, Azure.Core.ResourceIdentifier rackSkuId) { }
+        public NetworkCloudRackData(Azure.Core.AzureLocation location, string availabilityZone, string rackLocation, string rackSerialNumber, Azure.Core.ResourceIdentifier rackSkuId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AvailabilityZone { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus? DetailedStatus { get { throw null; } }
@@ -1148,7 +1394,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public string RackLocation { get { throw null; } set { } }
         public string RackSerialNumber { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RackSkuId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudRackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudRackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1175,8 +1424,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudRackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -1200,13 +1451,17 @@ namespace Azure.ResourceManager.NetworkCloud
         public NetworkCloudRackSkuData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot> ComputeMachines { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot> ControllerMachines { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType? DeploymentType { get { throw null; } }
         public string Description { get { throw null; } }
         public long? MaxClusterSlots { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.RackSkuType? RackType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot> StorageAppliances { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedRackSkuIds { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1247,19 +1502,22 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudStorageApplianceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>
     {
+        public NetworkCloudStorageApplianceData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudStorageApplianceData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId) { }
         public Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials AdministratorCredentials { get { throw null; } set { } }
-        public Azure.ResourceManager.NetworkCloud.Models.CertificateInfo CaCertificate { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo CACertificate { get { throw null; } }
         public long? Capacity { get { throw null; } }
         public long? CapacityUsed { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf> ExpansionShelves { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Net.IPAddress ManagementIPv4Address { get { throw null; } }
         public string Manufacturer { get { throw null; } }
         public string Model { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus MonitoringConfigurationStatus { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier RackId { get { throw null; } set { } }
         public long RackSlot { get { throw null; } set { } }
@@ -1269,7 +1527,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public string SerialNumber { get { throw null; } set { } }
         public string StorageApplianceSkuId { get { throw null; } set { } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1302,16 +1563,20 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudTrunkedNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudTrunkedNetworkCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string trunkedNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string trunkedNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string trunkedNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string trunkedNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string trunkedNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string trunkedNetworkName, Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string trunkedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1331,6 +1596,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudTrunkedNetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>
     {
         public NetworkCloudTrunkedNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds, System.Collections.Generic.IEnumerable<long> vlans) { }
+        public NetworkCloudTrunkedNetworkData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds, System.Collections.Generic.IEnumerable<long> vlans, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IReadOnlyList<string> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus? DetailedStatus { get { throw null; } }
@@ -1344,7 +1610,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> VirtualMachinesAssociatedIds { get { throw null; } }
         public System.Collections.Generic.IList<long> Vlans { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1360,11 +1629,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string trunkedNetworkName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1379,16 +1648,20 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudVirtualMachineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudVirtualMachineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string virtualMachineName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string virtualMachineName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string virtualMachineName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string virtualMachineName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string virtualMachineName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string virtualMachineName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1408,8 +1681,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudVirtualMachineConsoleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudVirtualMachineConsoleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string consoleName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string consoleName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string consoleName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string consoleName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string consoleName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string consoleName, Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string consoleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1428,6 +1703,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudVirtualMachineConsoleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>
     {
+        public NetworkCloudVirtualMachineConsoleData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled, string keyData, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudVirtualMachineConsoleData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey sshPublicKey) { }
         public Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -1439,7 +1715,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public Azure.Core.ResourceIdentifier PrivateLinkServiceId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? VirtualMachineAccessId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1455,11 +1734,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName, string consoleName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1474,14 +1753,17 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>
     {
         public NetworkCloudVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string adminUsername, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string vmImage) { }
+        public NetworkCloudVirtualMachineData(Azure.Core.AzureLocation location, string adminUsername, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string vmImage, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AdminUsername { get { throw null; } set { } }
         public string AvailabilityZone { get { throw null; } }
         public Azure.Core.ResourceIdentifier BareMetalMachineId { get { throw null; } }
@@ -1512,7 +1794,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public string VmImage { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials VmImageRepositoryCredentials { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> Volumes { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1530,11 +1815,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> AssignRelay(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> AssignRelayAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1560,16 +1845,20 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class NetworkCloudVolumeCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>, System.Collections.IEnumerable
     {
         protected NetworkCloudVolumeCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string volumeName, Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string volumeName, Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string volumeName, Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData data, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string volumeName, Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string volumeName, Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData data, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string volumeName, Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData data, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response<bool> Exists(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1589,7 +1878,9 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudVolumeData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>
     {
         public NetworkCloudVolumeData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long sizeInMiB) { }
-        public long? AllocatedSizeMiB { get { throw null; } }
+        public NetworkCloudVolumeData(Azure.Core.AzureLocation location, long sizeInMiB, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
+        public long? AllocatedInSizeMiB { get { throw null; } }
+        public Azure.Core.ResourceIdentifier AssignedStorageApplianceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AttachedTo { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -1599,7 +1890,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public string SerialNumber { get { throw null; } }
         public long SizeInMiB { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageApplianceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1615,11 +1909,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string volumeName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> Delete(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteAsync(Azure.WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> DeleteWithResponse(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>> DeleteWithResponseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1634,8 +1928,10 @@ namespace Azure.ResourceManager.NetworkCloud
         Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, string ifMatch = null, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -1645,6 +1941,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
     public partial class MockableNetworkCloudArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableNetworkCloudArmClient() { }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource GetNetworkCloudAccessBridgeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1655,6 +1952,7 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource GetNetworkCloudClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureResource GetNetworkCloudKubernetesClusterFeatureResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource GetNetworkCloudKubernetesClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource GetNetworkCloudKubernetesVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource GetNetworkCloudL3NetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource GetNetworkCloudRackResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1668,6 +1966,9 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
     public partial class MockableNetworkCloudResourceGroupResource : Azure.ResourceManager.ArmResource
     {
         protected MockableNetworkCloudResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridge(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource>> GetNetworkCloudAccessBridgeAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName accessBridgeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeCollection GetNetworkCloudAccessBridges() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines() { throw null; }
@@ -1683,6 +1984,9 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersion(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource>> GetNetworkCloudKubernetesVersionAsync(string kubernetesVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionCollection GetNetworkCloudKubernetesVersions() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks() { throw null; }
@@ -1708,46 +2012,42 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
     public partial class MockableNetworkCloudSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableNetworkCloudSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridges(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeResource> GetNetworkCloudAccessBridgesAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachinesClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworksClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagersClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetNetworkCloudClusters(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetNetworkCloudClusters(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetNetworkCloudClustersAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetNetworkCloudClustersAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterCollection GetNetworkCloudClustersClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClustersClient() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersions(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionResource> GetNetworkCloudKubernetesVersionsAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkCollection GetNetworkCloudL2NetworksClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkCollection GetNetworkCloudL3NetworksClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetNetworkCloudRacks(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetNetworkCloudRacks(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetNetworkCloudRacksAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetNetworkCloudRacksAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudRackCollection GetNetworkCloudRacksClient() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource> GetNetworkCloudRackSku(string rackSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource>> GetNetworkCloudRackSkuAsync(string rackSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuCollection GetNetworkCloudRackSkus() { throw null; }
@@ -1755,68 +2055,32 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliancesClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworksClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachinesClient() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetNetworkCloudVolumes(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetNetworkCloudVolumes(System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeCollection GetNetworkCloudVolumesClient() { throw null; }
     }
 }
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ActionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>
-    {
-        internal ActionState() { }
-        public string ActionType { get { throw null; } }
-        public string CorrelationId { get { throw null; } }
-        public string EndTime { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string StartTime { get { throw null; } }
-        public Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus? Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.StepState> StepStates { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.ActionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.ActionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ActionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionStateStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionStateStatus(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus Completed { get { throw null; } }
-        public static Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus InProgress { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus left, Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus left, Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AdministrativeCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>
     {
         public AdministrativeCredentials(string username) { }
+        public AdministrativeCredentials(string password, string username) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1828,7 +2092,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public AdministratorConfiguration() { }
         public string AdminUsername { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> SshPublicKeys { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1844,12 +2111,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric left, Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric left, Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1863,12 +2129,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1886,12 +2151,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1901,7 +2165,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? DrainTimeout { get { throw null; } set { } }
         public string MaxSurge { get { throw null; } set { } }
         public string MaxUnavailable { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1913,7 +2180,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public AnalyticsOutputSettings() { }
         public Azure.Core.ResourceIdentifier AnalyticsWorkspaceId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector AssociatedIdentity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1922,123 +2192,199 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public static partial class ArmNetworkCloudModelFactory
     {
-        public static Azure.ResourceManager.NetworkCloud.Models.ActionState ActionState(string actionType = null, string correlationId = null, string endTime = null, string message = null, string startTime = null, Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus? status = default(Azure.ResourceManager.NetworkCloud.Models.ActionStateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StepState> stepStates = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials AdministrativeCredentials(string password = null, string username = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration AdministratorConfiguration(string adminUsername = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> sshPublicKeys = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings AgentPoolUpgradeSettings(long? drainTimeout = default(long?), string maxSurge = null, string maxUnavailable = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings AnalyticsOutputSettings(Azure.Core.ResourceIdentifier analyticsWorkspaceId = null, Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector associatedIdentity = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration AttachedNetworkConfiguration(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration> l2Networks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration> l3Networks = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration> trunkedNetworks = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade AvailableUpgrade(Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle? availabilityLifecycle = default(Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle?), string version = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification BareMetalMachineCommandSpecification(System.Collections.Generic.IEnumerable<string> arguments = null, string command = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration BareMetalMachineConfiguration(string bmcConnectionString = null, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, string machineDetails = null, string machineName = null, long rackSlot = (long)0, string serialNumber = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent BareMetalMachineCordonContent(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate? evacuate = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus BareMetalMachineMonitoringConfigurationStatus(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel? logLevel = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel? metricsLevel = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent BareMetalMachinePowerOffContent(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown? skipShutdown = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent BareMetalMachineReimageContent(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode? safeguardMode = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent BareMetalMachineReplaceContent(Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, string machineName = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode? safeguardMode = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode?), string serialNumber = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy? storagePolicy = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent BareMetalMachineRunCommandContent(System.Collections.Generic.IEnumerable<string> arguments = null, long limitTimeSeconds = (long)0, string script = null) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.Models.CertificateInfo CertificateInfo(string hash = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent BareMetalMachineRunDataExtractsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> commands = null, long limitTimeSeconds = (long)0) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent BareMetalMachineRunReadCommandsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> commands = null, long limitTimeSeconds = (long)0) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement BgpAdvertisement(Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric? advertiseToFabric = default(Azure.ResourceManager.NetworkCloud.Models.AdvertiseToFabric?), System.Collections.Generic.IEnumerable<string> communities = null, System.Collections.Generic.IEnumerable<string> ipAddressPools = null, System.Collections.Generic.IEnumerable<string> peers = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration BgpServiceLoadBalancerConfiguration(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement> bgpAdvertisements = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer> bgpPeers = null, Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled? fabricPeeringEnabled = default(Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.IPAddressPool> ipAddressPools = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions CloudServicesNetworkStorageOptions(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? mode = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode?), long? sizeMiB = default(long?), Azure.Core.ResourceIdentifier storageApplianceId = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch CloudServicesNetworkStorageOptionsPatch(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? mode = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode?), long? sizeMiB = default(long?), Azure.Core.ResourceIdentifier storageApplianceId = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus CloudServicesNetworkStorageStatus(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? mode = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode?), long? sizeMiB = default(long?), Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus? status = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus?), string statusMessage = null, Azure.Core.ResourceIdentifier volumeId = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion ClusterAvailableUpgradeVersion(Azure.ResourceManager.NetworkCloud.Models.ControlImpact? controlImpact = default(Azure.ResourceManager.NetworkCloud.Models.ControlImpact?), string expectedDuration = null, string impactDescription = null, System.DateTimeOffset? supportExpireOn = default(System.DateTimeOffset?), string targetClusterVersion = null, Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact? workloadImpact = default(Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion ClusterAvailableVersion(string supportExpiryDate = null, string targetClusterVersion = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity ClusterCapacity(long? availableApplianceStorageGB = default(long?), long? availableCoreCount = default(long?), long? availableHostStorageGB = default(long?), long? availableMemoryGB = default(long?), long? totalApplianceStorageGB = default(long?), long? totalCoreCount = default(long?), long? totalHostStorageGB = default(long?), long? totalMemoryGB = default(long?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent ClusterContinueUpdateVersionContent(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode? machineGroupTargetingMode = default(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode?), Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode? safeguardMode = default(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent ClusterDeployContent(System.Collections.Generic.IEnumerable<string> skipValidationsForMachines = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent ClusterRotateCredentialContent(System.Collections.Generic.IEnumerable<string> credentials = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent ClusterScanRuntimeContent(Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity? scanActivity = default(Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive ClusterSecretArchive(Azure.Core.ResourceIdentifier keyVaultId = null, Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled? useKeyVault = default(Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy ClusterUpdateStrategy(long? maxUnavailable = default(long?), Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType strategyType = default(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType), Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType thresholdType = default(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType), long thresholdValue = (long)0, long? waitTimeMinutes = default(long?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent ClusterUpdateVersionContent(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode? safeguardMode = default(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode?), string targetClusterVersion = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride CommandOutputOverride(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector associatedIdentity = null, Azure.ResourceManager.NetworkCloud.Models.CommandOutputType? commandOutputType = default(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType?), System.Uri containerUri = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings CommandOutputSettings(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector associatedIdentity = null, System.Uri containerUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride> overrides = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration ControlPlaneNodeConfiguration(Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, long count = (long)0, string vmSkuName = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration ControlPlaneNodePatchConfiguration(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> administratorSshPublicKeys = null, long? count = default(long?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint EgressEndpoint(string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EndpointDependency> endpoints = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.EndpointDependency EndpointDependency(string domainName = null, long? port = default(long?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.FeatureStatus FeatureStatus(Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus?), string detailedStatusMessage = null, string name = null, string version = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.HardwareInventory HardwareInventory(string additionalHostInformation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface> interfaces = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic> nics = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface HardwareInventoryNetworkInterface(string linkStatus = null, string macAddress = null, string name = null, string networkInterfaceId = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus HardwareValidationStatus(System.DateTimeOffset? lastValidationOn = default(System.DateTimeOffset?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult? result = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials ImageRepositoryCredentials(string password = null, string registryUriString = null, string username = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration InitialAgentPoolConfiguration(Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration agentOptions = null, Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration attachedNetworkConfiguration = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, long count = (long)0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints = null, Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings upgradeSettings = null, string vmSkuName = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.IPAddressPool IPAddressPool(System.Collections.Generic.IEnumerable<string> addresses = null, Azure.ResourceManager.NetworkCloud.Models.BfdEnabled? autoAssign = default(Azure.ResourceManager.NetworkCloud.Models.BfdEnabled?), string name = null, Azure.ResourceManager.NetworkCloud.Models.BfdEnabled? onlyUseHostIPs = default(Azure.ResourceManager.NetworkCloud.Models.BfdEnabled?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.KeySetUser KeySetUser(string azureUserName = null, string description = null, string keyData = null, string userPrincipalName = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus KeySetUserStatus(string azureUserName = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus? status = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus?), string statusMessage = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration KubernetesClusterNetworkConfiguration(Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration attachedNetworkConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration bgpServiceLoadBalancerConfiguration = null, Azure.Core.ResourceIdentifier cloudServicesNetworkId = null, Azure.Core.ResourceIdentifier cniNetworkId = null, System.Net.IPAddress dnsServiceIP = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.IPAddressPool> l2ServiceLoadBalancerIPAddressPools = null, System.Collections.Generic.IEnumerable<string> podCidrs = null, System.Collections.Generic.IEnumerable<string> serviceCidrs = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode KubernetesClusterNode(Azure.Core.ResourceIdentifier agentPoolArmId = null, string availabilityZone = null, Azure.Core.ResourceIdentifier bareMetalMachineArmId = null, long? cpuCores = default(long?), Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus?), string detailedStatusMessage = null, long? diskSizeGB = default(long?), string image = null, string kubernetesVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels = null, long? memorySizeGB = default(long?), Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode? mode = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode?), string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment> networkAttachments = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState? powerState = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState?), Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole? role = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints = null, string vmSkuName = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels, long? memorySizeGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode? mode, string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment> networkAttachments, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState? powerState, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole? role, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints, string vmSkuName) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent KubernetesClusterRestartNodeContent(string nodeName = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel KubernetesLabel(string key = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration L2NetworkAttachmentConfiguration(Azure.Core.ResourceIdentifier networkId = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? pluginType = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration L3NetworkAttachmentConfiguration(Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled? ipamEnabled = default(Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled?), Azure.Core.ResourceIdentifier networkId = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? pluginType = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor LldpNeighbor(string portDescription = null, string portName = null, string systemDescription = null, string systemName = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.MachineDisk MachineDisk(long? capacityGB = default(long?), Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType? connection = default(Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType?), Azure.ResourceManager.NetworkCloud.Models.DiskType? diskType = default(Azure.ResourceManager.NetworkCloud.Models.DiskType?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot MachineSkuSlot(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol? bootstrapProtocol = default(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol?), long? cpuCores = default(long?), long? cpuSockets = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineDisk> disks = null, string generation = null, string hardwareVersion = null, long? memoryCapacityGB = default(long?), string model = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface> networkInterfaces = null, long? totalThreads = default(long?), string vendor = null, long? rackSlot = default(long?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot MachineSkuSlot(long? rackSlot = default(long?), Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol? bootstrapProtocol = default(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol?), long? cpuCores = default(long?), long? cpuSockets = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineDisk> disks = null, string generation = null, string hardwareVersion = null, long? memoryCapacityGB = default(long?), string model = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface> networkInterfaces = null, long? totalThreads = default(long?), string vendor = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string name = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector ManagedServiceIdentitySelector(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType? identityType = default(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType?), Azure.Core.ResourceIdentifier userAssignedIdentityResourceId = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment NetworkAttachment(Azure.Core.ResourceIdentifier attachedNetworkArmId = null, Azure.ResourceManager.NetworkCloud.Models.DefaultGateway? defaultGateway = default(Azure.ResourceManager.NetworkCloud.Models.DefaultGateway?), Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod ipAllocationMethod = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod), string ipv4Address = null, string ipv6Address = null, string macAddress = null, string networkAttachmentName = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment NetworkAttachment(string attachedNetworkId, Azure.ResourceManager.NetworkCloud.Models.DefaultGateway? defaultGateway, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod ipAllocationMethod, string ipv4Address, string ipv6Address, string macAddress, string networkAttachmentName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudAccessBridgeData NetworkCloudAccessBridgeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string ipv4ConnectedPrefix = null, string ipv6ConnectedPrefix = null, Azure.Core.ResourceIdentifier networkId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule> securityRules = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint> endpoints = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol? protocol = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol?), Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint NetworkCloudAccessBridgeEndpoint(string fqdn = null, string ipv4Address = null, string ipv6Address = null, string name = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch NetworkCloudAccessBridgePatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule> accessBridgePatchSecurityRules = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule NetworkCloudAccessBridgeSecurityRule(string description = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection direction = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection), System.Collections.Generic.IEnumerable<string> ipv4Addresses = null, System.Collections.Generic.IEnumerable<string> ipv6Addresses = null, string port = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState NetworkCloudActionState(string actionType = null, string correlationId = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string message = null, string startTime = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus? status = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState> stepStates = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration NetworkCloudAgentConfiguration(long hugepagesCount = (long)0, Azure.ResourceManager.NetworkCloud.Models.HugepagesSize? hugepagesSize = default(Azure.ResourceManager.NetworkCloud.Models.HugepagesSize?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData NetworkCloudAgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration agentOptions = null, Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration attachedNetworkConfiguration = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, long count = (long)0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints = null, Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings upgradeSettings = null, string vmSkuName = null, Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus?), string detailedStatusMessage = null, string kubernetesVersion = null, Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData NetworkCloudAgentPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration agentOptions, Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration attachedNetworkConfiguration, System.Collections.Generic.IEnumerable<string> availabilityZones, long count, Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode, Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints, Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings upgradeSettings, string vmSkuName) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData NetworkCloudAgentPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration agentOptions, Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration attachedNetworkConfiguration, System.Collections.Generic.IEnumerable<string> availabilityZones, long count, Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode, Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints, string upgradeMaxSurge, string vmSkuName) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolData NetworkCloudAgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration agentOptions = null, Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration attachedNetworkConfiguration = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, long count = (long)0, Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.AgentPoolDetailedStatus?), string detailedStatusMessage = null, string kubernetesVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode), Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.AgentPoolProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints = null, Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings upgradeSettings = null, string vmSkuName = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch NetworkCloudAgentPoolPatch(long? count = default(long?), Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings upgradeSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> administratorSshPublicKeys = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? cordonStatus, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.HardwareInventory hardwareInventory, Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus hardwareValidationStatus, System.Collections.Generic.IEnumerable<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, System.Collections.Generic.IEnumerable<string> machineRoles, string machineSkuId, System.Net.IPAddress oamIPv4Address, string oamIPv6Address, string osImage, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState? powerState, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState? provisioningState, Azure.Core.ResourceIdentifier rackId, long rackSlot, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState? readyState, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus runtimeProtectionStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, System.Collections.Generic.IEnumerable<string> virtualMachinesAssociatedIds) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? cordonStatus, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.HardwareInventory hardwareInventory, Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus hardwareValidationStatus, System.Collections.Generic.IEnumerable<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineDetails, string machineName, string machineSkuId, System.Net.IPAddress oamIPv4Address, string oamIPv6Address, string osImage, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState? powerState, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState? provisioningState, Azure.Core.ResourceIdentifier rackId, long rackSlot, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState? readyState, string serialNumber, string serviceTag, System.Collections.Generic.IEnumerable<string> virtualMachinesAssociatedIds) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? cordonStatus, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.HardwareInventory hardwareInventory, Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus hardwareValidationStatus, System.Collections.Generic.IEnumerable<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, string machineDetails, string machineName, System.Collections.Generic.IEnumerable<string> machineRoles, string machineSkuId, System.Net.IPAddress oamIPv4Address, string oamIPv6Address, string osImage, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState? powerState, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState? provisioningState, Azure.Core.ResourceIdentifier rackId, long rackSlot, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState? readyState, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus runtimeProtectionStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus, string serialNumber, string serviceTag, System.Collections.Generic.IEnumerable<string> virtualMachinesAssociatedIds) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ActionState> actionStates = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, string bmcConnectionString = null, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, Azure.ResourceManager.NetworkCloud.Models.CertificateInfo caCertificate = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? cordonStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.HardwareInventory hardwareInventory = null, Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus hardwareValidationStatus = null, System.Collections.Generic.IEnumerable<string> hybridAksClustersAssociatedIds = null, string kubernetesNodeName = null, string kubernetesVersion = null, string machineClusterVersion = null, string machineDetails = null, string machineName = null, System.Collections.Generic.IEnumerable<string> machineRoles = null, string machineSkuId = null, System.Net.IPAddress oamIPv4Address = null, string oamIPv6Address = null, string osImage = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState? powerState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState?), Azure.Core.ResourceIdentifier rackId = null, long rackSlot = (long)0, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState? readyState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState?), Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus runtimeProtectionStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus = null, string serialNumber = null, string serviceTag = null, System.Collections.Generic.IEnumerable<string> virtualMachinesAssociatedIds = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState> actionStates = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, string bmcConnectionString = null, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo caCertificate = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? cordonStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.HardwareInventory hardwareInventory = null, Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus hardwareValidationStatus = null, System.Collections.Generic.IEnumerable<string> hybridAksClustersAssociatedIds = null, string kubernetesNodeName = null, string kubernetesVersion = null, string machineClusterVersion = null, string machineDetails = null, string machineName = null, System.Collections.Generic.IEnumerable<string> machineRoles = null, string machineSkuId = null, System.Net.IPAddress oamIPv4Address = null, string oamIPv6Address = null, string osImage = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState? powerState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState?), Azure.Core.ResourceIdentifier rackId = null, long rackSlot = (long)0, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState? readyState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState?), Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus runtimeProtectionStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus = null, string serialNumber = null, string serviceTag = null, System.Collections.Generic.IEnumerable<string> virtualMachinesAssociatedIds = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string bmcConnectionString = null, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials = null, string bmcMacAddress = null, string bootMacAddress = null, string machineDetails = null, string machineName = null, string machineSkuId = null, Azure.Core.ResourceIdentifier rackId = null, long rackSlot = (long)0, string serialNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState> actionStates = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, string bmcIpv4Address = null, string bmcIpv6Address = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo caCertificate = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? cordonStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.HardwareInventory hardwareInventory = null, Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus hardwareValidationStatus = null, System.Collections.Generic.IEnumerable<string> hybridAksClustersAssociatedIds = null, string kubernetesNodeName = null, string kubernetesVersion = null, string machineClusterVersion = null, System.Collections.Generic.IEnumerable<string> machineRoles = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus = null, System.Net.IPAddress oamIPv4Address = null, string oamIPv6Address = null, string osImage = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState? powerState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState?), Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState? readyState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState?), Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus runtimeProtectionStatus = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus = null, string serviceTag = null, System.Collections.Generic.IEnumerable<string> virtualMachinesAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData NetworkCloudBareMetalMachineKeySetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, System.DateTimeOffset? lastValidatedOn, string osGroupName, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> userListStatus) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData NetworkCloudBareMetalMachineKeySetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, System.DateTimeOffset? lastValidatedOn, string osGroupName, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> userListStatus) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData NetworkCloudBareMetalMachineKeySetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, string azureGroupId = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus?), string detailedStatusMessage = null, System.DateTimeOffset expireOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed = null, System.DateTimeOffset? lastValidatedOn = default(System.DateTimeOffset?), string osGroupName = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel), string privilegeLevelName = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> userListStatus = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData NetworkCloudBareMetalMachineKeySetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string azureGroupId = null, System.DateTimeOffset expireOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed = null, string osGroupName = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel), string privilegeLevelName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus?), string detailedStatusMessage = null, System.DateTimeOffset? lastValidatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> userListStatus = null, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch NetworkCloudBareMetalMachineKeySetPatch(System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch NetworkCloudBareMetalMachinePatch(string machineDetails = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData NetworkCloudBmcKeySetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus? detailedStatus, string detailedStatusMessage, System.DateTimeOffset expireOn, System.DateTimeOffset? lastValidatedOn, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> userListStatus) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData NetworkCloudBmcKeySetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, string azureGroupId = null, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus?), string detailedStatusMessage = null, System.DateTimeOffset expireOn = default(System.DateTimeOffset), System.DateTimeOffset? lastValidatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel = default(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel), Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> userListStatus = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData NetworkCloudBmcKeySetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string azureGroupId = null, System.DateTimeOffset expireOn = default(System.DateTimeOffset), Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel = default(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList = null, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus?), string detailedStatusMessage = null, System.DateTimeOffset? lastValidatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus> userListStatus = null, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch NetworkCloudBmcKeySetPatch(System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo NetworkCloudCertificateInfo(string hash = null, string value = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> additionalEgressEndpoints, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> enabledEgressEndpoints, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> additionalEgressEndpoints = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint?), Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions storageOptions = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> enabledEgressEndpoints = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, string interfaceName = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus storageStatus = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> additionalEgressEndpoints = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> enabledEgressEndpoints = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, string interfaceName = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState?), Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions storageOptions = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus storageStatus = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> additionalEgressEndpoints, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> enabledEgressEndpoints, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch NetworkCloudCloudServicesNetworkPatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> additionalEgressEndpoints = null, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint?), Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch storageOptions = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData NetworkCloudClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.Core.ResourceIdentifier analyticsWorkspaceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion> availableUpgradeVersions, Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity clusterCapacity, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus? clusterConnectionStatus, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation clusterExtendedLocation, string clusterLocation, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus? clusterManagerConnectionStatus, Azure.Core.ResourceIdentifier clusterManagerId, Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation clusterServicePrincipal, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings commandOutputSettings, Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold computeDeploymentThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> computeRackDefinitions, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation hybridAksExtendedLocation, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, Azure.Core.ResourceIdentifier networkFabricId, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? provisioningState, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel, Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive secretArchive, System.DateTimeOffset? supportExpireOn, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy updateStrategy, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workloadResourceIds) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData NetworkCloudClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.Core.ResourceIdentifier analyticsWorkspaceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion> availableUpgradeVersions, Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity clusterCapacity, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus? clusterConnectionStatus, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation clusterExtendedLocation, string clusterLocation, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus? clusterManagerConnectionStatus, Azure.Core.ResourceIdentifier clusterManagerId, Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation clusterServicePrincipal, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold computeDeploymentThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> computeRackDefinitions, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation hybridAksExtendedLocation, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, Azure.Core.ResourceIdentifier networkFabricId, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? provisioningState, System.DateTimeOffset? supportExpireOn, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workloadResourceIds) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData NetworkCloudClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings analyticsOutputSettings = null, Azure.Core.ResourceIdentifier analyticsWorkspaceId = null, string clusterLocation = null, Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation clusterServicePrincipal = null, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType = default(Azure.ResourceManager.NetworkCloud.Models.ClusterType), string clusterVersion = null, Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings commandOutputSettings = null, Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold computeDeploymentThreshold = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> computeRackDefinitions = null, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.Core.ResourceIdentifier networkFabricId = null, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration runtimeProtectionConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive secretArchive = null, Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings secretArchiveSettings = null, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy updateStrategy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState> actionStates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion> availableUpgradeVersions = null, Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity clusterCapacity = null, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus? clusterConnectionStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus?), Azure.ResourceManager.Resources.Models.ExtendedLocation clusterExtendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus?), Azure.Core.ResourceIdentifier clusterManagerId = null, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.Resources.Models.ExtendedLocation hybridAksExtendedLocation = null, System.DateTimeOffset? lastSuccessfulVersionUpdateOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> managedCredentials = null, long? manualActionCount = default(long?), System.DateTimeOffset? supportExpireOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workloadResourceIds = null, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState?), Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default(Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType? kind = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData NetworkCloudClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings analyticsOutputSettings, Azure.Core.ResourceIdentifier analyticsWorkspaceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion> availableUpgradeVersions, Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity clusterCapacity, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus? clusterConnectionStatus, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation clusterExtendedLocation, string clusterLocation, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus? clusterManagerConnectionStatus, Azure.Core.ResourceIdentifier clusterManagerId, Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation clusterServicePrincipal, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings commandOutputSettings, Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold computeDeploymentThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> computeRackDefinitions, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation hybridAksExtendedLocation, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, Azure.Core.ResourceIdentifier networkFabricId, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? provisioningState, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel, Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive secretArchive, Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings secretArchiveSettings, System.DateTimeOffset? supportExpireOn, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy updateStrategy, Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workloadResourceIds) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData NetworkCloudClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ActionState> actionStates = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings analyticsOutputSettings = null, Azure.Core.ResourceIdentifier analyticsWorkspaceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion> availableUpgradeVersions = null, Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity clusterCapacity = null, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus? clusterConnectionStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation clusterExtendedLocation = null, string clusterLocation = null, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus?), Azure.Core.ResourceIdentifier clusterManagerId = null, Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation clusterServicePrincipal = null, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType = default(Azure.ResourceManager.NetworkCloud.Models.ClusterType), string clusterVersion = null, Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings commandOutputSettings = null, Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold computeDeploymentThreshold = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> computeRackDefinitions = null, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation hybridAksExtendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, long? manualActionCount = default(long?), Azure.Core.ResourceIdentifier networkFabricId = null, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState?), Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel?), Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive secretArchive = null, Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings secretArchiveSettings = null, System.DateTimeOffset? supportExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy updateStrategy = null, Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default(Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workloadResourceIds = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData NetworkCloudClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState> actionStates = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings analyticsOutputSettings = null, Azure.Core.ResourceIdentifier analyticsWorkspaceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion> availableUpgradeVersions = null, Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity clusterCapacity = null, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus? clusterConnectionStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation clusterExtendedLocation = null, string clusterLocation = null, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus?), Azure.Core.ResourceIdentifier clusterManagerId = null, Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation clusterServicePrincipal = null, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType = default(Azure.ResourceManager.NetworkCloud.Models.ClusterType), string clusterVersion = null, Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings commandOutputSettings = null, Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold computeDeploymentThreshold = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> computeRackDefinitions = null, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation hybridAksExtendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, long? manualActionCount = default(long?), Azure.Core.ResourceIdentifier networkFabricId = null, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState?), Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel?), Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive secretArchive = null, Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings secretArchiveSettings = null, System.DateTimeOffset? supportExpireOn = default(System.DateTimeOffset?), Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy updateStrategy = null, Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default(Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workloadResourceIds = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent NetworkCloudClusterInspectContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction> additionalActions = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices filterDevices = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData NetworkCloudClusterManagerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier analyticsWorkspaceId, System.Collections.Generic.IEnumerable<string> availabilityZones, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion> clusterVersions, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.Core.ResourceIdentifier fabricControllerId, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation managerExtendedLocation, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState? provisioningState, string vmSize) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData NetworkCloudClusterManagerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier analyticsWorkspaceId = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion> clusterVersions = null, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus?), string detailedStatusMessage = null, Azure.Core.ResourceIdentifier fabricControllerId = null, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.ResourceManager.Resources.Models.ExtendedLocation managerExtendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState?), string vmSize = null, Azure.Core.ResourceIdentifier relayNamespaceId = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType? kind = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData NetworkCloudClusterManagerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.Core.ResourceIdentifier analyticsWorkspaceId, System.Collections.Generic.IEnumerable<string> availabilityZones, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion> clusterVersions, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.Core.ResourceIdentifier fabricControllerId, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation managerExtendedLocation, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState? provisioningState, string vmSize) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerData NetworkCloudClusterManagerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.ResourceIdentifier analyticsWorkspaceId = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion> clusterVersions = null, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus?), string detailedStatusMessage = null, Azure.Core.ResourceIdentifier fabricControllerId = null, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation managerExtendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState?), string vmSize = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch NetworkCloudClusterManagerPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState connectionState = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState), string description = null, Azure.Core.ResourceIdentifier privateEndpointResourceId = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData NetworkCloudClusterMetricsConfigurationData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long collectionInterval, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, System.Collections.Generic.IEnumerable<string> disabledMetrics, System.Collections.Generic.IEnumerable<string> enabledMetrics, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState? provisioningState) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData NetworkCloudClusterMetricsConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> enabledMetrics = null, long collectionInterval = (long)0, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<string> disabledMetrics = null, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData NetworkCloudClusterMetricsConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, long collectionInterval = (long)0, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<string> disabledMetrics = null, System.Collections.Generic.IEnumerable<string> enabledMetrics = null, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch NetworkCloudClusterMetricsConfigurationPatch(long? collectionInterval = default(long?), System.Collections.Generic.IEnumerable<string> enabledMetrics = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch NetworkCloudClusterPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings analyticsOutputSettings = null, string clusterLocation = null, Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation clusterServicePrincipal = null, Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings commandOutputSettings = null, Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold computeDeploymentThreshold = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> computeRackDefinitions = null, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration runtimeProtectionConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive secretArchive = null, Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings secretArchiveSettings = null, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy updateStrategy = null, Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default(Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices NetworkCloudFilterDevices(System.Collections.Generic.IEnumerable<string> bareMetalMachineNames = null, System.Collections.Generic.IEnumerable<string> rackNames = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData NetworkCloudKubernetesClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations = null, string kubernetesVersion = null, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> attachedNetworkIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade> availableUpgrades = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.Core.ResourceIdentifier connectedClusterId = null, string controlPlaneKubernetesVersion = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.FeatureStatus> featureStatuses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode> nodes = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState?), System.Collections.Generic.IEnumerable<string> aadAdminGroupObjectIds = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData NetworkCloudKubernetesClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<string> aadAdminGroupObjectIds, Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> attachedNetworkIds, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade> availableUpgrades, Azure.Core.ResourceIdentifier clusterId, Azure.Core.ResourceIdentifier connectedClusterId, string controlPlaneKubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus? detailedStatus, string detailedStatusMessage, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.FeatureStatus> featureStatuses, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode> nodes, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData NetworkCloudKubernetesClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<string> aadAdminGroupObjectIds = null, Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration administratorConfiguration = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> attachedNetworkIds = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade> availableUpgrades = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.Core.ResourceIdentifier connectedClusterId = null, string controlPlaneKubernetesVersion = null, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.FeatureStatus> featureStatuses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations = null, string kubernetesVersion = null, Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode> nodes = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData NetworkCloudKubernetesClusterFeatureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair> options = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle?), Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired? required = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired?), string version = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData NetworkCloudKubernetesClusterFeatureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle?), Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair> options = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState?), Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired? required = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired?), string version = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterFeatureData NetworkCloudKubernetesClusterFeatureData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair> options, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState? provisioningState, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired? required, string version) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch NetworkCloudKubernetesClusterFeaturePatch(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair> options = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch NetworkCloudKubernetesClusterPatch(Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration = null, string kubernetesVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> administratorSshPublicKeys = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesVersionData NetworkCloudKubernetesVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue> values = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch NetworkCloudKubernetesVersionPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue NetworkCloudKubernetesVersionValue(string description = null, string version = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData NetworkCloudL2NetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType, string interfaceName, Azure.Core.ResourceIdentifier l2IsolationDomainId, Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData NetworkCloudL2NetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType?), string interfaceName = null, Azure.Core.ResourceIdentifier l2IsolationDomainId = null, Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData NetworkCloudL2NetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType?), string interfaceName = null, Azure.Core.ResourceIdentifier l2IsolationDomainId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch NetworkCloudL2NetworkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData NetworkCloudL3NetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds, Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled? hybridAksIpamEnabled, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType, string interfaceName, Azure.ResourceManager.NetworkCloud.Models.IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, Azure.Core.ResourceIdentifier l3IsolationDomainId, Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds, long vlan) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData NetworkCloudL3NetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled? hybridAksIpamEnabled = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled?), Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType?), string interfaceName = null, Azure.ResourceManager.NetworkCloud.Models.IPAllocationType? ipAllocationType = default(Azure.ResourceManager.NetworkCloud.Models.IPAllocationType?), string ipv4ConnectedPrefix = null, string ipv6ConnectedPrefix = null, Azure.Core.ResourceIdentifier l3IsolationDomainId = null, Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null, long vlan = (long)0) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData NetworkCloudL3NetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled? hybridAksIpamEnabled = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled?), Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType?), string interfaceName = null, Azure.ResourceManager.NetworkCloud.Models.IPAllocationType? ipAllocationType = default(Azure.ResourceManager.NetworkCloud.Models.IPAllocationType?), string iPv4ConnectedPrefix = null, string iPv6ConnectedPrefix = null, Azure.Core.ResourceIdentifier l3IsolationDomainId = null, long vlan = (long)0, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch NetworkCloudL3NetworkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface NetworkCloudNetworkInterface(string address = null, Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType? deviceConnectionType = default(Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType?), string model = null, long? physicalSlot = default(long?), long? portCount = default(long?), long? portSpeed = default(long?), string vendor = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic NetworkCloudNic(Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor lldpNeighbor = null, string macAddress = null, string name = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(Azure.Core.ResourceIdentifier id, Azure.Core.ResourceIdentifier resourceId, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> operations, Azure.ResponseError error) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, Azure.Core.ResourceIdentifier id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> operations = null, float? percentComplete = default(float?), Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string status = null, string exitCode = null, string outputHead = null, System.Uri resultRef = null, System.Uri resultUri = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResponseError error = null, Azure.Core.ResourceIdentifier id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult> operations = null, float? percentComplete = default(float?), string exitCode = null, string outputHead = null, System.Uri resultRef = null, System.Uri resultUri = null, Azure.Core.ResourceIdentifier resourceId = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string status = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk NetworkCloudOSDisk(Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption? createOption = default(Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption?), Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption? deleteOption = default(Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption?), long diskSizeInGB = (long)0) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudRackData NetworkCloudRackData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string availabilityZone, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState? provisioningState, string rackLocation, string rackSerialNumber, Azure.Core.ResourceIdentifier rackSkuId) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudRackData NetworkCloudRackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, string availabilityZone = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState?), string rackLocation = null, string rackSerialNumber = null, Azure.Core.ResourceIdentifier rackSkuId = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudRackData NetworkCloudRackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string availabilityZone = null, string rackLocation = null, string rackSerialNumber = null, Azure.Core.ResourceIdentifier rackSkuId = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition NetworkCloudRackDefinition(string availabilityZone = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration> bareMetalMachineConfigurationData = null, Azure.Core.ResourceIdentifier networkRackId = null, string rackLocation = null, string rackSerialNumber = null, Azure.Core.ResourceIdentifier rackSkuId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration> storageApplianceConfigurationData = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch NetworkCloudRackPatch(string rackLocation = null, string rackSerialNumber = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuData NetworkCloudRackSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot> computeMachines = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot> controllerMachines = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType? deploymentType = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType?), string description = null, long? maxClusterSlots = default(long?), Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState?), Azure.ResourceManager.NetworkCloud.Models.RackSkuType? rackType = default(Azure.ResourceManager.NetworkCloud.Models.RackSkuType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot> storageAppliances = null, System.Collections.Generic.IEnumerable<string> supportedRackSkuIds = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuData NetworkCloudRackSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot> computeMachines = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot> controllerMachines = null, string description = null, long? maxClusterSlots = default(long?), Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState?), Azure.ResourceManager.NetworkCloud.Models.RackSkuType? rackType = default(Azure.ResourceManager.NetworkCloud.Models.RackSkuType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot> storageAppliances = null, System.Collections.Generic.IEnumerable<string> supportedRackSkuIds = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey NetworkCloudSshPublicKey(string keyData = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState NetworkCloudStepState(System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string message = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus? status = default(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus?), string stepName = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials = null, Azure.Core.ResourceIdentifier rackId = null, long rackSlot = (long)0, string serialNumber = null, string storageApplianceSkuId = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo caCertificate = null, long? capacity = default(long?), long? capacityUsed = default(long?), Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf> expansionShelves = null, System.Net.IPAddress managementIPv4Address = null, string manufacturer = null, string model = null, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus monitoringConfigurationStatus = null, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature? remoteVendorManagementFeature = default(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature?), Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus? remoteVendorManagementStatus = default(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus = null, string version = null, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, System.Net.IPAddress managementIPv4Address, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? provisioningState, Azure.Core.ResourceIdentifier rackId, long rackSlot, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature? remoteVendorManagementFeature, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus? remoteVendorManagementStatus, string serialNumber, string storageApplianceSkuId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, System.Net.IPAddress managementIPv4Address, string manufacturer, string model, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? provisioningState, Azure.Core.ResourceIdentifier rackId, long rackSlot, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature? remoteVendorManagementFeature, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus? remoteVendorManagementStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials = null, Azure.ResourceManager.NetworkCloud.Models.CertificateInfo caCertificate = null, long? capacity = default(long?), long? capacityUsed = default(long?), Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus?), string detailedStatusMessage = null, System.Net.IPAddress managementIPv4Address = null, string manufacturer = null, string model = null, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState?), Azure.Core.ResourceIdentifier rackId = null, long rackSlot = (long)0, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature? remoteVendorManagementFeature = default(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature?), Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus? remoteVendorManagementStatus = default(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus = null, string serialNumber = null, string storageApplianceSkuId = null, string version = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo caCertificate = null, long? capacity = default(long?), long? capacityUsed = default(long?), Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus?), string detailedStatusMessage = null, System.Net.IPAddress managementIPv4Address = null, string manufacturer = null, string model = null, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState?), Azure.Core.ResourceIdentifier rackId = null, long rackSlot = (long)0, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature? remoteVendorManagementFeature = default(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature?), Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus? remoteVendorManagementStatus = default(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus = null, string serialNumber = null, string storageApplianceSkuId = null, string version = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, System.Net.IPAddress managementIPv4Address, string manufacturer, string model, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? provisioningState, Azure.Core.ResourceIdentifier rackId, long rackSlot, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature? remoteVendorManagementFeature, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus? remoteVendorManagementStatus, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch NetworkCloudStorageAppliancePatch(string serialNumber = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile NetworkCloudStorageProfile(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk osDisk = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> volumeAttachments = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData NetworkCloudTrunkedNetworkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<string> associatedResourceIds, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType, string interfaceName, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds, System.Collections.Generic.IEnumerable<long> vlans) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData NetworkCloudTrunkedNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, System.Collections.Generic.IEnumerable<string> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType?), string interfaceName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds = null, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null, System.Collections.Generic.IEnumerable<long> vlans = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData NetworkCloudTrunkedNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? hybridAksPluginType = default(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType?), string interfaceName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds = null, System.Collections.Generic.IEnumerable<long> vlans = null, System.Collections.Generic.IEnumerable<string> associatedResourceIds = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus?), string detailedStatusMessage = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> hybridAksClustersAssociatedIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> virtualMachinesAssociatedIds = null, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch NetworkCloudTrunkedNetworkPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData NetworkCloudVirtualMachineConsoleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled = default(Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus?), string detailedStatusMessage = null, Azure.Core.ResourceIdentifier privateLinkServiceId = null, System.Guid? virtualMachineAccessId = default(System.Guid?), Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState?), string keyData = null, Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData NetworkCloudVirtualMachineConsoleData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled, System.DateTimeOffset? expireOn, Azure.Core.ResourceIdentifier privateLinkServiceId, Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState? provisioningState, string keyData, System.Guid? virtualMachineAccessId) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData NetworkCloudVirtualMachineConsoleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled = default(Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier privateLinkServiceId = null, Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState?), string keyData = null, System.Guid? virtualMachineAccessId = default(System.Guid?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch NetworkCloudVirtualMachineConsolePatch(Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled? enabled = default(Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string keyData = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, Azure.Core.ResourceIdentifier bareMetalMachineId, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod? bootMethod, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, Azure.Core.ResourceIdentifier clusterId, long cpuCores, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment> networkAttachments, string networkData, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint> placementHints, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState? powerState, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> sshPublicKeys, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string userData, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType? virtioInterface, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials vmImageRepositoryCredentials, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> volumes) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string adminUsername = null, string availabilityZone = null, Azure.Core.ResourceIdentifier bareMetalMachineId = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod? bootMethod = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod?), Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation consoleExtendedLocation = null, long cpuCores = (long)0, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread? isolateEmulatorThread = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread?), long memorySizeInGB = (long)0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment> networkAttachments = null, string networkData = null, string networkDataContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint> placementHints = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState? powerState = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState?), Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> sshPublicKeys = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile = null, string userData = null, string userDataContent = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType? virtioInterface = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType?), Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType? vmDeviceModel = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType?), string vmImage = null, Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials vmImageRepositoryCredentials = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> volumes = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, Azure.Core.ResourceIdentifier bareMetalMachineId, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod? bootMethod, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, Azure.Core.ResourceIdentifier clusterId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation consoleExtendedLocation, long cpuCores, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment> networkAttachments, string networkData, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint> placementHints, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState? powerState, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> sshPublicKeys, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string userData, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType? virtioInterface, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials vmImageRepositoryCredentials, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> volumes) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string adminUsername = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod? bootMethod = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod?), Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment = null, long cpuCores = (long)0, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread? isolateEmulatorThread = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread?), long memorySizeInGB = (long)0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment> networkAttachments = null, string networkData = null, string networkDataContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint> placementHints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> sshPublicKeys = null, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile = null, string userData = null, string userDataContent = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType? virtioInterface = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType?), Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType? vmDeviceModel = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType?), string vmImage = null, Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials vmImageRepositoryCredentials = null, string availabilityZone = null, Azure.Core.ResourceIdentifier bareMetalMachineId = null, Azure.Core.ResourceIdentifier clusterId = null, Azure.ResourceManager.Resources.Models.ExtendedLocation consoleExtendedLocation = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState? powerState = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> volumes = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch NetworkCloudVirtualMachinePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials vmImageRepositoryCredentials = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData NetworkCloudVolumeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<string> attachedTo, Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData NetworkCloudVolumeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), long sizeInMiB = (long)0, Azure.Core.ResourceIdentifier storageApplianceId = null, long? allocatedInSizeMiB = default(long?), Azure.Core.ResourceIdentifier assignedStorageApplianceId = null, System.Collections.Generic.IEnumerable<string> attachedTo = null, Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus?), string detailedStatusMessage = null, string serialNumber = null, Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState?), Azure.ETag? eTag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData NetworkCloudVolumeData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<string> attachedTo, Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData NetworkCloudVolumeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, long? allocatedSizeMiB = default(long?), System.Collections.Generic.IEnumerable<string> attachedTo = null, Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState?), string serialNumber = null, long sizeInMiB = (long)0, Azure.Core.ResourceIdentifier storageApplianceId = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData NetworkCloudVolumeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation = null, long? allocatedInSizeMiB = default(long?), System.Collections.Generic.IEnumerable<string> attachedTo = null, Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? detailedStatus = default(Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus?), string detailedStatusMessage = null, Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState? provisioningState = default(Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState?), string serialNumber = null, long sizeInMiB = (long)0, Azure.Core.ResourceIdentifier storageApplianceId = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch NetworkCloudVolumePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration RuntimeProtectionConfiguration(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode?), Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? enforcementLevel = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus RuntimeProtectionStatus(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus? agentHealthStatus = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus?), System.Collections.Generic.IEnumerable<string> agentHealthStatusIssues = null, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus? agentLicenseStatus = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus?), Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode?), System.DateTimeOffset? definitionsLastUpdated = default(System.DateTimeOffset?), string definitionsVersion = null, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? enforcementLevel = default(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel?), System.DateTimeOffset? scanCompletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scanScheduledOn = default(System.DateTimeOffset?), System.DateTimeOffset? scanStartedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus RuntimeProtectionStatus(System.DateTimeOffset? definitionsLastUpdated = default(System.DateTimeOffset?), string definitionsVersion = null, System.DateTimeOffset? scanCompletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scanScheduledOn = default(System.DateTimeOffset?), System.DateTimeOffset? scanStartedOn = default(System.DateTimeOffset?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference SecretArchiveReference(Azure.Core.ResourceIdentifier keyVaultId, string secretName, string secretVersion) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference SecretArchiveReference(Azure.Core.ResourceIdentifier keyVaultId = null, System.Uri keyVaultUri = null, string secretName = null, string secretVersion = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings SecretArchiveSettings(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector associatedIdentity = null, System.Uri vaultUri = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus SecretRotationStatus(long? expirePeriodDays = default(long?), System.DateTimeOffset? lastRotationOn = default(System.DateTimeOffset?), long? rotationPeriodDays = default(long?), Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference secretArchiveReference = null, string secretType = null) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.Models.StepState StepState(string endTime = null, string message = null, string startTime = null, Azure.ResourceManager.NetworkCloud.Models.StepStateStatus? status = default(Azure.ResourceManager.NetworkCloud.Models.StepStateStatus?), string stepName = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer ServiceLoadBalancerBgpPeer(Azure.ResourceManager.NetworkCloud.Models.BfdEnabled? bfdEnabled = default(Azure.ResourceManager.NetworkCloud.Models.BfdEnabled?), Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop? bgpMultiHop = default(Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop?), string holdTime = null, string keepAliveTime = null, long? myAsn = default(long?), string name = null, string password = null, string peerAddress = null, long peerAsn = (long)0, long? peerPort = default(long?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation ServicePrincipalInformation(string applicationId = null, string password = null, string principalId = null, string tenantId = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification StorageApplianceCommandSpecification(System.Collections.Generic.IEnumerable<string> arguments = null, string command = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration StorageApplianceConfiguration(Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials adminCredentials = null, long rackSlot = (long)0, string serialNumber = null, string storageApplianceName = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent StorageApplianceEnableRemoteVendorManagementContent(System.Collections.Generic.IEnumerable<string> supportEndpoints = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf StorageApplianceExpansionShelf(string model = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus StorageApplianceMonitoringConfigurationStatus(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel? logLevel = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel?), Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel? metricsLevel = default(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent StorageApplianceRunReadCommandsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification> commands = null, long limitTimeSeconds = (long)0) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot StorageApplianceSkuSlot(long? rackSlot = default(long?), long? capacityGB = default(long?), string model = null) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent VirtualMachineAssignRelayContent(Azure.Core.ResourceIdentifier machineId = null, Azure.ResourceManager.NetworkCloud.Models.RelayType? relayType = default(Azure.ResourceManager.NetworkCloud.Models.RelayType?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot StorageApplianceSkuSlot(long? capacityGB = default(long?), string model = null, long? rackSlot = default(long?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair StringKeyValuePair(string key = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration TrunkedNetworkAttachmentConfiguration(Azure.Core.ResourceIdentifier networkId = null, Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? pluginType = default(Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold ValidationThreshold(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping grouping = default(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping), Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType thresholdType = default(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType), long value = (long)0) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent VirtualMachineAssignRelayContent(Azure.Core.ResourceIdentifier machineId = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType? relayType = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint VirtualMachinePlacementHint(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType hintType = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType), Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution schedulingExecution = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution), Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope scope = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent VirtualMachinePowerOffContent(Azure.ResourceManager.NetworkCloud.Models.SkipShutdown? skipShutdown = default(Azure.ResourceManager.NetworkCloud.Models.SkipShutdown?)) { throw null; }
     }
     public partial class AttachedNetworkConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration>
     {
@@ -2046,7 +2392,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration> L2Networks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration> L3Networks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration> TrunkedNetworks { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2062,12 +2411,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle GenerallyAvailable { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle Preview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle left, Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle left, Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2076,7 +2424,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         internal AvailableUpgrade() { }
         public Azure.ResourceManager.NetworkCloud.Models.AvailabilityLifecycle? AvailabilityLifecycle { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AvailableUpgrade>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2088,7 +2439,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public BareMetalMachineCommandSpecification(string command) { }
         public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public string Command { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2106,7 +2460,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string MachineName { get { throw null; } set { } }
         public long RackSlot { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2117,7 +2474,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public BareMetalMachineCordonContent() { }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate? Evacuate { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2133,12 +2493,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus Cordoned { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus Uncordoned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCordonStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2155,12 +2514,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus Provisioned { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2173,12 +2531,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineEvacuate right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2191,12 +2548,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult Fail { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult Pass { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2211,12 +2567,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus SomeInvalid { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus Validating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2230,12 +2585,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel Standard { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel Superuser { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2251,12 +2605,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2269,20 +2622,71 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus Active { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus Invalid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BareMetalMachineMetricsConfigurationStatusLogLevel : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BareMetalMachineMetricsConfigurationStatusLogLevel(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel Default { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel Nexus { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BareMetalMachineMetricsConfigurationStatusMetricsLevel : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BareMetalMachineMetricsConfigurationStatusMetricsLevel(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel Default { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel Nexus { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BareMetalMachineMonitoringConfigurationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus>
+    {
+        internal BareMetalMachineMonitoringConfigurationStatus() { }
+        public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusLogLevel? LogLevel { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMetricsConfigurationStatusMetricsLevel? MetricsLevel { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineMonitoringConfigurationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BareMetalMachinePowerOffContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent>
     {
         public BareMetalMachinePowerOffContent() { }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown? SkipShutdown { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerOffContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2298,12 +2702,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState Off { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState On { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachinePowerState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2319,12 +2722,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2337,13 +2739,43 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReadyState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class BareMetalMachineReimageContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent>
+    {
+        public BareMetalMachineReimageContent() { }
+        public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode? SafeguardMode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BareMetalMachineReimageSafeguardMode : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BareMetalMachineReimageSafeguardMode(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode All { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReimageSafeguardMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class BareMetalMachineReplaceContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent>
@@ -2356,7 +2788,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode? SafeguardMode { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy? StoragePolicy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2372,12 +2807,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode All { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceSafeguardMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2390,12 +2824,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy DiscardAll { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy Preserve { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineReplaceStoragePolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2405,7 +2838,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public long LimitTimeSeconds { get { throw null; } }
         public string Script { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunCommandContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2417,31 +2853,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public BareMetalMachineRunDataExtractsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> commands, long limitTimeSeconds) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> Commands { get { throw null; } }
         public long LimitTimeSeconds { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BareMetalMachineRunDataExtractsParameters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>
-    {
-        public BareMetalMachineRunDataExtractsParameters(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> commands, long limitTimeSeconds) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> Commands { get { throw null; } }
-        public long LimitTimeSeconds { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunDataExtractsParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class BareMetalMachineRunReadCommandsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent>
     {
         public BareMetalMachineRunReadCommandsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> commands, long limitTimeSeconds) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineCommandSpecification> Commands { get { throw null; } }
         public long LimitTimeSeconds { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineRunReadCommandsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2457,12 +2887,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown left, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineSkipShutdown right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2475,12 +2904,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BfdEnabled False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BfdEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BfdEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BfdEnabled left, Azure.ResourceManager.NetworkCloud.Models.BfdEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BfdEnabled (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BfdEnabled? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BfdEnabled left, Azure.ResourceManager.NetworkCloud.Models.BfdEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2491,7 +2919,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<string> Communities { get { throw null; } }
         public System.Collections.Generic.IList<string> IPAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<string> Peers { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BgpAdvertisement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2507,12 +2938,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop left, Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop left, Azure.ResourceManager.NetworkCloud.Models.BgpMultiHop right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2523,7 +2953,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer> BgpPeers { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled? FabricPeeringEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.IPAddressPool> IPAddressPools { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.BgpServiceLoadBalancerConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2541,12 +2974,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus SomeInvalid { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus Validating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2559,12 +2991,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel Administrator { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel ReadOnly { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel left, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel left, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2580,12 +3011,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2597,26 +3027,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public BootstrapProtocol(string value) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol Pxe { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol left, Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol left, Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class CertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>
-    {
-        internal CertificateInfo() { }
-        public string Hash { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.CertificateInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.CertificateInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CertificateInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CloudServicesNetworkDetailedStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus>
@@ -2628,12 +3045,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2646,12 +3062,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2667,12 +3082,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2685,12 +3099,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode None { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode Standard { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2700,7 +3113,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? Mode { get { throw null; } set { } }
         public long? SizeMiB { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageApplianceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2713,7 +3129,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageMode? Mode { get { throw null; } set { } }
         public long? SizeMiB { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageApplianceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2728,7 +3147,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus? Status { get { throw null; } }
         public string StatusMessage { get { throw null; } }
         public Azure.Core.ResourceIdentifier VolumeId { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2744,13 +3166,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus Available { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus ExpandingVolume { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus ExpansionFailed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus Initializing { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus None { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus Repairing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus left, Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageStatusStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2763,7 +3187,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.DateTimeOffset? SupportExpireOn { get { throw null; } }
         public string TargetClusterVersion { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact? WorkloadImpact { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2775,7 +3202,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         internal ClusterAvailableVersion() { }
         public string SupportExpiryDate { get { throw null; } }
         public string TargetClusterVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2793,7 +3223,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? TotalCoreCount { get { throw null; } }
         public long? TotalHostStorageGB { get { throw null; } }
         public long? TotalMemoryGB { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2811,12 +3244,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus Timeout { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus Undefined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2824,7 +3256,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public ClusterContinueUpdateVersionContent() { }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode? MachineGroupTargetingMode { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode? SafeguardMode { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2839,20 +3275,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ClusterContinueUpdateVersionMachineGroupTargetingMode(string value) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode AlphaByRack { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode left, Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode left, Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionMachineGroupTargetingMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterContinueUpdateVersionSafeguardMode : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterContinueUpdateVersionSafeguardMode(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode All { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.ClusterContinueUpdateVersionSafeguardMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ClusterDeployContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent>
     {
         public ClusterDeployContent() { }
         public System.Collections.Generic.IList<string> SkipValidationsForMachines { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterDeployContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2875,13 +3330,28 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus UpdatePaused { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterDetailedStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterInspectAdditionalAction : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterInspectAdditionalAction(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction ResetHardware { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction left, Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction left, Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2893,12 +3363,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus Connected { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus Unreachable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2915,12 +3384,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus UpdateFailed { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2937,12 +3405,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ClusterManagerProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2956,12 +3423,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus Processing { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2977,12 +3443,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -2999,20 +3464,36 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState Updating { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState Validating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ClusterProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ClusterRotateCredentialContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent>
+    {
+        public ClusterRotateCredentialContent(System.Collections.Generic.IEnumerable<string> credentials) { }
+        public System.Collections.Generic.IList<string> Credentials { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterRotateCredentialContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ClusterScanRuntimeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>
     {
         public ClusterScanRuntimeContent() { }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity? ScanActivity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3028,12 +3509,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity Scan { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity Skip { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity left, Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity left, Azure.ResourceManager.NetworkCloud.Models.ClusterScanRuntimeParametersScanActivity right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3042,7 +3522,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ClusterSecretArchive(Azure.Core.ResourceIdentifier keyVaultId) { }
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled? UseKeyVault { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3058,12 +3541,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled left, Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled left, Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchiveEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3076,12 +3558,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterType MultiRack { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterType SingleRack { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterType left, Azure.ResourceManager.NetworkCloud.Models.ClusterType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterType left, Azure.ResourceManager.NetworkCloud.Models.ClusterType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3093,7 +3574,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType ThresholdType { get { throw null; } set { } }
         public long ThresholdValue { get { throw null; } set { } }
         public long? WaitTimeMinutes { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3109,25 +3593,45 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType PauseAfterRack { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType Rack { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType left, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType left, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategyType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ClusterUpdateVersionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>
     {
         public ClusterUpdateVersionContent(string targetClusterVersion) { }
+        public Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode? SafeguardMode { get { throw null; } set { } }
         public string TargetClusterVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterUpdateVersionSafeguardMode : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterUpdateVersionSafeguardMode(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode All { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode left, Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateVersionSafeguardMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CommandOutputOverride : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>
     {
@@ -3135,7 +3639,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector AssociatedIdentity { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.CommandOutputType? CommandOutputType { get { throw null; } set { } }
         public System.Uri ContainerUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3148,7 +3655,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector AssociatedIdentity { get { throw null; } set { } }
         public System.Uri ContainerUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.CommandOutputOverride> Overrides { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3163,15 +3673,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public CommandOutputType(string value) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunCommand { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunDataExtracts { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunDataExtractsRestricted { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType BareMetalMachineRunReadCommands { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType ClusterSupportAdministrativeActions { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.CommandOutputType StorageRunReadCommands { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType left, Azure.ResourceManager.NetworkCloud.Models.CommandOutputType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CommandOutputType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.CommandOutputType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.CommandOutputType left, Azure.ResourceManager.NetworkCloud.Models.CommandOutputType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3184,12 +3695,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus Ready { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3202,12 +3712,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled left, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled left, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3223,12 +3732,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.ConsoleProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3241,12 +3749,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ControlImpact False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ControlImpact True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ControlImpact other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ControlImpact left, Azure.ResourceManager.NetworkCloud.Models.ControlImpact right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ControlImpact (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ControlImpact? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ControlImpact left, Azure.ResourceManager.NetworkCloud.Models.ControlImpact right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3257,7 +3764,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public long Count { get { throw null; } set { } }
         public string VmSkuName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3269,7 +3779,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ControlPlaneNodePatchConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> AdministratorSshPublicKeys { get { throw null; } }
         public long? Count { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3285,12 +3798,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.DefaultGateway False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.DefaultGateway True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.DefaultGateway other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.DefaultGateway left, Azure.ResourceManager.NetworkCloud.Models.DefaultGateway right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.DefaultGateway (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.DefaultGateway? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.DefaultGateway left, Azure.ResourceManager.NetworkCloud.Models.DefaultGateway right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3302,12 +3814,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public DeviceConnectionType(string value) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType PCI { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType left, Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType left, Azure.ResourceManager.NetworkCloud.Models.DeviceConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3320,12 +3831,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.DiskType HDD { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.DiskType SSD { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.DiskType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.DiskType left, Azure.ResourceManager.NetworkCloud.Models.DiskType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.DiskType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.DiskType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.DiskType left, Azure.ResourceManager.NetworkCloud.Models.DiskType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3334,7 +3844,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public EgressEndpoint(string category, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.EndpointDependency> endpoints) { }
         public string Category { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.EndpointDependency> Endpoints { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3346,7 +3859,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public EndpointDependency(string domainName) { }
         public string DomainName { get { throw null; } set { } }
         public long? Port { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.EndpointDependency JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.EndpointDependency PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.EndpointDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.EndpointDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.EndpointDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.EndpointDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.EndpointDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3359,6 +3875,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ExtendedLocation (Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation value) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3374,12 +3891,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled left, Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled left, Azure.ResourceManager.NetworkCloud.Models.FabricPeeringEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3393,12 +3909,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus Running { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.FeatureDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3409,7 +3924,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string DetailedStatusMessage { get { throw null; } }
         public string Name { get { throw null; } }
         public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.FeatureStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.FeatureStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.FeatureStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.FeatureStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.FeatureStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.FeatureStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.FeatureStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3422,7 +3940,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string AdditionalHostInformation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface> Interfaces { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic> Nics { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.HardwareInventory JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.HardwareInventory PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.HardwareInventory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.HardwareInventory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.HardwareInventory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.HardwareInventory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.HardwareInventory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3436,7 +3957,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } }
         public string NetworkInterfaceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.HardwareInventoryNetworkInterface>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3448,7 +3972,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         internal HardwareValidationStatus() { }
         public System.DateTimeOffset? LastValidationOn { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineHardwareValidationResult? Result { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.HardwareValidationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3464,12 +3991,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.HugepagesSize OneG { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.HugepagesSize TwoM { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.HugepagesSize other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.HugepagesSize left, Azure.ResourceManager.NetworkCloud.Models.HugepagesSize right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.HugepagesSize (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.HugepagesSize? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.HugepagesSize left, Azure.ResourceManager.NetworkCloud.Models.HugepagesSize right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3482,12 +4008,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled left, Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled left, Azure.ResourceManager.NetworkCloud.Models.HybridAksIpamEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3501,22 +4026,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType OSDevice { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType Sriov { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType left, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType left, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ImageRepositoryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>
     {
         public ImageRepositoryCredentials(string registryUriString, string username) { }
+        public ImageRepositoryCredentials(string password, string registryUriString, string username) { }
         public string Password { get { throw null; } set { } }
         public string RegistryUriString { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3525,7 +4053,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     }
     public partial class InitialAgentPoolConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration>
     {
-        public InitialAgentPoolConfiguration(long count, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode, string name, string vmSkuName) { }
+        public InitialAgentPoolConfiguration(long count, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode, string vmSkuName, string name) { }
         public Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration AdministratorConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration AgentOptions { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration AttachedNetworkConfiguration { get { throw null; } set { } }
@@ -3535,11 +4063,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode Mode { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> Taints { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string UpgradeMaxSurge { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings UpgradeSettings { get { throw null; } set { } }
         public string VmSkuName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3553,7 +4083,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.BfdEnabled? AutoAssign { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BfdEnabled? OnlyUseHostIPs { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.IPAddressPool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.IPAddressPool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.IPAddressPool System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.IPAddressPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.IPAddressPool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.IPAddressPool System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.IPAddressPool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3570,12 +4103,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.IPAllocationType IPV4 { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.IPAllocationType IPV6 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.IPAllocationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.IPAllocationType left, Azure.ResourceManager.NetworkCloud.Models.IPAllocationType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.IPAllocationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.IPAllocationType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.IPAllocationType left, Azure.ResourceManager.NetworkCloud.Models.IPAllocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3586,7 +4118,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string Description { get { throw null; } set { } }
         public string KeyData { get { throw null; } set { } }
         public string UserPrincipalName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KeySetUser JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KeySetUser PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.KeySetUser System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KeySetUser>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KeySetUser>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.KeySetUser System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.KeySetUser>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3599,7 +4134,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string AzureUserName { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetUserSetupStatus? Status { get { throw null; } }
         public string StatusMessage { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.KeySetUserStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3616,12 +4154,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3634,12 +4171,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle GenerallyAvailable { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle Preview { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureAvailabilityLifecycle right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3653,12 +4189,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus Installed { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3675,12 +4210,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3693,12 +4227,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterFeatureRequired right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3713,7 +4246,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.IPAddressPool> L2ServiceLoadBalancerIPAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<string> PodCidrs { get { throw null; } }
         public System.Collections.Generic.IList<string> ServiceCidrs { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3724,11 +4260,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         internal KubernetesClusterNode() { }
         public Azure.Core.ResourceIdentifier AgentPoolArmId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string AgentPoolId { get { throw null; } }
         public string AvailabilityZone { get { throw null; } }
         public Azure.Core.ResourceIdentifier BareMetalMachineArmId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string BareMetalMachineId { get { throw null; } }
         public long? CpuCores { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus? DetailedStatus { get { throw null; } }
@@ -3745,7 +4279,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole? Role { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> Taints { get { throw null; } }
         public string VmSkuName { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3767,12 +4304,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus Terminating { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3791,12 +4327,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3804,7 +4339,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public KubernetesClusterRestartNodeContent(string nodeName) { }
         public string NodeName { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterRestartNodeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3816,7 +4354,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public KubernetesLabel(string key, string value) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3833,12 +4374,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState On { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState left, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState left, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3851,12 +4391,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole ControlPlane { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole Worker { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole left, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole left, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3872,12 +4411,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType OSDevice { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType Sriov { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType left, Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType left, Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3886,7 +4424,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public L2NetworkAttachmentConfiguration(Azure.Core.ResourceIdentifier networkId) { }
         public Azure.Core.ResourceIdentifier NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? PluginType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.L2NetworkAttachmentConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3903,12 +4444,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3924,12 +4464,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.L2NetworkProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3939,7 +4478,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled? IpamEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? PluginType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.L3NetworkAttachmentConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3955,12 +4497,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled left, Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled left, Azure.ResourceManager.NetworkCloud.Models.L3NetworkConfigurationIpamEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3974,12 +4515,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -3995,12 +4535,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.L3NetworkProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4011,7 +4550,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string PortName { get { throw null; } }
         public string SystemDescription { get { throw null; } }
         public string SystemName { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4024,7 +4566,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? CapacityGB { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType? Connection { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.DiskType? DiskType { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.MachineDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.MachineDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.MachineDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.MachineDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.MachineDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.MachineDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.MachineDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4042,12 +4587,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType SAS { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType Sata { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType left, Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType left, Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4066,7 +4610,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? RackSlot { get { throw null; } }
         public long? TotalThreads { get { throw null; } }
         public string Vendor { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4078,7 +4625,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ManagedResourceGroupConfiguration() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4090,7 +4640,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ManagedServiceIdentitySelector() { }
         public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType? IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4106,12 +4659,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType SystemAssignedIdentity { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType UserAssignedIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType left, Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType left, Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4120,7 +4672,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public NetworkAttachment(Azure.Core.ResourceIdentifier attachedNetworkArmId, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod ipAllocationMethod) { }
         public NetworkAttachment(string attachedNetworkId, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod ipAllocationMethod) { }
         public Azure.Core.ResourceIdentifier AttachedNetworkArmId { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string AttachedNetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.DefaultGateway? DefaultGateway { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod IPAllocationMethod { get { throw null; } set { } }
@@ -4128,19 +4679,169 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string IPv6Address { get { throw null; } set { } }
         public string MacAddress { get { throw null; } }
         public string NetworkAttachmentName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudAccessBridgeAllowedName : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudAccessBridgeAllowedName(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName Bastion { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName PrivateVault { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName StorageDashboard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeAllowedName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudAccessBridgeDetailedStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudAccessBridgeDetailedStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus Degraded { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus Running { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeDetailedStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetworkCloudAccessBridgeEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint>
+    {
+        internal NetworkCloudAccessBridgeEndpoint() { }
+        public string Fqdn { get { throw null; } }
+        public string Ipv4Address { get { throw null; } }
+        public string Ipv6Address { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkCloudAccessBridgePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch>
+    {
+        public NetworkCloudAccessBridgePatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule> AccessBridgePatchSecurityRules { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudAccessBridgeProvisioningState : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudAccessBridgeProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetworkCloudAccessBridgeSecurityRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule>
+    {
+        public NetworkCloudAccessBridgeSecurityRule(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection direction, string port) { }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection Direction { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Ipv4Addresses { get { throw null; } }
+        public System.Collections.Generic.IList<string> Ipv6Addresses { get { throw null; } }
+        public string Port { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAccessBridgeSecurityRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkCloudActionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState>
+    {
+        internal NetworkCloudActionState() { }
+        public string ActionType { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string StartTime { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus? Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState> StepStates { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudActionStateStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudActionStateStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudActionStateStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NetworkCloudAgentConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration>
     {
         public NetworkCloudAgentConfiguration(long hugepagesCount) { }
         public long HugepagesCount { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.HugepagesSize? HugepagesSize { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4157,12 +4858,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode System { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4172,10 +4872,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> AdministratorSshPublicKeys { get { throw null; } }
         public long? Count { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string UpgradeMaxSurge { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AgentPoolUpgradeSettings UpgradeSettings { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4189,7 +4891,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Collections.Generic.IList<System.Net.IPAddress> JumpHostsAllowed { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> UserList { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachineKeySetPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4201,7 +4906,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public NetworkCloudBareMetalMachinePatch() { }
         public string MachineDetails { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBareMetalMachinePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4214,12 +4922,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> UserList { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudBmcKeySetPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkCloudCertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo>
+    {
+        internal NetworkCloudCertificateInfo() { }
+        public string Hash { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCertificateInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkCloudCloudServicesNetworkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch>
     {
@@ -4228,24 +4954,61 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkEnableDefaultEgressEndpoint? EnableDefaultEgressEndpoints { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.CloudServicesNetworkStorageOptionsPatch StorageOptions { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudCloudServicesNetworkPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NetworkCloudClusterInspectContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent>
+    {
+        public NetworkCloudClusterInspectContent() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.ClusterInspectAdditionalAction> AdditionalActions { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices FilterDevices { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterInspectContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NetworkCloudClusterManagerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch>
     {
         public NetworkCloudClusterManagerPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent>
+    {
+        public NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState connectionState, Azure.Core.ResourceIdentifier privateEndpointResourceId) { }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState ConnectionState { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterManagerRelayPrivateEndpointConnectionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkCloudClusterMetricsConfigurationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch>
     {
@@ -4253,7 +5016,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? CollectionInterval { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EnabledMetrics { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterMetricsConfigurationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4271,25 +5037,64 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold ComputeDeploymentThreshold { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition> ComputeRackDefinitions { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration RuntimeProtectionConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? RuntimeProtectionEnforcementLevel { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterSecretArchive SecretArchive { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings SecretArchiveSettings { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterUpdateStrategy UpdateStrategy { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? VulnerabilityScanningContainerScan { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudDeploymentType : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudDeploymentType(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType AzureLocal { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType Nexus { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudDeploymentType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetworkCloudFilterDevices : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices>
+    {
+        public NetworkCloudFilterDevices() { }
+        public System.Collections.Generic.IList<string> BareMetalMachineNames { get { throw null; } }
+        public System.Collections.Generic.IList<string> RackNames { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudFilterDevices>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NetworkCloudKubernetesClusterFeaturePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>
     {
         public NetworkCloudKubernetesClusterFeaturePatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair> Options { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterFeaturePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4301,22 +5106,75 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public NetworkCloudKubernetesClusterPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey> AdministratorSshPublicKeys { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodePatchConfiguration ControlPlaneNodeConfiguration { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public long? ControlPlaneNodeCount { get { throw null; } set { } }
         public string KubernetesVersion { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NetworkCloudKubernetesVersionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch>
+    {
+        public NetworkCloudKubernetesVersionPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudKubernetesVersionProvisioningState : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudKubernetesVersionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetworkCloudKubernetesVersionValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue>
+    {
+        internal NetworkCloudKubernetesVersionValue() { }
+        public string Description { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudKubernetesVersionValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NetworkCloudL2NetworkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch>
     {
         public NetworkCloudL2NetworkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL2NetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4327,7 +5185,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public NetworkCloudL3NetworkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudL3NetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4344,7 +5205,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? PortCount { get { throw null; } }
         public long? PortSpeed { get { throw null; } }
         public string Vendor { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4357,7 +5221,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor LldpNeighbor { get { throw null; } }
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNic>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4380,7 +5247,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Uri ResultUri { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOperationStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4393,7 +5263,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption? CreateOption { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption? DeleteOption { get { throw null; } set { } }
         public long DiskSizeInGB { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4410,7 +5283,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string RackSerialNumber { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RackSkuId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration> StorageApplianceConfigurationData { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4423,30 +5299,110 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string RackLocation { get { throw null; } set { } }
         public string RackSerialNumber { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudRelayPrivateEndpointConnectionState : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudRelayPrivateEndpointConnectionState(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState Approved { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState Rejected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRelayPrivateEndpointConnectionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudSecurityRuleDirection : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudSecurityRuleDirection(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSecurityRuleDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NetworkCloudSshPublicKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey>
     {
         public NetworkCloudSshPublicKey(string keyData) { }
         public string KeyData { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NetworkCloudStepState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState>
+    {
+        internal NetworkCloudStepState() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus? Status { get { throw null; } }
+        public string StepName { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudStepStateStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudStepStateStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus Completed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus NotStarted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStepStateStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NetworkCloudStorageAppliancePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch>
     {
         public NetworkCloudStorageAppliancePatch() { }
         public string SerialNumber { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageAppliancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4458,18 +5414,41 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public NetworkCloudStorageProfile(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk osDisk) { }
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudOSDisk OSDisk { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> VolumeAttachments { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkCloudTransportProtocol : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkCloudTransportProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol Tcp { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol Udp { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol left, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTransportProtocol right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class NetworkCloudTrunkedNetworkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch>
     {
         public NetworkCloudTrunkedNetworkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudTrunkedNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4483,7 +5462,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string KeyData { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachineConsolePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4496,7 +5478,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials VmImageRepositoryCredentials { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVirtualMachinePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4507,7 +5492,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public NetworkCloudVolumePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4523,12 +5511,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption Ephemeral { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption Persistent { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption left, Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption left, Azure.ResourceManager.NetworkCloud.Models.OSDiskCreateOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4540,12 +5527,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public OSDiskDeleteOption(string value) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption Delete { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption left, Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption left, Azure.ResourceManager.NetworkCloud.Models.OSDiskDeleteOption right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4559,12 +5545,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4580,12 +5565,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.RackProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4599,12 +5583,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.RackSkuProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4618,31 +5601,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.RackSkuType Compute { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.RackSkuType Single { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RackSkuType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RackSkuType left, Azure.ResourceManager.NetworkCloud.Models.RackSkuType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackSkuType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RackSkuType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RackSkuType left, Azure.ResourceManager.NetworkCloud.Models.RackSkuType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RelayType : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.RelayType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RelayType(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.Models.RelayType Platform { get { throw null; } }
-        public static Azure.ResourceManager.NetworkCloud.Models.RelayType Public { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RelayType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RelayType left, Azure.ResourceManager.NetworkCloud.Models.RelayType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RelayType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RelayType left, Azure.ResourceManager.NetworkCloud.Models.RelayType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4654,12 +5618,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature Supported { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature Unsupported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature left, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature left, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementFeature right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4673,13 +5636,78 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus Enabled { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus Unsupported { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus left, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus left, Azure.ResourceManager.NetworkCloud.Models.RemoteVendorManagementStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeProtectionAgentHealthStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeProtectionAgentHealthStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus Healthy { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus Unhealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeProtectionAgentLicenseStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeProtectionAgentLicenseStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus Licensed { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus Unlicensed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RuntimeProtectionConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration>
+    {
+        public RuntimeProtectionConfiguration() { }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode? DefinitionUpdateMode { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? EnforcementLevel { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeProtectionDefinitionUpdateMode : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeProtectionDefinitionUpdateMode(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode Automatic { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -4694,24 +5722,31 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel Passive { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel RealTime { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel left, Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class RuntimeProtectionStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>
     {
         internal RuntimeProtectionStatus() { }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentHealthStatus? AgentHealthStatus { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AgentHealthStatusIssues { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionAgentLicenseStatus? AgentLicenseStatus { get { throw null; } }
         public System.DateTimeOffset? DefinitionsLastUpdated { get { throw null; } }
         public string DefinitionsVersion { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionDefinitionUpdateMode? DefinitionUpdateMode { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionEnforcementLevel? EnforcementLevel { get { throw null; } }
         public System.DateTimeOffset? ScanCompletedOn { get { throw null; } }
         public System.DateTimeOffset? ScanScheduledOn { get { throw null; } }
         public System.DateTimeOffset? ScanStartedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.RuntimeProtectionStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4725,7 +5760,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public System.Uri KeyVaultUri { get { throw null; } }
         public string SecretName { get { throw null; } }
         public string SecretVersion { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4737,7 +5775,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public SecretArchiveSettings() { }
         public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector AssociatedIdentity { get { throw null; } set { } }
         public System.Uri VaultUri { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.SecretArchiveSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4752,7 +5793,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? RotationPeriodDays { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference SecretArchiveReference { get { throw null; } }
         public string SecretType { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4772,7 +5816,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string PeerAddress { get { throw null; } set { } }
         public long PeerAsn { get { throw null; } set { } }
         public long? PeerPort { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ServiceLoadBalancerBgpPeer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4782,11 +5829,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class ServicePrincipalInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation>
     {
         public ServicePrincipalInformation(string applicationId, string principalId, string tenantId) { }
+        public ServicePrincipalInformation(string applicationId, string password, string principalId, string tenantId) { }
         public string ApplicationId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4802,48 +5853,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.SkipShutdown False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.SkipShutdown True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.SkipShutdown other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.SkipShutdown left, Azure.ResourceManager.NetworkCloud.Models.SkipShutdown right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.SkipShutdown (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.SkipShutdown? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.SkipShutdown left, Azure.ResourceManager.NetworkCloud.Models.SkipShutdown right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class StepState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StepState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>
-    {
-        internal StepState() { }
-        public string EndTime { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string StartTime { get { throw null; } }
-        public Azure.ResourceManager.NetworkCloud.Models.StepStateStatus? Status { get { throw null; } }
-        public string StepName { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.StepState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.StepState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StepState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StepStateStatus : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.StepStateStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StepStateStatus(string value) { throw null; }
-        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus Completed { get { throw null; } }
-        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus InProgress { get { throw null; } }
-        public static Azure.ResourceManager.NetworkCloud.Models.StepStateStatus NotStarted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.StepStateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.StepStateStatus left, Azure.ResourceManager.NetworkCloud.Models.StepStateStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StepStateStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StepStateStatus left, Azure.ResourceManager.NetworkCloud.Models.StepStateStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class StorageApplianceCommandSpecification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>
@@ -4851,7 +5866,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public StorageApplianceCommandSpecification(string command) { }
         public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
         public string Command { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4865,7 +5883,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long RackSlot { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } set { } }
         public string StorageApplianceName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4883,12 +5904,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4896,12 +5916,79 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public StorageApplianceEnableRemoteVendorManagementContent() { }
         public System.Collections.Generic.IList<string> SupportEndpoints { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceEnableRemoteVendorManagementContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StorageApplianceExpansionShelf : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf>
+    {
+        internal StorageApplianceExpansionShelf() { }
+        public string Model { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceExpansionShelf>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageApplianceMetricsConfigurationStatusLogLevel : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageApplianceMetricsConfigurationStatusLogLevel(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel Default { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel Nexus { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageApplianceMetricsConfigurationStatusMetricsLevel : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageApplianceMetricsConfigurationStatusMetricsLevel(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel Default { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel Nexus { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class StorageApplianceMonitoringConfigurationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus>
+    {
+        internal StorageApplianceMonitoringConfigurationStatus() { }
+        public Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusLogLevel? LogLevel { get { throw null; } }
+        public Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMetricsConfigurationStatusMetricsLevel? MetricsLevel { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceMonitoringConfigurationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageApplianceProvisioningState : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState>
@@ -4915,12 +6002,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.StorageApplianceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -4929,7 +6015,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public StorageApplianceRunReadCommandsContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification> commands, long limitTimeSeconds) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceCommandSpecification> Commands { get { throw null; } }
         public long LimitTimeSeconds { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceRunReadCommandsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4942,7 +6031,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? CapacityGB { get { throw null; } }
         public string Model { get { throw null; } }
         public long? RackSlot { get { throw null; } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4954,7 +6046,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public StringKeyValuePair(string key, string value) { }
         public string Key { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.StringKeyValuePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4966,7 +6061,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public TrunkedNetworkAttachmentConfiguration(Azure.Core.ResourceIdentifier networkId) { }
         public Azure.Core.ResourceIdentifier NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.KubernetesPluginType? PluginType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkAttachmentConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4983,12 +6081,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5004,12 +6101,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5019,7 +6115,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping Grouping { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType ThresholdType { get { throw null; } set { } }
         public long Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ValidationThreshold>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5035,12 +6134,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping PerCluster { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping PerRack { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping left, Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping left, Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdGrouping right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5053,12 +6151,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType CountSuccess { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType PercentSuccess { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType left, Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType left, Azure.ResourceManager.NetworkCloud.Models.ValidationThresholdType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5066,13 +6163,33 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public VirtualMachineAssignRelayContent(Azure.Core.ResourceIdentifier machineId) { }
         public Azure.Core.ResourceIdentifier MachineId { get { throw null; } }
-        public Azure.ResourceManager.NetworkCloud.Models.RelayType? RelayType { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType? RelayType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VirtualMachineAssignRelayType : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VirtualMachineAssignRelayType(string value) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType Platform { get { throw null; } }
+        public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType Public { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineAssignRelayType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachineBootMethod : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod>
@@ -5083,12 +6200,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod Bios { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod Uefi { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineBootMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5107,12 +6223,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus Terminating { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5126,12 +6241,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType T2 { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType T3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineDeviceModelType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5145,12 +6259,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod Dynamic { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod Static { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5163,12 +6276,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIsolateEmulatorThread right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5179,7 +6291,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution SchedulingExecution { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope Scope { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5195,12 +6310,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope Machine { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope Rack { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintPodAffinityScope right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5213,12 +6327,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType Affinity { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType AntiAffinity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePlacementHintType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5226,7 +6339,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         public VirtualMachinePowerOffContent() { }
         public Azure.ResourceManager.NetworkCloud.Models.SkipShutdown? SkipShutdown { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerOffContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5243,12 +6359,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState On { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachinePowerState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5264,12 +6379,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5282,12 +6396,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution Hard { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution Soft { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineSchedulingExecution right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5300,12 +6413,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType Modern { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType Transitional { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType left, Azure.ResourceManager.NetworkCloud.Models.VirtualMachineVirtioInterfaceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5319,12 +6431,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus Error { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus Provisioning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus left, Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5340,12 +6451,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState Provisioning { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState left, Azure.ResourceManager.NetworkCloud.Models.VolumeProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5358,12 +6468,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan Disabled { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan left, Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan left, Azure.ResourceManager.NetworkCloud.Models.VulnerabilityScanningSettingsContainerScan right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -5376,12 +6485,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact False { get { throw null; } }
         public static Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact left, Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact right) { throw null; }
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact left, Azure.ResourceManager.NetworkCloud.Models.WorkloadImpact right) { throw null; }
         public override string ToString() { throw null; }
     }

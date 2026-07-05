@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointAnonymousAuthentication"/>. </summary>
         /// <param name="anonymousSettings"> Anonymous authentication properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="anonymousSettings"/> is null. </exception>
-        public RegistryEndpointAnonymousAuthentication(RegistryEndpointAnonymousSettings anonymousSettings)
+        public RegistryEndpointAnonymousAuthentication(RegistryEndpointAnonymousSettings anonymousSettings) : base(RegistryEndpointAuthenticationMethod.Anonymous)
         {
             Argument.AssertNotNull(anonymousSettings, nameof(anonymousSettings));
 
             AnonymousSettings = anonymousSettings;
-            Method = RegistryEndpointAuthenticationMethod.Anonymous;
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointAnonymousAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="anonymousSettings"> Anonymous authentication properties. </param>
-        internal RegistryEndpointAnonymousAuthentication(RegistryEndpointAuthenticationMethod method, IDictionary<string, BinaryData> serializedAdditionalRawData, RegistryEndpointAnonymousSettings anonymousSettings) : base(method, serializedAdditionalRawData)
+        internal RegistryEndpointAnonymousAuthentication(RegistryEndpointAuthenticationMethod @method, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegistryEndpointAnonymousSettings anonymousSettings) : base(@method, additionalBinaryDataProperties)
         {
             AnonymousSettings = anonymousSettings;
-            Method = method;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RegistryEndpointAnonymousAuthentication"/> for deserialization. </summary>
-        internal RegistryEndpointAnonymousAuthentication()
-        {
         }
 
         /// <summary> Anonymous authentication properties. </summary>

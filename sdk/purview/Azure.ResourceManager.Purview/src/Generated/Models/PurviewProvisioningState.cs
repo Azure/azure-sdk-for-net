@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Purview.Models
     public readonly partial struct PurviewProvisioningState : IEquatable<PurviewProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Moving. </summary>
+        private const string MovingValue = "Moving";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> SoftDeleting. </summary>
+        private const string SoftDeletingValue = "SoftDeleting";
+        /// <summary> SoftDeleted. </summary>
+        private const string SoftDeletedValue = "SoftDeleted";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="PurviewProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PurviewProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string CreatingValue = "Creating";
-        private const string MovingValue = "Moving";
-        private const string DeletingValue = "Deleting";
-        private const string SoftDeletingValue = "SoftDeleting";
-        private const string SoftDeletedValue = "SoftDeleted";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static PurviewProvisioningState Unknown { get; } = new PurviewProvisioningState(UnknownValue);
+
         /// <summary> Creating. </summary>
         public static PurviewProvisioningState Creating { get; } = new PurviewProvisioningState(CreatingValue);
+
         /// <summary> Moving. </summary>
         public static PurviewProvisioningState Moving { get; } = new PurviewProvisioningState(MovingValue);
+
         /// <summary> Deleting. </summary>
         public static PurviewProvisioningState Deleting { get; } = new PurviewProvisioningState(DeletingValue);
+
         /// <summary> SoftDeleting. </summary>
         public static PurviewProvisioningState SoftDeleting { get; } = new PurviewProvisioningState(SoftDeletingValue);
+
         /// <summary> SoftDeleted. </summary>
         public static PurviewProvisioningState SoftDeleted { get; } = new PurviewProvisioningState(SoftDeletedValue);
+
         /// <summary> Failed. </summary>
         public static PurviewProvisioningState Failed { get; } = new PurviewProvisioningState(FailedValue);
+
         /// <summary> Succeeded. </summary>
         public static PurviewProvisioningState Succeeded { get; } = new PurviewProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static PurviewProvisioningState Canceled { get; } = new PurviewProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="PurviewProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PurviewProvisioningState left, PurviewProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PurviewProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PurviewProvisioningState left, PurviewProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PurviewProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PurviewProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PurviewProvisioningState(string value) => new PurviewProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PurviewProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PurviewProvisioningState?(string value) => value == null ? null : new PurviewProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PurviewProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PurviewProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

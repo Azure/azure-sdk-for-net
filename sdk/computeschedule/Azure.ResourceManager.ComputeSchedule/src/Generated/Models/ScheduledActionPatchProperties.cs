@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The updatable properties of the ScheduledAction. </summary>
     public partial class ScheduledActionPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionPatchProperties"/>. </summary>
         public ScheduledActionPatchProperties()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationSettings> notificationSettings, bool? disabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationSettings> notificationSettings, bool? disabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -69,21 +41,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Schedule = schedule;
             NotificationSettings = notificationSettings;
             Disabled = disabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of resource the scheduled action is targeting. </summary>
         public ScheduledActionResourceType? ResourceType { get; set; }
+
         /// <summary> The action the scheduled action should perform in the resources. </summary>
         public ScheduledActionType? ActionType { get; set; }
+
         /// <summary> The time which the scheduled action is supposed to start running. </summary>
         public DateTimeOffset? StartOn { get; set; }
+
         /// <summary> The time when the scheduled action is supposed to stop scheduling. </summary>
         public DateTimeOffset? EndOn { get; set; }
+
         /// <summary> The schedule the scheduled action is supposed to follow. </summary>
         public ScheduledActionsSchedule Schedule { get; set; }
+
         /// <summary> The notification settings for the scheduled action. </summary>
         public IList<NotificationSettings> NotificationSettings { get; }
+
         /// <summary> Tell if the scheduled action is disabled or not. </summary>
         public bool? Disabled { get; set; }
     }

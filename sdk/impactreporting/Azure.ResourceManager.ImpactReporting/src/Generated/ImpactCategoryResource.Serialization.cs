@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ImpactReporting
 {
+    /// <summary></summary>
     public partial class ImpactCategoryResource : IJsonModel<ImpactCategoryData>
     {
-        private static ImpactCategoryData s_dataDeserializationInstance;
-        private static ImpactCategoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ImpactCategoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ImpactCategoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ImpactCategoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImpactCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImpactCategoryData>)Data).Write(writer, options);
 
-        ImpactCategoryData IJsonModel<ImpactCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImpactCategoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImpactCategoryData IJsonModel<ImpactCategoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ImpactCategoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImpactCategoryData>(Data, options, AzureResourceManagerImpactReportingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ImpactCategoryData IPersistableModel<ImpactCategoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImpactCategoryData>(data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        string IPersistableModel<ImpactCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImpactCategoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ImpactCategoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -13,45 +13,13 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> The response returned by a Conversation project. </summary>
     public partial class ConversationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationResult"/>. </summary>
         /// <param name="query"> The same query given in request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         internal ConversationResult(string query)
         {
-            Argument.AssertNotNull(query, nameof(query));
-
             Query = query;
         }
 
@@ -59,24 +27,21 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="query"> The same query given in request. </param>
         /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
         /// <param name="prediction"> The predicted result for the query. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationResult(string query, string detectedLanguage, ConversationPrediction prediction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationResult(string query, string detectedLanguage, ConversationPrediction prediction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             DetectedLanguage = detectedLanguage;
             Prediction = prediction;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConversationResult"/> for deserialization. </summary>
-        internal ConversationResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The same query given in request. </summary>
         public string Query { get; }
+
         /// <summary> The detected language from the query in BCP 47 language representation. </summary>
         public string DetectedLanguage { get; }
+
         /// <summary> The predicted result for the query. </summary>
         public ConversationPrediction Prediction { get; }
     }

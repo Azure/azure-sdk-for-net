@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.12.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,20 @@
 
 ### Bugs Fixed
 
-- Fixed an issue in `ArmDeploymentOperationProperties` deserialization where `StatusCode` could be either a string or a number in JSON, causing `InvalidOperationException` when parsing an integer `StatusCode`.
+### Other Changes
+
+## 1.12.0-beta.1 (2026-06-30)
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.11.2 (2025-10-16)
+
+### Bugs Fixed
+
+- Fixed an issue in `ArmDeploymentOperationProperties` deserialization where `StatusCode` could be either a string or a number in JSON, causing `InvalidOperationException` when parsing an integer `StatusCode`.
 
 ## 1.11.1 (2025-08-20)
 

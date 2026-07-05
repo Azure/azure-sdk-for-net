@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     internal static partial class StorageSyncNameUnavailableReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageSyncNameUnavailableReason value) => value switch
         {
             StorageSyncNameUnavailableReason.Invalid => "Invalid",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSyncNameUnavailableReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageSyncNameUnavailableReason ToStorageSyncNameUnavailableReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return StorageSyncNameUnavailableReason.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return StorageSyncNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return StorageSyncNameUnavailableReason.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists"))
+            {
+                return StorageSyncNameUnavailableReason.AlreadyExists;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSyncNameUnavailableReason value.");
         }
     }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Playwright
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlaywrightWorkspaceResource"/> and their operations.
-    /// Each <see cref="PlaywrightWorkspaceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PlaywrightWorkspaceCollection"/> instance call the GetPlaywrightWorkspaces method from an instance of the parent resource.
+    /// Each <see cref="PlaywrightWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PlaywrightWorkspaceCollection"/> instance call the GetPlaywrightWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PlaywrightWorkspaceCollection : ArmCollection, IEnumerable<PlaywrightWorkspaceResource>, IAsyncEnumerable<PlaywrightWorkspaceResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(PlaywrightWorkspaceResource.ResourceType, out string playwrightWorkspaceApiVersion);
             _playwrightWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2025-09-01");
+            _playwrightWorkspacesRestClient = new PlaywrightWorkspaces(_playwrightWorkspacesClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Playwright
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> PlaywrightWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Playwright
                 HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
-                    new PlaywrightWorkspaceOperationSource(Client),
+                    new PlaywrightWorkspaceResourceOperationSource(Client),
                     _playwrightWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> PlaywrightWorkspaces_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Playwright
                 HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
-                    new PlaywrightWorkspaceOperationSource(Client),
+                    new PlaywrightWorkspaceResourceOperationSource(Client),
                     _playwrightWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.Playwright
             }
         }
 
-        /// <summary> List PlaywrightWorkspace resources by resource group. </summary>
+        /// <summary>
+        /// List PlaywrightWorkspace resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -278,10 +294,26 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlaywrightWorkspaceCollection.GetAll"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
-        /// <summary> List PlaywrightWorkspace resources by resource group. </summary>
+        /// <summary>
+        /// List PlaywrightWorkspace resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/playwrightWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PlaywrightWorkspaces_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
@@ -290,11 +322,11 @@ namespace Azure.ResourceManager.Playwright
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlaywrightWorkspaceResource(Client, data));
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetByResourceGroupCollectionResultOfT(_playwrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlaywrightWorkspaceCollection.GetAll"), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
         /// <summary>
-        /// Get a PlaywrightWorkspace
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,11 +334,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Get a PlaywrightWorkspace
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,11 +391,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +440,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Get a PlaywrightWorkspace
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,11 +448,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +501,7 @@ namespace Azure.ResourceManager.Playwright
         }
 
         /// <summary>
-        /// Get a PlaywrightWorkspace
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,11 +509,11 @@ namespace Azure.ResourceManager.Playwright
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PlaywrightWorkspaces_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

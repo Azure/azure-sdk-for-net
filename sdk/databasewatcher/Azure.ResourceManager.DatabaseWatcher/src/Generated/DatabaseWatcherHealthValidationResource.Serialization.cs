@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
+    /// <summary></summary>
     public partial class DatabaseWatcherHealthValidationResource : IJsonModel<DatabaseWatcherHealthValidationData>
     {
-        private static DatabaseWatcherHealthValidationData s_dataDeserializationInstance;
-        private static DatabaseWatcherHealthValidationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatabaseWatcherHealthValidationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DatabaseWatcherHealthValidationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseWatcherHealthValidationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherHealthValidationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherHealthValidationData>)Data).Write(writer, options);
 
-        DatabaseWatcherHealthValidationData IJsonModel<DatabaseWatcherHealthValidationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherHealthValidationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherHealthValidationData IJsonModel<DatabaseWatcherHealthValidationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DatabaseWatcherHealthValidationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherHealthValidationData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseWatcherHealthValidationData IPersistableModel<DatabaseWatcherHealthValidationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherHealthValidationData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        string IPersistableModel<DatabaseWatcherHealthValidationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherHealthValidationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseWatcherHealthValidationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

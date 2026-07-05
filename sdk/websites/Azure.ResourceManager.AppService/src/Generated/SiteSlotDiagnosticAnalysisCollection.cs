@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteSlotDiagnosticAnalysisCollection : ArmCollection, IEnumerable<SiteSlotDiagnosticAnalysisResource>, IAsyncEnumerable<SiteSlotDiagnosticAnalysisResource>
     {
-        private readonly ClientDiagnostics _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics;
-        private readonly DiagnosticsRestOperations _siteSlotDiagnosticAnalysisDiagnosticsRestClient;
+        private readonly ClientDiagnostics _analysisDefinitionOperationGroupClientDiagnostics;
+        private readonly AnalysisDefinitionOperationGroup _analysisDefinitionOperationGroupRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticAnalysisCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteSlotDiagnosticAnalysisCollection for mocking. </summary>
         protected SiteSlotDiagnosticAnalysisCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticAnalysisCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSlotDiagnosticAnalysisCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteSlotDiagnosticAnalysisCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticAnalysisResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteSlotDiagnosticAnalysisResource.ResourceType, out string siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
-            _siteSlotDiagnosticAnalysisDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDiagnosticAnalysisDiagnosticsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SiteSlotDiagnosticAnalysisResource.ResourceType, out string siteSlotDiagnosticAnalysisApiVersion);
+            _analysisDefinitionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotDiagnosticAnalysisResource.ResourceType.Namespace, Diagnostics);
+            _analysisDefinitionOperationGroupRestClient = new AnalysisDefinitionOperationGroup(_analysisDefinitionOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotDiagnosticAnalysisApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SiteSlotDiagnosticResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotDiagnosticResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SiteSlotDiagnosticResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get Site Analysis
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_GetSiteAnalysisSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="analysisName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SiteSlotDiagnosticAnalysisResource>> GetAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
+            using DiagnosticScope scope = _analysisDefinitionOperationGroupClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _analysisDefinitionOperationGroupRestClient.CreateGetSiteAnalysisSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WebSiteAnalysisDefinitionData> response = Response.FromValue(WebSiteAnalysisDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotDiagnosticAnalysisResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get Site Analysis
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_GetSiteAnalysisSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="analysisName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SiteSlotDiagnosticAnalysisResource> Get(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
+            using DiagnosticScope scope = _analysisDefinitionOperationGroupClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _analysisDefinitionOperationGroupRestClient.CreateGetSiteAnalysisSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WebSiteAnalysisDefinitionData> response = Response.FromValue(WebSiteAnalysisDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotDiagnosticAnalysisResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,52 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get Site Analyses
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_ListSiteAnalysesSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_ListSiteAnalysesSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotDiagnosticAnalysisResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteSlotDiagnosticAnalysisResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotDiagnosticAnalysisResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WebSiteAnalysisDefinitionData, SiteSlotDiagnosticAnalysisResource>(new AnalysisDefinitionOperationGroupGetSiteAnalysesSlotAsyncCollectionResultOfT(
+                _analysisDefinitionOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SiteSlotDiagnosticAnalysisCollection.GetAll"), data => new SiteSlotDiagnosticAnalysisResource(Client, data));
         }
 
         /// <summary>
         /// Description for Get Site Analyses
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_ListSiteAnalysesSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_ListSiteAnalysesSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +209,69 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteSlotDiagnosticAnalysisResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotDiagnosticAnalysisResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticAnalysisDiagnosticsRestClient.CreateListSiteAnalysesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticAnalysisResource(Client, WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(e)), _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticAnalysisCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WebSiteAnalysisDefinitionData, SiteSlotDiagnosticAnalysisResource>(new AnalysisDefinitionOperationGroupGetSiteAnalysesSlotCollectionResultOfT(
+                _analysisDefinitionOperationGroupRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "SiteSlotDiagnosticAnalysisCollection.GetAll"), data => new SiteSlotDiagnosticAnalysisResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_GetSiteAnalysisSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="analysisName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
+            using DiagnosticScope scope = _analysisDefinitionOperationGroupClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _analysisDefinitionOperationGroupRestClient.CreateGetSiteAnalysisSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WebSiteAnalysisDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WebSiteAnalysisDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WebSiteAnalysisDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +285,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_GetSiteAnalysisSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="analysisName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
+            using DiagnosticScope scope = _analysisDefinitionOperationGroupClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _analysisDefinitionOperationGroupRestClient.CreateGetSiteAnalysisSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WebSiteAnalysisDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WebSiteAnalysisDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WebSiteAnalysisDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +342,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_GetSiteAnalysisSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="analysisName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SiteSlotDiagnosticAnalysisResource>> GetIfExistsAsync(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
+            using DiagnosticScope scope = _analysisDefinitionOperationGroupClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _analysisDefinitionOperationGroupRestClient.CreateGetSiteAnalysisSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WebSiteAnalysisDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WebSiteAnalysisDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WebSiteAnalysisDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteSlotDiagnosticAnalysisResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotDiagnosticAnalysisResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +403,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Diagnostics_GetSiteAnalysisSlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> AnalysisDefinitionOperationGroup_GetSiteAnalysisSlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotDiagnosticAnalysisResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="analysisName"> Analysis Name. </param>
+        /// <param name="analysisName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="analysisName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analysisName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SiteSlotDiagnosticAnalysisResource> GetIfExists(string analysisName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analysisName, nameof(analysisName));
 
-            using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
+            using DiagnosticScope scope = _analysisDefinitionOperationGroupClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.GetSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _analysisDefinitionOperationGroupRestClient.CreateGetSiteAnalysisSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, analysisName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WebSiteAnalysisDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WebSiteAnalysisDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WebSiteAnalysisDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteSlotDiagnosticAnalysisResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotDiagnosticAnalysisResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +470,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SiteSlotDiagnosticAnalysisResource> IAsyncEnumerable<SiteSlotDiagnosticAnalysisResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

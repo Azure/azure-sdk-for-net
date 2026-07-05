@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,73 +25,84 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class VpnServerConfigurationPolicyGroupCollection : ArmCollection, IEnumerable<VpnServerConfigurationPolicyGroupResource>, IAsyncEnumerable<VpnServerConfigurationPolicyGroupResource>
     {
-        private readonly ClientDiagnostics _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics;
-        private readonly ConfigurationPolicyGroupsRestOperations _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient;
+        private readonly ClientDiagnostics _configurationPolicyGroupsClientDiagnostics;
+        private readonly ConfigurationPolicyGroups _configurationPolicyGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="VpnServerConfigurationPolicyGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VpnServerConfigurationPolicyGroupCollection for mocking. </summary>
         protected VpnServerConfigurationPolicyGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VpnServerConfigurationPolicyGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VpnServerConfigurationPolicyGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnServerConfigurationPolicyGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VpnServerConfigurationPolicyGroupResource.ResourceType, out string vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsApiVersion);
-            _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient = new ConfigurationPolicyGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(VpnServerConfigurationPolicyGroupResource.ResourceType, out string vpnServerConfigurationPolicyGroupApiVersion);
+            _configurationPolicyGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VpnServerConfigurationPolicyGroupResource.ResourceType.Namespace, Diagnostics);
+            _configurationPolicyGroupsRestClient = new ConfigurationPolicyGroups(_configurationPolicyGroupsClientDiagnostics, Pipeline, Endpoint, vpnServerConfigurationPolicyGroupApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != VpnServerConfigurationResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VpnServerConfigurationResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, VpnServerConfigurationResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a ConfigurationPolicyGroup if it doesn't exist else updates the existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to create or update a VpnServerConfiguration PolicyGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<VpnServerConfigurationPolicyGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VpnServerConfigurationPolicyGroupResource>(new VpnServerConfigurationPolicyGroupOperationSource(Client), _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<VpnServerConfigurationPolicyGroupResource> operation = new NetworkArmOperation<VpnServerConfigurationPolicyGroupResource>(
+                    new VpnServerConfigurationPolicyGroupResourceOperationSource(Client),
+                    _configurationPolicyGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +116,51 @@ namespace Azure.ResourceManager.Network
         /// Creates a ConfigurationPolicyGroup if it doesn't exist else updates the existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to create or update a VpnServerConfiguration PolicyGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<VpnServerConfigurationPolicyGroupResource> CreateOrUpdate(WaitUntil waitUntil, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, data, cancellationToken);
-                var operation = new NetworkArmOperation<VpnServerConfigurationPolicyGroupResource>(new VpnServerConfigurationPolicyGroupOperationSource(Client), _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<VpnServerConfigurationPolicyGroupResource> operation = new NetworkArmOperation<VpnServerConfigurationPolicyGroupResource>(
+                    new VpnServerConfigurationPolicyGroupResourceOperationSource(Client),
+                    _configurationPolicyGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the details of a ConfigurationPolicyGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<VpnServerConfigurationPolicyGroupResource>> GetAsync(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Get");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VpnServerConfigurationPolicyGroupData> response = Response.FromValue(VpnServerConfigurationPolicyGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the details of a ConfigurationPolicyGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<VpnServerConfigurationPolicyGroupResource> Get(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Get");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VpnServerConfigurationPolicyGroupData> response = Response.FromValue(VpnServerConfigurationPolicyGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.Network
         /// Lists all the configurationPolicyGroups in a resource group for a vpnServerConfiguration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>configurationPolicyGroups_ListByVpnServerConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_ListByVpnServerConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnServerConfigurationPolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnServerConfigurationPolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnServerConfigurationPolicyGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationPolicyGroupResource(Client, VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(e)), _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, "VpnServerConfigurationPolicyGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VpnServerConfigurationPolicyGroupData, VpnServerConfigurationPolicyGroupResource>(new ConfigurationPolicyGroupsGetByVpnServerConfigurationAsyncCollectionResultOfT(
+                _configurationPolicyGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VpnServerConfigurationPolicyGroupCollection.GetAll"), data => new VpnServerConfigurationPolicyGroupResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the configurationPolicyGroups in a resource group for a vpnServerConfiguration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>configurationPolicyGroups_ListByVpnServerConfiguration</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_ListByVpnServerConfiguration. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="VpnServerConfigurationPolicyGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnServerConfigurationPolicyGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.CreateListByVpnServerConfigurationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationPolicyGroupResource(Client, VpnServerConfigurationPolicyGroupData.DeserializeVpnServerConfigurationPolicyGroupData(e)), _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics, Pipeline, "VpnServerConfigurationPolicyGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VpnServerConfigurationPolicyGroupData, VpnServerConfigurationPolicyGroupResource>(new ConfigurationPolicyGroupsGetByVpnServerConfigurationCollectionResultOfT(
+                _configurationPolicyGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "VpnServerConfigurationPolicyGroupCollection.GetAll"), data => new VpnServerConfigurationPolicyGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Exists");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VpnServerConfigurationPolicyGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VpnServerConfigurationPolicyGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VpnServerConfigurationPolicyGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Exists");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VpnServerConfigurationPolicyGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VpnServerConfigurationPolicyGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VpnServerConfigurationPolicyGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<VpnServerConfigurationPolicyGroupResource>> GetIfExistsAsync(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VpnServerConfigurationPolicyGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VpnServerConfigurationPolicyGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VpnServerConfigurationPolicyGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VpnServerConfigurationPolicyGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnServerConfigurations/{vpnServerConfigurationName}/configurationPolicyGroups/{configurationPolicyGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationPolicyGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurationPolicyGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationPolicyGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationPolicyGroupName"> The name of the ConfigurationPolicyGroup being retrieved. </param>
+        /// <param name="configurationPolicyGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationPolicyGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<VpnServerConfigurationPolicyGroupResource> GetIfExists(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
-            using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _configurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _configurationPolicyGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationPolicyGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VpnServerConfigurationPolicyGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VpnServerConfigurationPolicyGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VpnServerConfigurationPolicyGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VpnServerConfigurationPolicyGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VpnServerConfigurationPolicyGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VpnServerConfigurationPolicyGroupResource> IAsyncEnumerable<VpnServerConfigurationPolicyGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

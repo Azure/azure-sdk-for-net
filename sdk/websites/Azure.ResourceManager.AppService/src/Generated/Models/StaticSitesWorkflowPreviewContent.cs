@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Request entity for previewing the Static Site workflow. </summary>
     public partial class StaticSitesWorkflowPreviewContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreviewContent"/>. </summary>
         public StaticSitesWorkflowPreviewContent()
@@ -53,35 +25,80 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSitesWorkflowPreviewContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="repositoryUri"> URL for the repository of the static site. </param>
-        /// <param name="branch"> The target branch in the repository. </param>
-        /// <param name="buildProperties"> Build properties to configure on the repository. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StaticSitesWorkflowPreviewRequest resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitesWorkflowPreviewContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repositoryUri, string branch, StaticSiteBuildProperties buildProperties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSitesWorkflowPreviewContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSitesWorkflowPreviewContentProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            RepositoryUri = repositoryUri;
-            Branch = branch;
-            BuildProperties = buildProperties;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> URL for the repository of the static site. </summary>
-        [WirePath("properties.repositoryUrl")]
-        public Uri RepositoryUri { get; set; }
-        /// <summary> The target branch in the repository. </summary>
-        [WirePath("properties.branch")]
-        public string Branch { get; set; }
-        /// <summary> Build properties to configure on the repository. </summary>
-        [WirePath("properties.buildProperties")]
-        public StaticSiteBuildProperties BuildProperties { get; set; }
+        /// <summary> StaticSitesWorkflowPreviewRequest resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StaticSitesWorkflowPreviewContentProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> URL for the repository of the static site. </summary>
+        [WirePath("properties.repositoryUrl")]
+        public Uri RepositoryUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepositoryUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSitesWorkflowPreviewContentProperties();
+                }
+                Properties.RepositoryUri = value;
+            }
+        }
+
+        /// <summary> The target branch in the repository. </summary>
+        [WirePath("properties.branch")]
+        public string Branch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Branch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSitesWorkflowPreviewContentProperties();
+                }
+                Properties.Branch = value;
+            }
+        }
+
+        /// <summary> Build properties to configure on the repository. </summary>
+        [WirePath("properties.buildProperties")]
+        public StaticSiteBuildProperties BuildProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BuildProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSitesWorkflowPreviewContentProperties();
+                }
+                Properties.BuildProperties = value;
+            }
+        }
     }
 }

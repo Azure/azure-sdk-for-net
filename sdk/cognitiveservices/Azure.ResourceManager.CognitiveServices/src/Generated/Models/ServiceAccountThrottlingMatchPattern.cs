@@ -7,65 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The ServiceAccountThrottlingMatchPattern. </summary>
     public partial class ServiceAccountThrottlingMatchPattern
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingMatchPattern"/>. </summary>
-        internal ServiceAccountThrottlingMatchPattern()
+        public ServiceAccountThrottlingMatchPattern()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAccountThrottlingMatchPattern"/>. </summary>
         /// <param name="path"></param>
         /// <param name="method"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAccountThrottlingMatchPattern(string path, string method, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAccountThrottlingMatchPattern(string path, string @method, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
-            Method = method;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Method = @method;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the path. </summary>
+        /// <summary> Gets or sets the Path. </summary>
         [WirePath("path")]
-        public string Path { get; }
-        /// <summary> Gets the method. </summary>
+        public string Path { get; set; }
+
+        /// <summary> Gets or sets the Method. </summary>
         [WirePath("method")]
-        public string Method { get; }
+        public string Method { get; set; }
     }
 }

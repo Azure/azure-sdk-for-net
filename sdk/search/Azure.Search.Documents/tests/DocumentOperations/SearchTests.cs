@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -15,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    public class SearchTests : SearchTestBase
+    public partial class SearchTests : SearchTestBase
     {
         public SearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
@@ -53,14 +54,14 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult(count, null, null, new Dictionary<string, object>()
+            SearchModelFactory.FacetResult(count, additionalProperties: new Dictionary<string, object>()
             {
                 ["from"] = from,
                 ["to"] = to
             });
 
         public FacetResult MakeValueFacet(int count, object value) =>
-            new FacetResult(count, null, null, new Dictionary<string, object>()
+            SearchModelFactory.FacetResult(count, additionalProperties: new Dictionary<string, object>()
             {
                 ["value"] = value
             });
@@ -644,7 +645,6 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(4, second.Value);
             Assert.AreEqual(4, second.Count);
         }
-
         public class FacetKeyValuePair
         {
             public FacetKeyValuePair() { }
@@ -1021,7 +1021,6 @@ namespace Azure.Search.Documents.Tests
                 SemanticConfigurationName = "my-config",
                 QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.9, MaxCharLength = 300 },
                 QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = true, MaxCharLength = 300 },
-                QueryRewrites = new QueryRewrites(QueryRewritesType.Generative) { Count = 3},
                 ErrorMode = SemanticErrorMode.Partial,
                 MaxWait = TimeSpan.FromMilliseconds(1000),
             };
@@ -1029,11 +1028,6 @@ namespace Azure.Search.Documents.Tests
             {
                 Queries = { new VectorizedQuery(VectorSearchEmbeddings.SearchVectorizeDescription) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } },
                 FilterMode = VectorFilterMode.PostFilter
-            };
-            source.HybridSearch = new HybridSearch()
-            {
-                MaxTextRecallSize = 50,
-                CountAndFacetMode = HybridCountAndFacetMode.CountRetrievableResults
             };
             SearchOptions clonedSearchOptions = source.Clone();
 
@@ -1054,14 +1048,10 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.SemanticSearch.QueryCaption.CaptionType, clonedSearchOptions.SemanticSearch.QueryCaption.CaptionType);
             Assert.AreEqual(source.SemanticSearch.QueryCaption.HighlightEnabled, clonedSearchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
             Assert.AreEqual(source.SemanticSearch.QueryCaption.MaxCharLength, clonedSearchOptions.SemanticSearch.QueryCaption.MaxCharLength);
-            Assert.AreEqual(source.SemanticSearch.QueryRewrites.RewritesType, clonedSearchOptions.SemanticSearch.QueryRewrites.RewritesType);
-            Assert.AreEqual(source.SemanticSearch.QueryRewrites.Count, clonedSearchOptions.SemanticSearch.QueryRewrites.Count);
             Assert.AreEqual(source.SemanticSearch.ErrorMode, clonedSearchOptions.SemanticSearch.ErrorMode);
             Assert.AreEqual(source.SemanticSearch.MaxWait, clonedSearchOptions.SemanticSearch.MaxWait);
             Assert.AreEqual(source.VectorSearch.Queries, clonedSearchOptions.VectorSearch.Queries);
             Assert.AreEqual(source.VectorSearch.FilterMode, clonedSearchOptions.VectorSearch.FilterMode);
-            Assert.AreEqual(source.HybridSearch.MaxTextRecallSize, clonedSearchOptions.HybridSearch.MaxTextRecallSize);
-            Assert.AreEqual(source.HybridSearch.CountAndFacetMode, clonedSearchOptions.HybridSearch.CountAndFacetMode);
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

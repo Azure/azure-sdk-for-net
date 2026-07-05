@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
     public partial class KnowledgeStoreProjectionSelector
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected string _generatedKeyName;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjectionSelector"/>. </summary>
         public KnowledgeStoreProjectionSelector()
@@ -57,25 +30,29 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeStoreProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReferenceKeyName = referenceKeyName;
             GeneratedKeyName = generatedKeyName;
             Source = source;
             SourceContext = sourceContext;
             Inputs = inputs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of reference key to different projection. </summary>
         public string ReferenceKeyName { get; set; }
+
         /// <summary> Name of generated key to store projection under. </summary>
         public string GeneratedKeyName { get; set; }
+
         /// <summary> Source data to project. </summary>
         public string Source { get; set; }
+
         /// <summary> Source context for complex projections. </summary>
         public string SourceContext { get; set; }
+
         /// <summary> Nested inputs for complex projections. </summary>
         public IList<InputFieldMappingEntry> Inputs { get; }
     }

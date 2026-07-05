@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class StorageContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="StorageContainer"/>. </summary>
-        public StorageContainer()
+        public StorageContainer() : base(ProtectableContainerType.StorageContainer)
         {
-            ContainerType = ProtectableContainerType.StorageContainer;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageContainer"/>. </summary>
@@ -32,14 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM url. </param>
         /// <param name="storageAccountVersion"> Storage account version. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
         /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
         /// <param name="acquireStorageAccountLock"> Whether storage account lock is to be acquired for this container or not. </param>
         /// <param name="operationType"> Re-Do Operation. </param>
-        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
+        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             StorageAccountVersion = storageAccountVersion;
@@ -47,19 +46,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemCount = protectedItemCount;
             AcquireStorageAccountLock = acquireStorageAccountLock;
             OperationType = operationType;
-            ContainerType = containerType;
         }
 
         /// <summary> Fully qualified ARM url. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
+
         /// <summary> Storage account version. </summary>
         public string StorageAccountVersion { get; set; }
+
         /// <summary> Resource group name of Recovery Services Vault. </summary>
         public string ResourceGroup { get; set; }
+
         /// <summary> Number of items backed up in this container. </summary>
         public long? ProtectedItemCount { get; set; }
+
         /// <summary> Whether storage account lock is to be acquired for this container or not. </summary>
         public AcquireStorageAccountLock? AcquireStorageAccountLock { get; set; }
+
         /// <summary> Re-Do Operation. </summary>
         public WorkloadOperationType? OperationType { get; set; }
     }

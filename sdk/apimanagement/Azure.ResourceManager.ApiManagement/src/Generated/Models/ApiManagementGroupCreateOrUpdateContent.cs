@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters supplied to the Create Group operation. </summary>
     public partial class ApiManagementGroupCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGroupCreateOrUpdateContent"/>. </summary>
         public ApiManagementGroupCreateOrUpdateContent()
@@ -51,31 +23,88 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGroupCreateOrUpdateContent"/>. </summary>
-        /// <param name="displayName"> Group name. </param>
-        /// <param name="description"> Group description. </param>
-        /// <param name="apiManagementGroupType"> Group type. </param>
-        /// <param name="externalId"> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGroupCreateOrUpdateContent(string displayName, string description, ApiManagementGroupType? apiManagementGroupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties supplied to Create Group operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementGroupCreateOrUpdateContent(GroupCreateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            Description = description;
-            ApiManagementGroupType = apiManagementGroupType;
-            ExternalId = externalId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties supplied to Create Group operation. </summary>
+        [WirePath("properties")]
+        internal GroupCreateParametersProperties Properties { get; set; }
 
         /// <summary> Group name. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupCreateParametersProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Group description. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupCreateParametersProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Group type. </summary>
         [WirePath("properties.type")]
-        public ApiManagementGroupType? ApiManagementGroupType { get; set; }
+        public ApiManagementGroupType? ApiManagementGroupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiManagementGroupType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupCreateParametersProperties();
+                }
+                Properties.ApiManagementGroupType = value;
+            }
+        }
+
         /// <summary> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("properties.externalId")]
-        public string ExternalId { get; set; }
+        public string ExternalId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GroupCreateParametersProperties();
+                }
+                Properties.ExternalId = value;
+            }
+        }
     }
 }

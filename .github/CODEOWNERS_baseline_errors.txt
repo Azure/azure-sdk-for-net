@@ -1,5 +1,8 @@
+/sdk/**/NuGet.* ends in a wildcard '*'. For directories use '*/' to match files in multiple directories starting with. For files match the file extension, '*.md' or all files in a single directory '/*'.
+/sdk/**/Nuget.* ends in a wildcard '*'. For directories use '*/' to match files in multiple directories starting with. For files match the file extension, '*.md' or all files in a single directory '/*'.
+/sdk/**/nuget.* ends in a wildcard '*'. For directories use '*/' to match files in multiple directories starting with. For files match the file extension, '*.md' or all files in a single directory '/*'.
+/sdk/**/global.json glob does not have any matches in repository.
 khmic5 is not a public member of Azure.
-schaabs is not a public member of Azure.
 lirenhe is not a public member of Azure.
 mconnew is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 adamedx is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.

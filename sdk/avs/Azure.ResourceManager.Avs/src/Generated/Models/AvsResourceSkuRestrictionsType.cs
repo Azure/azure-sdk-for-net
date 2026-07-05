@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Avs.Models
     public readonly partial struct AvsResourceSkuRestrictionsType : IEquatable<AvsResourceSkuRestrictionsType>
     {
         private readonly string _value;
+        /// <summary> SKU restricted by location. </summary>
+        private const string LocationValue = "Location";
+        /// <summary> SKU restricted by availability zone. </summary>
+        private const string ZoneValue = "Zone";
 
         /// <summary> Initializes a new instance of <see cref="AvsResourceSkuRestrictionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvsResourceSkuRestrictionsType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LocationValue = "Location";
-        private const string ZoneValue = "Zone";
+            _value = value;
+        }
 
         /// <summary> SKU restricted by location. </summary>
         public static AvsResourceSkuRestrictionsType Location { get; } = new AvsResourceSkuRestrictionsType(LocationValue);
+
         /// <summary> SKU restricted by availability zone. </summary>
         public static AvsResourceSkuRestrictionsType Zone { get; } = new AvsResourceSkuRestrictionsType(ZoneValue);
+
         /// <summary> Determines if two <see cref="AvsResourceSkuRestrictionsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvsResourceSkuRestrictionsType left, AvsResourceSkuRestrictionsType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvsResourceSkuRestrictionsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvsResourceSkuRestrictionsType left, AvsResourceSkuRestrictionsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvsResourceSkuRestrictionsType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvsResourceSkuRestrictionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvsResourceSkuRestrictionsType(string value) => new AvsResourceSkuRestrictionsType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvsResourceSkuRestrictionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvsResourceSkuRestrictionsType?(string value) => value == null ? null : new AvsResourceSkuRestrictionsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvsResourceSkuRestrictionsType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvsResourceSkuRestrictionsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

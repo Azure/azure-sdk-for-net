@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 {
     internal static partial class StorageSkuExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StorageSku value) => value switch
         {
             StorageSku.Standard => "Standard",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Qumulo.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSku value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static StorageSku ToStorageSku(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return StorageSku.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Performance")) return StorageSku.Performance;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return StorageSku.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Performance"))
+            {
+                return StorageSku.Performance;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageSku value.");
         }
     }

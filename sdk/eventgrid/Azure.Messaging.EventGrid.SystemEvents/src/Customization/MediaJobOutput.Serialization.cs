@@ -18,7 +18,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.JobOutputAsset": return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element);
+                    case "#Microsoft.Media.JobOutputAsset":
+                        return MediaJobOutputAsset.DeserializeMediaJobOutputAsset(element);
                 }
             }
             return UnknownMediaJobOutput.DeserializeUnknownMediaJobOutput(element);

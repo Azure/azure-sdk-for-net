@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB SQL container resource object. </summary>
     public partial class CosmosDBSqlContainerResourceInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerResourceInfo"/>. </summary>
         /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
@@ -53,6 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(containerName, nameof(containerName));
 
             ContainerName = containerName;
+            MaterializedViews = new ChangeTrackingList<CosmosDBMaterializedViewDetails>();
             ComputedProperties = new ChangeTrackingList<ComputedProperty>();
         }
 
@@ -66,12 +39,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="clientEncryptionPolicy"> The client encryption policy for the container. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        /// <param name="materializedViews"> Materialized Views defined on the container. </param>
+        /// <param name="materializedViewsProperties"> Materialized Views Properties defined for source container. </param>
         /// <param name="computedProperties"> List of computed properties. </param>
         /// <param name="vectorEmbeddingPolicy"> The vector embedding policy for the container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
+        /// <param name="dataMaskingPolicy"> The Data Masking policy for the container. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, CosmosDBMaterializedViewDefinition materializedViewDefinition, IList<CosmosDBMaterializedViewDetails> materializedViews, MaterializedViewsProperties materializedViewsProperties, IList<ComputedProperty> computedProperties, VectorEmbeddingPolicy vectorEmbeddingPolicy, FullTextPolicy fullTextPolicy, DataMaskingPolicy dataMaskingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
@@ -84,30 +61,83 @@ namespace Azure.ResourceManager.CosmosDB.Models
             RestoreParameters = restoreParameters;
             CreateMode = createMode;
             MaterializedViewDefinition = materializedViewDefinition;
+            MaterializedViews = materializedViews;
+            MaterializedViewsProperties = materializedViewsProperties;
             ComputedProperties = computedProperties;
             VectorEmbeddingPolicy = vectorEmbeddingPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlContainerResourceInfo"/> for deserialization. </summary>
-        internal CosmosDBSqlContainerResourceInfo()
-        {
+            FullTextPolicy = fullTextPolicy;
+            DataMaskingPolicy = dataMaskingPolicy;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Cosmos DB SQL container. </summary>
         [WirePath("id")]
         public string ContainerName { get; set; }
+
         /// <summary> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </summary>
         [WirePath("indexingPolicy")]
         public CosmosDBIndexingPolicy IndexingPolicy { get; set; }
+
         /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
         [WirePath("partitionKey")]
         public CosmosDBContainerPartitionKey PartitionKey { get; set; }
+
         /// <summary> Default time to live. </summary>
         [WirePath("defaultTtl")]
         public int? DefaultTtl { get; set; }
+
         /// <summary> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </summary>
+        [WirePath("uniqueKeyPolicy")]
         internal CosmosDBUniqueKeyPolicy UniqueKeyPolicy { get; set; }
+
+        /// <summary> The conflict resolution policy for the container. </summary>
+        [WirePath("conflictResolutionPolicy")]
+        public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
+
+        /// <summary> The client encryption policy for the container. </summary>
+        [WirePath("clientEncryptionPolicy")]
+        public CosmosDBClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
+
+        /// <summary> Analytical TTL. </summary>
+        [WirePath("analyticalStorageTtl")]
+        public long? AnalyticalStorageTtl { get; set; }
+
+        /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("restoreParameters")]
+        public ResourceRestoreParameters RestoreParameters { get; set; }
+
+        /// <summary> Enum to indicate the mode of account creation. </summary>
+        [WirePath("createMode")]
+        public CosmosDBAccountCreateMode? CreateMode { get; set; }
+
+        /// <summary> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </summary>
+        [WirePath("materializedViewDefinition")]
+        public CosmosDBMaterializedViewDefinition MaterializedViewDefinition { get; set; }
+
+        /// <summary> Materialized Views defined on the container. </summary>
+        [WirePath("materializedViews")]
+        public IList<CosmosDBMaterializedViewDetails> MaterializedViews { get; }
+
+        /// <summary> Materialized Views Properties defined for source container. </summary>
+        [WirePath("materializedViewsProperties")]
+        internal MaterializedViewsProperties MaterializedViewsProperties { get; set; }
+
+        /// <summary> List of computed properties. </summary>
+        [WirePath("computedProperties")]
+        public IList<ComputedProperty> ComputedProperties { get; }
+
+        /// <summary> The vector embedding policy for the container. </summary>
+        [WirePath("vectorEmbeddingPolicy")]
+        internal VectorEmbeddingPolicy VectorEmbeddingPolicy { get; set; }
+
+        /// <summary> The FullText policy for the container. </summary>
+        [WirePath("fullTextPolicy")]
+        public FullTextPolicy FullTextPolicy { get; set; }
+
+        /// <summary> The Data Masking policy for the container. </summary>
+        [WirePath("dataMaskingPolicy")]
+        public DataMaskingPolicy DataMaskingPolicy { get; set; }
+
         /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
         [WirePath("uniqueKeyPolicy.uniqueKeys")]
         public IList<CosmosDBUniqueKey> UniqueKeys
@@ -115,34 +145,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get
             {
                 if (UniqueKeyPolicy is null)
+                {
                     UniqueKeyPolicy = new CosmosDBUniqueKeyPolicy();
+                }
                 return UniqueKeyPolicy.UniqueKeys;
             }
         }
 
-        /// <summary> The conflict resolution policy for the container. </summary>
-        [WirePath("conflictResolutionPolicy")]
-        public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
-        /// <summary> The client encryption policy for the container. </summary>
-        [WirePath("clientEncryptionPolicy")]
-        public CosmosDBClientEncryptionPolicy ClientEncryptionPolicy { get; set; }
-        /// <summary> Analytical TTL. </summary>
-        [WirePath("analyticalStorageTtl")]
-        public long? AnalyticalStorageTtl { get; set; }
-        /// <summary> Parameters to indicate the information about the restore. </summary>
-        [WirePath("restoreParameters")]
-        public ResourceRestoreParameters RestoreParameters { get; set; }
-        /// <summary> Enum to indicate the mode of resource creation. </summary>
-        [WirePath("createMode")]
-        public CosmosDBAccountCreateMode? CreateMode { get; set; }
-        /// <summary> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </summary>
-        [WirePath("materializedViewDefinition")]
-        public MaterializedViewDefinition MaterializedViewDefinition { get; set; }
-        /// <summary> List of computed properties. </summary>
-        [WirePath("computedProperties")]
-        public IList<ComputedProperty> ComputedProperties { get; }
-        /// <summary> The vector embedding policy for the container. </summary>
-        internal VectorEmbeddingPolicy VectorEmbeddingPolicy { get; set; }
+        /// <summary> Throughput bucket assigned for the materialized view operations on source container. </summary>
+        [WirePath("materializedViewsProperties.throughputBucketForBuild")]
+        public int? MaterializedViewsThroughputBucketForBuild
+        {
+            get
+            {
+                return MaterializedViewsProperties is null ? default : MaterializedViewsProperties.ThroughputBucketForBuild;
+            }
+            set
+            {
+                if (MaterializedViewsProperties is null)
+                {
+                    MaterializedViewsProperties = new MaterializedViewsProperties();
+                }
+                MaterializedViewsProperties.ThroughputBucketForBuild = value;
+            }
+        }
+
         /// <summary> List of vector embeddings. </summary>
         [WirePath("vectorEmbeddingPolicy.vectorEmbeddings")]
         public IList<CosmosDBVectorEmbedding> VectorEmbeddings
@@ -150,7 +177,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             get
             {
                 if (VectorEmbeddingPolicy is null)
+                {
                     VectorEmbeddingPolicy = new VectorEmbeddingPolicy();
+                }
                 return VectorEmbeddingPolicy.VectorEmbeddings;
             }
         }

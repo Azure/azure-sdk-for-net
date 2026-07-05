@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {
@@ -14,71 +15,112 @@ namespace Azure.AI.Language.Conversations.Models
     public readonly partial struct AreaUnit : IEquatable<AreaUnit>
     {
         private readonly string _value;
+        /// <summary> Unspecified area unit. </summary>
+        private const string UnspecifiedValue = "Unspecified";
+        /// <summary> Square kilometer area unit. </summary>
+        private const string SquareKilometerValue = "SquareKilometer";
+        /// <summary> Square hectometer area unit. </summary>
+        private const string SquareHectometerValue = "SquareHectometer";
+        /// <summary> Square decameter area unit. </summary>
+        private const string SquareDecameterValue = "SquareDecameter";
+        /// <summary> Square decimeter area unit. </summary>
+        private const string SquareDecimeterValue = "SquareDecimeter";
+        /// <summary> Square meter area unit. </summary>
+        private const string SquareMeterValue = "SquareMeter";
+        /// <summary> Square centimeter area unit. </summary>
+        private const string SquareCentimeterValue = "SquareCentimeter";
+        /// <summary> Square millimeter area unit. </summary>
+        private const string SquareMillimeterValue = "SquareMillimeter";
+        /// <summary> Square inch area unit. </summary>
+        private const string SquareInchValue = "SquareInch";
+        /// <summary> Square foot area unit. </summary>
+        private const string SquareFootValue = "SquareFoot";
+        /// <summary> Square mile area unit. </summary>
+        private const string SquareMileValue = "SquareMile";
+        /// <summary> Square yard area unit. </summary>
+        private const string SquareYardValue = "SquareYard";
+        /// <summary> Acre area unit. </summary>
+        private const string AcreValue = "Acre";
 
         /// <summary> Initializes a new instance of <see cref="AreaUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AreaUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnspecifiedValue = "Unspecified";
-        private const string SquareKilometerValue = "SquareKilometer";
-        private const string SquareHectometerValue = "SquareHectometer";
-        private const string SquareDecameterValue = "SquareDecameter";
-        private const string SquareDecimeterValue = "SquareDecimeter";
-        private const string SquareMeterValue = "SquareMeter";
-        private const string SquareCentimeterValue = "SquareCentimeter";
-        private const string SquareMillimeterValue = "SquareMillimeter";
-        private const string SquareInchValue = "SquareInch";
-        private const string SquareFootValue = "SquareFoot";
-        private const string SquareMileValue = "SquareMile";
-        private const string SquareYardValue = "SquareYard";
-        private const string AcreValue = "Acre";
+            _value = value;
+        }
 
         /// <summary> Unspecified area unit. </summary>
         public static AreaUnit Unspecified { get; } = new AreaUnit(UnspecifiedValue);
+
         /// <summary> Square kilometer area unit. </summary>
         public static AreaUnit SquareKilometer { get; } = new AreaUnit(SquareKilometerValue);
+
         /// <summary> Square hectometer area unit. </summary>
         public static AreaUnit SquareHectometer { get; } = new AreaUnit(SquareHectometerValue);
+
         /// <summary> Square decameter area unit. </summary>
         public static AreaUnit SquareDecameter { get; } = new AreaUnit(SquareDecameterValue);
+
         /// <summary> Square decimeter area unit. </summary>
         public static AreaUnit SquareDecimeter { get; } = new AreaUnit(SquareDecimeterValue);
+
         /// <summary> Square meter area unit. </summary>
         public static AreaUnit SquareMeter { get; } = new AreaUnit(SquareMeterValue);
+
         /// <summary> Square centimeter area unit. </summary>
         public static AreaUnit SquareCentimeter { get; } = new AreaUnit(SquareCentimeterValue);
+
         /// <summary> Square millimeter area unit. </summary>
         public static AreaUnit SquareMillimeter { get; } = new AreaUnit(SquareMillimeterValue);
+
         /// <summary> Square inch area unit. </summary>
         public static AreaUnit SquareInch { get; } = new AreaUnit(SquareInchValue);
+
         /// <summary> Square foot area unit. </summary>
         public static AreaUnit SquareFoot { get; } = new AreaUnit(SquareFootValue);
+
         /// <summary> Square mile area unit. </summary>
         public static AreaUnit SquareMile { get; } = new AreaUnit(SquareMileValue);
+
         /// <summary> Square yard area unit. </summary>
         public static AreaUnit SquareYard { get; } = new AreaUnit(SquareYardValue);
+
         /// <summary> Acre area unit. </summary>
         public static AreaUnit Acre { get; } = new AreaUnit(AcreValue);
+
         /// <summary> Determines if two <see cref="AreaUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AreaUnit left, AreaUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AreaUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AreaUnit left, AreaUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AreaUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AreaUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AreaUnit(string value) => new AreaUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AreaUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AreaUnit?(string value) => value == null ? null : new AreaUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AreaUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AreaUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

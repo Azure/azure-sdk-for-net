@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> Represents the SKU name and Azure pricing tier for Microsoft Fabric capacity resource. </summary>
     public partial class FabricSku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FabricSku"/>. </summary>
         /// <param name="name"> The name of the SKU level. </param>
@@ -60,21 +32,17 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> Initializes a new instance of <see cref="FabricSku"/>. </summary>
         /// <param name="name"> The name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricSku(string name, FabricSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FabricSku(string name, FabricSkuTier tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FabricSku"/> for deserialization. </summary>
-        internal FabricSku()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the SKU level. </summary>
         public string Name { get; set; }
+
         /// <summary> The name of the Azure pricing tier to which the SKU applies. </summary>
         public FabricSkuTier Tier { get; set; }
     }

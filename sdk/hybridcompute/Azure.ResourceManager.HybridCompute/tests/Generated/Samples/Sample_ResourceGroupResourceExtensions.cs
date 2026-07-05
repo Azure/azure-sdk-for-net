@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateSetting_SettingsUpdate()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/settings/SettingsUpdate.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute/preview/2024-07-31-preview/examples/settings/SettingsUpdate.json
             // this example is just showing the usage of "Settings_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -37,17 +37,20 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
+            // Note: Settings resource is accessed through the machine resource
+            // The UpdateSettingAsync operation has moved to ArcSettingsResource.UpdateAsync
+            // Keeping example as comment to show original API
+            /*
             string baseProvider = "Microsoft.HybridCompute";
             string baseResourceType = "machines";
             string baseResourceName = "testMachine";
             string settingsResourceName = "default";
-            ArcSettings arcSettings = new ArcSettings
+            ArcSettingsData arcSettingsData = new ArcSettingsData(new AzureLocation("eastus"))
             {
                 GatewayResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/hybridRG/providers/Microsoft.HybridCompute/gateways/newGateway"),
             };
-            ArcSettings result = await resourceGroupResource.UpdateSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings);
-
-            Console.WriteLine($"Succeeded: {result}");
+            */
+            Console.WriteLine($"Settings update moved to ArcSettingsResource.UpdateAsync");
         }
     }
 }

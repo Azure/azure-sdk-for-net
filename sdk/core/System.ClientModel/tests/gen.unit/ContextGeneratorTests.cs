@@ -119,8 +119,7 @@ namespace TestProject
 
             if (expectedDiag)
             {
-                Assert.AreEqual(1, result.Diagnostics.Length);
-                Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.TypeMustHaveParameterlessConstructor.Id, result.Diagnostics[0].Id);
+                Assert.AreEqual(0, result.Diagnostics.Length);
 
                 Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
             }
@@ -233,8 +232,7 @@ namespace TestProject
             Assert.IsNotNull(result.GenerationSpec);
             Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.AbstractTypeWithoutProxy.Id, result.Diagnostics[0].Id);
+            Assert.AreEqual(0, result.Diagnostics.Length);
             Assert.AreEqual("public", result.GenerationSpec!.Modifier);
             Assert.AreEqual(1, result.GenerationSpec.TypeBuilders.Count);
             Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
@@ -622,8 +620,7 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNull(result.GenerationSpec);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, result.Diagnostics[0].Id);
+            Assert.AreEqual(0, result.Diagnostics.Length);
         }
 
         [Test]
@@ -685,12 +682,11 @@ namespace TestProject
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
             Assert.IsNull(result.GenerationSpec);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.ContextMustBePartial.Id, result.Diagnostics[0].Id);
+            // The PartialModifierAnalyzer reports the diagnostic, not the generator
+            Assert.AreEqual(0, result.Diagnostics.Length);
         }
 
         [Test]
-        [Ignore("Temporarily disabled for perf")]
         public void AttributeOnWrongClassTypeShouldFail()
         {
             string source =
@@ -709,17 +705,11 @@ namespace TestProject
             Compilation compilation = CompilationHelper.CreateCompilation(source);
             var result = CompilationHelper.RunSourceGenerator(compilation);
 
-            Assert.IsNotNull(result.GenerationSpec);
-            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
-            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
-            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
-            Assert.AreEqual(0, result.GenerationSpec.TypeBuilders.Count);
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
+            Assert.IsNull(result.GenerationSpec);
+            Assert.AreEqual(0, result.Diagnostics.Length);
         }
 
         [Test]
-        [Ignore("Temporarily disabled for perf")]
         public void AttributeOnWrongClassWithOneOnCorrectClass()
         {
             string source =
@@ -771,8 +761,7 @@ namespace TestProject
             Assert.IsTrue(dict.TryGetValue($"TestProject.{JsonModel}", out var item));
             AssertJsonModel(item!.Type);
 
-            Assert.AreEqual(1, result.Diagnostics.Length);
-            Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.BuildableAttributeRequiresContext.Id, result.Diagnostics[0].Id);
+            Assert.AreEqual(0, result.Diagnostics.Length);
         }
 
         [Test]

@@ -3,19 +3,14 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Snippets;
-using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -46,8 +41,6 @@ internal class NameVisitor : ScmLibraryVisitor
             "PrivateLinkResourceListResult"
         };
 
-    private readonly Dictionary<MrwSerializationTypeDefinition, string> _deserializationRename = new();
-
     protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
     {
         if (type is null)
@@ -71,37 +64,44 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        if (TryTransformUrlToUri(model.Name, out var newName))
+        type = base.PreVisitModel(model, type);
+        if (type is null)
         {
-            UpdateSerialization(type, newName, type.Name);
+            return null;
+        }
+
+        if (TryTransformUrlToUri(type.Name, out var newName))
+        {
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
-            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
-            UpdateSerialization(type, newName, type.Name);
+            // Compose with type.Name (not model.Name) so any prior provider-level rename
+            // (e.g. ResourceDataModelProvider's "Data" suffix) is preserved.
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{type.Name}";
             type.Update(name: newName);
         }
 
-        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName))
+        if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            newName = $"{enclosingResourceName}Patch";
-            UpdateSerialization(type, newName, type.Name);
-            type.Update(name: newName);
+            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
+            // When the same model is also used as the Create body we always rename to
+            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
+            // consistent across the SDK surface.
+            if (isAlsoUsedInCreate)
+            {
+                newName = $"{enclosingResourceName}CreateOrUpdateContent";
+                type.Update(name: newName);
+            }
+            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            {
+                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
+                newName = $"{enclosingResourceName}Patch";
+                type.Update(name: newName);
+            }
         }
-        return base.PreVisitModel(model, type);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    private void UpdateSerialization(ModelProvider type, string newName, string originalName)
-    {
-        foreach (MrwSerializationTypeDefinition serializationProvider in type.SerializationProviders)
-        {
-            // Update the serialization provider name to match the model name
-            serializationProvider.Update(name: newName);
-            _deserializationRename.Add(serializationProvider, $"Deserialize{newName}");
-        }
+        return type;
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
@@ -120,8 +120,8 @@ internal class NameVisitor : ScmLibraryVisitor
             return;
         }
         var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
-            || !modelProvider.CrossLanguageDefinitionId.Equals(KnownManagementTypes.ArmResourceId))
+        if (enclosingType is not SystemObjectModelProvider modelProvider
+            || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
         {
             return;
         }
@@ -153,7 +153,7 @@ internal class NameVisitor : ScmLibraryVisitor
         };
     private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider != null && propertyProvider.Type.Equals(typeof(DateTimeOffset)))
+        if (propertyProvider != null && IsDateTimeInputType(property.Type))
         {
             var propertyName = propertyProvider.Name;
             // Skip properties that are not following the pattern we want to change
@@ -204,50 +204,6 @@ internal class NameVisitor : ScmLibraryVisitor
         }
     }
 
-    protected override MethodProvider? VisitMethod(MethodProvider method)
-    {
-        // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
-        {
-            method.Signature.Update(name: newName);
-        }
-
-        return base.VisitMethod(method);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    protected override MethodBodyStatement? VisitExpressionStatement(ExpressionStatement statement, MethodProvider method)
-    {
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
-            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
-            && method.Signature.Name == "JsonModelCreateCore"
-            && statement.Expression is KeywordExpression keyword && keyword.Keyword == "return"
-            && keyword.Expression is InvokeMethodExpression invokeMethod)
-        {
-            invokeMethod.Update(methodName: newName);
-        }
-        return base.VisitExpressionStatement(statement, method);
-    }
-
-    // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
-    protected override SwitchCaseStatement? VisitSwitchCaseStatement(SwitchCaseStatement statement, MethodProvider method)
-    {
-        if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition
-            && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName)
-            && method.Signature.Name == "PersistableModelCreateCore")
-        {
-            if (statement.Statement.AsStatement().FirstOrDefault() is UsingScopeStatement usingScopeStatement
-                && usingScopeStatement.Body.AsStatement().FirstOrDefault() is ExpressionStatement expression
-                && expression.Expression is KeywordExpression keywordExpression
-                && keywordExpression.Keyword == "return"
-                && keywordExpression.Expression is InvokeMethodExpression invokeMethod)
-            {
-                invokeMethod.Update(methodName: newName);
-            }
-        }
-        return base.VisitSwitchCaseStatement(statement, method);
-    }
-
     private bool TryTransformUrlToUri(string name, [MaybeNullWhen(false)] out string newName)
     {
         const char i = 'i';
@@ -271,4 +227,17 @@ internal class NameVisitor : ScmLibraryVisitor
 
         return false;
     }
+
+    /// <summary>
+    /// Checks the input type (rather than the C# type) to determine if it represents a date/time,
+    /// so the rename logic works regardless of what C# type the downstream generator maps it to
+    /// (e.g., DateTimeOffset, BicepValue&lt;DateTimeOffset&gt;, etc.).
+    /// </summary>
+    private static bool IsDateTimeInputType(InputType inputType) => inputType switch
+    {
+        InputDateTimeType => true,
+        InputPrimitiveType { Kind: InputPrimitiveTypeKind.PlainDate } => true,
+        InputNullableType nullableType => IsDateTimeInputType(nullableType.Type),
+        _ => false
+    };
 }

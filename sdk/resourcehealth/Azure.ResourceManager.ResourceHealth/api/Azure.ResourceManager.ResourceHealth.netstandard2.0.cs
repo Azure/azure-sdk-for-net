@@ -25,13 +25,15 @@ namespace Azure.ResourceManager.ResourceHealth
     {
         internal ResourceHealthEventData() { }
         public string AdditionalInformationMessage { get { throw null; } }
-        public string ArgQuery { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle Article { get { throw null; } }
+        public string BillingId { get { throw null; } }
+        public string CurrencyType { get { throw null; } }
         public string Description { get { throw null; } }
         public int? Duration { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue? EventLevel { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue? EventSource { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue? EventSubType { get { throw null; } }
+        public System.Collections.Generic.IList<string> EventTags { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue? EventType { get { throw null; } }
         public string ExternalIncidentId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq> Faqs { get { throw null; } }
@@ -42,21 +44,25 @@ namespace Azure.ResourceManager.ResourceHealth
         public System.DateTimeOffset? ImpactStartOn { get { throw null; } }
         public string ImpactType { get { throw null; } }
         public bool? IsChatWithUsEnabled { get { throw null; } }
+        public bool? IsEventSensitive { get { throw null; } }
         public bool? IsHirEvent { get { throw null; } }
         public bool? IsMicrosoftSupportEnabled { get { throw null; } }
         public bool? IsPlatformInitiated { get { throw null; } }
         public System.DateTimeOffset? LastUpdateOn { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue? Level { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink> Links { get { throw null; } }
-        public string MaintenanceId { get { throw null; } }
-        public string MaintenanceType { get { throw null; } }
+        public double? NewRate { get { throw null; } }
+        public double? OldRate { get { throw null; } }
         public int? Priority { get { throw null; } }
         public string Reason { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions RecommendedActions { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? Status { get { throw null; } }
         public string Summary { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.ResourceHealthEventData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.ResourceHealthEventData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.ResourceHealthEventData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -97,15 +103,13 @@ namespace Azure.ResourceManager.ResourceHealth
     {
         internal ResourceHealthEventImpactedResourceData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem> Info { get { throw null; } }
-        public string MaintenanceEndTime { get { throw null; } }
-        public string MaintenanceStartTime { get { throw null; } }
-        public string ResourceGroup { get { throw null; } }
-        public string ResourceName { get { throw null; } }
-        public string Status { get { throw null; } }
         public string TargetRegion { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
         public Azure.Core.ResourceType? TargetResourceType { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -119,6 +123,8 @@ namespace Azure.ResourceManager.ResourceHealth
         public virtual Azure.ResourceManager.ResourceHealth.ResourceHealthEventData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string eventTrackingId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource> FetchBillingCommunicationDetailsBySubscriptionIdAndTrackingId(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>> FetchBillingCommunicationDetailsBySubscriptionIdAndTrackingIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource> FetchDetailsBySubscriptionIdAndTrackingId(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource>> FetchDetailsBySubscriptionIdAndTrackingIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceHealth.ResourceHealthEventResource> Get(string filter = null, string queryStartTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -193,7 +199,10 @@ namespace Azure.ResourceManager.ResourceHealth
         public System.Collections.Generic.IReadOnlyList<string> DependsOn { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail> SupportedValues { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -236,7 +245,10 @@ namespace Azure.ResourceManager.ResourceHealth
         public System.DateTimeOffset? RefreshedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType> StatusActiveEvents { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType> StatusBanners { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.ServiceEmergingIssueData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -387,21 +399,21 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType EmergingIssueBannerType(string title = null, string message = null, string cloud = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact EmergingIssueImpact(string id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion> regions = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion EmergingIssueImpactedRegion(string id = null, string name = null) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceType> resourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = null, string previousId = null, string serviceGuid = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceType> resourceTypes = null, int? priority = default(int?)) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved ResourceHealthAvailabilityStateRecentlyResolved(System.DateTimeOffset? unavailableOccuredOn = default(System.DateTimeOffset?), System.DateTimeOffset? resolvedOn = default(System.DateTimeOffset?), string unavailableSummary = null) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus ResourceHealthAvailabilityStatus(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus ResourceHealthAvailabilityStatus(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties ResourceHealthAvailabilityStatusProperties(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue? availabilityState = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue?), string title = null, string summary = null, string detailedStatus = null, string reasonType = null, string context = null, string category = null, string articleId = null, System.DateTimeOffset? rootCauseAttributionOn = default(System.DateTimeOffset?), string healthEventType = null, string healthEventCause = null, string healthEventCategory = null, string healthEventId = null, System.DateTimeOffset? resolutionEta = default(System.DateTimeOffset?), System.DateTimeOffset? occuredOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType? reasonChronicity = default(Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType?), System.DateTimeOffset? reportedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction> recommendedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent> serviceImpactingEvents = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle ResourceHealthEventArticle(string articleContent = null, string articleId = null, System.BinaryData parameters = null) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.ResourceHealthEventData ResourceHealthEventData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue? eventType = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue?), Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue? eventSubType = default(Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue? eventSource = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? status = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue?), string title = null, string summary = null, string header = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue? level = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue? eventLevel = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue?), string externalIncidentId = null, string reason = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle article = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink> links = null, System.DateTimeOffset? impactStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? impactMitigationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact> impact = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions recommendedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq> faqs = null, bool? isHirEvent = default(bool?), bool? isMicrosoftSupportEnabled = default(bool?), string description = null, bool? isPlatformInitiated = default(bool?), bool? isChatWithUsEnabled = default(bool?), int? priority = default(int?), System.DateTimeOffset? lastUpdateOn = default(System.DateTimeOffset?), string hirStage = null, string additionalInformationMessage = null, int? duration = default(int?), string impactType = null, string maintenanceId = null, string maintenanceType = null, string argQuery = null) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.ResourceHealthEventData ResourceHealthEventData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue? eventType = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue?), Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue? eventSubType = default(Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue? eventSource = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? status = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue?), string title = null, string summary = null, string header = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue? level = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue? eventLevel = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue?), bool? isEventSensitive = default(bool?), string externalIncidentId = null, string reason = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle article = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink> links = null, System.DateTimeOffset? impactStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? impactMitigationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact> impact = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions recommendedActions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq> faqs = null, bool? isHirEvent = default(bool?), bool? isMicrosoftSupportEnabled = default(bool?), string description = null, bool? isPlatformInitiated = default(bool?), bool? isChatWithUsEnabled = default(bool?), int? priority = default(int?), System.DateTimeOffset? lastUpdateOn = default(System.DateTimeOffset?), string hirStage = null, int? duration = default(int?), string impactType = null, System.Collections.Generic.IEnumerable<string> eventTags = null, double? newRate = default(double?), double? oldRate = default(double?), string currencyType = null, string billingId = null, string additionalInformationMessage = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq ResourceHealthEventFaq(string question = null, string answer = null, string localeCode = null) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact ResourceHealthEventImpact(string impactedService = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion> impactedRegions = null) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.ResourceIdentifier targetResourceId = null, string targetRegion = null, string resourceName = null, string resourceGroup = null, string status = null, string maintenanceStartTime = null, string maintenanceEndTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem> info = null) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact ResourceHealthEventImpact(string impactedService = null, string impactedServiceGuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion> impactedRegions = null) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceType? targetResourceType = default(Azure.Core.ResourceType?), Azure.Core.ResourceIdentifier targetResourceId = null, string targetRegion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem> info = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion ResourceHealthEventImpactedServiceRegion(string impactedRegion = null, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? status = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue?), System.Collections.Generic.IEnumerable<string> impactedSubscriptions = null, System.Collections.Generic.IEnumerable<string> impactedTenants = null, System.DateTimeOffset? lastUpdateOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate> updates = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink ResourceHealthEventLink(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue? linkType = default(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue?), Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText displayText = null, string extensionName = null, string bladeName = null, System.BinaryData parameters = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText ResourceHealthEventLinkDisplayText(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions ResourceHealthEventRecommendedActions(string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem> actions = null, string localeCode = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem ResourceHealthEventRecommendedActionsItem(int? groupId = default(int?), string actionText = null) { throw null; }
-        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate ResourceHealthEventUpdate(string summary = null, System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate ResourceHealthEventUpdate(string summary = null, System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> eventTags = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem ResourceHealthKeyValueItem(string key = null, string value = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.ResourceHealthMetadataEntityData ResourceHealthMetadataEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, System.Collections.Generic.IEnumerable<string> dependsOn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario> applicableScenarios = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail> supportedValues = null) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = null, System.Uri actionUri = null, string actionUriComment = null, string actionUriText = null) { throw null; }
@@ -422,7 +434,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Title { get { throw null; } }
         public string TrackingId { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueActiveEventType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -436,7 +451,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public string Message { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueBannerType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -449,7 +467,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion> Regions { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -461,7 +482,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal EmergingIssueImpactedRegion() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.EmergingIssueImpactedRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -476,12 +500,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public EmergingIssueNameContent(string value) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent Default { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent left, Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent left, Azure.ResourceManager.ResourceHealth.Models.EmergingIssueNameContent right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -491,14 +514,20 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EventSubTypeValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue ForeignExchangeRateChange { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue MeterIdChanges { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue Overbilling { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue PriceChanges { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue Retirement { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue TaxChanges { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue UnauthorizedPartyAbuse { get { throw null; } }
+        public static Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue Underbilling { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue left, Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue left, Azure.ResourceManager.ResourceHealth.Models.EventSubTypeValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -510,12 +539,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public MetadataEntityScenario(string value) { throw null; }
         public static Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario Alerts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario left, Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario left, Azure.ResourceManager.ResourceHealth.Models.MetadataEntityScenario right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -524,8 +552,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal MetadataSupportedValueDetail() { }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
+        public string PreviousId { get { throw null; } }
+        public int? Priority { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceType> ResourceTypes { get { throw null; } }
+        public string ServiceGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.MetadataSupportedValueDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -541,12 +575,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType Persistent { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType Transient { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType left, Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType left, Azure.ResourceManager.ResourceHealth.Models.ReasonChronicityType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -556,7 +589,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.DateTimeOffset? ResolvedOn { get { throw null; } }
         public System.DateTimeOffset? UnavailableOccuredOn { get { throw null; } }
         public string UnavailableSummary { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateRecentlyResolved>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -574,12 +610,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue Unavailable { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStateValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -588,7 +623,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal ResourceHealthAvailabilityStatus() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -618,7 +656,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent> ServiceImpactingEvents { get { throw null; } }
         public string Summary { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthAvailabilityStatusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -631,7 +672,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string ArticleContent { get { throw null; } }
         public string ArticleId { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventArticle>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -644,7 +688,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string Answer { get { throw null; } }
         public string LocaleCode { get { throw null; } }
         public string Question { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventFaq>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -656,7 +703,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal ResourceHealthEventImpact() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion> ImpactedRegions { get { throw null; } }
         public string ImpactedService { get { throw null; } }
+        public string ImpactedServiceGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -672,7 +723,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.DateTimeOffset? LastUpdateOn { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate> Updates { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventImpactedServiceRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -688,12 +742,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue Critical { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventInsightLevelValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -708,12 +761,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue Informational { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLevelValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -725,7 +777,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string ExtensionName { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue? LinkType { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -737,7 +792,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal ResourceHealthEventLinkDisplayText() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkDisplayText>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -753,12 +811,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue Button { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue Hyperlink { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventLinkTypeValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -768,7 +825,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem> Actions { get { throw null; } }
         public string LocaleCode { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -780,7 +840,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal ResourceHealthEventRecommendedActionsItem() { }
         public string ActionText { get { throw null; } }
         public int? GroupId { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventRecommendedActionsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -797,12 +860,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel Information { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel Warning { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSeverityLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -815,12 +877,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue ResourceHealth { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue ServiceHealth { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventSourceValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -834,12 +895,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue Archived { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue Resolve { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStageValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -852,12 +912,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue Active { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue Resolved { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventStatusValue right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -867,6 +926,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ResourceHealthEventTypeValue(string value) { throw null; }
+        public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue Billing { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue EmergingIssues { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue HealthAdvisory { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue PlannedMaintenance { get { throw null; } }
@@ -874,21 +934,24 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue SecurityAdvisory { get { throw null; } }
         public static Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue ServiceIssue { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue right) { throw null; }
         public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue left, Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventTypeValue right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ResourceHealthEventUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate>
     {
         internal ResourceHealthEventUpdate() { }
+        public System.Collections.Generic.IList<string> EventTags { get { throw null; } }
         public string Summary { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthEventUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -900,7 +963,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         internal ResourceHealthKeyValueItem() { }
         public string Key { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthKeyValueItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -914,7 +980,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.Uri ActionUri { get { throw null; } }
         public string ActionUriComment { get { throw null; } }
         public string ActionUriText { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ResourceHealthRecommendedAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -929,7 +998,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public System.DateTimeOffset? EventStatusLastModifiedOn { get { throw null; } }
         public Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties IncidentProperties { get { throw null; } }
         public string StatusValue { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEvent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -943,7 +1015,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string Region { get { throw null; } }
         public string Service { get { throw null; } }
         public string Title { get { throw null; } }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ResourceHealth.Models.ServiceImpactingEventIncidentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

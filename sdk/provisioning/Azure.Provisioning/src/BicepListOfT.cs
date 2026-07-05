@@ -5,8 +5,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning;
 
@@ -23,14 +25,10 @@ public class BicepList<T> :
     private IList<BicepValue<T>> _values;
     private protected override object? GetLiteralValue() => _values;
 
-    // We're empty if unset or no literal values
-    public override bool IsEmpty =>
-        base.IsEmpty || (_kind == BicepValueKind.Literal && _values.Count == 0);
-
     /// <summary>
     /// Creates a new BicepList.
     /// </summary>
-    public BicepList() : this(self: null, values: null) { }
+    public BicepList() : this(self: null, values: []) { }
 
     /// <summary>
     /// Creates a new BicepList with literal values.
@@ -42,9 +40,26 @@ public class BicepList<T> :
     internal BicepList(BicepValueReference? self, IList<BicepValue<T>>? values = null)
         : base(self)
     {
-        _kind = BicepValueKind.Literal;
-        // Shallow clone their list
-        _values = values != null ? [.. values] : [];
+        if (values == null)
+        {
+            // we consider this as an "uninitialized list"
+            _kind = BicepValueKind.Unset;
+            _values = [];
+        }
+        else
+        {
+            // in this case, the list is initialized as a literal list
+            _kind = BicepValueKind.Literal;
+            _values = new List<BicepValue<T>>(values.Count);
+            // assign values from input into our own list
+            for (int i = 0; i < values.Count; i++)
+            {
+                var item = new BicepValue<T>((BicepValueReference?)null);
+                SetSelfForItem(item, i);
+                item.Assign(values[i]);
+                _values.Add(item);
+            }
+        }
     }
 
     // Move literal elements when assigning values to a list
@@ -59,6 +74,12 @@ public class BicepList<T> :
 
         // Everything else is handled by the base Assign
         base.Assign(source);
+
+        // handle self in all the items
+        for (int i = 0; i < _values.Count; i++)
+        {
+            SetSelfForItem(_values[i], i);
+        }
     }
 
     /// <summary>
@@ -91,7 +112,18 @@ public class BicepList<T> :
             }
             else
             {
-                return _values[index];
+                if (index < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(index), "Index must be non-negative.");
+                }
+                // if we are referencing an actual value
+                if (index < _values.Count)
+                {
+                    return _values[index];
+                }
+                // the index is out of range, we put a value factory as the literal value of this bicep value
+                // this will throw an exception when evaluated or compiled, but is still usable for building a reference expression
+                return new BicepValue<T>(GetItemSelf(index), () => _values[index].Value);
             }
         }
         set
@@ -100,17 +132,131 @@ public class BicepList<T> :
             {
                 throw new InvalidOperationException($"Cannot assign to {_self?.PropertyName}");
             }
-            _values[index] = value;
+            if (_kind == BicepValueKind.Unset)
+            {
+                _kind = BicepValueKind.Literal;
+            }
+            _values[index].Assign(value);
         }
     }
 
-    public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
-    public void Add(BicepValue<T> item) => _values.Add(item);
+    private BicepValueReference? GetItemSelf(int index) =>
+        _self is not null
+            ? new BicepListValueReference(_self.Construct, $"{_self.PropertyName}[{index}]", _self.BicepPath?.ToArray(), index)
+            : null;
 
-    // TODO: Decide whether it's important to "unlink" resources on removal
-    public void RemoveAt(int index) => _values.RemoveAt(index);
-    public void Clear() => _values.Clear();
-    public bool Remove(BicepValue<T> item) => _values.Remove(item);
+    private void SetSelfForItem(BicepValue<T> item, int index)
+    {
+        var itemSelf = GetItemSelf(index);
+        item.SetSelf(itemSelf);
+    }
+
+    private void RemoveSelfForItem(BicepValue<T> item)
+    {
+        item.SetSelf(null);
+    }
+
+    public void Insert(int index, BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Insert to {_self?.PropertyName}, the list is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        var insertedItem = new BicepValue<T>((BicepValueReference?)null);
+        _values.Insert(index, insertedItem);
+        insertedItem.Assign(item);
+        // update the _self for the inserted item and all items after it
+        for (int i = index; i < _values.Count; i++)
+        {
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
+        }
+    }
+
+    public void Add(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Add to {_self?.PropertyName}, the list is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        var addedItem = new BicepValue<T>((BicepValueReference?)null);
+        addedItem.Assign(item);
+        _values.Add(addedItem);
+        // update the _self pointing the new item
+        SetSelfForItem(addedItem, _values.Count - 1);
+    }
+
+    public void RemoveAt(int index)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the list is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        var removed = _values[index];
+        _values.RemoveAt(index);
+        // maintain the self reference for the removed item and remaining items
+        RemoveSelfForItem(removed);
+        // update the _self for all items after the removed item
+        for (int i = index; i < _values.Count; i++)
+        {
+            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
+            if (self is not null)
+            {
+                self.Index = i;
+            }
+        }
+    }
+
+    public void Clear()
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Clear {_self?.PropertyName}, the list is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        for (int i = 0; i < _values.Count; i++)
+        {
+            RemoveSelfForItem(_values[i]);
+        }
+        _values.Clear();
+    }
+
+    public bool Remove(BicepValue<T> item)
+    {
+        if (_kind == BicepValueKind.Expression || _isOutput)
+        {
+            throw new InvalidOperationException($"Cannot Remove from {_self?.PropertyName}, the list is an expression or output only");
+        }
+        if (_kind == BicepValueKind.Unset)
+        {
+            _kind = BicepValueKind.Literal;
+        }
+        int index = _values.IndexOf(item);
+        if (index >= 0)
+        {
+            RemoveAt(index);
+            return true;
+        }
+        return false;
+    }
 
     public int Count => _values.Count;
     public bool IsReadOnly => _values.IsReadOnly;
@@ -135,4 +281,9 @@ public class BicepList<T> :
     public static BicepList<T> FromExpression(Func<BicepExpression, T> referenceFactory, BicepExpression expression) =>
         new(expression) { _referenceFactory = referenceFactory };
     private Func<BicepExpression, T>? _referenceFactory = null;
+
+    private protected override BicepExpression CompileLiteralValue()
+    {
+        return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
+    }
 }

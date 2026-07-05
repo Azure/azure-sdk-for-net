@@ -20,26 +20,195 @@ namespace Microsoft.ClientModel.TestFramework;
 /// </summary>
 public abstract class TestEnvironment
 {
-    private static readonly Dictionary<Type, Task> s_environmentStateCache = new();
+    /// <summary>The default password used for development certificates in test environments.</summary>
+    public const string DevCertPassword = "password";
+
+    private static readonly HashSet<Type> BootstrappingAttemptedTypes = [];
+    private static readonly object SyncLock = new();
+
+    private static RecordedTestMode? s_recordedTestMode;
+    private static bool? s_disableAutoRecording;
+    private static bool? s_enableFiddler;
+    private static bool? s_disableBootstrapping;
+    private static bool? s_enableTestProxyDebugLogs;
+
+    private readonly Dictionary<string, string>? _environmentFile;
+    private readonly Type _type;
+
     private AuthenticationTokenProvider? _credential;
     private TestRecording? _recording;
-    private Dictionary<string, string>? _environmentFile;
-    private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
-    private static readonly object s_syncLock = new();
     private Exception? _bootstrappingException;
-    private readonly Type _type;
+
+    /// <summary>
+    /// Gets a value indicating whether the current platform is Windows.
+    /// Used for platform-specific test behavior and resource bootstrapping.
+    /// </summary>
+    public static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
     /// <summary>
     /// Gets the root directory of the repository containing the test project.
-    /// This is determined by searching for common repository indicators like .git directories or build files.
+    /// This is determined by searching for common repository indicators like .github directories or build files.
     /// </summary>
-    public static string? RepositoryRoot { get; }
+    public static string? RepositoryRoot
+    {
+        get
+        {
+            return field ??= FindRepositoryRoot();
+        }
+
+        protected set
+        {
+            field = value;
+        }
+    }
 
     /// <summary>
     /// Gets or sets the path to the development certificate used by the test proxy for HTTPS connections.
     /// Can be overridden by derived classes to specify custom certificate locations.
     /// </summary>
-    public static string? DevCertPath { get; protected set; }
+    public static string? DevCertPath
+    {
+        get
+        {
+            return field ??= FindDevelopmentCertificatePath(RepositoryRoot!);
+        }
+
+        protected set
+        {
+            field = value;
+        }
+    }
+
+    /// <summary>
+    /// Determines if there is a current global test mode.
+    /// </summary>
+    public static RecordedTestMode GlobalTestMode
+    {
+        get
+        {
+            // If a value was explicitly set, use it. Otherwise, check for configuration
+            // to determine the test mode.
+            if (s_recordedTestMode is { })
+            {
+                return s_recordedTestMode.Value;
+            }
+
+            string? modeString = TestContext.Parameters["TestMode"] ?? Environment.GetEnvironmentVariable("CLIENTMODEL_TEST_MODE");
+
+            RecordedTestMode mode = RecordedTestMode.Playback;
+            if (!string.IsNullOrEmpty(modeString))
+            {
+                mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
+            }
+
+            return mode;
+        }
+
+        set
+        {
+            s_recordedTestMode = value;
+        }
+    }
+
+    /// <summary>
+    /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
+    /// </summary>
+    public static bool GlobalDisableAutoRecording
+    {
+        get
+        {
+            // If a value was explicitly set, use it. Otherwise, check for a switch to
+            // disable auto-recording before re-recording on playback failures.
+            if (s_disableAutoRecording is { })
+            {
+                return s_disableAutoRecording.Value;
+            }
+
+            string? switchString = TestContext.Parameters["DisableAutoRecording"] ?? Environment.GetEnvironmentVariable("CLIENTMODEL_DISABLE_AUTO_RECORDING");
+            bool.TryParse(switchString, out bool disableAutoRecording);
+
+            return disableAutoRecording;
+        }
+
+        set
+        {
+            s_disableAutoRecording = value;
+        }
+    }
+
+    /// <summary>
+    /// Determines whether to enable the test framework to proxy traffic through fiddler.
+    /// </summary>
+    public static bool EnableFiddler
+    {
+        get
+        {
+            if (s_enableFiddler is { })
+            {
+                return s_enableFiddler.Value;
+            }
+
+            string? switchString = TestContext.Parameters["EnableFiddler"] ??
+                                  Environment.GetEnvironmentVariable("CLIENTMODEL_ENABLE_FIDDLER");
+            bool.TryParse(switchString, out bool enableFiddler);
+
+            return enableFiddler;
+        }
+
+        set
+        {
+            s_enableFiddler = value;
+        }
+    }
+
+    /// <summary>
+    /// Determines if the bootstrapping prompt and automatic resource group expiration extension should be disabled.
+    /// </summary>
+    public static bool DisableBootstrapping
+    {
+        get
+        {
+            if (s_disableBootstrapping is { })
+            {
+                return s_disableBootstrapping.Value;
+            }
+
+            string? switchString = TestContext.Parameters["DisableBootstrapping"] ?? Environment.GetEnvironmentVariable("CLIENTMODEL_DISABLE_BOOTSTRAPPING");
+            bool.TryParse(switchString, out bool disableBootstrapping);
+
+            return disableBootstrapping;
+        }
+
+        set
+        {
+            s_disableBootstrapping = value;
+        }
+    }
+
+    /// <summary>
+    /// Determines whether to enable debug level proxy logging. Errors are logged by default.
+    /// </summary>
+    public static bool EnableTestProxyDebugLogs
+    {
+        get
+        {
+            if (s_enableTestProxyDebugLogs is { })
+            {
+                return s_enableTestProxyDebugLogs.Value;
+            }
+
+            string? switchString = TestContext.Parameters[nameof(EnableTestProxyDebugLogs)] ??
+                                  Environment.GetEnvironmentVariable("CLIENTMODEL_ENABLE_TEST_PROXY_DEBUG_LOGS");
+            bool.TryParse(switchString, out bool enableProxyLogging);
+
+            return enableProxyLogging;
+        }
+
+        set
+        {
+            s_enableTestProxyDebugLogs = value;
+        }
+    }
 
     /// <summary>
     /// Gets or sets the path to the PowerShell script used for bootstrapping test resources.
@@ -48,101 +217,10 @@ public abstract class TestEnvironment
     public string? PathToTestResourceBootstrappingScript { get; set; }
 
     /// <summary>
-    /// The default password used for development certificates in test environments.
-    /// </summary>
-    public const string DevCertPassword = "password";
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="TestEnvironment"/> class.
-    /// Validates that repository root and certificate paths are available, then loads environment configuration.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown when RepositoryRoot is null.
-    /// </exception>
-    protected TestEnvironment()
-    {
-        if (RepositoryRoot == null)
-        {
-            throw new InvalidOperationException("Repository root is not set");
-        }
-
-        // DevCertPath is optional - if null, the test proxy will run without HTTPS support
-        if (DevCertPath != null && !File.Exists(DevCertPath))
-        {
-            Console.WriteLine($"Warning: Dev certificate not found at {DevCertPath}. HTTPS tests may not work.");
-        }
-
-        _type = GetType();
-
-        _environmentFile = ParseEnvironmentFile();
-    }
-
-    /// <summary>
-    /// Initializes static members of the <see cref="TestEnvironment"/> class.
-    /// Discovers the repository root and sets the default development certificate path.
-    /// </summary>
-    static TestEnvironment()
-    {
-        var directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
-        string? repositoryRoot = null;
-
-        // Strategy 1: Look for common repository root indicators
-        while (directoryInfo != null)
-        {
-            // Check for common repository root files/folders
-            if (File.Exists(Path.Combine(directoryInfo.FullName, ".git", "config")) ||
-                Directory.Exists(Path.Combine(directoryInfo.FullName, ".git")) ||
-                File.Exists(Path.Combine(directoryInfo.FullName, "Directory.Build.props")) ||
-                File.Exists(Path.Combine(directoryInfo.FullName, "Directory.Build.targets")) ||
-                File.Exists(Path.Combine(directoryInfo.FullName, "global.json")) ||
-                directoryInfo.Name == "artifacts")  // Keep existing Azure SDK logic
-            {
-                repositoryRoot = directoryInfo.Name == "artifacts" ? directoryInfo.Parent?.FullName : directoryInfo.FullName;
-                break;
-            }
-
-            directoryInfo = directoryInfo.Parent;
-        }
-
-        // Strategy 2: Fallback to a reasonable default if no indicators found
-        if (repositoryRoot == null)
-        {
-            // Go up a few levels from the assembly location as a reasonable guess
-            directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
-            for (int i = 0; i < 4 && directoryInfo?.Parent != null; i++)
-            {
-                directoryInfo = directoryInfo.Parent;
-            }
-            repositoryRoot = directoryInfo?.FullName;
-        }
-
-        if (repositoryRoot is null)
-        {
-            throw new InvalidOperationException("Repository root was not found");
-        }
-
-        RepositoryRoot ??= repositoryRoot;
-
-        // Make DevCertPath more flexible too
-        DevCertPath ??= Path.Combine(
-            RepositoryRoot,
-            "eng",
-            "common",
-            "testproxy",
-            "dotnet-devcert.pfx");
-    }
-
-    /// <summary>
     /// Gets or sets the recording mode for this test environment instance.
     /// Determines whether tests run against live services, record interactions, or replay recorded data.
     /// </summary>
     public RecordedTestMode? Mode { get; set; }
-
-    /// <summary>
-    /// Gets a value indicating whether the current platform is Windows.
-    /// Used for platform-specific test behavior and resource bootstrapping.
-    /// </summary>
-    public static bool IsWindows => RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
     /// <summary>
     /// Gets the credential provider for authenticating with Azure services during tests.
@@ -155,22 +233,24 @@ public abstract class TestEnvironment
     {
         get
         {
-            if (_credential != null)
+            if (Mode is RecordedTestMode.Live or RecordedTestMode.Record)
             {
-                return _credential;
+                throw new InvalidOperationException("Credential must be overridden in derived class for Live and Record modes.");
             }
 
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _credential = new MockCredential();
-            }
-            else
-            {
-                throw new InvalidOperationException("This getter must be overridden in Live/Record mode");
-            }
-
+            _credential ??= new MockCredential();
             return _credential;
         }
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="TestEnvironment"/> class.
+    /// Loads environment configuration from the environment file.
+    /// </summary>
+    protected TestEnvironment()
+    {
+        _type = GetType();
+        _environmentFile = ParseEnvironmentFile();
     }
 
     /// <summary>
@@ -185,6 +265,74 @@ public abstract class TestEnvironment
     /// </summary>
     /// <returns>A task.</returns>
     public abstract Task WaitForEnvironmentAsync();
+
+    /// <summary>
+    /// Associates a test recording with this environment for variable recording and playback.
+    /// Resets the credential provider to ensure proper authentication context for the recording mode.
+    /// </summary>
+    /// <param name="recording">The test recording to associate with this environment.</param>
+    public virtual void SetRecording(TestRecording recording)
+    {
+        _credential = null;
+        _recording = recording;
+    }
+
+    /// <summary>
+    /// Attempts to bootstrap test resources by running the configured PowerShell script.
+    /// Only runs on Windows platforms when bootstrapping is enabled and not in Playback mode.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when PathToTestResourceBootstrappingScript is null and bootstrapping is attempted.
+    /// </exception>
+    public virtual void BootStrapTestResources()
+    {
+        lock (SyncLock)
+        {
+            if (DisableBootstrapping)
+            {
+                return;
+            }
+            if (PathToTestResourceBootstrappingScript is null)
+            {
+                throw new InvalidOperationException("Attempting to bootstrap test resources, but PathToTestResourceBootstrappingScript is null");
+            }
+            try
+            {
+                if (!IsWindows ||
+                    BootstrappingAttemptedTypes.Contains(_type) ||
+                    Mode == RecordedTestMode.Playback)
+                {
+                    return;
+                }
+
+                var processInfo = new ProcessStartInfo(
+                @"pwsh.exe",
+                PathToTestResourceBootstrappingScript)
+                {
+                    UseShellExecute = true
+                };
+                Process? process = null;
+                try
+                {
+                    process = Process.Start(processInfo);
+                }
+                catch (Exception ex)
+                {
+                    _bootstrappingException = ex;
+                }
+
+                if (process != null)
+                {
+                    process.WaitForExit();
+                    ParseEnvironmentFile();
+                }
+            }
+            finally
+            {
+                BootstrappingAttemptedTypes.Add(_type);
+            }
+        }
+    }
 
     /// <summary>
     /// Returns and records an environment variable value when running live or recorded value during playback.
@@ -276,9 +424,6 @@ public abstract class TestEnvironment
     /// <returns>The environment variable value, or null if not found.</returns>
     protected string? GetOptionalVariable(string name)
     {
-        // TODO - add prefix var prefixedName = _prefix + name;
-
-        // Prefixed name overrides non-prefixed
         var value = Environment.GetEnvironmentVariable(name);
 
         if (value == null)
@@ -286,14 +431,14 @@ public abstract class TestEnvironment
             _environmentFile?.TryGetValue(name, out value);
         }
 
-        if (value == null)
-        {
-            value = Environment.GetEnvironmentVariable(name);
-        }
+        // Since the System.ClientModel test framework is used by multiple Azure SDK
+        // client libraries, assume an Azure prefix convention if the requested name
+        // was not found in either source.
+        name = $"AZURE_{name}";
 
         if (value == null)
         {
-            value = Environment.GetEnvironmentVariable($"AZURE_{name}");
+            value = Environment.GetEnvironmentVariable(name);
         }
 
         if (value == null)
@@ -341,17 +486,6 @@ public abstract class TestEnvironment
         }
     }
 
-    /// <summary>
-    /// Associates a test recording with this environment for variable recording and playback.
-    /// Resets the credential provider to ensure proper authentication context for the recording mode.
-    /// </summary>
-    /// <param name="recording">The test recording to associate with this environment.</param>
-    public virtual void SetRecording(TestRecording recording)
-    {
-        _credential = null;
-        _recording = recording;
-    }
-
     private string? GetRecordedValue(string name)
     {
         if (_recording == null)
@@ -393,140 +527,61 @@ public abstract class TestEnvironment
     }
 
     /// <summary>
-    /// Determines if the current global test mode.
+    ///   Intended for test use, this operation resets any
+    ///   static environment overrides back to their default state.
     /// </summary>
-    internal static RecordedTestMode GlobalTestMode
+    internal static void ResetEnvironmentOverrides()
     {
-        get
-        {
-            string? modeString = TestContext.Parameters["TestMode"] ?? Environment.GetEnvironmentVariable("CLIENTMODEL_TEST_MODE");
-
-            RecordedTestMode mode = RecordedTestMode.Playback;
-            if (!string.IsNullOrEmpty(modeString))
-            {
-                mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
-            }
-
-            return mode;
-        }
+        s_recordedTestMode = null;
+        s_disableAutoRecording = null;
+        s_enableFiddler = null;
+        s_disableBootstrapping = null;
+        s_enableTestProxyDebugLogs = null;
     }
 
     /// <summary>
-    /// Determines if tests that use <see cref="RecordedTestAttribute"/> should try to re-record on failure.
+    /// Finds the root path of the repository that contains the test project.
     /// </summary>
-    internal static bool GlobalDisableAutoRecording
+    /// <returns>The root path of the repository.</returns>
+    /// <exception cref="System.InvalidOperationException">Unable to find repository root when searching from: {assemblyLocation}</exception>
+    protected static string FindRepositoryRoot()
     {
-        get
+        var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+        var directoryInfo = new DirectoryInfo(assemblyLocation);
+        string? repositoryRoot = null;
+
+        while (directoryInfo != null)
         {
-            string? switchString = TestContext.Parameters["DisableAutoRecording"] ?? Environment.GetEnvironmentVariable("CLIENTMODEL_DISABLE_AUTO_RECORDING");
+            if (Directory.Exists(Path.Combine(directoryInfo.FullName, ".git")) ||
+                Directory.Exists(Path.Combine(directoryInfo.FullName, ".github")) ||
+                File.Exists(Path.Combine(directoryInfo.FullName, "global.json")) ||
+                directoryInfo.Name == "artifacts")
+            {
+                repositoryRoot = directoryInfo.Name == "artifacts" ? directoryInfo.Parent?.FullName : directoryInfo.FullName;
+                break;
+            }
 
-            bool.TryParse(switchString, out bool disableAutoRecording);
-
-            return disableAutoRecording;
+            directoryInfo = directoryInfo.Parent;
         }
+
+        return repositoryRoot
+            ?? throw new InvalidOperationException($"Unable to find repository root when searching from: {assemblyLocation}");
     }
 
     /// <summary>
-    /// Determines whether to enable the test framework to proxy traffic through fiddler.
+    /// Finds the path to the development certificate used by the test proxy for HTTPS connections.
     /// </summary>
-    internal static bool EnableFiddler
+    /// <param name="repositoryRoot">The root directory of the repository that contains the test project.</param>
+    /// <returns>The path to the development certificate.</returns>
+    protected static string FindDevelopmentCertificatePath(string repositoryRoot)
     {
-        get
-        {
-            string? switchString = TestContext.Parameters["EnableFiddler"] ??
-                                  Environment.GetEnvironmentVariable("CLIENTMODEL_ENABLE_FIDDLER");
+        Argument.AssertNotNullOrEmpty(repositoryRoot, nameof(repositoryRoot));
 
-            bool.TryParse(switchString, out bool enableFiddler);
-
-            return enableFiddler;
-        }
-    }
-
-    /// <summary>
-    /// Determines if the bootstrapping prompt and automatic resource group expiration extension should be disabled.
-    /// </summary>
-    internal static bool DisableBootstrapping
-    {
-        get
-        {
-            string? switchString = TestContext.Parameters["DisableBootstrapping"] ?? Environment.GetEnvironmentVariable("CLIENTMODEL_DISABLE_BOOTSTRAPPING");
-
-            bool.TryParse(switchString, out bool disableBootstrapping);
-
-            return disableBootstrapping;
-        }
-    }
-
-    /// <summary>
-    /// Determines whether to enable debug level proxy logging. Errors are logged by default.
-    /// </summary>
-    internal static bool EnableTestProxyDebugLogs
-    {
-        get
-        {
-            string? switchString = TestContext.Parameters[nameof(EnableTestProxyDebugLogs)] ??
-                                  Environment.GetEnvironmentVariable("CLIENTMODEL_ENABLE_TEST_PROXY_DEBUG_LOGS");
-
-            bool.TryParse(switchString, out bool enableProxyLogging);
-
-            return enableProxyLogging;
-        }
-    }
-
-    /// <summary>
-    /// Attempts to bootstrap test resources by running the configured PowerShell script.
-    /// Only runs on Windows platforms when bootstrapping is enabled and not in Playback mode.
-    /// </summary>
-    /// <exception cref="InvalidOperationException">
-    /// Thrown when PathToTestResourceBootstrappingScript is null and bootstrapping is attempted.
-    /// </exception>
-    public void BootStrapTestResources()
-    {
-        lock (s_syncLock)
-        {
-            if (DisableBootstrapping)
-            {
-                return;
-            }
-            if (PathToTestResourceBootstrappingScript is null)
-            {
-                throw new InvalidOperationException("Attempting to bootstrap test resources, but PathToTestResourceBootstrappingScript is null");
-            }
-            try
-            {
-                if (!IsWindows ||
-                    s_bootstrappingAttemptedTypes.Contains(_type) ||
-                    Mode == RecordedTestMode.Playback)
-                {
-                    return;
-                }
-
-                var processInfo = new ProcessStartInfo(
-                @"pwsh.exe",
-                PathToTestResourceBootstrappingScript)
-                {
-                    UseShellExecute = true
-                };
-                Process? process = null;
-                try
-                {
-                    process = Process.Start(processInfo);
-                }
-                catch (Exception ex)
-                {
-                    _bootstrappingException = ex;
-                }
-
-                if (process != null)
-                {
-                    process.WaitForExit();
-                    ParseEnvironmentFile();
-                }
-            }
-            finally
-            {
-                s_bootstrappingAttemptedTypes.Add(_type);
-            }
-        }
+        return Path.Combine(
+            repositoryRoot,
+            "eng",
+            "common",
+            "testproxy",
+            "dotnet-devcert.pfx");
     }
 }

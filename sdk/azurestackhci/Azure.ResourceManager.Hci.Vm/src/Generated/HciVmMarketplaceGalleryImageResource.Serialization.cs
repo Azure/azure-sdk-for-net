@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmMarketplaceGalleryImageResource : IJsonModel<HciVmMarketplaceGalleryImageData>
     {
-        private static HciVmMarketplaceGalleryImageData s_dataDeserializationInstance;
-        private static HciVmMarketplaceGalleryImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmMarketplaceGalleryImageData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmMarketplaceGalleryImageData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmMarketplaceGalleryImageData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmMarketplaceGalleryImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmMarketplaceGalleryImageData>)Data).Write(writer, options);
 
-        HciVmMarketplaceGalleryImageData IJsonModel<HciVmMarketplaceGalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmMarketplaceGalleryImageData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmMarketplaceGalleryImageData IJsonModel<HciVmMarketplaceGalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmMarketplaceGalleryImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmMarketplaceGalleryImageData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmMarketplaceGalleryImageData IPersistableModel<HciVmMarketplaceGalleryImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmMarketplaceGalleryImageData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmMarketplaceGalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmMarketplaceGalleryImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmMarketplaceGalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct DocumentIntelligenceLayoutSkillOutputMode : IEquatable<DocumentIntelligenceLayoutSkillOutputMode>
     {
         private readonly string _value;
+        /// <summary> Specify that the output should be parsed as 'oneToMany'. </summary>
+        private const string OneToManyValue = "oneToMany";
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillOutputMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentIntelligenceLayoutSkillOutputMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OneToManyValue = "oneToMany";
+            _value = value;
+        }
 
         /// <summary> Specify that the output should be parsed as 'oneToMany'. </summary>
         public static DocumentIntelligenceLayoutSkillOutputMode OneToMany { get; } = new DocumentIntelligenceLayoutSkillOutputMode(OneToManyValue);
+
         /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillOutputMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentIntelligenceLayoutSkillOutputMode left, DocumentIntelligenceLayoutSkillOutputMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillOutputMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentIntelligenceLayoutSkillOutputMode left, DocumentIntelligenceLayoutSkillOutputMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentIntelligenceLayoutSkillOutputMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillOutputMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentIntelligenceLayoutSkillOutputMode(string value) => new DocumentIntelligenceLayoutSkillOutputMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillOutputMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentIntelligenceLayoutSkillOutputMode?(string value) => value == null ? null : new DocumentIntelligenceLayoutSkillOutputMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentIntelligenceLayoutSkillOutputMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentIntelligenceLayoutSkillOutputMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

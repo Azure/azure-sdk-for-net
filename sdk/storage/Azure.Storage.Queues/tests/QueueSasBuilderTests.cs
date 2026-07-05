@@ -52,11 +52,35 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
             Assert.AreEqual(Constants.Sas.Resource.Queue, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_PreservesIdentityBinding()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string queueName = GetNewQueueName();
+            Uri queueUri = new Uri("https://" + constants.Sas.Account + ".queue.core.windows.net/" + queueName);
+            QueueClient queueClient = InstrumentClient(new QueueClient(queueUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            QueueSasBuilder builder = BuildQueueSasBuilder(constants, queueName);
+
+            // Act
+            string viaClient = queueClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, queueClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            Assert.AreEqual(viaDirect, viaClient);
         }
 
         [RecordedTest]
@@ -358,7 +382,7 @@ namespace Azure.Storage.Queues.Test
                 SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
                 constants.Sas.KeyService,
                 constants.Sas.KeyVersion,
-                null,
+                constants.Sas.KeyDelegatedTenantId,
                 constants.Sas.DelegatedObjectId,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(SasProtocol.Https),
@@ -382,6 +406,7 @@ namespace Azure.Storage.Queues.Test
                 SignedExpiresOn = constants.Sas.KeyExpiry,
                 SignedService = constants.Sas.KeyService,
                 SignedVersion = constants.Sas.KeyVersion,
+                SignedDelegatedUserTenantId = constants.Sas.KeyDelegatedTenantId,
                 Value = constants.Sas.KeyValue
             };
     }

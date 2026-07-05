@@ -25,6 +25,63 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlanetaryComputerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PlanetaryComputerGeoCatalogData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PlanetaryComputerGeoCatalogData IPersistableModel<PlanetaryComputerGeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PlanetaryComputerGeoCatalogData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PlanetaryComputerGeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="planetaryComputerGeoCatalogData"> The <see cref="PlanetaryComputerGeoCatalogData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PlanetaryComputerGeoCatalogData planetaryComputerGeoCatalogData)
+        {
+            if (planetaryComputerGeoCatalogData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(planetaryComputerGeoCatalogData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlanetaryComputerGeoCatalogData"/> from. </param>
+        internal static PlanetaryComputerGeoCatalogData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PlanetaryComputerGeoCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -52,7 +109,22 @@ namespace Azure.ResourceManager.PlanetaryComputer
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -85,11 +157,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             PlanetaryComputerGeoCatalogProperties properties = default;
             ManagedServiceIdentity identity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -165,7 +237,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPlanetaryComputerContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerPlanetaryComputerContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,71 +250,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PlanetaryComputerGeoCatalogData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlanetaryComputerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        PlanetaryComputerGeoCatalogData IPersistableModel<PlanetaryComputerGeoCatalogData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PlanetaryComputerGeoCatalogData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<PlanetaryComputerGeoCatalogData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PlanetaryComputerGeoCatalogData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PlanetaryComputerGeoCatalogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="planetaryComputerGeoCatalogData"> The <see cref="PlanetaryComputerGeoCatalogData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PlanetaryComputerGeoCatalogData planetaryComputerGeoCatalogData)
-        {
-            if (planetaryComputerGeoCatalogData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(planetaryComputerGeoCatalogData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PlanetaryComputerGeoCatalogData"/> from. </param>
-        internal static PlanetaryComputerGeoCatalogData FromResponse(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                identity,
+                additionalBinaryDataProperties);
         }
     }
 }

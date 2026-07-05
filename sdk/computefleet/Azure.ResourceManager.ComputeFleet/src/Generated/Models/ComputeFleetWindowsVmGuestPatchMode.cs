@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -18,17 +19,33 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetWindowsVmGuestPatchMode : IEquatable<ComputeFleetWindowsVmGuestPatchMode>
     {
         private readonly string _value;
+        /// <summary>
+        /// You control the application of patches to a virtual machine.
+        /// You do this by applying patches manually inside the VM. In this mode,
+        /// automatic updates are disabled; the property WindowsConfiguration.enableAutomaticUpdates
+        /// must be false
+        /// </summary>
+        private const string ManualValue = "Manual";
+        /// <summary>
+        /// The virtual machine will automatically be updated by the OS.
+        /// The property WindowsConfiguration.enableAutomaticUpdates must be true.
+        /// </summary>
+        private const string AutomaticByOSValue = "AutomaticByOS";
+        /// <summary>
+        /// The virtual machine will automatically updated by the platform. The properties
+        /// provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true.
+        /// </summary>
+        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetWindowsVmGuestPatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetWindowsVmGuestPatchMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManualValue = "Manual";
-        private const string AutomaticByOSValue = "AutomaticByOS";
-        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
+            _value = value;
+        }
 
         /// <summary>
         /// You control the application of patches to a virtual machine.
@@ -37,33 +54,49 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// must be false
         /// </summary>
         public static ComputeFleetWindowsVmGuestPatchMode Manual { get; } = new ComputeFleetWindowsVmGuestPatchMode(ManualValue);
+
         /// <summary>
         /// The virtual machine will automatically be updated by the OS.
         /// The property WindowsConfiguration.enableAutomaticUpdates must be true.
         /// </summary>
         public static ComputeFleetWindowsVmGuestPatchMode AutomaticByOS { get; } = new ComputeFleetWindowsVmGuestPatchMode(AutomaticByOSValue);
+
         /// <summary>
         /// The virtual machine will automatically updated by the platform. The properties
         /// provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true.
         /// </summary>
         public static ComputeFleetWindowsVmGuestPatchMode AutomaticByPlatform { get; } = new ComputeFleetWindowsVmGuestPatchMode(AutomaticByPlatformValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetWindowsVmGuestPatchMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetWindowsVmGuestPatchMode left, ComputeFleetWindowsVmGuestPatchMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetWindowsVmGuestPatchMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetWindowsVmGuestPatchMode left, ComputeFleetWindowsVmGuestPatchMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetWindowsVmGuestPatchMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetWindowsVmGuestPatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetWindowsVmGuestPatchMode(string value) => new ComputeFleetWindowsVmGuestPatchMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetWindowsVmGuestPatchMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetWindowsVmGuestPatchMode?(string value) => value == null ? null : new ComputeFleetWindowsVmGuestPatchMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetWindowsVmGuestPatchMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetWindowsVmGuestPatchMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

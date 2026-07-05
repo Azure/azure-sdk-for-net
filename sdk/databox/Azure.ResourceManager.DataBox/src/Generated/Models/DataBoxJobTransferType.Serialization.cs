@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxJobTransferTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxJobTransferType value) => value switch
         {
             DataBoxJobTransferType.ImportToAzure => "ImportToAzure",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxJobTransferType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxJobTransferType ToDataBoxJobTransferType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ImportToAzure")) return DataBoxJobTransferType.ImportToAzure;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExportFromAzure")) return DataBoxJobTransferType.ExportFromAzure;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ImportToAzure"))
+            {
+                return DataBoxJobTransferType.ImportToAzure;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ExportFromAzure"))
+            {
+                return DataBoxJobTransferType.ExportFromAzure;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxJobTransferType value.");
         }
     }

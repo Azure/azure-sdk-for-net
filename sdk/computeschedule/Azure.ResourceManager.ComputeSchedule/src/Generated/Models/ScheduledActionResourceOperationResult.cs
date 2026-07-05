@@ -14,46 +14,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> The response from scheduled action resource requests, which contains the status of each resource. </summary>
     public partial class ScheduledActionResourceOperationResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceOperationResult"/>. </summary>
         /// <param name="totalResources"> The total number of resources operated on. </param>
         /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesStatuses"/> is null. </exception>
         internal ScheduledActionResourceOperationResult(int totalResources, IEnumerable<ScheduledActionResourceStatus> resourcesStatuses)
         {
-            Argument.AssertNotNull(resourcesStatuses, nameof(resourcesStatuses));
-
             TotalResources = totalResources;
             ResourcesStatuses = resourcesStatuses.ToList();
         }
@@ -61,22 +29,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceOperationResult"/>. </summary>
         /// <param name="totalResources"> The total number of resources operated on. </param>
         /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionResourceOperationResult(int totalResources, IReadOnlyList<ScheduledActionResourceStatus> resourcesStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledActionResourceOperationResult(int totalResources, IList<ScheduledActionResourceStatus> resourcesStatuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalResources = totalResources;
             ResourcesStatuses = resourcesStatuses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceOperationResult"/> for deserialization. </summary>
-        internal ScheduledActionResourceOperationResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The total number of resources operated on. </summary>
         public int TotalResources { get; }
+
         /// <summary> The resource status of for each resource. </summary>
-        public IReadOnlyList<ScheduledActionResourceStatus> ResourcesStatuses { get; }
+        public IList<ScheduledActionResourceStatus> ResourcesStatuses { get; }
     }
 }

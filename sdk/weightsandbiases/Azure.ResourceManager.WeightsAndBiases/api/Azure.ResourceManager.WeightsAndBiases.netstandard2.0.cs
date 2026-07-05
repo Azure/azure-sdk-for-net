@@ -102,7 +102,10 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch WeightsAndBiasesInstancePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstanceProperties WeightsAndBiasesInstanceProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails marketplace = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails user = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState? provisioningState = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState?), Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties partnerProperties = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 singleSignOnProperties = null) { throw null; }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceDetails WeightsAndBiasesMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus?), Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails offerDetails = null) { throw null; }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesOfferDetails WeightsAndBiasesOfferDetails(string publisherId = null, string offerId = null, string planId = null, string planName = null, string termUnit = null, string termId = null) { throw null; }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesPartnerProperties WeightsAndBiasesPartnerProperties(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion region = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion), string subdomain = null) { throw null; }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnPropertiesV2 WeightsAndBiasesSingleSignOnPropertiesV2(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType type = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType), Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState? state = default(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState?), string enterpriseAppId = null, string uri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null) { throw null; }
+        public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesUserDetails WeightsAndBiasesUserDetails(string firstName = null, string lastName = null, string emailAddress = null, string upn = null, string phoneNumber = null) { throw null; }
     }
     public partial class WeightsAndBiasesInstancePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesInstancePatch>
     {
@@ -164,9 +167,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -218,9 +219,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesProvisioningState (string value) { throw null; }
@@ -241,9 +240,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion WestEurope { get { throw null; } }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion WestUS { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesRegion (string value) { throw null; }
@@ -279,9 +276,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState Enable { get { throw null; } }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState Initial { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnState (string value) { throw null; }
@@ -298,9 +293,7 @@ namespace Azure.ResourceManager.WeightsAndBiases.Models
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType OpenId { get { throw null; } }
         public static Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType Saml { get { throw null; } }
         public bool Equals(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType left, Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType right) { throw null; }
         public static implicit operator Azure.ResourceManager.WeightsAndBiases.Models.WeightsAndBiasesSingleSignOnType (string value) { throw null; }

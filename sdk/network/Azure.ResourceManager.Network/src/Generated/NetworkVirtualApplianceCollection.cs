@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkVirtualApplianceCollection : ArmCollection, IEnumerable<NetworkVirtualApplianceResource>, IAsyncEnumerable<NetworkVirtualApplianceResource>
     {
-        private readonly ClientDiagnostics _networkVirtualApplianceClientDiagnostics;
-        private readonly NetworkVirtualAppliancesRestOperations _networkVirtualApplianceRestClient;
+        private readonly ClientDiagnostics _networkVirtualAppliancesClientDiagnostics;
+        private readonly NetworkVirtualAppliances _networkVirtualAppliancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkVirtualApplianceCollection for mocking. </summary>
         protected NetworkVirtualApplianceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkVirtualApplianceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkVirtualApplianceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkVirtualApplianceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkVirtualApplianceResource.ResourceType, out string networkVirtualApplianceApiVersion);
-            _networkVirtualApplianceRestClient = new NetworkVirtualAppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkVirtualApplianceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkVirtualAppliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceResource.ResourceType.Namespace, Diagnostics);
+            _networkVirtualAppliancesRestClient = new NetworkVirtualAppliances(_networkVirtualAppliancesClientDiagnostics, Pipeline, Endpoint, networkVirtualApplianceApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkVirtualApplianceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkVirtualApplianceName, NetworkVirtualApplianceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkVirtualApplianceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkVirtualApplianceResource>(new NetworkVirtualApplianceOperationSource(Client), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, NetworkVirtualApplianceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<NetworkVirtualApplianceResource> operation = new NetworkArmOperation<NetworkVirtualApplianceResource>(
+                    new NetworkVirtualApplianceResourceOperationSource(Client),
+                    _networkVirtualAppliancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkVirtualApplianceResource> CreateOrUpdate(WaitUntil waitUntil, string networkVirtualApplianceName, NetworkVirtualApplianceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkVirtualApplianceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkVirtualApplianceResource>(new NetworkVirtualApplianceOperationSource(Client), _networkVirtualApplianceClientDiagnostics, Pipeline, _networkVirtualApplianceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, NetworkVirtualApplianceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<NetworkVirtualApplianceResource> operation = new NetworkArmOperation<NetworkVirtualApplianceResource>(
+                    new NetworkVirtualApplianceResourceOperationSource(Client),
+                    _networkVirtualAppliancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,39 +175,43 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public virtual async Task<Response<NetworkVirtualApplianceResource>> GetAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<NetworkVirtualApplianceResource>> GetAsync(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Get");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkVirtualApplianceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkVirtualApplianceData> response = Response.FromValue(NetworkVirtualApplianceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,39 +225,43 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified Network Virtual Appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public virtual Response<NetworkVirtualApplianceResource> Get(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<NetworkVirtualApplianceResource> Get(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Get");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkVirtualApplianceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkVirtualApplianceData> response = Response.FromValue(NetworkVirtualApplianceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,50 +275,44 @@ namespace Azure.ResourceManager.Network
         /// Lists all Network Virtual Appliances in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkVirtualApplianceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVirtualApplianceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), _networkVirtualApplianceClientDiagnostics, Pipeline, "NetworkVirtualApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetByResourceGroupAsyncCollectionResultOfT(_networkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkVirtualApplianceCollection.GetAll"), data => new NetworkVirtualApplianceResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Network Virtual Appliances in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,46 +320,62 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkVirtualApplianceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVirtualApplianceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), _networkVirtualApplianceClientDiagnostics, Pipeline, "NetworkVirtualApplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetByResourceGroupCollectionResultOfT(_networkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkVirtualApplianceCollection.GetAll"), data => new NetworkVirtualApplianceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkVirtualApplianceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkVirtualApplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkVirtualApplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkVirtualApplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,37 +389,51 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public virtual Response<bool> Exists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkVirtualApplianceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkVirtualApplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkVirtualApplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkVirtualApplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,39 +447,55 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public virtual async Task<NullableResponse<NetworkVirtualApplianceResource>> GetIfExistsAsync(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<NetworkVirtualApplianceResource>> GetIfExistsAsync(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkVirtualApplianceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkVirtualApplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkVirtualApplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkVirtualApplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkVirtualApplianceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,39 +509,55 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkVirtualApplianceName"> The name of Network Virtual Appliance. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkVirtualApplianceName"/> is null. </exception>
-        public virtual NullableResponse<NetworkVirtualApplianceResource> GetIfExists(string networkVirtualApplianceName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="networkVirtualApplianceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<NetworkVirtualApplianceResource> GetIfExists(string networkVirtualApplianceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkVirtualApplianceName, nameof(networkVirtualApplianceName));
 
-            using var scope = _networkVirtualApplianceClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExists");
+            using DiagnosticScope scope = _networkVirtualAppliancesClientDiagnostics.CreateScope("NetworkVirtualApplianceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkVirtualApplianceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkVirtualApplianceName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkVirtualAppliancesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkVirtualApplianceName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkVirtualApplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkVirtualApplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkVirtualApplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkVirtualApplianceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkVirtualApplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -492,6 +577,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkVirtualApplianceResource> IAsyncEnumerable<NetworkVirtualApplianceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

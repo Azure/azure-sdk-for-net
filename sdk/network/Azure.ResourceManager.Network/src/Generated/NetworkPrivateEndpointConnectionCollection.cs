@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,75 +25,81 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<NetworkPrivateEndpointConnectionResource>, IAsyncEnumerable<NetworkPrivateEndpointConnectionResource>
     {
-        private readonly ClientDiagnostics _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics;
-        private readonly PrivateLinkServicesRestOperations _networkPrivateEndpointConnectionPrivateLinkServicesRestClient;
+        private readonly ClientDiagnostics _privateLinkServicesClientDiagnostics;
+        private readonly PrivateLinkServices _privateLinkServicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkPrivateEndpointConnectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkPrivateEndpointConnectionCollection for mocking. </summary>
         protected NetworkPrivateEndpointConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkPrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPrivateEndpointConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkPrivateEndpointConnectionResource.ResourceType, out string networkPrivateEndpointConnectionPrivateLinkServicesApiVersion);
-            _networkPrivateEndpointConnectionPrivateLinkServicesRestClient = new PrivateLinkServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkPrivateEndpointConnectionPrivateLinkServicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkPrivateEndpointConnectionResource.ResourceType, out string networkPrivateEndpointConnectionApiVersion);
+            _privateLinkServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkServicesRestClient = new PrivateLinkServices(_privateLinkServicesClientDiagnostics, Pipeline, Endpoint, networkPrivateEndpointConnectionApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PrivateLinkServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PrivateLinkServiceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Approve or reject private end point connection for a private link service in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_UpdatePrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_UpdatePrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to approve or reject the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string peConnectionName, NetworkPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.UpdatePrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateUpdatePrivateEndpointConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, NetworkPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkPrivateEndpointConnectionData> response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkPrivateEndpointConnectionResource> operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,44 +113,48 @@ namespace Azure.ResourceManager.Network
         /// Approve or reject private end point connection for a private link service in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_UpdatePrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_UpdatePrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to approve or reject the private end point connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string peConnectionName, NetworkPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.UpdatePrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data, cancellationToken);
-                var uri = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateUpdatePrivateEndpointConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, NetworkPrivateEndpointConnectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkPrivateEndpointConnectionData> response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkPrivateEndpointConnectionResource> operation = new NetworkArmOperation<NetworkPrivateEndpointConnectionResource>(Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,39 +168,43 @@ namespace Azure.ResourceManager.Network
         /// Get the specific private end point connection by specific private link service in the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_GetPrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_GetPrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public virtual async Task<Response<NetworkPrivateEndpointConnectionResource>> GetAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<NetworkPrivateEndpointConnectionResource>> GetAsync(string peConnectionName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkPrivateEndpointConnectionData> response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,39 +218,43 @@ namespace Azure.ResourceManager.Network
         /// Get the specific private end point connection by specific private link service in the resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_GetPrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_GetPrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public virtual Response<NetworkPrivateEndpointConnectionResource> Get(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<NetworkPrivateEndpointConnectionResource> Get(string peConnectionName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkPrivateEndpointConnectionData> response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,50 +268,50 @@ namespace Azure.ResourceManager.Network
         /// Gets all private end point connections for a specific private link service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListPrivateEndpointConnections</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkPrivateEndpointConnectionResource(Client, NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(e)), _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, "NetworkPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new PrivateLinkServicesGetPrivateEndpointConnectionsAsyncCollectionResultOfT(
+                _privateLinkServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkPrivateEndpointConnectionCollection.GetAll"), data => new NetworkPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Gets all private end point connections for a specific private link service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListPrivateEndpointConnections</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,46 +319,68 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkPrivateEndpointConnectionResource(Client, NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(e)), _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, "NetworkPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkPrivateEndpointConnectionData, NetworkPrivateEndpointConnectionResource>(new PrivateLinkServicesGetPrivateEndpointConnectionsCollectionResultOfT(
+                _privateLinkServicesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkPrivateEndpointConnectionCollection.GetAll"), data => new NetworkPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_GetPrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_GetPrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string peConnectionName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkPrivateEndpointConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkPrivateEndpointConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,37 +394,51 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_GetPrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_GetPrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public virtual Response<bool> Exists(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string peConnectionName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkPrivateEndpointConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkPrivateEndpointConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,39 +452,55 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_GetPrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_GetPrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public virtual async Task<NullableResponse<NetworkPrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<NetworkPrivateEndpointConnectionResource>> GetIfExistsAsync(string peConnectionName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.GetPrivateEndpointConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkPrivateEndpointConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkPrivateEndpointConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkPrivateEndpointConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,39 +514,55 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateLinkServices/{serviceName}/privateEndpointConnections/{peConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_GetPrivateEndpointConnection</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_GetPrivateEndpointConnection. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkPrivateEndpointConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="peConnectionName"> The name of the private end point connection. </param>
+        /// <param name="peConnectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
-        public virtual NullableResponse<NetworkPrivateEndpointConnectionResource> GetIfExists(string peConnectionName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<NetworkPrivateEndpointConnectionResource> GetIfExists(string peConnectionName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
 
-            using var scope = _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkServicesClientDiagnostics.CreateScope("NetworkPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.GetPrivateEndpointConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, peConnectionName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkServicesRestClient.CreateGetPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peConnectionName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkPrivateEndpointConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkPrivateEndpointConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkPrivateEndpointConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkPrivateEndpointConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -495,6 +582,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkPrivateEndpointConnectionResource> IAsyncEnumerable<NetworkPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

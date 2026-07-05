@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.CloudHealth
 {
-    internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
+    internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {
         private IList<T> _innerList;
 
@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.CloudHealth
         {
         }
 
+        /// <param name="innerList"> The inner list. </param>
         public ChangeTrackingList(IList<T> innerList)
         {
             if (innerList != null)
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
+        /// <param name="innerList"> The inner list. </param>
         public ChangeTrackingList(IReadOnlyList<T> innerList)
         {
             if (innerList != null)
@@ -36,12 +38,16 @@ namespace Azure.ResourceManager.CloudHealth
             }
         }
 
+        /// <summary> Gets the IsUndefined. </summary>
         public bool IsUndefined => _innerList == null;
 
+        /// <summary> Gets the Count. </summary>
         public int Count => IsUndefined ? 0 : EnsureList().Count;
 
+        /// <summary> Gets the IsReadOnly. </summary>
         public bool IsReadOnly => IsUndefined ? false : EnsureList().IsReadOnly;
 
+        /// <summary> Gets or sets the value associated with the specified key. </summary>
         public T this[int index]
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.ResourceManager.CloudHealth
             return GetEnumerator();
         }
 
+        /// <param name="item"> The item to add. </param>
         public void Add(T item)
         {
             EnsureList().Add(item);
@@ -95,6 +102,7 @@ namespace Azure.ResourceManager.CloudHealth
             EnsureList().Clear();
         }
 
+        /// <param name="item"> The item. </param>
         public bool Contains(T item)
         {
             if (IsUndefined)
@@ -104,6 +112,8 @@ namespace Azure.ResourceManager.CloudHealth
             return EnsureList().Contains(item);
         }
 
+        /// <param name="array"> The array to copy to. </param>
+        /// <param name="arrayIndex"> The array index. </param>
         public void CopyTo(T[] array, int arrayIndex)
         {
             if (IsUndefined)
@@ -113,6 +123,7 @@ namespace Azure.ResourceManager.CloudHealth
             EnsureList().CopyTo(array, arrayIndex);
         }
 
+        /// <param name="item"> The item. </param>
         public bool Remove(T item)
         {
             if (IsUndefined)
@@ -122,6 +133,7 @@ namespace Azure.ResourceManager.CloudHealth
             return EnsureList().Remove(item);
         }
 
+        /// <param name="item"> The item. </param>
         public int IndexOf(T item)
         {
             if (IsUndefined)
@@ -131,11 +143,14 @@ namespace Azure.ResourceManager.CloudHealth
             return EnsureList().IndexOf(item);
         }
 
+        /// <param name="index"> The inner list. </param>
+        /// <param name="item"> The item. </param>
         public void Insert(int index, T item)
         {
             EnsureList().Insert(index, item);
         }
 
+        /// <param name="index"> The inner list. </param>
         public void RemoveAt(int index)
         {
             if (IsUndefined)

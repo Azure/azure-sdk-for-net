@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSignatureOverrides()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicySignatureOverridesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicySignatureOverridesGet.json
             // this example is just showing the usage of "FirewallPolicyIdpsSignaturesOverrides_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchSignatureOverrides()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicySignatureOverridesPatch.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicySignatureOverridesPatch.json
             // this example is just showing the usage of "FirewallPolicyIdpsSignaturesOverrides_Patch" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             PolicySignaturesOverridesForIdpsData data = new PolicySignaturesOverridesForIdpsData
             {
-                Name = "default",
                 Id = new ResourceIdentifier("/subscriptions/e747cc13-97d4-4a79-b463-42d7f4e558f2/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/signatureOverrides/default"),
                 ResourceType = new ResourceType("Microsoft.Network/firewallPolicies/signatureOverrides"),
                 Signatures =
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["2000106"] = "Deny"
 },
             };
-            PolicySignaturesOverridesForIdpsResource result = await policySignaturesOverridesForIdps.UpdateAsync(data);
+            PolicySignaturesOverridesForIdpsResource result = await policySignaturesOverridesForIdps.UpdateAsync(data, System.Threading.CancellationToken.None);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutSignatureOverrides()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicySignatureOverridesPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicySignatureOverridesPut.json
             // this example is just showing the usage of "FirewallPolicyIdpsSignaturesOverrides_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +108,6 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             PolicySignaturesOverridesForIdpsData data = new PolicySignaturesOverridesForIdpsData
             {
-                Name = "default",
                 Id = new ResourceIdentifier("/subscriptions/e747cc13-97d4-4a79-b463-42d7f4e558f2/resourceGroups/rg1/providers/Microsoft.Network/firewallPolicies/firewallPolicy/signatureOverrides/default"),
                 ResourceType = new ResourceType("Microsoft.Network/firewallPolicies/signatureOverrides"),
                 Signatures =
@@ -118,7 +116,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["2000106"] = "Deny"
 },
             };
-            ArmOperation<PolicySignaturesOverridesForIdpsResource> lro = await policySignaturesOverridesForIdps.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<PolicySignaturesOverridesForIdpsResource> lro = await policySignaturesOverridesForIdps.CreateOrUpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             PolicySignaturesOverridesForIdpsResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

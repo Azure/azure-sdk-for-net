@@ -121,7 +121,8 @@ namespace Azure.Storage.Test.Shared
             try
             {
                 process.Start();
-            } catch (Win32Exception e)
+            }
+            catch (Win32Exception e)
             {
                 throw new ArgumentException(ErrorMessage("could not run NodeJS, make sure it's installed"), e);
             }
@@ -200,7 +201,7 @@ namespace Azure.Storage.Test.Shared
             }
         }
 
-        private class AzuriteTokenCredential: TokenCredential
+        private class AzuriteTokenCredential : TokenCredential
         {
             public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {

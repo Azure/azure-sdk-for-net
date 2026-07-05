@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> The status of the job processing the evaluation. </summary>
     [CodeGenModel("EvaluationJobStatus")]
-    public partial struct PersonalizerEvaluationJobStatus {}
+    public partial struct PersonalizerEvaluationJobStatus { }
 }

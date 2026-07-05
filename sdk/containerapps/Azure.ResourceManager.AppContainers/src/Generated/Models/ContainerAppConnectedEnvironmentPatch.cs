@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppConnectedEnvironmentPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppConnectedEnvironmentPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(tags, additionalBinaryDataProperties)
         {
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct RestoreOverwriteOption : IEquatable<RestoreOverwriteOption>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RestoreOverwriteOption"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RestoreOverwriteOption(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string FailOnConflictValue = "FailOnConflict";
         private const string OverwriteValue = "Overwrite";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreOverwriteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RestoreOverwriteOption(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static RestoreOverwriteOption Invalid { get; } = new RestoreOverwriteOption(InvalidValue);
-        /// <summary> FailOnConflict. </summary>
+
+        /// <summary> Gets the FailOnConflict. </summary>
         public static RestoreOverwriteOption FailOnConflict { get; } = new RestoreOverwriteOption(FailOnConflictValue);
-        /// <summary> Overwrite. </summary>
+
+        /// <summary> Gets the Overwrite. </summary>
         public static RestoreOverwriteOption Overwrite { get; } = new RestoreOverwriteOption(OverwriteValue);
+
         /// <summary> Determines if two <see cref="RestoreOverwriteOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RestoreOverwriteOption left, RestoreOverwriteOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RestoreOverwriteOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RestoreOverwriteOption left, RestoreOverwriteOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RestoreOverwriteOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RestoreOverwriteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RestoreOverwriteOption(string value) => new RestoreOverwriteOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RestoreOverwriteOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RestoreOverwriteOption?(string value) => value == null ? null : new RestoreOverwriteOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RestoreOverwriteOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RestoreOverwriteOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciEdgeDeviceReportedProperties : IUtf8JsonSerializable, IJsonModel<HciEdgeDeviceReportedProperties>
+    /// <summary> Reported properties pushed from edge device. </summary>
+    public partial class HciEdgeDeviceReportedProperties : IJsonModel<HciEdgeDeviceReportedProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciEdgeDeviceReportedProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciEdgeDeviceReportedProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciEdgeDeviceReportedProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceReportedProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceReportedProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciEdgeDeviceReportedProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciEdgeDeviceReportedProperties IPersistableModel<HciEdgeDeviceReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciEdgeDeviceReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciEdgeDeviceReportedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceReportedProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(DeviceState))
             {
                 writer.WritePropertyName("deviceState"u8);
@@ -45,15 +84,25 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("extensionProfile"u8);
                 writer.WriteObjectValue(ExtensionProfile, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("lastSyncTimestamp"u8);
+                writer.WriteStringValue(LastSyncedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConfidentialVmProfile))
+            {
+                writer.WritePropertyName("confidentialVmProfile"u8);
+                writer.WriteObjectValue(ConfidentialVmProfile, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,138 +111,80 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        HciEdgeDeviceReportedProperties IJsonModel<HciEdgeDeviceReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciEdgeDeviceReportedProperties IJsonModel<HciEdgeDeviceReportedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciEdgeDeviceReportedProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceReportedProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciEdgeDeviceReportedProperties(document.RootElement, options);
         }
 
-        internal static HciEdgeDeviceReportedProperties DeserializeHciEdgeDeviceReportedProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciEdgeDeviceReportedProperties DeserializeHciEdgeDeviceReportedProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             HciEdgeDeviceState? deviceState = default;
-            HciEdgeDeviceExtensionProfile extensionProfile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ExtensionProfile extensionProfile = default;
+            DateTimeOffset? lastSyncedOn = default;
+            ConfidentialVmProfile confidentialVmProfile = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceState"u8))
+                if (prop.NameEquals("deviceState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deviceState = new HciEdgeDeviceState(property.Value.GetString());
+                    deviceState = new HciEdgeDeviceState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extensionProfile"u8))
+                if (prop.NameEquals("extensionProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extensionProfile = HciEdgeDeviceExtensionProfile.DeserializeHciEdgeDeviceExtensionProfile(property.Value, options);
+                    extensionProfile = ExtensionProfile.DeserializeExtensionProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("lastSyncTimestamp"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastSyncedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("confidentialVmProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidentialVmProfile = ConfidentialVmProfile.DeserializeConfidentialVmProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HciEdgeDeviceReportedProperties(deviceState, extensionProfile, serializedAdditionalRawData);
+            return new HciEdgeDeviceReportedProperties(deviceState, extensionProfile, lastSyncedOn, confidentialVmProfile, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  deviceState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeviceState))
-                {
-                    builder.Append("  deviceState: ");
-                    builder.AppendLine($"'{DeviceState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Extensions", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extensionProfile: ");
-                builder.AppendLine("{");
-                builder.Append("    extensions: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtensionProfile))
-                {
-                    builder.Append("  extensionProfile: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ExtensionProfile, options, 2, false, "  extensionProfile: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HciEdgeDeviceReportedProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceReportedProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HciEdgeDeviceReportedProperties IPersistableModel<HciEdgeDeviceReportedProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHciEdgeDeviceReportedProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceReportedProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HciEdgeDeviceReportedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

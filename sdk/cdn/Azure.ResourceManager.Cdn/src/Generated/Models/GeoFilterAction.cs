@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Action of the geo filter, i.e. allow or block access.
-    /// Serialized Name: GeoFilterActions
-    /// </summary>
+    /// <summary> Action of the geo filter, i.e. allow or block access. </summary>
     public enum GeoFilterAction
     {
-        /// <summary>
-        /// Block
-        /// Serialized Name: GeoFilterActions.Block
-        /// </summary>
+        /// <summary> Block. </summary>
         Block,
-        /// <summary>
-        /// Allow
-        /// Serialized Name: GeoFilterActions.Allow
-        /// </summary>
+        /// <summary> Allow. </summary>
         Allow
     }
 }

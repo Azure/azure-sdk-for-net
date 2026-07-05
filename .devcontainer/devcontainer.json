@@ -1,5 +1,6 @@
 {
 	"name": "GitHub Codespaces (Default)",
+	"image": "mcr.microsoft.com/devcontainers/universal:5",
 	"settings": {
 		"terminal.integrated.profiles.linux": {
 			"bash": {

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
     public partial class NotificationRecipient
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationRecipient"/>. </summary>
         public NotificationRecipient()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="principalId"> Principal ID. </param>
         /// <param name="emailAddress"> Email Address. </param>
         /// <param name="displayName"> Display Name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationRecipient(Guid? principalId, string emailAddress, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationRecipient(Guid? principalId, string emailAddress, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             EmailAddress = emailAddress;
             DisplayName = displayName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Principal ID. </summary>
         public Guid? PrincipalId { get; set; }
+
         /// <summary> Email Address. </summary>
         public string EmailAddress { get; }
+
         /// <summary> Display Name. </summary>
         public string DisplayName { get; }
     }

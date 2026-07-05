@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WorkloadOrchestration
 {
+    /// <summary></summary>
     public partial class EdgeSolutionTemplateResource : IJsonModel<EdgeSolutionTemplateData>
     {
-        private static EdgeSolutionTemplateData s_dataDeserializationInstance;
-        private static EdgeSolutionTemplateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EdgeSolutionTemplateData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EdgeSolutionTemplateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EdgeSolutionTemplateData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EdgeSolutionTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeSolutionTemplateData>)Data).Write(writer, options);
 
-        EdgeSolutionTemplateData IJsonModel<EdgeSolutionTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeSolutionTemplateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EdgeSolutionTemplateData IJsonModel<EdgeSolutionTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EdgeSolutionTemplateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeSolutionTemplateData>(Data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EdgeSolutionTemplateData IPersistableModel<EdgeSolutionTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeSolutionTemplateData>(data, options, AzureResourceManagerWorkloadOrchestrationContext.Default);
 
-        string IPersistableModel<EdgeSolutionTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeSolutionTemplateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EdgeSolutionTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

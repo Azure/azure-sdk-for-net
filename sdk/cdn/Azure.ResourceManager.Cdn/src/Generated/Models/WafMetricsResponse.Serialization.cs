@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class WafMetricsResponse : IUtf8JsonSerializable, IJsonModel<WafMetricsResponse>
+    /// <summary> Waf Metrics Response. </summary>
+    public partial class WafMetricsResponse : IJsonModel<WafMetricsResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafMetricsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WafMetricsResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWafMetricsResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WafMetricsResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WafMetricsResponse IPersistableModel<WafMetricsResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WafMetricsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WafMetricsResponse"/> from. </param>
+        internal static WafMetricsResponse FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeWafMetricsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WafMetricsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DateTimeBegin))
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
@@ -53,21 +101,21 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("series"u8);
                 writer.WriteStartArray();
-                foreach (var item in Series)
+                foreach (WafMetricsResponseSeriesItem item in Series)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +124,27 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        WafMetricsResponse IJsonModel<WafMetricsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WafMetricsResponse IJsonModel<WafMetricsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual WafMetricsResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWafMetricsResponse(document.RootElement, options);
         }
 
-        internal static WafMetricsResponse DeserializeWafMetricsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WafMetricsResponse DeserializeWafMetricsResponse(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,45 +153,44 @@ namespace Azure.ResourceManager.Cdn.Models
             DateTimeOffset? dateTimeEnd = default;
             WafMetricsResponseGranularity? granularity = default;
             IReadOnlyList<WafMetricsResponseSeriesItem> series = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dateTimeBegin"u8))
+                if (prop.NameEquals("dateTimeBegin"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dateTimeBegin = property.Value.GetDateTimeOffset("O");
+                    dateTimeBegin = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("dateTimeEnd"u8))
+                if (prop.NameEquals("dateTimeEnd"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dateTimeEnd = property.Value.GetDateTimeOffset("O");
+                    dateTimeEnd = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("granularity"u8))
+                if (prop.NameEquals("granularity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    granularity = new WafMetricsResponseGranularity(property.Value.GetString());
+                    granularity = new WafMetricsResponseGranularity(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("series"u8))
+                if (prop.NameEquals("series"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<WafMetricsResponseSeriesItem> array = new List<WafMetricsResponseSeriesItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item, options));
                     }
@@ -147,42 +199,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new WafMetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series ?? new ChangeTrackingList<WafMetricsResponseSeriesItem>(), serializedAdditionalRawData);
+            return new WafMetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series ?? new ChangeTrackingList<WafMetricsResponseSeriesItem>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<WafMetricsResponse>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WafMetricsResponse IPersistableModel<WafMetricsResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWafMetricsResponse(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WafMetricsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

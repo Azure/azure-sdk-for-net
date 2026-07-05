@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OracleDatabaseComputeModel : IEquatable<OracleDatabaseComputeModel>
     {
         private readonly string _value;
+        /// <summary> ECPU model type. </summary>
+        private const string EcpuValue = "ECPU";
+        /// <summary> OCPU model type. </summary>
+        private const string OcpuValue = "OCPU";
 
         /// <summary> Initializes a new instance of <see cref="OracleDatabaseComputeModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleDatabaseComputeModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EcpuValue = "ECPU";
-        private const string OcpuValue = "OCPU";
+            _value = value;
+        }
 
         /// <summary> ECPU model type. </summary>
         public static OracleDatabaseComputeModel Ecpu { get; } = new OracleDatabaseComputeModel(EcpuValue);
+
         /// <summary> OCPU model type. </summary>
         public static OracleDatabaseComputeModel Ocpu { get; } = new OracleDatabaseComputeModel(OcpuValue);
+
         /// <summary> Determines if two <see cref="OracleDatabaseComputeModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleDatabaseComputeModel left, OracleDatabaseComputeModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleDatabaseComputeModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleDatabaseComputeModel left, OracleDatabaseComputeModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDatabaseComputeModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleDatabaseComputeModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleDatabaseComputeModel(string value) => new OracleDatabaseComputeModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleDatabaseComputeModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleDatabaseComputeModel?(string value) => value == null ? null : new OracleDatabaseComputeModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleDatabaseComputeModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleDatabaseComputeModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

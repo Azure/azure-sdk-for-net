@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBLocationCollection : ArmCollection, IEnumerable<CosmosDBLocationResource>, IAsyncEnumerable<CosmosDBLocationResource>
     {
-        private readonly ClientDiagnostics _cosmosDBLocationLocationsClientDiagnostics;
-        private readonly LocationsRestOperations _cosmosDBLocationLocationsRestClient;
+        private readonly ClientDiagnostics _locationsClientDiagnostics;
+        private readonly Locations _locationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBLocationCollection for mocking. </summary>
         protected CosmosDBLocationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBLocationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBLocationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBLocationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CosmosDBLocationResource.ResourceType, out string cosmosDBLocationLocationsApiVersion);
-            _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBLocationLocationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CosmosDBLocationResource.ResourceType, out string cosmosDBLocationApiVersion);
+            _locationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBLocationResource.ResourceType.Namespace, Diagnostics);
+            _locationsRestClient = new Locations(_locationsClientDiagnostics, Pipeline, Endpoint, cosmosDBLocationApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the properties of an existing Cosmos DB location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,13 +76,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CosmosDBLocationResource>> GetAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Get");
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -97,20 +104,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Get the properties of an existing Cosmos DB location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,13 +121,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CosmosDBLocationResource> Get(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Get");
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, location, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBLocationData> response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -138,49 +149,44 @@ namespace Azure.ResourceManager.CosmosDB
         /// List Cosmos DB locations and their properties
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBLocationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBLocationResource(Client, CosmosDBLocationData.DeserializeCosmosDBLocationData(e)), _cosmosDBLocationLocationsClientDiagnostics, Pipeline, "CosmosDBLocationCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new LocationsGetAllAsyncCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
         }
 
         /// <summary>
         /// List Cosmos DB locations and their properties
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,28 +194,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBLocationResource(Client, CosmosDBLocationData.DeserializeCosmosDBLocationData(e)), _cosmosDBLocationLocationsClientDiagnostics, Pipeline, "CosmosDBLocationCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CosmosDBLocationData, CosmosDBLocationResource>(new LocationsGetAllCollectionResultOfT(_locationsRestClient, Guid.Parse(Id.SubscriptionId), context, "CosmosDBLocationCollection.GetAll"), data => new CosmosDBLocationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,11 +222,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Exists");
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -235,20 +258,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,11 +275,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Exists");
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -274,20 +311,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,13 +328,33 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<CosmosDBLocationResource>> GetIfExistsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.GetIfExists");
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBLocationLocationsRestClient.GetAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBLocationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,20 +368,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,13 +385,33 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<CosmosDBLocationResource> GetIfExists(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBLocationLocationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.GetIfExists");
+            using DiagnosticScope scope = _locationsClientDiagnostics.CreateScope("CosmosDBLocationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cosmosDBLocationLocationsRestClient.Get(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _locationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBLocationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBLocationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBLocationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBLocationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -362,6 +431,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CosmosDBLocationResource> IAsyncEnumerable<CosmosDBLocationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

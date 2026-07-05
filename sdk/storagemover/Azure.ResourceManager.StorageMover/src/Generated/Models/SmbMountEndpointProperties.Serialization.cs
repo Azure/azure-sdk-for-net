@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class SmbMountEndpointProperties : IUtf8JsonSerializable, IJsonModel<SmbMountEndpointProperties>
+    /// <summary> The properties of SMB share endpoint. </summary>
+    public partial class SmbMountEndpointProperties : EndpointBaseProperties, IJsonModel<SmbMountEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbMountEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SmbMountEndpointProperties"/> for deserialization. </summary>
+        internal SmbMountEndpointProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EndpointBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSmbMountEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SmbMountEndpointProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SmbMountEndpointProperties IPersistableModel<SmbMountEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SmbMountEndpointProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SmbMountEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SmbMountEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
@@ -46,119 +91,102 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
         }
 
-        SmbMountEndpointProperties IJsonModel<SmbMountEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SmbMountEndpointProperties IJsonModel<SmbMountEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SmbMountEndpointProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EndpointBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSmbMountEndpointProperties(document.RootElement, options);
         }
 
-        internal static SmbMountEndpointProperties DeserializeSmbMountEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SmbMountEndpointProperties DeserializeSmbMountEndpointProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            EndpointType endpointType = default;
+            string description = default;
+            StorageMoverEndpointKind? endpointKind = default;
+            StorageMoverProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string host = default;
             string shareName = default;
             AzureKeyVaultSmbCredentials credentials = default;
-            EndpointType endpointType = default;
-            string description = default;
-            StorageMoverProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("host"u8))
+                if (prop.NameEquals("endpointType"u8))
                 {
-                    host = property.Value.GetString();
+                    endpointType = new EndpointType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("shareName"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    shareName = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credentials"u8))
+                if (prop.NameEquals("endpointKind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value, options);
+                    endpointKind = new StorageMoverEndpointKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpointType"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new StorageMoverProvisioningState(property.Value.GetString());
+                    provisioningState = new StorageMoverProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("host"u8))
+                {
+                    host = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("shareName"u8))
+                {
+                    shareName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("credentials"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SmbMountEndpointProperties(
                 endpointType,
                 description,
+                endpointKind,
                 provisioningState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 host,
                 shareName,
                 credentials);
         }
-
-        BinaryData IPersistableModel<SmbMountEndpointProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SmbMountEndpointProperties IPersistableModel<SmbMountEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SmbMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSmbMountEndpointProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SmbMountEndpointProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SmbMountEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

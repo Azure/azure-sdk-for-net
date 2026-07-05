@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsStorageAccountType : IEquatable<DevOpsStorageAccountType>
     {
         private readonly string _value;
+        /// <summary> The data disk should use standard locally redundant storage. </summary>
+        private const string StandardLrsValue = "Standard_LRS";
+        /// <summary> The data disk should use premium locally redundant storage. </summary>
+        private const string PremiumLrsValue = "Premium_LRS";
+        /// <summary> The data disk should use standard SSD locally redundant storage. </summary>
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        /// <summary> The data disk should use premium SSD zonal redundant storage. </summary>
+        private const string PremiumZrsValue = "Premium_ZRS";
+        /// <summary> The data disk should use standard SSD zonal redundant storage. </summary>
+        private const string StandardSsdZrsValue = "StandardSSD_ZRS";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsStorageAccountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardLrsValue = "Standard_LRS";
-        private const string PremiumLrsValue = "Premium_LRS";
-        private const string StandardSsdLrsValue = "StandardSSD_LRS";
-        private const string PremiumZrsValue = "Premium_ZRS";
-        private const string StandardSsdZrsValue = "StandardSSD_ZRS";
+            _value = value;
+        }
 
         /// <summary> The data disk should use standard locally redundant storage. </summary>
         public static DevOpsStorageAccountType StandardLrs { get; } = new DevOpsStorageAccountType(StandardLrsValue);
+
         /// <summary> The data disk should use premium locally redundant storage. </summary>
         public static DevOpsStorageAccountType PremiumLrs { get; } = new DevOpsStorageAccountType(PremiumLrsValue);
+
         /// <summary> The data disk should use standard SSD locally redundant storage. </summary>
         public static DevOpsStorageAccountType StandardSsdLrs { get; } = new DevOpsStorageAccountType(StandardSsdLrsValue);
+
         /// <summary> The data disk should use premium SSD zonal redundant storage. </summary>
         public static DevOpsStorageAccountType PremiumZrs { get; } = new DevOpsStorageAccountType(PremiumZrsValue);
+
         /// <summary> The data disk should use standard SSD zonal redundant storage. </summary>
         public static DevOpsStorageAccountType StandardSsdZrs { get; } = new DevOpsStorageAccountType(StandardSsdZrsValue);
+
         /// <summary> Determines if two <see cref="DevOpsStorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsStorageAccountType left, DevOpsStorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsStorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsStorageAccountType left, DevOpsStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsStorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsStorageAccountType(string value) => new DevOpsStorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsStorageAccountType?(string value) => value == null ? null : new DevOpsStorageAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsStorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

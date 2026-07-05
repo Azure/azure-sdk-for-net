@@ -12,9 +12,9 @@ using OpenTelemetry.Logs;
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary>
-    /// Azure Monitor Log Exporter.
+    /// An exporter that sends logs to Application Insights.
     /// </summary>
-    internal sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    public sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;

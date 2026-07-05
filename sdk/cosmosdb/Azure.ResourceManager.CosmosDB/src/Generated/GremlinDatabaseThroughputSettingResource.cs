@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a GremlinDatabaseThroughputSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GremlinDatabaseThroughputSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetGremlinDatabaseThroughputSettingResource method.
+    /// A class representing a GremlinDatabaseThroughputSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GremlinDatabaseThroughputSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="GremlinDatabaseResource"/> using the GetGremlinDatabaseThroughputSetting method.
     /// </summary>
     public partial class GremlinDatabaseThroughputSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GremlinDatabaseThroughputSettingResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="databaseName"> The databaseName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics;
-        private readonly GremlinResourcesRestOperations _gremlinDatabaseThroughputSettingGremlinResourcesRestClient;
+        private readonly ClientDiagnostics _gremlinResourcesClientDiagnostics;
+        private readonly GremlinResources _gremlinResourcesRestClient;
         private readonly ThroughputSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/gremlinDatabases/throughputSettings";
 
-        /// <summary> Initializes a new instance of the <see cref="GremlinDatabaseThroughputSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GremlinDatabaseThroughputSettingResource for mocking. </summary>
         protected GremlinDatabaseThroughputSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GremlinDatabaseThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GremlinDatabaseThroughputSettingResource(ArmClient client, ThroughputSettingData data) : this(client, data.Id)
@@ -56,117 +46,51 @@ namespace Azure.ResourceManager.CosmosDB
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GremlinDatabaseThroughputSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GremlinDatabaseThroughputSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GremlinDatabaseThroughputSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string gremlinDatabaseThroughputSettingGremlinResourcesApiVersion);
-            _gremlinDatabaseThroughputSettingGremlinResourcesRestClient = new GremlinResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gremlinDatabaseThroughputSettingGremlinResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string gremlinDatabaseThroughputSettingApiVersion);
+            _gremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinDatabaseThroughputSettingApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ThroughputSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Gets the RUs per second of the Gremlin database under an existing Azure Cosmos DB database account with the provided name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GremlinDatabaseThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the RUs per second of the Gremlin database under an existing Azure Cosmos DB database account with the provided name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GremlinDatabaseThroughputSettingResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -174,20 +98,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB Gremlin database
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_UpdateGremlinDatabaseThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_UpdateGremlinDatabaseThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,14 +123,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.UpdateGremlinDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
+                    _gremlinResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -220,20 +157,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Update RUs per second of an Azure Cosmos DB Gremlin database
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_UpdateGremlinDatabaseThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_UpdateGremlinDatabaseThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,15 +182,124 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.CreateOrUpdate");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.UpdateGremlinDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateUpdateGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, ThroughputSettingsUpdateData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
+                    _gremlinResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the RUs per second of the Gremlin database under an existing Azure Cosmos DB database account with the provided name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_GetGremlinDatabaseThroughput. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<GremlinDatabaseThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the RUs per second of the Gremlin database under an existing Azure Cosmos DB database account with the provided name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_GetGremlinDatabaseThroughput. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<GremlinDatabaseThroughputSettingResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -266,20 +312,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to autoscale
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_MigrateGremlinDatabaseToAutoscale</description>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_MigrateGremlinDatabaseToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,14 +333,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<GremlinDatabaseThroughputSettingResource>> MigrateGremlinDatabaseToAutoscaleAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToAutoscale");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToAutoscale");
             scope.Start();
             try
             {
-                var response = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToAutoscaleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
+                    _gremlinResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -308,20 +367,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB Gremlin database from manual throughput to autoscale
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_MigrateGremlinDatabaseToAutoscale</description>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_MigrateGremlinDatabaseToAutoscale. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,14 +388,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<GremlinDatabaseThroughputSettingResource> MigrateGremlinDatabaseToAutoscale(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToAutoscale");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToAutoscale");
             scope.Start();
             try
             {
-                var response = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToAutoscale(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToAutoscaleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
+                    _gremlinResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -350,20 +422,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual throughput
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_MigrateGremlinDatabaseToManualThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_MigrateGremlinDatabaseToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,14 +443,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<GremlinDatabaseThroughputSettingResource>> MigrateGremlinDatabaseToManualThroughputAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToManualThroughput");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToManualThroughput");
             scope.Start();
             try
             {
-                var response = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToManualThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
+                    _gremlinResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -392,20 +477,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Migrate an Azure Cosmos DB Gremlin database from autoscale to manual throughput
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default/migrateToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_MigrateGremlinDatabaseToManualThroughput</description>
+        /// <term> Operation Id. </term>
+        /// <description> GremlinResources_MigrateGremlinDatabaseToManualThroughput. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GremlinDatabaseThroughputSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,14 +498,27 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<GremlinDatabaseThroughputSettingResource> MigrateGremlinDatabaseToManualThroughput(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToManualThroughput");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.MigrateGremlinDatabaseToManualThroughput");
             scope.Start();
             try
             {
-                var response = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.MigrateGremlinDatabaseToManualThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(new GremlinDatabaseThroughputSettingOperationSource(Client), _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics, Pipeline, _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _gremlinResourcesRestClient.CreateMigrateGremlinDatabaseToManualThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource> operation = new CosmosDBArmOperation<GremlinDatabaseThroughputSettingResource>(
+                    new GremlinDatabaseThroughputSettingResourceOperationSource(Client),
+                    _gremlinResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -430,27 +528,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -460,28 +538,29 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.AddTag");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<GremlinDatabaseThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -492,27 +571,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -522,28 +581,29 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.AddTag");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags[key] = value;
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    ArmOperation<GremlinDatabaseThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -554,53 +614,38 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<GremlinDatabaseThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.SetTags");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    patch.Tags.ReplaceWith(tags);
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<GremlinDatabaseThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -611,53 +656,38 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<GremlinDatabaseThroughputSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.SetTags");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    patch.Tags.ReplaceWith(tags);
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.ReplaceWith(tags);
+                    ArmOperation<GremlinDatabaseThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,27 +698,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -696,28 +706,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.RemoveTag");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughputAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = await CreateOrUpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ThroughputSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<GremlinDatabaseThroughputSettingResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -728,27 +739,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GremlinResources_GetGremlinDatabaseThroughput</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GremlinDatabaseThroughputSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -756,28 +747,29 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _gremlinDatabaseThroughputSettingGremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.RemoveTag");
+            using DiagnosticScope scope = _gremlinResourcesClientDiagnostics.CreateScope("GremlinDatabaseThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _gremlinDatabaseThroughputSettingGremlinResourcesRestClient.GetGremlinDatabaseThroughput(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _gremlinResourcesRestClient.CreateGetGremlinDatabaseThroughputRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ThroughputSettingData> response = Response.FromValue(ThroughputSettingData.FromResponse(result), result);
+                    return Response.FromValue(new GremlinDatabaseThroughputSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ThroughputSettingsUpdateData(current.Location, current.Resource);
-                    foreach (var tag in current.Tags)
-                    {
-                        patch.Tags.Add(tag);
-                    }
-                    patch.Tags.Remove(key);
-                    var result = CreateOrUpdate(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ThroughputSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags.Remove(key);
+                    ArmOperation<GremlinDatabaseThroughputSettingResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

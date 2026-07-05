@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistrySchemaVersionResource"/> and their operations.
-    /// Each <see cref="DeviceRegistrySchemaVersionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeviceRegistrySchemaVersionCollection"/> instance call the GetDeviceRegistrySchemaVersions method from an instance of the parent resource.
+    /// Each <see cref="DeviceRegistrySchemaVersionResource"/> in the collection will belong to the same instance of <see cref="DeviceRegistrySchemaResource"/>.
+    /// To get a <see cref="DeviceRegistrySchemaVersionCollection"/> instance call the GetDeviceRegistrySchemaVersions method from an instance of <see cref="DeviceRegistrySchemaResource"/>.
     /// </summary>
     public partial class DeviceRegistrySchemaVersionCollection : ArmCollection, IEnumerable<DeviceRegistrySchemaVersionResource>, IAsyncEnumerable<DeviceRegistrySchemaVersionResource>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistrySchemaVersionResource.ResourceType, out string deviceRegistrySchemaVersionApiVersion);
             _schemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaVersionResource.ResourceType.Namespace, Diagnostics);
-            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaVersionApiVersion ?? "2025-10-01");
+            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaVersionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             if (id.ResourceType != DeviceRegistrySchemaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistrySchemaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceRegistrySchemaResource.ResourceType), nameof(id));
             }
         }
 
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrReplace. </description>
+        /// <description> SchemaVersions_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrReplace. </description>
+        /// <description> SchemaVersions_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,11 +173,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,11 +222,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List SchemaVersion resources by Schema. </summary>
+        /// <summary>
+        /// List SchemaVersion resources by Schema
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_ListBySchema. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistrySchemaVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistrySchemaVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -277,10 +293,27 @@ namespace Azure.ResourceManager.DeviceRegistry
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DeviceRegistrySchemaVersionResource(Client, data));
+                context,
+                "DeviceRegistrySchemaVersionCollection.GetAll"), data => new DeviceRegistrySchemaVersionResource(Client, data));
         }
 
-        /// <summary> List SchemaVersion resources by Schema. </summary>
+        /// <summary>
+        /// List SchemaVersion resources by Schema
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SchemaVersions_ListBySchema. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistrySchemaVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistrySchemaVersionResource> GetAll(CancellationToken cancellationToken = default)
@@ -295,11 +328,12 @@ namespace Azure.ResourceManager.DeviceRegistry
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new DeviceRegistrySchemaVersionResource(Client, data));
+                context,
+                "DeviceRegistrySchemaVersionCollection.GetAll"), data => new DeviceRegistrySchemaVersionResource(Client, data));
         }
 
         /// <summary>
-        /// Get a SchemaVersion
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -307,11 +341,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +390,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Get a SchemaVersion
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -364,11 +398,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,7 +447,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Get a SchemaVersion
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -421,11 +455,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -474,7 +508,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Get a SchemaVersion
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -482,11 +516,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> SchemaVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

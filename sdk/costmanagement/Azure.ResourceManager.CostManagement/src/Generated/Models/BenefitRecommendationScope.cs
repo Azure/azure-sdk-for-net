@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.CostManagement.Models
     internal readonly partial struct BenefitRecommendationScope : IEquatable<BenefitRecommendationScope>
     {
         private readonly string _value;
+        /// <summary> Single scope recommendation. </summary>
+        private const string SingleValue = "Single";
+        /// <summary> Shared scope recommendation. </summary>
+        private const string SharedValue = "Shared";
 
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BenefitRecommendationScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SingleValue = "Single";
-        private const string SharedValue = "Shared";
+            _value = value;
+        }
 
         /// <summary> Single scope recommendation. </summary>
         public static BenefitRecommendationScope Single { get; } = new BenefitRecommendationScope(SingleValue);
+
         /// <summary> Shared scope recommendation. </summary>
         public static BenefitRecommendationScope Shared { get; } = new BenefitRecommendationScope(SharedValue);
+
         /// <summary> Determines if two <see cref="BenefitRecommendationScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BenefitRecommendationScope left, BenefitRecommendationScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BenefitRecommendationScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BenefitRecommendationScope left, BenefitRecommendationScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BenefitRecommendationScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BenefitRecommendationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BenefitRecommendationScope(string value) => new BenefitRecommendationScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BenefitRecommendationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BenefitRecommendationScope?(string value) => value == null ? null : new BenefitRecommendationScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BenefitRecommendationScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BenefitRecommendationScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

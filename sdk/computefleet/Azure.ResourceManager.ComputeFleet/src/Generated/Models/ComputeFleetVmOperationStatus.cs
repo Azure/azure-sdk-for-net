@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetVmOperationStatus : IEquatable<ComputeFleetVmOperationStatus>
     {
         private readonly string _value;
+        /// <summary> Indicates that the virtual machine has not been accepted by Compute yet and is still scheduled to be created. </summary>
+        private const string LaunchingValue = "Launching";
+        /// <summary> Indicates that the virtual machine is either in the process of being created or is scheduled to be created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Indicates that the virtual machine operation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Indicates that the virtual machine operation completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetVmOperationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CreatingValue = "Creating";
-        private const string CanceledValue = "Canceled";
-        private const string CancelFailedStatusUnknownValue = "CancelFailedStatusUnknown";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
+        /// <summary> Indicates that the virtual machine has not been accepted by Compute yet and is still scheduled to be created. </summary>
+        public static ComputeFleetVmOperationStatus Launching { get; } = new ComputeFleetVmOperationStatus(LaunchingValue);
 
         /// <summary> Indicates that the virtual machine is either in the process of being created or is scheduled to be created. </summary>
         public static ComputeFleetVmOperationStatus Creating { get; } = new ComputeFleetVmOperationStatus(CreatingValue);
-        /// <summary> Indicates that the cancellation request was successful because the virtual machine had not been created yet. </summary>
-        public static ComputeFleetVmOperationStatus Canceled { get; } = new ComputeFleetVmOperationStatus(CanceledValue);
-        /// <summary> Indicates that the cancellation request could not be applied because the virtual machine had already been created. </summary>
-        public static ComputeFleetVmOperationStatus CancelFailedStatusUnknown { get; } = new ComputeFleetVmOperationStatus(CancelFailedStatusUnknownValue);
+
         /// <summary> Indicates that the virtual machine operation failed. </summary>
         public static ComputeFleetVmOperationStatus Failed { get; } = new ComputeFleetVmOperationStatus(FailedValue);
+
         /// <summary> Indicates that the virtual machine operation completed successfully. </summary>
         public static ComputeFleetVmOperationStatus Succeeded { get; } = new ComputeFleetVmOperationStatus(SucceededValue);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmOperationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetVmOperationStatus left, ComputeFleetVmOperationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetVmOperationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetVmOperationStatus left, ComputeFleetVmOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetVmOperationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetVmOperationStatus(string value) => new ComputeFleetVmOperationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetVmOperationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetVmOperationStatus?(string value) => value == null ? null : new ComputeFleetVmOperationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetVmOperationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetVmOperationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

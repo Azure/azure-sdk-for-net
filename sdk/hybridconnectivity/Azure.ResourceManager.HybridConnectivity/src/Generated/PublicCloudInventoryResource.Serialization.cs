@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
+    /// <summary></summary>
     public partial class PublicCloudInventoryResource : IJsonModel<PublicCloudInventoryData>
     {
-        private static PublicCloudInventoryData s_dataDeserializationInstance;
-        private static PublicCloudInventoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PublicCloudInventoryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PublicCloudInventoryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PublicCloudInventoryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PublicCloudInventoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudInventoryData>)Data).Write(writer, options);
 
-        PublicCloudInventoryData IJsonModel<PublicCloudInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PublicCloudInventoryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PublicCloudInventoryData IJsonModel<PublicCloudInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PublicCloudInventoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PublicCloudInventoryData>(Data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PublicCloudInventoryData IPersistableModel<PublicCloudInventoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PublicCloudInventoryData>(data, options, AzureResourceManagerHybridConnectivityContext.Default);
 
-        string IPersistableModel<PublicCloudInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PublicCloudInventoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PublicCloudInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmOSType : IEquatable<HciVmOSType>
     {
         private readonly string _value;
+        /// <summary> Windows operating system. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> Linux operating system. </summary>
+        private const string LinuxValue = "Linux";
 
         /// <summary> Initializes a new instance of <see cref="HciVmOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmOSType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsValue = "Windows";
-        private const string LinuxValue = "Linux";
+            _value = value;
+        }
 
         /// <summary> Windows operating system. </summary>
         public static HciVmOSType Windows { get; } = new HciVmOSType(WindowsValue);
+
         /// <summary> Linux operating system. </summary>
         public static HciVmOSType Linux { get; } = new HciVmOSType(LinuxValue);
+
         /// <summary> Determines if two <see cref="HciVmOSType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmOSType left, HciVmOSType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmOSType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmOSType left, HciVmOSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmOSType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmOSType(string value) => new HciVmOSType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmOSType?(string value) => value == null ? null : new HciVmOSType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmOSType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

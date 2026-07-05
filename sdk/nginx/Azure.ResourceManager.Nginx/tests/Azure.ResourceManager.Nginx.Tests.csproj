@@ -11,6 +11,8 @@
     <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <Compile Remove="Properties\**" />
+    <EmbeddedResource Remove="Properties\**" />
+    <None Remove="Properties\**" />
   </ItemGroup>
 </Project>

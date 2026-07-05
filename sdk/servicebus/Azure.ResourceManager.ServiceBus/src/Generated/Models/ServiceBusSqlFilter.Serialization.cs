@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusSqlFilter : IUtf8JsonSerializable, IJsonModel<ServiceBusSqlFilter>
+    /// <summary> Represents a filter which is a composition of an expression and an action that is executed in the pub/sub pipeline. </summary>
+    public partial class ServiceBusSqlFilter : IJsonModel<ServiceBusSqlFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusSqlFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceBusSqlFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceBusSqlFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceBusSqlFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceBusSqlFilter IPersistableModel<ServiceBusSqlFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceBusSqlFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceBusSqlFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SqlExpression))
             {
                 writer.WritePropertyName("sqlExpression"u8);
@@ -50,15 +89,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,22 +106,27 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        ServiceBusSqlFilter IJsonModel<ServiceBusSqlFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceBusSqlFilter IJsonModel<ServiceBusSqlFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceBusSqlFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceBusSqlFilter(document.RootElement, options);
         }
 
-        internal static ServiceBusSqlFilter DeserializeServiceBusSqlFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceBusSqlFilter DeserializeServiceBusSqlFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,142 +134,38 @@ namespace Azure.ResourceManager.ServiceBus.Models
             string sqlExpression = default;
             int? compatibilityLevel = default;
             bool? requiresPreprocessing = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sqlExpression"u8))
+                if (prop.NameEquals("sqlExpression"u8))
                 {
-                    sqlExpression = property.Value.GetString();
+                    sqlExpression = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("compatibilityLevel"u8))
+                if (prop.NameEquals("compatibilityLevel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    compatibilityLevel = property.Value.GetInt32();
+                    compatibilityLevel = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("requiresPreprocessing"u8))
+                if (prop.NameEquals("requiresPreprocessing"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requiresPreprocessing = property.Value.GetBoolean();
+                    requiresPreprocessing = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, serializedAdditionalRawData);
+            return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlExpression), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sqlExpression: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SqlExpression))
-                {
-                    builder.Append("  sqlExpression: ");
-                    if (SqlExpression.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SqlExpression}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SqlExpression}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompatibilityLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  compatibilityLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CompatibilityLevel))
-                {
-                    builder.Append("  compatibilityLevel: ");
-                    builder.AppendLine($"{CompatibilityLevel.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresPreprocessing), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requiresPreprocessing: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequiresPreprocessing))
-                {
-                    builder.Append("  requiresPreprocessing: ");
-                    var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ServiceBusSqlFilter>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceBusSqlFilter IPersistableModel<ServiceBusSqlFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceBusSqlFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceBusSqlFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

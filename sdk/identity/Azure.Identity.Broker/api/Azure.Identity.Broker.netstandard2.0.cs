@@ -1,12 +1,22 @@
 namespace Azure.Identity.Broker
 {
+    public sealed partial class BrokerCredentialResolver : System.ClientModel.Primitives.CredentialResolver
+    {
+        public BrokerCredentialResolver() { }
+        public static Azure.Identity.Broker.BrokerCredentialResolver Default { get { throw null; } }
+        public override bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+    }
+    public static partial class ConfigurationExtensions
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddBrokerCredentialResolver(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddBrokerCredentialResolver(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder) { throw null; }
+    }
     public partial class InteractiveBrowserCredentialBrokerOptions : Azure.Identity.InteractiveBrowserCredentialOptions
     {
         public InteractiveBrowserCredentialBrokerOptions(System.IntPtr parentWindowHandle) { }
         public bool? IsLegacyMsaPassthroughEnabled { get { throw null; } set { } }
         public bool UseDefaultBrokerAccount { get { throw null; } set { } }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. For brokered authentication, consider using InteractiveBrowserCredential.")]
     public partial class SharedTokenCacheCredentialBrokerOptions : Azure.Identity.SharedTokenCacheCredentialOptions
     {

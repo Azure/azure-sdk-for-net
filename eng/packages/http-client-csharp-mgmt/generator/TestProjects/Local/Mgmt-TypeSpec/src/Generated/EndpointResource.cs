@@ -85,7 +85,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -121,7 +121,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -146,7 +146,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> EndpointResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -169,7 +169,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -194,7 +194,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> EndpointResources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -221,7 +221,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, EndpointResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, EndpointResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -246,7 +246,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Update. </description>
+        /// <description> EndpointResources_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -273,7 +273,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointResourcesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, EndpointResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, EndpointResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EndpointResourceData> response = Response.FromValue(EndpointResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -298,7 +298,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> EndpointResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -322,7 +322,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointResourcesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -349,7 +349,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> EndpointResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -373,7 +373,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointResourcesRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _endpointResourcesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

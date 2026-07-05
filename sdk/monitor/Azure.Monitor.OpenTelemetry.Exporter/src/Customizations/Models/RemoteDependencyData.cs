@@ -22,6 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 activityTagsProcessor.activityType &= ~OperationType.V2;
             }
 
+            // Process based on operation type
             switch (activityTagsProcessor.activityType)
             {
                 case OperationType.Http:
@@ -38,6 +39,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     break;
             }
 
+            // Check for Microsoft override attributes only if present (avoids overhead for standalone OTel usage)
+            if (activityTagsProcessor.HasOverrideAttributes)
+            {
+                var overrideData = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyData)?.ToString();
+                var overrideName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyName)?.ToString();
+                var overrideTarget = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyTarget)?.ToString();
+                var overrideType = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyType)?.ToString();
+                var overrideResultCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftDependencyResultCode)?.ToString();
+
+                // Apply overrides if present (these take precedence)
+                if (!string.IsNullOrEmpty(overrideData))
+                {
+                    Data = overrideData.Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideName))
+                {
+                    dependencyName = overrideName;
+                }
+
+                if (!string.IsNullOrEmpty(overrideTarget))
+                {
+                    Target = overrideTarget.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideType))
+                {
+                    Type = overrideType.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+                }
+
+                if (!string.IsNullOrEmpty(overrideResultCode))
+                {
+                    ResultCode = overrideResultCode.Truncate(SchemaConstants.RemoteDependencyData_ResultCode_MaxLength);
+                }
+            }
+
             dependencyName ??= activity.DisplayName;
             Name = dependencyName?.Truncate(SchemaConstants.RemoteDependencyData_Name_MaxLength);
             Id = activity.Context.SpanId.ToHexString();
@@ -46,13 +83,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 : SchemaConstants.Duration_MaxValue;
             Success = activity.Status != ActivityStatusCode.Error;
 
+            // Set Type from Azure namespace if present (unless already set by override attribute)
             if (activityTagsProcessor.AzureNamespace != null)
             {
-                Type = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
+                if (string.IsNullOrEmpty(Type))
+                {
+                    Type = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
+                }
             }
             else if (activity.Kind == ActivityKind.Internal)
             {
-                Type = "InProc";
+                if (string.IsNullOrEmpty(Type))
+                {
+                    Type = "InProc";
+                }
             }
 
             TraceHelper.AddActivityLinksToProperties(activity, ref activityTagsProcessor.UnMappedTags);

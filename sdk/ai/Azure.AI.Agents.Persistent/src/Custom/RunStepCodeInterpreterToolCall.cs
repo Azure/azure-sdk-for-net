@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Agents.Persistent;
 
@@ -20,7 +21,7 @@ public partial class RunStepCodeInterpreterToolCall
     public string Input => InternalDetails.Input;
 
     /// <inheritdoc cref="InternalCodeInterpreterToolCallDetails.Outputs"/>
-    public IReadOnlyList<RunStepCodeInterpreterToolCallOutput> Outputs => InternalDetails.Outputs;
+    public IReadOnlyList<RunStepCodeInterpreterToolCallOutput> Outputs => InternalDetails.Outputs.ToList();
 
     internal InternalCodeInterpreterToolCallDetails InternalDetails { get; }
 }

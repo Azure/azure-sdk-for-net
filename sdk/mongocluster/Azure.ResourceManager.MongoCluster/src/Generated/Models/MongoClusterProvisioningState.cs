@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterProvisioningState : IEquatable<MongoClusterProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> An operation is in-progress on the resource. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> An update operation is in-progress on the resource. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> A drop operation is in-progress on the resource. </summary>
+        private const string DroppingValue = "Dropping";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string InProgressValue = "InProgress";
-        private const string UpdatingValue = "Updating";
-        private const string DroppingValue = "Dropping";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static MongoClusterProvisioningState Succeeded { get; } = new MongoClusterProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static MongoClusterProvisioningState Failed { get; } = new MongoClusterProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static MongoClusterProvisioningState Canceled { get; } = new MongoClusterProvisioningState(CanceledValue);
+
         /// <summary> An operation is in-progress on the resource. </summary>
         public static MongoClusterProvisioningState InProgress { get; } = new MongoClusterProvisioningState(InProgressValue);
+
         /// <summary> An update operation is in-progress on the resource. </summary>
         public static MongoClusterProvisioningState Updating { get; } = new MongoClusterProvisioningState(UpdatingValue);
+
         /// <summary> A drop operation is in-progress on the resource. </summary>
         public static MongoClusterProvisioningState Dropping { get; } = new MongoClusterProvisioningState(DroppingValue);
+
         /// <summary> Determines if two <see cref="MongoClusterProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterProvisioningState left, MongoClusterProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterProvisioningState left, MongoClusterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterProvisioningState(string value) => new MongoClusterProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterProvisioningState?(string value) => value == null ? null : new MongoClusterProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

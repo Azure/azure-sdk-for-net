@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -24,56 +25,53 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBThroughputPoolAccountCollection : ArmCollection, IEnumerable<CosmosDBThroughputPoolAccountResource>, IAsyncEnumerable<CosmosDBThroughputPoolAccountResource>
     {
-        private readonly ClientDiagnostics _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics;
-        private readonly ThroughputPoolAccountRestOperations _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient;
-        private readonly ClientDiagnostics _cosmosDBThroughputPoolAccountThroughputPoolAccountsClientDiagnostics;
-        private readonly ThroughputPoolAccountsRestOperations _cosmosDBThroughputPoolAccountThroughputPoolAccountsRestClient;
+        private readonly ClientDiagnostics _throughputPoolAccountClientDiagnostics;
+        private readonly ThroughputPoolAccount _throughputPoolAccountRestClient;
+        private readonly ClientDiagnostics _throughputPoolAccountsClientDiagnostics;
+        private readonly ThroughputPoolAccounts _throughputPoolAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBThroughputPoolAccountCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBThroughputPoolAccountCollection for mocking. </summary>
         protected CosmosDBThroughputPoolAccountCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBThroughputPoolAccountCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolAccountCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBThroughputPoolAccountCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBThroughputPoolAccountResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CosmosDBThroughputPoolAccountResource.ResourceType, out string cosmosDBThroughputPoolAccountThroughputPoolAccountApiVersion);
-            _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient = new ThroughputPoolAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBThroughputPoolAccountThroughputPoolAccountApiVersion);
-            _cosmosDBThroughputPoolAccountThroughputPoolAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBThroughputPoolAccountResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CosmosDBThroughputPoolAccountResource.ResourceType, out string cosmosDBThroughputPoolAccountThroughputPoolAccountsApiVersion);
-            _cosmosDBThroughputPoolAccountThroughputPoolAccountsRestClient = new ThroughputPoolAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBThroughputPoolAccountThroughputPoolAccountsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CosmosDBThroughputPoolAccountResource.ResourceType, out string cosmosDBThroughputPoolAccountApiVersion);
+            _throughputPoolAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBThroughputPoolAccountResource.ResourceType.Namespace, Diagnostics);
+            _throughputPoolAccountRestClient = new ThroughputPoolAccount(_throughputPoolAccountClientDiagnostics, Pipeline, Endpoint, cosmosDBThroughputPoolAccountApiVersion ?? "2026-04-01-preview");
+            _throughputPoolAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBThroughputPoolAccountResource.ResourceType.Namespace, Diagnostics);
+            _throughputPoolAccountsRestClient = new ThroughputPoolAccounts(_throughputPoolAccountsClientDiagnostics, Pipeline, Endpoint, cosmosDBThroughputPoolAccountApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CosmosDBThroughputPoolResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBThroughputPoolResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBThroughputPoolResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates an Azure Cosmos DB ThroughputPool account. The "Update" method is preferred when performing updates on an account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,21 +79,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="data"> The parameters to provide for the current ThroughputPoolAccount. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CosmosDBThroughputPoolAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string throughputPoolAccountName, CosmosDBThroughputPoolAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource>(new CosmosDBThroughputPoolAccountOperationSource(Client), _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics, Pipeline, _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, CosmosDBThroughputPoolAccountData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource> operation = new CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource>(
+                    new CosmosDBThroughputPoolAccountResourceOperationSource(Client),
+                    _throughputPoolAccountClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -109,20 +120,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Creates or updates an Azure Cosmos DB ThroughputPool account. The "Update" method is preferred when performing updates on an account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,21 +137,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="data"> The parameters to provide for the current ThroughputPoolAccount. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CosmosDBThroughputPoolAccountResource> CreateOrUpdate(WaitUntil waitUntil, string throughputPoolAccountName, CosmosDBThroughputPoolAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource>(new CosmosDBThroughputPoolAccountOperationSource(Client), _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics, Pipeline, _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, CosmosDBThroughputPoolAccountData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource> operation = new CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource>(
+                    new CosmosDBThroughputPoolAccountResourceOperationSource(Client),
+                    _throughputPoolAccountClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +178,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CosmosDBThroughputPoolAccountResource>> GetAsync(string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Get");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBThroughputPoolAccountData> response = Response.FromValue(CosmosDBThroughputPoolAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +227,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CosmosDBThroughputPoolAccountResource> Get(string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Get");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBThroughputPoolAccountData> response = Response.FromValue(CosmosDBThroughputPoolAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +276,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// Lists all the Azure Cosmos DB accounts available under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBThroughputPoolAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBThroughputPoolAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBThroughputPoolAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBThroughputPoolAccountThroughputPoolAccountsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBThroughputPoolAccountThroughputPoolAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBThroughputPoolAccountResource(Client, CosmosDBThroughputPoolAccountData.DeserializeCosmosDBThroughputPoolAccountData(e)), _cosmosDBThroughputPoolAccountThroughputPoolAccountsClientDiagnostics, Pipeline, "CosmosDBThroughputPoolAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CosmosDBThroughputPoolAccountData, CosmosDBThroughputPoolAccountResource>(new ThroughputPoolAccountsGetAllAsyncCollectionResultOfT(
+                _throughputPoolAccountsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBThroughputPoolAccountCollection.GetAll"), data => new CosmosDBThroughputPoolAccountResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the Azure Cosmos DB accounts available under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +327,67 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBThroughputPoolAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBThroughputPoolAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBThroughputPoolAccountThroughputPoolAccountsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cosmosDBThroughputPoolAccountThroughputPoolAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBThroughputPoolAccountResource(Client, CosmosDBThroughputPoolAccountData.DeserializeCosmosDBThroughputPoolAccountData(e)), _cosmosDBThroughputPoolAccountThroughputPoolAccountsClientDiagnostics, Pipeline, "CosmosDBThroughputPoolAccountCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CosmosDBThroughputPoolAccountData, CosmosDBThroughputPoolAccountResource>(new ThroughputPoolAccountsGetAllCollectionResultOfT(
+                _throughputPoolAccountsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBThroughputPoolAccountCollection.GetAll"), data => new CosmosDBThroughputPoolAccountResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Exists");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBThroughputPoolAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBThroughputPoolAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBThroughputPoolAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +401,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Exists");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBThroughputPoolAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBThroughputPoolAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBThroughputPoolAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +458,54 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CosmosDBThroughputPoolAccountResource>> GetIfExistsAsync(string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBThroughputPoolAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBThroughputPoolAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBThroughputPoolAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBThroughputPoolAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +519,54 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}/throughputPoolAccounts/{throughputPoolAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ThroughputPoolAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolAccountResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CosmosDBThroughputPoolAccountResource> GetIfExists(string throughputPoolAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(throughputPoolAccountName, nameof(throughputPoolAccountName));
 
-            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.GetIfExists");
+            using DiagnosticScope scope = _throughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, throughputPoolAccountName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _throughputPoolAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, throughputPoolAccountName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBThroughputPoolAccountData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBThroughputPoolAccountData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBThroughputPoolAccountData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBThroughputPoolAccountResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +586,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CosmosDBThroughputPoolAccountResource> IAsyncEnumerable<CosmosDBThroughputPoolAccountResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

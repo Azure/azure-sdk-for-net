@@ -6,26 +6,32 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.Payload.Pageable
+namespace Specs.Azure.Payload.Pageable
 {
     public partial class PageableClient
     {
         public PageableClient() : this(new Uri("http://localhost:3000"), new PageableClientOptions()) => throw null;
 
-        public PageableClient(Uri endpoint, PageableClientOptions options) => throw null;
+        internal PageableClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PageableClientOptions options) => throw null;
+
+        public PageableClient(Uri endpoint, PageableClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public PageableClient(PageableClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> GetAll(int? maxpagesize, RequestContext context) => throw null;
+        public virtual Pageable<BinaryData> GetAll(int? maxPageSize, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> GetAllAsync(int? maxpagesize, RequestContext context) => throw null;
+        public virtual AsyncPageable<BinaryData> GetAllAsync(int? maxPageSize, RequestContext context) => throw null;
 
-        public virtual Pageable<User> GetAll(int? maxpagesize = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Pageable<User> GetAll(int? maxPageSize = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<User> GetAllAsync(int? maxpagesize = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<User> GetAllAsync(int? maxPageSize = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

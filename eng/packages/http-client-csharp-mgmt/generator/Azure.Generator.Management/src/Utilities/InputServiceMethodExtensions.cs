@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Input;
@@ -30,10 +31,44 @@ namespace Azure.Generator.Management.Utilities
 
         public static CSharpType? GetResponseBodyType(this InputServiceMethod method)
         {
-            var operationResponses = method.Operation.Responses;
-            var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
-            var responseBodyType = response?.BodyType;
+            InputType? responseBodyType;
+            if (method is InputLongRunningServiceMethod lroMethod)
+            {
+                responseBodyType = GetLongRunningResponseBodyType(lroMethod);
+            }
+            else if (method is InputLongRunningPagingServiceMethod lroPagingMethod)
+            {
+                responseBodyType = lroPagingMethod.LongRunningServiceMetadata.ReturnType;
+            }
+            else
+            {
+                responseBodyType = GetOperationResponseBodyType(method);
+            }
             return responseBodyType is null ? null : ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(responseBodyType);
+        }
+
+        private static InputType? GetLongRunningResponseBodyType(InputLongRunningServiceMethod method)
+        {
+            if (method.Operation.HttpMethod == "PATCH" && method.Operation.Responses.Any(IsSuccessfulNoContentResponse))
+            {
+                return null;
+            }
+
+            return method.LongRunningServiceMetadata.ReturnType;
+        }
+
+        private static InputType? GetOperationResponseBodyType(InputServiceMethod method)
+        {
+            var responses = method.Operation.Responses.Where(r => !r.IsErrorResponse);
+            return responses.FirstOrDefault(r => r.BodyType is not null)?.BodyType
+                ?? responses.FirstOrDefault()?.BodyType;
+        }
+
+        private static bool IsSuccessfulNoContentResponse(InputOperationResponse response)
+        {
+            return !response.IsErrorResponse
+                && response.BodyType is null
+                && response.StatusCodes.Any(statusCode => statusCode is 200 or 204);
         }
     }
 }

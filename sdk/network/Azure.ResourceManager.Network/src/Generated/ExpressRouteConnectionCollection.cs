@@ -6,91 +6,101 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="ExpressRouteConnectionResource"/> and their operations.
     /// Each <see cref="ExpressRouteConnectionResource"/> in the collection will belong to the same instance of <see cref="ExpressRouteGatewayResource"/>.
-    /// To get an <see cref="ExpressRouteConnectionCollection"/> instance call the GetExpressRouteConnections method from an instance of <see cref="ExpressRouteGatewayResource"/>.
+    /// To get a <see cref="ExpressRouteConnectionCollection"/> instance call the GetExpressRouteConnections method from an instance of <see cref="ExpressRouteGatewayResource"/>.
     /// </summary>
-    public partial class ExpressRouteConnectionCollection : ArmCollection, IEnumerable<ExpressRouteConnectionResource>, IAsyncEnumerable<ExpressRouteConnectionResource>
+    public partial class ExpressRouteConnectionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _expressRouteConnectionClientDiagnostics;
-        private readonly ExpressRouteConnectionsRestOperations _expressRouteConnectionRestClient;
+        private readonly ClientDiagnostics _expressRouteConnectionsClientDiagnostics;
+        private readonly ExpressRouteConnections _expressRouteConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ExpressRouteConnectionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ExpressRouteConnectionCollection for mocking. </summary>
         protected ExpressRouteConnectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ExpressRouteConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ExpressRouteConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _expressRouteConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteConnectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ExpressRouteConnectionResource.ResourceType, out string expressRouteConnectionApiVersion);
-            _expressRouteConnectionRestClient = new ExpressRouteConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteConnectionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _expressRouteConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteConnectionResource.ResourceType.Namespace, Diagnostics);
+            _expressRouteConnectionsRestClient = new ExpressRouteConnections(_expressRouteConnectionsClientDiagnostics, Pipeline, Endpoint, expressRouteConnectionApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ExpressRouteGatewayResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ExpressRouteGatewayResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ExpressRouteGatewayResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the connection subresource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="data"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ExpressRouteConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, ExpressRouteConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _expressRouteConnectionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ExpressRouteConnectionResource>(new ExpressRouteConnectionOperationSource(Client), _expressRouteConnectionClientDiagnostics, Pipeline, _expressRouteConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<ExpressRouteConnectionResource> operation = new NetworkArmOperation<ExpressRouteConnectionResource>(
+                    new ExpressRouteConnectionResourceOperationSource(Client),
+                    _expressRouteConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +114,51 @@ namespace Azure.ResourceManager.Network
         /// Creates a connection between an ExpressRoute gateway and an ExpressRoute circuit.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the connection subresource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="data"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ExpressRouteConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, ExpressRouteConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _expressRouteConnectionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken);
-                var operation = new NetworkArmOperation<ExpressRouteConnectionResource>(new ExpressRouteConnectionOperationSource(Client), _expressRouteConnectionClientDiagnostics, Pipeline, _expressRouteConnectionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<ExpressRouteConnectionResource> operation = new NetworkArmOperation<ExpressRouteConnectionResource>(
+                    new ExpressRouteConnectionResourceOperationSource(Client),
+                    _expressRouteConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +172,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified ExpressRouteConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ExpressRouteConnectionResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Get");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _expressRouteConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExpressRouteConnectionData> response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +221,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified ExpressRouteConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ExpressRouteConnectionResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Get");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _expressRouteConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExpressRouteConnectionData> response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,97 +267,53 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Lists ExpressRouteConnections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists ExpressRouteConnections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteConnectionResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Exists");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _expressRouteConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ExpressRouteConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpressRouteConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,36 +327,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Exists");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _expressRouteConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ExpressRouteConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpressRouteConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,38 +384,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ExpressRouteConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _expressRouteConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ExpressRouteConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpressRouteConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExpressRouteConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,38 +445,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ExpressRouteConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _expressRouteConnectionClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteConnectionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _expressRouteConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ExpressRouteConnectionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ExpressRouteConnectionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ExpressRouteConnectionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ExpressRouteConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -471,21 +500,6 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ExpressRouteConnectionResource> IEnumerable<ExpressRouteConnectionResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<ExpressRouteConnectionResource> IAsyncEnumerable<ExpressRouteConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

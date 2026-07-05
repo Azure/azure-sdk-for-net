@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Marketplace SAAS Info of the resource. </summary>
     public partial class MarketplaceSaaSInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSaaSInfo"/>. </summary>
         internal MarketplaceSaaSInfo()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
         /// <param name="publisherId"> Publisher Id of the Marketplace offer. </param>
         /// <param name="offerId"> Offer Id of the Marketplace offer,. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceSubscriptionName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, string publisherId, string offerId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceSubscriptionName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, string publisherId, string offerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             MarketplaceSubscriptionName = marketplaceSubscriptionName;
@@ -68,27 +40,33 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             BilledAzureSubscriptionId = billedAzureSubscriptionId;
             PublisherId = publisherId;
             OfferId = offerId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace Subscription Id. This is a GUID-formatted string. </summary>
         [WirePath("marketplaceSubscriptionId")]
         public string MarketplaceSubscriptionId { get; }
+
         /// <summary> Marketplace Subscription Details: SAAS Name. </summary>
         [WirePath("marketplaceSubscriptionName")]
         public string MarketplaceSubscriptionName { get; }
+
         /// <summary> Marketplace Subscription Details: Resource URI. </summary>
         [WirePath("marketplaceResourceId")]
         public string MarketplaceResourceId { get; }
+
         /// <summary> Marketplace Subscription Details: SaaS Subscription Status. </summary>
         [WirePath("marketplaceStatus")]
         public string MarketplaceStatus { get; }
+
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
         [WirePath("billedAzureSubscriptionId")]
         public string BilledAzureSubscriptionId { get; }
+
         /// <summary> Publisher Id of the Marketplace offer. </summary>
         [WirePath("publisherId")]
         public string PublisherId { get; }
+
         /// <summary> Offer Id of the Marketplace offer,. </summary>
         [WirePath("offerId")]
         public string OfferId { get; }

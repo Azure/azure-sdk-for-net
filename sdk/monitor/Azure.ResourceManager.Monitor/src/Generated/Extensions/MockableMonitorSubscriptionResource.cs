@@ -8,90 +8,100 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMonitorSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _autoscaleSettingClientDiagnostics;
-        private AutoscaleSettingsRestOperations _autoscaleSettingRestClient;
-        private ClientDiagnostics _alertRuleClientDiagnostics;
-        private AlertRulesRestOperations _alertRuleRestClient;
-        private ClientDiagnostics _actionGroupClientDiagnostics;
-        private ActionGroupsRestOperations _actionGroupRestClient;
+        private ClientDiagnostics _dataCollectionEndpointsClientDiagnostics;
+        private DataCollectionEndpoints _dataCollectionEndpointsRestClient;
+        private ClientDiagnostics _dataCollectionRulesClientDiagnostics;
+        private DataCollectionRules _dataCollectionRulesRestClient;
+        private ClientDiagnostics _privateLinkScopesClientDiagnostics;
+        private PrivateLinkScopes _privateLinkScopesRestClient;
+        private ClientDiagnostics _autoscaleSettingsClientDiagnostics;
+        private AutoscaleSettings _autoscaleSettingsRestClient;
+        private ClientDiagnostics _activityLogAlertsClientDiagnostics;
+        private ActivityLogAlerts _activityLogAlertsRestClient;
+        private ClientDiagnostics _metricAlertsClientDiagnostics;
+        private MetricAlerts _metricAlertsRestClient;
+        private ClientDiagnostics _scheduledQueryRulesClientDiagnostics;
+        private ScheduledQueryRules _scheduledQueryRulesRestClient;
+        private ClientDiagnostics _actionGroupsClientDiagnostics;
+        private ActionGroups _actionGroupsRestClient;
         private ClientDiagnostics _activityLogsClientDiagnostics;
-        private ActivityLogsRestOperations _activityLogsRestClient;
+        private ActivityLogs _activityLogsRestClient;
+        private ClientDiagnostics _metricDefinitionsClientDiagnostics;
+        private MetricDefinitions _metricDefinitionsRestClient;
         private ClientDiagnostics _metricsClientDiagnostics;
-        private MetricsRestOperations _metricsRestClient;
-        private ClientDiagnostics _metricAlertClientDiagnostics;
-        private MetricAlertsRestOperations _metricAlertRestClient;
-        private ClientDiagnostics _scheduledQueryRuleClientDiagnostics;
-        private ScheduledQueryRulesRestOperations _scheduledQueryRuleRestClient;
-        private ClientDiagnostics _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics;
-        private PrivateLinkScopesRestOperations _monitorPrivateLinkScopePrivateLinkScopesRestClient;
-        private ClientDiagnostics _activityLogAlertClientDiagnostics;
-        private ActivityLogAlertsRestOperations _activityLogAlertRestClient;
-        private ClientDiagnostics _dataCollectionEndpointClientDiagnostics;
-        private DataCollectionEndpointsRestOperations _dataCollectionEndpointRestClient;
-        private ClientDiagnostics _dataCollectionRuleClientDiagnostics;
-        private DataCollectionRulesRestOperations _dataCollectionRuleRestClient;
-        private ClientDiagnostics _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
-        private AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
-        private ClientDiagnostics _pipelineGroupClientDiagnostics;
-        private PipelineGroupsRestOperations _pipelineGroupRestClient;
+        private Metrics _metricsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMonitorSubscriptionResource for mocking. </summary>
         protected MockableMonitorSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMonitorSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMonitorSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AutoscaleSettingClientDiagnostics => _autoscaleSettingClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", AutoscaleSettingResource.ResourceType.Namespace, Diagnostics);
-        private AutoscaleSettingsRestOperations AutoscaleSettingRestClient => _autoscaleSettingRestClient ??= new AutoscaleSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AutoscaleSettingResource.ResourceType));
-        private ClientDiagnostics AlertRuleClientDiagnostics => _alertRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", AlertRuleResource.ResourceType.Namespace, Diagnostics);
-        private AlertRulesRestOperations AlertRuleRestClient => _alertRuleRestClient ??= new AlertRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AlertRuleResource.ResourceType));
-        private ClientDiagnostics ActionGroupClientDiagnostics => _actionGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ActionGroupResource.ResourceType.Namespace, Diagnostics);
-        private ActionGroupsRestOperations ActionGroupRestClient => _actionGroupRestClient ??= new ActionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActionGroupResource.ResourceType));
-        private ClientDiagnostics ActivityLogsClientDiagnostics => _activityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ActivityLogsRestOperations ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MetricsRestOperations MetricsRestClient => _metricsRestClient ??= new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics MetricAlertClientDiagnostics => _metricAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
-        private MetricAlertsRestOperations MetricAlertRestClient => _metricAlertRestClient ??= new MetricAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MetricAlertResource.ResourceType));
-        private ClientDiagnostics ScheduledQueryRuleClientDiagnostics => _scheduledQueryRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ScheduledQueryRuleResource.ResourceType.Namespace, Diagnostics);
-        private ScheduledQueryRulesRestOperations ScheduledQueryRuleRestClient => _scheduledQueryRuleRestClient ??= new ScheduledQueryRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScheduledQueryRuleResource.ResourceType));
-        private ClientDiagnostics MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics => _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-        private PrivateLinkScopesRestOperations MonitorPrivateLinkScopePrivateLinkScopesRestClient => _monitorPrivateLinkScopePrivateLinkScopesRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorPrivateLinkScopeResource.ResourceType));
-        private ClientDiagnostics ActivityLogAlertClientDiagnostics => _activityLogAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
-        private ActivityLogAlertsRestOperations ActivityLogAlertRestClient => _activityLogAlertRestClient ??= new ActivityLogAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActivityLogAlertResource.ResourceType));
-        private ClientDiagnostics DataCollectionEndpointClientDiagnostics => _dataCollectionEndpointClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionEndpointResource.ResourceType.Namespace, Diagnostics);
-        private DataCollectionEndpointsRestOperations DataCollectionEndpointRestClient => _dataCollectionEndpointRestClient ??= new DataCollectionEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataCollectionEndpointResource.ResourceType));
-        private ClientDiagnostics DataCollectionRuleClientDiagnostics => _dataCollectionRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleResource.ResourceType.Namespace, Diagnostics);
-        private DataCollectionRulesRestOperations DataCollectionRuleRestClient => _dataCollectionRuleRestClient ??= new DataCollectionRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataCollectionRuleResource.ResourceType));
-        private ClientDiagnostics MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics => _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private AzureMonitorWorkspacesRestOperations MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorWorkspaceResource.ResourceType));
-        private ClientDiagnostics PipelineGroupClientDiagnostics => _pipelineGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", PipelineGroupResource.ResourceType.Namespace, Diagnostics);
-        private PipelineGroupsRestOperations PipelineGroupRestClient => _pipelineGroupRestClient ??= new PipelineGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PipelineGroupResource.ResourceType));
+        private ClientDiagnostics DataCollectionEndpointsClientDiagnostics => _dataCollectionEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private DataCollectionEndpoints DataCollectionEndpointsRestClient => _dataCollectionEndpointsRestClient ??= new DataCollectionEndpoints(DataCollectionEndpointsClientDiagnostics, Pipeline, Endpoint, "2024-03-11");
 
-        /// <summary> Gets a collection of LogProfileResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of LogProfileResources and their operations over a LogProfileResource. </returns>
+        private ClientDiagnostics DataCollectionRulesClientDiagnostics => _dataCollectionRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DataCollectionRules DataCollectionRulesRestClient => _dataCollectionRulesRestClient ??= new DataCollectionRules(DataCollectionRulesClientDiagnostics, Pipeline, Endpoint, "2024-03-11");
+
+        private ClientDiagnostics PrivateLinkScopesClientDiagnostics => _privateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateLinkScopes PrivateLinkScopesRestClient => _privateLinkScopesRestClient ??= new PrivateLinkScopes(PrivateLinkScopesClientDiagnostics, Pipeline, Endpoint, "2023-06-01-preview");
+
+        private ClientDiagnostics AutoscaleSettingsClientDiagnostics => _autoscaleSettingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AutoscaleSettings AutoscaleSettingsRestClient => _autoscaleSettingsRestClient ??= new AutoscaleSettings(AutoscaleSettingsClientDiagnostics, Pipeline, Endpoint, "2022-10-01");
+
+        private ClientDiagnostics ActivityLogAlertsClientDiagnostics => _activityLogAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ActivityLogAlerts ActivityLogAlertsRestClient => _activityLogAlertsRestClient ??= new ActivityLogAlerts(ActivityLogAlertsClientDiagnostics, Pipeline, Endpoint, "2023-01-01-preview");
+
+        private ClientDiagnostics MetricAlertsClientDiagnostics => _metricAlertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private MetricAlerts MetricAlertsRestClient => _metricAlertsRestClient ??= new MetricAlerts(MetricAlertsClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+
+        private ClientDiagnostics ScheduledQueryRulesClientDiagnostics => _scheduledQueryRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ScheduledQueryRules ScheduledQueryRulesRestClient => _scheduledQueryRulesRestClient ??= new ScheduledQueryRules(ScheduledQueryRulesClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
+
+        private ClientDiagnostics ActionGroupsClientDiagnostics => _actionGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ActionGroups ActionGroupsRestClient => _actionGroupsRestClient ??= new ActionGroups(ActionGroupsClientDiagnostics, Pipeline, Endpoint, "2024-10-01-preview");
+
+        private ClientDiagnostics ActivityLogsClientDiagnostics => _activityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ActivityLogs ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogs(ActivityLogsClientDiagnostics, Pipeline, Endpoint, "2015-04-01");
+
+        private ClientDiagnostics MetricDefinitionsClientDiagnostics => _metricDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private MetricDefinitions MetricDefinitionsRestClient => _metricDefinitionsRestClient ??= new MetricDefinitions(MetricDefinitionsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+
+        private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Metrics MetricsRestClient => _metricsRestClient ??= new Metrics(MetricsClientDiagnostics, Pipeline, Endpoint, "2024-02-01");
+
+        /// <summary> Gets a collection of LogProfiles in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of LogProfiles and their operations over a LogProfileResource. </returns>
         public virtual LogProfileCollection GetLogProfiles()
         {
             return GetCachedClient(client => new LogProfileCollection(client, Id));
@@ -101,20 +111,16 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// Gets the log profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,6 +131,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<LogProfileResource>> GetLogProfileAsync(string logProfileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
             return await GetLogProfiles().GetAsync(logProfileName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -132,20 +140,16 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// Gets the log profile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogProfileResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,649 +160,53 @@ namespace Azure.ResourceManager.Monitor.Mocking
         [ForwardsClientCalls]
         public virtual Response<LogProfileResource> GetLogProfile(string logProfileName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
             return GetLogProfiles().Get(logProfileName, cancellationToken);
         }
 
         /// <summary>
-        /// Lists the autoscale settings for a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoscaleSettings_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoscaleSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutoscaleSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutoscaleSettingRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), AutoscaleSettingClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetAutoscaleSettings", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the autoscale settings for a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoscaleSettings_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoscaleSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoscaleSettingResource> GetAutoscaleSettings(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AutoscaleSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutoscaleSettingRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), AutoscaleSettingClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetAutoscaleSettings", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List the classic metric alert rules within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRules_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AlertRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertRuleResource> GetAlertRulesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AlertRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), AlertRuleClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetAlertRules", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the classic metric alert rules within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/alertrules</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRules_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2016-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AlertRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertRuleResource> GetAlertRules(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AlertRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), AlertRuleClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetAlertRules", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of all action groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_ListBySubscriptionId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActionGroupResource> GetActionGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActionGroupRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), ActionGroupClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActionGroups", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of all action groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_ListBySubscriptionId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActionGroupResource> GetActionGroups(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActionGroupRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), ActionGroupClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActionGroups", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Provides the list of records from the activity logs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogs_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceGroupName eq 'resourceGroupName'.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceUri eq 'resourceURI'.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z'.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceProvider eq 'resourceProviderName'.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and correlationId eq 'correlationID'.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
-        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventDataInfo> GetActivityLogsAsync(string filter, string select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), ActivityLogsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Provides the list of records from the activity logs.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogs_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceGroupName eq 'resourceGroupName'.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceUri eq 'resourceURI'.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z'.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceProvider eq 'resourceProviderName'.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and correlationId eq 'correlationID'.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
-        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventDataInfo> GetActivityLogs(string filter, string select = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), ActivityLogsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogs", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric data for a subscription**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metrics_ListAtSubscriptionScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetrics", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric data for a subscription**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metrics_ListAtSubscriptionScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetrics", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metrics_ListAtSubscriptionScopePost</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Metrics_ListAtSubscriptionScopePost</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="SubscriptionMonitorMetric"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve alert rule definitions in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricAlerts_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MetricAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricAlertRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), MetricAlertClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMetricAlerts", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve alert rule definitions in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetricAlerts_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MetricAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MetricAlertResource> GetMetricAlerts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricAlertRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), MetricAlertClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMetricAlerts", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a scheduled query rule definitions in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledQueryRules_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledQueryRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledQueryRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledQueryRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), ScheduledQueryRuleClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetScheduledQueryRules", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a scheduled query rule definitions in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledQueryRules_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledQueryRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledQueryRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledQueryRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), ScheduledQueryRuleClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetScheduledQueryRules", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/microsoft.insights/privateLinkScopes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorPrivateLinkScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of all Activity Log Alert rules in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogAlertRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogAlertRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), ActivityLogAlertClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogAlerts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of all Activity Log Alert rules in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_ListBySubscriptionId</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActivityLogAlertResource> GetActivityLogAlerts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogAlertRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogAlertRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), ActivityLogAlertClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetActivityLogAlerts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Lists all data collection endpoints in the specified subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionEndpoints_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionEndpointResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionEndpointResource(Client, DataCollectionEndpointData.DeserializeDataCollectionEndpointData(e)), DataCollectionEndpointClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointsGetBySubscriptionAsyncCollectionResultOfT(DataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints"), data => new DataCollectionEndpointResource(Client, data));
         }
 
         /// <summary>
         /// Lists all data collection endpoints in the specified subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionEndpoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionEndpoints_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionEndpointResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionEndpointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -806,59 +214,55 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> A collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionEndpointResource(Client, DataCollectionEndpointData.DeserializeDataCollectionEndpointData(e)), DataCollectionEndpointClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataCollectionEndpointData, DataCollectionEndpointResource>(new DataCollectionEndpointsGetBySubscriptionCollectionResultOfT(DataCollectionEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionEndpoints"), data => new DataCollectionEndpointResource(Client, data));
         }
 
         /// <summary>
         /// Lists all data collection rules in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), DataCollectionRuleClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetDataCollectionRules", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRulesGetBySubscriptionAsyncCollectionResultOfT(DataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionRules"), data => new DataCollectionRuleResource(Client, data));
         }
 
         /// <summary>
         /// Lists all data collection rules in the specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/dataCollectionRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataCollectionRules_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataCollectionRuleResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataCollectionRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-11. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -866,129 +270,809 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> A collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionRuleResource> GetDataCollectionRules(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), DataCollectionRuleClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetDataCollectionRules", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataCollectionRuleData, DataCollectionRuleResource>(new DataCollectionRulesGetBySubscriptionCollectionResultOfT(DataCollectionRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetDataCollectionRules"), data => new DataCollectionRuleResource(Client, data));
         }
 
         /// <summary>
-        /// Lists all workspaces in the specified subscription
+        /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/privateLinkScopes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetAllAsyncCollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
-        /// Lists all workspaces in the specified subscription
+        /// Gets a list of all Azure Monitor PrivateLinkScopes within a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/privateLinkScopes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureMonitorPrivateLinkScopes_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MonitorWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MonitorPrivateLinkScopeData, MonitorPrivateLinkScopeResource>(new PrivateLinkScopesGetAllCollectionResultOfT(PrivateLinkScopesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes"), data => new MonitorPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
-        /// Lists all workspaces in the specified subscription
+        /// Lists the autoscale settings for a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/pipelineGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoscaleSettingResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PipelineGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PipelineGroupResource> GetPipelineGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PipelineGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PipelineGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PipelineGroupResource(Client, PipelineGroupData.DeserializePipelineGroupData(e)), PipelineGroupClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetPipelineGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetBySubscriptionAsyncCollectionResultOfT(AutoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetAutoscaleSettings"), data => new AutoscaleSettingResource(Client, data));
         }
 
         /// <summary>
-        /// Lists all workspaces in the specified subscription
+        /// Lists the autoscale settings for a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/pipelineGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/autoscalesettings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PipelineGroups_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoscaleSettingResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PipelineGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PipelineGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PipelineGroupResource> GetPipelineGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutoscaleSettingResource> GetAutoscaleSettings(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PipelineGroupRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PipelineGroupRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PipelineGroupResource(Client, PipelineGroupData.DeserializePipelineGroupData(e)), PipelineGroupClientDiagnostics, Pipeline, "MockableMonitorSubscriptionResource.GetPipelineGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutoscaleSettingData, AutoscaleSettingResource>(new AutoscaleSettingsGetBySubscriptionCollectionResultOfT(AutoscaleSettingsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetAutoscaleSettings"), data => new AutoscaleSettingResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_ListBySubscriptionId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetBySubscriptionIdAsyncCollectionResultOfT(ActivityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActivityLogAlerts"), data => new ActivityLogAlertResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_ListBySubscriptionId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ActivityLogAlertResource> GetActivityLogAlerts(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetBySubscriptionIdCollectionResultOfT(ActivityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActivityLogAlerts"), data => new ActivityLogAlertResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieve alert rule definitions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricAlertResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetBySubscriptionAsyncCollectionResultOfT(MetricAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMetricAlerts"), data => new MetricAlertResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieve alert rule definitions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricAlerts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricAlertResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricAlertResource> GetMetricAlerts(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MetricAlertData, MetricAlertResource>(new MetricAlertsGetBySubscriptionCollectionResultOfT(MetricAlertsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetMetricAlerts"), data => new MetricAlertResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieve a scheduled query rule definitions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledQueryRuleResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetBySubscriptionAsyncCollectionResultOfT(ScheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetScheduledQueryRules"), data => new ScheduledQueryRuleResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieve a scheduled query rule definitions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledQueryRuleResources_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetBySubscriptionCollectionResultOfT(ScheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetScheduledQueryRules"), data => new ScheduledQueryRuleResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of all action groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_ListBySubscriptionId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ActionGroupResource> GetActionGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetBySubscriptionIdAsyncCollectionResultOfT(ActionGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActionGroups"), data => new ActionGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get a list of all action groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/actionGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_ListBySubscriptionId. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ActionGroupResource> GetActionGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ActionGroupData, ActionGroupResource>(new ActionGroupsGetBySubscriptionIdCollectionResultOfT(ActionGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorSubscriptionResource.GetActionGroups"), data => new ActionGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Provides the list of records from the activity logs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The <b>$filter</b> argument is very restricted and allows only the following patterns.&lt;br&gt;- <i>List events for a resource group</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceGroupName eq 'resourceGroupName'.&lt;br&gt;- <i>List events for resource</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceUri eq 'resourceURI'.&lt;br&gt;- <i>List events for a subscription in a time range</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z'.&lt;br&gt;- <i>List events for a resource provider</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceProvider eq 'resourceProviderName'.&lt;br&gt;- <i>List events for a correlation Id</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and correlationId eq 'correlationID'.&lt;br&gt;&lt;br&gt;<b>NOTE</b>: No other syntax is allowed. </param>
+        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventDataInfo> GetActivityLogsAsync(string filter, string @select = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ActivityLogsGetActivityLogsAsyncCollectionResultOfT(
+                ActivityLogsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                filter,
+                @select,
+                context,
+                "MockableMonitorSubscriptionResource.GetActivityLogs");
+        }
+
+        /// <summary>
+        /// Provides the list of records from the activity logs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/eventtypes/management/values. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The <b>$filter</b> argument is very restricted and allows only the following patterns.&lt;br&gt;- <i>List events for a resource group</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceGroupName eq 'resourceGroupName'.&lt;br&gt;- <i>List events for resource</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceUri eq 'resourceURI'.&lt;br&gt;- <i>List events for a subscription in a time range</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z'.&lt;br&gt;- <i>List events for a resource provider</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceProvider eq 'resourceProviderName'.&lt;br&gt;- <i>List events for a correlation Id</i>: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and correlationId eq 'correlationID'.&lt;br&gt;&lt;br&gt;<b>NOTE</b>: No other syntax is allowed. </param>
+        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventDataInfo> GetActivityLogs(string filter, string @select = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(filter, nameof(filter));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ActivityLogsGetActivityLogsCollectionResultOfT(
+                ActivityLogsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                filter,
+                @select,
+                context,
+                "MockableMonitorSubscriptionResource.GetActivityLogs");
+        }
+
+        /// <summary>
+        /// Lists the metric definitions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricDefinitionsOperationGroup_ListAtSubscriptionScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MonitorSubscriptionScopeMetric"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitionsAsync(string region, string metricnamespace = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MetricDefinitionsGetSubscriptionMonitorMetricDefinitionsAsyncCollectionResultOfT(
+                MetricDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                region,
+                metricnamespace,
+                context,
+                "MockableMonitorSubscriptionResource.GetSubscriptionMonitorMetricDefinitions");
+        }
+
+        /// <summary>
+        /// Lists the metric definitions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metricDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricDefinitionsOperationGroup_ListAtSubscriptionScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MonitorSubscriptionScopeMetric"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorSubscriptionScopeMetric> GetSubscriptionMonitorMetricDefinitions(string region, string metricnamespace = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MetricDefinitionsGetSubscriptionMonitorMetricDefinitionsCollectionResultOfT(
+                MetricDefinitionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                region,
+                metricnamespace,
+                context,
+                "MockableMonitorSubscriptionResource.GetSubscriptionMonitorMetricDefinitions");
+        }
+
+        /// <summary>
+        /// <b>Lists the metric data for a subscription</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricsOperationGroup_ListAtSubscriptionScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// <i>Examples: average, minimum, maximum</i>
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// <i>Examples: sum asc</i>
+        /// </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘<i>’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘</i>’ or B = ‘b2’<b>&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘<i>’ and C eq ‘</i>’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MonitorMetricsResult>> GetMonitorMetricsAsync(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetrics");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(Guid.Parse(Id.SubscriptionId), region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <b>Lists the metric data for a subscription</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricsOperationGroup_ListAtSubscriptionScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// <i>Examples: average, minimum, maximum</i>
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// <i>Examples: sum asc</i>
+        /// </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘<i>’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘</i>’ or B = ‘b2’<b>&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘<i>’ and C eq ‘</i>’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MonitorMetricsResult> GetMonitorMetrics(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetrics");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(Guid.Parse(Id.SubscriptionId), region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <b>Lists the metric data for a subscription</b>. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricsOperationGroup_ListAtSubscriptionScopePost. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// <i>Examples: average, minimum, maximum</i>
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// <i>Examples: sum asc</i>
+        /// </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘<i>’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘</i>’ or B = ‘b2’<b>&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘<i>’ and C eq ‘</i>’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<MonitorMetricsResult>> GetMonitorMetricsWithPostAsync(string region, SubscriptionScopeMetricsContent content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsWithPostRequest(Guid.Parse(Id.SubscriptionId), region, SubscriptionScopeMetricsContent.ToRequestContent(content), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// <b>Lists the metric data for a subscription</b>. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetricsOperationGroup_ListAtSubscriptionScopePost. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="region"> The region where the metrics you want reside. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="interval">
+        /// The interval (i.e. timegrain) of the query in ISO 8601 duration format. Defaults to PT1M. Special case for 'FULL' value that returns single datapoint for entire time span requested.
+        /// <i>Examples: PT15M, PT1H, P1D, FULL</i>
+        /// </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
+        /// <param name="aggregation">
+        /// The list of aggregation types (comma separated) to retrieve.
+        /// <i>Examples: average, minimum, maximum</i>
+        /// </param>
+        /// <param name="top">
+        /// The maximum number of records to retrieve per resource ID in the request.
+        /// Valid only if filter is specified.
+        /// Defaults to 10.
+        /// </param>
+        /// <param name="orderby">
+        /// The aggregation to use for sorting results and the direction of the sort.
+        /// Only one order can be specified.
+        /// <i>Examples: sum asc</i>
+        /// </param>
+        /// <param name="filter"> The <b>$filter</b> is used to reduce the set of metric data returned.&lt;br&gt;Example:&lt;br&gt;Metric contains metadata A, B and C.&lt;br&gt;- Return all time series of C where A = a1 and B = b1 or b2&lt;br&gt;**$filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘<i>’<b>&lt;br&gt;- Invalid variant:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘</i>’ or B = ‘b2’<b>&lt;br&gt;This is invalid because the logical or operator cannot separate two different metadata names.&lt;br&gt;- Return all time series where A = a1, B = b1 and C = c1:&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’<b>&lt;br&gt;- Return all time series where A = a1&lt;br&gt;</b>$filter=A eq ‘a1’ and B eq ‘<i>’ and C eq ‘</i>’**. </param>
+        /// <param name="resultType"> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
+        /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
+        /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
+        /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<MonitorMetricsResult> GetMonitorMetricsWithPost(string region, SubscriptionScopeMetricsContent content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(region, nameof(region));
+
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsWithPostRequest(Guid.Parse(Id.SubscriptionId), region, SubscriptionScopeMetricsContent.ToRequestContent(content), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct ResourceHealthStatus : IEquatable<ResourceHealthStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceHealthStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceHealthStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HealthyValue = "Healthy";
         private const string TransientDegradedValue = "TransientDegraded";
         private const string PersistentDegradedValue = "PersistentDegraded";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string PersistentUnhealthyValue = "PersistentUnhealthy";
         private const string InvalidValue = "Invalid";
 
-        /// <summary> Healthy. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceHealthStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Healthy. </summary>
         public static ResourceHealthStatus Healthy { get; } = new ResourceHealthStatus(HealthyValue);
-        /// <summary> TransientDegraded. </summary>
+
+        /// <summary> Gets the TransientDegraded. </summary>
         public static ResourceHealthStatus TransientDegraded { get; } = new ResourceHealthStatus(TransientDegradedValue);
-        /// <summary> PersistentDegraded. </summary>
+
+        /// <summary> Gets the PersistentDegraded. </summary>
         public static ResourceHealthStatus PersistentDegraded { get; } = new ResourceHealthStatus(PersistentDegradedValue);
-        /// <summary> TransientUnhealthy. </summary>
+
+        /// <summary> Gets the TransientUnhealthy. </summary>
         public static ResourceHealthStatus TransientUnhealthy { get; } = new ResourceHealthStatus(TransientUnhealthyValue);
-        /// <summary> PersistentUnhealthy. </summary>
+
+        /// <summary> Gets the PersistentUnhealthy. </summary>
         public static ResourceHealthStatus PersistentUnhealthy { get; } = new ResourceHealthStatus(PersistentUnhealthyValue);
-        /// <summary> Invalid. </summary>
+
+        /// <summary> Gets the Invalid. </summary>
         public static ResourceHealthStatus Invalid { get; } = new ResourceHealthStatus(InvalidValue);
+
         /// <summary> Determines if two <see cref="ResourceHealthStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceHealthStatus left, ResourceHealthStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceHealthStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceHealthStatus left, ResourceHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceHealthStatus(string value) => new ResourceHealthStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceHealthStatus?(string value) => value == null ? null : new ResourceHealthStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceHealthStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

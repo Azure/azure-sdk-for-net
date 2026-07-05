@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DevCenter;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterUserRoleAssignments : IUtf8JsonSerializable, IJsonModel<DevCenterUserRoleAssignments>
+    /// <summary> Mapping of user object ID to role assignments. </summary>
+    public partial class DevCenterUserRoleAssignments : IJsonModel<DevCenterUserRoleAssignments>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterUserRoleAssignments>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevCenterUserRoleAssignments PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDevCenterUserRoleAssignments(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterUserRoleAssignments)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterUserRoleAssignments)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevCenterUserRoleAssignments>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevCenterUserRoleAssignments IPersistableModel<DevCenterUserRoleAssignments>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DevCenterUserRoleAssignments>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevCenterUserRoleAssignments>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevCenterUserRoleAssignments)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
@@ -45,15 +85,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,83 +102,55 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
         }
 
-        DevCenterUserRoleAssignments IJsonModel<DevCenterUserRoleAssignments>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevCenterUserRoleAssignments IJsonModel<DevCenterUserRoleAssignments>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevCenterUserRoleAssignments JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevCenterUserRoleAssignments)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevCenterUserRoleAssignments(document.RootElement, options);
         }
 
-        internal static DevCenterUserRoleAssignments DeserializeDevCenterUserRoleAssignments(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DevCenterUserRoleAssignments DeserializeDevCenterUserRoleAssignments(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, DevCenterEnvironmentRole> roles = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("roles"u8))
+                if (prop.NameEquals("roles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, DevCenterEnvironmentRole> dictionary = new Dictionary<string, DevCenterEnvironmentRole>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value, options));
+                        dictionary.Add(prop0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(prop0.Value, options));
                     }
                     roles = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterUserRoleAssignments(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), serializedAdditionalRawData);
+            return new DevCenterUserRoleAssignments(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DevCenterUserRoleAssignments>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DevCenterUserRoleAssignments)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DevCenterUserRoleAssignments IPersistableModel<DevCenterUserRoleAssignments>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterUserRoleAssignments>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDevCenterUserRoleAssignments(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DevCenterUserRoleAssignments)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DevCenterUserRoleAssignments>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

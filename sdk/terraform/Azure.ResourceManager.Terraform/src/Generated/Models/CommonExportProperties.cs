@@ -7,51 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary>
     /// The base export parameter
-    /// Please note <see cref="CommonExportProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ExportQueryTerraform"/>, <see cref="ExportResourceTerraform"/> and <see cref="ExportResourceGroupTerraform"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportQueryTerraform"/>, <see cref="ExportResourceTerraform"/>, and <see cref="ExportResourceGroupTerraform"/>.
     /// </summary>
     public abstract partial class CommonExportProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommonExportProperties"/>. </summary>
-        protected CommonExportProperties()
+        /// <param name="type"> The parameter type. </param>
+        private protected CommonExportProperties(CommonExportType @type)
         {
+            Type = @type;
             AzureResourcesToExclude = new ChangeTrackingList<string>();
             TerraformResourcesToExclude = new ChangeTrackingList<string>();
         }
@@ -65,10 +38,10 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonExportProperties(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommonExportProperties(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             TargetProvider = targetProvider;
             IsOutputFullPropertiesEnabled = isOutputFullPropertiesEnabled;
             IsMaskSensitiveEnabled = isMaskSensitiveEnabled;
@@ -76,23 +49,30 @@ namespace Azure.ResourceManager.Terraform.Models
             IncludeManagedResource = includeManagedResource;
             AzureResourcesToExclude = azureResourcesToExclude;
             TerraformResourcesToExclude = terraformResourcesToExclude;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The parameter type. </summary>
         internal CommonExportType Type { get; set; }
+
         /// <summary> The target Azure Terraform provider. Defaults to `azurerm`. </summary>
         public TargetTerraformProvider? TargetProvider { get; set; }
+
         /// <summary> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </summary>
         public bool? IsOutputFullPropertiesEnabled { get; set; }
+
         /// <summary> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </summary>
         public bool? IsMaskSensitiveEnabled { get; set; }
+
         /// <summary> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </summary>
         public bool? IncludeRoleAssignment { get; set; }
+
         /// <summary> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </summary>
         public bool? IncludeManagedResource { get; set; }
+
         /// <summary> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </summary>
         public IList<string> AzureResourcesToExclude { get; }
+
         /// <summary> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </summary>
         public IList<string> TerraformResourcesToExclude { get; }
     }

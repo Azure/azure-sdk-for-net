@@ -8,88 +8,80 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDBForPostgreSql;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableCosmosDBForPostgreSqlSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _cosmosDBForPostgreSqlClusterClustersClientDiagnostics;
-        private ClustersRestOperations _cosmosDBForPostgreSqlClusterClustersRestClient;
+        private ClientDiagnostics _clustersClientDiagnostics;
+        private Clusters _clustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCosmosDBForPostgreSqlSubscriptionResource for mocking. </summary>
         protected MockableCosmosDBForPostgreSqlSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCosmosDBForPostgreSqlSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCosmosDBForPostgreSqlSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics CosmosDBForPostgreSqlClusterClustersClientDiagnostics => _cosmosDBForPostgreSqlClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations CosmosDBForPostgreSqlClusterClustersRestClient => _cosmosDBForPostgreSqlClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBForPostgreSqlClusterResource.ResourceType));
+        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2023-03-02-preview");
 
         /// <summary>
         /// Lists all clusters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "MockableCosmosDBForPostgreSqlSubscriptionResource.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBForPostgreSqlSubscriptionResource.GetCosmosDBForPostgreSqlClusters"), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
         }
 
         /// <summary>
         /// Lists all clusters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,44 +89,52 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBForPostgreSqlClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBForPostgreSqlClusterResource(Client, CosmosDBForPostgreSqlClusterData.DeserializeCosmosDBForPostgreSqlClusterData(e)), CosmosDBForPostgreSqlClusterClustersClientDiagnostics, Pipeline, "MockableCosmosDBForPostgreSqlSubscriptionResource.GetCosmosDBForPostgreSqlClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CosmosDBForPostgreSqlClusterData, CosmosDBForPostgreSqlClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCosmosDBForPostgreSqlSubscriptionResource.GetCosmosDBForPostgreSqlClusters"), data => new CosmosDBForPostgreSqlClusterResource(Client, data));
         }
 
         /// <summary>
         /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The required parameters for checking if cluster name is available. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
             scope.Start();
             try
             {
-                var response = await CosmosDBForPostgreSqlClusterClustersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateCheckCosmosDBForPostgreSqlClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CosmosDBForPostgreSqlClusterNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> response = Response.FromValue(CosmosDBForPostgreSqlClusterNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -148,35 +148,41 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// Checks availability of a cluster name. Cluster names should be globally unique; at least 3 characters and at most 40 characters long; they must only contain lowercase letters, numbers, and hyphens; and must not start or end with a hyphen.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClustersOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-08</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBForPostgreSqlClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-03-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The required parameters for checking if cluster name is available. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
+            using DiagnosticScope scope = ClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
             scope.Start();
             try
             {
-                var response = CosmosDBForPostgreSqlClusterClustersRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ClustersRestClient.CreateCheckCosmosDBForPostgreSqlClusterNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), CosmosDBForPostgreSqlClusterNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> response = Response.FromValue(CosmosDBForPostgreSqlClusterNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

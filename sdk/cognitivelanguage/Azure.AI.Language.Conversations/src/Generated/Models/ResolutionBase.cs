@@ -12,55 +12,27 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base class for entity resolutions.
-    /// Please note <see cref="ResolutionBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/> and <see cref="WeightResolution"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="VolumeResolution"/>, <see cref="SpeedResolution"/>, <see cref="AreaResolution"/>, <see cref="LengthResolution"/>, <see cref="InformationResolution"/>, <see cref="TemperatureResolution"/>, <see cref="WeightResolution"/>, <see cref="CurrencyResolution"/>, <see cref="BooleanResolution"/>, <see cref="DateTimeResolution"/>, <see cref="NumberResolution"/>, <see cref="OrdinalResolution"/>, <see cref="TemporalSpanResolution"/>, and <see cref="NumericRangeResolution"/>.
     /// </summary>
     public abstract partial class ResolutionBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResolutionBase"/>. </summary>
-        protected ResolutionBase()
+        /// <param name="resolutionKind"> The entity resolution object kind. </param>
+        private protected ResolutionBase(ResolutionKind resolutionKind)
         {
+            ResolutionKind = resolutionKind;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResolutionBase"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResolutionBase(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResolutionBase(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResolutionKind = resolutionKind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The entity resolution object kind. </summary>

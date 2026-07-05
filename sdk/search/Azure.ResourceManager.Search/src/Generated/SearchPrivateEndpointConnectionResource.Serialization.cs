@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Search
 {
+    /// <summary></summary>
     public partial class SearchPrivateEndpointConnectionResource : IJsonModel<SearchPrivateEndpointConnectionData>
     {
-        private static SearchPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static SearchPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SearchPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SearchPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SearchPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SearchPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        SearchPrivateEndpointConnectionData IJsonModel<SearchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchPrivateEndpointConnectionData IJsonModel<SearchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SearchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SearchPrivateEndpointConnectionData>(Data, options, AzureResourceManagerSearchContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SearchPrivateEndpointConnectionData IPersistableModel<SearchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchPrivateEndpointConnectionData>(data, options, AzureResourceManagerSearchContext.Default);
 
-        string IPersistableModel<SearchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SearchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

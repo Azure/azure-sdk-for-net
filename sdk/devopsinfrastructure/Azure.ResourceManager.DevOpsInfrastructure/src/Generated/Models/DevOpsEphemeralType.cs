@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsEphemeralType : IEquatable<DevOpsEphemeralType>
     {
         private readonly string _value;
+        /// <summary> Ephemeral is handled by Managed DevOps Pools service. </summary>
+        private const string AutomaticValue = "Automatic";
+        /// <summary> CacheDisk ephemeral only, requires that the SKU has a cache that is large enough for the image. </summary>
+        private const string CacheDiskValue = "CacheDisk";
+        /// <summary> ResourceDisk ephemeral only, requires only that the SKU supports it. </summary>
+        private const string ResourceDiskValue = "ResourceDisk";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsEphemeralType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsEphemeralType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutomaticValue = "Automatic";
-        private const string CacheDiskValue = "CacheDisk";
-        private const string ResourceDiskValue = "ResourceDisk";
+            _value = value;
+        }
 
         /// <summary> Ephemeral is handled by Managed DevOps Pools service. </summary>
         public static DevOpsEphemeralType Automatic { get; } = new DevOpsEphemeralType(AutomaticValue);
+
         /// <summary> CacheDisk ephemeral only, requires that the SKU has a cache that is large enough for the image. </summary>
         public static DevOpsEphemeralType CacheDisk { get; } = new DevOpsEphemeralType(CacheDiskValue);
+
         /// <summary> ResourceDisk ephemeral only, requires only that the SKU supports it. </summary>
         public static DevOpsEphemeralType ResourceDisk { get; } = new DevOpsEphemeralType(ResourceDiskValue);
+
         /// <summary> Determines if two <see cref="DevOpsEphemeralType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsEphemeralType left, DevOpsEphemeralType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsEphemeralType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsEphemeralType left, DevOpsEphemeralType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsEphemeralType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsEphemeralType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsEphemeralType(string value) => new DevOpsEphemeralType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsEphemeralType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsEphemeralType?(string value) => value == null ? null : new DevOpsEphemeralType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsEphemeralType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsEphemeralType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

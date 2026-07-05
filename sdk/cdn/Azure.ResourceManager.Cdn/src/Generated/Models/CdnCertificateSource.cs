@@ -7,48 +7,31 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for using CDN managed certificate for securing custom domain.
-    /// Serialized Name: CdnCertificateSourceParameters
-    /// </summary>
+    /// <summary> Defines the parameters for using CDN managed certificate for securing custom domain. </summary>
     public partial class CdnCertificateSource : CertificateSourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
-        /// <param name="certificateType">
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </param>
-        public CdnCertificateSource(CdnManagedCertificateType certificateType)
+        /// <param name="certificateType"> Type of certificate used. </param>
+        public CdnCertificateSource(CdnManagedCertificateType certificateType) : base(CertificateSourceParametersType.CdnCertificateSourceParameters)
         {
             CertificateType = certificateType;
-            TypeName = CertificateSourceParametersType.CdnCertificateSourceParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
-        /// <param name="typeName"> Serialized Name: CertificateSourceParameters.typeName. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="certificateType">
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </param>
-        internal CdnCertificateSource(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CdnManagedCertificateType certificateType) : base(typeName, serializedAdditionalRawData)
+        /// <param name="typeName"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="certificateType"> Type of certificate used. </param>
+        internal CdnCertificateSource(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnManagedCertificateType certificateType) : base(typeName, additionalBinaryDataProperties)
         {
             CertificateType = certificateType;
-            TypeName = typeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/> for deserialization. </summary>
-        internal CdnCertificateSource()
-        {
-        }
-
-        /// <summary>
-        /// Type of certificate used
-        /// Serialized Name: CdnCertificateSourceParameters.certificateType
-        /// </summary>
+        /// <summary> Type of certificate used. </summary>
+        [WirePath("certificateType")]
         public CdnManagedCertificateType CertificateType { get; set; }
     }
 }

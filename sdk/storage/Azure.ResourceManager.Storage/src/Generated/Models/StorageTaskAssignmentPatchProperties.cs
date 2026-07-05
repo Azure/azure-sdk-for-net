@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Properties of the storage task update assignment. </summary>
     public partial class StorageTaskAssignmentPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentPatchProperties"/>. </summary>
         public StorageTaskAssignmentPatchProperties()
@@ -56,53 +28,53 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>
-        /// <param name="storageTaskAssignmentProvisioningState"> Represents the provisioning state of the storage task assignment. </param>
+        /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageTaskAssignmentProvisioningState? storageTaskAssignmentProvisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
             IsEnabled = isEnabled;
             Description = description;
             ExecutionContext = executionContext;
             Report = report;
-            StorageTaskAssignmentProvisioningState = storageTaskAssignmentProvisioningState;
+            ProvisioningState = provisioningState;
             RunStatus = runStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Id of the corresponding storage task. </summary>
-        [WirePath("taskId")]
-        public string TaskId { get; }
-        /// <summary> Whether the storage task assignment is enabled or not. </summary>
-        [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
         /// <summary> Text that describes the purpose of the storage task assignment. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> The storage task assignment execution context. </summary>
         [WirePath("executionContext")]
         public StorageTaskAssignmentUpdateExecutionContext ExecutionContext { get; set; }
+
         /// <summary> The storage task assignment report. </summary>
+        [WirePath("report")]
         internal StorageTaskAssignmentUpdateReport Report { get; set; }
+
+        /// <summary> Run status of storage task assignment. </summary>
+        [WirePath("runStatus")]
+        public StorageTaskReportProperties RunStatus { get; set; }
+
         /// <summary> The prefix of the storage task assignment report. </summary>
         [WirePath("report.prefix")]
         public string ReportPrefix
         {
-            get => Report is null ? default : Report.Prefix;
+            get
+            {
+                return Report is null ? default : Report.Prefix;
+            }
             set
             {
                 if (Report is null)
+                {
                     Report = new StorageTaskAssignmentUpdateReport();
+                }
                 Report.Prefix = value;
             }
         }
-
-        /// <summary> Represents the provisioning state of the storage task assignment. </summary>
-        [WirePath("provisioningState")]
-        public StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState { get; }
-        /// <summary> Run status of storage task assignment. </summary>
-        [WirePath("runStatus")]
-        public StorageTaskReportProperties RunStatus { get; set; }
     }
 }

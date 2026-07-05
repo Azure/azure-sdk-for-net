@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CostManagement
 {
@@ -23,42 +24,38 @@ namespace Azure.ResourceManager.CostManagement
     /// </summary>
     public partial class CostManagementExportCollection : ArmCollection, IEnumerable<CostManagementExportResource>, IAsyncEnumerable<CostManagementExportResource>
     {
-        private readonly ClientDiagnostics _costManagementExportExportsClientDiagnostics;
-        private readonly ExportsRestOperations _costManagementExportExportsRestClient;
+        private readonly ClientDiagnostics _exportsClientDiagnostics;
+        private readonly Exports _exportsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CostManagementExportCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CostManagementExportCollection for mocking. </summary>
         protected CostManagementExportCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CostManagementExportCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementExportCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CostManagementExportCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _costManagementExportExportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementExportResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CostManagementExportResource.ResourceType, out string costManagementExportExportsApiVersion);
-            _costManagementExportExportsRestClient = new ExportsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementExportExportsApiVersion);
+            TryGetApiVersion(CostManagementExportResource.ResourceType, out string costManagementExportApiVersion);
+            _exportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementExportResource.ResourceType.Namespace, Diagnostics);
+            _exportsRestClient = new Exports(_exportsClientDiagnostics, Pipeline, Endpoint, costManagementExportApiVersion ?? "2025-03-01");
         }
 
         /// <summary>
         /// The operation to create or update a export. Update operation requires latest eTag to be set in the request. You may obtain the latest eTag by performing a get operation. Create operation does not require eTag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,23 +63,31 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="exportName"> Export Name. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate Export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CostManagementExportResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _costManagementExportExportsRestClient.CreateOrUpdateAsync(Id, exportName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _costManagementExportExportsRestClient.CreateCreateOrUpdateRequestUri(Id, exportName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CostManagementArmOperation<CostManagementExportResource>(Response.FromValue(new CostManagementExportResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), exportName, CostManagementExportData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CostManagementArmOperation<CostManagementExportResource> operation = new CostManagementArmOperation<CostManagementExportResource>(Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -96,20 +101,16 @@ namespace Azure.ResourceManager.CostManagement
         /// The operation to create or update a export. Update operation requires latest eTag to be set in the request. You may obtain the latest eTag by performing a get operation. Create operation does not require eTag.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,23 +118,31 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="exportName"> Export Name. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate Export operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CostManagementExportResource> CreateOrUpdate(WaitUntil waitUntil, string exportName, CostManagementExportData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _costManagementExportExportsRestClient.CreateOrUpdate(Id, exportName, data, cancellationToken);
-                var uri = _costManagementExportExportsRestClient.CreateCreateOrUpdateRequestUri(Id, exportName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new CostManagementArmOperation<CostManagementExportResource>(Response.FromValue(new CostManagementExportResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), exportName, CostManagementExportData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                CostManagementArmOperation<CostManagementExportResource> operation = new CostManagementArmOperation<CostManagementExportResource>(Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -147,39 +156,43 @@ namespace Azure.ResourceManager.CostManagement
         /// The operation to get the export for the defined scope by export name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        public virtual async Task<Response<CostManagementExportResource>> GetAsync(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CostManagementExportResource>> GetAsync(string exportName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Get");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.Get");
             scope.Start();
             try
             {
-                var response = await _costManagementExportExportsRestClient.GetAsync(Id, exportName, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -193,39 +206,43 @@ namespace Azure.ResourceManager.CostManagement
         /// The operation to get the export for the defined scope by export name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        public virtual Response<CostManagementExportResource> Get(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CostManagementExportResource> Get(string exportName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Get");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.Get");
             scope.Start();
             try
             {
-                var response = _costManagementExportExportsRestClient.Get(Id, exportName, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CostManagementExportData> response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,97 +256,109 @@ namespace Azure.ResourceManager.CostManagement
         /// The operation to list all exports at the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CostManagementExportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CostManagementExportResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// The operation to list all exports at the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CostManagementExportResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CostManagementExportResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CostManagementExportResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _costManagementExportExportsRestClient.CreateListRequest(Id, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CostManagementExportResource(Client, CostManagementExportData.DeserializeCostManagementExportData(e)), _costManagementExportExportsClientDiagnostics, Pipeline, "CostManagementExportCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllAsyncCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
+        }
+
+        /// <summary>
+        /// The operation to list all exports at the given scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last run of each export. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CostManagementExportResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CostManagementExportResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CostManagementExportData, CostManagementExportResource>(new ExportsGetAllCollectionResultOfT(_exportsRestClient, Id.ToString(), expand, context, "CostManagementExportCollection.GetAll"), data => new CostManagementExportResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string exportName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Exists");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _costManagementExportExportsRestClient.GetAsync(Id, exportName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CostManagementExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CostManagementExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,37 +372,51 @@ namespace Azure.ResourceManager.CostManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        public virtual Response<bool> Exists(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string exportName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.Exists");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.Exists");
             scope.Start();
             try
             {
-                var response = _costManagementExportExportsRestClient.Get(Id, exportName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CostManagementExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CostManagementExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,39 +430,55 @@ namespace Azure.ResourceManager.CostManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        public virtual async Task<NullableResponse<CostManagementExportResource>> GetIfExistsAsync(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<CostManagementExportResource>> GetIfExistsAsync(string exportName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _costManagementExportExportsRestClient.GetAsync(Id, exportName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CostManagementExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CostManagementExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CostManagementExportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -433,39 +492,55 @@ namespace Azure.ResourceManager.CostManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/exports/{exportName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/exports/{exportName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exports_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Exports_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementExportResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportName"> Export Name. </param>
         /// <param name="expand"> May be used to expand the properties within an export. Currently only 'runHistory' is supported and will return information for the last 10 runs of the export. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="exportName"/> is null. </exception>
-        public virtual NullableResponse<CostManagementExportResource> GetIfExists(string exportName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="exportName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<CostManagementExportResource> GetIfExists(string exportName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(exportName, nameof(exportName));
 
-            using var scope = _costManagementExportExportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
+            using DiagnosticScope scope = _exportsClientDiagnostics.CreateScope("CostManagementExportCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _costManagementExportExportsRestClient.Get(Id, exportName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _exportsRestClient.CreateGetRequest(Id.ToString(), exportName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CostManagementExportData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CostManagementExportData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CostManagementExportData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CostManagementExportResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementExportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +560,7 @@ namespace Azure.ResourceManager.CostManagement
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CostManagementExportResource> IAsyncEnumerable<CostManagementExportResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

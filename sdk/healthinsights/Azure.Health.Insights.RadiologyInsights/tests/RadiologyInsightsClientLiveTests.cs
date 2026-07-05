@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using NUnit.Framework;
-using System.IO;
-using System.Reflection;
-using Azure.Core;
-using System.Net;
-using Azure.Core.TestFramework;
-using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
-using Azure.Health.Insights.RadiologyInsights;
-using System.Text.Json;
 using System;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Health.Insights.RadiologyInsights;
+using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {

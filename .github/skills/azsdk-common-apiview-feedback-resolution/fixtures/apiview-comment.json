@@ -1,0 +1,18 @@
+{
+  "comments": [
+    {
+      "id": "c1",
+      "text": "Consider renaming 'ComputeProvisioningState' to 'ProvisioningState' for consistency.",
+      "severity": "suggestion",
+      "language": "python",
+      "resolved": false
+    },
+    {
+      "id": "c2",
+      "text": "Missing documentation on the 'createOrUpdate' method parameters.",
+      "severity": "critical",
+      "language": "python",
+      "resolved": false
+    }
+  ]
+}

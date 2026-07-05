@@ -14,7 +14,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary>
     /// The SanitizerAddition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BodyKeySanitizer"/>, <see cref="BodyRegexSanitizer"/>, <see cref="BodyStringSanitizer"/>, <see cref="GeneralRegexSanitizer"/>, <see cref="GeneralStringSanitizer"/>, <see cref="HeaderRegexSanitizer"/>, <see cref="HeaderStringSanitizer"/>, <see cref="OAuthResponseSanitizer"/>, <see cref="RegexEntrySanitizer"/>, <see cref="RemoveHeaderSanitizer"/>, <see cref="UriRegexSanitizer"/>, <see cref="UriStringSanitizer"/>, and <see cref="UriSubscriptionIdSanitizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BodyKeySanitizer"/>, <see cref="BodyRegexSanitizer"/>, <see cref="BodyStringSanitizer"/>, <see cref="ContentDispositionFilePathSanitizer"/>, <see cref="GeneralRegexSanitizer"/>, <see cref="GeneralStringSanitizer"/>, <see cref="HeaderRegexSanitizer"/>, <see cref="HeaderStringSanitizer"/>, <see cref="OAuthResponseSanitizer"/>, <see cref="RegexEntrySanitizer"/>, <see cref="RemoveHeaderSanitizer"/>, <see cref="UriRegexSanitizer"/>, <see cref="UriStringSanitizer"/>, and <see cref="UriSubscriptionIdSanitizer"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSanitizerAddition))]
     public abstract partial class SanitizerAddition : IJsonModel<SanitizerAddition>
@@ -96,6 +96,8 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
                         return BodyRegexSanitizer.DeserializeBodyRegexSanitizer(element, options);
                     case "BodyStringSanitizer":
                         return BodyStringSanitizer.DeserializeBodyStringSanitizer(element, options);
+                    case "ContentDispositionFilePathSanitizer":
+                        return ContentDispositionFilePathSanitizer.DeserializeContentDispositionFilePathSanitizer(element, options);
                     case "GeneralRegexSanitizer":
                         return GeneralRegexSanitizer.DeserializeGeneralRegexSanitizer(element, options);
                     case "GeneralStringSanitizer":
@@ -149,7 +151,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSanitizerAddition(document.RootElement, options);
                     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.TestCase
             var container = (await CreateResourceGroupAsync()).GetStreamAnalyticsClusters();
             var input = ResourceDataHelpers.GetClusterData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, Name, input);
-            var cluster =  lro.Value;
+            var cluster = lro.Value;
             var endPointContainer = cluster.GetStreamAnalyticsPrivateEndpoints();
             var endPointInput = ResourceDataHelpers.GetEndPointData();
             var lroEP = await endPointContainer.CreateOrUpdateAsync(WaitUntil.Completed, Name, endPointInput);

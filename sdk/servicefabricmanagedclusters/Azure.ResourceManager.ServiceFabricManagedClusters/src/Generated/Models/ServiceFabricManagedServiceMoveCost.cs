@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedServiceMoveCost : IEquatable<ServiceFabricManagedServiceMoveCost>
     {
         private readonly string _value;
+        /// <summary> Zero move cost. This value is zero. </summary>
+        private const string ZeroValue = "Zero";
+        /// <summary> Specifies the move cost of the service as Low. The value is 1. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Specifies the move cost of the service as Medium. The value is 2. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> Specifies the move cost of the service as High. The value is 3. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedServiceMoveCost"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedServiceMoveCost(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ZeroValue = "Zero";
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Zero move cost. This value is zero. </summary>
         public static ServiceFabricManagedServiceMoveCost Zero { get; } = new ServiceFabricManagedServiceMoveCost(ZeroValue);
+
         /// <summary> Specifies the move cost of the service as Low. The value is 1. </summary>
         public static ServiceFabricManagedServiceMoveCost Low { get; } = new ServiceFabricManagedServiceMoveCost(LowValue);
+
         /// <summary> Specifies the move cost of the service as Medium. The value is 2. </summary>
         public static ServiceFabricManagedServiceMoveCost Medium { get; } = new ServiceFabricManagedServiceMoveCost(MediumValue);
+
         /// <summary> Specifies the move cost of the service as High. The value is 3. </summary>
         public static ServiceFabricManagedServiceMoveCost High { get; } = new ServiceFabricManagedServiceMoveCost(HighValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedServiceMoveCost"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedServiceMoveCost left, ServiceFabricManagedServiceMoveCost right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedServiceMoveCost"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedServiceMoveCost left, ServiceFabricManagedServiceMoveCost right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedServiceMoveCost"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedServiceMoveCost"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedServiceMoveCost(string value) => new ServiceFabricManagedServiceMoveCost(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedServiceMoveCost"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedServiceMoveCost?(string value) => value == null ? null : new ServiceFabricManagedServiceMoveCost(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedServiceMoveCost other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedServiceMoveCost other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

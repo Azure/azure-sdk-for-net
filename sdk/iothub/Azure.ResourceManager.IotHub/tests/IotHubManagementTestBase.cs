@@ -1,18 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IotHub.Tests
 {
     public class IotHubManagementTestBase : ManagementRecordedTestBase<IotHubManagementTestEnvironment>
     {
+        private const string RecordedApiVersion = "2021-07-02";
+
         protected ArmClient Client { get; private set; }
 
         protected IotHubManagementTestBase(bool isAsync, RecordedTestMode mode)
@@ -28,7 +30,18 @@ namespace Azure.ResourceManager.IotHub.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-            Client = GetArmClient();
+            Client = GetArmClient(CreateRecordedClientOptions());
+        }
+
+        private static ArmClientOptions CreateRecordedClientOptions()
+        {
+            ArmClientOptions options = new ArmClientOptions();
+            options.SetApiVersion(IotHubDescriptionResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(IotHubCertificateDescriptionResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(EventHubConsumerGroupInfoResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(IotHubPrivateEndpointConnectionResource.ResourceType, RecordedApiVersion);
+            options.SetApiVersion(IotHubPrivateEndpointGroupInformationResource.ResourceType, RecordedApiVersion);
+            return options;
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
@@ -39,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Tests
             return lro.Value;
         }
 
-        protected async Task<IotHubDescriptionResource> CreateIotHub(ResourceGroupResource resourceGroup,string iotHubName)
+        protected async Task<IotHubDescriptionResource> CreateIotHub(ResourceGroupResource resourceGroup, string iotHubName)
         {
             var sku = new IotHubSkuInfo("S1")
             {

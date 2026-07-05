@@ -946,9 +946,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataSetMappingStatus Broken { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataSetMappingStatus Ok { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataSetMappingStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataSetMappingStatus left, Azure.ResourceManager.DataShare.Models.DataSetMappingStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataSetMappingStatus (string value) { throw null; }
@@ -991,9 +989,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus ActivationAttemptsExhausted { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus ActivationPending { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus left, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus (string value) { throw null; }
@@ -1011,9 +1007,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareInvitationStatus Rejected { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareInvitationStatus Withdrawn { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareInvitationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareInvitationStatus left, Azure.ResourceManager.DataShare.Models.DataShareInvitationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareInvitationStatus (string value) { throw null; }
@@ -1029,9 +1023,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareKind CopyBased { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareKind InPlace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareKind left, Azure.ResourceManager.DataShare.Models.DataShareKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareKind (string value) { throw null; }
@@ -1065,9 +1057,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareOperationStatus Succeeded { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareOperationStatus TransientFailure { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareOperationStatus left, Azure.ResourceManager.DataShare.Models.DataShareOperationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareOperationStatus (string value) { throw null; }
@@ -1083,9 +1073,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareOutputType Csv { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareOutputType Parquet { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareOutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareOutputType left, Azure.ResourceManager.DataShare.Models.DataShareOutputType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareOutputType (string value) { throw null; }
@@ -1104,9 +1092,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareProvisioningState Moving { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareProvisioningState left, Azure.ResourceManager.DataShare.Models.DataShareProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareProvisioningState (string value) { throw null; }
@@ -1122,9 +1108,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval Day { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval Hour { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval left, Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval (string value) { throw null; }
@@ -1152,9 +1136,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus Inactive { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus SourceSynchronizationSettingDeleted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus left, Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus (string value) { throw null; }
@@ -1314,9 +1296,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.ShareDataSetType SqlDWTable { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.ShareDataSetType SynapseWorkspaceSqlPoolTable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.ShareDataSetType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.ShareDataSetType left, Azure.ResourceManager.DataShare.Models.ShareDataSetType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.ShareDataSetType (string value) { throw null; }
@@ -1334,9 +1314,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus Revoking { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus SourceDeleted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus left, Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.ShareSubscriptionStatus (string value) { throw null; }
@@ -1514,9 +1492,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static Azure.ResourceManager.DataShare.Models.SynchronizationMode FullSync { get { throw null; } }
         public static Azure.ResourceManager.DataShare.Models.SynchronizationMode Incremental { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataShare.Models.SynchronizationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataShare.Models.SynchronizationMode left, Azure.ResourceManager.DataShare.Models.SynchronizationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataShare.Models.SynchronizationMode (string value) { throw null; }

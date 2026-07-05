@@ -7,23 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Unknown version of DataBoxValidationInputResult. </summary>
     internal partial class UnknownValidationInputResponse : DataBoxValidationInputResult
     {
         /// <summary> Initializes a new instance of <see cref="UnknownValidationInputResponse"/>. </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownValidationInputResponse(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationType, error, serializedAdditionalRawData)
-        {
-            ValidationType = validationType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownValidationInputResponse"/> for deserialization. </summary>
-        internal UnknownValidationInputResponse()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownValidationInputResponse(DataBoxValidationInputDiscriminator validationType, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(validationType, error, additionalBinaryDataProperties)
         {
         }
     }

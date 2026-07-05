@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Match variable to compare against.
-    /// Serialized Name: WafMatchVariable
-    /// </summary>
+    /// <summary> Match variable to compare against. </summary>
     public readonly partial struct WafMatchVariable : IEquatable<WafMatchVariable>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WafMatchVariable"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WafMatchVariable(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RemoteAddrValue = "RemoteAddr";
         private const string SocketAddrValue = "SocketAddr";
         private const string RequestMethodValue = "RequestMethod";
@@ -35,68 +25,73 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CookiesValue = "Cookies";
         private const string PostArgsValue = "PostArgs";
 
-        /// <summary>
-        /// RemoteAddr
-        /// Serialized Name: WafMatchVariable.RemoteAddr
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="WafMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WafMatchVariable(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the RemoteAddr. </summary>
         public static WafMatchVariable RemoteAddr { get; } = new WafMatchVariable(RemoteAddrValue);
-        /// <summary>
-        /// SocketAddr
-        /// Serialized Name: WafMatchVariable.SocketAddr
-        /// </summary>
+
+        /// <summary> Gets the SocketAddr. </summary>
         public static WafMatchVariable SocketAddr { get; } = new WafMatchVariable(SocketAddrValue);
-        /// <summary>
-        /// RequestMethod
-        /// Serialized Name: WafMatchVariable.RequestMethod
-        /// </summary>
+
+        /// <summary> Gets the RequestMethod. </summary>
         public static WafMatchVariable RequestMethod { get; } = new WafMatchVariable(RequestMethodValue);
-        /// <summary>
-        /// RequestHeader
-        /// Serialized Name: WafMatchVariable.RequestHeader
-        /// </summary>
+
+        /// <summary> Gets the RequestHeader. </summary>
         public static WafMatchVariable RequestHeader { get; } = new WafMatchVariable(RequestHeaderValue);
-        /// <summary>
-        /// RequestUri
-        /// Serialized Name: WafMatchVariable.RequestUri
-        /// </summary>
+
+        /// <summary> Gets the RequestUri. </summary>
         public static WafMatchVariable RequestUri { get; } = new WafMatchVariable(RequestUriValue);
-        /// <summary>
-        /// QueryString
-        /// Serialized Name: WafMatchVariable.QueryString
-        /// </summary>
+
+        /// <summary> Gets the QueryString. </summary>
         public static WafMatchVariable QueryString { get; } = new WafMatchVariable(QueryStringValue);
-        /// <summary>
-        /// RequestBody
-        /// Serialized Name: WafMatchVariable.RequestBody
-        /// </summary>
+
+        /// <summary> Gets the RequestBody. </summary>
         public static WafMatchVariable RequestBody { get; } = new WafMatchVariable(RequestBodyValue);
-        /// <summary>
-        /// Cookies
-        /// Serialized Name: WafMatchVariable.Cookies
-        /// </summary>
+
+        /// <summary> Gets the Cookies. </summary>
         public static WafMatchVariable Cookies { get; } = new WafMatchVariable(CookiesValue);
-        /// <summary>
-        /// PostArgs
-        /// Serialized Name: WafMatchVariable.PostArgs
-        /// </summary>
+
+        /// <summary> Gets the PostArgs. </summary>
         public static WafMatchVariable PostArgs { get; } = new WafMatchVariable(PostArgsValue);
+
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WafMatchVariable left, WafMatchVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WafMatchVariable left, WafMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WafMatchVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WafMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WafMatchVariable(string value) => new WafMatchVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WafMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WafMatchVariable?(string value) => value == null ? null : new WafMatchVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WafMatchVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WafMatchVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

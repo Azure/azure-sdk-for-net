@@ -11,7 +11,7 @@ namespace System.ClientModel;
 
 internal class LoggingPolicy : PipelinePolicy
 {
-    public LoggingPolicy() {}
+    public LoggingPolicy() { }
 
     public List<string> AllowedHeaders { get; } = ["Content-Type", "Accept", "User-Agent", "x-ms-client-request-id"];
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -44,7 +44,8 @@ internal class LoggingPolicy : PipelinePolicy
         Console.WriteLine(logMessage);
     }
 
-    protected virtual string FormatRequestLog(PipelineMessage message) {
+    protected virtual string FormatRequestLog(PipelineMessage message)
+    {
         StringBuilder logMessage = new();
         FormatRequestLine(message, logMessage);
         FormatHeaders(message, logMessage);

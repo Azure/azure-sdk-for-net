@@ -110,7 +110,7 @@ namespace Azure.AI.Translation.Document.Samples
                         new TranslationTarget(arabicTargetSasUri, "ar")
                     }),
             };
-#endregion
+            #endregion
         }
     }
 }

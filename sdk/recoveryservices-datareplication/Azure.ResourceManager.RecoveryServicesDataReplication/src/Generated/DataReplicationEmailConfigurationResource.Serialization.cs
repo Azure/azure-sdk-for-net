@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
+    /// <summary></summary>
     public partial class DataReplicationEmailConfigurationResource : IJsonModel<DataReplicationEmailConfigurationData>
     {
-        private static DataReplicationEmailConfigurationData s_dataDeserializationInstance;
-        private static DataReplicationEmailConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DataReplicationEmailConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DataReplicationEmailConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataReplicationEmailConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataReplicationEmailConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationEmailConfigurationData>)Data).Write(writer, options);
 
-        DataReplicationEmailConfigurationData IJsonModel<DataReplicationEmailConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationEmailConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataReplicationEmailConfigurationData IJsonModel<DataReplicationEmailConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataReplicationEmailConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationEmailConfigurationData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DataReplicationEmailConfigurationData IPersistableModel<DataReplicationEmailConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationEmailConfigurationData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
 
-        string IPersistableModel<DataReplicationEmailConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationEmailConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataReplicationEmailConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

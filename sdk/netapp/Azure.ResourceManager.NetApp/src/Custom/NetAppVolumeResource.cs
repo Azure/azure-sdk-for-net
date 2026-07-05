@@ -1,226 +1,94 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A Class representing a NetAppVolume along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetAppVolumeResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetAppVolumeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CapacityPoolResource" /> using the GetNetAppVolume method.
-    /// </summary>
-    public partial class NetAppVolumeResource : ArmResource
+    // Restore GA-shipped operation method names that the new spec renamed or moved. The
+    // current spec can only choose one generated name for each operation; several old SDK
+    // methods below are aliases for the same generated operation or target legacy routes, so
+    // they remain SDK-side compatibility methods instead of @@clientName customizations.
+    // - GetBackupStatus / GetLatestStatusBackup     -> delegate to generated GetLatestStatus
+    // - GetRestoreStatus / GetVolumeLatestRestoreStatusBackup -> delegate to GetVolumeLatestRestoreStatus
+    // - GetReplicationStatus                        -> SDK-side implementation; generated ReplicationStatus name is suppressed
+    // - MigrateBackupsBackupsUnderVolume            -> delegate to generated MigrateBackups
+    // - GetReplications(CancellationToken)          -> overload resolving to generated GetReplications(content, ct)
+    // - GetNetAppVolumeBackup(s)                    -> throw: backup collection moved to NetAppBackupVaultBackupResource
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("ReplicationStatus", typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("ReplicationStatusAsync", typeof(CancellationToken))]
+    public partial class NetAppVolumeResource
     {
-        private VaultsRestOperations _vaultsRestClient;
-        private ClientDiagnostics _vaultsClientDiagnostics;
-
-        private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-        private VaultsRestOperations VaultsRestClient => _vaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppAccountResource.ResourceType));
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        private BackupsRestOperations _netAppVolumeBackupBackupsRestClient;
-        private ClientDiagnostics _netAppVolumeBackupBackupsClientDiagnostics;
-
-        private ClientDiagnostics NetAppVolumeBackupBackupsClientDiagnostics => _netAppVolumeBackupBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-        private BackupsRestOperations NetAppVolumeBackupBackupsRestClient => _netAppVolumeBackupBackupsRestClient ??= new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppAccountResource.ResourceType));
-
-        /// <summary> Gets a collection of NetAppVolumeBackupResources in the NetAppVolume. </summary>
-        /// <returns> An object representing collection of NetAppVolumeBackupResources and their operations over a NetAppVolumeBackupResource. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual NetAppVolumeBackupCollection GetNetAppVolumeBackups()
-        {
-            return GetCachedClient(Client => new NetAppVolumeBackupCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get the status of the backup for a volume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backupStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backups_GetStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<NetAppVolumeBackupStatus>> GetBackupStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = NetAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetBackupStatus");
-            scope.Start();
-            try
-            {
-                var response = await NetAppVolumeBackupBackupsRestClient.GetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of the backup for a volume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backupStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backups_GetStatus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <summary> Get the status of the backup for a volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppVolumeBackupStatus> GetBackupStatus(CancellationToken cancellationToken = default)
-        {
-            using var scope = NetAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetBackupStatus");
-            scope.Start();
-            try
-            {
-                var response = NetAppVolumeBackupBackupsRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+            => GetLatestStatus(cancellationToken);
 
-        /// <summary>
-        /// Gets the specified backup of the volume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <summary> Get the status of the backup for a volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<NetAppVolumeBackupResource> GetNetAppVolumeBackup(string backupName, CancellationToken cancellationToken = default)
-        {
-            return GetNetAppVolumeBackups().Get(backupName, cancellationToken);
-        }
+        public virtual Task<Response<NetAppVolumeBackupStatus>> GetBackupStatusAsync(CancellationToken cancellationToken = default)
+            => GetLatestStatusAsync(cancellationToken);
 
-        /// <summary>
-        /// Gets the specified backup of the volume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backups_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <summary> Get the status of the latest backup for a volume. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<NetAppVolumeBackupResource>> GetNetAppVolumeBackupAsync(string backupName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetAppVolumeBackups().GetAsync(backupName, cancellationToken).ConfigureAwait(false);
-        }
+        public virtual Response<NetAppVolumeBackupStatus> GetLatestStatusBackup(CancellationToken cancellationToken = default)
+            => GetLatestStatus(cancellationToken);
 
-        /// <summary>
-        /// Get the status of the restore for a volume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/restoreStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backups_GetVolumeRestoreStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetAppRestoreStatus>> GetRestoreStatusAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatusBackup");
-            scope.Start();
-            try
-            {
-                var response = await _netAppBackupVaultBackupBackupsRestClient.GetVolumeLatestRestoreStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        /// <summary> Get the status of the latest backup for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<NetAppVolumeBackupStatus>> GetLatestStatusBackupAsync(CancellationToken cancellationToken = default)
+            => GetLatestStatusAsync(cancellationToken);
 
-        /// <summary>
-        /// Get the status of the restore for a volume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/restoreStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Backups_GetVolumeRestoreStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <summary> Get the status of the restore for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<NetAppRestoreStatus> GetRestoreStatus(CancellationToken cancellationToken = default)
+            => GetVolumeLatestRestoreStatus(cancellationToken);
+
+        /// <summary> Get the status of the restore for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<NetAppRestoreStatus>> GetRestoreStatusAsync(CancellationToken cancellationToken = default)
+            => GetVolumeLatestRestoreStatusAsync(cancellationToken);
+
+        /// <summary> Get the status of the latest restore for a volume's backup. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppRestoreStatus> GetVolumeLatestRestoreStatusBackup(CancellationToken cancellationToken = default)
+            => GetVolumeLatestRestoreStatus(cancellationToken);
+
+        /// <summary> Get the status of the latest restore for a volume's backup. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<NetAppRestoreStatus>> GetVolumeLatestRestoreStatusBackupAsync(CancellationToken cancellationToken = default)
+            => GetVolumeLatestRestoreStatusAsync(cancellationToken);
+
+        // The generated `ReplicationStatus` / `ReplicationStatusAsync` method names drop
+        // the `Get` verb prefix, so suppress them and keep the GA-shipped verb-style names.
+        /// <summary> Get the replication status for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetAppVolumeReplicationStatus> GetReplicationStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppBackupVaultBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetVolumeLatestRestoreStatusBackup");
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetReplicationStatus");
             scope.Start();
             try
             {
-                var response = _netAppBackupVaultBackupBackupsRestClient.GetVolumeLatestRestoreStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _volumesRestClient.CreateReplicationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetAppVolumeReplicationStatus> response = Response.FromValue(NetAppVolumeReplicationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -229,5 +97,75 @@ namespace Azure.ResourceManager.NetApp
                 throw;
             }
         }
+
+        /// <summary> Get the replication status for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetAppVolumeReplicationStatus>> GetReplicationStatusAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _volumesClientDiagnostics.CreateScope("NetAppVolumeResource.GetReplicationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _volumesRestClient.CreateReplicationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetAppVolumeReplicationStatus> response = Response.FromValue(NetAppVolumeReplicationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List replications for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetAppVolumeReplication> GetReplications(CancellationToken cancellationToken)
+            => GetReplications(content: default, cancellationToken);
+
+        /// <summary> List replications for a volume. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetAppVolumeReplication> GetReplicationsAsync(CancellationToken cancellationToken)
+            => GetReplicationsAsync(content: default, cancellationToken);
+
+        /// <summary> Migrate backups under a volume to a backup vault. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation MigrateBackupsBackupsUnderVolume(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
+            => MigrateBackups(waitUntil, content, cancellationToken);
+
+        /// <summary> Migrate backups under a volume to a backup vault. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<ArmOperation> MigrateBackupsBackupsUnderVolumeAsync(WaitUntil waitUntil, BackupsMigrationContent content, CancellationToken cancellationToken = default)
+            => MigrateBackupsAsync(waitUntil, content, cancellationToken);
+
+        // Backups are no longer a child collection of volumes in the new spec; the GA-shipped
+        // child accessors throw with guidance to use NetAppBackupVaultBackupResource instead.
+        /// <summary> Gets a collection of NetAppVolumeBackupResource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Volume-scoped backups have moved to NetAppBackupVaultBackupResource.", false)]
+        public virtual NetAppVolumeBackupCollection GetNetAppVolumeBackups()
+            => throw new NotSupportedException("Volume-scoped backups have moved to NetAppBackupVaultBackupResource. Use NetAppBackupVaultResource.GetNetAppBackupVaultBackups() instead.");
+
+        /// <summary> Gets a NetAppVolumeBackupResource by name. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Volume-scoped backups have moved to NetAppBackupVaultBackupResource.", false)]
+        public virtual Response<NetAppVolumeBackupResource> GetNetAppVolumeBackup(string backupName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Volume-scoped backups have moved to NetAppBackupVaultBackupResource. Use NetAppBackupVaultResource.GetNetAppBackupVaultBackup(...) instead.");
+
+        /// <summary> Gets a NetAppVolumeBackupResource by name. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Volume-scoped backups have moved to NetAppBackupVaultBackupResource.", false)]
+        public virtual Task<Response<NetAppVolumeBackupResource>> GetNetAppVolumeBackupAsync(string backupName, CancellationToken cancellationToken = default)
+            => throw new NotSupportedException("Volume-scoped backups have moved to NetAppBackupVaultBackupResource. Use NetAppBackupVaultResource.GetNetAppBackupVaultBackupAsync(...) instead.");
     }
 }

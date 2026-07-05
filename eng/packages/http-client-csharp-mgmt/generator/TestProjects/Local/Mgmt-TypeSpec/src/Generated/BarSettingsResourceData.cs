@@ -24,19 +24,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="anotherPropertyLeft"> enabled. </param>
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(int? propertyLeft, int? anotherPropertyLeft, string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
         {
+            Argument.AssertNotNull(propertyLeft, nameof(propertyLeft));
+            Argument.AssertNotNull(anotherPropertyLeft, nameof(anotherPropertyLeft));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
+            Argument.AssertNotNull(middleProp2, nameof(middleProp2));
+            Argument.AssertNotNull(prop1, nameof(prop1));
+            Argument.AssertNotNull(discriminatorProperty, nameof(discriminatorProperty));
 
             StringArray = new ChangeTrackingList<string>();
-            PropertyLeft = propertyLeft;
-            AnotherPropertyLeft = anotherPropertyLeft;
-            InnerProp2 = innerProp2;
-            MiddleProp1 = middleProp1;
-            Prop2 = prop2;
+            Property = new BarQuotaProperties(propertyLeft);
+            AnotherProperty = new BarQuotaProperties(anotherPropertyLeft);
+            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
             DiscriminatorProperty = discriminatorProperty;
         }
 
@@ -45,7 +50,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="stringArray"></param>
         /// <param name="property"></param>
@@ -53,9 +57,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="flattenedNestedProperty"></param>
         /// <param name="optionalFlattenProperty"></param>
         /// <param name="discriminatorProperty"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty, LimitJsonObject discriminatorProperty) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty, LimitJsonObject discriminatorProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             StringArray = stringArray;
             Property = @property;
@@ -63,6 +67,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             FlattenedNestedProperty = flattenedNestedProperty;
             OptionalFlattenProperty = optionalFlattenProperty;
             DiscriminatorProperty = discriminatorProperty;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -105,7 +110,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> enabled. </summary>
         [WirePath("property.left")]
-        public int? PropertyLeft
+        public string PropertyLeft
         {
             get
             {
@@ -113,13 +118,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                Property = new BarQuotaProperties(value);
             }
         }
 
         /// <summary> enabled. </summary>
         [WirePath("anotherProperty.left")]
-        public int? AnotherPropertyLeft
+        public string AnotherPropertyLeft
         {
             get
             {
@@ -127,7 +132,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                AnotherProperty = new BarQuotaProperties(value);
             }
         }
 
@@ -145,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FlattenedNestedProperty = new BarNestedQuotaProperties();
                 }
-                FlattenedNestedProperty.InnerProp1 = value.Value;
+                FlattenedNestedProperty.InnerProp1 = value;
             }
         }
 
@@ -237,11 +242,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return OptionalFlattenProperty is null ? default : OptionalFlattenProperty.RandomCollectionProp;
-            }
-            set
-            {
-                OptionalFlattenProperty = new OptionalFlattenPropertyType(value);
+                if (OptionalFlattenProperty is null)
+                {
+                    OptionalFlattenProperty = new OptionalFlattenPropertyType();
+                }
+                return OptionalFlattenProperty.RandomCollectionProp;
             }
         }
     }

@@ -17,14 +17,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public RemoveTagMethodProvider(
             ResourceClientProvider resource,
-            RequestPathPattern contextualPath,
+            OperationContext operationContext,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
             RestClientInfo updateRestClientInfo,
             RestClientInfo getRestClientInfo,
             bool isPatch,
             bool isAsync)
-            : base(resource, contextualPath, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
+            : base(resource, operationContext, updateMethodProvider, getMethod, updateRestClientInfo, getRestClientInfo, isPatch, isAsync,
                    isAsync ? "RemoveTagAsync" : "RemoveTag",
                    "Removes a tag by key from the resource.")
         {

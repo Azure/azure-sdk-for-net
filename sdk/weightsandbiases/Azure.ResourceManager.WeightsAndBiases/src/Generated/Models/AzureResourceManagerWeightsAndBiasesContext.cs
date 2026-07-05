@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WeightsAndBiases.Models;
 
@@ -17,6 +18,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
     /// </summary>
     [ModelReaderWriterBuildable(typeof(InstanceResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstanceData))]

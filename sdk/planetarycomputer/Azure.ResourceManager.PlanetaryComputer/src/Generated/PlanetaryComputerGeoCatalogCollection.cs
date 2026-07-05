@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.PlanetaryComputer
 {
     /// <summary>
     /// A class representing a collection of <see cref="PlanetaryComputerGeoCatalogResource"/> and their operations.
-    /// Each <see cref="PlanetaryComputerGeoCatalogResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="PlanetaryComputerGeoCatalogCollection"/> instance call the GetPlanetaryComputerGeoCatalogs method from an instance of the parent resource.
+    /// Each <see cref="PlanetaryComputerGeoCatalogResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PlanetaryComputerGeoCatalogCollection"/> instance call the GetPlanetaryComputerGeoCatalogs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PlanetaryComputerGeoCatalogCollection : ArmCollection, IEnumerable<PlanetaryComputerGeoCatalogResource>, IAsyncEnumerable<PlanetaryComputerGeoCatalogResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             TryGetApiVersion(PlanetaryComputerGeoCatalogResource.ResourceType, out string planetaryComputerGeoCatalogApiVersion);
             _geoCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlanetaryComputer", PlanetaryComputerGeoCatalogResource.ResourceType.Namespace, Diagnostics);
-            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2025-02-11-preview");
+            _geoCatalogsRestClient = new GeoCatalogs(_geoCatalogsClientDiagnostics, Pipeline, Endpoint, planetaryComputerGeoCatalogApiVersion ?? "2026-04-15");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> GeoCatalogs_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 HttpMessage message = _geoCatalogsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, PlanetaryComputerGeoCatalogData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource> operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(
-                    new PlanetaryComputerGeoCatalogOperationSource(Client),
+                    new PlanetaryComputerGeoCatalogResourceOperationSource(Client),
                     _geoCatalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> GeoCatalogs_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
                 HttpMessage message = _geoCatalogsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, catalogName, PlanetaryComputerGeoCatalogData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource> operation = new PlanetaryComputerArmOperation<PlanetaryComputerGeoCatalogResource>(
-                    new PlanetaryComputerGeoCatalogOperationSource(Client),
+                    new PlanetaryComputerGeoCatalogResourceOperationSource(Client),
                     _geoCatalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.PlanetaryComputer
             }
         }
 
-        /// <summary> List GeoCatalog resources by resource group. </summary>
+        /// <summary>
+        /// List GeoCatalog resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlanetaryComputerGeoCatalogResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -278,10 +294,26 @@ namespace Azure.ResourceManager.PlanetaryComputer
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupAsyncCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new AsyncPageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupAsyncCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlanetaryComputerGeoCatalogCollection.GetAll"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
-        /// <summary> List GeoCatalog resources by resource group. </summary>
+        /// <summary>
+        /// List GeoCatalog resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/geoCatalogs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GeoCatalogs_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlanetaryComputerGeoCatalogResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlanetaryComputerGeoCatalogResource> GetAll(CancellationToken cancellationToken = default)
@@ -290,11 +322,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PlanetaryComputerGeoCatalogResource(Client, data));
+            return new PageableWrapper<PlanetaryComputerGeoCatalogData, PlanetaryComputerGeoCatalogResource>(new GeoCatalogsGetByResourceGroupCollectionResultOfT(_geoCatalogsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PlanetaryComputerGeoCatalogCollection.GetAll"), data => new PlanetaryComputerGeoCatalogResource(Client, data));
         }
 
         /// <summary>
-        /// Get a GeoCatalog
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,11 +334,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         }
 
         /// <summary>
-        /// Get a GeoCatalog
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,11 +391,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +440,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         }
 
         /// <summary>
-        /// Get a GeoCatalog
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,11 +448,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +501,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
         }
 
         /// <summary>
-        /// Get a GeoCatalog
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,11 +509,11 @@ namespace Azure.ResourceManager.PlanetaryComputer
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> GeoCatalogs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-11-preview. </description>
+        /// <description> 2026-04-15. </description>
         /// </item>
         /// </list>
         /// </summary>

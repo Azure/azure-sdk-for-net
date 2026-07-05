@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Properties for a Git repository catalog. </summary>
     public partial class DevCenterGitCatalog
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterGitCatalog"/>. </summary>
         public DevCenterGitCatalog()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="branch"> Git branch. </param>
         /// <param name="secretIdentifier"> A reference to the Key Vault secret containing a security token to authenticate to a Git repository. </param>
         /// <param name="path"> The folder where the catalog items can be found inside the repository. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterGitCatalog(Uri uri, string branch, string secretIdentifier, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterGitCatalog(Uri uri, string branch, string secretIdentifier, string path, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Branch = branch;
             SecretIdentifier = secretIdentifier;
             Path = path;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Git URI. </summary>
         public Uri Uri { get; set; }
+
         /// <summary> Git branch. </summary>
         public string Branch { get; set; }
+
         /// <summary> A reference to the Key Vault secret containing a security token to authenticate to a Git repository. </summary>
         public string SecretIdentifier { get; set; }
+
         /// <summary> The folder where the catalog items can be found inside the repository. </summary>
         public string Path { get; set; }
     }

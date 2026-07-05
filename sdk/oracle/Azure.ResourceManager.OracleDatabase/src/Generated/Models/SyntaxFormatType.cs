@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct SyntaxFormatType : IEquatable<SyntaxFormatType>
     {
         private readonly string _value;
+        /// <summary> Long format. </summary>
+        private const string LongValue = "Long";
+        /// <summary> Ezconnect format. </summary>
+        private const string EzconnectValue = "Ezconnect";
+        /// <summary> Ezconnectplus format. </summary>
+        private const string EzconnectPlusValue = "Ezconnectplus";
 
         /// <summary> Initializes a new instance of <see cref="SyntaxFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyntaxFormatType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LongValue = "Long";
-        private const string EzconnectValue = "Ezconnect";
-        private const string EzconnectPlusValue = "Ezconnectplus";
+            _value = value;
+        }
 
         /// <summary> Long format. </summary>
         public static SyntaxFormatType Long { get; } = new SyntaxFormatType(LongValue);
+
         /// <summary> Ezconnect format. </summary>
         public static SyntaxFormatType Ezconnect { get; } = new SyntaxFormatType(EzconnectValue);
+
         /// <summary> Ezconnectplus format. </summary>
         public static SyntaxFormatType EzconnectPlus { get; } = new SyntaxFormatType(EzconnectPlusValue);
+
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyntaxFormatType left, SyntaxFormatType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyntaxFormatType left, SyntaxFormatType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyntaxFormatType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyntaxFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyntaxFormatType(string value) => new SyntaxFormatType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyntaxFormatType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyntaxFormatType?(string value) => value == null ? null : new SyntaxFormatType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyntaxFormatType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyntaxFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

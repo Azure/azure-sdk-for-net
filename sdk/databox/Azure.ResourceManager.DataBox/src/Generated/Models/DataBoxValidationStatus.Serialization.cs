@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class DataBoxValidationStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DataBoxValidationStatus value) => value switch
         {
             DataBoxValidationStatus.Valid => "Valid",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxValidationStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DataBoxValidationStatus ToDataBoxValidationStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid")) return DataBoxValidationStatus.Valid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return DataBoxValidationStatus.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return DataBoxValidationStatus.Skipped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Valid"))
+            {
+                return DataBoxValidationStatus.Valid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return DataBoxValidationStatus.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped"))
+            {
+                return DataBoxValidationStatus.Skipped;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxValidationStatus value.");
         }
     }

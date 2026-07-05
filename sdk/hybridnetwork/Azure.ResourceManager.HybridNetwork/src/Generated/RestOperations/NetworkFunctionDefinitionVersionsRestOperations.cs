@@ -6,39 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.HybridNetwork.Models;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal partial class NetworkFunctionDefinitionVersionsRestOperations
+    internal partial class NetworkFunctionDefinitionVersions
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersionsRestOperations. </summary>
+        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersions for mocking. </summary>
+        protected NetworkFunctionDefinitionVersions()
+        {
+        }
+
+        /// <summary> Initializes a new instance of NetworkFunctionDefinitionVersions. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public NetworkFunctionDefinitionVersionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal NetworkFunctionDefinitionVersions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -50,95 +55,21 @@ namespace Azure.ResourceManager.HybridNetwork
             uri.AppendPath(networkFunctionDefinitionGroupName, true);
             uri.AppendPath("/networkFunctionDefinitionVersions/", false);
             uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
-            uri.AppendPath(networkFunctionDefinitionGroupName, true);
-            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
-            uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Deletes the specified network function definition version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes the specified network function definition version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -150,103 +81,23 @@ namespace Azure.ResourceManager.HybridNetwork
             uri.AppendPath(networkFunctionDefinitionGroupName, true);
             uri.AppendPath("/networkFunctionDefinitionVersions/", false);
             uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
-            uri.AppendPath(networkFunctionDefinitionGroupName, true);
-            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
-            uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Creates or updates a network function definition version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="data"> Parameters supplied to the create or update network function definition version operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/>, <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates a network function definition version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="data"> Parameters supplied to the create or update network function definition version operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/>, <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -258,128 +109,23 @@ namespace Azure.ResourceManager.HybridNetwork
             uri.AppendPath(networkFunctionDefinitionGroupName, true);
             uri.AppendPath("/networkFunctionDefinitionVersions/", false);
             uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
-            uri.AppendPath(networkFunctionDefinitionGroupName, true);
-            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
-            uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets information about a network function definition version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkFunctionDefinitionVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkFunctionDefinitionVersionData.DeserializeNetworkFunctionDefinitionVersionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((NetworkFunctionDefinitionVersionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets information about a network function definition version. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkFunctionDefinitionVersionData> Get(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkFunctionDefinitionVersionData.DeserializeNetworkFunctionDefinitionVersionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((NetworkFunctionDefinitionVersionData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
-            uri.AppendPath(networkFunctionDefinitionGroupName, true);
-            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
-            uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -391,90 +137,20 @@ namespace Azure.ResourceManager.HybridNetwork
             uri.AppendPath(networkFunctionDefinitionGroupName, true);
             uri.AppendPath("/networkFunctionDefinitionVersions/", false);
             uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagsObject, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Delete;
             return message;
         }
 
-        /// <summary> Updates a network function definition version resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="tagsObject"> Parameters supplied to the create or update network function definition version operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/>, <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="tagsObject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkFunctionDefinitionVersionData>> UpdateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByNetworkFunctionDefinitionGroupRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, tagsObject);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkFunctionDefinitionVersionData.DeserializeNetworkFunctionDefinitionVersionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates a network function definition version resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="tagsObject"> Parameters supplied to the create or update network function definition version operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/>, <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="tagsObject"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkFunctionDefinitionVersionData> Update(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, tagsObject);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkFunctionDefinitionVersionData.DeserializeNetworkFunctionDefinitionVersionData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByNetworkFunctionDefinitionGroupRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -485,98 +161,44 @@ namespace Azure.ResourceManager.HybridNetwork
             uri.AppendPath("/networkFunctionDefinitionGroups/", false);
             uri.AppendPath(networkFunctionDefinitionGroupName, true);
             uri.AppendPath("/networkFunctionDefinitionVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByNetworkFunctionDefinitionGroupRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
-            uri.AppendPath(networkFunctionDefinitionGroupName, true);
-            uri.AppendPath("/networkFunctionDefinitionVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets information about a list of network function definition versions under a network function definition group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkFunctionDefinitionVersionListResult>> ListByNetworkFunctionDefinitionGroupAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByNetworkFunctionDefinitionGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-
-            using var message = CreateListByNetworkFunctionDefinitionGroupRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkFunctionDefinitionVersionListResult.DeserializeNetworkFunctionDefinitionVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Gets information about a list of network function definition versions under a network function definition group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkFunctionDefinitionVersionListResult> ListByNetworkFunctionDefinitionGroup(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-
-            using var message = CreateListByNetworkFunctionDefinitionGroupRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkFunctionDefinitionVersionListResult.DeserializeNetworkFunctionDefinitionVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateStateRequestUri(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -589,187 +211,18 @@ namespace Azure.ResourceManager.HybridNetwork
             uri.AppendPath("/networkFunctionDefinitionVersions/", false);
             uri.AppendPath(networkFunctionDefinitionVersionName, true);
             uri.AppendPath("/updateState", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateStateRequest(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridNetwork/publishers/", false);
-            uri.AppendPath(publisherName, true);
-            uri.AppendPath("/networkFunctionDefinitionGroups/", false);
-            uri.AppendPath(networkFunctionDefinitionGroupName, true);
-            uri.AppendPath("/networkFunctionDefinitionVersions/", false);
-            uri.AppendPath(networkFunctionDefinitionVersionName, true);
-            uri.AppendPath("/updateState", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkFunctionDefinitionVersionUpdateState, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
-        }
-
-        /// <summary> Update network function definition version state. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="networkFunctionDefinitionVersionUpdateState"> Parameters supplied to update the state of network function definition version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/>, <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="networkFunctionDefinitionVersionUpdateState"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateStateAsync(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(networkFunctionDefinitionVersionUpdateState, nameof(networkFunctionDefinitionVersionUpdateState));
-
-            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, networkFunctionDefinitionVersionUpdateState);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update network function definition version state. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
-        /// <param name="networkFunctionDefinitionVersionUpdateState"> Parameters supplied to update the state of network function definition version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/>, <paramref name="networkFunctionDefinitionVersionName"/> or <paramref name="networkFunctionDefinitionVersionUpdateState"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/>, <paramref name="networkFunctionDefinitionGroupName"/> or <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateState(string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersionName, NetworkFunctionDefinitionVersionUpdateState networkFunctionDefinitionVersionUpdateState, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionVersionName, nameof(networkFunctionDefinitionVersionName));
-            Argument.AssertNotNull(networkFunctionDefinitionVersionUpdateState, nameof(networkFunctionDefinitionVersionUpdateState));
-
-            using var message = CreateUpdateStateRequest(subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersionName, networkFunctionDefinitionVersionUpdateState);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByNetworkFunctionDefinitionGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByNetworkFunctionDefinitionGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets information about a list of network function definition versions under a network function definition group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkFunctionDefinitionVersionListResult>> ListByNetworkFunctionDefinitionGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-
-            using var message = CreateListByNetworkFunctionDefinitionGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkFunctionDefinitionVersionListResult.DeserializeNetworkFunctionDefinitionVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets information about a list of network function definition versions under a network function definition group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="publisherName"> The name of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="publisherName"/> or <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkFunctionDefinitionVersionListResult> ListByNetworkFunctionDefinitionGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string publisherName, string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
-
-            using var message = CreateListByNetworkFunctionDefinitionGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, publisherName, networkFunctionDefinitionGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        NetworkFunctionDefinitionVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkFunctionDefinitionVersionListResult.DeserializeNetworkFunctionDefinitionVersionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

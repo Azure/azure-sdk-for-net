@@ -1,17 +1,5 @@
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/communication/ci.mgmt.yml
-    - sdk/communication/Azure.ResourceManager.Communication/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
@@ -20,3 +8,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication
+    - name: Azure.Provisioning.Communication
+      safeName: AzureProvisioningCommunication

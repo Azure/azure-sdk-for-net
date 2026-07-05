@@ -683,7 +683,7 @@ sample-gen:
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/90a65cb3135d42438a381eb8bb5461a2b99b199f/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/efa49a123da7ce3ffe093a13832258305f529711/specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/management.json
 request-path-to-parent:
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/getEntities: /providers/Microsoft.Management/managementGroups/{groupId}
@@ -706,8 +706,10 @@ rename-mapping:
   EntityInfo: EntityData
   Permissions: EntityPermission
   Permissions.noaccess: NoAccess
-  SearchOptions: EntitySearchOption
+  EntitySearchType: EntitySearchOption
   SubscriptionUnderManagementGroup: ManagementGroupSubscription
+  EntityViewParameterType: EntityViewOption
+  Reason: ManagementGroupNameUnavailableReason
 
 override-operation-name:
   ManagementGroupSubscriptions_GetSubscription: GetManagementGroupSubscription
@@ -750,9 +752,21 @@ directive:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
   - from: management.json
-    where: $.parameters.SkipTokenParameter
+    where: $.paths
     transform: >
-      $['x-ms-client-name'] = 'SkipToken'
+      $['/providers/Microsoft.Management/getEntities'].post.parameters[1]['x-ms-client-name'] = 'SkipToken';
+  - from: management.json
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.Management/managementGroups'].get.parameters[2]['x-ms-client-name'] = 'SkipToken';
+  - from: management.json
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.Management/managementGroups/{groupId}/descendants'].get.parameters[2]['x-ms-client-name'] = 'SkipToken';
+  - from: management.json
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.Management/managementGroups/{groupId}/subscriptions'].get.parameters[2]['x-ms-client-name'] = 'SkipToken';
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
@@ -768,12 +782,6 @@ directive:
     where: $.definitions.ManagementGroupInfo
     transform: 'return undefined'
   - remove-model: OperationResults
-  - from: management.json
-    where: $.definitions.CheckNameAvailabilityResult.properties.reason
-    transform: >
-      $['x-ms-enum'] = {
-        name: "ManagementGroupNameUnavailableReason"
-      }
   - from: management.json
     where: $.definitions.ManagementGroupChildType
     transform: >

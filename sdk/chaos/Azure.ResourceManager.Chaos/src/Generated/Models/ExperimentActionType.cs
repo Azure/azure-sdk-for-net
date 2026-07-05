@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Chaos.Models
     internal readonly partial struct ExperimentActionType : IEquatable<ExperimentActionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExperimentActionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExperimentActionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DelayValue = "delay";
         private const string DiscreteValue = "discrete";
         private const string ContinuousValue = "continuous";
 
-        /// <summary> delay. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExperimentActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExperimentActionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Delay. </summary>
         public static ExperimentActionType Delay { get; } = new ExperimentActionType(DelayValue);
-        /// <summary> discrete. </summary>
+
+        /// <summary> Gets the Discrete. </summary>
         public static ExperimentActionType Discrete { get; } = new ExperimentActionType(DiscreteValue);
-        /// <summary> continuous. </summary>
+
+        /// <summary> Gets the Continuous. </summary>
         public static ExperimentActionType Continuous { get; } = new ExperimentActionType(ContinuousValue);
+
         /// <summary> Determines if two <see cref="ExperimentActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExperimentActionType left, ExperimentActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExperimentActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExperimentActionType left, ExperimentActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExperimentActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExperimentActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExperimentActionType(string value) => new ExperimentActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExperimentActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExperimentActionType?(string value) => value == null ? null : new ExperimentActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExperimentActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExperimentActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

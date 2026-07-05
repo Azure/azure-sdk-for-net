@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    /// <summary> The RulestackSecurityServiceType. </summary>
+    /// <summary></summary>
     public readonly partial struct RulestackSecurityServiceType : IEquatable<RulestackSecurityServiceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RulestackSecurityServiceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AntiSpywareValue = "antiSpyware";
         private const string AntiVirusValue = "antiVirus";
         private const string IPsVulnerabilityValue = "ipsVulnerability";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         private const string FileBlockingValue = "fileBlocking";
         private const string DnsSubscriptionValue = "dnsSubscription";
 
-        /// <summary> antiSpyware. </summary>
+        /// <summary> Initializes a new instance of <see cref="RulestackSecurityServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RulestackSecurityServiceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AntiSpyware. </summary>
         public static RulestackSecurityServiceType AntiSpyware { get; } = new RulestackSecurityServiceType(AntiSpywareValue);
-        /// <summary> antiVirus. </summary>
+
+        /// <summary> Gets the AntiVirus. </summary>
         public static RulestackSecurityServiceType AntiVirus { get; } = new RulestackSecurityServiceType(AntiVirusValue);
-        /// <summary> ipsVulnerability. </summary>
+
+        /// <summary> Gets the IPsVulnerability. </summary>
         public static RulestackSecurityServiceType IPsVulnerability { get; } = new RulestackSecurityServiceType(IPsVulnerabilityValue);
-        /// <summary> urlFiltering. </summary>
+
+        /// <summary> Gets the UrlFiltering. </summary>
         public static RulestackSecurityServiceType UrlFiltering { get; } = new RulestackSecurityServiceType(UrlFilteringValue);
-        /// <summary> fileBlocking. </summary>
+
+        /// <summary> Gets the FileBlocking. </summary>
         public static RulestackSecurityServiceType FileBlocking { get; } = new RulestackSecurityServiceType(FileBlockingValue);
-        /// <summary> dnsSubscription. </summary>
+
+        /// <summary> Gets the DnsSubscription. </summary>
         public static RulestackSecurityServiceType DnsSubscription { get; } = new RulestackSecurityServiceType(DnsSubscriptionValue);
+
         /// <summary> Determines if two <see cref="RulestackSecurityServiceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RulestackSecurityServiceType left, RulestackSecurityServiceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RulestackSecurityServiceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RulestackSecurityServiceType left, RulestackSecurityServiceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RulestackSecurityServiceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RulestackSecurityServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RulestackSecurityServiceType(string value) => new RulestackSecurityServiceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RulestackSecurityServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RulestackSecurityServiceType?(string value) => value == null ? null : new RulestackSecurityServiceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RulestackSecurityServiceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RulestackSecurityServiceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

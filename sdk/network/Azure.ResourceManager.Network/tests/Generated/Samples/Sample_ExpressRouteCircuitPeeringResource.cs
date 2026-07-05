@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExpressRouteCircuitPeering()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitPeeringGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitPeeringGet.json
             // this example is just showing the usage of "ExpressRouteCircuitPeerings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteExpressRouteCircuitPeerings()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitPeeringDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitPeeringDelete.json
             // this example is just showing the usage of "ExpressRouteCircuitPeerings_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteCircuitPeeringResource expressRouteCircuitPeering = client.GetExpressRouteCircuitPeeringResource(expressRouteCircuitPeeringResourceId);
 
             // invoke the operation
-            await expressRouteCircuitPeering.DeleteAsync(WaitUntil.Completed);
+            await expressRouteCircuitPeering.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateExpressRouteCircuitPeerings()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitPeeringCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitPeeringCreate.json
             // this example is just showing the usage of "ExpressRouteCircuitPeerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Samples
                 SecondaryPeerAddressPrefix = "192.168.18.252/30",
                 VlanId = 200,
             };
-            ArmOperation<ExpressRouteCircuitPeeringResource> lro = await expressRouteCircuitPeering.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ExpressRouteCircuitPeeringResource> lro = await expressRouteCircuitPeering.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetArpTableExpressRouteCircuit_ListARPTable()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitARPTableList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitARPTableList.json
             // this example is just showing the usage of "ExpressRouteCircuits_ListArpTable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "devicePath";
-            ArmOperation<ExpressRouteCircuitsArpTableListResult> lro = await expressRouteCircuitPeering.GetArpTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsArpTableListResult> lro = await expressRouteCircuitPeering.GetArpTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsArpTableListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetRoutesTableExpressRouteCircuit_ListRouteTables()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitRouteTableList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitRouteTableList.json
             // this example is just showing the usage of "ExpressRouteCircuits_ListRoutesTable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "devicePath";
-            ArmOperation<ExpressRouteCircuitsRoutesTableListResult> lro = await expressRouteCircuitPeering.GetRoutesTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsRoutesTableListResult> lro = await expressRouteCircuitPeering.GetRoutesTableExpressRouteCircuitAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsRoutesTableListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetRoutesTableSummaryExpressRouteCircuit_ListRouteTableSummary()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitRouteTableSummaryList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitRouteTableSummaryList.json
             // this example is just showing the usage of "ExpressRouteCircuits_ListRoutesTableSummary" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string devicePath = "devicePath";
-            ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> lro = await expressRouteCircuitPeering.GetRoutesTableSummaryExpressRouteCircuitAsync(WaitUntil.Completed, devicePath);
+            ArmOperation<ExpressRouteCircuitsRoutesTableSummaryListResult> lro = await expressRouteCircuitPeering.GetRoutesTableSummaryExpressRouteCircuitAsync(WaitUntil.Completed, devicePath, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitsRoutesTableSummaryListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPeeringStatsExpressRouteCircuit_GetExpressRouteCircuitPeeringTrafficStats()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRouteCircuitPeeringStats.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitPeeringStats.json
             // this example is just showing the usage of "ExpressRouteCircuits_GetPeeringStats" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteCircuitPeeringResource expressRouteCircuitPeering = client.GetExpressRouteCircuitPeeringResource(expressRouteCircuitPeeringResourceId);
 
             // invoke the operation
-            ExpressRouteCircuitStats result = await expressRouteCircuitPeering.GetPeeringStatsExpressRouteCircuitAsync();
+            ExpressRouteCircuitStats result = await expressRouteCircuitPeering.GetPeeringStatsExpressRouteCircuitAsync(System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }

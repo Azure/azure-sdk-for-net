@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DevCenter
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.DevCenter
     /// </summary>
     public partial class DevCenterImageCollection : ArmCollection, IEnumerable<DevCenterImageResource>, IAsyncEnumerable<DevCenterImageResource>
     {
-        private readonly ClientDiagnostics _devCenterImageImagesClientDiagnostics;
-        private readonly ImagesRestOperations _devCenterImageImagesRestClient;
+        private readonly ClientDiagnostics _imagesClientDiagnostics;
+        private readonly Images _imagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterImageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevCenterImageCollection for mocking. </summary>
         protected DevCenterImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevCenterImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevCenterImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devCenterImageImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevCenterImageResource.ResourceType, out string devCenterImageImagesApiVersion);
-            _devCenterImageImagesRestClient = new ImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterImageImagesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DevCenterImageResource.ResourceType, out string devCenterImageApiVersion);
+            _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterImageResource.ResourceType.Namespace, Diagnostics);
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, devCenterImageApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DevCenterGalleryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterGalleryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevCenterGalleryResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a gallery image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DevCenterImageResource>> GetAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterImageImagesClientDiagnostics.CreateScope("DevCenterImageCollection.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DevCenterImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devCenterImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevCenterImageData> response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.DevCenter
         /// Gets a gallery image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DevCenterImageResource> Get(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterImageImagesClientDiagnostics.CreateScope("DevCenterImageCollection.Get");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DevCenterImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _devCenterImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevCenterImageData> response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,98 +156,124 @@ namespace Azure.ResourceManager.DevCenter
         /// Lists images for a gallery.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_ListByGallery</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_ListByGallery. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevCenterImageResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterImageCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists images for a gallery.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_ListByGallery</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevCenterImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevCenterImageResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevCenterImageResource> GetAllAsync(int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterImageImagesRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devCenterImageImagesRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterImageResource(Client, DevCenterImageData.DeserializeDevCenterImageData(e)), _devCenterImageImagesClientDiagnostics, Pipeline, "DevCenterImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DevCenterImageData, DevCenterImageResource>(new ImagesGetByGalleryAsyncCollectionResultOfT(
+                _imagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                top,
+                context,
+                "DevCenterImageCollection.GetAll"), data => new DevCenterImageResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists images for a gallery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Images_ListByGallery. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevCenterImageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevCenterImageResource> GetAll(int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DevCenterImageData, DevCenterImageResource>(new ImagesGetByGalleryCollectionResultOfT(
+                _imagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                top,
+                context,
+                "DevCenterImageCollection.GetAll"), data => new DevCenterImageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterImageImagesClientDiagnostics.CreateScope("DevCenterImageCollection.Exists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DevCenterImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devCenterImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevCenterImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,36 +287,50 @@ namespace Azure.ResourceManager.DevCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterImageImagesClientDiagnostics.CreateScope("DevCenterImageCollection.Exists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DevCenterImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devCenterImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevCenterImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,38 +344,54 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DevCenterImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterImageImagesClientDiagnostics.CreateScope("DevCenterImageCollection.GetIfExists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DevCenterImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devCenterImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevCenterImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevCenterImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,38 +405,54 @@ namespace Azure.ResourceManager.DevCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevCenterImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="imageName"> The name of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DevCenterImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
 
-            using var scope = _devCenterImageImagesClientDiagnostics.CreateScope("DevCenterImageCollection.GetIfExists");
+            using DiagnosticScope scope = _imagesClientDiagnostics.CreateScope("DevCenterImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devCenterImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _imagesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, imageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevCenterImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevCenterImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevCenterImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevCenterImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevCenterImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,6 +472,7 @@ namespace Azure.ResourceManager.DevCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DevCenterImageResource> IAsyncEnumerable<DevCenterImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

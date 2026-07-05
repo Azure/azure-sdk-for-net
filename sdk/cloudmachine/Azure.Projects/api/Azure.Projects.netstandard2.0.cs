@@ -54,21 +54,13 @@ namespace Azure.Projects
     public partial class ProjectClient : System.ClientModel.Primitives.ClientConnectionProvider
     {
         public ProjectClient() : base (default(int)) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public ProjectClient(string projectId, System.ClientModel.Primitives.ClientConnectionProvider connections) : base (default(int)) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string ProjectId { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static string ReadOrCreateProjectId() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     public static partial class ServiceBusExtensions
@@ -87,12 +79,9 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task DeleteAsync() { throw null; }
         public System.BinaryData Download() { throw null; }
         public System.Threading.Tasks.Task<System.BinaryData> DownloadAsync() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static implicit operator Azure.Response (Azure.Projects.StorageFile result) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -104,7 +93,6 @@ namespace Azure.Projects
         public System.Threading.Tasks.Task DeleteAsync(string path) { throw null; }
         public System.BinaryData Download(string path) { throw null; }
         public System.Threading.Tasks.Task<System.BinaryData> DownloadAsync(string path) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Storage.Blobs.BlobContainerClient GetContainer(string containerName = null) { throw null; }
         public string Upload(System.BinaryData data, string name = null, bool overwrite = false) { throw null; }
         public string Upload(System.IO.Stream fileStream, string name = null, string contentType = null, bool overwrite = false) { throw null; }

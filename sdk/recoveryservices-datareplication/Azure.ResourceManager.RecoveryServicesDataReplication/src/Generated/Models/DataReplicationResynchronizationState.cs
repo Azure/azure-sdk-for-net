@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public readonly partial struct DataReplicationResynchronizationState : IEquatable<DataReplicationResynchronizationState>
     {
         private readonly string _value;
+        /// <summary> Resynchronization is not active. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Resynchronization has been initiated. </summary>
+        private const string ResynchronizationInitiatedValue = "ResynchronizationInitiated";
+        /// <summary> Resynchronization has been completed successfully. </summary>
+        private const string ResynchronizationCompletedValue = "ResynchronizationCompleted";
+        /// <summary> Resynchronization has failed and would need to be started again. </summary>
+        private const string ResynchronizationFailedValue = "ResynchronizationFailed";
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationResynchronizationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataReplicationResynchronizationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ResynchronizationInitiatedValue = "ResynchronizationInitiated";
-        private const string ResynchronizationCompletedValue = "ResynchronizationCompleted";
-        private const string ResynchronizationFailedValue = "ResynchronizationFailed";
+            _value = value;
+        }
 
         /// <summary> Resynchronization is not active. </summary>
         public static DataReplicationResynchronizationState None { get; } = new DataReplicationResynchronizationState(NoneValue);
+
         /// <summary> Resynchronization has been initiated. </summary>
         public static DataReplicationResynchronizationState ResynchronizationInitiated { get; } = new DataReplicationResynchronizationState(ResynchronizationInitiatedValue);
+
         /// <summary> Resynchronization has been completed successfully. </summary>
         public static DataReplicationResynchronizationState ResynchronizationCompleted { get; } = new DataReplicationResynchronizationState(ResynchronizationCompletedValue);
+
         /// <summary> Resynchronization has failed and would need to be started again. </summary>
         public static DataReplicationResynchronizationState ResynchronizationFailed { get; } = new DataReplicationResynchronizationState(ResynchronizationFailedValue);
+
         /// <summary> Determines if two <see cref="DataReplicationResynchronizationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataReplicationResynchronizationState left, DataReplicationResynchronizationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataReplicationResynchronizationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataReplicationResynchronizationState left, DataReplicationResynchronizationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationResynchronizationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataReplicationResynchronizationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataReplicationResynchronizationState(string value) => new DataReplicationResynchronizationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataReplicationResynchronizationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataReplicationResynchronizationState?(string value) => value == null ? null : new DataReplicationResynchronizationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataReplicationResynchronizationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataReplicationResynchronizationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

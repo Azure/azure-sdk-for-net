@@ -15,6 +15,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public partial class CloudVmClusterDBNodeContent
     {
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/>. </summary>
+        /// <param name="dbServerOcids"> Db servers ocids. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbServerOcids"/> is null. </exception>
+        public CloudVmClusterDBNodeContent(IEnumerable<string> dbServerOcids)
+        {
+            Argument.AssertNotNull(dbServerOcids, nameof(dbServerOcids));
+
+            DBServerOcids = dbServerOcids.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/>. </summary>
         /// <param name="dbServers"> Db servers ocids. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dbServers"/> is null. </exception>
         [Obsolete("This constructor is obsolete and will be removed in a future release", false)]

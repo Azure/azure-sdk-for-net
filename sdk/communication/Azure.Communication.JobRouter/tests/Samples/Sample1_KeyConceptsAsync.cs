@@ -102,9 +102,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
 
             Response completeJob = await routerClient.CompleteJobAsync(new CompleteJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
-                {
-                    Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
-                });
+            {
+                Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+            });
 
             Console.WriteLine($"Job has been successfully completed: {completeJob.Status == 200}");
 
@@ -113,9 +113,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
 
             Response closeJob = await routerClient.CloseJobAsync(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
-                {
-                    Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
-                });
+            {
+                Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+            });
             Console.WriteLine($"Job has been successfully closed: {closeJob.Status == 200}");
 
             updatedJob = await routerClient.GetJobAsync(job.Value.Id);
@@ -126,10 +126,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture_Async
             // Optionally, a job can also be set up to be marked as closed in the future.
             var closeJobInFuture = await routerClient.CloseJobAsync(new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
-                {
-                    CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
-                    Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
-                });
+            {
+                CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
+                Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
+            });
             Console.WriteLine($"Job has been marked to close: {closeJob.Status == 202}"); // You'll received a 202 in that case
 
             await Task.Delay(TimeSpan.FromSeconds(2));

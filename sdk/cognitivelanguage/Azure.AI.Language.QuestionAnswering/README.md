@@ -188,14 +188,16 @@ To create a new project, you must specify the project's name and a create a `Req
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
-    new {
+    new
+    {
         description = "This is the description for a test project",
         language = "en",
         multilingualResource = false,
-        settings = new {
+        settings = new
+        {
             defaultAnswer = "No answer found for your question."
-            }
         }
+    }
     );
 
 Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
@@ -362,8 +364,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_docs_features]: https://azure.microsoft.com/services/cognitive-services/qna-maker/#features
 [questionanswering_nuget_package]: https://nuget.org/packages/Azure.AI.Language.QuestionAnswering/
 [questionanswering_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
-[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering
-[questionanswering_rest_docs_projects]: https://learn.microsoft.com/rest/api/language/question-answering-projects
+[questionanswering_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering/question-answering
+[questionanswering_rest_docs_projects]: https://learn.microsoft.com/rest/api/language/question-answering-authoring/question-answering-projects
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
 [questionansweringauthoring_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/Generated/QuestionAnsweringAuthoringClient.cs

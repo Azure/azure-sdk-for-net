@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Azure.Test;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
             var applicationSecurityGroupResponse = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, new ApplicationSecurityGroupData()
             {
                 Location = TestEnvironment.Location,
-            })).Value;
+            }, System.Threading.CancellationToken.None)).Value;
 
             Assert.True(await collection.ExistsAsync(name));
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Tests
             applicationSecurityGroupData.Tags.Add("tag2", "value2");
 
             // update
-            applicationSecurityGroupResponse = await (await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, applicationSecurityGroupData)).WaitForCompletionAsync();
+            applicationSecurityGroupResponse = await (await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, applicationSecurityGroupData, System.Threading.CancellationToken.None)).WaitForCompletionAsync();
             applicationSecurityGroupData = applicationSecurityGroupResponse.Data;
 
             ValidateCommon(applicationSecurityGroupData, name);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(applicationSecurityGroupData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await applicationSecurityGroup.DeleteAsync(WaitUntil.Completed);
+            await applicationSecurityGroup.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             Assert.False(await collection.ExistsAsync(name));
 

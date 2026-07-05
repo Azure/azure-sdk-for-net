@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class ProblemClassificationCollection : ArmCollection, IEnumerable<ProblemClassificationResource>, IAsyncEnumerable<ProblemClassificationResource>
     {
-        private readonly ClientDiagnostics _problemClassificationClientDiagnostics;
-        private readonly ProblemClassificationsRestOperations _problemClassificationRestClient;
+        private readonly ClientDiagnostics _problemClassificationsClientDiagnostics;
+        private readonly ProblemClassifications _problemClassificationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProblemClassificationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ProblemClassificationCollection for mocking. </summary>
         protected ProblemClassificationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProblemClassificationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProblemClassificationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProblemClassificationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _problemClassificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ProblemClassificationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ProblemClassificationResource.ResourceType, out string problemClassificationApiVersion);
-            _problemClassificationRestClient = new ProblemClassificationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, problemClassificationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _problemClassificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ProblemClassificationResource.ResourceType.Namespace, Diagnostics);
+            _problemClassificationsRestClient = new ProblemClassifications(_problemClassificationsClientDiagnostics, Pipeline, Endpoint, problemClassificationApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SupportAzureServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SupportAzureServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SupportAzureServiceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get problem classification details for a specific Azure service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ProblemClassificationResource>> GetAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
-            using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Get");
+            using DiagnosticScope scope = _problemClassificationsClientDiagnostics.CreateScope("ProblemClassificationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _problemClassificationRestClient.GetAsync(Id.Name, problemClassificationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _problemClassificationsRestClient.CreateGetRequest(Id.Name, problemClassificationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProblemClassificationData> response = Response.FromValue(ProblemClassificationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProblemClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.Support
         /// Get problem classification details for a specific Azure service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ProblemClassificationResource> Get(string problemClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
-            using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Get");
+            using DiagnosticScope scope = _problemClassificationsClientDiagnostics.CreateScope("ProblemClassificationCollection.Get");
             scope.Start();
             try
             {
-                var response = _problemClassificationRestClient.Get(Id.Name, problemClassificationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _problemClassificationsRestClient.CreateGetRequest(Id.Name, problemClassificationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProblemClassificationData> response = Response.FromValue(ProblemClassificationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProblemClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,44 @@ namespace Azure.ResourceManager.Support
         /// Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProblemClassificationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProblemClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProblemClassificationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _problemClassificationRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ProblemClassificationData, ProblemClassificationResource>(new ProblemClassificationsGetAllAsyncCollectionResultOfT(_problemClassificationsRestClient, Id.Name, context, "ProblemClassificationCollection.GetAll"), data => new ProblemClassificationResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the problem classifications (categories) available for a specific Azure service. Always use the service and problem classifications obtained programmatically. This practice ensures that you always have the most recent set of service and problem classification Ids.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +201,61 @@ namespace Azure.ResourceManager.Support
         /// <returns> A collection of <see cref="ProblemClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProblemClassificationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _problemClassificationRestClient.CreateListRequest(Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _problemClassificationRestClient.CreateListNextPageRequest(nextLink, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProblemClassificationResource(Client, ProblemClassificationData.DeserializeProblemClassificationData(e)), _problemClassificationClientDiagnostics, Pipeline, "ProblemClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ProblemClassificationData, ProblemClassificationResource>(new ProblemClassificationsGetAllCollectionResultOfT(_problemClassificationsRestClient, Id.Name, context, "ProblemClassificationCollection.GetAll"), data => new ProblemClassificationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
-            using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Exists");
+            using DiagnosticScope scope = _problemClassificationsClientDiagnostics.CreateScope("ProblemClassificationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _problemClassificationRestClient.GetAsync(Id.Name, problemClassificationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _problemClassificationsRestClient.CreateGetRequest(Id.Name, problemClassificationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProblemClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProblemClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProblemClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +269,50 @@ namespace Azure.ResourceManager.Support
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string problemClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
-            using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.Exists");
+            using DiagnosticScope scope = _problemClassificationsClientDiagnostics.CreateScope("ProblemClassificationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _problemClassificationRestClient.Get(Id.Name, problemClassificationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _problemClassificationsRestClient.CreateGetRequest(Id.Name, problemClassificationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProblemClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProblemClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProblemClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +326,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ProblemClassificationResource>> GetIfExistsAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
-            using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.GetIfExists");
+            using DiagnosticScope scope = _problemClassificationsClientDiagnostics.CreateScope("ProblemClassificationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _problemClassificationRestClient.GetAsync(Id.Name, problemClassificationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _problemClassificationsRestClient.CreateGetRequest(Id.Name, problemClassificationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProblemClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProblemClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProblemClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProblemClassificationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProblemClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +387,54 @@ namespace Azure.ResourceManager.Support
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProblemClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProblemClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ProblemClassificationResource> GetIfExists(string problemClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(problemClassificationName, nameof(problemClassificationName));
 
-            using var scope = _problemClassificationClientDiagnostics.CreateScope("ProblemClassificationCollection.GetIfExists");
+            using DiagnosticScope scope = _problemClassificationsClientDiagnostics.CreateScope("ProblemClassificationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _problemClassificationRestClient.Get(Id.Name, problemClassificationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _problemClassificationsRestClient.CreateGetRequest(Id.Name, problemClassificationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProblemClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProblemClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProblemClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProblemClassificationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProblemClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +454,7 @@ namespace Azure.ResourceManager.Support
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ProblemClassificationResource> IAsyncEnumerable<ProblemClassificationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

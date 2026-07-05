@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> The status of the NGINX App Protect Web Application Firewall. </summary>
     public partial class WebApplicationFirewallStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallStatus"/>. </summary>
         internal WebApplicationFirewallStatus()
@@ -51,26 +22,34 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallStatus"/>. </summary>
+        /// <param name="wafRelease"> NGINX App Protect WAF release version. </param>
         /// <param name="attackSignaturesPackage"> Package containing attack signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="botSignaturesPackage"> Package containing bot signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="threatCampaignsPackage"> Package containing threat campaigns for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="componentVersions"> Versions of the NGINX App Protect Web Application Firewall (WAF) components. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallStatus(WebApplicationFirewallPackage attackSignaturesPackage, WebApplicationFirewallPackage botSignaturesPackage, WebApplicationFirewallPackage threatCampaignsPackage, WebApplicationFirewallComponentVersions componentVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationFirewallStatus(string wafRelease, WebApplicationFirewallPackage attackSignaturesPackage, WebApplicationFirewallPackage botSignaturesPackage, WebApplicationFirewallPackage threatCampaignsPackage, WebApplicationFirewallComponentVersions componentVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            WafRelease = wafRelease;
             AttackSignaturesPackage = attackSignaturesPackage;
             BotSignaturesPackage = botSignaturesPackage;
             ThreatCampaignsPackage = threatCampaignsPackage;
             ComponentVersions = componentVersions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> NGINX App Protect WAF release version. </summary>
+        public string WafRelease { get; }
 
         /// <summary> Package containing attack signatures for the NGINX App Protect Web Application Firewall (WAF). </summary>
         public WebApplicationFirewallPackage AttackSignaturesPackage { get; }
+
         /// <summary> Package containing bot signatures for the NGINX App Protect Web Application Firewall (WAF). </summary>
         public WebApplicationFirewallPackage BotSignaturesPackage { get; }
+
         /// <summary> Package containing threat campaigns for the NGINX App Protect Web Application Firewall (WAF). </summary>
         public WebApplicationFirewallPackage ThreatCampaignsPackage { get; }
+
         /// <summary> Versions of the NGINX App Protect Web Application Firewall (WAF) components. </summary>
         public WebApplicationFirewallComponentVersions ComponentVersions { get; }
     }

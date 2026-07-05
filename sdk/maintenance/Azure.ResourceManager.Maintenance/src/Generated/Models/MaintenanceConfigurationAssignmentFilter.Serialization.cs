@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceConfigurationAssignmentFilter : IUtf8JsonSerializable, IJsonModel<MaintenanceConfigurationAssignmentFilter>
+    /// <summary> Azure query for the update configuration. </summary>
+    public partial class MaintenanceConfigurationAssignmentFilter : IJsonModel<MaintenanceConfigurationAssignmentFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationAssignmentFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MaintenanceConfigurationAssignmentFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMaintenanceConfigurationAssignmentFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MaintenanceConfigurationAssignmentFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenanceConfigurationAssignmentFilter IPersistableModel<MaintenanceConfigurationAssignmentFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MaintenanceConfigurationAssignmentFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MaintenanceConfigurationAssignmentFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +70,16 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceTypes)
+                foreach (ResourceType item in ResourceTypes)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -48,8 +89,13 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceGroups)
+                foreach (string item in ResourceGroups)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -58,8 +104,13 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("osTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in OSTypes)
+                foreach (string item in OSTypes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -68,7 +119,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Locations)
+                foreach (AzureLocation item in Locations)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -79,15 +130,15 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("tagSettings"u8);
                 writer.WriteObjectValue(TagSettings, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +147,27 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
         }
 
-        MaintenanceConfigurationAssignmentFilter IJsonModel<MaintenanceConfigurationAssignmentFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MaintenanceConfigurationAssignmentFilter IJsonModel<MaintenanceConfigurationAssignmentFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MaintenanceConfigurationAssignmentFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMaintenanceConfigurationAssignmentFilter(document.RootElement, options);
         }
 
-        internal static MaintenanceConfigurationAssignmentFilter DeserializeMaintenanceConfigurationAssignmentFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MaintenanceConfigurationAssignmentFilter DeserializeMaintenanceConfigurationAssignmentFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -120,120 +176,101 @@ namespace Azure.ResourceManager.Maintenance.Models
             IList<string> resourceGroups = default;
             IList<string> osTypes = default;
             IList<AzureLocation> locations = default;
-            VmTagSettings tagSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            MaintenanceVmTagSettings tagSettings = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceTypes"u8))
+                if (prop.NameEquals("resourceTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceType> array = new List<ResourceType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ResourceType(item.GetString()));
                     }
                     resourceTypes = array;
                     continue;
                 }
-                if (property.NameEquals("resourceGroups"u8))
+                if (prop.NameEquals("resourceGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     resourceGroups = array;
                     continue;
                 }
-                if (property.NameEquals("osTypes"u8))
+                if (prop.NameEquals("osTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     osTypes = array;
                     continue;
                 }
-                if (property.NameEquals("locations"u8))
+                if (prop.NameEquals("locations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("tagSettings"u8))
+                if (prop.NameEquals("tagSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tagSettings = VmTagSettings.DeserializeVmTagSettings(property.Value, options);
+                    tagSettings = MaintenanceVmTagSettings.DeserializeMaintenanceVmTagSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MaintenanceConfigurationAssignmentFilter(
                 resourceTypes ?? new ChangeTrackingList<ResourceType>(),
                 resourceGroups ?? new ChangeTrackingList<string>(),
                 osTypes ?? new ChangeTrackingList<string>(),
                 locations ?? new ChangeTrackingList<AzureLocation>(),
                 tagSettings,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MaintenanceConfigurationAssignmentFilter>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMaintenanceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MaintenanceConfigurationAssignmentFilter IPersistableModel<MaintenanceConfigurationAssignmentFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMaintenanceConfigurationAssignmentFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MaintenanceConfigurationAssignmentFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

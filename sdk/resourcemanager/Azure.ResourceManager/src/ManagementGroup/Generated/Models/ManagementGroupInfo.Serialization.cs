@@ -58,20 +58,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             if (Optional.IsCollectionDefined(Path))
             {
-                if (Path != null)
+                writer.WritePropertyName("path"u8);
+                writer.WriteStartArray();
+                foreach (var item in Path)
                 {
-                    writer.WritePropertyName("path"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Path)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item, options);
                 }
-                else
-                {
-                    writer.WriteNull("path");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ManagementGroupAncestors))
             {
@@ -92,20 +85,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
             {
-                if (ManagementGroupAncestorChain != null)
+                writer.WritePropertyName("managementGroupAncestorsChain"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagementGroupAncestorChain)
                 {
-                    writer.WritePropertyName("managementGroupAncestorsChain"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in ManagementGroupAncestorChain)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item, options);
                 }
-                else
-                {
-                    writer.WriteNull("managementGroupAncestorsChain");
-                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -191,7 +177,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        path = null;
                         continue;
                     }
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
@@ -221,7 +206,6 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        managementGroupAncestorsChain = null;
                         continue;
                     }
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();

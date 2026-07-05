@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupValidationType : IEquatable<BackupValidationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupValidationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupValidationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ShallowValidationValue = "ShallowValidation";
         private const string DeepValidationValue = "DeepValidation";
 
-        /// <summary> ShallowValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupValidationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupValidationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ShallowValidation. </summary>
         public static BackupValidationType ShallowValidation { get; } = new BackupValidationType(ShallowValidationValue);
-        /// <summary> DeepValidation. </summary>
+
+        /// <summary> Gets the DeepValidation. </summary>
         public static BackupValidationType DeepValidation { get; } = new BackupValidationType(DeepValidationValue);
+
         /// <summary> Determines if two <see cref="BackupValidationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupValidationType left, BackupValidationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupValidationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupValidationType left, BackupValidationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupValidationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupValidationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupValidationType(string value) => new BackupValidationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupValidationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupValidationType?(string value) => value == null ? null : new BackupValidationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupValidationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupValidationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

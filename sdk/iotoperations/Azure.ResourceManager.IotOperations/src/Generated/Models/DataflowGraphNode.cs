@@ -12,71 +12,36 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// DataflowGraph node properties.
-    /// Please note <see cref="DataflowGraphNode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DataflowGraphDestinationNode"/>, <see cref="DataflowGraphGraphNode"/> and <see cref="DataflowGraphSourceNode"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowGraphSourceNode"/>, <see cref="DataflowGraphGraphNode"/>, and <see cref="DataflowGraphDestinationNode"/>.
     /// </summary>
     public abstract partial class DataflowGraphNode
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphNode"/>. </summary>
         /// <param name="name"> Name of the node. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        protected DataflowGraphNode(string name)
+        /// <param name="nodeType"> Type of the node. </param>
+        private protected DataflowGraphNode(string name, DataflowGraphNodeType nodeType)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
+            NodeType = nodeType;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataflowGraphNode"/>. </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="nodeType"> Type of the node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowGraphNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataflowGraphNode(string name, DataflowGraphNodeType nodeType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             NodeType = nodeType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataflowGraphNode"/> for deserialization. </summary>
-        internal DataflowGraphNode()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the node. </summary>
         public string Name { get; set; }
+
         /// <summary> Type of the node. </summary>
         internal DataflowGraphNodeType NodeType { get; set; }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetServiceEndpointDefinitionInServiceEndpointPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceEndpointPolicyDefinitionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceEndpointPolicyDefinitionGet.json
             // this example is just showing the usage of "ServiceEndpointPolicyDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteServiceEndpointPolicyDefinitionsFromServiceEndpointPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceEndpointPolicyDefinitionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceEndpointPolicyDefinitionDelete.json
             // this example is just showing the usage of "ServiceEndpointPolicyDefinitions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             ServiceEndpointPolicyDefinitionResource serviceEndpointPolicyDefinition = client.GetServiceEndpointPolicyDefinitionResource(serviceEndpointPolicyDefinitionResourceId);
 
             // invoke the operation
-            await serviceEndpointPolicyDefinition.DeleteAsync(WaitUntil.Completed);
+            await serviceEndpointPolicyDefinition.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateServiceEndpointPolicyDefinition()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ServiceEndpointPolicyDefinitionCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ServiceEndpointPolicyDefinitionCreate.json
             // this example is just showing the usage of "ServiceEndpointPolicyDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Service = "Microsoft.Storage",
                 ServiceResources = { new ResourceIdentifier("/subscriptions/subid1"), new ResourceIdentifier("/subscriptions/subid1/resourceGroups/storageRg"), new ResourceIdentifier("/subscriptions/subid1/resourceGroups/storageRg/providers/Microsoft.Storage/storageAccounts/stAccount") },
             };
-            ArmOperation<ServiceEndpointPolicyDefinitionResource> lro = await serviceEndpointPolicyDefinition.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ServiceEndpointPolicyDefinitionResource> lro = await serviceEndpointPolicyDefinition.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ServiceEndpointPolicyDefinitionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -1,4 +1,0 @@
-﻿How to run the File Staging integration tests:
-    See the instructions on how to run the Batch client library integration tests (Batch\Client\Tests\ObjectModel\BatchClientIntegrationTests\howto.txt)
-
-

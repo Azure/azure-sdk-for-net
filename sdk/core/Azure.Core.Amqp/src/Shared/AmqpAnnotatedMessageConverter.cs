@@ -253,7 +253,7 @@ namespace Azure.Core.Amqp.Shared
 
                 message.Header.Ttl = ttl.TotalMilliseconds > uint.MaxValue
                     ? uint.MaxValue
-                    : (uint) ttl.TotalMilliseconds;
+                    : (uint)ttl.TotalMilliseconds;
 
                 message.Properties.CreationTime = DateTime.UtcNow;
 
@@ -342,7 +342,7 @@ namespace Azure.Core.Amqp.Shared
 
                     if (source.Properties.CreationTime.HasValue)
                     {
-                        message.Header.TimeToLive = absoluteExpiryTime- source.Properties.CreationTime.Value;
+                        message.Header.TimeToLive = absoluteExpiryTime - source.Properties.CreationTime.Value;
                     }
                 }
 
@@ -631,17 +631,17 @@ namespace Azure.Core.Amqp.Shared
                     break;
 
                 case AmqpMap map when allowBodyTypes:
-                {
-                    var dict = new Dictionary<string, object>(map.Count);
-
-                    foreach (var pair in map)
                     {
-                        dict.Add(pair.Key.ToString(), pair.Value);
-                    }
+                        var dict = new Dictionary<string, object>(map.Count);
 
-                    convertedPropertyValue = dict;
-                    break;
-                }
+                        foreach (var pair in map)
+                        {
+                            dict.Add(pair.Key.ToString(), pair.Value);
+                        }
+
+                        convertedPropertyValue = dict;
+                        break;
+                    }
 
                 default:
                     var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, "Serialization operation failed due to unsupported type {0}.", amqpPropertyValue.GetType().FullName));
@@ -750,9 +750,13 @@ namespace Azure.Core.Amqp.Shared
                 return false;
             }
 
-            var bodyContent = new List<IList<object>>();
+            var sequenceBodySections = source.SequenceBody;
 
-            foreach (var item in source.SequenceBody)
+            var bodyContent = sequenceBodySections is IReadOnlyCollection<AmqpSequence> coll
+                ? new List<IList<object>>(coll.Count)
+                : new List<IList<object>>();
+
+            foreach (var item in sequenceBodySections)
             {
                 bodyContent.Add((IList<object>)item.List);
             }
@@ -847,7 +851,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns>The <see cref="ArraySegment{T}" /> containing the stream data.</returns>
         ///
-        private static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
+        internal static ArraySegment<byte> ReadStreamToArraySegment(Stream stream)
         {
             switch (stream)
             {
@@ -858,26 +862,28 @@ namespace Azure.Core.Amqp.Shared
                     return bufferListStream.ReadBytes((int)stream.Length);
 
                 case MemoryStream memStreamSource:
-                {
-                    using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
-                    memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
                     {
-                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        using var memStreamCopy = new MemoryStream((int)(memStreamSource.Length - memStreamSource.Position));
+                        memStreamSource.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
                     }
-                    return segment;
-                }
 
                 default:
-                {
-                    using var memStreamCopy = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
-                    if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
                     {
-                        segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        long remaining = stream.CanSeek ? Math.Max(stream.Length - stream.Position, 0) : StreamBufferSizeInBytes;
+                        int capacity = remaining > 0 ? (int)Math.Min(remaining, int.MaxValue) : StreamBufferSizeInBytes;
+                        using var memStreamCopy = new MemoryStream(capacity);
+                        stream.CopyTo(memStreamCopy, StreamBufferSizeInBytes);
+                        if (!memStreamCopy.TryGetBuffer(out ArraySegment<byte> segment))
+                        {
+                            segment = new ArraySegment<byte>(memStreamCopy.ToArray());
+                        }
+                        return segment;
                     }
-                    return segment;
-                }
             }
         }
 

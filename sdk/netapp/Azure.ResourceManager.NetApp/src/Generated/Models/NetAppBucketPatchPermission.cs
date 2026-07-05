@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppBucketPatchPermission : IEquatable<NetAppBucketPatchPermission>
     {
         private readonly string _value;
+        /// <summary> Read-only access to bucket. </summary>
+        private const string ReadOnlyValue = "ReadOnly";
+        /// <summary> Read-write access to bucket. </summary>
+        private const string ReadWriteValue = "ReadWrite";
 
         /// <summary> Initializes a new instance of <see cref="NetAppBucketPatchPermission"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppBucketPatchPermission(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadOnlyValue = "ReadOnly";
-        private const string ReadWriteValue = "ReadWrite";
+            _value = value;
+        }
 
         /// <summary> Read-only access to bucket. </summary>
         public static NetAppBucketPatchPermission ReadOnly { get; } = new NetAppBucketPatchPermission(ReadOnlyValue);
+
         /// <summary> Read-write access to bucket. </summary>
         public static NetAppBucketPatchPermission ReadWrite { get; } = new NetAppBucketPatchPermission(ReadWriteValue);
+
         /// <summary> Determines if two <see cref="NetAppBucketPatchPermission"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppBucketPatchPermission left, NetAppBucketPatchPermission right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppBucketPatchPermission"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppBucketPatchPermission left, NetAppBucketPatchPermission right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppBucketPatchPermission"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppBucketPatchPermission"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppBucketPatchPermission(string value) => new NetAppBucketPatchPermission(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppBucketPatchPermission"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppBucketPatchPermission?(string value) => value == null ? null : new NetAppBucketPatchPermission(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppBucketPatchPermission other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppBucketPatchPermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

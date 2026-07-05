@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> The GrainContent. </summary>
+    /// <summary></summary>
     public readonly partial struct GrainContent : IEquatable<GrainContent>
     {
         private readonly string _value;
+        /// <summary> Hourly grain corresponds to value per hour. </summary>
+        private const string HourlyValue = "Hourly";
+        /// <summary> Hourly grain corresponds to value per day. </summary>
+        private const string DailyValue = "Daily";
+        /// <summary> Hourly grain corresponds to value per month. </summary>
+        private const string MonthlyValue = "Monthly";
 
         /// <summary> Initializes a new instance of <see cref="GrainContent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GrainContent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HourlyValue = "Hourly";
-        private const string DailyValue = "Daily";
-        private const string MonthlyValue = "Monthly";
+            _value = value;
+        }
 
         /// <summary> Hourly grain corresponds to value per hour. </summary>
         public static GrainContent Hourly { get; } = new GrainContent(HourlyValue);
+
         /// <summary> Hourly grain corresponds to value per day. </summary>
         public static GrainContent Daily { get; } = new GrainContent(DailyValue);
+
         /// <summary> Hourly grain corresponds to value per month. </summary>
         public static GrainContent Monthly { get; } = new GrainContent(MonthlyValue);
+
         /// <summary> Determines if two <see cref="GrainContent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GrainContent left, GrainContent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GrainContent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GrainContent left, GrainContent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GrainContent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GrainContent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GrainContent(string value) => new GrainContent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GrainContent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GrainContent?(string value) => value == null ? null : new GrainContent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GrainContent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GrainContent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

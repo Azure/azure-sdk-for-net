@@ -3,14 +3,14 @@
 
 namespace Azure.ResourceManager.SelfHelp.Tests
 {
-    using Azure.Core.TestFramework;
-    using Azure.Core;
-    using System.Threading.Tasks;
-    using NUnit.Framework;
     using System;
-    using Azure.ResourceManager.SelfHelp.Models;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
+    using Azure.Core;
+    using Azure.Core.TestFramework;
+    using Azure.ResourceManager.SelfHelp.Models;
+    using NUnit.Framework;
 
     public class DiscoverySolutionsTests : SelfHelpManagementTestBase
     {

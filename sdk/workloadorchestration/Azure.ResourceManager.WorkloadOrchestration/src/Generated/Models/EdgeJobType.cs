@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct EdgeJobType : IEquatable<EdgeJobType>
     {
         private readonly string _value;
+        /// <summary> A deployment job. </summary>
+        private const string DeployValue = "deploy";
+        /// <summary> A staging job. </summary>
+        private const string StagingValue = "staging";
+        /// <summary> A validation job. </summary>
+        private const string ExternalValidationValue = "externalValidation";
 
         /// <summary> Initializes a new instance of <see cref="EdgeJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeJobType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeployValue = "deploy";
-        private const string StagingValue = "staging";
-        private const string ExternalValidationValue = "externalValidation";
+            _value = value;
+        }
 
         /// <summary> A deployment job. </summary>
         public static EdgeJobType Deploy { get; } = new EdgeJobType(DeployValue);
+
         /// <summary> A staging job. </summary>
         public static EdgeJobType Staging { get; } = new EdgeJobType(StagingValue);
+
         /// <summary> A validation job. </summary>
         public static EdgeJobType ExternalValidation { get; } = new EdgeJobType(ExternalValidationValue);
+
         /// <summary> Determines if two <see cref="EdgeJobType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeJobType left, EdgeJobType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeJobType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeJobType left, EdgeJobType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeJobType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeJobType(string value) => new EdgeJobType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeJobType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeJobType?(string value) => value == null ? null : new EdgeJobType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeJobType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeJobType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,10 +6,10 @@
 using System;
 using System.IO;
 using System.Linq;
-using Azure.Projects.Ofx;
-using NUnit.Framework;
 using Azure.Projects.Core;
+using Azure.Projects.Ofx;
 using Azure.Provisioning.CognitiveServices;
+using NUnit.Framework;
 
 [assembly: NonParallelizable]
 
@@ -183,7 +183,8 @@ public class BicepGenerationTests
     {
         string contents = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", filename));
         contents = contents.Replace("\r\n", Environment.NewLine);
-        while (contents.EndsWith(Environment.NewLine))  {
+        while (contents.EndsWith(Environment.NewLine))
+        {
             contents = contents.Substring(0, contents.Length - Environment.NewLine.Length);
         }
         return contents;

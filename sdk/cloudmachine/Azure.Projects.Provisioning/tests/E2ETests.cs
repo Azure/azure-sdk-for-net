@@ -31,7 +31,8 @@ public class E2ETests
     {
         ProjectInfrastructure infra = new(allProjectId);
         infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
-        if (infra.TryExecuteCommand([arg])) return;
+        if (infra.TryExecuteCommand([arg]))
+            return;
 
         ProjectClient project = new(allProjectId, default);
         ChatClient chat = project.GetOpenAIChatClient();
@@ -43,7 +44,8 @@ public class E2ETests
     {
         ProjectInfrastructure infra = new(oneProjectId);
         infra.AddFeature(new AIModelsFeature("DeepSeek-V3", "1"));
-        if (infra.TryExecuteCommand([arg])) return;
+        if (infra.TryExecuteCommand([arg]))
+            return;
 
         ProjectClient project = new(oneProjectId, default);
         ModelsClient maas = project.GetModelsClient();
@@ -58,7 +60,8 @@ public class E2ETests
     {
         ProjectInfrastructure infra = new(allProjectId);
         infra.AddFeature(new KeyVaultFeature());
-        if (infra.TryExecuteCommand([arg])) return;
+        if (infra.TryExecuteCommand([arg]))
+            return;
 
         ProjectClient project = new(allProjectId, default);
         SecretClient secrets = project.GetSecretClient();
@@ -66,7 +69,7 @@ public class E2ETests
 
     [TestCase("-bicep")]
     //[TestCase("")]
-    public void All (string arg)
+    public void All(string arg)
     {
         ProjectInfrastructure infrastructure = new(allProjectId);
         AddAllFeratures(infrastructure);
@@ -123,11 +126,13 @@ public class E2ETests
             uploadedPath = project.Storage.Upload(BinaryData.FromString("hello world"));
             string downloaded = project.Storage.Download(uploadedPath).ToString();
             Assert.AreEqual("hello world", downloaded);
-            while (Interlocked.Read(ref done)==0);
+            while (Interlocked.Read(ref done) == 0)
+                ;
         }
         finally
         {
-            if (uploadedPath!=null) project.Storage.Delete(uploadedPath);
+            if (uploadedPath != null)
+                project.Storage.Delete(uploadedPath);
         }
     }
 

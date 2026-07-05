@@ -10,14 +10,63 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineInstallPatchesResult : IUtf8JsonSerializable, IJsonModel<MachineInstallPatchesResult>
+    /// <summary> The result summary of an installation operation. </summary>
+    public partial class MachineInstallPatchesResult : IJsonModel<MachineInstallPatchesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineInstallPatchesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineInstallPatchesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineInstallPatchesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineInstallPatchesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineInstallPatchesResult IPersistableModel<MachineInstallPatchesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineInstallPatchesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MachineInstallPatchesResult"/> from. </param>
+        internal static MachineInstallPatchesResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMachineInstallPatchesResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineInstallPatchesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +78,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -110,15 +158,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("errorDetails"u8);
                 ((IJsonModel<ResponseError>)ErrorDetails).Write(writer, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -127,22 +175,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        MachineInstallPatchesResult IJsonModel<MachineInstallPatchesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineInstallPatchesResult IJsonModel<MachineInstallPatchesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineInstallPatchesResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineInstallPatchesResult(document.RootElement, options);
         }
 
-        internal static MachineInstallPatchesResult DeserializeMachineInstallPatchesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineInstallPatchesResult DeserializeMachineInstallPatchesResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -156,153 +209,151 @@ namespace Azure.ResourceManager.HybridCompute.Models
             int? pendingPatchCount = default;
             int? installedPatchCount = default;
             int? failedPatchCount = default;
-            DateTimeOffset? startDateTime = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? lastModifiedOn = default;
             PatchOperationStartedBy? startedBy = default;
             PatchServiceUsed? patchServiceUsed = default;
             HybridComputeOSType? osType = default;
             ResponseError errorDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new MachineOperationStatus(property.Value.GetString());
+                    status = new MachineOperationStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("installationActivityId"u8))
+                if (prop.NameEquals("installationActivityId"u8))
                 {
-                    installationActivityId = property.Value.GetString();
+                    installationActivityId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rebootStatus"u8))
+                if (prop.NameEquals("rebootStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rebootStatus = new VmGuestPatchRebootStatus(property.Value.GetString());
+                    rebootStatus = new VmGuestPatchRebootStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("maintenanceWindowExceeded"u8))
+                if (prop.NameEquals("maintenanceWindowExceeded"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceWindowExceeded = property.Value.GetBoolean();
+                    maintenanceWindowExceeded = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("excludedPatchCount"u8))
+                if (prop.NameEquals("excludedPatchCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    excludedPatchCount = property.Value.GetInt32();
+                    excludedPatchCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("notSelectedPatchCount"u8))
+                if (prop.NameEquals("notSelectedPatchCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notSelectedPatchCount = property.Value.GetInt32();
+                    notSelectedPatchCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pendingPatchCount"u8))
+                if (prop.NameEquals("pendingPatchCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pendingPatchCount = property.Value.GetInt32();
+                    pendingPatchCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("installedPatchCount"u8))
+                if (prop.NameEquals("installedPatchCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    installedPatchCount = property.Value.GetInt32();
+                    installedPatchCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("failedPatchCount"u8))
+                if (prop.NameEquals("failedPatchCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failedPatchCount = property.Value.GetInt32();
+                    failedPatchCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startDateTime"u8))
+                if (prop.NameEquals("startDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startDateTime = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedDateTime"u8))
+                if (prop.NameEquals("lastModifiedDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("startedBy"u8))
+                if (prop.NameEquals("startedBy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startedBy = new PatchOperationStartedBy(property.Value.GetString());
+                    startedBy = new PatchOperationStartedBy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("patchServiceUsed"u8))
+                if (prop.NameEquals("patchServiceUsed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    patchServiceUsed = new PatchServiceUsed(property.Value.GetString());
+                    patchServiceUsed = new PatchServiceUsed(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new HybridComputeOSType(property.Value.GetString());
+                    osType = new HybridComputeOSType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("errorDetails"u8))
+                if (prop.NameEquals("errorDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerHybridComputeContext.Default);
+                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHybridComputeContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineInstallPatchesResult(
                 status,
                 installationActivityId,
@@ -313,297 +364,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 pendingPatchCount,
                 installedPatchCount,
                 failedPatchCount,
-                startDateTime,
-                lastModifiedDateTime,
+                startOn,
+                lastModifiedOn,
                 startedBy,
                 patchServiceUsed,
                 osType,
                 errorDetails,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    builder.AppendLine($"'{Status.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstallationActivityId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  installationActivityId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InstallationActivityId))
-                {
-                    builder.Append("  installationActivityId: ");
-                    if (InstallationActivityId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InstallationActivityId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InstallationActivityId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RebootStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rebootStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RebootStatus))
-                {
-                    builder.Append("  rebootStatus: ");
-                    builder.AppendLine($"'{RebootStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindowExceeded), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maintenanceWindowExceeded: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaintenanceWindowExceeded))
-                {
-                    builder.Append("  maintenanceWindowExceeded: ");
-                    var boolValue = MaintenanceWindowExceeded.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedPatchCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  excludedPatchCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExcludedPatchCount))
-                {
-                    builder.Append("  excludedPatchCount: ");
-                    builder.AppendLine($"{ExcludedPatchCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotSelectedPatchCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  notSelectedPatchCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NotSelectedPatchCount))
-                {
-                    builder.Append("  notSelectedPatchCount: ");
-                    builder.AppendLine($"{NotSelectedPatchCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PendingPatchCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pendingPatchCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PendingPatchCount))
-                {
-                    builder.Append("  pendingPatchCount: ");
-                    builder.AppendLine($"{PendingPatchCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstalledPatchCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  installedPatchCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InstalledPatchCount))
-                {
-                    builder.Append("  installedPatchCount: ");
-                    builder.AppendLine($"{InstalledPatchCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailedPatchCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  failedPatchCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FailedPatchCount))
-                {
-                    builder.Append("  failedPatchCount: ");
-                    builder.AppendLine($"{FailedPatchCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startDateTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("  startDateTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastModifiedDateTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastModifiedOn))
-                {
-                    builder.Append("  lastModifiedDateTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartedBy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  startedBy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartedBy))
-                {
-                    builder.Append("  startedBy: ");
-                    builder.AppendLine($"'{StartedBy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PatchServiceUsed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  patchServiceUsed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PatchServiceUsed))
-                {
-                    builder.Append("  patchServiceUsed: ");
-                    builder.AppendLine($"'{PatchServiceUsed.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  osType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OSType))
-                {
-                    builder.Append("  osType: ");
-                    builder.AppendLine($"'{OSType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  errorDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ErrorDetails))
-                {
-                    builder.Append("  errorDetails: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ErrorDetails, options, 2, false, "  errorDetails: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineInstallPatchesResult IPersistableModel<MachineInstallPatchesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineInstallPatchesResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineInstallPatchesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

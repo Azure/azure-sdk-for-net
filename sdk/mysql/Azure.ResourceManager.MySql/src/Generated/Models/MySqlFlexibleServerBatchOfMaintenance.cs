@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerBatchOfMaintenance : IEquatable<MySqlFlexibleServerBatchOfMaintenance>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBatchOfMaintenance"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerBatchOfMaintenance(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "Default";
         private const string Batch1Value = "Batch1";
         private const string Batch2Value = "Batch2";
 
-        /// <summary> Default. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerBatchOfMaintenance"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerBatchOfMaintenance(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static MySqlFlexibleServerBatchOfMaintenance Default { get; } = new MySqlFlexibleServerBatchOfMaintenance(DefaultValue);
-        /// <summary> Batch1. </summary>
+
+        /// <summary> Gets the Batch1. </summary>
         public static MySqlFlexibleServerBatchOfMaintenance Batch1 { get; } = new MySqlFlexibleServerBatchOfMaintenance(Batch1Value);
-        /// <summary> Batch2. </summary>
+
+        /// <summary> Gets the Batch2. </summary>
         public static MySqlFlexibleServerBatchOfMaintenance Batch2 { get; } = new MySqlFlexibleServerBatchOfMaintenance(Batch2Value);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerBatchOfMaintenance"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerBatchOfMaintenance left, MySqlFlexibleServerBatchOfMaintenance right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerBatchOfMaintenance"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerBatchOfMaintenance left, MySqlFlexibleServerBatchOfMaintenance right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerBatchOfMaintenance"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerBatchOfMaintenance"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerBatchOfMaintenance(string value) => new MySqlFlexibleServerBatchOfMaintenance(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerBatchOfMaintenance"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerBatchOfMaintenance?(string value) => value == null ? null : new MySqlFlexibleServerBatchOfMaintenance(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerBatchOfMaintenance other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerBatchOfMaintenance other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

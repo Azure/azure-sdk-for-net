@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
@@ -9,14 +9,14 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class WebPubSubSpecification() :
-    Specification("WebPubSub", typeof(WebPubSubExtensions))
+    Specification("WebPubSub", typeof(WebPubSubExtensions), serviceDirectory: "webpubsub")
 {
     protected override void Customize()
     {
         // Remove misfires
         RemoveProperty<WebPubSubPrivateEndpointConnectionData>("ResourceType");
         RemoveProperty<WebPubSubSharedPrivateLinkData>("ResourceType");
-        
+
         // Patch models
         CustomizeResource<WebPubSubResource>(r => r.Name = "WebPubSubService");
         CustomizeProperty<LiveTraceConfiguration>("IsEnabled", p => { p.Path = ["enabled"]; p.PropertyType = TypeRegistry.Get<string>(); });

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> AkriConnectorTemplateDeviceInboundEndpointType properties. </summary>
     public partial class AkriConnectorTemplateDeviceInboundEndpointType
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDeviceInboundEndpointType"/>. </summary>
         /// <param name="endpointType"> The type of the device inbound endpoint. </param>
@@ -56,32 +28,25 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDeviceInboundEndpointType"/>. </summary>
-        /// <param name="description"> A description of the device inbound endpoint. </param>
+        /// <param name="displayName"> The display name of the device inbound endpoint. </param>
         /// <param name="endpointType"> The type of the device inbound endpoint. </param>
         /// <param name="version"> The version of the device inbound endpoint. </param>
-        /// <param name="configurationSchemaRefs"> The configuration schema references for the device inbound endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AkriConnectorTemplateDeviceInboundEndpointType(string description, string endpointType, string version, AkriConnectorTemplateDeviceInboundEndpointConfigurationSchemaRefs configurationSchemaRefs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AkriConnectorTemplateDeviceInboundEndpointType(string displayName, string endpointType, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
+            DisplayName = displayName;
             EndpointType = endpointType;
             Version = version;
-            ConfigurationSchemaRefs = configurationSchemaRefs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateDeviceInboundEndpointType"/> for deserialization. </summary>
-        internal AkriConnectorTemplateDeviceInboundEndpointType()
-        {
-        }
+        /// <summary> The display name of the device inbound endpoint. </summary>
+        public string DisplayName { get; set; }
 
-        /// <summary> A description of the device inbound endpoint. </summary>
-        public string Description { get; set; }
         /// <summary> The type of the device inbound endpoint. </summary>
         public string EndpointType { get; set; }
+
         /// <summary> The version of the device inbound endpoint. </summary>
         public string Version { get; set; }
-        /// <summary> The configuration schema references for the device inbound endpoint. </summary>
-        public AkriConnectorTemplateDeviceInboundEndpointConfigurationSchemaRefs ConfigurationSchemaRefs { get; set; }
     }
 }

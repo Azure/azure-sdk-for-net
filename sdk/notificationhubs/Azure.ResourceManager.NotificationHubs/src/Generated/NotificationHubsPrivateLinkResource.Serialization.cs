@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
+    /// <summary></summary>
     public partial class NotificationHubsPrivateLinkResource : IJsonModel<NotificationHubsPrivateLinkResourceData>
     {
-        private static NotificationHubsPrivateLinkResourceData s_dataDeserializationInstance;
-        private static NotificationHubsPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NotificationHubsPrivateLinkResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NotificationHubsPrivateLinkResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NotificationHubsPrivateLinkResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NotificationHubsPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubsPrivateLinkResourceData>)Data).Write(writer, options);
 
-        NotificationHubsPrivateLinkResourceData IJsonModel<NotificationHubsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationHubsPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NotificationHubsPrivateLinkResourceData IJsonModel<NotificationHubsPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NotificationHubsPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationHubsPrivateLinkResourceData>(Data, options, AzureResourceManagerNotificationHubsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NotificationHubsPrivateLinkResourceData IPersistableModel<NotificationHubsPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationHubsPrivateLinkResourceData>(data, options, AzureResourceManagerNotificationHubsContext.Default);
 
-        string IPersistableModel<NotificationHubsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationHubsPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NotificationHubsPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

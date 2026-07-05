@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CassandraClusterBackupSchedule. </summary>
     public partial class CassandraClusterBackupSchedule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CassandraClusterBackupSchedule"/>. </summary>
         public CassandraClusterBackupSchedule()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="scheduleName"> The unique identifier of backup schedule. </param>
         /// <param name="cronExpression"> The cron expression that defines when you want to back up your data. </param>
         /// <param name="retentionInHours"> The retention period (hours) of the backups. If you want to retain data forever, set retention to 0. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterBackupSchedule(string scheduleName, string cronExpression, int? retentionInHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterBackupSchedule(string scheduleName, string cronExpression, int? retentionInHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduleName = scheduleName;
             CronExpression = cronExpression;
             RetentionInHours = retentionInHours;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique identifier of backup schedule. </summary>
         [WirePath("scheduleName")]
         public string ScheduleName { get; set; }
+
         /// <summary> The cron expression that defines when you want to back up your data. </summary>
         [WirePath("cronExpression")]
         public string CronExpression { get; set; }
+
         /// <summary> The retention period (hours) of the backups. If you want to retain data forever, set retention to 0. </summary>
         [WirePath("retentionInHours")]
         public int? RetentionInHours { get; set; }

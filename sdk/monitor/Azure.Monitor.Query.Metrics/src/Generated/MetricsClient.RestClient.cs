@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Metrics
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
-        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         internal HttpMessage CreateQueryResourcesRequest(Guid subscriptionId, string metricNamespace, IEnumerable<string> metricNames, RequestContent content, string startTime, string endTime, string interval, string aggregation, int? top, string orderBy, string filter, string rollUpBy, RequestContext context)
         {
@@ -26,7 +26,10 @@ namespace Azure.Monitor.Query.Metrics
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/metrics:getBatch", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (startTime != null)
             {
                 uri.AppendQuery("starttime", startTime, true);

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubProperties : IUtf8JsonSerializable, IJsonModel<IotHubProperties>
+    /// <summary> The properties of an IoT hub. </summary>
+    public partial class IotHubProperties : IJsonModel<IotHubProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotHubProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotHubProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubProperties IPersistableModel<IotHubProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(AuthorizationPolicies))
             {
                 writer.WritePropertyName("authorizationPolicies"u8);
                 writer.WriteStartArray();
-                foreach (var item in AuthorizationPolicies)
+                foreach (SharedAccessSignatureAuthorizationRule item in AuthorizationPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,8 +108,13 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("allowedFqdnList"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllowedFqdns)
+                foreach (string item in AllowedFqdns)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -83,7 +128,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("ipFilterRules"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPFilterRules)
+                foreach (IotHubIPFilterRule item in IPFilterRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -103,7 +148,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
+                foreach (IotHubPrivateEndpointConnectionData item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,6 +168,16 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeviceHostName))
+            {
+                writer.WritePropertyName("deviceHostName"u8);
+                writer.WriteStringValue(DeviceHostName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceHostName))
+            {
+                writer.WritePropertyName("serviceHostName"u8);
+                writer.WriteStringValue(ServiceHostName);
             }
             if (Optional.IsCollectionDefined(EventHubEndpoints))
             {
@@ -177,16 +232,26 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
+            if (Optional.IsDefined(DeviceStreams))
+            {
+                writer.WritePropertyName("deviceStreams"u8);
+                writer.WriteObjectValue(DeviceStreams, options);
+            }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStringValue(Features.Value.ToString());
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Locations)
+                foreach (IotHubLocationDescription item in Locations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -197,15 +262,35 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("enableDataResidency"u8);
                 writer.WriteBooleanValue(EnableDataResidency.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(RootCertificate))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("rootCertificate"u8);
+                writer.WriteObjectValue(RootCertificate, options);
+            }
+            if (Optional.IsDefined(IPVersion))
+            {
+                writer.WritePropertyName("ipVersion"u8);
+                writer.WriteStringValue(IPVersion.Value.ToString());
+            }
+            if (Optional.IsDefined(DeviceRegistry))
+            {
+                writer.WritePropertyName("deviceRegistry"u8);
+                writer.WriteObjectValue(DeviceRegistry, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IotHubDetails))
+            {
+                writer.WritePropertyName("iotHubDetails"u8);
+                writer.WriteObjectValue(IotHubDetails, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -214,22 +299,27 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        IotHubProperties IJsonModel<IotHubProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubProperties IJsonModel<IotHubProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotHubProperties(document.RootElement, options);
         }
 
-        internal static IotHubProperties DeserializeIotHubProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotHubProperties DeserializeIotHubProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -239,7 +329,7 @@ namespace Azure.ResourceManager.IotHub.Models
             bool? disableDeviceSas = default;
             bool? disableModuleSas = default;
             bool? restrictOutboundNetworkAccess = default;
-            IList<string> allowedFqdnList = default;
+            IList<string> allowedFqdns = default;
             IotHubPublicNetworkAccess? publicNetworkAccess = default;
             IList<IotHubIPFilterRule> ipFilterRules = default;
             IotHubNetworkRuleSetProperties networkRuleSets = default;
@@ -248,6 +338,8 @@ namespace Azure.ResourceManager.IotHub.Models
             string provisioningState = default;
             string state = default;
             string hostName = default;
+            string deviceHostName = default;
+            string serviceHostName = default;
             IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default;
             IotHubRoutingProperties routing = default;
             IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default;
@@ -255,262 +347,337 @@ namespace Azure.ResourceManager.IotHub.Models
             bool? enableFileUploadNotifications = default;
             CloudToDeviceProperties cloudToDevice = default;
             string comments = default;
+            IotHubPropertiesDeviceStreams deviceStreams = default;
             IotHubCapability? features = default;
+            IotHubEncryptionProperties encryption = default;
             IReadOnlyList<IotHubLocationDescription> locations = default;
             bool? enableDataResidency = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IotHubRootCertificateProperties rootCertificate = default;
+            IotHubIPVersion? ipVersion = default;
+            IotHubDeviceRegistry deviceRegistry = default;
+            IotHubDetails iotHubDetails = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("authorizationPolicies"u8))
+                if (prop.NameEquals("authorizationPolicies"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SharedAccessSignatureAuthorizationRule> array = new List<SharedAccessSignatureAuthorizationRule>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item, options));
                     }
                     authorizationPolicies = array;
                     continue;
                 }
-                if (property.NameEquals("disableLocalAuth"u8))
+                if (prop.NameEquals("disableLocalAuth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableLocalAuth = property.Value.GetBoolean();
+                    disableLocalAuth = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableDeviceSAS"u8))
+                if (prop.NameEquals("disableDeviceSAS"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableDeviceSas = property.Value.GetBoolean();
+                    disableDeviceSas = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableModuleSAS"u8))
+                if (prop.NameEquals("disableModuleSAS"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableModuleSas = property.Value.GetBoolean();
+                    disableModuleSas = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("restrictOutboundNetworkAccess"u8))
+                if (prop.NameEquals("restrictOutboundNetworkAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restrictOutboundNetworkAccess = property.Value.GetBoolean();
+                    restrictOutboundNetworkAccess = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("allowedFqdnList"u8))
+                if (prop.NameEquals("allowedFqdnList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    allowedFqdnList = array;
+                    allowedFqdns = array;
                     continue;
                 }
-                if (property.NameEquals("publicNetworkAccess"u8))
+                if (prop.NameEquals("publicNetworkAccess"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new IotHubPublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new IotHubPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipFilterRules"u8))
+                if (prop.NameEquals("ipFilterRules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IotHubIPFilterRule> array = new List<IotHubIPFilterRule>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item, options));
                     }
                     ipFilterRules = array;
                     continue;
                 }
-                if (property.NameEquals("networkRuleSets"u8))
+                if (prop.NameEquals("networkRuleSets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkRuleSets = IotHubNetworkRuleSetProperties.DeserializeIotHubNetworkRuleSetProperties(property.Value, options);
+                    networkRuleSets = IotHubNetworkRuleSetProperties.DeserializeIotHubNetworkRuleSetProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("minTlsVersion"u8))
+                if (prop.NameEquals("minTlsVersion"u8))
                 {
-                    minTlsVersion = property.Value.GetString();
+                    minTlsVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateEndpointConnections"u8))
+                if (prop.NameEquals("privateEndpointConnections"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IotHubPrivateEndpointConnectionData> array = new List<IotHubPrivateEndpointConnectionData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    state = property.Value.GetString();
+                    state = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hostName"u8))
+                if (prop.NameEquals("hostName"u8))
                 {
-                    hostName = property.Value.GetString();
+                    hostName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventHubEndpoints"u8))
+                if (prop.NameEquals("deviceHostName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    deviceHostName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("serviceHostName"u8))
+                {
+                    serviceHostName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("eventHubEndpoints"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, EventHubCompatibleEndpointProperties> dictionary = new Dictionary<string, EventHubCompatibleEndpointProperties>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(property0.Value, options));
+                        dictionary.Add(prop0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(prop0.Value, options));
                     }
                     eventHubEndpoints = dictionary;
                     continue;
                 }
-                if (property.NameEquals("routing"u8))
+                if (prop.NameEquals("routing"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    routing = IotHubRoutingProperties.DeserializeIotHubRoutingProperties(property.Value, options);
+                    routing = IotHubRoutingProperties.DeserializeIotHubRoutingProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageEndpoints"u8))
+                if (prop.NameEquals("storageEndpoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IotHubStorageEndpointProperties> dictionary = new Dictionary<string, IotHubStorageEndpointProperties>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(property0.Value, options));
+                        dictionary.Add(prop0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(prop0.Value, options));
                     }
                     storageEndpoints = dictionary;
                     continue;
                 }
-                if (property.NameEquals("messagingEndpoints"u8))
+                if (prop.NameEquals("messagingEndpoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, MessagingEndpointProperties> dictionary = new Dictionary<string, MessagingEndpointProperties>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(property0.Value, options));
+                        dictionary.Add(prop0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(prop0.Value, options));
                     }
                     messagingEndpoints = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enableFileUploadNotifications"u8))
+                if (prop.NameEquals("enableFileUploadNotifications"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableFileUploadNotifications = property.Value.GetBoolean();
+                    enableFileUploadNotifications = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloudToDevice"u8))
+                if (prop.NameEquals("cloudToDevice"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloudToDevice = CloudToDeviceProperties.DeserializeCloudToDeviceProperties(property.Value, options);
+                    cloudToDevice = CloudToDeviceProperties.DeserializeCloudToDeviceProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("comments"u8))
+                if (prop.NameEquals("comments"u8))
                 {
-                    comments = property.Value.GetString();
+                    comments = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("features"u8))
+                if (prop.NameEquals("deviceStreams"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    features = new IotHubCapability(property.Value.GetString());
+                    deviceStreams = IotHubPropertiesDeviceStreams.DeserializeIotHubPropertiesDeviceStreams(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("locations"u8))
+                if (prop.NameEquals("features"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    features = new IotHubCapability(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("encryption"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    encryption = IotHubEncryptionProperties.DeserializeIotHubEncryptionProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("locations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IotHubLocationDescription> array = new List<IotHubLocationDescription>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IotHubLocationDescription.DeserializeIotHubLocationDescription(item, options));
                     }
                     locations = array;
                     continue;
                 }
-                if (property.NameEquals("enableDataResidency"u8))
+                if (prop.NameEquals("enableDataResidency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableDataResidency = property.Value.GetBoolean();
+                    enableDataResidency = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("rootCertificate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rootCertificate = IotHubRootCertificateProperties.DeserializeIotHubRootCertificateProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("ipVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipVersion = new IotHubIPVersion(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("deviceRegistry"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceRegistry = IotHubDeviceRegistry.DeserializeIotHubDeviceRegistry(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("iotHubDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    iotHubDetails = IotHubDetails.DeserializeIotHubDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new IotHubProperties(
                 authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>(),
                 disableLocalAuth,
                 disableDeviceSas,
                 disableModuleSas,
                 restrictOutboundNetworkAccess,
-                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                allowedFqdns ?? new ChangeTrackingList<string>(),
                 publicNetworkAccess,
                 ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>(),
                 networkRuleSets,
@@ -519,6 +686,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 provisioningState,
                 state,
                 hostName,
+                deviceHostName,
+                serviceHostName,
                 eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(),
                 routing,
                 storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(),
@@ -526,41 +695,16 @@ namespace Azure.ResourceManager.IotHub.Models
                 enableFileUploadNotifications,
                 cloudToDevice,
                 comments,
+                deviceStreams,
                 features,
+                encryption,
                 locations ?? new ChangeTrackingList<IotHubLocationDescription>(),
                 enableDataResidency,
-                serializedAdditionalRawData);
+                rootCertificate,
+                ipVersion,
+                deviceRegistry,
+                iotHubDetails,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<IotHubProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IotHubProperties IPersistableModel<IotHubProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIotHubProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IotHubProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

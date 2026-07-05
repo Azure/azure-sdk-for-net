@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeUserType : IEquatable<DataBoxEdgeUserType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeUserType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ShareValue = "Share";
         private const string LocalManagementValue = "LocalManagement";
         private const string ArmValue = "ARM";
 
-        /// <summary> Share. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUserType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeUserType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Share. </summary>
         public static DataBoxEdgeUserType Share { get; } = new DataBoxEdgeUserType(ShareValue);
-        /// <summary> LocalManagement. </summary>
+
+        /// <summary> Gets the LocalManagement. </summary>
         public static DataBoxEdgeUserType LocalManagement { get; } = new DataBoxEdgeUserType(LocalManagementValue);
-        /// <summary> ARM. </summary>
+
+        /// <summary> Gets the Arm. </summary>
         public static DataBoxEdgeUserType Arm { get; } = new DataBoxEdgeUserType(ArmValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUserType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeUserType left, DataBoxEdgeUserType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUserType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeUserType left, DataBoxEdgeUserType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeUserType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeUserType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeUserType(string value) => new DataBoxEdgeUserType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeUserType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeUserType?(string value) => value == null ? null : new DataBoxEdgeUserType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeUserType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeUserType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

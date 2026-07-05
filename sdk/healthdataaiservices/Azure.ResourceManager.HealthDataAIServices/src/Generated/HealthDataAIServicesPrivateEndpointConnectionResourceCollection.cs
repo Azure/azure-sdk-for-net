@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthDataAIServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceCollection"/> instance call the GetHealthDataAIServicesPrivateEndpointConnectionResources method from an instance of the parent resource.
+    /// Each <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="DeidServiceResource"/>.
+    /// To get a <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceCollection"/> instance call the GetHealthDataAIServicesPrivateEndpointConnectionResources method from an instance of <see cref="DeidServiceResource"/>.
     /// </summary>
     public partial class HealthDataAIServicesPrivateEndpointConnectionResourceCollection : ArmCollection, IEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>, IAsyncEnumerable<HealthDataAIServicesPrivateEndpointConnectionResource>
     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             if (id.ResourceType != DeidServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeidServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeidServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> PrivateEndpointConnections_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> PrivateEndpointConnections_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.HealthDataAIServices
             }
         }
 
-        /// <summary> List private endpoint connections on the given resource. </summary>
+        /// <summary>
+        /// List private endpoint connections on the given resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListByDeidService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthDataAIServicesPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -277,10 +293,32 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetAll"), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
         }
 
-        /// <summary> List private endpoint connections on the given resource. </summary>
+        /// <summary>
+        /// List private endpoint connections on the given resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_ListByDeidService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthDataAIServicesPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
@@ -289,11 +327,17 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<HealthDataAIServicesPrivateEndpointConnectionResourceData, HealthDataAIServicesPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByDeidServiceCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HealthDataAIServicesPrivateEndpointConnectionResourceCollection.GetAll"), data => new HealthDataAIServicesPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -301,7 +345,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -350,7 +394,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -358,7 +402,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -407,7 +451,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -415,7 +459,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -468,7 +512,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a specific private connection
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -476,7 +520,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> PrivateEndpointConnections_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

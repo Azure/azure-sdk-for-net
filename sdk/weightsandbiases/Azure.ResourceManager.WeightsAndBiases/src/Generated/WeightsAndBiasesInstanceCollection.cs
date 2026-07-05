@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.WeightsAndBiases
 {
     /// <summary>
     /// A class representing a collection of <see cref="WeightsAndBiasesInstanceResource"/> and their operations.
-    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of the parent resource.
+    /// Each <see cref="WeightsAndBiasesInstanceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="WeightsAndBiasesInstanceCollection"/> instance call the GetWeightsAndBiasesInstances method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class WeightsAndBiasesInstanceCollection : ArmCollection, IEnumerable<WeightsAndBiasesInstanceResource>, IAsyncEnumerable<WeightsAndBiasesInstanceResource>
     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Instances_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
-                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    new WeightsAndBiasesInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Instances_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instancename, WeightsAndBiasesInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource> operation = new WeightsAndBiasesArmOperation<WeightsAndBiasesInstanceResource>(
-                    new WeightsAndBiasesInstanceOperationSource(Client),
+                    new WeightsAndBiasesInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.WeightsAndBiases
             }
         }
 
-        /// <summary> List InstanceResource resources by resource group. </summary>
+        /// <summary>
+        /// List InstanceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WeightsAndBiasesInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -278,10 +294,26 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new AsyncPageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupAsyncCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
-        /// <summary> List InstanceResource resources by resource group. </summary>
+        /// <summary>
+        /// List InstanceResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.WeightsAndBiases/instances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Instances_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-18. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WeightsAndBiasesInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WeightsAndBiasesInstanceResource> GetAll(CancellationToken cancellationToken = default)
@@ -290,11 +322,11 @@ namespace Azure.ResourceManager.WeightsAndBiases
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new WeightsAndBiasesInstanceResource(Client, data));
+            return new PageableWrapper<WeightsAndBiasesInstanceData, WeightsAndBiasesInstanceResource>(new InstancesGetByResourceGroupCollectionResultOfT(_instancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "WeightsAndBiasesInstanceCollection.GetAll"), data => new WeightsAndBiasesInstanceResource(Client, data));
         }
 
         /// <summary>
-        /// Get a InstanceResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +334,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         }
 
         /// <summary>
-        /// Get a InstanceResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,7 +391,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,7 +440,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         }
 
         /// <summary>
-        /// Get a InstanceResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,7 +448,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +501,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         }
 
         /// <summary>
-        /// Get a InstanceResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,7 +509,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Instances_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

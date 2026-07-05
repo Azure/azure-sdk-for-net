@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.AnomalyDetector
 {
-    // Data plane generated client.
     /// <summary>
     /// The Anomaly Detector API detects anomalies automatically in time series data.
     /// It supports both a stateless detection mode and a
@@ -33,17 +34,11 @@ namespace Azure.AI.AnomalyDetector
     /// </summary>
     public partial class AnomalyDetectorClient
     {
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        private Univariate _cachedUnivariate;
+        private Multivariate _cachedMultivariate;
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient for mocking. </summary>
         protected AnomalyDetectorClient()
@@ -51,50 +46,68 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Azure Cognitive Services endpoints (protocol and host name, such as
-        /// https://westus2.api.cognitive.microsoft.com).
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AnomalyDetectorClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Azure Cognitive Services endpoints (protocol and host name, such as
-        /// https://westus2.api.cognitive.microsoft.com).
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, AnomalyDetectorClientOptions options)
+        internal AnomalyDetectorClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AnomalyDetectorClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+
             options ??= new AnomalyDetectorClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        private Univariate _cachedUnivariate;
-        private Multivariate _cachedMultivariate;
+        /// <summary> Initializes a new instance of AnomalyDetectorClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public AnomalyDetectorClient(Uri endpoint, AzureKeyCredential credential, AnomalyDetectorClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AnomalyDetectorClient from a <see cref="AnomalyDetectorClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for AnomalyDetectorClient. </param>
+        [Experimental("SCME0002")]
+        public AnomalyDetectorClient(AnomalyDetectorClientSettings settings) : this(settings?.Endpoint, string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredential(settings.Credential.Key) : null, settings?.Options)
+        {
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> Initializes a new instance of Univariate. </summary>
         public virtual Univariate GetUnivariateClient()
         {
-            return Volatile.Read(ref _cachedUnivariate) ?? Interlocked.CompareExchange(ref _cachedUnivariate, new Univariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, _apiVersion), null) ?? _cachedUnivariate;
+            return Volatile.Read(ref _cachedUnivariate) ?? Interlocked.CompareExchange(ref _cachedUnivariate, new Univariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedUnivariate;
         }
 
         /// <summary> Initializes a new instance of Multivariate. </summary>
         public virtual Multivariate GetMultivariateClient()
         {
-            return Volatile.Read(ref _cachedMultivariate) ?? Interlocked.CompareExchange(ref _cachedMultivariate, new Multivariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, _apiVersion), null) ?? _cachedMultivariate;
+            return Volatile.Read(ref _cachedMultivariate) ?? Interlocked.CompareExchange(ref _cachedMultivariate, new Multivariate(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedMultivariate;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateLinkResource()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PrivateLinkResourceGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/Batch/stable/2025-06-01/examples/PrivateLinkResourceGet.json
             // this example is just showing the usage of "PrivateLinkResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchPrivateLinkResource created on azure
             // for more information of creating BatchPrivateLinkResource, please refer to the document of BatchPrivateLinkResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string privateLinkResourceName = "batchAccount";

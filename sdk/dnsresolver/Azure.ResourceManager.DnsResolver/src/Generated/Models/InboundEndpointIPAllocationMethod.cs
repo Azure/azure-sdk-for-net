@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public readonly partial struct InboundEndpointIPAllocationMethod : IEquatable<InboundEndpointIPAllocationMethod>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPAllocationMethod"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InboundEndpointIPAllocationMethod(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StaticValue = "Static";
         private const string DynamicValue = "Dynamic";
 
-        /// <summary> Static. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEndpointIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public InboundEndpointIPAllocationMethod(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Static. </summary>
         public static InboundEndpointIPAllocationMethod Static { get; } = new InboundEndpointIPAllocationMethod(StaticValue);
-        /// <summary> Dynamic. </summary>
+
+        /// <summary> Gets the Dynamic. </summary>
         public static InboundEndpointIPAllocationMethod Dynamic { get; } = new InboundEndpointIPAllocationMethod(DynamicValue);
+
         /// <summary> Determines if two <see cref="InboundEndpointIPAllocationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InboundEndpointIPAllocationMethod left, InboundEndpointIPAllocationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InboundEndpointIPAllocationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InboundEndpointIPAllocationMethod left, InboundEndpointIPAllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InboundEndpointIPAllocationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InboundEndpointIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InboundEndpointIPAllocationMethod(string value) => new InboundEndpointIPAllocationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InboundEndpointIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InboundEndpointIPAllocationMethod?(string value) => value == null ? null : new InboundEndpointIPAllocationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InboundEndpointIPAllocationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InboundEndpointIPAllocationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

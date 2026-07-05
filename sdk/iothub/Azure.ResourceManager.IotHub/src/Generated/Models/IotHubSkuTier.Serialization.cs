@@ -11,19 +11,35 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal static partial class IotHubSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotHubSkuTier value) => value switch
         {
             IotHubSkuTier.Free => "Free",
             IotHubSkuTier.Standard => "Standard",
             IotHubSkuTier.Basic => "Basic",
+            IotHubSkuTier.Generation2 => "Generation2",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotHubSkuTier ToIotHubSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return IotHubSkuTier.Free;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return IotHubSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return IotHubSkuTier.Basic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
+            {
+                return IotHubSkuTier.Free;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return IotHubSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
+            {
+                return IotHubSkuTier.Basic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Generation2"))
+            {
+                return IotHubSkuTier.Generation2;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotHubSkuTier value.");
         }
     }

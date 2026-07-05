@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
     public partial class NewRelicMonitoredSubscriptionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitoredSubscriptionProperties"/>. </summary>
         public NewRelicMonitoredSubscriptionProperties()
@@ -55,21 +27,23 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="patchOperation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicMonitoredSubscriptionProperties(MonitoredSubscriptionPatchOperation? patchOperation, IList<NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicMonitoredSubscriptionProperties(MonitoredSubscriptionPatchOperation? patchOperation, IList<NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList, NewRelicProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchOperation = patchOperation;
             MonitoredSubscriptionList = monitoredSubscriptionList;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operation for the patch on the resource. </summary>
         [WirePath("patchOperation")]
         public MonitoredSubscriptionPatchOperation? PatchOperation { get; set; }
+
         /// <summary> List of subscriptions and the state of the monitoring. </summary>
         [WirePath("monitoredSubscriptionList")]
         public IList<NewRelicMonitoredSubscriptionInfo> MonitoredSubscriptionList { get; }
+
         /// <summary> Provisioning State of the resource. </summary>
         [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; }

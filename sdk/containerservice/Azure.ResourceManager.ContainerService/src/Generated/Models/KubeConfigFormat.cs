@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The KubeConfigFormat. </summary>
+    /// <summary> The format of the kubeconfig credential. </summary>
     public readonly partial struct KubeConfigFormat : IEquatable<KubeConfigFormat>
     {
         private readonly string _value;
+        /// <summary> Return azure auth-provider kubeconfig. This format is deprecated in v1.22 and will be fully removed in v1.26. See: https://aka.ms/k8s/changes-1-26. </summary>
+        private const string AzureValue = "azure";
+        /// <summary> Return exec format kubeconfig. This format requires kubelogin binary in the path. </summary>
+        private const string ExecValue = "exec";
 
         /// <summary> Initializes a new instance of <see cref="KubeConfigFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KubeConfigFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureValue = "azure";
-        private const string ExecValue = "exec";
+            _value = value;
+        }
 
         /// <summary> Return azure auth-provider kubeconfig. This format is deprecated in v1.22 and will be fully removed in v1.26. See: https://aka.ms/k8s/changes-1-26. </summary>
         public static KubeConfigFormat Azure { get; } = new KubeConfigFormat(AzureValue);
+
         /// <summary> Return exec format kubeconfig. This format requires kubelogin binary in the path. </summary>
         public static KubeConfigFormat Exec { get; } = new KubeConfigFormat(ExecValue);
+
         /// <summary> Determines if two <see cref="KubeConfigFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KubeConfigFormat left, KubeConfigFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KubeConfigFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KubeConfigFormat left, KubeConfigFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KubeConfigFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KubeConfigFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KubeConfigFormat(string value) => new KubeConfigFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KubeConfigFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KubeConfigFormat?(string value) => value == null ? null : new KubeConfigFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KubeConfigFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KubeConfigFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

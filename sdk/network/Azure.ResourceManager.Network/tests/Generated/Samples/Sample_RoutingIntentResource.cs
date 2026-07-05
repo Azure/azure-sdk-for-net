@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteTableGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/RoutingIntentGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RoutingIntentGet.json
             // this example is just showing the usage of "RoutingIntent_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RouteTableDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/RoutingIntentDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RoutingIntentDelete.json
             // this example is just showing the usage of "RoutingIntent_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             RoutingIntentResource routingIntent = client.GetRoutingIntentResource(routingIntentResourceId);
 
             // invoke the operation
-            await routingIntent.DeleteAsync(WaitUntil.Completed);
+            await routingIntent.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RouteTablePut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/RoutingIntentPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/RoutingIntentPut.json
             // this example is just showing the usage of "RoutingIntent_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 RoutingPolicies = { new RoutingPolicy("InternetTraffic", new string[] { "Internet" }, "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1"), new RoutingPolicy("PrivateTrafficPolicy", new string[] { "PrivateTraffic" }, "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1") },
             };
-            ArmOperation<RoutingIntentResource> lro = await routingIntent.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<RoutingIntentResource> lro = await routingIntent.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             RoutingIntentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

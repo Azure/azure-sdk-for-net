@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class RulesEngineAction : IUtf8JsonSerializable, IJsonModel<RulesEngineAction>
+    /// <summary> One or more actions that will execute, modifying the request and/or response. </summary>
+    public partial class RulesEngineAction : IJsonModel<RulesEngineAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RulesEngineAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RulesEngineAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRulesEngineAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RulesEngineAction)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RulesEngineAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RulesEngineAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RulesEngineAction IPersistableModel<RulesEngineAction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RulesEngineAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RulesEngineAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RulesEngineAction)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(RequestHeaderActions))
             {
                 writer.WritePropertyName("requestHeaderActions"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequestHeaderActions)
+                foreach (RulesEngineHeaderAction item in RequestHeaderActions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 writer.WritePropertyName("responseHeaderActions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResponseHeaderActions)
+                foreach (RulesEngineHeaderAction item in ResponseHeaderActions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,25 +96,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(RouteConfigurationOverride))
             {
-                if (RouteConfigurationOverride != null)
-                {
-                    writer.WritePropertyName("routeConfigurationOverride"u8);
-                    writer.WriteObjectValue(RouteConfigurationOverride, options);
-                }
-                else
-                {
-                    writer.WriteNull("routeConfigurationOverride");
-                }
+                writer.WritePropertyName("routeConfigurationOverride"u8);
+                writer.WriteObjectValue(RouteConfigurationOverride, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -85,22 +116,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
         }
 
-        RulesEngineAction IJsonModel<RulesEngineAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RulesEngineAction IJsonModel<RulesEngineAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RulesEngineAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RulesEngineAction)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRulesEngineAction(document.RootElement, options);
         }
 
-        internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RulesEngineAction DeserializeRulesEngineAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,164 +144,52 @@ namespace Azure.ResourceManager.FrontDoor.Models
             IList<RulesEngineHeaderAction> requestHeaderActions = default;
             IList<RulesEngineHeaderAction> responseHeaderActions = default;
             RouteConfiguration routeConfigurationOverride = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("requestHeaderActions"u8))
+                if (prop.NameEquals("requestHeaderActions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item, options));
                     }
                     requestHeaderActions = array;
                     continue;
                 }
-                if (property.NameEquals("responseHeaderActions"u8))
+                if (prop.NameEquals("responseHeaderActions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RulesEngineHeaderAction> array = new List<RulesEngineHeaderAction>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RulesEngineHeaderAction.DeserializeRulesEngineHeaderAction(item, options));
                     }
                     responseHeaderActions = array;
                     continue;
                 }
-                if (property.NameEquals("routeConfigurationOverride"u8))
+                if (prop.NameEquals("routeConfigurationOverride"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        routeConfigurationOverride = null;
                         continue;
                     }
-                    routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(property.Value, options);
+                    routeConfigurationOverride = RouteConfiguration.DeserializeRouteConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RulesEngineAction(requestHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), responseHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), routeConfigurationOverride, serializedAdditionalRawData);
+            return new RulesEngineAction(requestHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), responseHeaderActions ?? new ChangeTrackingList<RulesEngineHeaderAction>(), routeConfigurationOverride, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestHeaderActions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestHeaderActions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RequestHeaderActions))
-                {
-                    if (RequestHeaderActions.Any())
-                    {
-                        builder.Append("  requestHeaderActions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RequestHeaderActions)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  requestHeaderActions: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResponseHeaderActions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  responseHeaderActions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ResponseHeaderActions))
-                {
-                    if (ResponseHeaderActions.Any())
-                    {
-                        builder.Append("  responseHeaderActions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ResponseHeaderActions)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  responseHeaderActions: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteConfigurationOverride), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  routeConfigurationOverride: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RouteConfigurationOverride))
-                {
-                    builder.Append("  routeConfigurationOverride: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RouteConfigurationOverride, options, 2, false, "  routeConfigurationOverride: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RulesEngineAction>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RulesEngineAction)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RulesEngineAction IPersistableModel<RulesEngineAction>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RulesEngineAction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRulesEngineAction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RulesEngineAction)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RulesEngineAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

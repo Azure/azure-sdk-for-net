@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBNodeMaintenanceType : IEquatable<DBNodeMaintenanceType>
     {
         private readonly string _value;
+        /// <summary> VMDB reboot migration maintenance type. </summary>
+        private const string VmdbRebootMigrationValue = "VmdbRebootMigration";
 
         /// <summary> Initializes a new instance of <see cref="DBNodeMaintenanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBNodeMaintenanceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VmdbRebootMigrationValue = "VmdbRebootMigration";
+            _value = value;
+        }
 
         /// <summary> VMDB reboot migration maintenance type. </summary>
         public static DBNodeMaintenanceType VmdbRebootMigration { get; } = new DBNodeMaintenanceType(VmdbRebootMigrationValue);
+
         /// <summary> Determines if two <see cref="DBNodeMaintenanceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBNodeMaintenanceType left, DBNodeMaintenanceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBNodeMaintenanceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBNodeMaintenanceType left, DBNodeMaintenanceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBNodeMaintenanceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBNodeMaintenanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBNodeMaintenanceType(string value) => new DBNodeMaintenanceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBNodeMaintenanceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBNodeMaintenanceType?(string value) => value == null ? null : new DBNodeMaintenanceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBNodeMaintenanceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBNodeMaintenanceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

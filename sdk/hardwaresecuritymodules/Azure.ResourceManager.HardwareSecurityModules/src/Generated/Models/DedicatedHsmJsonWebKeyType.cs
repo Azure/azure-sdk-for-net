@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public readonly partial struct DedicatedHsmJsonWebKeyType : IEquatable<DedicatedHsmJsonWebKeyType>
     {
         private readonly string _value;
+        /// <summary> The dedicated HSM has been fully provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The dedicated HSM is currently being provisioned. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> A device is currently being allocated for the dedicated HSM resource. </summary>
+        private const string AllocatingValue = "Allocating";
+        /// <summary> The dedicated HSM is being connected to the virtual network. </summary>
+        private const string ConnectingValue = "Connecting";
+        /// <summary> Provisioning of the dedicated HSM has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Validating the subscription has sufficient quota to allocate a dedicated HSM device. </summary>
+        private const string CheckingQuotaValue = "CheckingQuota";
+        /// <summary> The dedicated HSM is currently being deleted. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmJsonWebKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DedicatedHsmJsonWebKeyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string ProvisioningValue = "Provisioning";
-        private const string AllocatingValue = "Allocating";
-        private const string ConnectingValue = "Connecting";
-        private const string FailedValue = "Failed";
-        private const string CheckingQuotaValue = "CheckingQuota";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> The dedicated HSM has been fully provisioned. </summary>
         public static DedicatedHsmJsonWebKeyType Succeeded { get; } = new DedicatedHsmJsonWebKeyType(SucceededValue);
+
         /// <summary> The dedicated HSM is currently being provisioned. </summary>
         public static DedicatedHsmJsonWebKeyType Provisioning { get; } = new DedicatedHsmJsonWebKeyType(ProvisioningValue);
+
         /// <summary> A device is currently being allocated for the dedicated HSM resource. </summary>
         public static DedicatedHsmJsonWebKeyType Allocating { get; } = new DedicatedHsmJsonWebKeyType(AllocatingValue);
+
         /// <summary> The dedicated HSM is being connected to the virtual network. </summary>
         public static DedicatedHsmJsonWebKeyType Connecting { get; } = new DedicatedHsmJsonWebKeyType(ConnectingValue);
+
         /// <summary> Provisioning of the dedicated HSM has failed. </summary>
         public static DedicatedHsmJsonWebKeyType Failed { get; } = new DedicatedHsmJsonWebKeyType(FailedValue);
+
         /// <summary> Validating the subscription has sufficient quota to allocate a dedicated HSM device. </summary>
         public static DedicatedHsmJsonWebKeyType CheckingQuota { get; } = new DedicatedHsmJsonWebKeyType(CheckingQuotaValue);
+
         /// <summary> The dedicated HSM is currently being deleted. </summary>
         public static DedicatedHsmJsonWebKeyType Deleting { get; } = new DedicatedHsmJsonWebKeyType(DeletingValue);
+
         /// <summary> Determines if two <see cref="DedicatedHsmJsonWebKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DedicatedHsmJsonWebKeyType left, DedicatedHsmJsonWebKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DedicatedHsmJsonWebKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DedicatedHsmJsonWebKeyType left, DedicatedHsmJsonWebKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DedicatedHsmJsonWebKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DedicatedHsmJsonWebKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DedicatedHsmJsonWebKeyType(string value) => new DedicatedHsmJsonWebKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DedicatedHsmJsonWebKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DedicatedHsmJsonWebKeyType?(string value) => value == null ? null : new DedicatedHsmJsonWebKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DedicatedHsmJsonWebKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DedicatedHsmJsonWebKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -85,7 +85,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 var audience = EventHubConnection.BuildConnectionSignatureAuthorizationResource(options.TransportType, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName);
                 EventHubsTestEnvironment tempQualifier = EventHubsTestEnvironment.Instance;
                 var signature = new SharedAccessSignature(audience, tempQualifier.SharedAccessKeyName, tempQualifier.SharedAccessKey, TimeSpan.FromMinutes(30));
-                var connectionString = $"Endpoint=sb://{tempQualifier.FullyQualifiedNamespace };EntityPath={ scope.EventHubName };SharedAccessSignature={ signature.Value }";
+                var connectionString = $"Endpoint=sb://{tempQualifier.FullyQualifiedNamespace};EntityPath={scope.EventHubName};SharedAccessSignature={signature.Value}";
 
                 await using (var connection = new TestConnectionWithRetryPolicy(connectionString, options))
                 {
@@ -150,7 +150,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 (
                     new SharedAccessSignature
                     (
-                        $"{ options.TransportType.GetUriScheme() }://{ EventHubsTestEnvironment.Instance.FullyQualifiedNamespace }/{ scope.EventHubName }".ToLowerInvariant(),
+                        $"{options.TransportType.GetUriScheme()}://{EventHubsTestEnvironment.Instance.FullyQualifiedNamespace}/{scope.EventHubName}".ToLowerInvariant(),
                         EventHubsTestEnvironment.Instance.SharedAccessKeyName,
                         EventHubsTestEnvironment.Instance.SharedAccessKey,
                         TimeSpan.FromHours(4)

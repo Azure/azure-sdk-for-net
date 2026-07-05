@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct StateStoreResourceKeyType : IEquatable<StateStoreResourceKeyType>
     {
         private readonly string _value;
+        /// <summary> Key type - pattern. </summary>
+        private const string PatternValue = "Pattern";
+        /// <summary> Key type - string. </summary>
+        private const string StringValue = "String";
+        /// <summary> Key type - binary. </summary>
+        private const string BinaryValue = "Binary";
 
         /// <summary> Initializes a new instance of <see cref="StateStoreResourceKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StateStoreResourceKeyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PatternValue = "Pattern";
-        private const string StringValue = "String";
-        private const string BinaryValue = "Binary";
+            _value = value;
+        }
 
         /// <summary> Key type - pattern. </summary>
         public static StateStoreResourceKeyType Pattern { get; } = new StateStoreResourceKeyType(PatternValue);
+
         /// <summary> Key type - string. </summary>
         public static StateStoreResourceKeyType String { get; } = new StateStoreResourceKeyType(StringValue);
+
         /// <summary> Key type - binary. </summary>
         public static StateStoreResourceKeyType Binary { get; } = new StateStoreResourceKeyType(BinaryValue);
+
         /// <summary> Determines if two <see cref="StateStoreResourceKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StateStoreResourceKeyType left, StateStoreResourceKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StateStoreResourceKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StateStoreResourceKeyType left, StateStoreResourceKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StateStoreResourceKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StateStoreResourceKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StateStoreResourceKeyType(string value) => new StateStoreResourceKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StateStoreResourceKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StateStoreResourceKeyType?(string value) => value == null ? null : new StateStoreResourceKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StateStoreResourceKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StateStoreResourceKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

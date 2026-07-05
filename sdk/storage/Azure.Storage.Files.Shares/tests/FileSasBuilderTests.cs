@@ -317,6 +317,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
             Assert.AreEqual(Constants.Sas.Resource.File, sasQueryParameters.Resource);
             Assert.AreEqual(constants.Sas.CacheControl, sasQueryParameters.CacheControl);
             Assert.AreEqual(constants.Sas.ContentDisposition, sasQueryParameters.ContentDisposition);
@@ -327,6 +328,63 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             Assert.IsNotNull(stringToSign);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_File_PreservesIdentityBinding()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string shareName = GetNewShareName();
+            string filePath = GetNewDirectoryName();
+            Uri fileUri = new Uri("https://" + constants.Sas.Account + ".file.core.windows.net/" + shareName + "/" + filePath);
+            ShareFileClient fileClient = InstrumentClient(new ShareFileClient(fileUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            ShareSasBuilder builder = BuildFileSasBuilder(
+                includeFilePath: true,
+                constants,
+                shareName,
+                filePath,
+                includeDelegatedUserObjectId: true);
+
+            // Act
+            string viaClient = fileClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, fileClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_Share_PreservesIdentityBinding()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string shareName = GetNewShareName();
+            Uri shareUri = new Uri("https://" + constants.Sas.Account + ".file.core.windows.net/" + shareName);
+            ShareClient shareClient = InstrumentClient(new ShareClient(shareUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            ShareSasBuilder builder = BuildFileSasBuilder(
+                includeFilePath: false,
+                constants,
+                shareName,
+                filePath: null,
+                includeDelegatedUserObjectId: true);
+
+            // Act
+            string viaClient = shareClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, shareClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            Assert.AreEqual(viaDirect, viaClient);
         }
 
         private ShareSasBuilder BuildFileSasBuilder(
@@ -416,7 +474,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SasExtensions.FormatTimesForSasSigning(constants.Sas.KeyExpiry),
                 constants.Sas.KeyService,
                 constants.Sas.KeyVersion,
-                null,
+                constants.Sas.KeyDelegatedTenantId,
                 constants.Sas.DelegatedObjectId,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
@@ -445,6 +503,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 SignedExpiresOn = constants.Sas.KeyExpiry,
                 SignedService = constants.Sas.KeyService,
                 SignedVersion = constants.Sas.KeyVersion,
+                SignedDelegatedUserTenantId = constants.Sas.KeyDelegatedTenantId,
                 Value = constants.Sas.KeyValue
             };
     }

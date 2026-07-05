@@ -29,7 +29,8 @@
             "$ref": "1"
           },
           "doc": "Api version 2025-01-01.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Client.AlternateApiVersion.Service.Query",
@@ -37,7 +38,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -47,12 +49,14 @@
       "$id": "4",
       "kind": "client",
       "name": "QueryClient",
+      "isExactName": false,
       "namespace": "Client.AlternateApiVersion.Service.Query",
       "methods": [
         {
           "$id": "5",
           "kind": "basic",
           "name": "queryApiVersion",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2025-01-01"
@@ -61,6 +65,7 @@
           "operation": {
             "$id": "6",
             "name": "queryApiVersion",
+            "isExactName": false,
             "resourceName": "Query",
             "doc": "Query api version parameter.",
             "accessibility": "public",
@@ -92,7 +97,41 @@
                 "scope": "Client",
                 "decorators": [],
                 "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query.queryApiVersion.version",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "10",
+                    "kind": "method",
+                    "name": "version",
+                    "serializedName": "version",
+                    "type": {
+                      "$id": "11",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "",
+                    "isApiVersion": true,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "12",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2025-01-01"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query.queryApiVersion.version",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -101,7 +140,8 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -111,7 +151,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query.queryApiVersion",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.AlternateApiVersion.Service.Query"
           },
           "parameters": [],
           "response": {},
@@ -123,13 +164,13 @@
       ],
       "parameters": [
         {
-          "$id": "10",
+          "$id": "13",
           "kind": "endpoint",
           "name": "endpoint",
           "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "11",
+            "$id": "14",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -140,7 +181,7 @@
           "isEndpoint": true,
           "defaultValue": {
             "type": {
-              "$id": "12",
+              "$id": "15",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"
@@ -150,14 +191,20 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query.endpoint"
+          "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query.endpoint",
+          "isExactName": false
+        },
+        {
+          "$ref": "10"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query",
       "apiVersions": [
         "2025-01-01"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

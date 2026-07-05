@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The GeneralRegexSanitizer. </summary>
-    public partial class GeneralRegexSanitizer : IJsonModel<GeneralRegexSanitizer>
+    public partial class GeneralRegexSanitizer : SanitizerAddition, IJsonModel<GeneralRegexSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="GeneralRegexSanitizer"/> for deserialization. </summary>
         internal GeneralRegexSanitizer()
@@ -120,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGeneralRegexSanitizer(document.RootElement, options);
                     }

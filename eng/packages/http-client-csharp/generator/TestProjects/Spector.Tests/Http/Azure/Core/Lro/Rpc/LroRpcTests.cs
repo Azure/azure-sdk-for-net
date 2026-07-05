@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using _Specs_.Azure.Core.Lro.Rpc;
+using Specs.Azure.Core.Lro.Rpc;
 using Azure;
 using NUnit.Framework;
 

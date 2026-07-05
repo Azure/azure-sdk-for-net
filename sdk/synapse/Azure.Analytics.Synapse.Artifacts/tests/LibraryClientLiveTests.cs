@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;

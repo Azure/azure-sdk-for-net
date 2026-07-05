@@ -7,69 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes the parameters for using a user's KeyVault for URL Signing Key.
-    /// Serialized Name: KeyVaultSigningKeyParameters
-    /// </summary>
+    /// <summary> Describes the parameters for using a user's KeyVault for URL Signing Key. </summary>
     public partial class KeyVaultSigningKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/>. </summary>
-        /// <param name="keyType"> Serialized Name: KeyVaultSigningKeyParameters.typeName. </param>
-        /// <param name="subscriptionId">
-        /// Subscription Id of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.subscriptionId
-        /// </param>
-        /// <param name="resourceGroupName">
-        /// Resource group of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.resourceGroupName
-        /// </param>
-        /// <param name="vaultName">
-        /// The name of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.vaultName
-        /// </param>
-        /// <param name="secretName">
-        /// The name of secret in Key Vault.
-        /// Serialized Name: KeyVaultSigningKeyParameters.secretName
-        /// </param>
-        /// <param name="secretVersion">
-        /// The version(GUID) of secret in Key Vault.
-        /// Serialized Name: KeyVaultSigningKeyParameters.secretVersion
-        /// </param>
+        /// <param name="keyType"></param>
+        /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the secret. </param>
+        /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the secret. </param>
+        /// <param name="vaultName"> The name of the user's Key Vault containing the secret. </param>
+        /// <param name="secretName"> The name of secret in Key Vault. </param>
+        /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
         public KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion)
         {
@@ -88,29 +42,14 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/>. </summary>
-        /// <param name="keyType"> Serialized Name: KeyVaultSigningKeyParameters.typeName. </param>
-        /// <param name="subscriptionId">
-        /// Subscription Id of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.subscriptionId
-        /// </param>
-        /// <param name="resourceGroupName">
-        /// Resource group of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.resourceGroupName
-        /// </param>
-        /// <param name="vaultName">
-        /// The name of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.vaultName
-        /// </param>
-        /// <param name="secretName">
-        /// The name of secret in Key Vault.
-        /// Serialized Name: KeyVaultSigningKeyParameters.secretName
-        /// </param>
-        /// <param name="secretVersion">
-        /// The version(GUID) of secret in Key Vault.
-        /// Serialized Name: KeyVaultSigningKeyParameters.secretVersion
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="keyType"></param>
+        /// <param name="subscriptionId"> Subscription Id of the user's Key Vault containing the secret. </param>
+        /// <param name="resourceGroupName"> Resource group of the user's Key Vault containing the secret. </param>
+        /// <param name="vaultName"> The name of the user's Key Vault containing the secret. </param>
+        /// <param name="secretName"> The name of secret in Key Vault. </param>
+        /// <param name="secretVersion"> The version(GUID) of secret in Key Vault. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultSigningKey(KeyVaultSigningKeyType keyType, string subscriptionId, string resourceGroupName, string vaultName, string secretName, string secretVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
             SubscriptionId = subscriptionId;
@@ -118,40 +57,31 @@ namespace Azure.ResourceManager.Cdn.Models
             VaultName = vaultName;
             SecretName = secretName;
             SecretVersion = secretVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultSigningKey"/> for deserialization. </summary>
-        internal KeyVaultSigningKey()
-        {
-        }
-
-        /// <summary> Serialized Name: KeyVaultSigningKeyParameters.typeName. </summary>
+        /// <summary> Gets or sets the KeyType. </summary>
+        [WirePath("typeName")]
         public KeyVaultSigningKeyType KeyType { get; set; }
-        /// <summary>
-        /// Subscription Id of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.subscriptionId
-        /// </summary>
+
+        /// <summary> Subscription Id of the user's Key Vault containing the secret. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
-        /// <summary>
-        /// Resource group of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.resourceGroupName
-        /// </summary>
+
+        /// <summary> Resource group of the user's Key Vault containing the secret. </summary>
+        [WirePath("resourceGroupName")]
         public string ResourceGroupName { get; set; }
-        /// <summary>
-        /// The name of the user's Key Vault containing the secret
-        /// Serialized Name: KeyVaultSigningKeyParameters.vaultName
-        /// </summary>
+
+        /// <summary> The name of the user's Key Vault containing the secret. </summary>
+        [WirePath("vaultName")]
         public string VaultName { get; set; }
-        /// <summary>
-        /// The name of secret in Key Vault.
-        /// Serialized Name: KeyVaultSigningKeyParameters.secretName
-        /// </summary>
+
+        /// <summary> The name of secret in Key Vault. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; set; }
-        /// <summary>
-        /// The version(GUID) of secret in Key Vault.
-        /// Serialized Name: KeyVaultSigningKeyParameters.secretVersion
-        /// </summary>
+
+        /// <summary> The version(GUID) of secret in Key Vault. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; set; }
     }
 }

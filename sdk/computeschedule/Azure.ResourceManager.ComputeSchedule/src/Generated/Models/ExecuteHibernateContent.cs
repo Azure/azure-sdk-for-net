@@ -14,83 +14,38 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> The ExecuteHibernateRequest request for executeHibernate operations. </summary>
     public partial class ExecuteHibernateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExecuteHibernateContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/>, <paramref name="resources"/> or <paramref name="correlationId"/> is null. </exception>
-        public ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId)
-        {
-            Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resources, nameof(resources));
-            Argument.AssertNotNull(correlationId, nameof(correlationId));
-
-            ExecutionParameters = executionParameters;
-            Resources = resources;
-            CorrelationId = correlationId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExecuteHibernateContent"/>. </summary>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
-        /// <param name="correlationId"> CorrelationId item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
             CorrelationId = correlationId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExecuteHibernateContent"/> for deserialization. </summary>
-        internal ExecuteHibernateContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The execution parameters for the request. </summary>
         public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
+
         /// <summary> The resources for the request. </summary>
         internal UserRequestResources Resources { get; }
-        /// <summary> The resource ids used for the request. </summary>
-        public IList<ResourceIdentifier> ResourcesIds
-        {
-            get => Resources?.Ids;
-        }
 
         /// <summary> CorrelationId item. </summary>
         public string CorrelationId { get; }
+
+        /// <summary> The resource ids used for the request. </summary>
+        public IList<ResourceIdentifier> ResourcesIds
+        {
+            get
+            {
+                return Resources is null ? default : Resources.Ids;
+            }
+        }
     }
 }

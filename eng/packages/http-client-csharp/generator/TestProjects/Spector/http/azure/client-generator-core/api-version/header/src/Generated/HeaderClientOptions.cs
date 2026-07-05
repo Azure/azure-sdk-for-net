@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Client.AlternateApiVersion.Service.Header
 {
@@ -14,6 +16,9 @@ namespace Client.AlternateApiVersion.Service.Header
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_01;
 
         public HeaderClientOptions(ServiceVersion version = LatestVersion) => throw null;
+
+        [Experimental("SCME0002")]
+        internal HeaderClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

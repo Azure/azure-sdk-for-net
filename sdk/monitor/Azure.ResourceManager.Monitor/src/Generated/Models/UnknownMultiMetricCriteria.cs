@@ -10,25 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Unknown version of MultiMetricCriteria. </summary>
     internal partial class UnknownMultiMetricCriteria : MultiMetricCriteria
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMultiMetricCriteria"/>. </summary>
-        /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
+        /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="metricNamespace"> Namespace of the metric. </param>
-        /// <param name="timeAggregation"> the criteria time aggregation types. </param>
+        /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownMultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
-        {
-            CriterionType = criterionType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMultiMetricCriteria"/> for deserialization. </summary>
-        internal UnknownMultiMetricCriteria()
+        /// <param name="additionalProperties"></param>
+        internal UnknownMultiMetricCriteria(ScheduledQueryRuleCriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties) : base(criterionType != default ? criterionType : "unknown", name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {
         }
     }

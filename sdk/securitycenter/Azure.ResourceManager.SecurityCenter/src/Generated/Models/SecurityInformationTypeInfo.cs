@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The information type. </summary>
     public partial class SecurityInformationTypeInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInformationTypeInfo"/>. </summary>
         public SecurityInformationTypeInfo()
@@ -57,33 +29,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="order"> The order of the information type. </param>
         /// <param name="recommendedLabelId"> The recommended label id to be associated with this information type. </param>
         /// <param name="isEnabled"> Indicates whether the information type is enabled or not. </param>
-        /// <param name="custom"> Indicates whether the information type is custom or not. </param>
+        /// <param name="isCustom"> Indicates whether the information type is custom or not. </param>
         /// <param name="keywords"> The information type keywords. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInformationTypeInfo(string displayName, string description, int? order, Guid? recommendedLabelId, bool? isEnabled, bool? custom, IList<InformationProtectionKeyword> keywords, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInformationTypeInfo(string displayName, string description, int? order, Guid? recommendedLabelId, bool? isEnabled, bool? isCustom, IList<InformationProtectionKeyword> keywords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
             Order = order;
             RecommendedLabelId = recommendedLabelId;
             IsEnabled = isEnabled;
-            Custom = custom;
+            IsCustom = isCustom;
             Keywords = keywords;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the information type. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> The description of the information type. </summary>
         public string Description { get; set; }
+
         /// <summary> The order of the information type. </summary>
         public int? Order { get; set; }
+
         /// <summary> The recommended label id to be associated with this information type. </summary>
         public Guid? RecommendedLabelId { get; set; }
+
         /// <summary> Indicates whether the information type is enabled or not. </summary>
         public bool? IsEnabled { get; set; }
+
         /// <summary> Indicates whether the information type is custom or not. </summary>
-        public bool? Custom { get; set; }
+        public bool? IsCustom { get; set; }
+
         /// <summary> The information type keywords. </summary>
         public IList<InformationProtectionKeyword> Keywords { get; }
     }

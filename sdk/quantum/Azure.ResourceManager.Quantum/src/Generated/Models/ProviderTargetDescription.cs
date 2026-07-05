@@ -7,49 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
     /// <summary> Information about a Target. A target is the component that can process a specific type of Job. </summary>
     public partial class ProviderTargetDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProviderTargetDescription"/>. </summary>
         internal ProviderTargetDescription()
         {
             AcceptedDataFormats = new ChangeTrackingList<string>();
             AcceptedContentEncodings = new ChangeTrackingList<string>();
+            Metadata = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderTargetDescription"/>. </summary>
@@ -58,26 +32,70 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="description"> A description about this target. </param>
         /// <param name="acceptedDataFormats"> List of data formats accepted by this target. </param>
         /// <param name="acceptedContentEncodings"> List of content encodings accepted by this target. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderTargetDescription(string id, string name, string description, IReadOnlyList<string> acceptedDataFormats, IReadOnlyList<string> acceptedContentEncodings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="numQubits"> The qubit number. </param>
+        /// <param name="targetProfile"> Target QIR profile. </param>
+        /// <param name="metadata"> The metadata of this target. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderTargetDescription(string id, string name, string description, IList<string> acceptedDataFormats, IList<string> acceptedContentEncodings, int? numQubits, string targetProfile, IReadOnlyDictionary<string, BinaryData> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Description = description;
             AcceptedDataFormats = acceptedDataFormats;
             AcceptedContentEncodings = acceptedContentEncodings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NumQubits = numQubits;
+            TargetProfile = targetProfile;
+            Metadata = metadata;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique target id. </summary>
         public string Id { get; }
+
         /// <summary> Display name of this target. </summary>
         public string Name { get; }
+
         /// <summary> A description about this target. </summary>
         public string Description { get; }
+
         /// <summary> List of data formats accepted by this target. </summary>
-        public IReadOnlyList<string> AcceptedDataFormats { get; }
+        public IList<string> AcceptedDataFormats { get; }
+
         /// <summary> List of content encodings accepted by this target. </summary>
-        public IReadOnlyList<string> AcceptedContentEncodings { get; }
+        public IList<string> AcceptedContentEncodings { get; }
+
+        /// <summary> The qubit number. </summary>
+        public int? NumQubits { get; }
+
+        /// <summary> Target QIR profile. </summary>
+        public string TargetProfile { get; }
+
+        /// <summary>
+        /// The metadata of this target.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> Metadata { get; }
     }
 }

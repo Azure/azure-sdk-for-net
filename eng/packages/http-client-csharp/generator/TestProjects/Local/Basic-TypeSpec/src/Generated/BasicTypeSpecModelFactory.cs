@@ -6,8 +6,11 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
 {
@@ -145,6 +148,230 @@ namespace BasicTypeSpec
         public static ReturnsAnonymousModelResponse ReturnsAnonymousModelResponse()
         {
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The MultipartRequestRequest. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.MultipartRequestRequest"/> instance for mocking. </returns>
+        public static MultipartRequestRequest MultipartRequestRequest(string name = default)
+        {
+            return new MultipartRequestRequest(name);
+        }
+
+        /// <summary> Model with DataFactoryElement properties. </summary>
+        /// <param name="stringProperty"> String property with DFE pattern. </param>
+        /// <param name="intProperty"> Int property with DFE pattern. </param>
+        /// <param name="boolProperty"> Bool property with DFE pattern. </param>
+        /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
+        /// <returns> A new <see cref="BasicTypeSpec.DataFactoryElementModel"/> instance for mocking. </returns>
+        public static DataFactoryElementModel DataFactoryElementModel(DataFactoryElement<string> stringProperty = default, DataFactoryElement<int> intProperty = default, DataFactoryElement<bool> boolProperty = default, DataFactoryElement<IList<string>> stringArrayProperty = default)
+        {
+            return new DataFactoryElementModel(stringProperty, intProperty, boolProperty, stringArrayProperty, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An advanced XML model for testing various property types and XML features. </summary>
+        /// <param name="name"> A simple string property. </param>
+        /// <param name="age"> An integer property. </param>
+        /// <param name="enabled"> A boolean property. </param>
+        /// <param name="score"> A float property. </param>
+        /// <param name="optionalString"> An optional string. </param>
+        /// <param name="optionalInt"> An optional integer. </param>
+        /// <param name="nullableString"> A nullable string. </param>
+        /// <param name="id"> A string as XML attribute. </param>
+        /// <param name="version"> An integer as XML attribute. </param>
+        /// <param name="isActive"> A boolean as XML attribute. </param>
+        /// <param name="originalName"> A property with a custom XML element name. </param>
+        /// <param name="xmlIdentifier"> An attribute with a custom XML name. </param>
+        /// <param name="content"> Text content in the element (unwrapped string). </param>
+        /// <param name="unwrappedStrings"> An unwrapped array of strings - items appear directly without wrapper. </param>
+        /// <param name="unwrappedCounts"> An unwrapped array of integers. </param>
+        /// <param name="unwrappedItems"> An unwrapped array of models. </param>
+        /// <param name="wrappedColors"> A wrapped array of strings (default). </param>
+        /// <param name="items"> A wrapped array with custom wrapper name. </param>
+        /// <param name="nestedModel"> A nested model property. </param>
+        /// <param name="optionalNestedModel"> An optional nested model. </param>
+        /// <param name="metadata"> A dictionary property. </param>
+        /// <param name="createdAt"> A date-time property. </param>
+        /// <param name="duration"> A duration property. </param>
+        /// <param name="data"> A bytes property. </param>
+        /// <param name="optionalRecordUnknown"> optional record of unknown. </param>
+        /// <param name="fixedEnum"> A fixed enum property. </param>
+        /// <param name="extensibleEnum"> An extensible enum property. </param>
+        /// <param name="optionalFixedEnum"> An optional fixed enum property. </param>
+        /// <param name="optionalExtensibleEnum"> An optional extensible enum property. </param>
+        /// <param name="label"></param>
+        /// <param name="daysUsed"></param>
+        /// <param name="fooItems"></param>
+        /// <param name="anotherModel"></param>
+        /// <param name="modelsWithNamespaces"></param>
+        /// <param name="unwrappedModelsWithNamespaces"></param>
+        /// <param name="listOfListFoo"></param>
+        /// <param name="dictionaryFoo"></param>
+        /// <param name="dictionaryOfDictionaryFoo"></param>
+        /// <param name="dictionaryListFoo"></param>
+        /// <param name="listOfDictionaryFoo"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.XmlAdvancedModel"/> instance for mocking. </returns>
+        public static XmlAdvancedModel XmlAdvancedModel(string name = default, int age = default, bool enabled = default, float score = default, string optionalString = default, int? optionalInt = default, string nullableString = default, string id = default, int version = default, bool isActive = default, string originalName = default, string xmlIdentifier = default, string content = default, IEnumerable<string> unwrappedStrings = default, IEnumerable<int> unwrappedCounts = default, IEnumerable<XmlItem> unwrappedItems = default, IEnumerable<string> wrappedColors = default, IEnumerable<XmlItem> items = default, XmlNestedModel nestedModel = default, XmlNestedModel optionalNestedModel = default, IDictionary<string, string> metadata = default, DateTimeOffset createdAt = default, TimeSpan duration = default, BinaryData data = default, IDictionary<string, BinaryData> optionalRecordUnknown = default, StringFixedEnum fixedEnum = default, StringExtensibleEnum extensibleEnum = default, IntFixedEnum? optionalFixedEnum = default, IntExtensibleEnum? optionalExtensibleEnum = default, string label = default, int daysUsed = default, IEnumerable<string> fooItems = default, XmlNestedModel anotherModel = default, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces = default, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces = default, IEnumerable<IList<XmlItem>> listOfListFoo = default, IDictionary<string, XmlItem> dictionaryFoo = default, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo = default, IDictionary<string, IList<XmlItem>> dictionaryListFoo = default, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo = default)
+        {
+            unwrappedStrings ??= new ChangeTrackingList<string>();
+            unwrappedCounts ??= new ChangeTrackingList<int>();
+            unwrappedItems ??= new ChangeTrackingList<XmlItem>();
+            wrappedColors ??= new ChangeTrackingList<string>();
+            items ??= new ChangeTrackingList<XmlItem>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            optionalRecordUnknown ??= new ChangeTrackingDictionary<string, BinaryData>();
+            fooItems ??= new ChangeTrackingList<string>();
+            modelsWithNamespaces ??= new ChangeTrackingList<XmlModelWithNamespace>();
+            unwrappedModelsWithNamespaces ??= new ChangeTrackingList<XmlModelWithNamespace>();
+            listOfListFoo ??= new ChangeTrackingList<IList<XmlItem>>();
+            dictionaryFoo ??= new ChangeTrackingDictionary<string, XmlItem>();
+            dictionaryOfDictionaryFoo ??= new ChangeTrackingDictionary<string, IDictionary<string, XmlItem>>();
+            dictionaryListFoo ??= new ChangeTrackingDictionary<string, IList<XmlItem>>();
+            listOfDictionaryFoo ??= new ChangeTrackingList<IDictionary<string, XmlItem>>();
+
+            return new XmlAdvancedModel(
+                name,
+                age,
+                enabled,
+                score,
+                optionalString,
+                optionalInt,
+                nullableString,
+                id,
+                version,
+                isActive,
+                originalName,
+                xmlIdentifier,
+                content,
+                unwrappedStrings.ToList(),
+                unwrappedCounts.ToList(),
+                unwrappedItems.ToList(),
+                wrappedColors.ToList(),
+                items.ToList(),
+                nestedModel,
+                optionalNestedModel,
+                metadata,
+                createdAt,
+                duration,
+                data,
+                optionalRecordUnknown,
+                fixedEnum,
+                extensibleEnum,
+                optionalFixedEnum,
+                optionalExtensibleEnum,
+                label,
+                daysUsed,
+                fooItems.ToList(),
+                anotherModel,
+                modelsWithNamespaces.ToList(),
+                unwrappedModelsWithNamespaces.ToList(),
+                listOfListFoo.ToList(),
+                dictionaryFoo,
+                dictionaryOfDictionaryFoo,
+                dictionaryListFoo,
+                listOfDictionaryFoo.ToList());
+        }
+
+        /// <summary> An item model for XML array testing. </summary>
+        /// <param name="itemName"> The item name. </param>
+        /// <param name="itemValue"> The item value. </param>
+        /// <param name="itemId"> Item ID as attribute. </param>
+        /// <returns> A new <see cref="BasicTypeSpec.XmlItem"/> instance for mocking. </returns>
+        public static XmlItem XmlItem(string itemName = default, int itemValue = default, string itemId = default)
+        {
+            return new XmlItem(itemName, itemValue, itemId);
+        }
+
+        /// <summary> A nested model for XML testing. </summary>
+        /// <param name="value"> The value of the nested model. </param>
+        /// <param name="nestedId"> An attribute on the nested model. </param>
+        /// <returns> A new <see cref="BasicTypeSpec.XmlNestedModel"/> instance for mocking. </returns>
+        public static XmlNestedModel XmlNestedModel(string value = default, int nestedId = default)
+        {
+            return new XmlNestedModel(value, nestedId);
+        }
+
+        /// <summary> The XmlModelWithNamespace. </summary>
+        /// <param name="foo"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.XmlModelWithNamespace"/> instance for mocking. </returns>
+        public static XmlModelWithNamespace XmlModelWithNamespace(string foo = default)
+        {
+            return new XmlModelWithNamespace(foo);
+        }
+
+        /// <summary> The Cat. </summary>
+        /// <param name="id"></param>
+        /// <param name="boolPart"></param>
+        /// <param name="int32Part"></param>
+        /// <param name="int64Part"></param>
+        /// <param name="float32Part"></param>
+        /// <param name="float64Part"></param>
+        /// <param name="decimalPart"></param>
+        /// <param name="int8Part"></param>
+        /// <param name="uint8Part"></param>
+        /// <param name="dictionaryPart"></param>
+        /// <param name="dictionaryModelPart"></param>
+        /// <param name="listPart"></param>
+        /// <param name="listModelPart"></param>
+        /// <param name="multipleListPart"></param>
+        /// <param name="profileImage"></param>
+        /// <param name="extensibleEnumPart"></param>
+        /// <param name="fixedEnumPart"></param>
+        /// <param name="intExtensibleEnumPart"></param>
+        /// <param name="intFixedEnumPart"></param>
+        /// <returns> A new <see cref="BasicTypeSpec.Cat"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static Cat Cat(string id = default, bool boolPart = default, int int32Part = default, long int64Part = default, float float32Part = default, double float64Part = default, decimal decimalPart = default, sbyte int8Part = default, byte uint8Part = default, IDictionary<string, string> dictionaryPart = default, IDictionary<string, ThingModel> dictionaryModelPart = default, IEnumerable<string> listPart = default, IEnumerable<ThingModel> listModelPart = default, IEnumerable<string> multipleListPart = default, FileBinaryContent profileImage = default, StringExtensibleEnum extensibleEnumPart = default, StringFixedEnum fixedEnumPart = default, IntExtensibleEnum intExtensibleEnumPart = default, IntFixedEnum intFixedEnumPart = default)
+        {
+            dictionaryPart ??= new ChangeTrackingDictionary<string, string>();
+            dictionaryModelPart ??= new ChangeTrackingDictionary<string, ThingModel>();
+            listPart ??= new ChangeTrackingList<string>();
+            listModelPart ??= new ChangeTrackingList<ThingModel>();
+            multipleListPart ??= new ChangeTrackingList<string>();
+
+            return new Cat(
+                id,
+                boolPart,
+                int32Part,
+                int64Part,
+                float32Part,
+                float64Part,
+                decimalPart,
+                int8Part,
+                uint8Part,
+                dictionaryPart,
+                dictionaryModelPart,
+                listPart.ToList(),
+                listModelPart.ToList(),
+                multipleListPart.ToList(),
+                profileImage,
+                extensibleEnumPart,
+                fixedEnumPart,
+                intExtensibleEnumPart,
+                intFixedEnumPart);
+        }
+
+        /// <summary> Tree is a specific type of plant. </summary>
+        /// <param name="id"> The unique identifier of the plant. </param>
+        /// <param name="height"> The height of the plant in centimeters. </param>
+        /// <param name="age"> The age of the tree in years. </param>
+        /// <returns> A new <see cref="BasicTypeSpec.Tree"/> instance for mocking. </returns>
+        public static Tree Tree(string id = default, int height = default, int age = default)
+        {
+            return new Tree("tree", id, height, additionalBinaryDataProperties: null, age);
+        }
+
+        /// <summary>
+        /// Base plant with discriminator
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BasicTypeSpec.Tree"/>.
+        /// </summary>
+        /// <param name="species"> The species of plant. </param>
+        /// <param name="id"> The unique identifier of the plant. </param>
+        /// <param name="height"> The height of the plant in centimeters. </param>
+        /// <returns> A new <see cref="BasicTypeSpec.Plant"/> instance for mocking. </returns>
+        public static Plant Plant(string species = default, string id = default, int height = default)
+        {
+            return new UnknownPlant(species, id, height, additionalBinaryDataProperties: null);
         }
     }
 }

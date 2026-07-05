@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The OAuthResponseSanitizer. </summary>
-    public partial class OAuthResponseSanitizer : IJsonModel<OAuthResponseSanitizer>
+    public partial class OAuthResponseSanitizer : SanitizerAddition, IJsonModel<OAuthResponseSanitizer>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -107,7 +107,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeOAuthResponseSanitizer(document.RootElement, options);
                     }

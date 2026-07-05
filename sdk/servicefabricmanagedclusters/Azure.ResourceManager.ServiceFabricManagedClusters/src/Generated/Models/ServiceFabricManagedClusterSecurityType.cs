@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedClusterSecurityType : IEquatable<ServiceFabricManagedClusterSecurityType>
     {
         private readonly string _value;
+        /// <summary> Trusted Launch is a security type that secures generation 2 virtual machines. </summary>
+        private const string TrustedLaunchValue = "TrustedLaunch";
+        /// <summary> Standard is the default security type for all machines. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> ConfidentialVM provides hardware-based encryption, trusted execution environment (TEE) and isolation of the VM memory &amp; CPU from host. </summary>
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedClusterSecurityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrustedLaunchValue = "TrustedLaunch";
-        private const string StandardValue = "Standard";
-        private const string ConfidentialVmValue = "ConfidentialVM";
+            _value = value;
+        }
 
         /// <summary> Trusted Launch is a security type that secures generation 2 virtual machines. </summary>
         public static ServiceFabricManagedClusterSecurityType TrustedLaunch { get; } = new ServiceFabricManagedClusterSecurityType(TrustedLaunchValue);
+
         /// <summary> Standard is the default security type for all machines. </summary>
         public static ServiceFabricManagedClusterSecurityType Standard { get; } = new ServiceFabricManagedClusterSecurityType(StandardValue);
+
         /// <summary> ConfidentialVM provides hardware-based encryption, trusted execution environment (TEE) and isolation of the VM memory &amp; CPU from host. </summary>
         public static ServiceFabricManagedClusterSecurityType ConfidentialVm { get; } = new ServiceFabricManagedClusterSecurityType(ConfidentialVmValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedClusterSecurityType left, ServiceFabricManagedClusterSecurityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedClusterSecurityType left, ServiceFabricManagedClusterSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedClusterSecurityType(string value) => new ServiceFabricManagedClusterSecurityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedClusterSecurityType?(string value) => value == null ? null : new ServiceFabricManagedClusterSecurityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedClusterSecurityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedClusterSecurityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

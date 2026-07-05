@@ -3,12 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.Analytics.Synapse.Tests;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Artifacts.Samples
 {

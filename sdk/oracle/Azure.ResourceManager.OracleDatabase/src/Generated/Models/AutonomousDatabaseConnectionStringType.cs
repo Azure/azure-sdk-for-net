@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> The connection string profile to allow clients to group, filter and select connection string values based on structured metadata. </summary>
     public partial class AutonomousDatabaseConnectionStringType
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseConnectionStringType"/>. </summary>
         internal AutonomousDatabaseConnectionStringType()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="high"> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </param>
         /// <param name="low"> The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </param>
         /// <param name="medium"> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseConnectionStringType(string high, string low, string medium, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutonomousDatabaseConnectionStringType(string high, string low, string medium, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             High = high;
             Low = low;
             Medium = medium;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The High database service provides the highest level of resources to each SQL statement resulting in the highest performance, but supports the fewest number of concurrent SQL statements. </summary>
         public string High { get; }
+
         /// <summary> The Low database service provides the least level of resources to each SQL statement, but supports the most number of concurrent SQL statements. </summary>
         public string Low { get; }
+
         /// <summary> The Medium database service provides a lower level of resources to each SQL statement potentially resulting a lower level of performance, but supports more concurrent SQL statements. </summary>
         public string Medium { get; }
     }

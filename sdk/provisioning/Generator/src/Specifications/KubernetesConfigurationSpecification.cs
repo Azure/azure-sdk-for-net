@@ -7,7 +7,7 @@ using Azure.ResourceManager.KubernetesConfiguration;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class KubernetesConfigurationSpecification() :
-    Specification("KubernetesConfiguration", typeof(KubernetesConfigurationExtensions))
+    Specification("KubernetesConfiguration", typeof(KubernetesConfigurationExtensions), serviceDirectory: "kubernetesconfiguration")
 {
     protected override void Customize()
     {

@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             var cts = new CancellationTokenSource();
             var poller = new OperationPoller(new TestDelayStrategy(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(1), cts));
-            var operation = new OperationInternal(new EndlessOperation(),new ClientDiagnostics(ClientOptions.Default), new MockResponse(200));
+            var operation = new OperationInternal(new EndlessOperation(), new ClientDiagnostics(ClientOptions.Default), new MockResponse(200));
             Assert.CatchAsync<OperationCanceledException>(async () => await poller.WaitForCompletionResponseAsync(operation, null, cts.Token));
         }
 

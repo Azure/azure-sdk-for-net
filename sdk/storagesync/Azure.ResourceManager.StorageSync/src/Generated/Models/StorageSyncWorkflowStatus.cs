@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct StorageSyncWorkflowStatus : IEquatable<StorageSyncWorkflowStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageSyncWorkflowStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageSyncWorkflowStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ActiveValue = "active";
         private const string ExpiredValue = "expired";
         private const string SucceededValue = "succeeded";
         private const string AbortedValue = "aborted";
         private const string FailedValue = "failed";
 
-        /// <summary> active. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageSyncWorkflowStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageSyncWorkflowStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Active. </summary>
         public static StorageSyncWorkflowStatus Active { get; } = new StorageSyncWorkflowStatus(ActiveValue);
-        /// <summary> expired. </summary>
+
+        /// <summary> Gets the Expired. </summary>
         public static StorageSyncWorkflowStatus Expired { get; } = new StorageSyncWorkflowStatus(ExpiredValue);
-        /// <summary> succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static StorageSyncWorkflowStatus Succeeded { get; } = new StorageSyncWorkflowStatus(SucceededValue);
-        /// <summary> aborted. </summary>
+
+        /// <summary> Gets the Aborted. </summary>
         public static StorageSyncWorkflowStatus Aborted { get; } = new StorageSyncWorkflowStatus(AbortedValue);
-        /// <summary> failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static StorageSyncWorkflowStatus Failed { get; } = new StorageSyncWorkflowStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="StorageSyncWorkflowStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageSyncWorkflowStatus left, StorageSyncWorkflowStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageSyncWorkflowStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageSyncWorkflowStatus left, StorageSyncWorkflowStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSyncWorkflowStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageSyncWorkflowStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageSyncWorkflowStatus(string value) => new StorageSyncWorkflowStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageSyncWorkflowStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageSyncWorkflowStatus?(string value) => value == null ? null : new StorageSyncWorkflowStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageSyncWorkflowStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageSyncWorkflowStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

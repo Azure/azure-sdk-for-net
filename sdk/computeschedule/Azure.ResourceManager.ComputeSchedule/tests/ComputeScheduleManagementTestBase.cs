@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         protected AzureLocation Location { get; private set; }
         protected GenericResourceCollection _genericResourceCollection;
         protected ResourceGroupResource DefaultResourceGroupResource;
+        private const string NetworkResourceApiVersion = "2025-07-01";
 
         protected ComputeScheduleManagementTestBase(bool isAsync)
             : base(isAsync)
@@ -43,7 +44,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                Client = GetArmClient();
+                ArmClientOptions options = new();
+                options.SetApiVersion("Microsoft.Network/virtualNetworks", NetworkResourceApiVersion);
+                options.SetApiVersion("Microsoft.Network/networkInterfaces", NetworkResourceApiVersion);
+                Client = GetArmClient(options);
                 SubscriptionResource subIdRes = await Client.GetDefaultSubscriptionAsync();
                 DefaultSubscription = Client.GetSubscriptionResource(subIdRes.Id);
                 DefaultResourceGroupResource = await DefaultSubscription.GetResourceGroupAsync(TestEnvironment.ResourceGroup);
@@ -116,7 +120,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
                 { "name", subnetName },
                 { "properties", new Dictionary<string, object>()
                 {
-                    { "addressPrefix", "10.0.2.0/24" }
+                    { "addressPrefix", "10.0.2.0/24" },
+                    { "defaultOutboundAccess", false }
                 } }
             };
             var subnets = new List<object>() { subnet };
@@ -531,41 +536,64 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             return result;
         }
 
-        #endregion
-/*
-        #region Recurring scheduledactions operations
-
-        public static async Task<Response<ScheduledActionResource>> GetScheduledActions(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+        protected static async Task<ScheduledActionCreateFlexResult> TestExecuteCreateFlexAsync(AzureLocation location, ExecuteCreateFlexContent executeCreateFlexRequest, string subid, ArmClient client)
         {
-            Response<ScheduledActionResource> saResource = null;
+            SubscriptionResource subscriptionResource = GenerateSubscriptionResource(client, subid);
+            ExecuteCreateFlexContent content = executeCreateFlexRequest;
+            ScheduledActionCreateFlexResult result;
 
             try
             {
-                saResource = await rgResource.GetScheduledActionAsync(scheduledActionName);
+                result = await subscriptionResource.ExecuteVirtualMachineCreateFlexOperationAsync(location, content);
             }
-            catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceNotFound")
+            catch (RequestFailedException ex)
             {
-                Console.WriteLine($" {scheduledActionName} scheduledaction deleted");
-
-                if (shouldThrow)
-                {
-                    throw;
-                }
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
             }
-
-            return saResource;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+            return result;
         }
 
-        public static async Task DeleteScheduledAction(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
-        {
-            ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subid, rgResource.Id.Name, scheduledActionName);
-            ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
-
-            await scheduledAction.DeleteAsync(WaitUntil.Completed);
-
-            await GetScheduledActions(subid, client, scheduledActionName, rgResource, shouldThrow);
-        }
         #endregion
-*/
+        /*
+                #region Recurring scheduledactions operations
+
+                public static async Task<Response<ScheduledActionResource>> GetScheduledActions(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+                {
+                    Response<ScheduledActionResource> saResource = null;
+
+                    try
+                    {
+                        saResource = await rgResource.GetScheduledActionAsync(scheduledActionName);
+                    }
+                    catch (RequestFailedException ex) when (ex.ErrorCode == "ResourceNotFound")
+                    {
+                        Console.WriteLine($" {scheduledActionName} scheduledaction deleted");
+
+                        if (shouldThrow)
+                        {
+                            throw;
+                        }
+                    }
+
+                    return saResource;
+                }
+
+                public static async Task DeleteScheduledAction(string subid, ArmClient client, string scheduledActionName, ResourceGroupResource rgResource, bool shouldThrow = false)
+                {
+                    ResourceIdentifier scheduledActionResourceId = ScheduledActionResource.CreateResourceIdentifier(subid, rgResource.Id.Name, scheduledActionName);
+                    ScheduledActionResource scheduledAction = client.GetScheduledActionResource(scheduledActionResourceId);
+
+                    await scheduledAction.DeleteAsync(WaitUntil.Completed);
+
+                    await GetScheduledActions(subid, client, scheduledActionName, rgResource, shouldThrow);
+                }
+                #endregion
+        */
     }
 }

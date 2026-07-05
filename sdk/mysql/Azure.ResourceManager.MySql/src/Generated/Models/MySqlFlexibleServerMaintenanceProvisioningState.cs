@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerMaintenanceProvisioningState : IEquatable<MySqlFlexibleServerMaintenanceProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerMaintenanceProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerMaintenanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerMaintenanceProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static MySqlFlexibleServerMaintenanceProvisioningState Succeeded { get; } = new MySqlFlexibleServerMaintenanceProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static MySqlFlexibleServerMaintenanceProvisioningState Creating { get; } = new MySqlFlexibleServerMaintenanceProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static MySqlFlexibleServerMaintenanceProvisioningState Deleting { get; } = new MySqlFlexibleServerMaintenanceProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static MySqlFlexibleServerMaintenanceProvisioningState Failed { get; } = new MySqlFlexibleServerMaintenanceProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerMaintenanceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerMaintenanceProvisioningState left, MySqlFlexibleServerMaintenanceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerMaintenanceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerMaintenanceProvisioningState left, MySqlFlexibleServerMaintenanceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerMaintenanceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerMaintenanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerMaintenanceProvisioningState(string value) => new MySqlFlexibleServerMaintenanceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerMaintenanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerMaintenanceProvisioningState?(string value) => value == null ? null : new MySqlFlexibleServerMaintenanceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerMaintenanceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerMaintenanceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

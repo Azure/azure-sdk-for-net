@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateLinkService()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateLinkServiceGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateLinkServiceGet.json
             // this example is just showing the usage of "PrivateLinkServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateLinkService()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateLinkServiceDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateLinkServiceDelete.json
             // this example is just showing the usage of "PrivateLinkServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             PrivateLinkServiceResource privateLinkService = client.GetPrivateLinkServiceResource(privateLinkServiceResourceId);
 
             // invoke the operation
-            await privateLinkService.DeleteAsync(WaitUntil.Completed);
+            await privateLinkService.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatePrivateLinkService()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateLinkServiceCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateLinkServiceCreate.json
             // this example is just showing the usage of "PrivateLinkServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,14 +108,13 @@ Subnet = new SubnetData
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 PrivateIPAddressVersion = NetworkIPVersion.IPv4,
-Name = "fe-lb",
 }},
                 VisibilitySubscriptions = { "subscription1", "subscription2", "subscription3" },
                 AutoApprovalSubscriptions = { "subscription1", "subscription2" },
                 Fqdns = { "fqdn1", "fqdn2", "fqdn3" },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<PrivateLinkServiceResource> lro = await privateLinkService.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<PrivateLinkServiceResource> lro = await privateLinkService.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             PrivateLinkServiceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

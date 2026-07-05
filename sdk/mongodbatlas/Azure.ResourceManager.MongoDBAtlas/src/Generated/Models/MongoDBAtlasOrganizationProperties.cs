@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Properties specific to Organization. </summary>
     public partial class MongoDBAtlasOrganizationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
@@ -63,27 +35,25 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerProperties"> MongoDB properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDBAtlasOrganizationProperties(MongoDBAtlasMarketplaceDetails marketplace, MongoDBAtlasUserDetails user, MongoDBAtlasResourceProvisioningState? provisioningState, MongoDBAtlasPartnerProperties partnerProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBAtlasOrganizationProperties(MongoDBAtlasMarketplaceDetails marketplace, MongoDBAtlasUserDetails user, MongoDBAtlasResourceProvisioningState? provisioningState, MongoDBAtlasPartnerProperties partnerProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
             ProvisioningState = provisioningState;
             PartnerProperties = partnerProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasOrganizationProperties"/> for deserialization. </summary>
-        internal MongoDBAtlasOrganizationProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace details of the resource. </summary>
         public MongoDBAtlasMarketplaceDetails Marketplace { get; set; }
+
         /// <summary> Details of the user. </summary>
         public MongoDBAtlasUserDetails User { get; set; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public MongoDBAtlasResourceProvisioningState? ProvisioningState { get; }
+
         /// <summary> MongoDB properties. </summary>
         public MongoDBAtlasPartnerProperties PartnerProperties { get; set; }
     }

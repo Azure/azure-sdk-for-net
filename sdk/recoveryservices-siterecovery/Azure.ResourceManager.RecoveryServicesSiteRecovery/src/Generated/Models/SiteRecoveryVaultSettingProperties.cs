@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Vault setting properties. </summary>
     public partial class SiteRecoveryVaultSettingProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingProperties"/>. </summary>
         internal SiteRecoveryVaultSettingProperties()
@@ -53,17 +24,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVaultSettingProperties"/>. </summary>
         /// <param name="migrationSolutionId"> The migration solution ARM Id. </param>
-        /// <param name="vmwareToAzureProviderType"> VMware to Azure provider type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId, string vmwareToAzureProviderType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="vMwareToAzureProviderType"> VMware to Azure provider type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryVaultSettingProperties(ResourceIdentifier migrationSolutionId, string vMwareToAzureProviderType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MigrationSolutionId = migrationSolutionId;
-            VMwareToAzureProviderType = vmwareToAzureProviderType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            VMwareToAzureProviderType = vMwareToAzureProviderType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The migration solution ARM Id. </summary>
         public ResourceIdentifier MigrationSolutionId { get; }
+
         /// <summary> VMware to Azure provider type. </summary>
         public string VMwareToAzureProviderType { get; }
     }

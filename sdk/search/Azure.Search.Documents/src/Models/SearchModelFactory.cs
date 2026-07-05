@@ -1,19 +1,22 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure.Core;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Utilities;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// Helper class that acts as a factory for read-only models, to mock the types in <c>Azure.Search.Documents.Models</c>.
+    /// Renames generated SearchDocumentsModelFactory to SearchModelFactory.
     /// </summary>
-    [CodeGenModel("SearchDocumentsModelFactory")]
+    [CodeGenType("DocumentsModelFactory")]
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {
@@ -28,7 +31,7 @@ namespace Azure.Search.Documents.Models
             int startOffset,
             int endOffset,
             int position) =>
-            new AnalyzedTokenInfo(token, startOffset, endOffset, position);
+            new AnalyzedTokenInfo(token, startOffset, endOffset, position, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of CharFilter. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the char filter. </param>
@@ -36,7 +39,7 @@ namespace Azure.Search.Documents.Models
         public static CharFilter CharFilter(
             string oDataType,
             string name) =>
-            new CharFilter(oDataType, name, serializedAdditionalRawData: null);
+            new CharFilter(oDataType, name, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of CognitiveServicesAccount. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>
@@ -44,19 +47,19 @@ namespace Azure.Search.Documents.Models
         public static CognitiveServicesAccount CognitiveServicesAccount(
             string oDataType,
             string description) =>
-            new CognitiveServicesAccount(oDataType, description, serializedAdditionalRawData: null);
+            new CognitiveServicesAccount(oDataType, description, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
         public static DataChangeDetectionPolicy DataChangeDetectionPolicy(
             string oDataType) =>
-            new DataChangeDetectionPolicy(oDataType, serializedAdditionalRawData: null);
+            new DataChangeDetectionPolicy(oDataType, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the data deletion detection policy. </param>
         public static DataDeletionDetectionPolicy DataDeletionDetectionPolicy(
             string oDataType) =>
-            new DataDeletionDetectionPolicy(oDataType, serializedAdditionalRawData: null);
+            new DataDeletionDetectionPolicy(oDataType, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
@@ -82,7 +85,7 @@ namespace Azure.Search.Documents.Models
             int failedItemCount,
             string initialTrackingState,
             string finalTrackingState) =>
-            new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState, serializedAdditionalRawData: null);
+            new IndexerExecutionResult(status, statusDetail: null, mode: null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
@@ -112,7 +115,7 @@ namespace Azure.Search.Documents.Models
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, serializedAdditionalRawData: null);
+            return new IndexerExecutionResult(status, statusDetail: null, mode: null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
@@ -121,7 +124,7 @@ namespace Azure.Search.Documents.Models
         public static LexicalAnalyzer LexicalAnalyzer(
             string oDataType,
             string name) =>
-            new LexicalAnalyzer(oDataType, name, serializedAdditionalRawData: null);
+            new LexicalAnalyzer(oDataType, name, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of LexicalTokenizer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the tokenizer. </param>
@@ -129,7 +132,7 @@ namespace Azure.Search.Documents.Models
         public static LexicalTokenizer LexicalTokenizer(
             string oDataType,
             string name) =>
-            new LexicalTokenizer(oDataType, name, serializedAdditionalRawData: null);
+            new LexicalTokenizer(oDataType, name, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of ScoringFunction. </summary>
         /// <param name="type"> Indicates the type of function to use. Valid values include magnitude, freshness, distance, and tag. The function type must be lower case. </param>
@@ -141,7 +144,7 @@ namespace Azure.Search.Documents.Models
             string fieldName,
             double boost,
             ScoringFunctionInterpolation? interpolation) =>
-            new ScoringFunction(type, fieldName, boost, interpolation, serializedAdditionalRawData: null);
+            new ScoringFunction(fieldName, boost, interpolation, type, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchIndexerError. </summary>
         /// <param name="key"> The key of the item for which indexing failed. </param>
@@ -158,7 +161,7 @@ namespace Azure.Search.Documents.Models
             string name,
             string details,
             string documentationLink) =>
-            new SearchIndexerError(key, errorMessage, statusCode, name, details, documentationLink, serializedAdditionalRawData: null);
+            new SearchIndexerError(key, errorMessage, statusCode, name, details, documentationLink, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchIndexerLimits. </summary>
         /// <param name="maxRunTime"> The maximum duration that the indexer is permitted to run for one execution. </param>
@@ -169,7 +172,7 @@ namespace Azure.Search.Documents.Models
             TimeSpan? maxRunTime,
             long? maxDocumentExtractionSize,
             long? maxDocumentContentCharactersToExtract) =>
-            new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract, serializedAdditionalRawData: null);
+            new SearchIndexerLimits(maxRunTime, maxDocumentExtractionSize, maxDocumentContentCharactersToExtract, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
@@ -185,7 +188,7 @@ namespace Azure.Search.Documents.Models
             string context,
             IList<InputFieldMappingEntry> inputs,
             IList<OutputFieldMappingEntry> outputs) =>
-            new SearchIndexerSkill(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData: null);
+            new SearchIndexerSkill(oDataType, name, description, context, inputs, outputs, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -199,7 +202,7 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult,
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
-            new SearchIndexerStatus(default, status, lastResult, executionHistory, limits, default, serializedAdditionalRawData: null);
+            new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory, limits, currentState: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -212,7 +215,7 @@ namespace Azure.Search.Documents.Models
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(default, status, lastResult, executionHistory?.ToList(), limits, default, serializedAdditionalRawData: null);
+            return new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory?.ToList(), limits, currentState: null, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
@@ -222,7 +225,6 @@ namespace Azure.Search.Documents.Models
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchIndexerStatus SearchIndexerStatus(string name = null, IndexerStatus status = default, IndexerExecutionResult lastResult = null, IEnumerable<IndexerExecutionResult> executionHistory = null, SearchIndexerLimits limits = null)
         {
             executionHistory ??= new List<IndexerExecutionResult>();
@@ -230,11 +232,12 @@ namespace Azure.Search.Documents.Models
             return new SearchIndexerStatus(
                 name,
                 status,
+                runtime: null,
                 lastResult,
                 executionHistory?.ToList(),
                 limits,
-                null,
-                serializedAdditionalRawData: null);
+                currentState: null,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of SearchIndexerWarning. </summary>
@@ -250,7 +253,7 @@ namespace Azure.Search.Documents.Models
             string name,
             string details,
             string documentationLink) =>
-            new SearchIndexerWarning(key, message, name, details, documentationLink, serializedAdditionalRawData: null);
+            new SearchIndexerWarning(key, message, name, details, documentationLink, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
@@ -260,7 +263,7 @@ namespace Azure.Search.Documents.Models
         public static SearchIndexStatistics SearchIndexStatistics(
             long documentCount,
             long storageSize) =>
-            new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize: default);
+            new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize: default, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
         /// <param name="usage"> The resource usage amount. </param>
@@ -269,7 +272,7 @@ namespace Azure.Search.Documents.Models
         public static SearchResourceCounter SearchResourceCounter(
             long usage,
             long? quota) =>
-            new SearchResourceCounter(usage, quota, serializedAdditionalRawData: null);
+            new SearchResourceCounter(usage, quota, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -287,7 +290,7 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter dataSourceCounter,
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null, null);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null, vectorIndexSizeCounter: null, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -307,7 +310,7 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter,
             SearchResourceCounter skillsetCounter) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, null);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter: null, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
 
         // <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -329,7 +332,23 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter synonymMapCounter = null,
             SearchResourceCounter skillsetCounter = null,
             SearchResourceCounter vectorIndexSizeCounter = null) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
+
+        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
+        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
+        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
+        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
+        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
+        /// <param name="maxStoragePerIndexInBytes"> The maximum storage per index in bytes. </param>
+        /// <returns> A new SearchServiceLimits instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceLimits SearchServiceLimits(
+        int? maxFieldsPerIndex = null,
+        int? maxFieldNestingDepthPerIndex = null,
+        int? maxComplexCollectionFieldsPerIndex = null,
+        int? maxComplexObjectsInCollectionsPerDocument = null,
+        long? maxStoragePerIndexInBytes = null) =>
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
@@ -343,7 +362,7 @@ namespace Azure.Search.Documents.Models
         int? maxFieldNestingDepthPerIndex,
         int? maxComplexCollectionFieldsPerIndex,
         int? maxComplexObjectsInCollectionsPerDocument) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, null, serializedAdditionalRawData: null);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
@@ -352,13 +371,13 @@ namespace Azure.Search.Documents.Models
         public static SearchServiceStatistics SearchServiceStatistics(
             SearchServiceCounters counters,
             SearchServiceLimits limits) =>
-            new SearchServiceStatistics(counters, limits);
+            new SearchServiceStatistics(counters, limits, indexersRuntime: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
         /// <param name="oDataType"> . </param>
         public static SimilarityAlgorithm SimilarityAlgorithm(
             string oDataType) =>
-            new SimilarityAlgorithm(oDataType, serializedAdditionalRawData: null);
+            new SimilarityAlgorithm(oDataType, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of TokenFilter. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
@@ -366,7 +385,7 @@ namespace Azure.Search.Documents.Models
         public static TokenFilter TokenFilter(
             string oDataType,
             string name) =>
-            new TokenFilter(oDataType, name, serializedAdditionalRawData: null);
+            new TokenFilter(oDataType, name, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
         /// <param name="coverage"> A value indicating the percentage of the index that was considered by the autocomplete request, or null if minimumCoverage was not specified in the request. </param>
@@ -376,7 +395,7 @@ namespace Azure.Search.Documents.Models
         public static AutocompleteResults AutocompleteResults(
             double? coverage,
             IReadOnlyList<AutocompleteItem> results) =>
-            new AutocompleteResults(coverage, results, serializedAdditionalRawData: null);
+            new AutocompleteResults(coverage, results, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of AutocompleteItem. </summary>
         /// <param name="text"> The completed term. </param>
@@ -385,7 +404,32 @@ namespace Azure.Search.Documents.Models
         public static AutocompleteItem AutocompleteItem(
             string text,
             string queryPlusText) =>
-            new AutocompleteItem(text, queryPlusText);
+            new AutocompleteItem(text, queryPlusText, additionalBinaryDataProperties: null);
+
+        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="avg"> The resulting total avg for the facet when an avg metric is requested. </param>
+        /// <param name="min"> The resulting total min for the facet when a min metric is requested. </param>
+        /// <param name="max"> The resulting total max for the facet when a max metric is requested. </param>
+        /// <param name="sum"> The resulting total sum for the facet when a sum metric is requested. </param>
+        /// <param name="cardinality"> The resulting total cardinality for the facet when a cardinality metric is requested. </param>
+        /// <param name="facets"> The nested facet query results for the search operation. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
+        public static FacetResult FacetResult(
+            long? count = null,
+            double? avg = null,
+            double? min = null,
+            double? max = null,
+            double? sum = null,
+            long? cardinality = null,
+            IReadOnlyDictionary<string, IList<FacetResult>> facets = null,
+            IReadOnlyDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new FacetResult(count, avg, min, max, sum, cardinality, facets, additionalProperties.ToBinaryDataDictionary());
+        }
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
@@ -408,11 +452,11 @@ namespace Azure.Search.Documents.Models
         /// </example>
         /// <remarks> For more details please refer <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/search-documents#query-parameters"/></remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static FacetResult FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, null, null, additionalProperties);
+            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties.ToBinaryDataDictionary());
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
@@ -420,7 +464,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new IndexDocumentsResult instance for mocking. </returns>
         public static IndexDocumentsResult IndexDocumentsResult(
             IEnumerable<IndexingResult> results) =>
-            new IndexDocumentsResult(results);
+            new IndexDocumentsResult([.. results], additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of IndexingResult. </summary>
         /// <param name="key"> The key of a document that was in the indexing request. </param>
@@ -433,38 +477,7 @@ namespace Azure.Search.Documents.Models
             string errorMessage,
             bool succeeded,
             int status) =>
-            new IndexingResult(key, errorMessage, succeeded, status, serializedAdditionalRawData: null);
-
-        /// <summary> Initializes a new instance of IndexerState. </summary>
-        /// <param name="mode"> The mode the indexer is running in. </param>
-        /// <param name="allDocumentsInitialChangeTrackingState"> Change tracking state used when indexing starts on all documents in the datasource. </param>
-        /// <param name="allDocumentsFinalChangeTrackingState"> Change tracking state value when indexing finishes on all documents in the datasource. </param>
-        /// <param name="resetDocumentsInitialChangeTrackingState"> Change tracking state used when indexing starts on select, reset documents in the datasource. </param>
-        /// <param name="resetDocumentsFinalChangeTrackingState"> Change tracking state value when indexing finishes on select, reset documents in the datasource. </param>
-        /// <param name="resetDocumentKeys"> The list of document keys that have been reset. The document key is the document&apos;s unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </param>
-        /// <param name="resetDataSourceDocumentIds"> The list of datasource document ids that have been reset. The datasource document id is the unique identifier for the data in the datasource. The indexer will prioritize selectively re-ingesting these ids. </param>
-        /// <returns> A new <see cref="Indexes.Models.IndexerState"/> instance for mocking. </returns>
-        public static IndexerState IndexerState(
-            IndexingMode? mode = null,
-            string allDocumentsInitialChangeTrackingState = null,
-            string allDocumentsFinalChangeTrackingState = null,
-            string resetDocumentsInitialChangeTrackingState = null,
-            string resetDocumentsFinalChangeTrackingState = null,
-            IEnumerable<string> resetDocumentKeys = null,
-            IEnumerable<string> resetDataSourceDocumentIds = null)
-        {
-            resetDocumentKeys ??= new List<string>();
-            resetDataSourceDocumentIds ??= new List<string>();
-
-            return new IndexerState(
-                mode,
-                allDocumentsInitialChangeTrackingState,
-                allDocumentsFinalChangeTrackingState,
-                resetDocumentsInitialChangeTrackingState,
-                resetDocumentsFinalChangeTrackingState,
-                resetDocumentKeys?.ToList(),
-                resetDataSourceDocumentIds?.ToList());
-        }
+            new IndexingResult(key, errorMessage, succeeded, status, additionalBinaryDataProperties: null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexerChangeTrackingState"/> class.
@@ -526,9 +539,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="etag"> The ETag of the index. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndex SearchIndex(string name = null, string description = null, IList<SearchField> fields = null, IList<ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, CorsOptions corsOptions = null, IList<SearchSuggester> suggesters = null, IList<LexicalAnalyzer> analyzers = null, IList<LexicalTokenizer> tokenizers = null, IList<TokenFilter> tokenFilters = null, IList<CharFilter> charFilters = null, IList<LexicalNormalizer> normalizers = null, SearchResourceEncryptionKey encryptionKey = null, SimilarityAlgorithm similarity = null, SemanticSearch semanticSearch = null, VectorSearch vectorSearch = null, string etag = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        public static SearchIndex SearchIndex(string name = null, string description = null, IList<SearchField> fields = null, IList<ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, CorsOptions corsOptions = null, IList<SearchSuggester> suggesters = null, IList<LexicalAnalyzer> analyzers = null, IList<LexicalTokenizer> tokenizers = null, IList<TokenFilter> tokenFilters = null, IList<CharFilter> charFilters = null, IList<LexicalNormalizer> normalizers = null, SearchResourceEncryptionKey encryptionKey = null, SimilarityAlgorithm similarity = null, SemanticSearch semanticSearch = null, VectorSearch vectorSearch = null, string etag = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
             fields ??= new List<SearchField>();
             scoringProfiles ??= new List<ScoringProfile>();
@@ -538,68 +550,9 @@ namespace Azure.Search.Documents.Models
             tokenFilters ??= new List<TokenFilter>();
             charFilters ??= new List<CharFilter>();
             normalizers ??= new List<LexicalNormalizer>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndex(name, description, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, null, etag, serializedAdditionalRawData);
-        }
-
-        /// <summary> Initializes a new instance of SearchIndex. </summary>
-        /// <param name="name"> The name of the index. </param>
-        /// <param name="description"> The description of the index. </param>
-        /// <param name="fields"> The fields of the index. </param>
-        /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
-        /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
-        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the index. </param>
-        /// <param name="suggesters"> The suggesters for the index. </param>
-        /// <param name="analyzers">
-        /// The analyzers for the index.
-        /// Please note <see cref="LexicalAnalyzer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/> and <see cref="StopAnalyzer"/>.
-        /// </param>
-        /// <param name="tokenizers">
-        /// The tokenizers for the index.
-        /// Please note <see cref="LexicalTokenizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ClassicTokenizer"/>, <see cref="EdgeNGramTokenizer"/>, <see cref="KeywordTokenizer"/>, <see cref="MicrosoftLanguageStemmingTokenizer"/>, <see cref="MicrosoftLanguageTokenizer"/>, <see cref="NGramTokenizer"/>, <see cref="PathHierarchyTokenizer"/>, <see cref="PatternTokenizer"/>, <see cref="LuceneStandardTokenizer"/> and <see cref="UaxUrlEmailTokenizer"/>.
-        /// </param>
-        /// <param name="tokenFilters">
-        /// The token filters for the index.
-        /// Please note <see cref="TokenFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AsciiFoldingTokenFilter"/>, <see cref="CjkBigramTokenFilter"/>, <see cref="CommonGramTokenFilter"/>, <see cref="DictionaryDecompounderTokenFilter"/>, <see cref="EdgeNGramTokenFilter"/>, <see cref="ElisionTokenFilter"/>, <see cref="KeepTokenFilter"/>, <see cref="KeywordMarkerTokenFilter"/>, <see cref="LengthTokenFilter"/>, <see cref="LimitTokenFilter"/>, <see cref="NGramTokenFilter"/>, <see cref="PatternCaptureTokenFilter"/>, <see cref="PatternReplaceTokenFilter"/>, <see cref="PhoneticTokenFilter"/>, <see cref="ShingleTokenFilter"/>, <see cref="SnowballTokenFilter"/>, <see cref="StemmerOverrideTokenFilter"/>, <see cref="StemmerTokenFilter"/>, <see cref="StopwordsTokenFilter"/>, <see cref="SynonymTokenFilter"/>, <see cref="TruncateTokenFilter"/>, <see cref="UniqueTokenFilter"/> and <see cref="WordDelimiterTokenFilter"/>.
-        /// </param>
-        /// <param name="charFilters">
-        /// The character filters for the index.
-        /// Please note <see cref="CharFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MappingCharFilter"/> and <see cref="PatternReplaceCharFilter"/>.
-        /// </param>
-        /// <param name="normalizers">
-        /// The normalizers for the index.
-        /// Please note <see cref="LexicalNormalizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CustomNormalizer"/>.
-        /// </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="similarity">
-        /// The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used.
-        /// Please note <see cref="SimilarityAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BM25Similarity"/> and <see cref="ClassicSimilarity"/>.
-        /// </param>
-        /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
-        /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
-        /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
-        /// <param name="etag"> The ETag of the index. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public static SearchIndex SearchIndex(string name = null, string description = null, IList<SearchField> fields = null, IList<ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, CorsOptions corsOptions = null, IList<SearchSuggester> suggesters = null, IList<LexicalAnalyzer> analyzers = null, IList<LexicalTokenizer> tokenizers = null, IList<TokenFilter> tokenFilters = null, IList<CharFilter> charFilters = null, IList<LexicalNormalizer> normalizers = null, SearchResourceEncryptionKey encryptionKey = null, SimilarityAlgorithm similarity = null, SemanticSearch semanticSearch = null, VectorSearch vectorSearch = null, SearchIndexPermissionFilterOption permissionFilterOption = default, string etag = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
-        {
-            fields ??= new List<SearchField>();
-            scoringProfiles ??= new List<ScoringProfile>();
-            suggesters ??= new List<SearchSuggester>();
-            analyzers ??= new List<LexicalAnalyzer>();
-            tokenizers ??= new List<LexicalTokenizer>();
-            tokenFilters ??= new List<TokenFilter>();
-            charFilters ??= new List<CharFilter>();
-            normalizers ??= new List<LexicalNormalizer>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SearchIndex(name, description, fields, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption, etag, serializedAdditionalRawData);
+            return new SearchIndex(name, description, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption: null, purviewEnabled: null, sharePointConnectorAppRegistration: null, fields, etag, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
@@ -618,12 +571,12 @@ namespace Azure.Search.Documents.Models
         /// </param>
         /// <param name="etag"> The ETag of the data source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition. Once you have encrypted your data source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public static SearchIndexerDataSourceConnection SearchIndexerDataSourceConnection(string name = null, string description = null, SearchIndexerDataSourceType type = default, string connectionString = null, SearchIndexerDataContainer container = null, DataChangeDetectionPolicy dataChangeDetectionPolicy = null, DataDeletionDetectionPolicy dataDeletionDetectionPolicy = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        public static SearchIndexerDataSourceConnection SearchIndexerDataSourceConnection(string name = null, string description = null, SearchIndexerDataSourceType type = default, string connectionString = null, SearchIndexerDataContainer container = null, DataChangeDetectionPolicy dataChangeDetectionPolicy = null, DataDeletionDetectionPolicy dataDeletionDetectionPolicy = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexerDataSourceConnection(name, description, type, connectionString, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, etag, encryptionKey, serializedAdditionalRawData);
+            return new SearchIndexerDataSourceConnection(name, description, type, connectionString, container, dataChangeDetectionPolicy, dataDeletionDetectionPolicy, etag, encryptionKey, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of SearchIndexer. </summary>
@@ -639,105 +592,94 @@ namespace Azure.Search.Documents.Models
         /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
         /// <param name="etag"> The ETag of the indexer. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IList<FieldMapping> fieldMappings = null, IList<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IList<FieldMapping> fieldMappings = null, IList<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, ETag? etag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
             fieldMappings ??= new List<FieldMapping>();
             outputFieldMappings ??= new List<FieldMapping>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, null, serializedAdditionalRawData);
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, cache: null, additionalBinaryDataProperties);
         }
 
-        /// <summary> Initializes a new instance of SearchIndexer. </summary>
-        /// <param name="name"> The name of the indexer. </param>
-        /// <param name="description"> The description of the indexer. </param>
-        /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
-        /// <param name="skillsetName"> The name of the skillset executing with this indexer. </param>
-        /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
-        /// <param name="schedule"> The schedule for this indexer. </param>
-        /// <param name="parameters"> Parameters for indexer execution. </param>
-        /// <param name="fieldMappings"> Defines mappings between fields in the data source and corresponding target fields in the index. </param>
-        /// <param name="outputFieldMappings"> Output field mappings are applied after enrichment and immediately before indexing. </param>
-        /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
-        /// <param name="etag"> The ETag of the indexer. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IList<FieldMapping> fieldMappings = null, IList<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null, SearchIndexerCache cache = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
-        {
-            fieldMappings ??= new List<FieldMapping>();
-            outputFieldMappings ??= new List<FieldMapping>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, cache, serializedAdditionalRawData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SynonymMap"/>. </summary>
+        /// <summary> Initializes a new instance of SynonymMap. </summary>
         /// <param name="name"> The name of the synonym map. </param>
         /// <param name="format"> The format of the synonym map. Only the 'solr' format is currently supported. </param>
         /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data. Once you have encrypted your data, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="etag"> The ETag of the synonym map. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public static SynonymMap SynonymMap(string name = null, string format = null, string synonyms = null, SearchResourceEncryptionKey encryptionKey = null, string etag = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        public static SynonymMap SynonymMap(string name = null, string format = null, string synonyms = null, SearchResourceEncryptionKey encryptionKey = null, string etag = null, IDictionary<string, BinaryData> additionalBinaryDataProperties = null)
         {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SynonymMap(name, format, synonyms, encryptionKey, etag, serializedAdditionalRawData);
+            return new SynonymMap(name, format, synonyms?.Split('\n'), encryptionKey, etag, additionalBinaryDataProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchAlias"/>. </summary>
-        /// <param name="name"> The name of the alias. </param>
-        /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
-        /// <param name="etag"> The ETag of the alias. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public static SearchAlias SearchAlias(string name = null, IList<string> indexes = null, string etag = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null)
-        {
-            indexes ??= new List<string>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SearchAlias(name, indexes, etag, serializedAdditionalRawData);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSource"/>. </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="eTag"> The ETag of the agent. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
-        public static KnowledgeSource AzureBlobKnowledgeSource(string name = null, string description = null, string kind = null, string eTag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, AzureBlobKnowledgeSourceParameters azureBlobParameters = null)
-        {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new AzureBlobKnowledgeSource(name, description, kind, eTag, encryptionKey, serializedAdditionalRawData, azureBlobParameters);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSource"/>. </summary>
-        /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="description"> Optional user-defined description. </param>
-        /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="eTag"> The ETag of the agent. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="searchIndexParameters"> The parameters for the knowledge source. </param>
-        public static KnowledgeSource SearchIndexKnowledgeSource(string name = null, string description = null, string kind = null, string eTag = null, SearchResourceEncryptionKey encryptionKey = null, IDictionary<string, BinaryData> serializedAdditionalRawData = null, SearchIndexKnowledgeSourceParameters searchIndexParameters = null)
-        {
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-
-            return new SearchIndexKnowledgeSource(name, description, kind, eTag, encryptionKey, serializedAdditionalRawData, searchIndexParameters);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentDebugInfo"/>. </summary>
+        /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
-        /// <returns> A new <see cref="Models.DocumentDebugInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors = null)
         {
-            return new DocumentDebugInfo(null, vectors, null, serializedAdditionalRawData: null);
+            return new DocumentDebugInfo(semantic: null, vectors, innerHits: null, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of QueryAnswerResult. </summary>
+        /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
+        /// <param name="key"> The key of the document the answer was extracted from. </param>
+        /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
+        /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        {
+            return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of FacetResult. </summary>
+        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FacetResult FacetResult(long? count, IDictionary<string, BinaryData> additionalProperties)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+
+            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. </param>
+        /// <param name="oversampling"> Oversampling factor. </param>
+        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
+        /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string filterOverride)
+        {
+            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: filterOverride);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id, string @type, int? elapsedMs, KnowledgeBaseErrorDetail error)
+        {
+            return KnowledgeBaseActivityRecord(id: id, @type: @type, elapsedMs: elapsedMs, error: error, warning: default);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeSourceParams. </summary>
+        /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string kind)
+        {
+            return KnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, kind: kind);
         }
     }
 }

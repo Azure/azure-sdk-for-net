@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Error definition. </summary>
     public partial class SelfHelpError
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpError"/>. </summary>
         internal SelfHelpError()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="errorType"> Service specific error type which serves as additional context for the error herein. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="details"> An array of additional nested error response info objects, as described by this contract. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SelfHelpError(string code, string errorType, string message, IReadOnlyList<SelfHelpError> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SelfHelpError(string code, string errorType, string message, IReadOnlyList<SelfHelpError> details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             ErrorType = errorType;
             Message = message;
             Details = details;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Service specific error code which serves as the substatus for the HTTP error code. </summary>
         public string Code { get; }
+
         /// <summary> Service specific error type which serves as additional context for the error herein. </summary>
         public string ErrorType { get; }
+
         /// <summary> Description of the error. </summary>
         public string Message { get; }
+
         /// <summary> An array of additional nested error response info objects, as described by this contract. </summary>
         public IReadOnlyList<SelfHelpError> Details { get; }
     }

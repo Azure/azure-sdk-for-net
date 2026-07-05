@@ -3,6 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Net;
+using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -17,11 +19,25 @@ namespace Azure.Provisioning;
 /// <typeparam name="T">The type of the value.</typeparam>
 public class BicepValue<T> : BicepValue
 {
+    private T? _value;
+    private Func<T?>? _valueFactory;
     /// <summary>
     /// Gets or sets the literal value.  You can also rely on implicit
     /// conversions most of the time.
     /// </summary>
-    public T? Value { get; private protected set; }
+    public T? Value
+    {
+        get => _valueFactory is not null ? _valueFactory() : _value;
+        private set
+        {
+            if (_valueFactory is not null)
+            {
+                throw new InvalidOperationException($"Cannot assign value for {_self?.GetReference(false)} because its value is invalid");
+            }
+            _value = value;
+        }
+    }
+
     private protected override object? GetLiteralValue() => Value;
 
     // Get the closest primitive to T
@@ -40,9 +56,42 @@ public class BicepValue<T> : BicepValue
     /// <param name="expression">An expression that evaluates to the value.</param>
     public BicepValue(BicepExpression expression) : this(self: null, expression) { }
 
-    internal BicepValue(BicepValueReference? self) : base(self) { }
-    private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { Value = literal; }
-    private protected BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression) { }
+    /// <summary>
+    /// Initialize a new instance without a literal value or expression (unset state).
+    /// </summary>
+    /// <param name="self"></param>
+    internal BicepValue(BicepValueReference? self) : base(self)
+    {
+    }
+
+    /// <summary>
+    /// Initialize a new instance of a literal value, but the literal value will be lazily evaluated by the value factory.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="valueFactory"></param>
+    internal BicepValue(BicepValueReference? self, Func<T?> valueFactory) : base(self)
+    {
+        _kind = BicepValueKind.Literal;
+        _valueFactory = valueFactory;
+    }
+
+    /// <summary>
+    /// Initialize a new instance from a literal value.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="literal"></param>
+    private BicepValue(BicepValueReference? self, T literal) : base(self, literal!)
+    {
+        _value = literal;
+    }
+
+    /// <summary>
+    /// Initialize a new instance from a bicep expression.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="expression"></param>
+    private BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression)
+    { }
 
     /// <summary>
     /// Clears a previously assigned literal or expression value.
@@ -50,7 +99,8 @@ public class BicepValue<T> : BicepValue
     public void ClearValue()
     {
         _kind = BicepValueKind.Unset;
-        Value = default;
+        _valueFactory = null;
+        _value = default;
         _expression = null;
         _source = null;
     }
@@ -113,4 +163,29 @@ public class BicepValue<T> : BicepValue
             BicepValueKind.Literal => new(value._self, BicepTypeMapping.ToLiteralString(value.Value!, value.Format)),
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
+
+    private protected override BicepExpression CompileLiteralValue() => Value switch
+    {
+        null => BicepSyntax.Null(),
+        IBicepValue v => v.Compile(),
+        bool b => BicepSyntax.Value(b),
+        int i => BicepSyntax.Value(i),
+        long l => BicepSyntax.Value(l),
+        float f => BicepSyntax.Value(f),
+        double d => BicepSyntax.Value(d),
+        string s => BicepSyntax.Value(s),
+        Uri u => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(u, Format)),
+        DateTimeOffset d => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(d, Format)),
+        TimeSpan t => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(t, Format)),
+        Guid g => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(g, Format)),
+        IPAddress a => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(a, Format)),
+        ETag e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
+        ResourceIdentifier i => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(i, Format)),
+        AzureLocation azureLocation => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(azureLocation, Format)),
+        ResourceType rt => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(rt, Format)),
+        Enum e => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(e, Format)),
+        // Other extensible enums like AzureLocation (AzureLocation has been handled above)
+        ValueType ee => BicepSyntax.Value(BicepTypeMapping.ToLiteralString(ee, Format)),
+        _ => throw new InvalidOperationException($"Cannot convert {Value} to a Bicep expression.")
+    };
 }

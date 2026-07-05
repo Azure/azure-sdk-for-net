@@ -100,6 +100,12 @@ namespace Azure.Storage.Sas
         // sduoid
         private string _delegatedUserObjectId;
 
+        // srh
+        private List<string> _requestHeaders;
+
+        // srq
+        private List<string> _requestQueryParameters;
+
         /// <summary>
         /// Gets the storage service version to use to authenticate requests
         /// made with this shared access signature, and the service version to
@@ -251,6 +257,19 @@ namespace Azure.Storage.Sas
         /// issued to the user specified in this value.
         /// </summary>
         public string DelegatedUserObjectId => _delegatedUserObjectId ?? string.Empty;
+
+        /// <summary>
+        /// Custom Request Header names to include in the SAS. Any usage of the SAS must
+        /// include these header names in the request.
+        /// </summary>
+        public List<string> RequestHeaders => _requestHeaders ?? null;
+
+        /// <summary>
+        /// Custom Request Query Parameter names to include in the SAS. Any usage of the SAS must
+        /// include these query parameter names in the request.
+        /// </summary>
+        public List<string> RequestQueryParameters => _requestQueryParameters ?? null;
+
         /// <summary>
         /// Gets the string-to-sign, a unique string constructed from the
         /// fields that must be verified in order to authenticate the request.
@@ -354,6 +373,12 @@ namespace Azure.Storage.Sas
                     case Constants.Sas.Parameters.DelegatedUserObjectIdUpper:
                         _delegatedUserObjectId = kv.Value;
                         break;
+                    case Constants.Sas.Parameters.RequestHeadersUpper:
+                        _requestHeaders = ParseStringToList(kv.Value);
+                        break;
+                    case Constants.Sas.Parameters.RequestQueryParametersUpper:
+                        _requestQueryParameters = ParseStringToList(kv.Value);
+                        break;
 
                     // We didn't recognize the query parameter
                     default:
@@ -372,6 +397,64 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new SasQueryParameters instance.
         /// </summary>
+        protected SasQueryParameters(
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default,
+            int? directoryDepth = default,
+            string encryptionScope = default,
+            string delegatedUserObjectId = default,
+            List<string> requestHeaders = default,
+            List<string> requestQueryParameter = default)
+        {
+            _version = version;
+            _services = (services, services?.ToPermissionsString());
+            _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
+            _protocol = (protocol, protocol.ToProtocolString());
+            _startTime = startsOn;
+            _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+            _expiryTime = expiresOn;
+            _expiryTimeString = expiresOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+            _ipRange = ipRange;
+            _identifier = identifier;
+            _resource = resource;
+            _permissions = permissions;
+            _signature = signature;
+            _cacheControl = cacheControl;
+            _contentDisposition = contentDisposition;
+            _contentEncoding = contentEncoding;
+            _contentLanguage = contentLanguage;
+            _contentType = contentType;
+            _preauthorizedAgentObjectId = authorizedAadObjectId;
+            _agentObjectId = unauthorizedAadObjectId;
+            _correlationId = correlationId;
+            _directoryDepth = directoryDepth;
+            _encryptionScope = encryptionScope;
+            _delegatedUserObjectId = delegatedUserObjectId;
+            _requestHeaders = requestHeaders;
+            _requestQueryParameters = requestQueryParameter;
+        }
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected SasQueryParameters(
             string version,
             AccountSasServices? services,
@@ -583,6 +666,61 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new SasQueryParameters instance.
         /// </summary>
+        protected static SasQueryParameters Create(
+            string version,
+            AccountSasServices? services,
+            AccountSasResourceTypes? resourceTypes,
+            SasProtocol protocol,
+            DateTimeOffset startsOn,
+            DateTimeOffset expiresOn,
+            SasIPRange ipRange,
+            string identifier,
+            string resource,
+            string permissions,
+            string signature,
+            string cacheControl = default,
+            string contentDisposition = default,
+            string contentEncoding = default,
+            string contentLanguage = default,
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default,
+            int? directoryDepth = default,
+            string encryptionScope = default,
+            string delegatedUserObjectId = default,
+            List<string> requestHeaders = default,
+            List<string> requestQueryParameter = default) =>
+            new SasQueryParameters(
+                version: version,
+                services: services,
+                resourceTypes: resourceTypes,
+                protocol: protocol,
+                startsOn: startsOn,
+                expiresOn: expiresOn,
+                ipRange: ipRange,
+                identifier: identifier,
+                resource: resource,
+                permissions: permissions,
+                signature: signature,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentType: contentType,
+                authorizedAadObjectId: authorizedAadObjectId,
+                unauthorizedAadObjectId: unauthorizedAadObjectId,
+                correlationId: correlationId,
+                directoryDepth: directoryDepth,
+                encryptionScope: encryptionScope,
+                delegatedUserObjectId: delegatedUserObjectId,
+                requestHeaders: requestHeaders,
+                requestQueryParameter: requestQueryParameter);
+
+        /// <summary>
+        /// Creates a new SasQueryParameters instance.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected static SasQueryParameters Create(
             string version,
             AccountSasServices? services,
@@ -892,6 +1030,20 @@ namespace Azure.Storage.Sas
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.DelegatedUserObjectId, WebUtility.UrlEncode(DelegatedUserObjectId));
             }
 
+            if (RequestHeaders != null && RequestHeaders.Count > 0)
+            {
+                stringBuilder.AppendQueryParameter(
+                    Constants.Sas.Parameters.RequestHeaders,
+                    ListToEncodedSasQueryParameterString(RequestHeaders));
+            }
+
+            if (RequestQueryParameters != null && RequestQueryParameters.Count > 0)
+            {
+                stringBuilder.AppendQueryParameter(
+                    Constants.Sas.Parameters.RequestQueryParameters,
+                    ListToEncodedSasQueryParameterString(RequestQueryParameters));
+            }
+
             if (!string.IsNullOrWhiteSpace(Signature))
             {
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(Signature));
@@ -906,6 +1058,20 @@ namespace Azure.Storage.Sas
             }
 
             return DateTimeOffset.ParseExact(dateTimeString, s_sasTimeFormats, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+        }
+
+        private string ListToEncodedSasQueryParameterString(List<string> list)
+        {
+            return list == null || list.Count == 0
+                ? string.Empty
+                : string.Join(",", list.Select(WebUtility.UrlEncode));
+        }
+
+        private List<string> ParseStringToList(string listString)
+        {
+            return string.IsNullOrEmpty(listString)
+                ? null
+                : listString.Split(',').ToList();
         }
 
         private static readonly string[] s_sasTimeFormats = {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Grafana.Models
     public readonly partial struct ManagedPrivateEndpointConnectionStatus : IEquatable<ManagedPrivateEndpointConnectionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ManagedPrivateEndpointConnectionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ManagedPrivateEndpointConnectionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Pending. </summary>
         public static ManagedPrivateEndpointConnectionStatus Pending { get; } = new ManagedPrivateEndpointConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static ManagedPrivateEndpointConnectionStatus Approved { get; } = new ManagedPrivateEndpointConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static ManagedPrivateEndpointConnectionStatus Rejected { get; } = new ManagedPrivateEndpointConnectionStatus(RejectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> Gets the Disconnected. </summary>
         public static ManagedPrivateEndpointConnectionStatus Disconnected { get; } = new ManagedPrivateEndpointConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="ManagedPrivateEndpointConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedPrivateEndpointConnectionStatus left, ManagedPrivateEndpointConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedPrivateEndpointConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedPrivateEndpointConnectionStatus left, ManagedPrivateEndpointConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedPrivateEndpointConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedPrivateEndpointConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedPrivateEndpointConnectionStatus(string value) => new ManagedPrivateEndpointConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedPrivateEndpointConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedPrivateEndpointConnectionStatus?(string value) => value == null ? null : new ManagedPrivateEndpointConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedPrivateEndpointConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedPrivateEndpointConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -18,49 +18,6 @@ namespace Azure.Storage.Blobs.Models
     public static partial class BlobsModelFactory
     {
         #region BlobContentInfo
-        /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
-        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
-        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
-        /// <param name="signedStartsOn"> The date-time the key is active. </param>
-        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
-        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
-        /// <param name="signedVersion"> The service version that created the key. </param>
-        /// <param name="value"> The key as a base64 string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
-        /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
-        public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string value = null)
-        {
-            if (signedObjectId == null)
-            {
-                throw new ArgumentNullException(nameof(signedObjectId));
-            }
-            if (signedTenantId == null)
-            {
-                throw new ArgumentNullException(nameof(signedTenantId));
-            }
-            if (signedService == null)
-            {
-                throw new ArgumentNullException(nameof(signedService));
-            }
-            if (signedVersion == null)
-            {
-                throw new ArgumentNullException(nameof(signedVersion));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            return new UserDelegationKey(
-                signedObjectId,
-                signedTenantId,
-                signedStartsOn,
-                signedExpiresOn,
-                signedService,
-                signedVersion,
-                value);
-        }
-
         /// <summary>
         /// Creates a new BlobContentInfo instance for mocking.
         /// </summary>
@@ -169,16 +126,16 @@ namespace Azure.Storage.Blobs.Models
             bool isServerEncrypted,
             string encryptionKeySha256)
             => new BlobAppendInfo()
-                {
-                    ETag = eTag,
-                    LastModified = lastModified,
-                    ContentHash = contentHash,
-                    ContentCrc64 = contentCrc64,
-                    BlobAppendOffset = blobAppendOffset,
-                    BlobCommittedBlockCount = blobCommittedBlockCount,
-                    IsServerEncrypted = isServerEncrypted,
-                    EncryptionKeySha256 = encryptionKeySha256
-                };
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                BlobAppendOffset = blobAppendOffset,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256
+            };
         #endregion
 
         #region BlobProperties
@@ -229,7 +186,8 @@ namespace Azure.Storage.Blobs.Models
             byte[] contentHash = default,
             DateTimeOffset lastAccessed = default,
             BlobImmutabilityPolicy immutabilityPolicy = default,
-            bool hasLegalHold = default)
+            bool hasLegalHold = default,
+            string smartAccessTier = default)
                 => new BlobProperties(
                     lastModified: lastModified,
                     createdOn: createdOn,
@@ -274,7 +232,104 @@ namespace Azure.Storage.Blobs.Models
                     rehydratePriority: rehydratePriority,
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
-                    hasLegalHold: hasLegalHold);
+                    hasLegalHold: hasLegalHold,
+                    smartAccessTier: smartAccessTier);
+
+        /// <summary>
+        /// Creates a new BlobProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobProperties BlobProperties(
+            DateTimeOffset lastModified,
+            LeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            LeaseState leaseState,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            long blobSequenceNumber,
+            LeaseDurationType leaseDuration,
+            string acceptRanges,
+            string destinationSnapshot,
+            int blobCommittedBlockCount,
+            bool isIncrementalCopy,
+            bool isServerEncrypted,
+            CopyStatus? blobCopyStatus,
+            string encryptionKeySha256,
+            Uri copySource,
+            string encryptionScope,
+            string copyProgress,
+            string accessTier,
+            string copyId,
+            bool accessTierInferred,
+            string copyStatusDescription,
+            string archiveStatus,
+            DateTimeOffset copyCompletedOn,
+            DateTimeOffset accessTierChangedOn,
+            BlobType blobType,
+            string versionId,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            bool isLatestVersion,
+            string objectReplicationDestinationPolicyId,
+            long tagCount,
+            IDictionary<string, string> metadata,
+            DateTimeOffset expiresOn,
+            DateTimeOffset createdOn,
+            bool isSealed,
+            string rehydratePriority,
+            byte[] contentHash,
+            DateTimeOffset lastAccessed,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool hasLegalHold)
+                => new BlobProperties(
+                    lastModified: lastModified,
+                    createdOn: createdOn,
+                    metadata: metadata,
+                    objectReplicationDestinationPolicyId: objectReplicationDestinationPolicyId,
+                    objectReplicationSourceProperties: objectReplicationSourceProperties,
+                    blobType: blobType,
+                    copyCompletedOn: copyCompletedOn,
+                    copyStatusDescription: copyStatusDescription,
+                    copyId: copyId,
+                    copyProgress: copyProgress,
+                    copySource: copySource,
+                    blobCopyStatus: blobCopyStatus,
+                    isIncrementalCopy: isIncrementalCopy,
+                    destinationSnapshot: destinationSnapshot,
+                    leaseDuration: leaseDuration,
+                    leaseState: leaseState,
+                    leaseStatus: leaseStatus,
+                    contentLength: contentLength,
+                    contentType: contentType,
+                    eTag: eTag,
+                    contentHash: contentHash,
+                    contentEncoding: contentEncoding,
+                    contentDisposition: contentDisposition,
+                    contentLanguage: contentLanguage,
+                    cacheControl: cacheControl,
+                    blobSequenceNumber: blobSequenceNumber,
+                    acceptRanges: acceptRanges,
+                    blobCommittedBlockCount: blobCommittedBlockCount,
+                    isServerEncrypted: isServerEncrypted,
+                    encryptionKeySha256: encryptionKeySha256,
+                    encryptionScope: encryptionScope,
+                    accessTier: accessTier,
+                    accessTierInferred: accessTierInferred,
+                    archiveStatus: archiveStatus,
+                    accessTierChangedOn: accessTierChangedOn,
+                    versionId: versionId,
+                    isLatestVersion: isLatestVersion,
+                    tagCount: tagCount,
+                    expiresOn: expiresOn,
+                    isSealed: isSealed,
+                    rehydratePriority: rehydratePriority,
+                    lastAccessed: lastAccessed,
+                    immutabilityPolicy: immutabilityPolicy,
+                    hasLegalHold: hasLegalHold,
+                    smartAccessTier: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -369,7 +424,8 @@ namespace Azure.Storage.Blobs.Models
                     rehydratePriority: rehydratePriority,
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
-                    hasLegalHold: hasLegalHold);
+                    hasLegalHold: hasLegalHold,
+                    smartAccessTier: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -416,7 +472,7 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset createdOn,
             bool isSealed,
             string rehydratePriority,
-            byte[] contentHash ,
+            byte[] contentHash,
             DateTimeOffset lastAccessed)
                 => new BlobProperties(
                     lastModified: lastModified,
@@ -462,7 +518,8 @@ namespace Azure.Storage.Blobs.Models
                     rehydratePriority: rehydratePriority,
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
-                    hasLegalHold: false); // Not provided, see non-deprecated model
+                    hasLegalHold: false, // Not provided, see non-deprecated model
+                    smartAccessTier: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -554,7 +611,8 @@ namespace Azure.Storage.Blobs.Models
                     rehydratePriority: rehydratePriority,
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
-                    hasLegalHold: false); // Not provided, see non-deprecated model
+                    hasLegalHold: false, // Not provided, see non-deprecated model
+                    smartAccessTier: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -638,7 +696,8 @@ namespace Azure.Storage.Blobs.Models
                     rehydratePriority: default, // Not provided, see non-deprecated model
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
-                    hasLegalHold: false); // Not provided, see non-deprecated model
+                    hasLegalHold: false, // Not provided, see non-deprecated model
+                    smartAccessTier: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -721,8 +780,8 @@ namespace Azure.Storage.Blobs.Models
                     rehydratePriority: default, // Not provided, see non-deprecated model
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
-                    hasLegalHold: false // Not provided, see non-deprecated model
-                    );
+                    hasLegalHold: false, // Not provided, see non-deprecated model
+                    smartAccessTier: default); // Not provided, see non-deprecated model
         #endregion
 
         #region BlobItemProperties
@@ -766,7 +825,94 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset? createdOn = default,
             DateTimeOffset? copyCompletedOn = default,
             DateTimeOffset? deletedOn = default,
-            DateTimeOffset? accessTierChangedOn = default)
+            DateTimeOffset? accessTierChangedOn = default,
+            AccessTier? smartAccessTier = default)
+        {
+            return new BlobItemProperties()
+            {
+                AccessTierInferred = accessTierInferred,
+                ServerEncrypted = serverEncrypted,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                ContentLanguage = contentLanguage,
+                ContentHash = contentHash,
+                ContentDisposition = contentDisposition,
+                CacheControl = cacheControl,
+                BlobSequenceNumber = blobSequenceNumber,
+                BlobType = blobType,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+                CopySource = copySource,
+                CopyProgress = copyProgress,
+                CopyStatusDescription = copyStatusDescription,
+                ContentLength = contentLength,
+                IncrementalCopy = incrementalCopy,
+                DestinationSnapshot = destinationSnapshot,
+                RemainingRetentionDays = remainingRetentionDays,
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ArchiveStatus = archiveStatus,
+                CustomerProvidedKeySha256 = customerProvidedKeySha256,
+                EncryptionScope = encryptionScope,
+                TagCount = tagCount,
+                ExpiresOn = expiresOn,
+                IsSealed = isSealed,
+                RehydratePriority = rehydratePriority,
+                LastAccessedOn = lastAccessedOn,
+                ETag = eTag,
+                CreatedOn = createdOn,
+                CopyCompletedOn = copyCompletedOn,
+                DeletedOn = deletedOn,
+                AccessTierChangedOn = accessTierChangedOn,
+                SmartAccessTier = smartAccessTier,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobItemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobItemProperties BlobItemProperties(
+            bool accessTierInferred,
+            bool? serverEncrypted,
+            string contentType,
+            string contentEncoding,
+            string contentLanguage,
+            byte[] contentHash,
+            string contentDisposition,
+            string cacheControl,
+            long? blobSequenceNumber,
+            BlobType? blobType,
+            LeaseStatus? leaseStatus,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            string copyId,
+            CopyStatus? copyStatus,
+            Uri copySource,
+            string copyProgress,
+            string copyStatusDescription,
+            long? contentLength,
+            bool? incrementalCopy,
+            string destinationSnapshot,
+            int? remainingRetentionDays,
+            AccessTier? accessTier,
+            DateTimeOffset? lastModified,
+            ArchiveStatus? archiveStatus,
+            string customerProvidedKeySha256,
+            string encryptionScope,
+            long? tagCount,
+            DateTimeOffset? expiresOn,
+            bool? isSealed,
+            RehydratePriority? rehydratePriority,
+            DateTimeOffset? lastAccessedOn,
+            ETag? eTag,
+            DateTimeOffset? createdOn,
+            DateTimeOffset? copyCompletedOn,
+            DateTimeOffset? deletedOn,
+            DateTimeOffset? accessTierChangedOn)
         {
             return new BlobItemProperties()
             {
@@ -901,7 +1047,7 @@ namespace Azure.Storage.Blobs.Models
             string contentType,
             string contentEncoding,
             string contentLanguage,
-            byte[] contentHash ,
+            byte[] contentHash,
             string contentDisposition,
             string cacheControl,
             long? blobSequenceNumber,
@@ -976,8 +1122,8 @@ namespace Azure.Storage.Blobs.Models
             string contentLanguage,
             byte[] contentHash,
             string contentDisposition,
-            string cacheControl ,
-            long? blobSequenceNumber ,
+            string cacheControl,
+            long? blobSequenceNumber,
             BlobType? blobType,
             LeaseStatus? leaseStatus,
             LeaseState? leaseState,
@@ -2021,6 +2167,31 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new UserDelegationKey instance for mocking.
         /// </summary>
         public static UserDelegationKey UserDelegationKey(
+            string signedObjectId = default,
+            string signedTenantId = default,
+            string signedService = default,
+            string signedVersion = default,
+            string value = default,
+            DateTimeOffset signedExpiresOn = default,
+            DateTimeOffset signedStartsOn = default,
+            string signedDelegatedUserTenantId = default)
+        {
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                signedDelegatedUserTenantId,
+                value);
+        }
+
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UserDelegationKey UserDelegationKey(
             string signedObjectId,
             string signedTenantId,
             string signedService,
@@ -2036,6 +2207,76 @@ namespace Azure.Storage.Blobs.Models
                 signedExpiresOn,
                 signedService,
                 signedVersion,
+                default,
+                value);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
+        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedStartsOn"> The date-time the key is active. </param>
+        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
+        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
+        /// <param name="signedVersion"> The service version that created the key. </param>
+        /// <param name="signedDelegatedUserTenantId"> The delegated user tenant id in Azure AD. </param>
+        /// <param name="value"> The key as a base64 string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
+        /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
+        public static UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, DateTimeOffset signedStartsOn = default, DateTimeOffset signedExpiresOn = default, string signedService = null, string signedVersion = null, string signedDelegatedUserTenantId = null, string value = null)
+        {
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                signedDelegatedUserTenantId,
+                value);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
+        /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
+        /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
+        /// <param name="signedStartsOn"> The date-time the key is active. </param>
+        /// <param name="signedExpiresOn"> The date-time the key expires. </param>
+        /// <param name="signedService"> Abbreviation of the Azure Storage service that accepts the key. </param>
+        /// <param name="signedVersion"> The service version that created the key. </param>
+        /// <param name="value"> The key as a base64 string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="signedObjectId"/>, <paramref name="signedTenantId"/>, <paramref name="signedService"/>, <paramref name="signedVersion"/> or <paramref name="value"/> is null. </exception>
+        /// <returns> A new <see cref="Models.UserDelegationKey"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, DateTimeOffset signedStartsOn, DateTimeOffset signedExpiresOn, string signedService, string signedVersion, string value)
+        {
+            if (signedObjectId == null)
+            {
+                throw new ArgumentNullException(nameof(signedObjectId));
+            }
+            if (signedTenantId == null)
+            {
+                throw new ArgumentNullException(nameof(signedTenantId));
+            }
+            if (signedService == null)
+            {
+                throw new ArgumentNullException(nameof(signedService));
+            }
+            if (signedVersion == null)
+            {
+                throw new ArgumentNullException(nameof(signedVersion));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                default,
                 value);
         }
         #endregion

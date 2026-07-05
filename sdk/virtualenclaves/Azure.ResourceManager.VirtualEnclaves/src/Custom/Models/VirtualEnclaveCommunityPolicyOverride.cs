@@ -3,14 +3,12 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary>
-    /// Renamed to VirtualEnclaveCommunityPolicyOverride.
+    /// VirtualEnclaveCommunityPolicyOverride.
     /// </summary>
-    [CodeGenModel("CommunityPropertiesPolicyOverride")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("CommunityPropertiesPolicyOverride")]
     public readonly partial struct VirtualEnclaveCommunityPolicyOverride
     {
     }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Search
 {
+    /// <summary></summary>
     public partial class SearchServiceNetworkSecurityPerimeterConfigurationResource : IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData>
     {
-        private static SearchServiceNetworkSecurityPerimeterConfigurationData s_dataDeserializationInstance;
-        private static SearchServiceNetworkSecurityPerimeterConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SearchServiceNetworkSecurityPerimeterConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData>)Data).Write(writer, options);
 
-        SearchServiceNetworkSecurityPerimeterConfigurationData IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchServiceNetworkSecurityPerimeterConfigurationData IJsonModel<SearchServiceNetworkSecurityPerimeterConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SearchServiceNetworkSecurityPerimeterConfigurationData>(Data, options, AzureResourceManagerSearchContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SearchServiceNetworkSecurityPerimeterConfigurationData IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchServiceNetworkSecurityPerimeterConfigurationData>(data, options, AzureResourceManagerSearchContext.Default);
 
-        string IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SearchServiceNetworkSecurityPerimeterConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

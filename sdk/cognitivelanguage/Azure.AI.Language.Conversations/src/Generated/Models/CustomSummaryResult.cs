@@ -14,51 +14,16 @@ namespace Azure.AI.Language.Conversations.Models
     /// <summary> Custom Summary Results. </summary>
     public partial class CustomSummaryResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomSummaryResult"/>. </summary>
         /// <param name="conversations"> array of conversations. </param>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversations"/>, <paramref name="errors"/>, <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
         internal CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations, IEnumerable<DocumentError> errors, string projectName, string deploymentName)
         {
-            Argument.AssertNotNull(conversations, nameof(conversations));
-            Argument.AssertNotNull(errors, nameof(errors));
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-
             Conversations = conversations.ToList();
             Errors = errors.ToList();
             ProjectName = projectName;
@@ -71,30 +36,29 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomSummaryResult(IReadOnlyList<ConversationsSummaryResult> conversations, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomSummaryResult(IList<ConversationsSummaryResult> conversations, IList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Conversations = conversations;
             Errors = errors;
             Statistics = statistics;
             ProjectName = projectName;
             DeploymentName = deploymentName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomSummaryResult"/> for deserialization. </summary>
-        internal CustomSummaryResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> array of conversations. </summary>
-        public IReadOnlyList<ConversationsSummaryResult> Conversations { get; }
+        public IList<ConversationsSummaryResult> Conversations { get; }
+
         /// <summary> Errors by document id. </summary>
-        public IReadOnlyList<DocumentError> Errors { get; }
+        public IList<DocumentError> Errors { get; }
+
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>
         public RequestStatistics Statistics { get; }
+
         /// <summary> This field indicates the project name for the model. </summary>
         public string ProjectName { get; }
+
         /// <summary> This field indicates the deployment name for the model. </summary>
         public string DeploymentName { get; }
     }

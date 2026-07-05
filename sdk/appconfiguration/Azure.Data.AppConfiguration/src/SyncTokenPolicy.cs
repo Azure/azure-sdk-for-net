@@ -8,6 +8,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
+    /// <summary>
+    /// Policy that manages and applies App Configuration sync tokens to requests.
+    /// </summary>
     internal class SyncTokenPolicy : HttpPipelineSynchronousPolicy
     {
         private const string SyncTokenHeader = "Sync-Token";

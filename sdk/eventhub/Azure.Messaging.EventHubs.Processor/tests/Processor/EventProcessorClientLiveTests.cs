@@ -83,8 +83,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  {processedEvents.Count} events were processed.");
 
             await processor.StopProcessingAsync(cancellationSource.Token);
             cancellationSource.Cancel();
@@ -133,8 +133,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  {processedEvents.Count} events were processed.");
 
             await processor.StopProcessingAsync(cancellationSource.Token);
             cancellationSource.Cancel();
@@ -182,8 +182,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  {processedEvents.Count} events were processed.");
 
             await processor.StopProcessingAsync(cancellationSource.Token);
             cancellationSource.Cancel();
@@ -231,8 +231,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Allow the processors to complete, while respecting the test timeout.
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  {processedEvents.Count} events were processed.");
 
             await Task.WhenAll(processors.Select(processor => processor.StopProcessingAsync(cancellationSource.Token)));
             cancellationSource.Cancel();
@@ -294,8 +294,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
             }
         }
 
@@ -350,7 +350,7 @@ namespace Azure.Messaging.EventHubs.Tests
             await processor.StartProcessingAsync(cancellationSource.Token);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  {processedEvents.Count} events were processed.");
 
             await processor.StopProcessingAsync(cancellationSource.Token);
             cancellationSource.Cancel();
@@ -364,7 +364,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var partitionOwnership in ownership)
             {
-                Assert.That(partitionIds.Contains(partitionOwnership.PartitionId), Is.True, $"The partition `{ partitionOwnership.PartitionId }` is not valid for the Event Hub.");
+                Assert.That(partitionIds.Contains(partitionOwnership.PartitionId), Is.True, $"The partition `{partitionOwnership.PartitionId}` is not valid for the Event Hub.");
                 Assert.That(partitionOwnership.OwnerIdentifier, Is.Empty, "Ownership should have bee relinquished when the processor was stopped.");
             }
         }
@@ -447,8 +447,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
             }
         }
 
@@ -534,8 +534,8 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in afterCheckpointEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{sourceId}] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{sourceId}] did not match the corresponding processed event.");
             }
         }
 
@@ -634,7 +634,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Create the processor and attempt to start.
 
-            var blobUri = new Uri($"https://{ StorageTestEnvironment.Instance.StorageAccountName }.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}");
+            var blobUri = new Uri($"https://{StorageTestEnvironment.Instance.StorageAccountName}.{StorageTestEnvironment.Instance.StorageEndpointSuffix}");
 
             var blobUriBuilder = new BlobUriBuilder(blobUri)
             {
@@ -688,7 +688,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Create the processor and attempt to start.
 
-            var blobUri = new Uri($"https://{ StorageTestEnvironment.Instance.StorageAccountName }.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}");
+            var blobUri = new Uri($"https://{StorageTestEnvironment.Instance.StorageAccountName}.{StorageTestEnvironment.Instance.StorageEndpointSuffix}");
 
             var blobUriBuilder = new BlobUriBuilder(blobUri)
             {
@@ -740,7 +740,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Create the processor and attempt to start.
 
-            var blobUri = new Uri($"https://{ StorageTestEnvironment.Instance.StorageAccountName }.{ StorageTestEnvironment.Instance.StorageEndpointSuffix}");
+            var blobUri = new Uri($"https://{StorageTestEnvironment.Instance.StorageAccountName}.{StorageTestEnvironment.Instance.StorageEndpointSuffix}");
 
             var blobUriBuilder = new BlobUriBuilder(blobUri)
             {
@@ -1149,7 +1149,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 builder.Path = builder.Path.TrimEnd('/');
             }
 
-            var resource =  builder.Uri.AbsoluteUri.ToLowerInvariant();
+            var resource = builder.Uri.AbsoluteUri.ToLowerInvariant();
             var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
             var credential = new AzureSasCredential(signature.Value);
             EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
@@ -1250,7 +1250,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 var ex = args.Exception.InnerException ?? args.Exception;
 
-                Assert.Fail($"Processor Error Surfaced ({ ex.GetType().Name }): {Environment.NewLine}\t{ args.Exception }");
+                Assert.Fail($"Processor Error Surfaced ({ex.GetType().Name}): {Environment.NewLine}\t{args.Exception}");
                 return Task.CompletedTask;
             };
 

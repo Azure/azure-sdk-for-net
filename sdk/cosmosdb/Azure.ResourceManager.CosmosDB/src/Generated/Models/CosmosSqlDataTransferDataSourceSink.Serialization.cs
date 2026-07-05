@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosSqlDataTransferDataSourceSink : IUtf8JsonSerializable, IJsonModel<CosmosSqlDataTransferDataSourceSink>
+    /// <summary> A CosmosDB No Sql API data source/sink. </summary>
+    public partial class CosmosSqlDataTransferDataSourceSink : BaseCosmosDataTransferDataSourceSink, IJsonModel<CosmosSqlDataTransferDataSourceSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosSqlDataTransferDataSourceSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosSqlDataTransferDataSourceSink()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataTransferDataSourceSink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCosmosSqlDataTransferDataSourceSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosSqlDataTransferDataSourceSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosSqlDataTransferDataSourceSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CosmosSqlDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosSqlDataTransferDataSourceSink IPersistableModel<CosmosSqlDataTransferDataSourceSink>.Create(BinaryData data, ModelReaderWriterOptions options) => (CosmosSqlDataTransferDataSourceSink)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosSqlDataTransferDataSourceSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosSqlDataTransferDataSourceSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosSqlDataTransferDataSourceSink)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
@@ -42,190 +86,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(ContainerName);
         }
 
-        CosmosSqlDataTransferDataSourceSink IJsonModel<CosmosSqlDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosSqlDataTransferDataSourceSink IJsonModel<CosmosSqlDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CosmosSqlDataTransferDataSourceSink)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataTransferDataSourceSink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosSqlDataTransferDataSourceSink)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCosmosSqlDataTransferDataSourceSink(document.RootElement, options);
         }
 
-        internal static CosmosSqlDataTransferDataSourceSink DeserializeCosmosSqlDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CosmosSqlDataTransferDataSourceSink DeserializeCosmosSqlDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            DataTransferComponent component = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string remoteAccountName = default;
             string databaseName = default;
             string containerName = default;
-            string remoteAccountName = default;
-            DataTransferComponent component = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("component"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    component = new DataTransferComponent(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (prop.NameEquals("remoteAccountName"u8))
                 {
-                    containerName = property.Value.GetString();
+                    remoteAccountName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteAccountName"u8))
+                if (prop.NameEquals("databaseName"u8))
                 {
-                    remoteAccountName = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("component"u8))
+                if (prop.NameEquals("containerName"u8))
                 {
-                    component = new DataTransferComponent(property.Value.GetString());
+                    containerName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosSqlDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName, databaseName, containerName);
+            return new CosmosSqlDataTransferDataSourceSink(component, additionalBinaryDataProperties, remoteAccountName, databaseName, containerName);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  databaseName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatabaseName))
-                {
-                    builder.Append("  databaseName: ");
-                    if (DatabaseName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabaseName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatabaseName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containerName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContainerName))
-                {
-                    builder.Append("  containerName: ");
-                    if (ContainerName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContainerName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContainerName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteAccountName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  remoteAccountName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RemoteAccountName))
-                {
-                    builder.Append("  remoteAccountName: ");
-                    if (RemoteAccountName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RemoteAccountName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RemoteAccountName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  component: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  component: ");
-                builder.AppendLine($"'{Component.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CosmosSqlDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CosmosSqlDataTransferDataSourceSink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CosmosSqlDataTransferDataSourceSink IPersistableModel<CosmosSqlDataTransferDataSourceSink>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosSqlDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCosmosSqlDataTransferDataSourceSink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CosmosSqlDataTransferDataSourceSink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CosmosSqlDataTransferDataSourceSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,60 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    /// <summary> The ScalingScheduleDaysOfWeekItem. </summary>
+    /// <summary> Day of the week. Modeled as string. </summary>
     public readonly partial struct ScalingScheduleDaysOfWeekItem : IEquatable<ScalingScheduleDaysOfWeekItem>
     {
         private readonly string _value;
+        /// <summary> Monday. </summary>
+        private const string MondayValue = "Monday";
+        /// <summary> Tuesday. </summary>
+        private const string TuesdayValue = "Tuesday";
+        /// <summary> Wednesday. </summary>
+        private const string WednesdayValue = "Wednesday";
+        /// <summary> Thursday. </summary>
+        private const string ThursdayValue = "Thursday";
+        /// <summary> Friday. </summary>
+        private const string FridayValue = "Friday";
+        /// <summary> Saturday. </summary>
+        private const string SaturdayValue = "Saturday";
+        /// <summary> Sunday. </summary>
+        private const string SundayValue = "Sunday";
 
         /// <summary> Initializes a new instance of <see cref="ScalingScheduleDaysOfWeekItem"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScalingScheduleDaysOfWeekItem(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SundayValue = "Sunday";
-        private const string MondayValue = "Monday";
-        private const string TuesdayValue = "Tuesday";
-        private const string WednesdayValue = "Wednesday";
-        private const string ThursdayValue = "Thursday";
-        private const string FridayValue = "Friday";
-        private const string SaturdayValue = "Saturday";
+        /// <summary> Monday. </summary>
+        public static ScalingScheduleDaysOfWeekItem Monday { get; } = new ScalingScheduleDaysOfWeekItem(MondayValue);
+
+        /// <summary> Tuesday. </summary>
+        public static ScalingScheduleDaysOfWeekItem Tuesday { get; } = new ScalingScheduleDaysOfWeekItem(TuesdayValue);
+
+        /// <summary> Wednesday. </summary>
+        public static ScalingScheduleDaysOfWeekItem Wednesday { get; } = new ScalingScheduleDaysOfWeekItem(WednesdayValue);
+
+        /// <summary> Thursday. </summary>
+        public static ScalingScheduleDaysOfWeekItem Thursday { get; } = new ScalingScheduleDaysOfWeekItem(ThursdayValue);
+
+        /// <summary> Friday. </summary>
+        public static ScalingScheduleDaysOfWeekItem Friday { get; } = new ScalingScheduleDaysOfWeekItem(FridayValue);
+
+        /// <summary> Saturday. </summary>
+        public static ScalingScheduleDaysOfWeekItem Saturday { get; } = new ScalingScheduleDaysOfWeekItem(SaturdayValue);
 
         /// <summary> Sunday. </summary>
         public static ScalingScheduleDaysOfWeekItem Sunday { get; } = new ScalingScheduleDaysOfWeekItem(SundayValue);
-        /// <summary> Monday. </summary>
-        public static ScalingScheduleDaysOfWeekItem Monday { get; } = new ScalingScheduleDaysOfWeekItem(MondayValue);
-        /// <summary> Tuesday. </summary>
-        public static ScalingScheduleDaysOfWeekItem Tuesday { get; } = new ScalingScheduleDaysOfWeekItem(TuesdayValue);
-        /// <summary> Wednesday. </summary>
-        public static ScalingScheduleDaysOfWeekItem Wednesday { get; } = new ScalingScheduleDaysOfWeekItem(WednesdayValue);
-        /// <summary> Thursday. </summary>
-        public static ScalingScheduleDaysOfWeekItem Thursday { get; } = new ScalingScheduleDaysOfWeekItem(ThursdayValue);
-        /// <summary> Friday. </summary>
-        public static ScalingScheduleDaysOfWeekItem Friday { get; } = new ScalingScheduleDaysOfWeekItem(FridayValue);
-        /// <summary> Saturday. </summary>
-        public static ScalingScheduleDaysOfWeekItem Saturday { get; } = new ScalingScheduleDaysOfWeekItem(SaturdayValue);
+
         /// <summary> Determines if two <see cref="ScalingScheduleDaysOfWeekItem"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScalingScheduleDaysOfWeekItem left, ScalingScheduleDaysOfWeekItem right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScalingScheduleDaysOfWeekItem"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScalingScheduleDaysOfWeekItem left, ScalingScheduleDaysOfWeekItem right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScalingScheduleDaysOfWeekItem"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScalingScheduleDaysOfWeekItem"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScalingScheduleDaysOfWeekItem(string value) => new ScalingScheduleDaysOfWeekItem(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScalingScheduleDaysOfWeekItem"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScalingScheduleDaysOfWeekItem?(string value) => value == null ? null : new ScalingScheduleDaysOfWeekItem(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScalingScheduleDaysOfWeekItem other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScalingScheduleDaysOfWeekItem other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

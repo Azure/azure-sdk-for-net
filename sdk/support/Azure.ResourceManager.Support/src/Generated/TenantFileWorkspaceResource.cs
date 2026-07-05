@@ -6,44 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A Class representing a TenantFileWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantFileWorkspaceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetTenantFileWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantFileWorkspace method.
+    /// A class representing a TenantFileWorkspace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TenantFileWorkspaceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetTenantFileWorkspaces method.
     /// </summary>
     public partial class TenantFileWorkspaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="TenantFileWorkspaceResource"/> instance. </summary>
-        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string fileWorkspaceName)
-        {
-            var resourceId = $"/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics;
-        private readonly FileWorkspacesNoSubscriptionRestOperations _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient;
+        private readonly ClientDiagnostics _tenantFileWorkspaceClientDiagnostics;
+        private readonly TenantFileWorkspace _tenantFileWorkspaceRestClient;
         private readonly FileWorkspaceDetailData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Support/fileWorkspaces";
 
-        /// <summary> Initializes a new instance of the <see cref="TenantFileWorkspaceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of TenantFileWorkspaceResource for mocking. </summary>
         protected TenantFileWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantFileWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantFileWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TenantFileWorkspaceResource(ArmClient client, FileWorkspaceDetailData data) : this(client, data.Id)
@@ -52,140 +44,90 @@ namespace Azure.ResourceManager.Support
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TenantFileWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantFileWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TenantFileWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string tenantFileWorkspaceFileWorkspacesNoSubscriptionApiVersion);
-            _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient = new FileWorkspacesNoSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantFileWorkspaceFileWorkspacesNoSubscriptionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string tenantFileWorkspaceApiVersion);
+            _tenantFileWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
+            _tenantFileWorkspaceRestClient = new TenantFileWorkspace(_tenantFileWorkspaceClientDiagnostics, Pipeline, Endpoint, tenantFileWorkspaceApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual FileWorkspaceDetailData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string fileWorkspaceName)
+        {
+            string resourceId = $"/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of SupportTicketNoSubFileResources in the TenantFileWorkspace. </summary>
-        /// <returns> An object representing collection of SupportTicketNoSubFileResources and their operations over a SupportTicketNoSubFileResource. </returns>
-        public virtual SupportTicketNoSubFileCollection GetSupportTicketNoSubFiles()
-        {
-            return GetCachedClient(client => new SupportTicketNoSubFileCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Returns details of a specific file in a work space.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fileName"> The name of the FileDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SupportTicketNoSubFileResource>> GetSupportTicketNoSubFileAsync(string fileName, CancellationToken cancellationToken = default)
-        {
-            return await GetSupportTicketNoSubFiles().GetAsync(fileName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns details of a specific file in a work space.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}/files/{fileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FilesNoSubscription_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SupportTicketNoSubFileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="fileName"> The name of the FileDetails. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SupportTicketNoSubFileResource> GetSupportTicketNoSubFile(string fileName, CancellationToken cancellationToken = default)
-        {
-            return GetSupportTicketNoSubFiles().Get(fileName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets details for a specific file workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileWorkspacesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantFileWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TenantFileWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Get");
+            using DiagnosticScope scope = _tenantFileWorkspaceClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantFileWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,33 +141,41 @@ namespace Azure.ResourceManager.Support
         /// Gets details for a specific file workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileWorkspacesNoSubscription_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantFileWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantFileWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Get");
+            using DiagnosticScope scope = _tenantFileWorkspaceClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.Get(Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantFileWorkspaceRestClient.CreateGetRequest(Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new TenantFileWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,23 +186,23 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Creates a new file workspace.
+        /// Update a TenantFileWorkspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspacesNoSubscription_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileWorkspacesNoSubscription_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantFileWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,16 +210,24 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<TenantFileWorkspaceResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Update");
+            using DiagnosticScope scope = _tenantFileWorkspaceClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.CreateAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.CreateCreateRequestUri(Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SupportArmOperation<TenantFileWorkspaceResource> operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -280,23 +238,23 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// Creates a new file workspace.
+        /// Update a TenantFileWorkspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FileWorkspacesNoSubscription_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> FileWorkspacesNoSubscription_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TenantFileWorkspaceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TenantFileWorkspaceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,16 +262,24 @@ namespace Azure.ResourceManager.Support
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<TenantFileWorkspaceResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantFileWorkspaceFileWorkspacesNoSubscriptionClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Update");
+            using DiagnosticScope scope = _tenantFileWorkspaceClientDiagnostics.CreateScope("TenantFileWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.Create(Id.Name, cancellationToken);
-                var uri = _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.CreateCreateRequestUri(Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tenantFileWorkspaceRestClient.CreateCreateRequest(Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FileWorkspaceDetailData> response = Response.FromValue(FileWorkspaceDetailData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SupportArmOperation<TenantFileWorkspaceResource> operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -321,6 +287,39 @@ namespace Azure.ResourceManager.Support
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of SupportTicketNoSubFiles in the <see cref="TenantFileWorkspaceResource"/>. </summary>
+        /// <returns> An object representing collection of SupportTicketNoSubFiles and their operations over a SupportTicketNoSubFileResource. </returns>
+        public virtual SupportTicketNoSubFileCollection GetSupportTicketNoSubFiles()
+        {
+            return GetCachedClient(client => new SupportTicketNoSubFileCollection(client, Id));
+        }
+
+        /// <summary> Returns details of a specific file in a work space. </summary>
+        /// <param name="fileName"> The name of the FileDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SupportTicketNoSubFileResource>> GetSupportTicketNoSubFileAsync(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            return await GetSupportTicketNoSubFiles().GetAsync(fileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns details of a specific file in a work space. </summary>
+        /// <param name="fileName"> The name of the FileDetails. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SupportTicketNoSubFileResource> GetSupportTicketNoSubFile(string fileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
+            return GetSupportTicketNoSubFiles().Get(fileName, cancellationToken);
         }
     }
 }

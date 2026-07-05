@@ -6,5 +6,5 @@ using Azure.Core;
 namespace Azure.Storage.Blobs.Models
 {
     [CodeGenModel("ArrowField")]
-    internal partial class ArrowFieldInternal {}
+    internal partial class ArrowFieldInternal { }
 }

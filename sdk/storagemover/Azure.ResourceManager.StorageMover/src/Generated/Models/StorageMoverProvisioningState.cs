@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct StorageMoverProvisioningState : IEquatable<StorageMoverProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="StorageMoverProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StorageMoverProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SucceededValue = "Succeeded";
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StorageMoverProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Succeeded. </summary>
         public static StorageMoverProvisioningState Succeeded { get; } = new StorageMoverProvisioningState(SucceededValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static StorageMoverProvisioningState Canceled { get; } = new StorageMoverProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static StorageMoverProvisioningState Failed { get; } = new StorageMoverProvisioningState(FailedValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static StorageMoverProvisioningState Deleting { get; } = new StorageMoverProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="StorageMoverProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageMoverProvisioningState left, StorageMoverProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageMoverProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageMoverProvisioningState left, StorageMoverProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMoverProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageMoverProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageMoverProvisioningState(string value) => new StorageMoverProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageMoverProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageMoverProvisioningState?(string value) => value == null ? null : new StorageMoverProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageMoverProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageMoverProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

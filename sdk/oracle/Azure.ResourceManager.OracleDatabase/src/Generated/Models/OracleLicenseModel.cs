@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OracleLicenseModel : IEquatable<OracleLicenseModel>
     {
         private readonly string _value;
+        /// <summary> License included. </summary>
+        private const string LicenseIncludedValue = "LicenseIncluded";
+        /// <summary> Bring Your Own License. </summary>
+        private const string BringYourOwnLicenseValue = "BringYourOwnLicense";
 
         /// <summary> Initializes a new instance of <see cref="OracleLicenseModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OracleLicenseModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LicenseIncludedValue = "LicenseIncluded";
-        private const string BringYourOwnLicenseValue = "BringYourOwnLicense";
+            _value = value;
+        }
 
         /// <summary> License included. </summary>
         public static OracleLicenseModel LicenseIncluded { get; } = new OracleLicenseModel(LicenseIncludedValue);
+
         /// <summary> Bring Your Own License. </summary>
         public static OracleLicenseModel BringYourOwnLicense { get; } = new OracleLicenseModel(BringYourOwnLicenseValue);
+
         /// <summary> Determines if two <see cref="OracleLicenseModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OracleLicenseModel left, OracleLicenseModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OracleLicenseModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OracleLicenseModel left, OracleLicenseModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleLicenseModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OracleLicenseModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OracleLicenseModel(string value) => new OracleLicenseModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OracleLicenseModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OracleLicenseModel?(string value) => value == null ? null : new OracleLicenseModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OracleLicenseModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OracleLicenseModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

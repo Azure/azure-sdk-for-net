@@ -24,21 +24,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// Counter for successful telemetry items sent to Application Insights.
         /// </summary>
         public static readonly Counter<long> ItemSuccessCount = Meter.CreateCounter<long>(
-            "preview.item.success.count",
+            "Item_Success_Count",
             description: "Count of successful telemetry items sent to Application Insights");
 
         /// <summary>
         /// Counter for dropped telemetry items.
         /// </summary>
         public static readonly Counter<long> ItemDroppedCount = Meter.CreateCounter<long>(
-            "preview.item.dropped.count",
+            "Item_Dropped_Count",
             description: "Count of dropped telemetry items");
 
         /// <summary>
         /// Counter for retried telemetry items.
         /// </summary>
         public static readonly Counter<long> ItemRetryCount = Meter.CreateCounter<long>(
-            "preview.item.retry.count",
+            "Item_Retry_Count",
             description: "Count of retried telemetry items");
     }
 }

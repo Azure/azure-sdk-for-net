@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct SpotAllocationStrategy : IEquatable<SpotAllocationStrategy>
     {
         private readonly string _value;
+        /// <summary> Default. VM sizes distribution will be determined to optimize for both price and capacity. </summary>
+        private const string PriceCapacityOptimizedValue = "PriceCapacityOptimized";
+        /// <summary> VM sizes distribution will be determined to optimize for price. Note: Capacity will still be considered here but will be given much less weight. </summary>
+        private const string LowestPriceValue = "LowestPrice";
+        /// <summary> VM sizes distribution will be determined to optimize for capacity. </summary>
+        private const string CapacityOptimizedValue = "CapacityOptimized";
 
         /// <summary> Initializes a new instance of <see cref="SpotAllocationStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SpotAllocationStrategy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PriceCapacityOptimizedValue = "PriceCapacityOptimized";
-        private const string LowestPriceValue = "LowestPrice";
-        private const string CapacityOptimizedValue = "CapacityOptimized";
+            _value = value;
+        }
 
         /// <summary> Default. VM sizes distribution will be determined to optimize for both price and capacity. </summary>
         public static SpotAllocationStrategy PriceCapacityOptimized { get; } = new SpotAllocationStrategy(PriceCapacityOptimizedValue);
+
         /// <summary> VM sizes distribution will be determined to optimize for price. Note: Capacity will still be considered here but will be given much less weight. </summary>
         public static SpotAllocationStrategy LowestPrice { get; } = new SpotAllocationStrategy(LowestPriceValue);
+
         /// <summary> VM sizes distribution will be determined to optimize for capacity. </summary>
         public static SpotAllocationStrategy CapacityOptimized { get; } = new SpotAllocationStrategy(CapacityOptimizedValue);
+
         /// <summary> Determines if two <see cref="SpotAllocationStrategy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SpotAllocationStrategy left, SpotAllocationStrategy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SpotAllocationStrategy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SpotAllocationStrategy left, SpotAllocationStrategy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SpotAllocationStrategy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SpotAllocationStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SpotAllocationStrategy(string value) => new SpotAllocationStrategy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SpotAllocationStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SpotAllocationStrategy?(string value) => value == null ? null : new SpotAllocationStrategy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SpotAllocationStrategy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SpotAllocationStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

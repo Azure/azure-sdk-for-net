@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct MapperPolicyRecurrenceFrequencyType : IEquatable<MapperPolicyRecurrenceFrequencyType>
     {
         private readonly string _value;
+        /// <summary> Hour. </summary>
+        private const string HourValue = "Hour";
+        /// <summary> Minute. </summary>
+        private const string MinuteValue = "Minute";
+        /// <summary> Second. </summary>
+        private const string SecondValue = "Second";
 
         /// <summary> Initializes a new instance of <see cref="MapperPolicyRecurrenceFrequencyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MapperPolicyRecurrenceFrequencyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HourValue = "Hour";
-        private const string MinuteValue = "Minute";
-        private const string SecondValue = "Second";
+            _value = value;
+        }
 
         /// <summary> Hour. </summary>
         public static MapperPolicyRecurrenceFrequencyType Hour { get; } = new MapperPolicyRecurrenceFrequencyType(HourValue);
+
         /// <summary> Minute. </summary>
         public static MapperPolicyRecurrenceFrequencyType Minute { get; } = new MapperPolicyRecurrenceFrequencyType(MinuteValue);
+
         /// <summary> Second. </summary>
         public static MapperPolicyRecurrenceFrequencyType Second { get; } = new MapperPolicyRecurrenceFrequencyType(SecondValue);
+
         /// <summary> Determines if two <see cref="MapperPolicyRecurrenceFrequencyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MapperPolicyRecurrenceFrequencyType left, MapperPolicyRecurrenceFrequencyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MapperPolicyRecurrenceFrequencyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MapperPolicyRecurrenceFrequencyType left, MapperPolicyRecurrenceFrequencyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MapperPolicyRecurrenceFrequencyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MapperPolicyRecurrenceFrequencyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MapperPolicyRecurrenceFrequencyType(string value) => new MapperPolicyRecurrenceFrequencyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MapperPolicyRecurrenceFrequencyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MapperPolicyRecurrenceFrequencyType?(string value) => value == null ? null : new MapperPolicyRecurrenceFrequencyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MapperPolicyRecurrenceFrequencyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MapperPolicyRecurrenceFrequencyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

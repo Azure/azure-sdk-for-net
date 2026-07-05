@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Unknown version of CopyOption. </summary>
     internal partial class UnknownCopyOption : DataProtectionBackupCopySetting
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopyOption"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCopyOption(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCopyOption"/> for deserialization. </summary>
-        internal UnknownCopyOption()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCopyOption(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

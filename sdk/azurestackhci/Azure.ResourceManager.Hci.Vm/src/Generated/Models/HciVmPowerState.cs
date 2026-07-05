@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Vm;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     public readonly partial struct HciVmPowerState : IEquatable<HciVmPowerState>
     {
         private readonly string _value;
+        /// <summary> Virtual machine deallocated. </summary>
+        private const string DeallocatedValue = "Deallocated";
+        /// <summary> Virtual machine deallocating. </summary>
+        private const string DeallocatingValue = "Deallocating";
+        /// <summary> Virtual machine running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Virtual machine starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> Virtual machine stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Virtual machine stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Virtual machine paused. </summary>
+        private const string PausedValue = "Paused";
+        /// <summary> Virtual machine Saved,. </summary>
+        private const string SavedValue = "Saved";
+        /// <summary> Power state of the virtual machine is unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="HciVmPowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciVmPowerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DeallocatedValue = "Deallocated";
-        private const string DeallocatingValue = "Deallocating";
-        private const string RunningValue = "Running";
-        private const string StartingValue = "Starting";
-        private const string StoppedValue = "Stopped";
-        private const string StoppingValue = "Stopping";
-        private const string PausedValue = "Paused";
-        private const string SavedValue = "Saved";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> Virtual machine deallocated. </summary>
         public static HciVmPowerState Deallocated { get; } = new HciVmPowerState(DeallocatedValue);
+
         /// <summary> Virtual machine deallocating. </summary>
         public static HciVmPowerState Deallocating { get; } = new HciVmPowerState(DeallocatingValue);
+
         /// <summary> Virtual machine running. </summary>
         public static HciVmPowerState Running { get; } = new HciVmPowerState(RunningValue);
+
         /// <summary> Virtual machine starting. </summary>
         public static HciVmPowerState Starting { get; } = new HciVmPowerState(StartingValue);
+
         /// <summary> Virtual machine stopped. </summary>
         public static HciVmPowerState Stopped { get; } = new HciVmPowerState(StoppedValue);
+
         /// <summary> Virtual machine stopping. </summary>
         public static HciVmPowerState Stopping { get; } = new HciVmPowerState(StoppingValue);
+
         /// <summary> Virtual machine paused. </summary>
         public static HciVmPowerState Paused { get; } = new HciVmPowerState(PausedValue);
+
         /// <summary> Virtual machine Saved,. </summary>
         public static HciVmPowerState Saved { get; } = new HciVmPowerState(SavedValue);
+
         /// <summary> Power state of the virtual machine is unknown. </summary>
         public static HciVmPowerState Unknown { get; } = new HciVmPowerState(UnknownValue);
+
         /// <summary> Determines if two <see cref="HciVmPowerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciVmPowerState left, HciVmPowerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciVmPowerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciVmPowerState left, HciVmPowerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciVmPowerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciVmPowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciVmPowerState(string value) => new HciVmPowerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciVmPowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciVmPowerState?(string value) => value == null ? null : new HciVmPowerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciVmPowerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciVmPowerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

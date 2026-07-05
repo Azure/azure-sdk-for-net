@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Tests
         private static int s_randomSeed = Environment.TickCount;
 
         /// <summary>The name of the custom event property which holds a test-specific artificial event identifier.</summary>
-        public static readonly string IdPropertyName = $"{ nameof(EventGenerator) }::Identifier";
+        public static readonly string IdPropertyName = $"{nameof(EventGenerator)}::Identifier";
 
         /// <summary>The random number generator to use for a specific thread.</summary>
         private static readonly ThreadLocal<Random> RandomNumberGenerator = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref s_randomSeed)), false);
@@ -143,7 +143,7 @@ namespace Azure.Messaging.EventHubs.Tests
             return new EventData(eventBody)
             {
                 MessageId = id,
-                Properties = {{ IdPropertyName, id }}
+                Properties = { { IdPropertyName, id } }
             };
         }
 

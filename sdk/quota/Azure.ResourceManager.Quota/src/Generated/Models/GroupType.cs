@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Quota.Models
     public readonly partial struct GroupType : IEquatable<GroupType>
     {
         private readonly string _value;
+        /// <summary> The group is used for subscription group quota allocations. </summary>
+        private const string AllocationGroupValue = "AllocationGroup";
+        /// <summary> The group is used for the enforced shared limit scenario. </summary>
+        private const string EnforcedGroupValue = "EnforcedGroup";
 
         /// <summary> Initializes a new instance of <see cref="GroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GroupType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllocationGroupValue = "AllocationGroup";
-        private const string EnforcedGroupValue = "EnforcedGroup";
+            _value = value;
+        }
 
         /// <summary> The group is used for subscription group quota allocations. </summary>
         public static GroupType AllocationGroup { get; } = new GroupType(AllocationGroupValue);
+
         /// <summary> The group is used for the enforced shared limit scenario. </summary>
         public static GroupType EnforcedGroup { get; } = new GroupType(EnforcedGroupValue);
+
         /// <summary> Determines if two <see cref="GroupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GroupType left, GroupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GroupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GroupType left, GroupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GroupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GroupType(string value) => new GroupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GroupType?(string value) => value == null ? null : new GroupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GroupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GroupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

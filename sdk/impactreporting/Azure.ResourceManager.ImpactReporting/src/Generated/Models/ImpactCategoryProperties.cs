@@ -7,51 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
     /// <summary> Impact category properties. </summary>
     public partial class ImpactCategoryProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImpactCategoryProperties"/>. </summary>
         /// <param name="categoryId"> Unique ID of the category. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         internal ImpactCategoryProperties(string categoryId)
         {
-            Argument.AssertNotNull(categoryId, nameof(categoryId));
-
             CategoryId = categoryId;
             RequiredImpactProperties = new ChangeTrackingList<RequiredImpactProperties>();
         }
@@ -62,31 +31,27 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="parentCategoryId"> Unique ID of the parent category. </param>
         /// <param name="description"> Description of the category. </param>
         /// <param name="requiredImpactProperties"> The workloadImpact properties which are required when reporting with the impact category. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactCategoryProperties(ImpactReportingProvisioningState? provisioningState, string categoryId, string parentCategoryId, string description, IReadOnlyList<RequiredImpactProperties> requiredImpactProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImpactCategoryProperties(ImpactReportingProvisioningState? provisioningState, string categoryId, string parentCategoryId, string description, IReadOnlyList<RequiredImpactProperties> requiredImpactProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CategoryId = categoryId;
             ParentCategoryId = parentCategoryId;
             Description = description;
             RequiredImpactProperties = requiredImpactProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ImpactCategoryProperties"/> for deserialization. </summary>
-        internal ImpactCategoryProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource provisioning state. </summary>
         public ImpactReportingProvisioningState? ProvisioningState { get; }
+
         /// <summary> Unique ID of the category. </summary>
         public string CategoryId { get; }
+
         /// <summary> Unique ID of the parent category. </summary>
         public string ParentCategoryId { get; }
+
         /// <summary> Description of the category. </summary>
         public string Description { get; }
-        /// <summary> The workloadImpact properties which are required when reporting with the impact category. </summary>
-        public IReadOnlyList<RequiredImpactProperties> RequiredImpactProperties { get; }
     }
 }

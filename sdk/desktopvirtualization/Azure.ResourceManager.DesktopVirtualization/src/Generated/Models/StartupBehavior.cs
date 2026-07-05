@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct StartupBehavior : IEquatable<StartupBehavior>
     {
         private readonly string _value;
+        /// <summary> Session hosts will not be started by the service. This setting depends on Start VM on Connect to be enabled to start the session hosts. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Session hosts with an assigned user will be started during Ramp Up. </summary>
+        private const string WithAssignedUserValue = "WithAssignedUser";
+        /// <summary> All personal session hosts in the hostpool will be started during ramp up. </summary>
+        private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="StartupBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StartupBehavior(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string WithAssignedUserValue = "WithAssignedUser";
-        private const string AllValue = "All";
+            _value = value;
+        }
 
         /// <summary> Session hosts will not be started by the service. This setting depends on Start VM on Connect to be enabled to start the session hosts. </summary>
         public static StartupBehavior None { get; } = new StartupBehavior(NoneValue);
+
         /// <summary> Session hosts with an assigned user will be started during Ramp Up. </summary>
         public static StartupBehavior WithAssignedUser { get; } = new StartupBehavior(WithAssignedUserValue);
+
         /// <summary> All personal session hosts in the hostpool will be started during ramp up. </summary>
         public static StartupBehavior All { get; } = new StartupBehavior(AllValue);
+
         /// <summary> Determines if two <see cref="StartupBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StartupBehavior left, StartupBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StartupBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StartupBehavior left, StartupBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StartupBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StartupBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StartupBehavior(string value) => new StartupBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StartupBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StartupBehavior?(string value) => value == null ? null : new StartupBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StartupBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StartupBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

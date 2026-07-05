@@ -7,72 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AdministrativeCredentials represents the admin credentials for the device requiring password-based authentication. </summary>
     public partial class AdministrativeCredentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/>. </summary>
+        /// <param name="password"> The password of the administrator of the device used during initialization. </param>
         /// <param name="username"> The username of the administrator of the device used during initialization. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
-        public AdministrativeCredentials(string username)
+        /// <exception cref="ArgumentNullException"> <paramref name="password"/> or <paramref name="username"/> is null. </exception>
+        public AdministrativeCredentials(string password, string username)
         {
+            Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(username, nameof(username));
 
+            Password = password;
             Username = username;
         }
 
         /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/>. </summary>
         /// <param name="password"> The password of the administrator of the device used during initialization. </param>
         /// <param name="username"> The username of the administrator of the device used during initialization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdministrativeCredentials(string password, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AdministrativeCredentials(string password, string username, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Password = password;
             Username = username;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AdministrativeCredentials"/> for deserialization. </summary>
-        internal AdministrativeCredentials()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The password of the administrator of the device used during initialization. </summary>
         public string Password { get; set; }
+
         /// <summary> The username of the administrator of the device used during initialization. </summary>
         public string Username { get; set; }
     }

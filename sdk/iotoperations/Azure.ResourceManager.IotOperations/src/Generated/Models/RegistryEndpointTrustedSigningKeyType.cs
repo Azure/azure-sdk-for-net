@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     internal readonly partial struct RegistryEndpointTrustedSigningKeyType : IEquatable<RegistryEndpointTrustedSigningKeyType>
     {
         private readonly string _value;
+        /// <summary> Trust settings stored in a Kubernetes Secret. </summary>
+        private const string SecretValue = "Secret";
+        /// <summary> Trust settings stored in a Kubernetes ConfigMap. </summary>
+        private const string ConfigMapValue = "ConfigMap";
 
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RegistryEndpointTrustedSigningKeyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SecretValue = "Secret";
-        private const string ConfigMapValue = "ConfigMap";
+            _value = value;
+        }
 
         /// <summary> Trust settings stored in a Kubernetes Secret. </summary>
         public static RegistryEndpointTrustedSigningKeyType Secret { get; } = new RegistryEndpointTrustedSigningKeyType(SecretValue);
+
         /// <summary> Trust settings stored in a Kubernetes ConfigMap. </summary>
         public static RegistryEndpointTrustedSigningKeyType ConfigMap { get; } = new RegistryEndpointTrustedSigningKeyType(ConfigMapValue);
+
         /// <summary> Determines if two <see cref="RegistryEndpointTrustedSigningKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RegistryEndpointTrustedSigningKeyType left, RegistryEndpointTrustedSigningKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RegistryEndpointTrustedSigningKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RegistryEndpointTrustedSigningKeyType left, RegistryEndpointTrustedSigningKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RegistryEndpointTrustedSigningKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RegistryEndpointTrustedSigningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RegistryEndpointTrustedSigningKeyType(string value) => new RegistryEndpointTrustedSigningKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RegistryEndpointTrustedSigningKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RegistryEndpointTrustedSigningKeyType?(string value) => value == null ? null : new RegistryEndpointTrustedSigningKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RegistryEndpointTrustedSigningKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RegistryEndpointTrustedSigningKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

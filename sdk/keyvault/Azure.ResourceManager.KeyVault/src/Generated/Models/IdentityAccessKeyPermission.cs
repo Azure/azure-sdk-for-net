@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> The IdentityAccessKeyPermission. </summary>
+    /// <summary></summary>
     public readonly partial struct IdentityAccessKeyPermission : IEquatable<IdentityAccessKeyPermission>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessKeyPermission"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IdentityAccessKeyPermission(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllValue = "all";
         private const string EncryptValue = "encrypt";
         private const string DecryptValue = "decrypt";
@@ -44,65 +37,109 @@ namespace Azure.ResourceManager.KeyVault.Models
         private const string GetrotationpolicyValue = "getrotationpolicy";
         private const string SetrotationpolicyValue = "setrotationpolicy";
 
-        /// <summary> all. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityAccessKeyPermission"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IdentityAccessKeyPermission(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the All. </summary>
         public static IdentityAccessKeyPermission All { get; } = new IdentityAccessKeyPermission(AllValue);
-        /// <summary> encrypt. </summary>
+
+        /// <summary> Gets the Encrypt. </summary>
         public static IdentityAccessKeyPermission Encrypt { get; } = new IdentityAccessKeyPermission(EncryptValue);
-        /// <summary> decrypt. </summary>
+
+        /// <summary> Gets the Decrypt. </summary>
         public static IdentityAccessKeyPermission Decrypt { get; } = new IdentityAccessKeyPermission(DecryptValue);
-        /// <summary> wrapKey. </summary>
+
+        /// <summary> Gets the WrapKey. </summary>
         public static IdentityAccessKeyPermission WrapKey { get; } = new IdentityAccessKeyPermission(WrapKeyValue);
-        /// <summary> unwrapKey. </summary>
+
+        /// <summary> Gets the UnwrapKey. </summary>
         public static IdentityAccessKeyPermission UnwrapKey { get; } = new IdentityAccessKeyPermission(UnwrapKeyValue);
-        /// <summary> sign. </summary>
+
+        /// <summary> Gets the Sign. </summary>
         public static IdentityAccessKeyPermission Sign { get; } = new IdentityAccessKeyPermission(SignValue);
-        /// <summary> verify. </summary>
+
+        /// <summary> Gets the Verify. </summary>
         public static IdentityAccessKeyPermission Verify { get; } = new IdentityAccessKeyPermission(VerifyValue);
-        /// <summary> get. </summary>
+
+        /// <summary> Gets the Get. </summary>
         public static IdentityAccessKeyPermission Get { get; } = new IdentityAccessKeyPermission(GetValue);
-        /// <summary> list. </summary>
+
+        /// <summary> Gets the List. </summary>
         public static IdentityAccessKeyPermission List { get; } = new IdentityAccessKeyPermission(ListValue);
-        /// <summary> create. </summary>
+
+        /// <summary> Gets the Create. </summary>
         public static IdentityAccessKeyPermission Create { get; } = new IdentityAccessKeyPermission(CreateValue);
-        /// <summary> update. </summary>
+
+        /// <summary> Gets the Update. </summary>
         public static IdentityAccessKeyPermission Update { get; } = new IdentityAccessKeyPermission(UpdateValue);
-        /// <summary> import. </summary>
+
+        /// <summary> Gets the Import. </summary>
         public static IdentityAccessKeyPermission Import { get; } = new IdentityAccessKeyPermission(ImportValue);
-        /// <summary> delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static IdentityAccessKeyPermission Delete { get; } = new IdentityAccessKeyPermission(DeleteValue);
-        /// <summary> backup. </summary>
+
+        /// <summary> Gets the Backup. </summary>
         public static IdentityAccessKeyPermission Backup { get; } = new IdentityAccessKeyPermission(BackupValue);
-        /// <summary> restore. </summary>
+
+        /// <summary> Gets the Restore. </summary>
         public static IdentityAccessKeyPermission Restore { get; } = new IdentityAccessKeyPermission(RestoreValue);
-        /// <summary> recover. </summary>
+
+        /// <summary> Gets the Recover. </summary>
         public static IdentityAccessKeyPermission Recover { get; } = new IdentityAccessKeyPermission(RecoverValue);
-        /// <summary> purge. </summary>
+
+        /// <summary> Gets the Purge. </summary>
         public static IdentityAccessKeyPermission Purge { get; } = new IdentityAccessKeyPermission(PurgeValue);
-        /// <summary> release. </summary>
+
+        /// <summary> Gets the Release. </summary>
         public static IdentityAccessKeyPermission Release { get; } = new IdentityAccessKeyPermission(ReleaseValue);
-        /// <summary> rotate. </summary>
+
+        /// <summary> Gets the Rotate. </summary>
         public static IdentityAccessKeyPermission Rotate { get; } = new IdentityAccessKeyPermission(RotateValue);
-        /// <summary> getrotationpolicy. </summary>
+
+        /// <summary> Gets the Getrotationpolicy. </summary>
         public static IdentityAccessKeyPermission Getrotationpolicy { get; } = new IdentityAccessKeyPermission(GetrotationpolicyValue);
-        /// <summary> setrotationpolicy. </summary>
+
+        /// <summary> Gets the Setrotationpolicy. </summary>
         public static IdentityAccessKeyPermission Setrotationpolicy { get; } = new IdentityAccessKeyPermission(SetrotationpolicyValue);
+
         /// <summary> Determines if two <see cref="IdentityAccessKeyPermission"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityAccessKeyPermission left, IdentityAccessKeyPermission right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IdentityAccessKeyPermission"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityAccessKeyPermission left, IdentityAccessKeyPermission right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityAccessKeyPermission"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IdentityAccessKeyPermission"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IdentityAccessKeyPermission(string value) => new IdentityAccessKeyPermission(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IdentityAccessKeyPermission"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IdentityAccessKeyPermission?(string value) => value == null ? null : new IdentityAccessKeyPermission(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityAccessKeyPermission other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IdentityAccessKeyPermission other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

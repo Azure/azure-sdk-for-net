@@ -11,12 +11,6 @@ parameters:
   - name: SDKType
     type: string
     default: all
-  - name: CheckAOTCompat
-    type: boolean
-    default: false
-  - name: AOTTestInputs
-    type: object
-    default: []
   - name: BuildSnippets
     type: boolean
     default: true
@@ -55,6 +49,14 @@ steps:
     - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
+  - ${{ if eq(variables['Build.Reason'], 'Manual') }}:
+    # Run CODEOWNERS verification before artifacts are produced and uploaded to
+    # prevent artifact collisions.
+    - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
+      parameters:
+        ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+        Artifacts: ${{ parameters.Artifacts }}
 
   - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
@@ -153,12 +155,11 @@ steps:
       LibType: 'client'
       PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
-  - ${{ if eq(parameters.CheckAOTCompat, 'true') }}:
-    - template: /eng/pipelines/templates/steps/aot-compatibility.yml
-      parameters:
-        ServiceDirectory: ${{ parameters.ServiceDirectory }}
-        AOTTestInputs: ${{ parameters.AOTTestInputs }}
-        PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+  - template: /eng/pipelines/templates/steps/aot-compatibility.yml
+    parameters:
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      Artifacts: ${{ parameters.Artifacts }}
+      PackageInfoFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
 
   - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
     displayName: "Component Detection"

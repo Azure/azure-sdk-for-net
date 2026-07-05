@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedClusterUpdateType : IEquatable<ServiceFabricManagedClusterUpdateType>
     {
         private readonly string _value;
+        /// <summary> The operation will proceed in all specified nodes at the same time. </summary>
+        private const string DefaultValue = "Default";
+        /// <summary> The operation will proceed one upgrade domain at a time, checking the health in between each to continue. </summary>
+        private const string ByUpgradeDomainValue = "ByUpgradeDomain";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedClusterUpdateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
-        private const string ByUpgradeDomainValue = "ByUpgradeDomain";
+            _value = value;
+        }
 
         /// <summary> The operation will proceed in all specified nodes at the same time. </summary>
         public static ServiceFabricManagedClusterUpdateType Default { get; } = new ServiceFabricManagedClusterUpdateType(DefaultValue);
+
         /// <summary> The operation will proceed one upgrade domain at a time, checking the health in between each to continue. </summary>
         public static ServiceFabricManagedClusterUpdateType ByUpgradeDomain { get; } = new ServiceFabricManagedClusterUpdateType(ByUpgradeDomainValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterUpdateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedClusterUpdateType left, ServiceFabricManagedClusterUpdateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterUpdateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedClusterUpdateType left, ServiceFabricManagedClusterUpdateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClusterUpdateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedClusterUpdateType(string value) => new ServiceFabricManagedClusterUpdateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClusterUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedClusterUpdateType?(string value) => value == null ? null : new ServiceFabricManagedClusterUpdateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedClusterUpdateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedClusterUpdateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

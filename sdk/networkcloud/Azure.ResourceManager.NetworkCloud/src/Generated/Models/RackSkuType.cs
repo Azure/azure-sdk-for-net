@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct RackSkuType : IEquatable<RackSkuType>
     {
         private readonly string _value;
+        /// <summary> Aggregator Rack. </summary>
+        private const string AggregatorValue = "Aggregator";
+        /// <summary> Compute Rack. </summary>
+        private const string ComputeValue = "Compute";
+        /// <summary> Combination of Aggregator Rack and Compute Rack for a single rack cluster. </summary>
+        private const string SingleValue = "Single";
 
         /// <summary> Initializes a new instance of <see cref="RackSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RackSkuType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AggregatorValue = "Aggregator";
-        private const string ComputeValue = "Compute";
-        private const string SingleValue = "Single";
-
-        /// <summary> Aggregator. </summary>
+        /// <summary> Aggregator Rack. </summary>
         public static RackSkuType Aggregator { get; } = new RackSkuType(AggregatorValue);
-        /// <summary> Compute. </summary>
+
+        /// <summary> Compute Rack. </summary>
         public static RackSkuType Compute { get; } = new RackSkuType(ComputeValue);
-        /// <summary> Single. </summary>
+
+        /// <summary> Combination of Aggregator Rack and Compute Rack for a single rack cluster. </summary>
         public static RackSkuType Single { get; } = new RackSkuType(SingleValue);
+
         /// <summary> Determines if two <see cref="RackSkuType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RackSkuType left, RackSkuType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RackSkuType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RackSkuType left, RackSkuType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RackSkuType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RackSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RackSkuType(string value) => new RackSkuType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RackSkuType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RackSkuType?(string value) => value == null ? null : new RackSkuType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RackSkuType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RackSkuType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

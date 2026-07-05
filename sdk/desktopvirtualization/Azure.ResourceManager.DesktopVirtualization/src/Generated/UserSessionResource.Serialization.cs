@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
+    /// <summary></summary>
     public partial class UserSessionResource : IJsonModel<UserSessionData>
     {
-        private static UserSessionData s_dataDeserializationInstance;
-        private static UserSessionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<UserSessionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<UserSessionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new UserSessionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UserSessionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<UserSessionData>)Data).Write(writer, options);
 
-        UserSessionData IJsonModel<UserSessionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<UserSessionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UserSessionData IJsonModel<UserSessionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<UserSessionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UserSessionData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         UserSessionData IPersistableModel<UserSessionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserSessionData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
 
-        string IPersistableModel<UserSessionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<UserSessionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UserSessionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

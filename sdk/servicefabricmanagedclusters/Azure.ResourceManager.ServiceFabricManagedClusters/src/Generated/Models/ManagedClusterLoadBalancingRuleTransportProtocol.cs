@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterLoadBalancingRuleTransportProtocol : IEquatable<ManagedClusterLoadBalancingRuleTransportProtocol>
     {
         private readonly string _value;
+        /// <summary> Transport protocol is TCP. </summary>
+        private const string TcpValue = "tcp";
+        /// <summary> Transport protocol is UDP. </summary>
+        private const string UdpValue = "udp";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterLoadBalancingRuleTransportProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "tcp";
-        private const string UdpValue = "udp";
+            _value = value;
+        }
 
         /// <summary> Transport protocol is TCP. </summary>
         public static ManagedClusterLoadBalancingRuleTransportProtocol Tcp { get; } = new ManagedClusterLoadBalancingRuleTransportProtocol(TcpValue);
+
         /// <summary> Transport protocol is UDP. </summary>
         public static ManagedClusterLoadBalancingRuleTransportProtocol Udp { get; } = new ManagedClusterLoadBalancingRuleTransportProtocol(UdpValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterLoadBalancingRuleTransportProtocol left, ManagedClusterLoadBalancingRuleTransportProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterLoadBalancingRuleTransportProtocol left, ManagedClusterLoadBalancingRuleTransportProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterLoadBalancingRuleTransportProtocol(string value) => new ManagedClusterLoadBalancingRuleTransportProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterLoadBalancingRuleTransportProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterLoadBalancingRuleTransportProtocol?(string value) => value == null ? null : new ManagedClusterLoadBalancingRuleTransportProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterLoadBalancingRuleTransportProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterLoadBalancingRuleTransportProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

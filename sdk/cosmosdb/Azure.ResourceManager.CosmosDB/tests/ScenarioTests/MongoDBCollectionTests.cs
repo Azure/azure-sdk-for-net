@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionCreateAndUpdate()
         {
@@ -87,9 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             VerifyMongoDBCollections(collection, collection2);
 
-            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(collection.Id, _collectionName, collection.Data.ResourceType, null,
-                new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, collection.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity), null);
+            var updateOptions = new MongoDBCollectionCreateOrUpdateContent(AzureLocation.WestUS, collection.Data.Resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             collection = await (await MongoDBCollectionCollection.CreateOrUpdateAsync(WaitUntil.Started, _collectionName, updateOptions)).WaitForCompletionAsync();
             Assert.AreEqual(_collectionName, collection.Data.Resource.CollectionName);
@@ -97,7 +94,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBCollections(collection, collection2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionList()
         {
@@ -110,7 +106,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoDBCollections(collections[0], collection);
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionThroughput()
         {
@@ -128,9 +123,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task MongoDBCollectionMigrateToAutoscale()
         {
             var collection = await CreateMongoDBCollection(null);
@@ -141,9 +136,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task MongoDBCollectionMigrateToManual()
         {
             var collection = await CreateMongoDBCollection(new AutoscaleSettings()
@@ -158,7 +153,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         public async Task MongoDBCollectionDelete()
         {

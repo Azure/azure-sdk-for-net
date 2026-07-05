@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.LargeInstance.Models
     public readonly partial struct LargeInstanceForcePowerState : IEquatable<LargeInstanceForcePowerState>
     {
         private readonly string _value;
+        /// <summary> Active means that the restart operation will terminate and halt existing processes that may be running on the server. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> Inactive means that the restart operation will not terminate and halt existing processes that may be running on the server. </summary>
+        private const string InactiveValue = "inactive";
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceForcePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LargeInstanceForcePowerState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "active";
-        private const string InactiveValue = "inactive";
+            _value = value;
+        }
 
         /// <summary> Active means that the restart operation will terminate and halt existing processes that may be running on the server. </summary>
         public static LargeInstanceForcePowerState Active { get; } = new LargeInstanceForcePowerState(ActiveValue);
+
         /// <summary> Inactive means that the restart operation will not terminate and halt existing processes that may be running on the server. </summary>
         public static LargeInstanceForcePowerState Inactive { get; } = new LargeInstanceForcePowerState(InactiveValue);
+
         /// <summary> Determines if two <see cref="LargeInstanceForcePowerState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LargeInstanceForcePowerState left, LargeInstanceForcePowerState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LargeInstanceForcePowerState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LargeInstanceForcePowerState left, LargeInstanceForcePowerState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstanceForcePowerState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LargeInstanceForcePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LargeInstanceForcePowerState(string value) => new LargeInstanceForcePowerState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LargeInstanceForcePowerState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LargeInstanceForcePowerState?(string value) => value == null ? null : new LargeInstanceForcePowerState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LargeInstanceForcePowerState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LargeInstanceForcePowerState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

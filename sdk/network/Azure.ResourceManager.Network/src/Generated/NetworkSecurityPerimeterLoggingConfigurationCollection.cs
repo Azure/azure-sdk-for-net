@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkSecurityPerimeterLoggingConfigurationCollection : ArmCollection, IEnumerable<NetworkSecurityPerimeterLoggingConfigurationResource>, IAsyncEnumerable<NetworkSecurityPerimeterLoggingConfigurationResource>
     {
-        private readonly ClientDiagnostics _networkSecurityPerimeterLoggingConfigurationClientDiagnostics;
-        private readonly NetworkSecurityPerimeterLoggingConfigurationsRestOperations _networkSecurityPerimeterLoggingConfigurationRestClient;
+        private readonly ClientDiagnostics _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics;
+        private readonly NetworkSecurityPerimeterLoggingConfigurations _networkSecurityPerimeterLoggingConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterLoggingConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkSecurityPerimeterLoggingConfigurationCollection for mocking. </summary>
         protected NetworkSecurityPerimeterLoggingConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterLoggingConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkSecurityPerimeterLoggingConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkSecurityPerimeterLoggingConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterLoggingConfigurationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkSecurityPerimeterLoggingConfigurationResource.ResourceType, out string networkSecurityPerimeterLoggingConfigurationApiVersion);
-            _networkSecurityPerimeterLoggingConfigurationRestClient = new NetworkSecurityPerimeterLoggingConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterLoggingConfigurationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterLoggingConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _networkSecurityPerimeterLoggingConfigurationsRestClient = new NetworkSecurityPerimeterLoggingConfigurations(_networkSecurityPerimeterLoggingConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterLoggingConfigurationApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkSecurityPerimeterResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkSecurityPerimeterResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkSecurityPerimeterResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates NSP logging configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="data"> Parameters that hold the NspLoggingConfiguration to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loggingConfigurationName, NetworkSecurityPerimeterLoggingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterLoggingConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _networkSecurityPerimeterLoggingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource>(Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, NetworkSecurityPerimeterLoggingConfigurationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource> operation = new NetworkArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource>(Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates NSP logging configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.Network
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="data"> Parameters that hold the NspLoggingConfiguration to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string loggingConfigurationName, NetworkSecurityPerimeterLoggingConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterLoggingConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, data, cancellationToken);
-                var uri = _networkSecurityPerimeterLoggingConfigurationRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource>(Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, NetworkSecurityPerimeterLoggingConfigurationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource> operation = new NetworkArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource>(Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the NSP logging configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkSecurityPerimeterLoggingConfigurationResource>> GetAsync(string loggingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterLoggingConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the NSP logging configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkSecurityPerimeterLoggingConfigurationResource> Get(string loggingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterLoggingConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,50 @@ namespace Azure.ResourceManager.Network
         /// Lists the NSP logging configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkSecurityPerimeterLoggingConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterLoggingConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityPerimeterLoggingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterLoggingConfigurationResource(Client, NetworkSecurityPerimeterLoggingConfigurationData.DeserializeNetworkSecurityPerimeterLoggingConfigurationData(e)), _networkSecurityPerimeterLoggingConfigurationClientDiagnostics, Pipeline, "NetworkSecurityPerimeterLoggingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterLoggingConfigurationData, NetworkSecurityPerimeterLoggingConfigurationResource>(new NetworkSecurityPerimeterLoggingConfigurationsGetAllAsyncCollectionResultOfT(
+                _networkSecurityPerimeterLoggingConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkSecurityPerimeterLoggingConfigurationCollection.GetAll"), data => new NetworkSecurityPerimeterLoggingConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Lists the NSP logging configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +317,67 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkSecurityPerimeterLoggingConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterLoggingConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityPerimeterLoggingConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterLoggingConfigurationResource(Client, NetworkSecurityPerimeterLoggingConfigurationData.DeserializeNetworkSecurityPerimeterLoggingConfigurationData(e)), _networkSecurityPerimeterLoggingConfigurationClientDiagnostics, Pipeline, "NetworkSecurityPerimeterLoggingConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkSecurityPerimeterLoggingConfigurationData, NetworkSecurityPerimeterLoggingConfigurationResource>(new NetworkSecurityPerimeterLoggingConfigurationsGetAllCollectionResultOfT(
+                _networkSecurityPerimeterLoggingConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkSecurityPerimeterLoggingConfigurationCollection.GetAll"), data => new NetworkSecurityPerimeterLoggingConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string loggingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Exists");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterLoggingConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkSecurityPerimeterLoggingConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +391,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string loggingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Exists");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterLoggingConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkSecurityPerimeterLoggingConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +448,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkSecurityPerimeterLoggingConfigurationResource>> GetIfExistsAsync(string loggingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterLoggingConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkSecurityPerimeterLoggingConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkSecurityPerimeterLoggingConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +509,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspLoggingConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkSecurityPerimeterLoggingConfigurationResource> GetIfExists(string loggingConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(loggingConfigurationName, nameof(loggingConfigurationName));
 
-            using var scope = _networkSecurityPerimeterLoggingConfigurationClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _networkSecurityPerimeterLoggingConfigurationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterLoggingConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterLoggingConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggingConfigurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterLoggingConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, loggingConfigurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkSecurityPerimeterLoggingConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkSecurityPerimeterLoggingConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkSecurityPerimeterLoggingConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkSecurityPerimeterLoggingConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterLoggingConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +576,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkSecurityPerimeterLoggingConfigurationResource> IAsyncEnumerable<NetworkSecurityPerimeterLoggingConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

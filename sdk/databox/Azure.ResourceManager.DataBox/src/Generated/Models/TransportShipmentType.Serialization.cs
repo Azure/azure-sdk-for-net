@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal static partial class TransportShipmentTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TransportShipmentType value) => value switch
         {
             TransportShipmentType.CustomerManaged => "CustomerManaged",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.DataBox.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransportShipmentType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static TransportShipmentType ToTransportShipmentType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerManaged")) return TransportShipmentType.CustomerManaged;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftManaged")) return TransportShipmentType.MicrosoftManaged;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomerManaged"))
+            {
+                return TransportShipmentType.CustomerManaged;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MicrosoftManaged"))
+            {
+                return TransportShipmentType.MicrosoftManaged;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TransportShipmentType value.");
         }
     }

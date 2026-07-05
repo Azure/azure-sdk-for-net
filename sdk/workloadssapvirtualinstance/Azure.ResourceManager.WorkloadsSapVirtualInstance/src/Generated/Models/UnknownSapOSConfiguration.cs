@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
-    /// <summary> Unknown version of SapOSConfiguration. </summary>
     internal partial class UnknownSapOSConfiguration : SapOSConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSapOSConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSapOSConfiguration(SapOSType osType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(osType, serializedAdditionalRawData)
-        {
-            OSType = osType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownSapOSConfiguration"/> for deserialization. </summary>
-        internal UnknownSapOSConfiguration()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSapOSConfiguration(SapOSType osType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(osType != default ? osType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

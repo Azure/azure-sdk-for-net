@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Elastic
 {
+    /// <summary></summary>
     public partial class ElasticMonitorResource : IJsonModel<ElasticMonitorData>
     {
-        private static ElasticMonitorData s_dataDeserializationInstance;
-        private static ElasticMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ElasticMonitorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ElasticMonitorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ElasticMonitorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ElasticMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticMonitorData>)Data).Write(writer, options);
 
-        ElasticMonitorData IJsonModel<ElasticMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticMonitorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ElasticMonitorData IJsonModel<ElasticMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ElasticMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticMonitorData>(Data, options, AzureResourceManagerElasticContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ElasticMonitorData IPersistableModel<ElasticMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticMonitorData>(data, options, AzureResourceManagerElasticContext.Default);
 
-        string IPersistableModel<ElasticMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ElasticMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

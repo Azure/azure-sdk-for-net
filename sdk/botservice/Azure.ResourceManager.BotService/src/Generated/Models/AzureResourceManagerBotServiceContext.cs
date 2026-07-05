@@ -6,15 +6,15 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AcsChatChannel))]
     [ModelReaderWriterBuildable(typeof(AlexaChannel))]
@@ -38,15 +38,21 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(BotServiceHostSettingsResult))]
     [ModelReaderWriterBuildable(typeof(BotServiceNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(BotServiceNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(BotServiceNetworkSecurityPerimeterConfigurationData))]
+    [ModelReaderWriterBuildable(typeof(BotServiceNetworkSecurityPerimeterConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(BotServiceNetworkSecurityPerimeterProfile))]
+    [ModelReaderWriterBuildable(typeof(BotServiceNspAccessRuleSubscription))]
     [ModelReaderWriterBuildable(typeof(BotServicePrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(BotServicePrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(BotServicePrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(BotServicePrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(BotServicePrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(BotServicePrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(BotServicePrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(BotServiceProvider))]
     [ModelReaderWriterBuildable(typeof(BotServiceProviderParameter))]
     [ModelReaderWriterBuildable(typeof(BotServiceProviderProperties))]
+    [ModelReaderWriterBuildable(typeof(BotServiceResourceAssociation))]
     [ModelReaderWriterBuildable(typeof(BotServiceSku))]
     [ModelReaderWriterBuildable(typeof(ChannelResponseList))]
     [ModelReaderWriterBuildable(typeof(ConnectionSettingResponseList))]
@@ -57,6 +63,7 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(DirectLineSpeechChannel))]
     [ModelReaderWriterBuildable(typeof(DirectLineSpeechChannelProperties))]
     [ModelReaderWriterBuildable(typeof(EmailChannel))]
+    [ModelReaderWriterBuildable(typeof(EmailChannelProperties))]
     [ModelReaderWriterBuildable(typeof(FacebookChannel))]
     [ModelReaderWriterBuildable(typeof(FacebookChannelProperties))]
     [ModelReaderWriterBuildable(typeof(FacebookPage))]
@@ -70,8 +77,18 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(M365Extensions))]
     [ModelReaderWriterBuildable(typeof(MsTeamsChannel))]
     [ModelReaderWriterBuildable(typeof(MsTeamsChannelProperties))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeter))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationList))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(NspAccessRule))]
+    [ModelReaderWriterBuildable(typeof(NspAccessRuleProperties))]
     [ModelReaderWriterBuildable(typeof(Omnichannel))]
     [ModelReaderWriterBuildable(typeof(OutlookChannel))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ProvisioningIssue))]
+    [ModelReaderWriterBuildable(typeof(ProvisioningIssueProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SearchAssistant))]
     [ModelReaderWriterBuildable(typeof(ServiceProviderParameterMetadata))]
     [ModelReaderWriterBuildable(typeof(ServiceProviderParameterMetadataConstraints))]
@@ -82,7 +99,6 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(SlackChannelProperties))]
     [ModelReaderWriterBuildable(typeof(SmsChannel))]
     [ModelReaderWriterBuildable(typeof(SmsChannelProperties))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TelegramChannel))]
     [ModelReaderWriterBuildable(typeof(TelegramChannelProperties))]

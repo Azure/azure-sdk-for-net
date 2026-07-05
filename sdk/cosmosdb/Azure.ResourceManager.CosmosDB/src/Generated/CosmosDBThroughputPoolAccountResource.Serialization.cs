@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class CosmosDBThroughputPoolAccountResource : IJsonModel<CosmosDBThroughputPoolAccountData>
     {
-        private static CosmosDBThroughputPoolAccountData s_dataDeserializationInstance;
-        private static CosmosDBThroughputPoolAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CosmosDBThroughputPoolAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CosmosDBThroughputPoolAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CosmosDBThroughputPoolAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBThroughputPoolAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBThroughputPoolAccountData>)Data).Write(writer, options);
 
-        CosmosDBThroughputPoolAccountData IJsonModel<CosmosDBThroughputPoolAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBThroughputPoolAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBThroughputPoolAccountData IJsonModel<CosmosDBThroughputPoolAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosDBThroughputPoolAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBThroughputPoolAccountData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosDBThroughputPoolAccountData IPersistableModel<CosmosDBThroughputPoolAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBThroughputPoolAccountData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<CosmosDBThroughputPoolAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBThroughputPoolAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBThroughputPoolAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

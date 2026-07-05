@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerService
 {
+    /// <summary></summary>
     public partial class AgentPoolSnapshotResource : IJsonModel<AgentPoolSnapshotData>
     {
-        private static AgentPoolSnapshotData s_dataDeserializationInstance;
-        private static AgentPoolSnapshotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AgentPoolSnapshotData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AgentPoolSnapshotData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AgentPoolSnapshotData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgentPoolSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AgentPoolSnapshotData>)Data).Write(writer, options);
 
-        AgentPoolSnapshotData IJsonModel<AgentPoolSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AgentPoolSnapshotData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgentPoolSnapshotData IJsonModel<AgentPoolSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AgentPoolSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgentPoolSnapshotData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AgentPoolSnapshotData IPersistableModel<AgentPoolSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgentPoolSnapshotData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
-        string IPersistableModel<AgentPoolSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AgentPoolSnapshotData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AgentPoolSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

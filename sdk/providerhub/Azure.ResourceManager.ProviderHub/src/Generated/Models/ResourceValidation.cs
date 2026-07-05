@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct ResourceValidation : IEquatable<ResourceValidation>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceValidation"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceValidation(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string ReservedWordsValue = "ReservedWords";
         private const string ProfaneWordsValue = "ProfaneWords";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceValidation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceValidation(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ResourceValidation NotSpecified { get; } = new ResourceValidation(NotSpecifiedValue);
-        /// <summary> ReservedWords. </summary>
+
+        /// <summary> Gets the ReservedWords. </summary>
         public static ResourceValidation ReservedWords { get; } = new ResourceValidation(ReservedWordsValue);
-        /// <summary> ProfaneWords. </summary>
+
+        /// <summary> Gets the ProfaneWords. </summary>
         public static ResourceValidation ProfaneWords { get; } = new ResourceValidation(ProfaneWordsValue);
+
         /// <summary> Determines if two <see cref="ResourceValidation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceValidation left, ResourceValidation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceValidation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceValidation left, ResourceValidation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceValidation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceValidation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceValidation(string value) => new ResourceValidation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceValidation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceValidation?(string value) => value == null ? null : new ResourceValidation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceValidation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceValidation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

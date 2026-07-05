@@ -6,23 +6,71 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a SqlServerJobExecutionStepTarget along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerJobExecutionStepTargetResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerJobExecutionStepTargetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlServerJobExecutionStepResource"/> using the GetSqlServerJobExecutionStepTarget method.
+    /// A class representing a SqlServerJobExecutionStepTarget along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerJobExecutionStepTargetResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlServerJobExecutionStepResource"/> using the GetSqlServerJobExecutionStepTargets method.
     /// </summary>
     public partial class SqlServerJobExecutionStepTargetResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SqlServerJobExecutionStepTargetResource"/> instance. </summary>
+        private readonly ClientDiagnostics _jobTargetExecutionsClientDiagnostics;
+        private readonly JobTargetExecutions _jobTargetExecutionsRestClient;
+        private readonly SqlServerJobExecutionData _data;
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs/executions/steps/targets";
+
+        /// <summary> Initializes a new instance of SqlServerJobExecutionStepTargetResource for mocking. </summary>
+        protected SqlServerJobExecutionStepTargetResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionStepTargetResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="data"> The resource that is the target of operations. </param>
+        internal SqlServerJobExecutionStepTargetResource(ArmClient client, SqlServerJobExecutionData data) : this(client, data.Id)
+        {
+            HasData = true;
+            _data = data;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionStepTargetResource"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal SqlServerJobExecutionStepTargetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        {
+            TryGetApiVersion(ResourceType, out string sqlServerJobExecutionStepTargetApiVersion);
+            _jobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _jobTargetExecutionsRestClient = new JobTargetExecutions(_jobTargetExecutionsClientDiagnostics, Pipeline, Endpoint, sqlServerJobExecutionStepTargetApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
+        }
+
+        /// <summary> Gets whether or not the current instance has data. </summary>
+        public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        public virtual SqlServerJobExecutionData Data
+        {
+            get
+            {
+                if (!HasData)
+                {
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
+                return _data;
+            }
+        }
+
+        /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serverName"> The serverName. </param>
@@ -33,96 +81,59 @@ namespace Azure.ResourceManager.Sql
         /// <param name="targetId"> The targetId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, Guid targetId)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics;
-        private readonly JobTargetExecutionsRestOperations _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient;
-        private readonly SqlServerJobExecutionData _data;
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs/executions/steps/targets";
-
-        /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepTargetResource"/> class for mocking. </summary>
-        protected SqlServerJobExecutionStepTargetResource()
-        {
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepTargetResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServerJobExecutionStepTargetResource(ArmClient client, SqlServerJobExecutionData data) : this(client, data.Id)
-        {
-            HasData = true;
-            _data = data;
-        }
-
-        /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepTargetResource"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SqlServerJobExecutionStepTargetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sqlServerJobExecutionStepTargetJobTargetExecutionsApiVersion);
-            _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobExecutionStepTargetJobTargetExecutionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SqlServerJobExecutionData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a target execution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerJobExecutionStepTargetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SqlServerJobExecutionStepTargetResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetResource.Get");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetResource.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Guid.Parse(Id.Name), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerJobExecutionData> response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,33 +147,41 @@ namespace Azure.ResourceManager.Sql
         /// Gets a target execution.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobTargetExecutions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> JobTargetExecutions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerJobExecutionStepTargetResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerJobExecutionStepTargetResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlServerJobExecutionStepTargetResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetResource.Get");
+            using DiagnosticScope scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepTargetResource.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _jobTargetExecutionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Name), Id.Parent.Name, Guid.Parse(Id.Name), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerJobExecutionData> response = Response.FromValue(SqlServerJobExecutionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerJobExecutionStepTargetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

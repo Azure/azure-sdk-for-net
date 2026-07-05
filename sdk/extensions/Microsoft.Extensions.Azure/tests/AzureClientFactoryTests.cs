@@ -3,14 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using static Azure.Core.Extensions.Tests.ReflectionHelpers;
 
 namespace Azure.Core.Extensions.Tests
 {
@@ -27,8 +28,8 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.NotNull(client);
-            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.That(client, Is.Not.Null);
+            Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
         }
 
         [Test]
@@ -43,7 +44,7 @@ namespace Azure.Core.Extensions.Tests
             TestClient client = factory.CreateClient("Default");
             TestClient anotherClient = factory.CreateClient("Default");
 
-            Assert.AreSame(client, anotherClient);
+            Assert.That(anotherClient, Is.SameAs(client));
         }
 
         [Test]
@@ -58,8 +59,8 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.AreSame(client, client);
-            Assert.AreEqual("Value", client.Options.Property);
+            Assert.That(client, Is.SameAs(client));
+            Assert.That(client.Options.Property, Is.EqualTo("Value"));
         }
 
         [Test]
@@ -74,8 +75,8 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.AreSame(client, client);
-            Assert.AreEqual("Value", client.Options.Property);
+            Assert.That(client, Is.SameAs(client));
+            Assert.That(client.Options.Property, Is.EqualTo("Value"));
         }
 
         [Test]
@@ -90,7 +91,7 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.AreEqual("http://otherhost/", client.Uri.ToString());
+            Assert.That(client.Uri.ToString(), Is.EqualTo("http://otherhost/"));
         }
 
         [Test]
@@ -108,13 +109,13 @@ namespace Azure.Core.Extensions.Tests
             TestClient client = factory.CreateClient("Default");
             TestClient otherClient = factory.CreateClient("OtherClient");
 
-            Assert.AreEqual("http://localhost/", client.Uri.ToString());
-            Assert.AreEqual("http://otherhost/", otherClient.Uri.ToString());
+            Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
+            Assert.That(otherClient.Uri.ToString(), Is.EqualTo("http://otherhost/"));
 
-            Assert.AreEqual("Value1", client.Options.Property);
-            Assert.AreEqual("Value2", otherClient.Options.Property);
+            Assert.That(client.Options.Property, Is.EqualTo("Value1"));
+            Assert.That(otherClient.Options.Property, Is.EqualTo("Value2"));
 
-            Assert.AreNotSame(client, otherClient);
+            Assert.That(otherClient, Is.Not.SameAs(client));
         }
 
         [Test]
@@ -129,8 +130,8 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.NotNull(client);
-            Assert.AreEqual("http://localhost/", client.Uri.ToString());
+            Assert.That(client, Is.Not.Null);
+            Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
         }
 
         [Test]
@@ -151,10 +152,10 @@ namespace Azure.Core.Extensions.Tests
 
             TestClient client = factory.CreateClient("Default");
 
-            Assert.AreEqual("value", client.Options.Property);
-            Assert.AreEqual("nested-value", client.Options.Nested.Property);
-            Assert.AreEqual(15, client.Options.IntProperty);
-            Assert.AreEqual("http://localhost/", client.ConnectionString);
+            Assert.That(client.Options.Property, Is.EqualTo("value"));
+            Assert.That(client.Options.Nested.Property, Is.EqualTo("nested-value"));
+            Assert.That(client.Options.IntProperty, Is.EqualTo(15));
+            Assert.That(client.ConnectionString, Is.EqualTo("http://localhost/"));
         }
 
         [Test]
@@ -167,7 +168,7 @@ namespace Azure.Core.Extensions.Tests
             IAzureClientFactory<TestClient> factory = provider.GetService<IAzureClientFactory<TestClient>>();
             var exception = Assert.Throws<InvalidOperationException>(() => factory.CreateClient("Other"));
 
-            Assert.AreEqual(exception.Message, "Unable to find client registration with type 'TestClient' and name 'Other'.");
+            Assert.That(exception.Message, Is.EqualTo("Unable to find client registration with type 'TestClient' and name 'Other'."));
         }
 
         [Test]
@@ -181,8 +182,8 @@ namespace Azure.Core.Extensions.Tests
             var exception = Assert.Throws<ArgumentException>(() => factory.CreateClient("Default"));
             var otherException = Assert.Throws<ArgumentException>(() => factory.CreateClient("Default"));
 
-            Assert.AreSame(otherException, exception);
-            Assert.AreEqual(exception.Message, "Throwing");
+            Assert.That(exception, Is.SameAs(otherException));
+            Assert.That(exception.Message, Is.EqualTo("Throwing"));
         }
 
         [Test]
@@ -199,8 +200,8 @@ namespace Azure.Core.Extensions.Tests
             TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
             TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
 
-            Assert.AreEqual("GlobalAppId", testClient.Options.Diagnostics.ApplicationId);
-            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.Diagnostics.ApplicationId);
+            Assert.That(testClient.Options.Diagnostics.ApplicationId, Is.EqualTo("GlobalAppId"));
+            Assert.That(testClientWithCredentials.Options.Diagnostics.ApplicationId, Is.EqualTo("GlobalAppId"));
         }
 
         [Test]
@@ -219,8 +220,8 @@ namespace Azure.Core.Extensions.Tests
             TestClient testClient = provider.GetService<IAzureClientFactory<TestClient>>().CreateClient("Default");
             TestClientWithCredentials testClientWithCredentials = provider.GetService<IAzureClientFactory<TestClientWithCredentials>>().CreateClient("Default");
 
-            Assert.AreEqual("GlobalAppId", testClient.Options.Diagnostics.ApplicationId);
-            Assert.AreEqual("GlobalAppId", testClientWithCredentials.Options.Diagnostics.ApplicationId);
+            Assert.That(testClient.Options.Diagnostics.ApplicationId, Is.EqualTo("GlobalAppId"));
+            Assert.That(testClientWithCredentials.Options.Diagnostics.ApplicationId, Is.EqualTo("GlobalAppId"));
         }
 
         [Test]
@@ -231,27 +232,27 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             var client = provider.GetService<TestClient>();
 
-            Assert.AreEqual("Connection string", client.ConnectionString);
+            Assert.That(client.ConnectionString, Is.EqualTo("Connection string"));
         }
 
         [Test]
         public void UsesProvidedCredentialIfOverGlobal()
         {
             var serviceCollection = new ServiceCollection();
-            var defaultAzureCredential = new ManagedIdentityCredential();
+            var defaultAzureCredential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
             serviceCollection.AddAzureClients(builder => builder.AddTestClientWithCredentials(new Uri("http://localhost")).WithCredential(defaultAzureCredential));
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.AreSame(defaultAzureCredential, client.Credential);
+            Assert.That(client.Credential, Is.SameAs(defaultAzureCredential));
         }
 
         [Test]
         public void UsesGlobalCredential()
         {
             var serviceCollection = new ServiceCollection();
-            var defaultAzureCredential = new ManagedIdentityCredential();
+            var defaultAzureCredential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
             serviceCollection.AddAzureClients(builder => {
                 builder.AddTestClientWithCredentials(new Uri("http://localhost"));
                 builder.UseCredential(defaultAzureCredential);
@@ -260,7 +261,7 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.AreSame(defaultAzureCredential, client.Credential);
+            Assert.That(client.Credential, Is.SameAs(defaultAzureCredential));
         }
 
         [Test]
@@ -279,12 +280,12 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            Assert.That(client.Credential, Is.InstanceOf<ClientSecretCredential>());
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientId"), Is.EqualTo("ConfigurationClientId"));
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientSecret"), Is.EqualTo("ConfigurationClientSecret"));
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "TenantId"), Is.EqualTo("ConfigurationTenantId"));
         }
 
         [Test]
@@ -303,13 +304,13 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.IsInstanceOf<ClientSecretCredential>(client.Credential);
+            Assert.That(client.Credential, Is.InstanceOf<ClientSecretCredential>());
             var clientSecretCredential = (ClientSecretCredential)client.Credential;
 
-            Assert.AreEqual("http://localhost/", client.Uri.ToString());
-            Assert.AreEqual("ConfigurationClientId", clientSecretCredential.ClientId);
-            Assert.AreEqual("ConfigurationClientSecret", clientSecretCredential.ClientSecret);
-            Assert.AreEqual("ConfigurationTenantId", clientSecretCredential.TenantId);
+            Assert.That(client.Uri.ToString(), Is.EqualTo("http://localhost/"));
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientId"), Is.EqualTo("ConfigurationClientId"));
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "ClientSecret"), Is.EqualTo("ConfigurationClientSecret"));
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientSecretCredential), clientSecretCredential, "TenantId"), Is.EqualTo("ConfigurationTenantId"));
         }
 
         [Test]
@@ -320,7 +321,7 @@ namespace Azure.Core.Extensions.Tests
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClient client = provider.GetService<TestClient>();
-            Assert.AreEqual(TestClientOptions.ServiceVersion.B, client.Options.Version);
+            Assert.That(client.Options.Version, Is.EqualTo(TestClientOptions.ServiceVersion.B));
         }
 
         [Test]
@@ -331,7 +332,7 @@ namespace Azure.Core.Extensions.Tests
 
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => provider.GetService<TestClient>());
-            Assert.AreEqual("Client registration requires a TokenCredential. Configure it using UseCredential method.", exception.Message);
+            Assert.That(exception.Message, Is.EqualTo("Client registration requires a TokenCredential. Configure it using UseCredential method."));
         }
 
         [Test]
@@ -342,9 +343,9 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientMultipleOptionsParameters client = provider.GetService<TestClientMultipleOptionsParameters>();
 
-            Assert.NotNull(client.Options);
-            Assert.AreEqual(TestClientOptionsMultipleParameters.ServiceVersion.D, client.Options.Version);
-            Assert.AreEqual("some default value", client.Options.OtherParameter);
+            Assert.That(client.Options, Is.Not.Null);
+            Assert.That(client.Options.Version, Is.EqualTo(TestClientOptionsMultipleParameters.ServiceVersion.D));
+            Assert.That(client.Options.OtherParameter, Is.EqualTo("some default value"));
         }
 
         [Test]
@@ -355,9 +356,9 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientMultipleOptionsParameters client = provider.GetService<TestClientMultipleOptionsParameters>();
 
-            Assert.NotNull(client.Options);
-            Assert.AreEqual(TestClientOptionsMultipleParameters.ServiceVersion.B, client.Options.Version);
-            Assert.AreEqual("some default value", client.Options.OtherParameter);
+            Assert.That(client.Options, Is.Not.Null);
+            Assert.That(client.Options.Version, Is.EqualTo(TestClientOptionsMultipleParameters.ServiceVersion.B));
+            Assert.That(client.Options.OtherParameter, Is.EqualTo("some default value"));
         }
 
         [Test]
@@ -370,8 +371,8 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClient client = provider.GetService<TestClient>();
 
-            Assert.AreEqual("conn str", client.ConnectionString);
-            Assert.NotNull(client.Options);
+            Assert.That(client.ConnectionString, Is.EqualTo("conn str"));
+            Assert.That(client.Options, Is.Not.Null);
         }
 
         [Test]
@@ -386,7 +387,7 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             ValueClient client = provider.GetService<ValueClient>();
 
-            Assert.AreEqual(name, client.Name);
+            Assert.That(client.Name, Is.EqualTo(name));
         }
 
         [Test]
@@ -401,7 +402,7 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             int clientValue = provider.GetService<int>();
 
-            Assert.AreEqual(value, clientValue);
+            Assert.That(clientValue, Is.EqualTo(value));
         }
 
         [Test]
@@ -414,9 +415,9 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.AreEqual("http://localhost/", client.Uri.AbsoluteUri);
-            Assert.NotNull(client.Options);
-            Assert.NotNull(client.Credential);
+            Assert.That(client.Uri.AbsoluteUri, Is.EqualTo("http://localhost/"));
+            Assert.That(client.Options, Is.Not.Null);
+            Assert.That(client.Credential, Is.Not.Null);
         }
 
         [Test]
@@ -430,8 +431,8 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClient client = provider.GetService<TestClient>();
 
-            Assert.AreEqual("conn str", client.ConnectionString);
-            Assert.NotNull(client.Options);
+            Assert.That(client.ConnectionString, Is.EqualTo("conn str"));
+            Assert.That(client.Options, Is.Not.Null);
         }
 
         [Test]
@@ -445,9 +446,9 @@ namespace Azure.Core.Extensions.Tests
             ServiceProvider provider = serviceCollection.BuildServiceProvider();
             TestClientWithCredentials client = provider.GetService<TestClientWithCredentials>();
 
-            Assert.AreEqual("http://localhost/", client.Uri.AbsoluteUri);
-            Assert.NotNull(client.Options);
-            Assert.NotNull(client.Credential);
+            Assert.That(client.Uri.AbsoluteUri, Is.EqualTo("http://localhost/"));
+            Assert.That(client.Options, Is.Not.Null);
+            Assert.That(client.Credential, Is.Not.Null);
         }
 
         [Test]
@@ -472,10 +473,8 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
-            Assert.IsTrue(disposed);
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
+            Assert.That(disposed, Is.True);
         }
 
         [Test]
@@ -500,10 +499,8 @@ namespace Azure.Core.Extensions.Tests
 
             provider.Dispose();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
-            Assert.IsTrue(disposed);
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
+            Assert.That(disposed, Is.True);
         }
 
         [Test]
@@ -564,10 +561,8 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.DoesNotThrow(provider.Dispose);
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
-            Assert.AreEqual(disposeCount, 3);
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
+            Assert.That(disposeCount, Is.EqualTo(3));
         }
 
         [Test]
@@ -592,10 +587,8 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
-            Assert.IsTrue(disposed);
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
+            Assert.That(disposed, Is.True);
         }
 
         [Test]
@@ -620,10 +613,8 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
-            Assert.IsTrue(disposed);
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
+            Assert.That(disposed, Is.True);
         }
 
         [Test]
@@ -684,10 +675,8 @@ namespace Azure.Core.Extensions.Tests
 
             await provider.DisposeAsync();
 
-            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-
-            Assert.DoesNotThrowAsync(async () => await tcs.Task.AwaitWithCancellation(cancellationSource.Token));
-            Assert.AreEqual(disposeCount, 3);
+            Assert.DoesNotThrowAsync(async () => await tcs.Task.TimeoutAfter(TimeSpan.FromSeconds(5)));
+            Assert.That(disposeCount, Is.EqualTo(3));
         }
 
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)

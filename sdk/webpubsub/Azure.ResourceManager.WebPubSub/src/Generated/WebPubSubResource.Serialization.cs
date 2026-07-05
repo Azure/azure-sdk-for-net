@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.WebPubSub
 {
+    /// <summary></summary>
     public partial class WebPubSubResource : IJsonModel<WebPubSubData>
     {
-        private static WebPubSubData s_dataDeserializationInstance;
-        private static WebPubSubData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WebPubSubData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WebPubSubData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WebPubSubData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebPubSubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubData>)Data).Write(writer, options);
 
-        WebPubSubData IJsonModel<WebPubSubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebPubSubData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebPubSubData IJsonModel<WebPubSubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WebPubSubData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebPubSubData>(Data, options, AzureResourceManagerWebPubSubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WebPubSubData IPersistableModel<WebPubSubData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebPubSubData>(data, options, AzureResourceManagerWebPubSubContext.Default);
 
-        string IPersistableModel<WebPubSubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebPubSubData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebPubSubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

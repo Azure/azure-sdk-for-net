@@ -4,21 +4,21 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {
     public class DeleteRecordingTests : CallAutomationTestBase
     {
-        private const string AmsDeleteUrl = "https://dummyurl.com/v1/objects/documentid";
+        private const string AmsDeleteUrl = "https://dummyurl.asm.skype.com/v1/objects/documentid";
 
         [Test]
         public void DeleteRecording_Returns200Ok()
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
             var response = callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl));
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [Test]
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200);
             var response = await callAutomationClient.GetCallRecording().DeleteAsync(new Uri(AmsDeleteUrl)).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl)));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -44,8 +44,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.GetCallRecording().Delete(new Uri(AmsDeleteUrl)));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 401);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(401));
         }
     }
 }

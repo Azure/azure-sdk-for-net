@@ -26,21 +26,23 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "client.clientnamespace.second.sub",
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "4",
       "kind": "constant",
-      "name": "getFirstContentType",
+      "name": "GetFirstAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -51,12 +53,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
       "kind": "constant",
-      "name": "getSecondContentType",
+      "name": "GetFirstAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -67,7 +70,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -79,6 +83,12 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.FirstModel.FirstClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "FirstClientResult"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "9",
@@ -103,7 +113,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -115,6 +126,12 @@
       "crossLanguageDefinitionId": "Client.ClientNamespace.Second.Model.SecondClientResult",
       "usage": "Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "SecondClientResult"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "12",
@@ -135,7 +152,8 @@
               "name": "type"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -145,17 +163,20 @@
       "$id": "13",
       "kind": "client",
       "name": "ClientNamespaceFirstClient",
+      "isExactName": false,
       "namespace": "client.clientnamespace",
       "methods": [
         {
           "$id": "14",
           "kind": "basic",
           "name": "getFirst",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "15",
             "name": "getFirst",
+            "isExactName": false,
             "resourceName": "ClientNamespaceFirstClient",
             "accessibility": "public",
             "parameters": [
@@ -173,7 +194,28 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept"
+                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "17",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "4"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -188,7 +230,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -198,25 +245,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst",
-            "decorators": []
+            "decorators": [],
+            "namespace": "ClientNameSpaceClient"
           },
           "parameters": [
             {
-              "$id": "17",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "4"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.getFirst.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "17"
             }
           ],
           "response": {
@@ -259,28 +293,34 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.ClientNamespace.endpoint"
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceFirstClient",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     },
     {
       "$id": "21",
       "kind": "client",
       "name": "ClientNamespaceSecondClient",
+      "isExactName": false,
       "namespace": "client.clientnamespace.second",
       "methods": [
         {
           "$id": "22",
           "kind": "basic",
           "name": "getSecond",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "23",
             "name": "getSecond",
+            "isExactName": false,
             "resourceName": "ClientNamespaceSecondClient",
             "accessibility": "public",
             "parameters": [
@@ -298,7 +338,28 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept"
+                "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "25",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "6"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -313,7 +374,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -323,25 +389,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond",
-            "decorators": []
+            "decorators": [],
+            "namespace": "client.clientnamespace.second"
           },
           "parameters": [
             {
-              "$id": "25",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "6"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.getSecond.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "25"
             }
           ],
           "response": {
@@ -384,12 +437,15 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.ClientNamespace.endpoint"
+          "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "ClientNameSpaceClient.ClientNamespaceSecondClient",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

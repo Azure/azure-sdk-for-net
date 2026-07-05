@@ -31,18 +31,11 @@ namespace Azure.ResourceManager.EdgeZones
     public partial class ExtendedZoneData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>
     {
         internal ExtendedZoneData() { }
-        public string DisplayName { get { throw null; } }
-        public string Geography { get { throw null; } }
-        public string GeographyGroup { get { throw null; } }
-        public string HomeLocation { get { throw null; } }
-        public string Latitude { get { throw null; } }
-        public string Longitude { get { throw null; } }
-        public Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState? ProvisioningState { get { throw null; } }
-        public string RegionalDisplayName { get { throw null; } }
-        public string RegionCategory { get { throw null; } }
-        public string RegionType { get { throw null; } }
-        public Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState? RegistrationState { get { throw null; } }
+        public Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.EdgeZones.ExtendedZoneData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.EdgeZones.ExtendedZoneData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.ExtendedZoneData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -88,7 +81,8 @@ namespace Azure.ResourceManager.EdgeZones.Models
 {
     public static partial class ArmEdgeZonesModelFactory
     {
-        public static Azure.ResourceManager.EdgeZones.ExtendedZoneData ExtendedZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState? provisioningState = default(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState?), Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState? registrationState = default(Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState?), string displayName = null, string regionalDisplayName = null, string regionType = null, string regionCategory = null, string geography = null, string geographyGroup = null, string longitude = null, string latitude = null, string homeLocation = null) { throw null; }
+        public static Azure.ResourceManager.EdgeZones.ExtendedZoneData ExtendedZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties ExtendedZoneProperties(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState? provisioningState = default(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState?), Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState? registrationState = default(Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState?), string displayName = null, string regionalDisplayName = null, string regionType = null, string regionCategory = null, string geography = null, string geographyGroup = null, string longitude = null, string latitude = null, string homeLocation = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EdgeZonesProvisioningState : System.IEquatable<Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState>
@@ -104,12 +98,11 @@ namespace Azure.ResourceManager.EdgeZones.Models
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState left, Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState left, Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -124,13 +117,36 @@ namespace Azure.ResourceManager.EdgeZones.Models
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState PendingUnregister { get { throw null; } }
         public static Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState Registered { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState left, Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState left, Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ExtendedZoneProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties>
+    {
+        internal ExtendedZoneProperties() { }
+        public string DisplayName { get { throw null; } }
+        public string Geography { get { throw null; } }
+        public string GeographyGroup { get { throw null; } }
+        public string HomeLocation { get { throw null; } }
+        public string Latitude { get { throw null; } }
+        public string Longitude { get { throw null; } }
+        public Azure.ResourceManager.EdgeZones.Models.EdgeZonesProvisioningState? ProvisioningState { get { throw null; } }
+        public string RegionalDisplayName { get { throw null; } }
+        public string RegionCategory { get { throw null; } }
+        public string RegionType { get { throw null; } }
+        public Azure.ResourceManager.EdgeZones.Models.EdgeZonesRegistrationState? RegistrationState { get { throw null; } }
+        protected virtual Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EdgeZones.Models.ExtendedZoneProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

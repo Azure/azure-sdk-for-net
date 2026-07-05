@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public readonly partial struct NotificationLanguage : IEquatable<NotificationLanguage>
     {
         private readonly string _value;
+        /// <summary> American english language. </summary>
+        private const string EnUsValue = "en-us";
 
         /// <summary> Initializes a new instance of <see cref="NotificationLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NotificationLanguage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnUsValue = "en-us";
+            _value = value;
+        }
 
         /// <summary> American english language. </summary>
         public static NotificationLanguage EnUs { get; } = new NotificationLanguage(EnUsValue);
+
         /// <summary> Determines if two <see cref="NotificationLanguage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NotificationLanguage left, NotificationLanguage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NotificationLanguage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NotificationLanguage left, NotificationLanguage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationLanguage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NotificationLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NotificationLanguage(string value) => new NotificationLanguage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NotificationLanguage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NotificationLanguage?(string value) => value == null ? null : new NotificationLanguage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NotificationLanguage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NotificationLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

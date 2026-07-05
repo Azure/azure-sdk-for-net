@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.SecretsStoreExtension;
 
 namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSecretsStoreExtensionArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableSecretsStoreExtensionArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSecretsStoreExtensionArmClient for mocking. </summary>
         protected MockableSecretsStoreExtensionArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecretsStoreExtensionArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSecretsStoreExtensionArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSecretsStoreExtensionArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableSecretsStoreExtensionArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="KeyVaultSecretProviderClassResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KeyVaultSecretProviderClassResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultSecretProviderClassResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="KeyVaultSecretProviderClassResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="KeyVaultSecretProviderClassResource"/> object. </returns>
         public virtual KeyVaultSecretProviderClassResource GetKeyVaultSecretProviderClassResource(ResourceIdentifier id)
@@ -46,10 +35,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Mocking
             return new KeyVaultSecretProviderClassResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SecretSyncResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecretSyncResource.CreateResourceIdentifier" /> to create a <see cref="SecretSyncResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SecretSyncResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SecretSyncResource"/> object. </returns>
         public virtual SecretSyncResource GetSecretSyncResource(ResourceIdentifier id)

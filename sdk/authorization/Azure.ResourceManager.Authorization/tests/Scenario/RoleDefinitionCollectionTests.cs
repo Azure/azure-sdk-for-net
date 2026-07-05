@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        public ResourceGroupResource ResourceGroup {get; set;}
+        public ResourceGroupResource ResourceGroup { get; set; }
 
         private async Task<AuthorizationRoleDefinitionCollection> GetRoleDefinitionCollectionAsync()
         {

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -14,22 +15,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class VMwareToAzStackHciProtectedItemCustomPropertiesUpdate : DataReplicationProtectedItemCustomPropertiesUpdate
     {
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedItemCustomPropertiesUpdate"/>. </summary>
-        public VMwareToAzStackHciProtectedItemCustomPropertiesUpdate()
+        public VMwareToAzStackHciProtectedItemCustomPropertiesUpdate() : base("VMwareToAzStackHCI")
         {
             NicsToInclude = new ChangeTrackingList<VMwareToAzStackHciNicInput>();
-            InstanceType = "VMwareToAzStackHCI";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedItemCustomPropertiesUpdate"/>. </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationProtectedItemCustomPropertiesUpdate. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="nicsToInclude"> Gets or sets the list of VM NIC to replicate. </param>
         /// <param name="targetCpuCores"> Gets or sets the target CPU cores. </param>
         /// <param name="isDynamicRam"> Gets or sets a value indicating whether memory is dynamical. </param>
         /// <param name="dynamicMemoryConfig"> Protected item dynamic memory config. </param>
         /// <param name="targetMemoryInMegaBytes"> Gets or sets the target memory in mega-bytes. </param>
         /// <param name="osType"> Gets or sets the type of the OS. </param>
-        internal VMwareToAzStackHciProtectedItemCustomPropertiesUpdate(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<VMwareToAzStackHciNicInput> nicsToInclude, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string osType) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareToAzStackHciProtectedItemCustomPropertiesUpdate(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<VMwareToAzStackHciNicInput> nicsToInclude, int? targetCpuCores, bool? isDynamicRam, ProtectedItemDynamicMemoryConfig dynamicMemoryConfig, int? targetMemoryInMegaBytes, string osType) : base(instanceType, additionalBinaryDataProperties)
         {
             NicsToInclude = nicsToInclude;
             TargetCpuCores = targetCpuCores;
@@ -37,19 +37,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DynamicMemoryConfig = dynamicMemoryConfig;
             TargetMemoryInMegaBytes = targetMemoryInMegaBytes;
             OSType = osType;
-            InstanceType = instanceType ?? "VMwareToAzStackHCI";
         }
 
         /// <summary> Gets or sets the list of VM NIC to replicate. </summary>
         public IList<VMwareToAzStackHciNicInput> NicsToInclude { get; }
+
         /// <summary> Gets or sets the target CPU cores. </summary>
         public int? TargetCpuCores { get; set; }
+
         /// <summary> Gets or sets a value indicating whether memory is dynamical. </summary>
         public bool? IsDynamicRam { get; set; }
+
         /// <summary> Protected item dynamic memory config. </summary>
         public ProtectedItemDynamicMemoryConfig DynamicMemoryConfig { get; set; }
+
         /// <summary> Gets or sets the target memory in mega-bytes. </summary>
         public int? TargetMemoryInMegaBytes { get; set; }
+
         /// <summary> Gets or sets the type of the OS. </summary>
         public string OSType { get; set; }
     }

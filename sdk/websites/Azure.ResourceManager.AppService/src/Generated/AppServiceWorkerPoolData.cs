@@ -13,95 +13,130 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the AppServiceWorkerPool data model.
-    /// Worker pool of an App Service Environment ARM resource.
-    /// </summary>
+    /// <summary> Worker pool of an App Service Environment ARM resource. </summary>
     public partial class AppServiceWorkerPoolData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceWorkerPoolData"/>. </summary>
         public AppServiceWorkerPoolData()
         {
-            InstanceNames = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceWorkerPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Core resource properties. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
-        /// <param name="workerSizeId"> Worker size ID for referencing this worker pool. </param>
-        /// <param name="computeMode"> Shared or dedicated app hosting. </param>
-        /// <param name="workerSize"> VM size of the worker pool instances. </param>
-        /// <param name="workerCount"> Number of instances in the worker pool. </param>
-        /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceSkuDescription sku, int? workerSizeId, ComputeModeOption? computeMode, string workerSize, int? workerCount, IReadOnlyList<string> instanceNames, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkerPool properties, AppServiceSkuDescription sku, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Sku = sku;
-            WorkerSizeId = workerSizeId;
-            ComputeMode = computeMode;
-            WorkerSize = workerSize;
-            WorkerCount = workerCount;
-            InstanceNames = instanceNames;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
+        internal WorkerPool Properties { get; set; }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
         [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; set; }
-        /// <summary> Worker size ID for referencing this worker pool. </summary>
-        [WirePath("properties.workerSizeId")]
-        public int? WorkerSizeId { get; set; }
-        /// <summary> Shared or dedicated app hosting. </summary>
-        [WirePath("properties.computeMode")]
-        public ComputeModeOption? ComputeMode { get; set; }
-        /// <summary> VM size of the worker pool instances. </summary>
-        [WirePath("properties.workerSize")]
-        public string WorkerSize { get; set; }
-        /// <summary> Number of instances in the worker pool. </summary>
-        [WirePath("properties.workerCount")]
-        public int? WorkerCount { get; set; }
-        /// <summary> Names of all instances in the worker pool (read only). </summary>
-        [WirePath("properties.instanceNames")]
-        public IReadOnlyList<string> InstanceNames { get; }
-        /// <summary> Kind of resource. </summary>
+
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Worker size ID for referencing this worker pool. </summary>
+        [WirePath("properties.workerSizeId")]
+        public int? WorkerSizeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkerSizeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkerPool();
+                }
+                Properties.WorkerSizeId = value;
+            }
+        }
+
+        /// <summary> Shared or dedicated app hosting. </summary>
+        [WirePath("properties.computeMode")]
+        public ComputeModeOption? ComputeMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkerPool();
+                }
+                Properties.ComputeMode = value;
+            }
+        }
+
+        /// <summary> VM size of the worker pool instances. </summary>
+        [WirePath("properties.workerSize")]
+        public string WorkerSize
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkerSize;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkerPool();
+                }
+                Properties.WorkerSize = value;
+            }
+        }
+
+        /// <summary> Number of instances in the worker pool. </summary>
+        [WirePath("properties.workerCount")]
+        public int? WorkerCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkerCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkerPool();
+                }
+                Properties.WorkerCount = value;
+            }
+        }
+
+        /// <summary> Names of all instances in the worker pool (read only). </summary>
+        [WirePath("properties.instanceNames")]
+        public IReadOnlyList<string> InstanceNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkerPool();
+                }
+                return Properties.InstanceNames;
+            }
+        }
     }
 }

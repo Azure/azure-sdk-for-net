@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             if (await templateCollection.ExistsAsync("sdk-test-akriconnector-template"))
             {
-                 var existing = await templateCollection.GetAsync("sdk-test-akriconnector-template");
-                 await existing.Value.DeleteAsync(WaitUntil.Completed);
+                var existing = await templateCollection.GetAsync("sdk-test-akriconnector-template");
+                await existing.Value.DeleteAsync(WaitUntil.Completed);
             }
             var response = await templateCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
@@ -76,18 +76,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             var runtimeConfiguration = new AkriConnectorTemplateManagedConfiguration(managedImageConfig);
 
-            // Device inbound endpoint type: Microsoft.Media with default streams config schema ref
-            var mediaSchemaRefs = new AkriConnectorTemplateDeviceInboundEndpointConfigurationSchemaRefs
-            {
-                DefaultStreamsConfigSchemaRef = "aio-sr://${schemaRegistry.properties.namespace}/media-stream-config-schema:1",
-            };
-
             var inboundEndpoints = new[]
             {
                 new AkriConnectorTemplateDeviceInboundEndpointType("Microsoft.Media")
-                {
-                    ConfigurationSchemaRefs = mediaSchemaRefs
-                }
             };
 
             // Build and return the resource data, including extended location (CustomLocation)

@@ -18,7 +18,7 @@ namespace Azure.Core.GeoJson
         /// Initializes new instance of <see cref="GeoPolygonCollection"/>.
         /// </summary>
         /// <param name="polygons">The collection of inner polygons.</param>
-        public GeoPolygonCollection(IEnumerable<GeoPolygon> polygons): this(polygons, null, DefaultProperties)
+        public GeoPolygonCollection(IEnumerable<GeoPolygon> polygons) : this(polygons, null, DefaultProperties)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Core.GeoJson
         /// <param name="polygons">The collection of inner geometries.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoPolygonCollection(IEnumerable<GeoPolygon> polygons, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
+        public GeoPolygonCollection(IEnumerable<GeoPolygon> polygons, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties) : base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(polygons, nameof(polygons));
 

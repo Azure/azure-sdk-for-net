@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyPut.json
             // this example is just showing the usage of "FirewallPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ WorkspaceIdId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/
                 IntrusionDetection = new FirewallPolicyIntrusionDetection
                 {
                     Mode = FirewallPolicyIntrusionDetectionStateType.Alert,
-                    Profile = new FirewallPolicyIntrusionDetectionProfileType("Balanced"),
+                    Profile = FirewallPolicyIntrusionDetectionProfileType.Core,
                     Configuration = new FirewallPolicyIntrusionDetectionConfiguration
                     {
                         SignatureOverrides = {new FirewallPolicyIntrusionDetectionSignatureSpecification
@@ -100,7 +100,6 @@ Mode = FirewallPolicyIntrusionDetectionStateType.Deny,
 }},
                         BypassTrafficSettings = {new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications
 {
-Name = "bypassRule1",
 Description = "Rule 1",
 Protocol = FirewallPolicyIntrusionDetectionProtocol.Tcp,
 SourceAddresses = {"1.2.3.4"},
@@ -112,7 +111,6 @@ DestinationPorts = {"*"},
                 TransportSecurityCertificateAuthority = new FirewallPolicyCertificateAuthority
                 {
                     KeyVaultSecretId = "https://kv/secret",
-                    Name = "clientcert",
                 },
                 SkuTier = FirewallPolicySkuTier.Premium,
                 Location = new AzureLocation("West US"),
@@ -121,7 +119,7 @@ DestinationPorts = {"*"},
 ["key1"] = "value1"
 },
             };
-            ArmOperation<FirewallPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallPolicyName, data);
+            ArmOperation<FirewallPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallPolicyName, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -135,7 +133,7 @@ DestinationPorts = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyGet.json
             // this example is just showing the usage of "FirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +166,7 @@ DestinationPorts = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllFirewallPoliciesForAGivenResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyListByResourceGroup.json
             // this example is just showing the usage of "FirewallPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +201,7 @@ DestinationPorts = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyGet.json
             // this example is just showing the usage of "FirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,7 +230,7 @@ DestinationPorts = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/FirewallPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/FirewallPolicyGet.json
             // this example is just showing the usage of "FirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

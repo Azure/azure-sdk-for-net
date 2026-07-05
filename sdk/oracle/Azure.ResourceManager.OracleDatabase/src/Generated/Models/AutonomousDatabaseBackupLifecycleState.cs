@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct AutonomousDatabaseBackupLifecycleState : IEquatable<AutonomousDatabaseBackupLifecycleState>
     {
         private readonly string _value;
+        /// <summary> AutonomousDatabase backup is creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> AutonomousDatabase backup is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> AutonomousDatabase backup is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> AutonomousDatabase backup is failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> AutonomousDatabase backup is updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutonomousDatabaseBackupLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string ActiveValue = "Active";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> AutonomousDatabase backup is creating. </summary>
         public static AutonomousDatabaseBackupLifecycleState Creating { get; } = new AutonomousDatabaseBackupLifecycleState(CreatingValue);
+
         /// <summary> AutonomousDatabase backup is active. </summary>
         public static AutonomousDatabaseBackupLifecycleState Active { get; } = new AutonomousDatabaseBackupLifecycleState(ActiveValue);
+
         /// <summary> AutonomousDatabase backup is deleting. </summary>
         public static AutonomousDatabaseBackupLifecycleState Deleting { get; } = new AutonomousDatabaseBackupLifecycleState(DeletingValue);
+
         /// <summary> AutonomousDatabase backup is failed. </summary>
         public static AutonomousDatabaseBackupLifecycleState Failed { get; } = new AutonomousDatabaseBackupLifecycleState(FailedValue);
+
         /// <summary> AutonomousDatabase backup is updating. </summary>
         public static AutonomousDatabaseBackupLifecycleState Updating { get; } = new AutonomousDatabaseBackupLifecycleState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseBackupLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutonomousDatabaseBackupLifecycleState left, AutonomousDatabaseBackupLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutonomousDatabaseBackupLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutonomousDatabaseBackupLifecycleState left, AutonomousDatabaseBackupLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousDatabaseBackupLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseBackupLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutonomousDatabaseBackupLifecycleState(string value) => new AutonomousDatabaseBackupLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutonomousDatabaseBackupLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutonomousDatabaseBackupLifecycleState?(string value) => value == null ? null : new AutonomousDatabaseBackupLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutonomousDatabaseBackupLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutonomousDatabaseBackupLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

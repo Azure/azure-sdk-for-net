@@ -7,80 +7,51 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for IsDevice match conditions
-    /// Serialized Name: IsDeviceMatchConditionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for IsDevice match conditions. </summary>
     public partial class IsDeviceMatchCondition : DeliveryRuleConditionProperties
     {
         /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
-        /// <param name="isDeviceOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: IsDeviceMatchConditionParameters.operator
-        /// </param>
-        public IsDeviceMatchCondition(IsDeviceOperator isDeviceOperator)
+        /// <param name="isDeviceOperator"> Describes operator to be matched. </param>
+        public IsDeviceMatchCondition(IsDeviceOperator isDeviceOperator) : base(DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters)
         {
             IsDeviceOperator = isDeviceOperator;
             MatchValues = new ChangeTrackingList<IsDeviceMatchConditionMatchValue>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleIsDeviceConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isDeviceOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: IsDeviceMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: IsDeviceMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: IsDeviceMatchConditionParameters.matchValues
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: IsDeviceMatchConditionParameters.transforms
-        /// </param>
-        internal IsDeviceMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        /// <param name="typeName"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="isDeviceOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        internal IsDeviceMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, IsDeviceOperator isDeviceOperator, bool? negateCondition, IList<IsDeviceMatchConditionMatchValue> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
             IsDeviceOperator = isDeviceOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            TypeName = typeName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IsDeviceMatchCondition"/> for deserialization. </summary>
-        internal IsDeviceMatchCondition()
-        {
-        }
-
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: IsDeviceMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Describes operator to be matched. </summary>
+        [WirePath("operator")]
         public IsDeviceOperator IsDeviceOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: IsDeviceMatchConditionParameters.negateCondition
-        /// </summary>
+
+        /// <summary> Describes if this is negate condition or not. </summary>
+        [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: IsDeviceMatchConditionParameters.matchValues
-        /// </summary>
+
+        /// <summary> The match value for the condition of the delivery rule. </summary>
+        [WirePath("matchValues")]
         public IList<IsDeviceMatchConditionMatchValue> MatchValues { get; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: IsDeviceMatchConditionParameters.transforms
-        /// </summary>
+
+        /// <summary> List of transforms. </summary>
+        [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

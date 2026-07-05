@@ -8,16 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class HostPoolRegistrationInfo : IUtf8JsonSerializable, IJsonModel<HostPoolRegistrationInfo>
+    /// <summary> Represents a RegistrationInfo definition. </summary>
+    public partial class HostPoolRegistrationInfo : IJsonModel<HostPoolRegistrationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolRegistrationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HostPoolRegistrationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHostPoolRegistrationInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HostPoolRegistrationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostPoolRegistrationInfo IPersistableModel<HostPoolRegistrationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HostPoolRegistrationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HostPoolRegistrationInfo"/> from. </param>
+        internal static HostPoolRegistrationInfo FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHostPoolRegistrationInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HostPoolRegistrationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,23 +77,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ExpireOn))
             {
-                if (ExpireOn != null)
-                {
-                    writer.WritePropertyName("expirationTime"u8);
-                    writer.WriteStringValue(ExpireOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("expirationTime");
-                }
+                writer.WritePropertyName("expirationTime"u8);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(Token))
             {
@@ -57,15 +97,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("registrationTokenOperation"u8);
                 writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -74,166 +114,66 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
         }
 
-        HostPoolRegistrationInfo IJsonModel<HostPoolRegistrationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HostPoolRegistrationInfo IJsonModel<HostPoolRegistrationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HostPoolRegistrationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHostPoolRegistrationInfo(document.RootElement, options);
         }
 
-        internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HostPoolRegistrationInfo DeserializeHostPoolRegistrationInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? expirationTime = default;
+            DateTimeOffset? expireOn = default;
             string token = default;
             HostPoolRegistrationTokenOperation? registrationTokenOperation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("expirationTime"u8))
+                if (prop.NameEquals("expirationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        expirationTime = null;
-                        continue;
-                    }
-                    expirationTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("token"u8))
-                {
-                    token = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("registrationTokenOperation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    registrationTokenOperation = new HostPoolRegistrationTokenOperation(property.Value.GetString());
+                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("token"u8))
+                {
+                    token = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("registrationTokenOperation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    registrationTokenOperation = new HostPoolRegistrationTokenOperation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HostPoolRegistrationInfo(expirationTime, token, registrationTokenOperation, serializedAdditionalRawData);
+            return new HostPoolRegistrationInfo(expireOn, token, registrationTokenOperation, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expirationTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpireOn))
-                {
-                    builder.Append("  expirationTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Token), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  token: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Token))
-                {
-                    builder.Append("  token: ");
-                    if (Token.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Token}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Token}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationTokenOperation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  registrationTokenOperation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RegistrationTokenOperation))
-                {
-                    builder.Append("  registrationTokenOperation: ");
-                    builder.AppendLine($"'{RegistrationTokenOperation.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HostPoolRegistrationInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HostPoolRegistrationInfo IPersistableModel<HostPoolRegistrationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHostPoolRegistrationInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HostPoolRegistrationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

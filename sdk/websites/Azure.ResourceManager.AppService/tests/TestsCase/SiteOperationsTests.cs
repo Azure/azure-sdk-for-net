@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
+using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.AppService.Tests.Helpers;
 using Azure.ResourceManager.Resources;

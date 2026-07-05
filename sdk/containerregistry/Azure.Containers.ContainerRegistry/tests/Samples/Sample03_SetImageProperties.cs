@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Containers.ContainerRegistry;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {

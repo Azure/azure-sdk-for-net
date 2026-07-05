@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.KeyVault.Models
     public readonly partial struct KeyVaultPrivateEndpointServiceConnectionStatus : IEquatable<KeyVaultPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public KeyVaultPrivateEndpointServiceConnectionStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PendingValue = "Pending";
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
         private const string DisconnectedValue = "Disconnected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public KeyVaultPrivateEndpointServiceConnectionStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Pending. </summary>
         public static KeyVaultPrivateEndpointServiceConnectionStatus Pending { get; } = new KeyVaultPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+
+        /// <summary> Gets the Approved. </summary>
         public static KeyVaultPrivateEndpointServiceConnectionStatus Approved { get; } = new KeyVaultPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+
+        /// <summary> Gets the Rejected. </summary>
         public static KeyVaultPrivateEndpointServiceConnectionStatus Rejected { get; } = new KeyVaultPrivateEndpointServiceConnectionStatus(RejectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> Gets the Disconnected. </summary>
         public static KeyVaultPrivateEndpointServiceConnectionStatus Disconnected { get; } = new KeyVaultPrivateEndpointServiceConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultPrivateEndpointServiceConnectionStatus left, KeyVaultPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultPrivateEndpointServiceConnectionStatus left, KeyVaultPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultPrivateEndpointServiceConnectionStatus(string value) => new KeyVaultPrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KeyVaultPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new KeyVaultPrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultPrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KeyVaultPrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

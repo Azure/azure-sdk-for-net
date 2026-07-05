@@ -13,46 +13,14 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> NGINX App Protect Web Application Firewall (WAF) Package. Contains the version and revision date of the package. </summary>
     public partial class WebApplicationFirewallPackage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPackage"/>. </summary>
         /// <param name="version"> The version of the NGINX App Protect Web Application Firewall (WAF) package. </param>
         /// <param name="revisionDatetime"> The date and time of the package revision. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         internal WebApplicationFirewallPackage(string version, DateTimeOffset revisionDatetime)
         {
-            Argument.AssertNotNull(version, nameof(version));
-
             Version = version;
             RevisionDatetime = revisionDatetime;
         }
@@ -60,21 +28,17 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPackage"/>. </summary>
         /// <param name="version"> The version of the NGINX App Protect Web Application Firewall (WAF) package. </param>
         /// <param name="revisionDatetime"> The date and time of the package revision. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPackage(string version, DateTimeOffset revisionDatetime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebApplicationFirewallPackage(string version, DateTimeOffset revisionDatetime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             RevisionDatetime = revisionDatetime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPackage"/> for deserialization. </summary>
-        internal WebApplicationFirewallPackage()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version of the NGINX App Protect Web Application Firewall (WAF) package. </summary>
         public string Version { get; }
+
         /// <summary> The date and time of the package revision. </summary>
         public DateTimeOffset RevisionDatetime { get; }
     }

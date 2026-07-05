@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -18,15 +19,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
-        ///
         /// </param>
         /// <param name="highKey">
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
-        ///
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lowKey"/> or <paramref name="highKey"/> is null. </exception>
-        public UniformInt64RangePartitionSchemeDescription(int count, string lowKey, string highKey)
+        public UniformInt64RangePartitionSchemeDescription(int count, string lowKey, string highKey) : base(ApplicationPartitionScheme.UniformInt64Range)
         {
             Argument.AssertNotNull(lowKey, nameof(lowKey));
             Argument.AssertNotNull(highKey, nameof(highKey));
@@ -34,48 +33,39 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Count = count;
             LowKey = lowKey;
             HighKey = highKey;
-            PartitionScheme = ApplicationPartitionScheme.UniformInt64Range;
         }
 
         /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
-        ///
         /// </param>
         /// <param name="highKey">
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
-        ///
         /// </param>
-        internal UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, int count, string lowKey, string highKey) : base(partitionScheme, serializedAdditionalRawData)
+        internal UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties, int count, string lowKey, string highKey) : base(partitionScheme, additionalBinaryDataProperties)
         {
             Count = count;
             LowKey = lowKey;
             HighKey = highKey;
-            PartitionScheme = partitionScheme;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UniformInt64RangePartitionSchemeDescription"/> for deserialization. </summary>
-        internal UniformInt64RangePartitionSchemeDescription()
-        {
         }
 
         /// <summary> The number of partitions. </summary>
         public int Count { get; set; }
+
         /// <summary>
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
-        ///
         /// </summary>
         public string LowKey { get; set; }
+
         /// <summary>
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
-        ///
         /// </summary>
         public string HighKey { get; set; }
     }

@@ -7,55 +7,78 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary>
     /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-    ///
     /// `Basic` is deprecated, use `Standard` instead.
     /// </summary>
     public readonly partial struct WebPubSubSkuTier : IEquatable<WebPubSubSkuTier>
     {
         private readonly string _value;
+        /// <summary> Free tier for WebPubSub service. </summary>
+        private const string FreeValue = "Free";
+        /// <summary> Basic tier for WebPubSub service (deprecated, use Standard instead). </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Standard tier for WebPubSub service. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium tier for WebPubSub service. </summary>
+        private const string PremiumValue = "Premium";
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebPubSubSkuTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string FreeValue = "Free";
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-
-        /// <summary> Free. </summary>
+        /// <summary> Free tier for WebPubSub service. </summary>
         public static WebPubSubSkuTier Free { get; } = new WebPubSubSkuTier(FreeValue);
-        /// <summary> Basic. </summary>
+
+        /// <summary> Basic tier for WebPubSub service (deprecated, use Standard instead). </summary>
         public static WebPubSubSkuTier Basic { get; } = new WebPubSubSkuTier(BasicValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> Standard tier for WebPubSub service. </summary>
         public static WebPubSubSkuTier Standard { get; } = new WebPubSubSkuTier(StandardValue);
-        /// <summary> Premium. </summary>
+
+        /// <summary> Premium tier for WebPubSub service. </summary>
         public static WebPubSubSkuTier Premium { get; } = new WebPubSubSkuTier(PremiumValue);
+
         /// <summary> Determines if two <see cref="WebPubSubSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebPubSubSkuTier left, WebPubSubSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebPubSubSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebPubSubSkuTier left, WebPubSubSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebPubSubSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebPubSubSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebPubSubSkuTier(string value) => new WebPubSubSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebPubSubSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebPubSubSkuTier?(string value) => value == null ? null : new WebPubSubSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebPubSubSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebPubSubSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -6,9 +6,11 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Payload.Pageable._PageSize;
 using Payload.Pageable._ServerDrivenPagination;
+using Payload.Pageable._XmlPagination;
 
 namespace Payload.Pageable
 {
@@ -16,12 +18,19 @@ namespace Payload.Pageable
     {
         public PageableClient() : this(new Uri("http://localhost:3000"), new PageableClientOptions()) => throw null;
 
-        public PageableClient(Uri endpoint, PageableClientOptions options) => throw null;
+        internal PageableClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, PageableClientOptions options) => throw null;
+
+        public PageableClient(Uri endpoint, PageableClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public PageableClient(PageableClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual ServerDrivenPagination GetServerDrivenPaginationClient() => throw null;
 
         public virtual PageSize GetPageSizeClient() => throw null;
+
+        public virtual XmlPagination GetXmlPaginationClient() => throw null;
     }
 }

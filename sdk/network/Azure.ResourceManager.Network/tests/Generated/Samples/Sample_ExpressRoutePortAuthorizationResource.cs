@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExpressRoutePortAuthorization()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRoutePortAuthorizationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRoutePortAuthorizationGet.json
             // this example is just showing the usage of "ExpressRoutePortAuthorizations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteExpressRoutePortAuthorization()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRoutePortAuthorizationDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRoutePortAuthorizationDelete.json
             // this example is just showing the usage of "ExpressRoutePortAuthorizations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRoutePortAuthorizationResource expressRoutePortAuthorization = client.GetExpressRoutePortAuthorizationResource(expressRoutePortAuthorizationResourceId);
 
             // invoke the operation
-            await expressRoutePortAuthorization.DeleteAsync(WaitUntil.Completed);
+            await expressRoutePortAuthorization.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateExpressRoutePortAuthorization()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/ExpressRoutePortAuthorizationCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRoutePortAuthorizationCreate.json
             // this example is just showing the usage of "ExpressRoutePortAuthorizations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             ExpressRoutePortAuthorizationData data = new ExpressRoutePortAuthorizationData();
-            ArmOperation<ExpressRoutePortAuthorizationResource> lro = await expressRoutePortAuthorization.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ExpressRoutePortAuthorizationResource> lro = await expressRoutePortAuthorization.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRoutePortAuthorizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

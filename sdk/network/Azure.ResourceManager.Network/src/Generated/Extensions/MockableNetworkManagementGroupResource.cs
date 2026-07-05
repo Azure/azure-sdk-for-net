@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> A class to add extension methods to ManagementGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ManagementGroupResource"/>. </summary>
     public partial class MockableNetworkManagementGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkManagementGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkManagementGroupResource for mocking. </summary>
         protected MockableNetworkManagementGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkManagementGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNetworkManagementGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNetworkManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ManagementGroupNetworkManagerConnectionResources in the ManagementGroupResource. </summary>
-        /// <returns> An object representing collection of ManagementGroupNetworkManagerConnectionResources and their operations over a ManagementGroupNetworkManagerConnectionResource. </returns>
+        /// <summary> Gets a collection of ManagementGroupNetworkManagerConnections in the <see cref="ManagementGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ManagementGroupNetworkManagerConnections and their operations over a ManagementGroupNetworkManagerConnectionResource. </returns>
         public virtual ManagementGroupNetworkManagerConnectionCollection GetManagementGroupNetworkManagerConnections()
         {
             return GetCachedClient(client => new ManagementGroupNetworkManagerConnectionCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Get a specified connection created by this management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagementGroupNetworkManagerConnectionResource>> GetManagementGroupNetworkManagerConnectionAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+
             return await GetManagementGroupNetworkManagerConnections().GetAsync(networkManagerConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Get a specified connection created by this management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ManagementGroupNetworkManagerConnectionResource> GetManagementGroupNetworkManagerConnection(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+
             return GetManagementGroupNetworkManagerConnections().Get(networkManagerConnectionName, cancellationToken);
         }
     }

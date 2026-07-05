@@ -1,0 +1,6 @@
+directory: specification/computelimit/resource-manager/Microsoft.ComputeLimit/ComputeLimit
+commit: 4d8712b5c51c6b7fff86a7a08adb5ee3b40fe468
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

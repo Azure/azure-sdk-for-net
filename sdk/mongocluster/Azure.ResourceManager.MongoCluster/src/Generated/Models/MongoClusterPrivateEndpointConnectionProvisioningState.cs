@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterPrivateEndpointConnectionProvisioningState : IEquatable<MongoClusterPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Connection has been provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Connection is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Connection is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Connection provisioning has failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterPrivateEndpointConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Connection has been provisioned. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Succeeded { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(SucceededValue);
+
         /// <summary> Connection is being created. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Creating { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(CreatingValue);
+
         /// <summary> Connection is being deleted. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Deleting { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(DeletingValue);
+
         /// <summary> Connection provisioning has failed. </summary>
         public static MongoClusterPrivateEndpointConnectionProvisioningState Failed { get; } = new MongoClusterPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="MongoClusterPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterPrivateEndpointConnectionProvisioningState left, MongoClusterPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterPrivateEndpointConnectionProvisioningState left, MongoClusterPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterPrivateEndpointConnectionProvisioningState(string value) => new MongoClusterPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new MongoClusterPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

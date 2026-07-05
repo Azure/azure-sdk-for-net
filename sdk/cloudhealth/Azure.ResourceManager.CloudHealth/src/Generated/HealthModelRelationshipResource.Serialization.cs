@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CloudHealth
 {
+    /// <summary></summary>
     public partial class HealthModelRelationshipResource : IJsonModel<HealthModelRelationshipData>
     {
-        private static HealthModelRelationshipData s_dataDeserializationInstance;
-        private static HealthModelRelationshipData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HealthModelRelationshipData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HealthModelRelationshipData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HealthModelRelationshipData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthModelRelationshipData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthModelRelationshipData>)Data).Write(writer, options);
 
-        HealthModelRelationshipData IJsonModel<HealthModelRelationshipData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthModelRelationshipData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthModelRelationshipData IJsonModel<HealthModelRelationshipData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HealthModelRelationshipData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthModelRelationshipData>(Data, options, AzureResourceManagerCloudHealthContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HealthModelRelationshipData IPersistableModel<HealthModelRelationshipData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthModelRelationshipData>(data, options, AzureResourceManagerCloudHealthContext.Default);
 
-        string IPersistableModel<HealthModelRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthModelRelationshipData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthModelRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

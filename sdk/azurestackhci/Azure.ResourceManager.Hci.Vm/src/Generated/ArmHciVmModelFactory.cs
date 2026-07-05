@@ -8,55 +8,53 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Hci.Vm;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHciVmModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmGalleryImageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmGalleryImageData"/> instance for mocking. </returns>
-        public static HciVmGalleryImageData HciVmGalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciVmGalleryImageProperties properties = null, HciVmExtendedLocation extendedLocation = null)
+        public static HciVmGalleryImageData HciVmGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmGalleryImageData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmGalleryImageProperties"/>. </summary>
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for gallery image. </param>
         /// <param name="imagePath"> location of the image the gallery image should be created from. </param>
         /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
         /// <param name="cloudInitDataSource"> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
-        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
         /// <param name="identifier"> This is the gallery image definition identifier. </param>
         /// <param name="version"> Specifies information about the gallery image version that you want to create or update. </param>
         /// <param name="provisioningState"> Provisioning state of the gallery image. </param>
         /// <param name="status"> The observed state of gallery images. </param>
         /// <param name="sourceVirtualMachineId"> Resource ID of the source virtual machine from whose OS disk the gallery image is created. </param>
         /// <returns> A new <see cref="Models.HciVmGalleryImageProperties"/> instance for mocking. </returns>
-        public static HciVmGalleryImageProperties HciVmGalleryImageProperties(ResourceIdentifier containerId = null, string imagePath = null, HciVmOSType osType = default, CloudInitDataSource? cloudInitDataSource = null, HciVmHyperVGeneration? hyperVGeneration = null, HciVmImageRepositoryCredentials vmImageRepositoryCredentials = null, HciVmGalleryImageIdentifier identifier = null, HciVmGalleryImageVersion version = null, HciVmProvisioningState? provisioningState = null, HciVmGalleryImageStatus status = null, ResourceIdentifier sourceVirtualMachineId = null)
+        public static HciVmGalleryImageProperties HciVmGalleryImageProperties(ResourceIdentifier containerId = default, string imagePath = default, HciVmOSType osType = default, CloudInitDataSource? cloudInitDataSource = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmGalleryImageIdentifier identifier = default, HciVmGalleryImageVersion version = default, HciVmProvisioningState? provisioningState = default, HciVmGalleryImageStatus status = default, ResourceIdentifier sourceVirtualMachineId = default)
         {
             return new HciVmGalleryImageProperties(
                 containerId,
@@ -64,159 +62,286 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 osType,
                 cloudInitDataSource,
                 hyperVGeneration,
-                vmImageRepositoryCredentials,
                 identifier,
                 version,
                 provisioningState,
                 status,
                 sourceVirtualMachineId,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmGalleryImageStatus"/>. </summary>
+        /// <param name="publisher"> The name of the gallery image definition publisher. </param>
+        /// <param name="offer"> The name of the gallery image definition offer. </param>
+        /// <param name="sku"> The name of the gallery image definition SKU. </param>
+        /// <returns> A new <see cref="Models.HciVmGalleryImageIdentifier"/> instance for mocking. </returns>
+        public static HciVmGalleryImageIdentifier HciVmGalleryImageIdentifier(string publisher = default, string offer = default, string sku = default)
+        {
+            return new HciVmGalleryImageIdentifier(publisher, offer, sku, default);
+        }
+
+        /// <param name="name"> This is the version of the gallery image. </param>
+        /// <param name="storageOSDiskImageSizeInMB"> This property indicates the size of the VHD to be created. </param>
+        /// <returns> A new <see cref="Models.HciVmGalleryImageVersion"/> instance for mocking. </returns>
+        public static HciVmGalleryImageVersion HciVmGalleryImageVersion(string name = default, long? storageOSDiskImageSizeInMB = default)
+        {
+            return new HciVmGalleryImageVersion(name, storageOSDiskImageSizeInMB is null ? default : new HciVmGalleryImageVersionProperties(new HciVmGalleryImageVersionStorageProfile(new HciVmGalleryOSDiskImage(storageOSDiskImageSizeInMB, default), default), default), default);
+        }
+
         /// <param name="errorCode"> GalleryImage provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"> provisioning status of the gallery image. </param>
-        /// <param name="downloadSizeInMB"> The download status of the gallery image. </param>
+        /// <param name="downloadSizeInMB"> The downloaded sized of the image in MB. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
         /// <returns> A new <see cref="Models.HciVmGalleryImageStatus"/> instance for mocking. </returns>
-        public static HciVmGalleryImageStatus HciVmGalleryImageStatus(string errorCode = null, string errorMessage = null, HciVmGalleryImageProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = null, long? progressPercentage = null)
+        public static HciVmGalleryImageStatus HciVmGalleryImageStatus(string errorCode = default, string errorMessage = default, HciVmGalleryImageProvisioningStatus provisioningStatus = default, long? downloadSizeInMB = default, long? progressPercentage = default)
         {
             return new HciVmGalleryImageStatus(
                 errorCode,
                 errorMessage,
                 provisioningStatus,
-                downloadSizeInMB != null ? new GalleryImageStatusDownloadStatus(downloadSizeInMB, serializedAdditionalRawData: null) : null,
+                downloadSizeInMB is null ? default : new HciVmGalleryImageDownloadStatus(downloadSizeInMB, default),
                 progressPercentage,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmGalleryImageProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
         /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmGalleryImageProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmGalleryImageProvisioningStatus HciVmGalleryImageProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmGalleryImageProvisioningStatus HciVmGalleryImageProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmGalleryImageProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmGalleryImageProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmLogicalNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="name"> The name of the extended location. </param>
+        /// <param name="type"> The type of the extended location. </param>
+        /// <returns> A new <see cref="Models.HciVmExtendedLocation"/> instance for mocking. </returns>
+        public static HciVmExtendedLocation HciVmExtendedLocation(string name = default, HciVmExtendedLocationType? @type = default)
+        {
+            return new HciVmExtendedLocation(name, @type, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmGalleryImagePatch"/> instance for mocking. </returns>
+        public static HciVmGalleryImagePatch HciVmGalleryImagePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmGalleryImagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmLogicalNetworkData"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkData HciVmLogicalNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciVmLogicalNetworkProperties properties = null, HciVmExtendedLocation extendedLocation = null)
+        public static HciVmLogicalNetworkData HciVmLogicalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLogicalNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmLogicalNetworkData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmLogicalNetworkProperties"/>. </summary>
-        /// <param name="dhcpOptionsDnsServers"> DhcpOptions contains an array of DNS servers available to VMs deployed in the logical network. Standard DHCP option for a subnet overrides logical network DHCP options. </param>
+        /// <param name="dhcpOptionsDnsServers"> The list of DNS servers IP addresses. </param>
+        /// <param name="fabricNetworkResourceId"> The Azure Resource ID for a Managed Network Fabric L2ISD or L3ISD internal network. </param>
         /// <param name="subnets"> Subnet - list of subnets under the logical network. </param>
         /// <param name="provisioningState"> Provisioning state of the logical network. </param>
         /// <param name="vmSwitchName"> name of the network switch to be used for VMs. </param>
         /// <param name="status"> The observed state of logical networks. </param>
         /// <param name="networkType"> Type of the Logical Network. </param>
         /// <returns> A new <see cref="Models.HciVmLogicalNetworkProperties"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkProperties HciVmLogicalNetworkProperties(IEnumerable<string> dhcpOptionsDnsServers = null, IEnumerable<HciVmNetworkingSubnet> subnets = null, HciVmProvisioningState? provisioningState = null, string vmSwitchName = null, HciVmLogicalNetworkStatus status = null, HciVmLogicalNetworkType? networkType = null)
+        public static HciVmLogicalNetworkProperties HciVmLogicalNetworkProperties(IEnumerable<string> dhcpOptionsDnsServers = default, ResourceIdentifier fabricNetworkResourceId = default, IEnumerable<HciVmNetworkingSubnet> subnets = default, HciVmProvisioningState? provisioningState = default, string vmSwitchName = default, HciVmLogicalNetworkStatus status = default, HciVmLogicalNetworkType? networkType = default)
         {
-            dhcpOptionsDnsServers ??= new List<string>();
-            subnets ??= new List<HciVmNetworkingSubnet>();
+            subnets ??= new ChangeTrackingList<HciVmNetworkingSubnet>();
 
             return new HciVmLogicalNetworkProperties(
-                dhcpOptionsDnsServers != null ? new HciVmLogicalNetworkDhcpOptions(dhcpOptionsDnsServers?.ToList(), serializedAdditionalRawData: null) : null,
-                subnets?.ToList(),
+                dhcpOptionsDnsServers is null ? default : new HciVmLogicalNetworkDhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
+                fabricNetworkResourceId is null ? default : new ManagedNetworkFabricArmReference(fabricNetworkResourceId, default),
+                (subnets ?? new ChangeTrackingList<HciVmNetworkingSubnet>()).ToList(),
                 provisioningState,
                 vmSwitchName,
                 status,
                 networkType,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmNetworkingRouteTable"/>. </summary>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="addressPrefix"> The address prefix for the subnet: Cidr for this subnet - IPv4, IPv6. </param>
+        /// <param name="addressPrefixes"> List of address prefixes for the subnet. </param>
+        /// <param name="ipAllocationMethod"> IPAllocationMethod - The IP address allocation method. Possible values include: 'Static', 'Dynamic'. </param>
+        /// <param name="ipConfigurationReferences"> IPConfigurationReferences - list of IPConfigurationReferences. </param>
+        /// <param name="routeTable"> Route table resource. </param>
+        /// <param name="ipPools"> network associated pool of IP Addresses. </param>
+        /// <param name="vlan"> Vlan to use for the subnet. </param>
+        /// <param name="provisioningState"> Provisioning state of the subnet resource. </param>
+        /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
+        /// <param name="name"> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <returns> A new <see cref="Models.HciVmNetworkingSubnet"/> instance for mocking. </returns>
+        public static HciVmNetworkingSubnet HciVmNetworkingSubnet(string addressPrefix = default, IEnumerable<string> addressPrefixes = default, HciVmIPAllocationMethod? ipAllocationMethod = default, IEnumerable<HciVmSubnetIPConfigurationReference> ipConfigurationReferences = default, HciVmNetworkingRouteTable routeTable = default, IEnumerable<HciVmNetworkingIPPool> ipPools = default, int? vlan = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier networkSecurityGroupId = default, string name = default)
+        {
+            return new HciVmNetworkingSubnet(addressPrefix is null && addressPrefixes is null && ipAllocationMethod is null && ipConfigurationReferences is null && networkSecurityGroupId is null && routeTable is null && ipPools is null && vlan is null && provisioningState is null ? default : new SubnetProperties(
+                addressPrefix,
+                (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                ipAllocationMethod,
+                (ipConfigurationReferences ?? new ChangeTrackingList<HciVmSubnetIPConfigurationReference>()).ToList(),
+                new NetworkSecurityGroupArmReference(networkSecurityGroupId, default),
+                routeTable,
+                (ipPools ?? new ChangeTrackingList<HciVmNetworkingIPPool>()).ToList(),
+                vlan,
+                provisioningState,
+                default), name, default);
+        }
+
+        /// <param name="id"> The Azure Resource ID for a Network Interface. </param>
+        /// <returns> A new <see cref="Models.HciVmSubnetIPConfigurationReference"/> instance for mocking. </returns>
+        public static HciVmSubnetIPConfigurationReference HciVmSubnetIPConfigurationReference(ResourceIdentifier id = default)
+        {
+            return new HciVmSubnetIPConfigurationReference(id, default);
+        }
+
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="routes"> Collection of routes contained within a route table. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkingRouteTable"/> instance for mocking. </returns>
-        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string etag = null, string name = null, string type = null, IEnumerable<HciVmNetworkingRoute> routes = null)
+        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(ETag? eTag = default, string name = default, string @type = default, IEnumerable<HciVmNetworkingRoute> routes = default)
         {
-            routes ??= new List<HciVmNetworkingRoute>();
-
-            return new HciVmNetworkingRouteTable(etag, name, type, routes?.ToList(), serializedAdditionalRawData: null);
+            return new HciVmNetworkingRouteTable(eTag, name, @type, routes is null ? default : new RouteTableProperties((routes ?? new ChangeTrackingList<HciVmNetworkingRoute>()).ToList(), default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmIPPoolInfo"/>. </summary>
+        /// <param name="addressPrefix"> The destination CIDR to which the route applies. </param>
+        /// <param name="nextHopIPAddress"> The IP address packets should be forwarded to. Next hop values are only allowed in routes where the next hop type is VirtualAppliance. </param>
+        /// <param name="name"> Name - name of the subnet. </param>
+        /// <returns> A new <see cref="Models.HciVmNetworkingRoute"/> instance for mocking. </returns>
+        public static HciVmNetworkingRoute HciVmNetworkingRoute(string addressPrefix = default, string nextHopIPAddress = default, string name = default)
+        {
+            return new HciVmNetworkingRoute(addressPrefix is null && nextHopIPAddress is null ? default : new RouteProperties(addressPrefix, nextHopIPAddress, default), name, default);
+        }
+
+        /// <param name="name"> Name of the IP-Pool. </param>
+        /// <param name="ipPoolType"> Type of the IP Pool [vm, vippool]. </param>
+        /// <param name="start"> Start of the IP address pool. </param>
+        /// <param name="end"> End of the IP address pool. </param>
+        /// <param name="info"> IPPool info. </param>
+        /// <returns> A new <see cref="Models.HciVmNetworkingIPPool"/> instance for mocking. </returns>
+        public static HciVmNetworkingIPPool HciVmNetworkingIPPool(string name = default, HciVmIPPoolType? ipPoolType = default, string start = default, string end = default, HciVmIPPoolInfo info = default)
+        {
+            return new HciVmNetworkingIPPool(
+                name,
+                ipPoolType,
+                start,
+                end,
+                info,
+                default);
+        }
+
         /// <param name="used"> Number of IP addresses allocated from the IP Pool. </param>
         /// <param name="available"> Number of IP addresses available in the IP Pool. </param>
         /// <returns> A new <see cref="Models.HciVmIPPoolInfo"/> instance for mocking. </returns>
-        public static HciVmIPPoolInfo HciVmIPPoolInfo(string used = null, string available = null)
+        public static HciVmIPPoolInfo HciVmIPPoolInfo(string used = default, string available = default)
         {
-            return new HciVmIPPoolInfo(used, available, serializedAdditionalRawData: null);
+            return new HciVmIPPoolInfo(used, available, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmLogicalNetworkStatus"/>. </summary>
         /// <param name="errorCode"> LogicalNetwork provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"> Logical network provisioning status. </param>
+        /// <param name="fabricIntegration"> Enhanced fabric integration status with detailed health monitoring and connectivity state. </param>
         /// <returns> A new <see cref="Models.HciVmLogicalNetworkStatus"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkStatus HciVmLogicalNetworkStatus(string errorCode = null, string errorMessage = null, HciVmLogicalNetworkProvisioningStatus provisioningStatus = null)
+        public static HciVmLogicalNetworkStatus HciVmLogicalNetworkStatus(string errorCode = default, string errorMessage = default, HciVmLogicalNetworkProvisioningStatus provisioningStatus = default, HciVmFabricIntegrationStatus fabricIntegration = default)
         {
-            return new HciVmLogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData: null);
+            return new HciVmLogicalNetworkStatus(errorCode, errorMessage, provisioningStatus, fabricIntegration, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmLogicalNetworkProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the logical network. </param>
         /// <param name="status"> The status of the operation performed on the logical network [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmLogicalNetworkProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkProvisioningStatus HciVmLogicalNetworkProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmLogicalNetworkProvisioningStatus HciVmLogicalNetworkProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmLogicalNetworkProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmLogicalNetworkProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmMarketplaceGalleryImageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="state"> Current fabric integration state. </param>
+        /// <param name="health"> Health status of the fabric connection. </param>
+        /// <param name="lastCheckedOn"> Timestamp of the last fabric health check as ISO 8601 string. </param>
+        /// <param name="resourceType"> Type of fabric resource referenced. </param>
+        /// <param name="issues"> Issues raised by fabric. </param>
+        /// <returns> A new <see cref="Models.HciVmFabricIntegrationStatus"/> instance for mocking. </returns>
+        public static HciVmFabricIntegrationStatus HciVmFabricIntegrationStatus(HciVmFabricIntegrationStateType? state = default, HciVmFabricConnectionHealthStateType? health = default, DateTimeOffset? lastCheckedOn = default, HciVmFabricResourceType? resourceType = default, IEnumerable<HciVmFabricIssue> issues = default)
+        {
+            issues ??= new ChangeTrackingList<HciVmFabricIssue>();
+
+            return new HciVmFabricIntegrationStatus(
+                state,
+                health,
+                lastCheckedOn,
+                resourceType,
+                (issues ?? new ChangeTrackingList<HciVmFabricIssue>()).ToList(),
+                default);
+        }
+
+        /// <param name="code"> Specific error/warning code. </param>
+        /// <param name="severity"> issue severity. </param>
+        /// <param name="message"> Description of the issue. </param>
+        /// <param name="target"> specific property or resource that has the issue. </param>
+        /// <param name="timestamp"> Timestamp of the issue as ISO 8601 string. </param>
+        /// <returns> A new <see cref="Models.HciVmFabricIssue"/> instance for mocking. </returns>
+        public static HciVmFabricIssue HciVmFabricIssue(string code = default, string severity = default, string message = default, string target = default, DateTimeOffset? timestamp = default)
+        {
+            return new HciVmFabricIssue(
+                code,
+                severity,
+                message,
+                target,
+                timestamp,
+                default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmLogicalNetworkPatch"/> instance for mocking. </returns>
+        public static HciVmLogicalNetworkPatch HciVmLogicalNetworkPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmLogicalNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmMarketplaceGalleryImageData"/> instance for mocking. </returns>
-        public static HciVmMarketplaceGalleryImageData HciVmMarketplaceGalleryImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciVmMarketplaceGalleryImageProperties properties = null, HciVmExtendedLocation extendedLocation = null)
+        public static HciVmMarketplaceGalleryImageData HciVmMarketplaceGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmMarketplaceGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmMarketplaceGalleryImageData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmMarketplaceGalleryImageProperties"/>. </summary>
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for marketplace gallery image. </param>
         /// <param name="osType"> Operating system type that the gallery image uses [Windows, Linux]. </param>
         /// <param name="cloudInitDataSource"> Datasource for the gallery image when provisioning with cloud-init [NoCloud, Azure]. </param>
@@ -226,7 +351,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="provisioningState"> Provisioning state of the marketplace gallery image. </param>
         /// <param name="status"> The observed state of marketplace gallery images. </param>
         /// <returns> A new <see cref="Models.HciVmMarketplaceGalleryImageProperties"/> instance for mocking. </returns>
-        public static HciVmMarketplaceGalleryImageProperties HciVmMarketplaceGalleryImageProperties(ResourceIdentifier containerId = null, HciVmOSType osType = default, CloudInitDataSource? cloudInitDataSource = null, HciVmHyperVGeneration? hyperVGeneration = null, HciVmGalleryImageIdentifier identifier = null, HciVmGalleryImageVersion version = null, HciVmProvisioningState? provisioningState = null, HciVmMarketplaceGalleryImageStatus status = null)
+        public static HciVmMarketplaceGalleryImageProperties HciVmMarketplaceGalleryImageProperties(ResourceIdentifier containerId = default, HciVmOSType osType = default, CloudInitDataSource? cloudInitDataSource = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmGalleryImageIdentifier identifier = default, HciVmGalleryImageVersion version = default, HciVmProvisioningState? provisioningState = default, HciVmMarketplaceGalleryImageStatus status = default)
         {
             return new HciVmMarketplaceGalleryImageProperties(
                 containerId,
@@ -237,187 +362,235 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 version,
                 provisioningState,
                 status,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmMarketplaceGalleryImageStatus"/>. </summary>
         /// <param name="errorCode"> MarketplaceGalleryImage provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"> Provisioning status of marketplace gallery image. </param>
-        /// <param name="downloadSizeInMB"> The download status of the gallery image. </param>
+        /// <param name="downloadSizeInMB"> The downloaded sized of the image in MB. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
         /// <returns> A new <see cref="Models.HciVmMarketplaceGalleryImageStatus"/> instance for mocking. </returns>
-        public static HciVmMarketplaceGalleryImageStatus HciVmMarketplaceGalleryImageStatus(string errorCode = null, string errorMessage = null, HciVmMarketplaceGalleryImageProvisioningStatus provisioningStatus = null, long? downloadSizeInMB = null, long? progressPercentage = null)
+        public static HciVmMarketplaceGalleryImageStatus HciVmMarketplaceGalleryImageStatus(string errorCode = default, string errorMessage = default, HciVmMarketplaceGalleryImageProvisioningStatus provisioningStatus = default, long? downloadSizeInMB = default, long? progressPercentage = default)
         {
             return new HciVmMarketplaceGalleryImageStatus(
                 errorCode,
                 errorMessage,
                 provisioningStatus,
-                downloadSizeInMB != null ? new MarketplaceGalleryImageStatusDownloadStatus(downloadSizeInMB, serializedAdditionalRawData: null) : null,
+                downloadSizeInMB is null ? default : new MarketplaceGalleryImageStatusDownloadStatus(downloadSizeInMB, default),
                 progressPercentage,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmMarketplaceGalleryImageProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the gallery image. </param>
         /// <param name="status"> The status of the operation performed on the gallery image [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmMarketplaceGalleryImageProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmMarketplaceGalleryImageProvisioningStatus HciVmMarketplaceGalleryImageProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmMarketplaceGalleryImageProvisioningStatus HciVmMarketplaceGalleryImageProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmMarketplaceGalleryImageProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmMarketplaceGalleryImageProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmNetworkInterfaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmMarketplaceGalleryImagePatch"/> instance for mocking. </returns>
+        public static HciVmMarketplaceGalleryImagePatch HciVmMarketplaceGalleryImagePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmMarketplaceGalleryImagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmNetworkInterfaceData"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceData HciVmNetworkInterfaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciVmNetworkInterfaceProperties properties = null, HciVmExtendedLocation extendedLocation = null)
+        public static HciVmNetworkInterfaceData HciVmNetworkInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkInterfaceProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmNetworkInterfaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmNetworkInterfaceProperties"/>. </summary>
         /// <param name="ipConfigurations"> IPConfigurations - A list of IPConfigurations of the network interface. </param>
         /// <param name="macAddress"> MacAddress - The MAC address of the network interface. </param>
-        /// <param name="dnsServers"> DNS Settings for the interface. </param>
-        /// <param name="createFromLocal"> Boolean indicating whether this is a existing local network interface or if one should be created. </param>
+        /// <param name="dnsServers"> List of DNS server IP Addresses for the interface. </param>
+        /// <param name="isCreatingFromLocal"> Boolean indicating whether this is a existing local network interface or if one should be created. </param>
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
-        /// <param name="networkSecurityGroupId"> NetworkSecurityGroup - Network Security Group attached to the network interface. </param>
+        /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
+        /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkInterfaceProperties"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(IEnumerable<HciVmIPConfiguration> ipConfigurations = null, string macAddress = null, IEnumerable<string> dnsServers = null, bool? createFromLocal = null, HciVmProvisioningState? provisioningState = null, HciVmNetworkInterfaceStatus status = null, ResourceIdentifier networkSecurityGroupId = null)
+        public static HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(IEnumerable<HciVmIPConfiguration> ipConfigurations = default, string macAddress = default, IEnumerable<string> dnsServers = default, bool? isCreatingFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmNetworkInterfaceStatus status = default, ResourceIdentifier networkSecurityGroupId = default, bool? isSdnPoliciesBypassed = default)
         {
-            ipConfigurations ??= new List<HciVmIPConfiguration>();
-            dnsServers ??= new List<string>();
+            ipConfigurations ??= new ChangeTrackingList<HciVmIPConfiguration>();
 
             return new HciVmNetworkInterfaceProperties(
-                ipConfigurations?.ToList(),
+                (ipConfigurations ?? new ChangeTrackingList<HciVmIPConfiguration>()).ToList(),
                 macAddress,
-                dnsServers != null ? new InterfaceDnsSettings(dnsServers?.ToList(), serializedAdditionalRawData: null) : null,
-                createFromLocal,
+                dnsServers is null ? default : new HciVmInterfaceDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
+                isCreatingFromLocal,
                 provisioningState,
                 status,
-                networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null,
-                serializedAdditionalRawData: null);
+                networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default),
+                isSdnPoliciesBypassed,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmIPConfigurationProperties"/>. </summary>
+        /// <param name="name"> Name - The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="properties"> InterfaceIPConfigurationPropertiesFormat properties of IP configuration. </param>
+        /// <returns> A new <see cref="Models.HciVmIPConfiguration"/> instance for mocking. </returns>
+        public static HciVmIPConfiguration HciVmIPConfiguration(string name = default, HciVmIPConfigurationProperties properties = default)
+        {
+            return new HciVmIPConfiguration(name, properties, default);
+        }
+
         /// <param name="gateway"> Gateway for network interface. </param>
         /// <param name="prefixLength"> prefixLength for network interface. </param>
         /// <param name="privateIPAddress"> PrivateIPAddress - Private IP address of the IP configuration. </param>
-        /// <param name="subnetId"> Subnet - Name of Subnet bound to the IP configuration. </param>
+        /// <param name="subnetId"> The Azure Resource ID for a Logical Network. </param>
         /// <returns> A new <see cref="Models.HciVmIPConfigurationProperties"/> instance for mocking. </returns>
-        public static HciVmIPConfigurationProperties HciVmIPConfigurationProperties(string gateway = null, string prefixLength = null, string privateIPAddress = null, ResourceIdentifier subnetId = null)
+        public static HciVmIPConfigurationProperties HciVmIPConfigurationProperties(string gateway = default, string prefixLength = default, string privateIPAddress = default, ResourceIdentifier subnetId = default)
         {
-            return new HciVmIPConfigurationProperties(gateway, prefixLength, privateIPAddress, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, serializedAdditionalRawData: null);
+            return new HciVmIPConfigurationProperties(gateway, prefixLength, privateIPAddress, subnetId is null ? default : new HciVmLogicalNetworkArmReference(subnetId, default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmNetworkInterfaceStatus"/>. </summary>
+        /// <param name="id"> The Azure Resource ID for a Logical Network. </param>
+        /// <returns> A new <see cref="Models.HciVmLogicalNetworkArmReference"/> instance for mocking. </returns>
+        public static HciVmLogicalNetworkArmReference HciVmLogicalNetworkArmReference(ResourceIdentifier id = default)
+        {
+            return new HciVmLogicalNetworkArmReference(id, default);
+        }
+
         /// <param name="errorCode"> NetworkInterface provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"> Network interface provisioning status. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkInterfaceStatus"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceStatus HciVmNetworkInterfaceStatus(string errorCode = null, string errorMessage = null, HciVmNetworkInterfaceProvisioningStatus provisioningStatus = null)
+        public static HciVmNetworkInterfaceStatus HciVmNetworkInterfaceStatus(string errorCode = default, string errorMessage = default, HciVmNetworkInterfaceProvisioningStatus provisioningStatus = default)
         {
-            return new HciVmNetworkInterfaceStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData: null);
+            return new HciVmNetworkInterfaceStatus(errorCode, errorMessage, provisioningStatus, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmNetworkInterfaceProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the network interface. </param>
         /// <param name="status"> The status of the operation performed on the network interface [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkInterfaceProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceProvisioningStatus HciVmNetworkInterfaceProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmNetworkInterfaceProvisioningStatus HciVmNetworkInterfaceProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmNetworkInterfaceProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmNetworkInterfaceProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmNetworkSecurityGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Defines the resource properties for the update. </param>
+        /// <returns> A new <see cref="Models.HciVmNetworkInterfacePatch"/> instance for mocking. </returns>
+        public static HciVmNetworkInterfacePatch HciVmNetworkInterfacePatch(IDictionary<string, string> tags = default, HciVmNetworkInterfacePatchProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNetworkInterfacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
+        /// <param name="dnsServers"> List of DNS server IP Addresses for the interface. </param>
+        /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
+        /// <returns> A new <see cref="Models.HciVmNetworkInterfacePatchProperties"/> instance for mocking. </returns>
+        public static HciVmNetworkInterfacePatchProperties HciVmNetworkInterfacePatchProperties(ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, bool? isSdnPoliciesBypassed = default)
+        {
+            return new HciVmNetworkInterfacePatchProperties(networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default), dnsServers is null ? default : new HciVmInterfaceDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), default), isSdnPoliciesBypassed, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="Vm.HciVmNetworkSecurityGroupData"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = null, HciVmExtendedLocation extendedLocation = null, string etag = null)
+        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, ETag? eTag = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmNetworkSecurityGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 extendedLocation,
-                etag,
-                serializedAdditionalRawData: null);
+                eTag,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmNetworkSecurityGroupProperties"/>. </summary>
         /// <param name="networkInterfaces"> A collection of references to network interfaces that are currently using this NSG. </param>
         /// <param name="subnets"> A collection of references to logical networks that are currently using this NSG. </param>
         /// <param name="provisioningState"> The provisioning state of the network security group resource. </param>
         /// <param name="status"> The observed state of Network Security Group. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkSecurityGroupProperties"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupProperties HciVmNetworkSecurityGroupProperties(IEnumerable<WritableSubResource> networkInterfaces = null, IEnumerable<WritableSubResource> subnets = null, HciVmProvisioningState? provisioningState = null, HciVmNetworkSecurityGroupStatus status = null)
+        public static HciVmNetworkSecurityGroupProperties HciVmNetworkSecurityGroupProperties(IEnumerable<HciVmNetworkInterfaceArmReference> networkInterfaces = default, IEnumerable<HciVmLogicalNetworkArmReference> subnets = default, HciVmProvisioningState? provisioningState = default, HciVmNetworkSecurityGroupStatus status = default)
         {
-            networkInterfaces ??= new List<WritableSubResource>();
-            subnets ??= new List<WritableSubResource>();
+            networkInterfaces ??= new ChangeTrackingList<HciVmNetworkInterfaceArmReference>();
+            subnets ??= new ChangeTrackingList<HciVmLogicalNetworkArmReference>();
 
-            return new HciVmNetworkSecurityGroupProperties(networkInterfaces?.ToList(), subnets?.ToList(), provisioningState, status, serializedAdditionalRawData: null);
+            return new HciVmNetworkSecurityGroupProperties((networkInterfaces ?? new ChangeTrackingList<HciVmNetworkInterfaceArmReference>()).ToList(), (subnets ?? new ChangeTrackingList<HciVmLogicalNetworkArmReference>()).ToList(), provisioningState, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmNetworkSecurityGroupStatus"/>. </summary>
+        /// <param name="id"> The Azure Resource ID for a Network Interface. </param>
+        /// <returns> A new <see cref="Models.HciVmNetworkInterfaceArmReference"/> instance for mocking. </returns>
+        public static HciVmNetworkInterfaceArmReference HciVmNetworkInterfaceArmReference(ResourceIdentifier id = default)
+        {
+            return new HciVmNetworkInterfaceArmReference(id, default);
+        }
+
         /// <param name="errorCode"> NetworkSecurityGroup provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"> network security group provisioning status. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkSecurityGroupStatus"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupStatus HciVmNetworkSecurityGroupStatus(string errorCode = null, string errorMessage = null, HciVmNetworkSecurityGroupProvisioningStatus provisioningStatus = null)
+        public static HciVmNetworkSecurityGroupStatus HciVmNetworkSecurityGroupStatus(string errorCode = default, string errorMessage = default, HciVmNetworkSecurityGroupProvisioningStatus provisioningStatus = default)
         {
-            return new HciVmNetworkSecurityGroupStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData: null);
+            return new HciVmNetworkSecurityGroupStatus(errorCode, errorMessage, provisioningStatus, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmNetworkSecurityGroupProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the network security group. </param>
         /// <param name="status"> The status of the operation performed on the network security group [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkSecurityGroupProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupProvisioningStatus HciVmNetworkSecurityGroupProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmNetworkSecurityGroupProvisioningStatus HciVmNetworkSecurityGroupProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmNetworkSecurityGroupProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmNetworkSecurityGroupProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmSecurityRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmNetworkSecurityGroupPatch"/> instance for mocking. </returns>
+        public static HciVmNetworkSecurityGroupPatch HciVmNetworkSecurityGroupPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNetworkSecurityGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmSecurityRuleData"/> instance for mocking. </returns>
-        public static HciVmSecurityRuleData HciVmSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciVmSecurityRuleProperties properties = null, HciVmExtendedLocation extendedLocation = null)
+        public static HciVmSecurityRuleData HciVmSecurityRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmSecurityRuleProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
             return new HciVmSecurityRuleData(
                 id,
@@ -426,10 +599,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 systemData,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmSecurityRuleProperties"/>. </summary>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="sourceAddressPrefixes"> The CIDR or source IP ranges. </param>
@@ -441,71 +613,68 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="direction"> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </param>
         /// <param name="provisioningState"> Provisioning state of the SR. </param>
         /// <returns> A new <see cref="Models.HciVmSecurityRuleProperties"/> instance for mocking. </returns>
-        public static HciVmSecurityRuleProperties HciVmSecurityRuleProperties(string description = null, HciVmSecurityRuleProtocol protocol = default, IEnumerable<string> sourceAddressPrefixes = null, IEnumerable<string> destinationAddressPrefixes = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, HciVmSecurityRuleAccess access = default, int priority = default, HciVmSecurityRuleDirection direction = default, HciVmProvisioningState? provisioningState = null)
+        public static HciVmSecurityRuleProperties HciVmSecurityRuleProperties(string description = default, HciVmSecurityRuleProtocol protocol = default, IEnumerable<string> sourceAddressPrefixes = default, IEnumerable<string> destinationAddressPrefixes = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, HciVmSecurityRuleAccess access = default, int priority = default, HciVmSecurityRuleDirection direction = default, HciVmProvisioningState? provisioningState = default)
         {
-            sourceAddressPrefixes ??= new List<string>();
-            destinationAddressPrefixes ??= new List<string>();
-            sourcePortRanges ??= new List<string>();
-            destinationPortRanges ??= new List<string>();
+            sourceAddressPrefixes ??= new ChangeTrackingList<string>();
+            destinationAddressPrefixes ??= new ChangeTrackingList<string>();
+            sourcePortRanges ??= new ChangeTrackingList<string>();
+            destinationPortRanges ??= new ChangeTrackingList<string>();
 
             return new HciVmSecurityRuleProperties(
                 description,
                 protocol,
-                sourceAddressPrefixes?.ToList(),
-                destinationAddressPrefixes?.ToList(),
-                sourcePortRanges?.ToList(),
-                destinationPortRanges?.ToList(),
+                (sourceAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                (destinationAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
                 access,
                 priority,
                 direction,
                 provisioningState,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmStorageContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmStorageContainerData"/> instance for mocking. </returns>
-        public static HciVmStorageContainerData HciVmStorageContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciVmStorageContainerProperties properties = null, HciVmExtendedLocation extendedLocation = null)
+        public static HciVmStorageContainerData HciVmStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmStorageContainerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmStorageContainerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmStorageContainerProperties"/>. </summary>
         /// <param name="path"> Path of the storage container on the disk. </param>
         /// <param name="provisioningState"> Provisioning state of the storage container. </param>
         /// <param name="status"> The observed state of storage containers. </param>
         /// <returns> A new <see cref="Models.HciVmStorageContainerProperties"/> instance for mocking. </returns>
-        public static HciVmStorageContainerProperties HciVmStorageContainerProperties(string path = null, HciVmProvisioningState? provisioningState = null, HciVmStorageContainerStatus status = null)
+        public static HciVmStorageContainerProperties HciVmStorageContainerProperties(string path = default, HciVmProvisioningState? provisioningState = default, HciVmStorageContainerStatus status = default)
         {
-            return new HciVmStorageContainerProperties(path, provisioningState, status, serializedAdditionalRawData: null);
+            return new HciVmStorageContainerProperties(path, provisioningState, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmStorageContainerStatus"/>. </summary>
         /// <param name="errorCode"> StorageContainer provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="availableSizeInMB"> Amount of space available on the disk in MB. </param>
         /// <param name="containerSizeInMB"> Total size of the disk in MB. </param>
         /// <param name="provisioningStatus"> Storage container's provisioning status. </param>
         /// <returns> A new <see cref="Models.HciVmStorageContainerStatus"/> instance for mocking. </returns>
-        public static HciVmStorageContainerStatus HciVmStorageContainerStatus(string errorCode = null, string errorMessage = null, long? availableSizeInMB = null, long? containerSizeInMB = null, HciVmStorageContainerProvisioningStatus provisioningStatus = null)
+        public static HciVmStorageContainerStatus HciVmStorageContainerStatus(string errorCode = default, string errorMessage = default, long? availableSizeInMB = default, long? containerSizeInMB = default, HciVmStorageContainerProvisioningStatus provisioningStatus = default)
         {
             return new HciVmStorageContainerStatus(
                 errorCode,
@@ -513,90 +682,97 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 availableSizeInMB,
                 containerSizeInMB,
                 provisioningStatus,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmStorageContainerProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the storage container. </param>
         /// <param name="status"> The status of the operation performed on the storage container [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmStorageContainerProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmStorageContainerProvisioningStatus HciVmStorageContainerProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmStorageContainerProvisioningStatus HciVmStorageContainerProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmStorageContainerProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmStorageContainerProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmVirtualHardDiskData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmStorageContainerPatch"/> instance for mocking. </returns>
+        public static HciVmStorageContainerPatch HciVmStorageContainerPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmStorageContainerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmVirtualHardDiskData"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskData HciVmVirtualHardDiskData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HciVmVirtualHardDiskProperties properties = null, HciVmExtendedLocation extendedLocation = null)
+        public static HciVmVirtualHardDiskData HciVmVirtualHardDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmVirtualHardDiskProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmVirtualHardDiskData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 extendedLocation,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmVirtualHardDiskProperties"/>. </summary>
         /// <param name="blockSizeInBytes"> Block size in bytes. </param>
         /// <param name="diskSizeInGB"> Size of the disk in GB. </param>
-        /// <param name="dynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
+        /// <param name="isDynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
         /// <param name="logicalSectorInBytes"> Logical sector in bytes. </param>
         /// <param name="physicalSectorInBytes"> Physical sector in bytes. </param>
         /// <param name="downloadUri"> URL for downloading or accessing the virtual hard disk. This URL points to a secure link from where the VHD can be downloaded or accessed directly. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
         /// <param name="diskFileFormat"> The format of the actual VHD file [vhd, vhdx]. </param>
         /// <param name="isCreatingFromLocal"> Boolean indicating whether it is an existing local hard disk or if one should be created. </param>
+        /// <param name="localVhdPath"> Absolute path of the VHD. This is only applicable when createFromLocal is true. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual hard disk. </param>
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for VHD. </param>
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskProperties"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = null, long? diskSizeInGB = null, bool? @dynamic = null, int? logicalSectorInBytes = null, int? physicalSectorInBytes = null, Uri downloadUri = null, HciVmHyperVGeneration? hyperVGeneration = null, HciVmDiskFileFormat? diskFileFormat = null, bool? isCreatingFromLocal = null, HciVmProvisioningState? provisioningState = null, ResourceIdentifier containerId = null, HciVmVirtualHardDiskStatus status = null, long? maxShares = null)
+        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default, long? diskSizeInGB = default, bool? isDynamic = default, int? logicalSectorInBytes = default, int? physicalSectorInBytes = default, Uri downloadUri = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmDiskFileFormat? diskFileFormat = default, bool? isCreatingFromLocal = default, string localVhdPath = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier containerId = default, HciVmVirtualHardDiskStatus status = default, long? maxShares = default)
         {
             return new HciVmVirtualHardDiskProperties(
                 blockSizeInBytes,
                 diskSizeInGB,
-                @dynamic,
+                isDynamic,
                 logicalSectorInBytes,
                 physicalSectorInBytes,
                 downloadUri,
                 hyperVGeneration,
                 diskFileFormat,
                 isCreatingFromLocal,
+                localVhdPath,
                 provisioningState,
                 containerId,
                 status,
                 maxShares,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmVirtualHardDiskStatus"/>. </summary>
         /// <param name="errorCode"> VirtualHardDisk provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="provisioningStatus"> Provisioning status of the vhd. </param>
         /// <param name="downloadStatus"> The download status of the virtual hard disk. </param>
         /// <param name="uploadStatus"> The upload status of the virtual hard disk. </param>
-        /// <param name="managedBy"> ARM IDs of the VMs that are consuming the VHD. </param>
+        /// <param name="managedBy"> Azure Resource IDs of the VMs that are consuming the VHD. </param>
         /// <param name="uniqueId"> Unique Guid identifying the resource. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskStatus"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskStatus HciVmVirtualHardDiskStatus(string errorCode = null, string errorMessage = null, HciVmVirtualHardDiskProvisioningStatus provisioningStatus = null, HciVmVirtualHardDiskDownloadStatus downloadStatus = null, HciVmVirtualHardDiskUploadStatus uploadStatus = null, IEnumerable<string> managedBy = null, string uniqueId = null)
+        public static HciVmVirtualHardDiskStatus HciVmVirtualHardDiskStatus(string errorCode = default, string errorMessage = default, HciVmVirtualHardDiskProvisioningStatus provisioningStatus = default, HciVmVirtualHardDiskDownloadStatus downloadStatus = default, HciVmVirtualHardDiskUploadStatus uploadStatus = default, IEnumerable<string> managedBy = default, string uniqueId = default)
         {
-            managedBy ??= new List<string>();
+            managedBy ??= new ChangeTrackingList<string>();
 
             return new HciVmVirtualHardDiskStatus(
                 errorCode,
@@ -604,38 +780,35 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 provisioningStatus,
                 downloadStatus,
                 uploadStatus,
-                managedBy?.ToList(),
+                (managedBy ?? new ChangeTrackingList<string>()).ToList(),
                 uniqueId,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmVirtualHardDiskProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the virtual hard disk. </param>
         /// <param name="status"> The status of the operation performed on the virtual hard disk [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskProvisioningStatus HciVmVirtualHardDiskProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmVirtualHardDiskProvisioningStatus HciVmVirtualHardDiskProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmVirtualHardDiskProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmVirtualHardDiskProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmVirtualHardDiskDownloadStatus"/>. </summary>
         /// <param name="downloadedSizeInMB"> The downloaded sized of the virtual hard disk in MB. </param>
         /// <param name="status"> The status of Uploading virtual hard disk [Succeeded, Failed, InProgress]. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskDownloadStatus"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskDownloadStatus HciVmVirtualHardDiskDownloadStatus(long? downloadedSizeInMB = null, HciVmOperationStatus? status = null, long? progressPercentage = null)
+        public static HciVmVirtualHardDiskDownloadStatus HciVmVirtualHardDiskDownloadStatus(long? downloadedSizeInMB = default, HciVmOperationStatus? status = default, long? progressPercentage = default)
         {
-            return new HciVmVirtualHardDiskDownloadStatus(downloadedSizeInMB, status, progressPercentage, serializedAdditionalRawData: null);
+            return new HciVmVirtualHardDiskDownloadStatus(downloadedSizeInMB, status, progressPercentage, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmVirtualHardDiskUploadStatus"/>. </summary>
         /// <param name="uploadedSizeInMB"> The uploaded sized of the virtual hard disk in MB. </param>
         /// <param name="status"> The status of Uploading virtual hard disk [Succeeded, Failed, InProgress]. </param>
         /// <param name="progressPercentage"> The progress of the operation in percentage. </param>
         /// <param name="errorCode"> VirtualHardDisk upload error code. </param>
         /// <param name="errorMessage"> Descriptive upload error message. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskUploadStatus"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskUploadStatus HciVmVirtualHardDiskUploadStatus(long? uploadedSizeInMB = null, HciVmOperationStatus? status = null, long? progressPercentage = null, string errorCode = null, string errorMessage = null)
+        public static HciVmVirtualHardDiskUploadStatus HciVmVirtualHardDiskUploadStatus(long? uploadedSizeInMB = default, HciVmOperationStatus? status = default, long? progressPercentage = default, string errorCode = default, string errorMessage = default)
         {
             return new HciVmVirtualHardDiskUploadStatus(
                 uploadedSizeInMB,
@@ -643,28 +816,43 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 progressPercentage,
                 errorCode,
                 errorMessage,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmVirtualHardDiskUploadResult"/>. </summary>
-        /// <param name="virtualHardDiskId"> The ARM ID for a Virtual Hard Disk. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="diskSizeGB"> Size of the disk in GB. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualHardDiskPatch"/> instance for mocking. </returns>
+        public static HciVmVirtualHardDiskPatch HciVmVirtualHardDiskPatch(IDictionary<string, string> tags = default, long? diskSizeGB = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmVirtualHardDiskPatch(tags ?? new ChangeTrackingDictionary<string, string>(), diskSizeGB is null ? default : new HciVmVirtualHardDiskPatchProperties(diskSizeGB, default), default);
+        }
+
+        /// <param name="managedDiskUploadUri"> The Azure managed disk SAS URL to upload the virtual hard disk to. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualHardDiskUploadContent"/> instance for mocking. </returns>
+        public static HciVmVirtualHardDiskUploadContent HciVmVirtualHardDiskUploadContent(Uri managedDiskUploadUri = default)
+        {
+            return new HciVmVirtualHardDiskUploadContent(managedDiskUploadUri, default);
+        }
+
+        /// <param name="virtualHardDiskId"> The Azure Resource ID for a Virtual Hard Disk. </param>
         /// <param name="uploadStatus"> The upload status of the virtual hard disk. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskUploadResult"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskUploadResult HciVmVirtualHardDiskUploadResult(ResourceIdentifier virtualHardDiskId = null, HciVmVirtualHardDiskUploadStatus uploadStatus = null)
+        public static HciVmVirtualHardDiskUploadResult HciVmVirtualHardDiskUploadResult(ResourceIdentifier virtualHardDiskId = default, HciVmVirtualHardDiskUploadStatus uploadStatus = default)
         {
-            return new HciVmVirtualHardDiskUploadResult(virtualHardDiskId, uploadStatus, serializedAdditionalRawData: null);
+            return new HciVmVirtualHardDiskUploadResult(virtualHardDiskId, uploadStatus, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Vm.HciVmInstanceData"/> instance for mocking. </returns>
-        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciVmInstanceProperties properties = null, HciVmExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null)
+        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmInstanceProperties properties = default, HciVmExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
         {
             return new HciVmInstanceData(
                 id,
@@ -674,20 +862,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 properties,
                 extendedLocation,
                 identity,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmInstanceProperties"/>. </summary>
         /// <param name="hardwareProfile"> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </param>
         /// <param name="placementProfile"> PlacementProfile - Specifies the placement related settings for the virtual machine. </param>
-        /// <param name="networkInterfaces"> NetworkProfile - describes the network configuration the virtual machine instance. </param>
+        /// <param name="networkInterfaces"> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </param>
         /// <param name="osProfile"> OsProfile - describes the configuration of the operating system and sets login data. </param>
         /// <param name="securityProfile"> SecurityProfile - Specifies the security settings for the virtual machine instance. </param>
         /// <param name="storageProfile"> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </param>
         /// <param name="httpProxyConfig"> HTTP Proxy configuration for the VM. </param>
         /// <param name="isCreatingFromLocal"> Boolean indicating whether this is an existing local virtual machine or if one should be created. </param>
+        /// <param name="localVmName"> HyperV name of the VM. This is only applicable when createFromLocal is true. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
-        /// <param name="instanceViewVmAgent"> The virtual machine instance view. </param>
+        /// <param name="instanceViewVmAgent"> The VM Config Agent running on the virtual machine. </param>
         /// <param name="status"> The observed state of virtual machine instances. </param>
         /// <param name="guestAgentInstallStatus"> Guest agent install status. </param>
         /// <param name="vmId"> Unique identifier for the vm resource. </param>
@@ -696,21 +884,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="hostNodeName"> Name of the host node that the VM is on. </param>
         /// <param name="hostNodeIPAddress"> Name of the host node that the VM is on. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceProperties"/> instance for mocking. </returns>
-        public static HciVmInstanceProperties HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile = null, HciVmInstancePlacementProfile placementProfile = null, IEnumerable<WritableSubResource> networkInterfaces = null, HciVmInstanceOSProfile osProfile = null, HciVmInstanceSecurityProfile securityProfile = null, HciVmInstanceStorageProfile storageProfile = null, HciVmHttpProxyConfiguration httpProxyConfig = null, bool? isCreatingFromLocal = null, HciVmProvisioningState? provisioningState = null, HciVmConfigAgentInstanceView instanceViewVmAgent = null, HciVmInstanceStatus status = null, GuestAgentInstallStatus guestAgentInstallStatus = null, string vmId = null, string resourceUid = null, string hyperVVmId = null, string hostNodeName = null, string hostNodeIPAddress = null)
+        public static HciVmInstanceProperties HciVmInstanceProperties(HciVmInstanceHardwareProfile hardwareProfile = default, HciVmInstancePlacementProfile placementProfile = default, IEnumerable<HciVmNetworkInterfaceArmReference> networkInterfaces = default, HciVmInstanceOSProfile osProfile = default, HciVmInstanceSecurityProfile securityProfile = default, HciVmInstanceStorageProfile storageProfile = default, HciVmHttpProxyConfiguration httpProxyConfig = default, bool? isCreatingFromLocal = default, string localVmName = default, HciVmProvisioningState? provisioningState = default, HciVmConfigAgentInstanceView instanceViewVmAgent = default, HciVmInstanceStatus status = default, GuestAgentInstallStatus guestAgentInstallStatus = default, string vmId = default, string resourceUid = default, string hyperVVmId = default, string hostNodeName = default, string hostNodeIPAddress = default)
         {
-            networkInterfaces ??= new List<WritableSubResource>();
-
             return new HciVmInstanceProperties(
                 hardwareProfile,
                 placementProfile,
-                networkInterfaces != null ? new VirtualMachineInstancePropertiesNetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null,
+                networkInterfaces is null ? default : new VirtualMachineInstancePropertiesNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HciVmNetworkInterfaceArmReference>()).ToList(), default),
                 osProfile,
                 securityProfile,
                 storageProfile,
                 httpProxyConfig,
                 isCreatingFromLocal,
+                localVmName,
                 provisioningState,
-                instanceViewVmAgent != null ? new VirtualMachineInstanceView(instanceViewVmAgent, serializedAdditionalRawData: null) : null,
+                instanceViewVmAgent is null ? default : new VirtualMachineInstanceView(instanceViewVmAgent, default),
                 status,
                 guestAgentInstallStatus,
                 vmId,
@@ -718,28 +905,172 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 hyperVVmId,
                 hostNodeName,
                 hostNodeIPAddress,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmConfigAgentInstanceView"/>. </summary>
+        /// <param name="vmSize"> Enum of VM Sizes. </param>
+        /// <param name="processors"> number of processors for the virtual machine instance. </param>
+        /// <param name="memoryInMB"> RAM in MB for the virtual machine instance. </param>
+        /// <param name="dynamicMemoryConfig"> Dynamic memory config. </param>
+        /// <param name="virtualMachineGPUs"> virtualMachineGPUs - list of gpus to be attached to the virtual machine instance. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceHardwareProfile"/> instance for mocking. </returns>
+        public static HciVmInstanceHardwareProfile HciVmInstanceHardwareProfile(HciVmSize? vmSize = default, int? processors = default, long? memoryInMB = default, HciVmInstanceHardwareProfileDynamicMemoryConfiguration dynamicMemoryConfig = default, IEnumerable<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = default)
+        {
+            virtualMachineGPUs ??= new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>();
+
+            return new HciVmInstanceHardwareProfile(
+                vmSize,
+                processors,
+                memoryInMB,
+                dynamicMemoryConfig,
+                (virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>()).ToList(),
+                default);
+        }
+
+        /// <param name="maximumMemoryInMB"> Maximum memory in MB. </param>
+        /// <param name="minimumMemoryInMB"> Minimum memory in MB. </param>
+        /// <param name="targetMemoryBuffer"> Defines the amount of extra memory that should be reserved for a virtual machine instance at runtime, as a percentage of the total memory that the virtual machine instance is thought to need. This only applies to virtual systems with dynamic memory enabled. This property can be in the range of 5 to 2000. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceHardwareProfileDynamicMemoryConfiguration"/> instance for mocking. </returns>
+        public static HciVmInstanceHardwareProfileDynamicMemoryConfiguration HciVmInstanceHardwareProfileDynamicMemoryConfiguration(long? maximumMemoryInMB = default, long? minimumMemoryInMB = default, int? targetMemoryBuffer = default)
+        {
+            return new HciVmInstanceHardwareProfileDynamicMemoryConfiguration(maximumMemoryInMB, minimumMemoryInMB, targetMemoryBuffer, default);
+        }
+
+        /// <param name="assignmentType"> GPU assignment type. </param>
+        /// <param name="partitionSizeInMB"> Size of gpu partition in MB for GPU-P. </param>
+        /// <param name="gpuName"> Name of the GPU. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceHardwareProfileGpuConfiguration"/> instance for mocking. </returns>
+        public static HciVmInstanceHardwareProfileGpuConfiguration HciVmInstanceHardwareProfileGpuConfiguration(GpuAssignmentType assignmentType = default, long? partitionSizeInMB = default, string gpuName = default)
+        {
+            return new HciVmInstanceHardwareProfileGpuConfiguration(assignmentType, partitionSizeInMB, gpuName, default);
+        }
+
+        /// <param name="zone"> The zone in which the VM should be placed in. </param>
+        /// <param name="isStrictPlacementPolicyEnabled"> Specifies whether VM can only failover strictly within the zone it was placed in. </param>
+        /// <returns> A new <see cref="Models.HciVmInstancePlacementProfile"/> instance for mocking. </returns>
+        public static HciVmInstancePlacementProfile HciVmInstancePlacementProfile(string zone = default, bool? isStrictPlacementPolicyEnabled = default)
+        {
+            return new HciVmInstancePlacementProfile(zone, isStrictPlacementPolicyEnabled, default);
+        }
+
+        /// <param name="adminPassword"> AdminPassword - admin password. </param>
+        /// <param name="adminUsername"> AdminUsername - admin username. </param>
+        /// <param name="computerName"> ComputerName - name of the compute. </param>
+        /// <param name="linuxConfiguration"> LinuxConfiguration - linux specific configuration values for the virtual machine instance. </param>
+        /// <param name="windowsConfiguration"> Windows Configuration for the virtual machine instance. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceOSProfile"/> instance for mocking. </returns>
+        public static HciVmInstanceOSProfile HciVmInstanceOSProfile(string adminPassword = default, string adminUsername = default, string computerName = default, HciVmInstanceOSProfileLinuxConfiguration linuxConfiguration = default, HciVmInstanceOSProfileWindowsConfiguration windowsConfiguration = default)
+        {
+            return new HciVmInstanceOSProfile(
+                adminPassword,
+                adminUsername,
+                computerName,
+                linuxConfiguration,
+                windowsConfiguration,
+                default);
+        }
+
+        /// <param name="disablePasswordAuthentication"> DisablePasswordAuthentication - whether password authentication should be disabled. </param>
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceOSProfileLinuxConfiguration"/> instance for mocking. </returns>
+        public static HciVmInstanceOSProfileLinuxConfiguration HciVmInstanceOSProfileLinuxConfiguration(bool? disablePasswordAuthentication = default, IEnumerable<HciVmOSProfileSshPublicKey> sshPublicKeys = default, bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
+        {
+            return new HciVmInstanceOSProfileLinuxConfiguration(disablePasswordAuthentication, sshPublicKeys is null ? default : new HciVmOSProfileSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<HciVmOSProfileSshPublicKey>()).ToList(), default), shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
+        }
+
+        /// <param name="path"> Specifies the full path on the created VM where ssh public key is stored. If the file already exists, the specified key is appended to the file. Example: /home/user/.ssh/authorized_keys. </param>
+        /// <param name="keyData"> SSH public key certificate used to authenticate with the VM through ssh. The key needs to be at least 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure]https://learn.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed). </param>
+        /// <returns> A new <see cref="Models.HciVmOSProfileSshPublicKey"/> instance for mocking. </returns>
+        public static HciVmOSProfileSshPublicKey HciVmOSProfileSshPublicKey(string path = default, string keyData = default)
+        {
+            return new HciVmOSProfileSshPublicKey(path, keyData, default);
+        }
+
+        /// <param name="enableAutomaticUpdates"> Whether to EnableAutomaticUpdates on the machine. </param>
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
+        /// <param name="timeZone"> TimeZone for the virtual machine instance. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceOSProfileWindowsConfiguration"/> instance for mocking. </returns>
+        public static HciVmInstanceOSProfileWindowsConfiguration HciVmInstanceOSProfileWindowsConfiguration(bool? enableAutomaticUpdates = default, IEnumerable<HciVmOSProfileSshPublicKey> sshPublicKeys = default, string timeZone = default, bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
+        {
+            return new HciVmInstanceOSProfileWindowsConfiguration(
+                enableAutomaticUpdates,
+                sshPublicKeys is null ? default : new HciVmOSProfileSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<HciVmOSProfileSshPublicKey>()).ToList(), default),
+                timeZone,
+                shouldProvisionVmAgent,
+                shouldProvisionVmConfigAgent,
+                default);
+        }
+
+        /// <param name="isTpmEnabled"> Enable TPM flag. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
+        /// <param name="securityType"> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceSecurityProfile"/> instance for mocking. </returns>
+        public static HciVmInstanceSecurityProfile HciVmInstanceSecurityProfile(bool? isTpmEnabled = default, bool? isSecureBootEnabled = default, HciVmSecurityType? securityType = default)
+        {
+            return new HciVmInstanceSecurityProfile(isTpmEnabled, isSecureBootEnabled is null ? default : new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(isSecureBootEnabled, default), securityType, default);
+        }
+
+        /// <param name="dataDisks"> adds data disks to the virtual machine instance. </param>
+        /// <param name="imageReferenceId"> The Azure Resource ID for an image resource used by the virtual machine instance. </param>
+        /// <param name="osDisk"> VHD to attach as OS disk. </param>
+        /// <param name="vmConfigStoragePathId"> Id of the storage container that hosts the VM configuration file. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceStorageProfile"/> instance for mocking. </returns>
+        public static HciVmInstanceStorageProfile HciVmInstanceStorageProfile(IEnumerable<HciVmVirtualHardDiskArmReference> dataDisks = default, ResourceIdentifier imageReferenceId = default, HciVmInstanceStorageProfileOSDisk osDisk = default, ResourceIdentifier vmConfigStoragePathId = default)
+        {
+            dataDisks ??= new ChangeTrackingList<HciVmVirtualHardDiskArmReference>();
+
+            return new HciVmInstanceStorageProfile((dataDisks ?? new ChangeTrackingList<HciVmVirtualHardDiskArmReference>()).ToList(), imageReferenceId is null ? default : new ImageArmReference(imageReferenceId, default), osDisk, vmConfigStoragePathId, default);
+        }
+
+        /// <param name="id"> The Azure Resource ID for a Virtual Hard Disk. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualHardDiskArmReference"/> instance for mocking. </returns>
+        public static HciVmVirtualHardDiskArmReference HciVmVirtualHardDiskArmReference(ResourceIdentifier id = default)
+        {
+            return new HciVmVirtualHardDiskArmReference(id, default);
+        }
+
+        /// <param name="id"> The Azure Resource ID for a Virtual Hard Disk. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
+        /// <param name="managedDiskSecurityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. NOTE: It can be set for only Confidential VMs. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceStorageProfileOSDisk"/> instance for mocking. </returns>
+        public static HciVmInstanceStorageProfileOSDisk HciVmInstanceStorageProfileOSDisk(ResourceIdentifier id = default, HciVmOSType? osType = default, HciVmSecurityEncryptionType? managedDiskSecurityEncryptionType = default)
+        {
+            return new HciVmInstanceStorageProfileOSDisk(id, osType, default, default);
+        }
+
+        /// <param name="httpProxy"> The HTTP proxy server endpoint to use. </param>
+        /// <param name="httpsProxy"> The HTTPS proxy server endpoint to use. </param>
+        /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
+        /// <param name="trustedCa"> Alternative CA cert to use for connecting to proxy servers. </param>
+        /// <returns> A new <see cref="Models.HciVmHttpProxyConfiguration"/> instance for mocking. </returns>
+        public static HciVmHttpProxyConfiguration HciVmHttpProxyConfiguration(string httpProxy = default, string httpsProxy = default, IEnumerable<string> noProxy = default, string trustedCa = default)
+        {
+            noProxy ??= new ChangeTrackingList<string>();
+
+            return new HciVmHttpProxyConfiguration(httpProxy, httpsProxy, (noProxy ?? new ChangeTrackingList<string>()).ToList(), trustedCa, default);
+        }
+
         /// <param name="vmConfigAgentVersion"> The VM Config Agent full version. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <returns> A new <see cref="Models.HciVmConfigAgentInstanceView"/> instance for mocking. </returns>
-        public static HciVmConfigAgentInstanceView HciVmConfigAgentInstanceView(string vmConfigAgentVersion = null, IEnumerable<HciVmInstanceViewStatus> statuses = null)
+        public static HciVmConfigAgentInstanceView HciVmConfigAgentInstanceView(string vmConfigAgentVersion = default, IEnumerable<HciVmInstanceViewStatus> statuses = default)
         {
-            statuses ??= new List<HciVmInstanceViewStatus>();
+            statuses ??= new ChangeTrackingList<HciVmInstanceViewStatus>();
 
-            return new HciVmConfigAgentInstanceView(vmConfigAgentVersion, statuses?.ToList(), serializedAdditionalRawData: null);
+            return new HciVmConfigAgentInstanceView(vmConfigAgentVersion, (statuses ?? new ChangeTrackingList<HciVmInstanceViewStatus>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmInstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceViewStatus"/> instance for mocking. </returns>
-        public static HciVmInstanceViewStatus HciVmInstanceViewStatus(string code = null, HciVmStatusLevelType? level = null, string displayStatus = null, string message = null, DateTimeOffset? time = null)
+        public static HciVmInstanceViewStatus HciVmInstanceViewStatus(string code = default, HciVmStatusLevelType? level = default, string displayStatus = default, string message = default, DateTimeOffset? time = default)
         {
             return new HciVmInstanceViewStatus(
                 code,
@@ -747,57 +1078,108 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 displayStatus,
                 message,
                 time,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmInstanceStatus"/>. </summary>
         /// <param name="errorCode"> VirtualMachine provisioning error code. </param>
         /// <param name="errorMessage"> Descriptive error message. </param>
         /// <param name="powerState"> The power state of the virtual machine instance. </param>
         /// <param name="provisioningStatus"> Provisioning status of the virtual machine instance. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceStatus"/> instance for mocking. </returns>
-        public static HciVmInstanceStatus HciVmInstanceStatus(string errorCode = null, string errorMessage = null, HciVmPowerState? powerState = null, HciVmInstanceProvisioningStatus provisioningStatus = null)
+        public static HciVmInstanceStatus HciVmInstanceStatus(string errorCode = default, string errorMessage = default, HciVmPowerState? powerState = default, HciVmInstanceProvisioningStatus provisioningStatus = default)
         {
-            return new HciVmInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus, serializedAdditionalRawData: null);
+            return new HciVmInstanceStatus(errorCode, errorMessage, powerState, provisioningStatus, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmInstanceProvisioningStatus"/>. </summary>
         /// <param name="operationId"> The ID of the operation performed on the virtual machine instance. </param>
         /// <param name="status"> The status of the operation performed on the virtual machine instance [Succeeded, Failed, InProgress]. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceProvisioningStatus"/> instance for mocking. </returns>
-        public static HciVmInstanceProvisioningStatus HciVmInstanceProvisioningStatus(string operationId = null, HciVmOperationStatus? status = null)
+        public static HciVmInstanceProvisioningStatus HciVmInstanceProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
-            return new HciVmInstanceProvisioningStatus(operationId, status, serializedAdditionalRawData: null);
+            return new HciVmInstanceProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GuestAgentInstallStatus"/>. </summary>
         /// <param name="vmUuid"> Specifies the VM's unique SMBIOS ID. </param>
         /// <param name="status"> The installation status of the hybrid machine agent installation. </param>
         /// <param name="lastStatusChangedOn"> The time of the last status change. </param>
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
         /// <param name="errorDetails"> Details about the error state. </param>
         /// <returns> A new <see cref="Models.GuestAgentInstallStatus"/> instance for mocking. </returns>
-        public static GuestAgentInstallStatus GuestAgentInstallStatus(string vmUuid = null, HybridMachineAgentInstallationStatusType? status = null, DateTimeOffset? lastStatusChangedOn = null, string agentVersion = null, IEnumerable<ResponseError> errorDetails = null)
+        public static GuestAgentInstallStatus GuestAgentInstallStatus(string vmUuid = default, HybridMachineAgentInstallationStatusType? status = default, DateTimeOffset? lastStatusChangedOn = default, string agentVersion = default, IEnumerable<ResponseError> errorDetails = default)
         {
-            errorDetails ??= new List<ResponseError>();
+            errorDetails ??= new ChangeTrackingList<ResponseError>();
 
             return new GuestAgentInstallStatus(
                 vmUuid,
                 status,
                 lastStatusChangedOn,
                 agentVersion,
-                errorDetails?.ToList(),
-                serializedAdditionalRawData: null);
+                (errorDetails ?? new ChangeTrackingList<ResponseError>()).ToList(),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmHybridIdentityMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Defines the resource properties for the update. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="Models.HciVmInstancePatch"/> instance for mocking. </returns>
+        public static HciVmInstancePatch HciVmInstancePatch(HciVmInstancePatchProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            return new HciVmInstancePatch(properties, identity, default);
+        }
+
+        /// <param name="hardwareProfile"> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </param>
+        /// <param name="storageDataDisks"> adds data disks to the virtual machine instance for the update call. </param>
+        /// <param name="networkInterfaces"> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </param>
+        /// <param name="osProfile"> OsProfile - describes the update configuration of the operating system. </param>
+        /// <returns> A new <see cref="Models.HciVmInstancePatchProperties"/> instance for mocking. </returns>
+        public static HciVmInstancePatchProperties HciVmInstancePatchProperties(HciVmInstanceHardwareProfilePatch hardwareProfile = default, IEnumerable<HciVmVirtualHardDiskArmReference> storageDataDisks = default, IEnumerable<HciVmNetworkInterfaceArmReference> networkInterfaces = default, HciVmOSProfile osProfile = default)
+        {
+            return new HciVmInstancePatchProperties(hardwareProfile, storageDataDisks is null ? default : new StorageProfileUpdate((storageDataDisks ?? new ChangeTrackingList<HciVmVirtualHardDiskArmReference>()).ToList(), default), networkInterfaces is null ? default : new NetworkProfileUpdate((networkInterfaces ?? new ChangeTrackingList<HciVmNetworkInterfaceArmReference>()).ToList(), default), osProfile, default);
+        }
+
+        /// <param name="vmSize"> VM Size Enum. </param>
+        /// <param name="processors"> number of processors for the virtual machine instance. </param>
+        /// <param name="memoryInMB"> RAM in MB for the virtual machine instance. </param>
+        /// <param name="virtualMachineGPUs"> virtualMachineGPUs - updated list of GPUs on the virtual machine instance. </param>
+        /// <returns> A new <see cref="Models.HciVmInstanceHardwareProfilePatch"/> instance for mocking. </returns>
+        public static HciVmInstanceHardwareProfilePatch HciVmInstanceHardwareProfilePatch(HciVmSize? vmSize = default, int? processors = default, long? memoryInMB = default, IEnumerable<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = default)
+        {
+            virtualMachineGPUs ??= new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>();
+
+            return new HciVmInstanceHardwareProfilePatch(vmSize, processors, memoryInMB, (virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>()).ToList(), default);
+        }
+
+        /// <param name="computerName"> ComputerName - name of the computer. </param>
+        /// <param name="linuxConfiguration"> Linux configuration properties. </param>
+        /// <param name="windowsConfiguration"> Windows configuration properties. </param>
+        /// <returns> A new <see cref="Models.HciVmOSProfile"/> instance for mocking. </returns>
+        public static HciVmOSProfile HciVmOSProfile(string computerName = default, HciVmOSProfileLinuxConfiguration linuxConfiguration = default, HciVmOSProfileWindowsConfiguration windowsConfiguration = default)
+        {
+            return new HciVmOSProfile(computerName, linuxConfiguration, windowsConfiguration, default);
+        }
+
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <returns> A new <see cref="Models.HciVmOSProfileLinuxConfiguration"/> instance for mocking. </returns>
+        public static HciVmOSProfileLinuxConfiguration HciVmOSProfileLinuxConfiguration(bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
+        {
+            return new HciVmOSProfileLinuxConfiguration(shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
+        }
+
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <returns> A new <see cref="Models.HciVmOSProfileWindowsConfiguration"/> instance for mocking. </returns>
+        public static HciVmOSProfileWindowsConfiguration HciVmOSProfileWindowsConfiguration(bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
+        {
+            return new HciVmOSProfileWindowsConfiguration(shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Vm.HciVmHybridIdentityMetadataData"/> instance for mocking. </returns>
-        public static HciVmHybridIdentityMetadataData HciVmHybridIdentityMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciVmHybridIdentityMetadataProperties properties = null)
+        public static HciVmHybridIdentityMetadataData HciVmHybridIdentityMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmHybridIdentityMetadataProperties properties = default)
         {
             return new HciVmHybridIdentityMetadataData(
                 id,
@@ -805,28 +1187,26 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmHybridIdentityMetadataProperties"/>. </summary>
         /// <param name="resourceUid"> The unique identifier for the resource. </param>
         /// <param name="publicKey"> The Public Key. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <returns> A new <see cref="Models.HciVmHybridIdentityMetadataProperties"/> instance for mocking. </returns>
-        public static HciVmHybridIdentityMetadataProperties HciVmHybridIdentityMetadataProperties(string resourceUid = null, string publicKey = null, ManagedServiceIdentity identity = null, HciVmProvisioningState? provisioningState = null)
+        public static HciVmHybridIdentityMetadataProperties HciVmHybridIdentityMetadataProperties(string resourceUid = default, string publicKey = default, ManagedServiceIdentity identity = default, HciVmProvisioningState? provisioningState = default)
         {
-            return new HciVmHybridIdentityMetadataProperties(resourceUid, publicKey, identity, provisioningState, serializedAdditionalRawData: null);
+            return new HciVmHybridIdentityMetadataProperties(resourceUid, publicKey, identity, provisioningState, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmAttestationStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Vm.HciVmAttestationStatusData"/> instance for mocking. </returns>
-        public static HciVmAttestationStatusData HciVmAttestationStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciVmAttestationStatusProperties properties = null)
+        public static HciVmAttestationStatusData HciVmAttestationStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmAttestationStatusProperties properties = default)
         {
             return new HciVmAttestationStatusData(
                 id,
@@ -834,10 +1214,9 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmAttestationStatusProperties"/>. </summary>
         /// <param name="attestSecureBootEnabled"> The status of whether secure boot is enabled. </param>
         /// <param name="attestationCertValidated"> The status of whether attestation certificate is validated. </param>
         /// <param name="bootIntegrityValidated"> The status of whether the list of boot integrity properties is validated. </param>
@@ -849,7 +1228,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="attestHardwarePlatform"> The hardware platform information from attestation token. This only applies to Confidential VM. </param>
         /// <param name="attestDiskSecurityEncryptionType"> The managed disk security encryption type from attestation token. This only applies to Confidential VM. </param>
         /// <returns> A new <see cref="Models.HciVmAttestationStatusProperties"/> instance for mocking. </returns>
-        public static HciVmAttestationStatusProperties HciVmAttestationStatusProperties(AttestSecureBootStatus? attestSecureBootEnabled = null, AttestCertValidationStatus? attestationCertValidated = null, AttestBootIntegrityStatus? bootIntegrityValidated = null, string linuxKernelVersion = null, AttestHealthStatus? healthStatus = null, string timestamp = null, string errorMessage = null, HciVmProvisioningState? provisioningState = null, AttestHardwarePlatformType? attestHardwarePlatform = null, AttestDiskSecurityEncryptionType? attestDiskSecurityEncryptionType = null)
+        public static HciVmAttestationStatusProperties HciVmAttestationStatusProperties(AttestSecureBootStatus? attestSecureBootEnabled = default, AttestCertValidationStatus? attestationCertValidated = default, AttestBootIntegrityStatus? bootIntegrityValidated = default, string linuxKernelVersion = default, AttestHealthStatus? healthStatus = default, string timestamp = default, string errorMessage = default, HciVmProvisioningState? provisioningState = default, AttestHardwarePlatformType? attestHardwarePlatform = default, AttestDiskSecurityEncryptionType? attestDiskSecurityEncryptionType = default)
         {
             return new HciVmAttestationStatusProperties(
                 attestSecureBootEnabled,
@@ -862,17 +1241,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 provisioningState,
                 attestHardwarePlatform,
                 attestDiskSecurityEncryptionType,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Vm.HciVmGuestAgentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Vm.HciVmGuestAgentData"/> instance for mocking. </returns>
-        public static HciVmGuestAgentData HciVmGuestAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciVmGuestAgentProperties properties = null)
+        public static HciVmGuestAgentData HciVmGuestAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmGuestAgentProperties properties = default)
         {
             return new HciVmGuestAgentData(
                 id,
@@ -880,18 +1258,528 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 resourceType,
                 systemData,
                 properties,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HciVmGuestAgentProperties"/>. </summary>
         /// <param name="credentials"> Username / Password Credentials to provision guest agent. </param>
         /// <param name="provisioningAction"> The guest agent provisioning action. </param>
         /// <param name="status"> The guest agent status. </param>
         /// <param name="provisioningState"> Provisioning state of the virtual machine instance. </param>
         /// <returns> A new <see cref="Models.HciVmGuestAgentProperties"/> instance for mocking. </returns>
-        public static HciVmGuestAgentProperties HciVmGuestAgentProperties(HciVmGuestCredential credentials = null, GuestAgentProvisioningAction? provisioningAction = null, string status = null, HciVmProvisioningState? provisioningState = null)
+        public static HciVmGuestAgentProperties HciVmGuestAgentProperties(HciVmGuestCredential credentials = default, GuestAgentProvisioningAction? provisioningAction = default, string status = default, HciVmProvisioningState? provisioningState = default)
         {
-            return new HciVmGuestAgentProperties(credentials, provisioningAction, status, provisioningState, serializedAdditionalRawData: null);
+            return new HciVmGuestAgentProperties(credentials, provisioningAction, status, provisioningState, default);
+        }
+
+        /// <param name="username"> The username to connect with the guest. </param>
+        /// <param name="password"> The password to connect with the guest. </param>
+        /// <returns> A new <see cref="Models.HciVmGuestCredential"/> instance for mocking. </returns>
+        public static HciVmGuestCredential HciVmGuestCredential(string username = default, string password = default)
+        {
+            return new HciVmGuestCredential(username, password, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkData"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkData HciVmVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmVirtualNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="addressPrefixes"> A list of one or more CIDR blocks that define the address space. </param>
+        /// <param name="dhcpOptionsDnsServers"> An array of DNS server IP addresses that VMs or wokloads in the vnet can inherit. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
+        /// <param name="status"> The observed status of Virtual Network. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="addressPrefixes"/> is null. </exception>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkProperties"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkProperties HciVmVirtualNetworkProperties(IEnumerable<string> addressPrefixes = default, IEnumerable<string> dhcpOptionsDnsServers = default, HciVmProvisioningState? provisioningState = default, HciVmVirtualNetworkStatus status = default)
+        {
+            return new HciVmVirtualNetworkProperties(addressPrefixes is null ? default : new HciVmVirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), default), dhcpOptionsDnsServers is null ? default : new HciVmVirtualNetworkDhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), default), provisioningState, status, default);
+        }
+
+        /// <param name="errorCode"> VirtualNetwork provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> virtual network provisioning status. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkStatus"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkStatus HciVmVirtualNetworkStatus(string errorCode = default, string errorMessage = default, HciVmVirtualNetworkStatusProvisioningStatus provisioningStatus = default)
+        {
+            return new HciVmVirtualNetworkStatus(errorCode, errorMessage, provisioningStatus, default);
+        }
+
+        /// <param name="operationId"> The ID of the operation performed on the virtual network. </param>
+        /// <param name="status"> The status of the operation performed on the virtual network [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkStatusProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkStatusProvisioningStatus HciVmVirtualNetworkStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
+        {
+            return new HciVmVirtualNetworkStatusProvisioningStatus(operationId, status, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkPatch"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkPatch HciVmVirtualNetworkPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmVirtualNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkSubnetData"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetData HciVmVirtualNetworkSubnetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmVirtualNetworkSubnetProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            return new HciVmVirtualNetworkSubnetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="addressPrefix"> Subnet CIDR. </param>
+        /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
+        /// <param name="natGatewayResourceId"> The ARM ID for a Network Security Group. </param>
+        /// <param name="routeTable"> RouteTable defining custom routes for the subnet. </param>
+        /// <param name="ipConfigurations"> List of ip configurations for the subnet. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network subnet resource. </param>
+        /// <param name="status"> The observed status of the virtual network subnet resource. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetProperties"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetProperties HciVmVirtualNetworkSubnetProperties(string addressPrefix = default, ResourceIdentifier networkSecurityGroupId = default, ResourceIdentifier natGatewayResourceId = default, HciVmNetworkingRouteTable routeTable = default, IEnumerable<HciVmVirtualNetworkSubnetIPConfigurationReference> ipConfigurations = default, HciVmProvisioningState? provisioningState = default, HciVmVirtualNetworkSubnetStatus status = default)
+        {
+            ipConfigurations ??= new ChangeTrackingList<HciVmVirtualNetworkSubnetIPConfigurationReference>();
+
+            return new HciVmVirtualNetworkSubnetProperties(
+                addressPrefix,
+                networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default),
+                natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, default),
+                routeTable,
+                (ipConfigurations ?? new ChangeTrackingList<HciVmVirtualNetworkSubnetIPConfigurationReference>()).ToList(),
+                provisioningState,
+                status,
+                default);
+        }
+
+        /// <param name="id"> The Azure Resource ID for a Network Interface. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetIPConfigurationReference"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetIPConfigurationReference HciVmVirtualNetworkSubnetIPConfigurationReference(ResourceIdentifier id = default)
+        {
+            return new HciVmVirtualNetworkSubnetIPConfigurationReference(id, default);
+        }
+
+        /// <param name="errorCode"> VirtualNetworkSubnet provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> Public IP provisioning status. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetStatus"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetStatus HciVmVirtualNetworkSubnetStatus(string errorCode = default, string errorMessage = default, HciVmVirtualNetworkSubnetStatusProvisioningStatus provisioningStatus = default)
+        {
+            return new HciVmVirtualNetworkSubnetStatus(errorCode, errorMessage, provisioningStatus, default);
+        }
+
+        /// <param name="operationId"> The ID of the operation performed on the virtual network subnet. </param>
+        /// <param name="status"> The status of the operation performed on the virtual network subnet [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetStatusProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetStatusProvisioningStatus HciVmVirtualNetworkSubnetStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
+        {
+            return new HciVmVirtualNetworkSubnetStatusProvisioningStatus(operationId, status, default);
+        }
+
+        /// <param name="properties"> properties to update. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetPatch"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetPatch HciVmVirtualNetworkSubnetPatch(VirtualNetworkSubnetUpdateProperties properties = default)
+        {
+            return new HciVmVirtualNetworkSubnetPatch(properties, default);
+        }
+
+        /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
+        /// <param name="natGatewayResourceId"> The ARM ID for a Network Security Group. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkSubnetUpdateProperties"/> instance for mocking. </returns>
+        public static VirtualNetworkSubnetUpdateProperties VirtualNetworkSubnetUpdateProperties(ResourceIdentifier networkSecurityGroupId = default, ResourceIdentifier natGatewayResourceId = default)
+        {
+            return new VirtualNetworkSubnetUpdateProperties(networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default), natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmPublicIPAddressData"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressData HciVmPublicIPAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmPublicIPAddressProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmPublicIPAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="publicIPAddressVersion"> Whether the public IP is v4 or v6. Defaults to IPv4. </param>
+        /// <param name="ipAllocationScope"> ipAllocationScope: Azure Reference to a particular IP Pool (ALM) or a LogicalNetwork (ALL) for allocating public IP. </param>
+        /// <param name="ipAddress"> IP Address. This is static. If the user specifies, we allocate that otherwise allocate from logical network address space. </param>
+        /// <param name="ipResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
+        /// <param name="natGatewayResourceId"> The ARM ID for a Network Security Group. </param>
+        /// <param name="provisioningState"> Provisioning state of the public IP. </param>
+        /// <returns> A new <see cref="Models.HciVmPublicIPAddressProperties"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressProperties HciVmPublicIPAddressProperties(HciVmPublicIPAddressType? publicIPAddressVersion = default, ResourceIdentifier ipAllocationScope = default, string ipAddress = default, ResourceIdentifier ipResourceId = default, ResourceIdentifier natGatewayResourceId = default, HciVmProvisioningState? provisioningState = default)
+        {
+            return new HciVmPublicIPAddressProperties(
+                publicIPAddressVersion,
+                ipAllocationScope,
+                ipAddress,
+                ipResourceId is null ? default : new HciVmIPConfigurationArmReference(ipResourceId, default),
+                natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, default),
+                provisioningState,
+                default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmPublicIPAddressPatch"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressPatch HciVmPublicIPAddressPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmPublicIPAddressPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmNatGatewayData"/> instance for mocking. </returns>
+        public static HciVmNatGatewayData HciVmNatGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNatGatewayProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNatGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="publicIPAddresses"> List of public ip addresses that the gateway can use for NAT. </param>
+        /// <param name="subnets"> List of subnets associated with the nat gateway. These can only be vnet subnets and must be from the same vnet. </param>
+        /// <param name="inboundNatRules"> List of inbound NAT rules. InboundNATRules can only be set after the NAT Gateway has been associated with a vnet. Removed in 2026-04-01-preview; use InboundRule Child resource instead. </param>
+        /// <param name="provisioningState"> Provisioning state of the public IP. </param>
+        /// <param name="status"> The observed state of Nat Gateway. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayProperties"/> instance for mocking. </returns>
+        public static HciVmNatGatewayProperties HciVmNatGatewayProperties(IEnumerable<HciVmPublicIPAddressArmReference> publicIPAddresses = default, IEnumerable<HciVmVirtualNetworkSubnetArmReference> subnets = default, IEnumerable<HciVmInboundNatRule> inboundNatRules = default, HciVmProvisioningState? provisioningState = default, HciVmNatGatewayStatus status = default)
+        {
+            publicIPAddresses ??= new ChangeTrackingList<HciVmPublicIPAddressArmReference>();
+            subnets ??= new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>();
+            inboundNatRules ??= new ChangeTrackingList<HciVmInboundNatRule>();
+
+            return new HciVmNatGatewayProperties(
+                (publicIPAddresses ?? new ChangeTrackingList<HciVmPublicIPAddressArmReference>()).ToList(),
+                (subnets ?? new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>()).ToList(),
+                (inboundNatRules ?? new ChangeTrackingList<HciVmInboundNatRule>()).ToList(),
+                provisioningState,
+                status,
+                default);
+        }
+
+        /// <param name="resourceId"> The Azure Resource ID of a Public IP resource. </param>
+        /// <returns> A new <see cref="Models.HciVmPublicIPAddressArmReference"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressArmReference HciVmPublicIPAddressArmReference(ResourceIdentifier resourceId = default)
+        {
+            return new HciVmPublicIPAddressArmReference(resourceId, default);
+        }
+
+        /// <param name="resourceId"> The Azure Resource ID for a Virtual Network subnet. </param>
+        /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetArmReference"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetArmReference HciVmVirtualNetworkSubnetArmReference(ResourceIdentifier resourceId = default)
+        {
+            return new HciVmVirtualNetworkSubnetArmReference(resourceId, default);
+        }
+
+        /// <param name="name"> name of the inbound nat rule. </param>
+        /// <param name="properties"> properties of the inbound nat rule. </param>
+        /// <returns> A new <see cref="Models.HciVmInboundNatRule"/> instance for mocking. </returns>
+        public static HciVmInboundNatRule HciVmInboundNatRule(string name = default, HciVmInboundNatRuleProperties properties = default)
+        {
+            return new HciVmInboundNatRule(name, properties, default);
+        }
+
+        /// <param name="protocol"> Protocol for the NAT rule. </param>
+        /// <param name="frontendPort"> Frontend Port for the inbound rule. </param>
+        /// <param name="backendPort"> backend Port for the inbound rule. </param>
+        /// <param name="backendIPResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
+        /// <param name="publicIPAddressResourceId"> The Azure Resource ID of a Public IP resource. </param>
+        /// <returns> A new <see cref="Models.HciVmInboundNatRuleProperties"/> instance for mocking. </returns>
+        public static HciVmInboundNatRuleProperties HciVmInboundNatRuleProperties(HciVmInboundNatRuleProtocol protocol = default, int frontendPort = default, int backendPort = default, ResourceIdentifier backendIPResourceId = default, ResourceIdentifier publicIPAddressResourceId = default)
+        {
+            return new HciVmInboundNatRuleProperties(
+                protocol,
+                frontendPort,
+                backendPort,
+                backendIPResourceId is null ? default : new HciVmIPConfigurationArmReference(backendIPResourceId, default),
+                publicIPAddressResourceId is null ? default : new HciVmPublicIPAddressArmReference(publicIPAddressResourceId, default),
+                default);
+        }
+
+        /// <param name="errorCode"> NatGateway provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> NatGateway provisioning status. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayStatus"/> instance for mocking. </returns>
+        public static HciVmNatGatewayStatus HciVmNatGatewayStatus(string errorCode = default, string errorMessage = default, HciVmNatGatewayStatusProvisioningStatus provisioningStatus = default)
+        {
+            return new HciVmNatGatewayStatus(errorCode, errorMessage, provisioningStatus, default);
+        }
+
+        /// <param name="operationId"> The ID of the operation performed on the nat gateway. </param>
+        /// <param name="status"> The status of the operation performed on the nat gateway [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayStatusProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVmNatGatewayStatusProvisioningStatus HciVmNatGatewayStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
+        {
+            return new HciVmNatGatewayStatusProvisioningStatus(operationId, status, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayPatch"/> instance for mocking. </returns>
+        public static HciVmNatGatewayPatch HciVmNatGatewayPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNatGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmLoadBalancerData"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerData HciVmLoadBalancerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLoadBalancerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmLoadBalancerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="frontendIPConfigurations"> Frontend IPs for the loadbalancer. </param>
+        /// <param name="backendAddressPools"> backendAddressPools for the loadbalancer. </param>
+        /// <param name="loadBalancingRules"> load balancer rules. </param>
+        /// <param name="probes"> load balancer health probes. </param>
+        /// <param name="provisioningState"> Provisioning state of the Load Balancer. </param>
+        /// <param name="status"> observed state of the load balancer. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerProperties"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerProperties HciVmLoadBalancerProperties(IEnumerable<HciVmFrontendIPConfiguration> frontendIPConfigurations = default, IEnumerable<HciVmBackendAddressPool> backendAddressPools = default, IEnumerable<HciVmLoadBalancerRule> loadBalancingRules = default, IEnumerable<HciVmLoadBalancerHealthProbe> probes = default, HciVmProvisioningState? provisioningState = default, HciVmLoadBalancerStatus status = default)
+        {
+            frontendIPConfigurations ??= new ChangeTrackingList<HciVmFrontendIPConfiguration>();
+            backendAddressPools ??= new ChangeTrackingList<HciVmBackendAddressPool>();
+            loadBalancingRules ??= new ChangeTrackingList<HciVmLoadBalancerRule>();
+            probes ??= new ChangeTrackingList<HciVmLoadBalancerHealthProbe>();
+
+            return new HciVmLoadBalancerProperties(
+                (frontendIPConfigurations ?? new ChangeTrackingList<HciVmFrontendIPConfiguration>()).ToList(),
+                (backendAddressPools ?? new ChangeTrackingList<HciVmBackendAddressPool>()).ToList(),
+                (loadBalancingRules ?? new ChangeTrackingList<HciVmLoadBalancerRule>()).ToList(),
+                (probes ?? new ChangeTrackingList<HciVmLoadBalancerHealthProbe>()).ToList(),
+                provisioningState,
+                status,
+                default);
+        }
+
+        /// <param name="name"> name for the frontend IP configuration. </param>
+        /// <param name="properties"> properties for this frontendIPConfiguration. </param>
+        /// <returns> A new <see cref="Models.HciVmFrontendIPConfiguration"/> instance for mocking. </returns>
+        public static HciVmFrontendIPConfiguration HciVmFrontendIPConfiguration(string name = default, HciVmFrontendIPConfigurationProperties properties = default)
+        {
+            return new HciVmFrontendIPConfiguration(name, properties, default);
+        }
+
+        /// <param name="privateIPAddress"> Private IP Address that was allocated (dynamic) or is to be allocated (static) from the subnet. </param>
+        /// <param name="privateIPAllocationMethod"> privateIPAllocationMethod - set to Static for requesting a specific IP. </param>
+        /// <param name="subnetResourceId"> The Azure Resource ID for a Virtual Network subnet. </param>
+        /// <param name="publicIPAddressResourceId"> The Azure Resource ID of a Public IP resource. </param>
+        /// <returns> A new <see cref="Models.HciVmFrontendIPConfigurationProperties"/> instance for mocking. </returns>
+        public static HciVmFrontendIPConfigurationProperties HciVmFrontendIPConfigurationProperties(string privateIPAddress = default, HciVmIPAllocationMethod? privateIPAllocationMethod = default, ResourceIdentifier subnetResourceId = default, ResourceIdentifier publicIPAddressResourceId = default)
+        {
+            return new HciVmFrontendIPConfigurationProperties(privateIPAddress, privateIPAllocationMethod, subnetResourceId is null ? default : new HciVmVirtualNetworkSubnetArmReference(subnetResourceId, default), publicIPAddressResourceId is null ? default : new HciVmPublicIPAddressArmReference(publicIPAddressResourceId, default), default);
+        }
+
+        /// <param name="name"> name of the backend pool. </param>
+        /// <param name="properties"> properties for the backend pool. </param>
+        /// <returns> A new <see cref="Models.HciVmBackendAddressPool"/> instance for mocking. </returns>
+        public static HciVmBackendAddressPool HciVmBackendAddressPool(string name = default, HciVmBackendAddressPoolProperties properties = default)
+        {
+            return new HciVmBackendAddressPool(name, properties, default);
+        }
+
+        /// <param name="loadBalancerBackendAddresses"> List of backend addresses for the backend pool. </param>
+        /// <param name="virtualNetworkResourceId"> The Azure Resource ID for a Virtual Network. </param>
+        /// <param name="logicalNetworkId"> The Azure Resource ID for a Logical Network. </param>
+        /// <returns> A new <see cref="Models.HciVmBackendAddressPoolProperties"/> instance for mocking. </returns>
+        public static HciVmBackendAddressPoolProperties HciVmBackendAddressPoolProperties(IEnumerable<HciVmLoadBalancerBackendAddress> loadBalancerBackendAddresses = default, ResourceIdentifier virtualNetworkResourceId = default, ResourceIdentifier logicalNetworkId = default)
+        {
+            loadBalancerBackendAddresses ??= new ChangeTrackingList<HciVmLoadBalancerBackendAddress>();
+
+            return new HciVmBackendAddressPoolProperties((loadBalancerBackendAddresses ?? new ChangeTrackingList<HciVmLoadBalancerBackendAddress>()).ToList(), virtualNetworkResourceId is null ? default : new VirtualNetworkArmReference(virtualNetworkResourceId, default), logicalNetworkId is null ? default : new HciVmLogicalNetworkArmReference(logicalNetworkId, default), default);
+        }
+
+        /// <param name="name"> name of the backend address. </param>
+        /// <param name="properties"> backend address properties. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerBackendAddress"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerBackendAddress HciVmLoadBalancerBackendAddress(string name = default, HciVmLoadBalancerBackendAddressProperties properties = default)
+        {
+            return new HciVmLoadBalancerBackendAddress(name, properties, default);
+        }
+
+        /// <param name="adminState"> admin state - if set to false, the address is removed from the pool. </param>
+        /// <param name="ipAddress"> IP address of the backend target. Populated automatically from the referenced IP configuration. </param>
+        /// <param name="subnetResourceId"> The Azure Resource ID for a Virtual Network subnet. </param>
+        /// <param name="virtualNetworkResourceId"> The Azure Resource ID for a Virtual Network. </param>
+        /// <param name="logicalNetworkId"> The Azure Resource ID for a Logical Network. </param>
+        /// <param name="networkInterfaceIPResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerBackendAddressProperties"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerBackendAddressProperties HciVmLoadBalancerBackendAddressProperties(HciVmLoadBalancerBackendAddressAdminState? adminState = default, string ipAddress = default, ResourceIdentifier subnetResourceId = default, ResourceIdentifier virtualNetworkResourceId = default, ResourceIdentifier logicalNetworkId = default, ResourceIdentifier networkInterfaceIPResourceId = default)
+        {
+            return new HciVmLoadBalancerBackendAddressProperties(
+                adminState,
+                ipAddress,
+                subnetResourceId is null ? default : new HciVmVirtualNetworkSubnetArmReference(subnetResourceId, default),
+                virtualNetworkResourceId is null ? default : new VirtualNetworkArmReference(virtualNetworkResourceId, default),
+                logicalNetworkId is null ? default : new HciVmLogicalNetworkArmReference(logicalNetworkId, default),
+                networkInterfaceIPResourceId is null ? default : new HciVmIPConfigurationArmReference(networkInterfaceIPResourceId, default),
+                default);
+        }
+
+        /// <param name="name"> name of the load balancer rule. </param>
+        /// <param name="properties"> load balancer rule properties. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerRule"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerRule HciVmLoadBalancerRule(string name = default, HciVmLoadBalancerRuleProperties properties = default)
+        {
+            return new HciVmLoadBalancerRule(name, properties, default);
+        }
+
+        /// <param name="frontendIPName"> name of the frontnedIPConfiguration. </param>
+        /// <param name="backendAddressPoolName"> name of the backend address pool. </param>
+        /// <param name="frontendPort"> Frontend port to accept connections. </param>
+        /// <param name="backendPort"> backendPort to forward connections. </param>
+        /// <param name="protocol"> IP Protocol that the rule must load-balance. </param>
+        /// <param name="probeName"> name of the health probe. </param>
+        /// <param name="loadDistribution"> SessionPersistence: Default (5-tuple), SourceIP(2-tuple), sourceIPProtocol(3-tuple). </param>
+        /// <param name="idleTimeoutInMinutes"> Time for which connections are preserved before being torn down. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="frontendIPName"/> or <paramref name="backendAddressPoolName"/> is null. </exception>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerRuleProperties"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerRuleProperties HciVmLoadBalancerRuleProperties(string frontendIPName = default, string backendAddressPoolName = default, int frontendPort = default, int backendPort = default, HciVmLoadBalancerRuleTransportProtocol protocol = default, string probeName = default, HciVmLoadBalancerRuleSessionPersistenceType? loadDistribution = default, int? idleTimeoutInMinutes = default)
+        {
+            return new HciVmLoadBalancerRuleProperties(
+                frontendIPName is null ? default : new HciVmLoadBalancerFrontendIPConfigurationReference(frontendIPName, default),
+                backendAddressPoolName is null ? default : new HciVmLoadBalancerBackendAddressPoolReference(backendAddressPoolName, default),
+                frontendPort,
+                backendPort,
+                protocol,
+                probeName is null ? default : new LoadBalancerProbeReference(probeName, default),
+                loadDistribution,
+                idleTimeoutInMinutes,
+                default);
+        }
+
+        /// <param name="name"> name of the load balancer health probe. </param>
+        /// <param name="properties"> load balancer rule properties. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerHealthProbe"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerHealthProbe HciVmLoadBalancerHealthProbe(string name = default, HciVmLoadBalancerHealthProbeProperties properties = default)
+        {
+            return new HciVmLoadBalancerHealthProbe(name, properties, default);
+        }
+
+        /// <param name="protocol"> Protocol for this probe: Can be Tcp or Http - Diverges from Azure where Https is also an option. </param>
+        /// <param name="port"> Port on the backend address to probe. </param>
+        /// <param name="requestPath"> For http probes, specify the request path e.g. /health. </param>
+        /// <param name="intervalInSeconds"> Probe interval in seconds (5-300) default 15. </param>
+        /// <param name="numberOfProbes"> number of consecutive probe failures before marking unhealthy (1-20) default 2. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerHealthProbeProperties"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerHealthProbeProperties HciVmLoadBalancerHealthProbeProperties(HciVmLoadBalancerProbeProtocol protocol = default, int port = default, string requestPath = default, int? intervalInSeconds = default, int? numberOfProbes = default)
+        {
+            return new HciVmLoadBalancerHealthProbeProperties(
+                protocol,
+                port,
+                requestPath,
+                intervalInSeconds,
+                numberOfProbes,
+                default);
+        }
+
+        /// <param name="errorCode"> LoadBalancer provisioning error code. </param>
+        /// <param name="errorMessage"> Descriptive error message. </param>
+        /// <param name="provisioningStatus"> virtual network provisioning status. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerStatus"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerStatus HciVmLoadBalancerStatus(string errorCode = default, string errorMessage = default, HciVmLoadBalancerStatusProvisioningStatus provisioningStatus = default)
+        {
+            return new HciVmLoadBalancerStatus(errorCode, errorMessage, provisioningStatus, default);
+        }
+
+        /// <param name="operationId"> The ID of the operation performed on the load balancer. </param>
+        /// <param name="status"> The status of the operation performed on the loadbalancer [Succeeded, Failed, InProgress]. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerStatusProvisioningStatus"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerStatusProvisioningStatus HciVmLoadBalancerStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
+        {
+            return new HciVmLoadBalancerStatusProvisioningStatus(operationId, status, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmLoadBalancerPatch"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerPatch HciVmLoadBalancerPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmLoadBalancerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
     }
 }

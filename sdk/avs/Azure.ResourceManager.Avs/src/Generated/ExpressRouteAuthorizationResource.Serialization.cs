@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Avs
 {
+    /// <summary></summary>
     public partial class ExpressRouteAuthorizationResource : IJsonModel<ExpressRouteAuthorizationData>
     {
-        private static ExpressRouteAuthorizationData s_dataDeserializationInstance;
-        private static ExpressRouteAuthorizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExpressRouteAuthorizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExpressRouteAuthorizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExpressRouteAuthorizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRouteAuthorizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteAuthorizationData>)Data).Write(writer, options);
 
-        ExpressRouteAuthorizationData IJsonModel<ExpressRouteAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteAuthorizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteAuthorizationData IJsonModel<ExpressRouteAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteAuthorizationData>(Data, options, AzureResourceManagerAvsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExpressRouteAuthorizationData IPersistableModel<ExpressRouteAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteAuthorizationData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<ExpressRouteAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteAuthorizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

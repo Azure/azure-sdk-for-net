@@ -8,16 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendHealthOnDemand : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayBackendHealthOnDemand>
+    /// <summary> Result of on demand test probe. </summary>
+    public partial class ApplicationGatewayBackendHealthOnDemand : IJsonModel<ApplicationGatewayBackendHealthOnDemand>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHealthOnDemand>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationGatewayBackendHealthOnDemand PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationGatewayBackendHealthOnDemand(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthOnDemand)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthOnDemand)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationGatewayBackendHealthOnDemand>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayBackendHealthOnDemand IPersistableModel<ApplicationGatewayBackendHealthOnDemand>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationGatewayBackendHealthOnDemand>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationGatewayBackendHealthOnDemand"/> from. </param>
+        internal static ApplicationGatewayBackendHealthOnDemand FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeApplicationGatewayBackendHealthOnDemand(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationGatewayBackendHealthOnDemand>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +77,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthOnDemand)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
@@ -45,15 +92,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("backendHealthHttpSettings"u8);
                 writer.WriteObjectValue(BackendHealthHttpSettings, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,135 +109,60 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ApplicationGatewayBackendHealthOnDemand IJsonModel<ApplicationGatewayBackendHealthOnDemand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayBackendHealthOnDemand IJsonModel<ApplicationGatewayBackendHealthOnDemand>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationGatewayBackendHealthOnDemand JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthOnDemand)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationGatewayBackendHealthOnDemand(document.RootElement, options);
         }
 
-        internal static ApplicationGatewayBackendHealthOnDemand DeserializeApplicationGatewayBackendHealthOnDemand(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationGatewayBackendHealthOnDemand DeserializeApplicationGatewayBackendHealthOnDemand(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ApplicationGatewayBackendAddressPool backendAddressPool = default;
             ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("backendAddressPool"u8))
+                if (prop.NameEquals("backendAddressPool"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(property.Value, options);
+                    backendAddressPool = ApplicationGatewayBackendAddressPool.DeserializeApplicationGatewayBackendAddressPool(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("backendHealthHttpSettings"u8))
+                if (prop.NameEquals("backendHealthHttpSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backendHealthHttpSettings = ApplicationGatewayBackendHealthHttpSettings.DeserializeApplicationGatewayBackendHealthHttpSettings(property.Value, options);
+                    backendHealthHttpSettings = ApplicationGatewayBackendHealthHttpSettings.DeserializeApplicationGatewayBackendHealthHttpSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool, backendHealthHttpSettings, serializedAdditionalRawData);
+            return new ApplicationGatewayBackendHealthOnDemand(backendAddressPool, backendHealthHttpSettings, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendAddressPool), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backendAddressPool: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BackendAddressPool))
-                {
-                    builder.Append("  backendAddressPool: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BackendAddressPool, options, 2, false, "  backendAddressPool: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendHealthHttpSettings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backendHealthHttpSettings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BackendHealthHttpSettings))
-                {
-                    builder.Append("  backendHealthHttpSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BackendHealthHttpSettings, options, 2, false, "  backendHealthHttpSettings: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationGatewayBackendHealthOnDemand>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthOnDemand)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationGatewayBackendHealthOnDemand IPersistableModel<ApplicationGatewayBackendHealthOnDemand>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthOnDemand>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationGatewayBackendHealthOnDemand(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthOnDemand)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationGatewayBackendHealthOnDemand>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

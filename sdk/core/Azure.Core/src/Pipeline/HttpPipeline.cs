@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline
 {
@@ -58,6 +59,17 @@ namespace Azure.Core.Pipeline
                 ClientDiagnostics.CreateMessageSanitizer(new DiagnosticsOptions()));
             policies.CopyTo(all, 0);
 
+            for (int i = 0; i < policies.Length; i++)
+            {
+                // If the policy implements ISupportsTransportCertificateUpdate, we need to subscribe to its TransportUpdated event
+                if (policies[i] is ISupportsTransportUpdate transportUpdated)
+                {
+                    AzureCoreEventSource.Singleton.TokenBinding("HttpPipeline subscribed to transport option updates.");
+                    transportUpdated.TransportOptionsChanged += options => _transport.Update(options);
+                    break;
+                }
+            }
+
             _pipeline = all;
         }
 
@@ -78,6 +90,16 @@ namespace Azure.Core.Pipeline
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
             _internallyConstructed = true;
+
+            for (int i = 0; i < pipeline.Length; i++)
+            {
+                // If the policy implements ISupportsTransportCertificateUpdate, we need to subscribe to its TransportUpdated event
+                if (pipeline[i] is ISupportsTransportUpdate transportUpdated)
+                {
+                    transportUpdated.TransportOptionsChanged += options => _transport.Update(options);
+                    break;
+                }
+            }
         }
 
         /// <summary>

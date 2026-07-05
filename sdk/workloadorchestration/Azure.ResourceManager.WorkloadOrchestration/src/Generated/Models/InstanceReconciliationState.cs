@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct InstanceReconciliationState : IEquatable<InstanceReconciliationState>
     {
         private readonly string _value;
+        /// <summary> Reconciliation is inactive. </summary>
+        private const string InactiveValue = "inactive";
+        /// <summary> Reconciliation is active. </summary>
+        private const string ActiveValue = "active";
 
         /// <summary> Initializes a new instance of <see cref="InstanceReconciliationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstanceReconciliationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InactiveValue = "inactive";
-        private const string ActiveValue = "active";
+            _value = value;
+        }
 
         /// <summary> Reconciliation is inactive. </summary>
         public static InstanceReconciliationState Inactive { get; } = new InstanceReconciliationState(InactiveValue);
+
         /// <summary> Reconciliation is active. </summary>
         public static InstanceReconciliationState Active { get; } = new InstanceReconciliationState(ActiveValue);
+
         /// <summary> Determines if two <see cref="InstanceReconciliationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InstanceReconciliationState left, InstanceReconciliationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InstanceReconciliationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InstanceReconciliationState left, InstanceReconciliationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InstanceReconciliationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InstanceReconciliationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InstanceReconciliationState(string value) => new InstanceReconciliationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InstanceReconciliationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InstanceReconciliationState?(string value) => value == null ? null : new InstanceReconciliationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InstanceReconciliationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InstanceReconciliationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

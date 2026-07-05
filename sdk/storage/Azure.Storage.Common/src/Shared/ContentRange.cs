@@ -82,20 +82,20 @@ namespace Azure.Storage
         public long? End { get; }
 
         /// <summary>
-        /// Size of this range, measured in this instance's <see cref="Unit"/>.
+        /// Size of the entire resource this range is from, measured in this instance's <see cref="Unit"/>.
         /// </summary>
-        public long? Size { get; }
+        public long? TotalResourceLength { get; }
 
         /// <summary>
         /// Unit this range is measured in. Generally "bytes".
         /// </summary>
         public RangeUnit Unit { get; }
 
-        public ContentRange(RangeUnit unit, long? start, long? end, long? size)
+        public ContentRange(RangeUnit unit, long? start, long? end, long? totalResourceLength)
         {
             Start = start;
             End = end;
-            Size = size;
+            TotalResourceLength = totalResourceLength;
             Unit = unit;
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Storage
             string unit = default;
             long? start = default;
             long? end = default;
-            long? size = default;
+            long? resourceSize = default;
 
             try
             {
@@ -136,10 +136,10 @@ namespace Azure.Storage
                 var rawSize = tokens[blobSizeIndex];
                 if (rawSize != WildcardMarker)
                 {
-                    size = long.Parse(rawSize, CultureInfo.InvariantCulture);
+                    resourceSize = long.Parse(rawSize, CultureInfo.InvariantCulture);
                 }
 
-                return new ContentRange(unit, start, end, size);
+                return new ContentRange(unit, start, end, resourceSize);
             }
             catch (IndexOutOfRangeException)
             {
@@ -166,7 +166,7 @@ namespace Azure.Storage
         /// <summary>
         /// Indicates whether this instance and a specified <see cref="RangeUnit"/> are equal
         /// </summary>
-        public bool Equals(ContentRange other) => (other.Start == Start) && (other.End == End) && (other.Unit == Unit) && (other.Size == Size);
+        public bool Equals(ContentRange other) => (other.Start == Start) && (other.End == End) && (other.Unit == Unit) && (other.TotalResourceLength == TotalResourceLength);
 
         /// <summary>
         /// Determines if two <see cref="Unit"/> values are the same.
@@ -186,6 +186,6 @@ namespace Azure.Storage
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => HashCodeBuilder.Combine(Start, End, Size, Unit.GetHashCode());
+        public override int GetHashCode() => HashCodeBuilder.Combine(Start, End, TotalResourceLength, Unit.GetHashCode());
     }
 }

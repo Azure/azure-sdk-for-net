@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct VirtualMachineBootMethod : IEquatable<VirtualMachineBootMethod>
     {
         private readonly string _value;
+        /// <summary> BIOS boot mode. </summary>
+        private const string BiosValue = "BIOS";
+        /// <summary> UEFI boot mode. </summary>
+        private const string UefiValue = "UEFI";
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineBootMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualMachineBootMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string UefiValue = "UEFI";
-        private const string BiosValue = "BIOS";
-
-        /// <summary> UEFI. </summary>
-        public static VirtualMachineBootMethod Uefi { get; } = new VirtualMachineBootMethod(UefiValue);
-        /// <summary> BIOS. </summary>
+        /// <summary> BIOS boot mode. </summary>
         public static VirtualMachineBootMethod Bios { get; } = new VirtualMachineBootMethod(BiosValue);
+
+        /// <summary> UEFI boot mode. </summary>
+        public static VirtualMachineBootMethod Uefi { get; } = new VirtualMachineBootMethod(UefiValue);
+
         /// <summary> Determines if two <see cref="VirtualMachineBootMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachineBootMethod left, VirtualMachineBootMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachineBootMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachineBootMethod left, VirtualMachineBootMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachineBootMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachineBootMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachineBootMethod(string value) => new VirtualMachineBootMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachineBootMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachineBootMethod?(string value) => value == null ? null : new VirtualMachineBootMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachineBootMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachineBootMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

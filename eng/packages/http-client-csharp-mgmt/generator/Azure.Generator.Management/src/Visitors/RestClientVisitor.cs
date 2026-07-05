@@ -84,7 +84,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
             rootClient);
 
         rootClient.Update(
-            fields:[apiVersionField, endpointField],
+            fields: [apiVersionField, endpointField],
             methods: [.. rootClient.RestClient.Methods], // put create request methods to client directly
             modifiers: TransformPublicModifiersToInternal(rootClient),
             relativeFilePath: TransformRelativeFilePathForClient(rootClient),

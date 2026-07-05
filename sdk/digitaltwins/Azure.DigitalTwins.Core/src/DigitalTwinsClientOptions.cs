@@ -32,7 +32,7 @@ namespace Azure.DigitalTwins.Core
             /// <summary>
             /// 2023_06_30
             /// </summary>
-            V2023_06_30= 3,
+            V2023_06_30 = 3,
             /// <summary>
             /// 2023_10_31
             /// </summary>

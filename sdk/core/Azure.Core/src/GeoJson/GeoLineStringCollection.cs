@@ -18,7 +18,7 @@ namespace Azure.Core.GeoJson
         /// Initializes new instance of <see cref="GeoLineStringCollection"/>.
         /// </summary>
         /// <param name="lines">The collection of inner lines.</param>
-        public GeoLineStringCollection(IEnumerable<GeoLineString> lines): this(lines, null, DefaultProperties)
+        public GeoLineStringCollection(IEnumerable<GeoLineString> lines) : this(lines, null, DefaultProperties)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.Core.GeoJson
         /// <param name="lines">The collection of inner lines.</param>
         /// <param name="boundingBox">The <see cref="GeoBoundingBox"/> to use.</param>
         /// <param name="customProperties">The set of custom properties associated with the <see cref="GeoObject"/>.</param>
-        public GeoLineStringCollection(IEnumerable<GeoLineString> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties): base(boundingBox, customProperties)
+        public GeoLineStringCollection(IEnumerable<GeoLineString> lines, GeoBoundingBox? boundingBox, IReadOnlyDictionary<string, object?> customProperties) : base(boundingBox, customProperties)
         {
             Argument.AssertNotNull(lines, nameof(lines));
 

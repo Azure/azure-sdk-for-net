@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DBNodeActionType : IEquatable<DBNodeActionType>
     {
         private readonly string _value;
+        /// <summary> Start DbNode. </summary>
+        private const string StartValue = "Start";
+        /// <summary> Stop DbNode. </summary>
+        private const string StopValue = "Stop";
+        /// <summary> Soft reset DbNode. </summary>
+        private const string SoftResetValue = "SoftReset";
+        /// <summary> Reset DbNode. </summary>
+        private const string ResetValue = "Reset";
 
         /// <summary> Initializes a new instance of <see cref="DBNodeActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DBNodeActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartValue = "Start";
-        private const string StopValue = "Stop";
-        private const string SoftResetValue = "SoftReset";
-        private const string ResetValue = "Reset";
+            _value = value;
+        }
 
         /// <summary> Start DbNode. </summary>
         public static DBNodeActionType Start { get; } = new DBNodeActionType(StartValue);
+
         /// <summary> Stop DbNode. </summary>
         public static DBNodeActionType Stop { get; } = new DBNodeActionType(StopValue);
+
         /// <summary> Soft reset DbNode. </summary>
         public static DBNodeActionType SoftReset { get; } = new DBNodeActionType(SoftResetValue);
+
         /// <summary> Reset DbNode. </summary>
         public static DBNodeActionType Reset { get; } = new DBNodeActionType(ResetValue);
+
         /// <summary> Determines if two <see cref="DBNodeActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DBNodeActionType left, DBNodeActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DBNodeActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DBNodeActionType left, DBNodeActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DBNodeActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DBNodeActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DBNodeActionType(string value) => new DBNodeActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DBNodeActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DBNodeActionType?(string value) => value == null ? null : new DBNodeActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DBNodeActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DBNodeActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

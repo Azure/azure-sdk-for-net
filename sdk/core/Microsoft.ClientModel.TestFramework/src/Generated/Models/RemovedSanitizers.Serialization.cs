@@ -151,7 +151,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeRemovedSanitizers(document.RootElement, options);
                     }
@@ -166,8 +166,8 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="RemovedSanitizers"/> from. </param>
         public static explicit operator RemovedSanitizers(ClientResult result)
         {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRemovedSanitizers(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

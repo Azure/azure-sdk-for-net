@@ -17,12 +17,6 @@ parameters:
   - name: BuildSnippets
     type: boolean
     default: true
-  - name: CheckAOTCompat
-    type: boolean
-    default: false
-  - name: AOTTestInputs
-    type: object
-    default: []
   - name: TestSetupSteps
     type: stepList
     default: []
@@ -51,10 +45,11 @@ parameters:
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    # Build matrix - larger LOC batches (1.2M) for fewer jobs and lower per-job overhead.
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_build_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build-analyze.yml
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-build.yml
         Pools: # eng/pipelines/templates/stages/build-matrix.json only contains windows OS currently so only pass the Windows pool to avoid the other OS's being marked skipped in DevOps
           - name: Windows
             filter: .*Windows.*Pool$
@@ -69,14 +64,12 @@ jobs:
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
-        PRJobBatchSize: 10
+        PRJobBatchSize: 1
         AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
           TestPipeline: ${{ parameters.TestPipeline }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           SDKType: ${{ parameters.SDKType }}
-          CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-          AOTTestInputs: ${{ parameters.AOTTestInputs }}
           BuildSnippets: ${{ parameters.BuildSnippets }}
         PreGenerationSteps:
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
@@ -85,6 +78,46 @@ jobs:
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
               ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableLocWeighting: true
+              LocTarget: 1200000
+              PublishArtifact: true
+
+    # Analyze matrix - smaller LOC batches (300k) for more parallelism so analyze wall-clock matches build.
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+      parameters:
+        GenerateJobName: generate_analyze_matrix
+        JobTemplatePath: /eng/pipelines/templates/jobs/batched-analyze.yml
+        Pools: # build-matrix.json only contains Windows entries; batched-analyze.yml overrides pool to Linux internally.
+          - name: Windows
+            filter: .*Windows.*Pool$
+            os: windows
+        MatrixConfigs:
+        - Name: NET_ci_analyze_base
+          Path: eng/pipelines/templates/stages/build-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+        SparseCheckoutPaths:
+          - "/*"
+          - "!SessionRecords"
+        EnablePRGeneration: true
+        PRMatrixSetting: ProjectNames
+        PRJobBatchSize: 1
+        AdditionalParameters:
+          Artifacts: ${{ parameters.Artifacts }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          SDKType: ${{ parameters.SDKType }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
+          ArtifactName: AnalyzePackageInfoArtifact
+        PreGenerationSteps:
+          - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
+            parameters:
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              PublishingArtifactName: AnalyzePackageInfoArtifact
+              ForceDirect: true
+              ExcludePaths: ${{ parameters.ExcludePaths }}
+              EnableLocWeighting: true
+              LocTarget: 300000
+              PublishArtifact: true
 
   - ${{ else }}:
     - job: Build
@@ -116,18 +149,10 @@ jobs:
             TestPipeline: ${{ parameters.TestPipeline }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             SDKType: ${{ parameters.SDKType }}
-            CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
-            AOTTestInputs: ${{ parameters.AOTTestInputs }}
 
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
       condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
-      templateContext:
-        outputs:
-          - output: pipelineArtifact
-            targetPath: '$(Build.ArtifactStagingDirectory)'
-            artifactName: 'verify'
-
       pool:
         name: $(LINUXPOOL)
         image: $(LINUXVMIMAGE)
@@ -150,6 +175,10 @@ jobs:
         image: $(WINDOWSVMIMAGE)
         os: windows
       steps:
+        - checkout: self
+          fetchFilter: tree:0
+          fetchTags: false
+
         - task: UsePythonVersion@0
           displayName: "Use Python 3.11"
           inputs:
@@ -158,21 +187,22 @@ jobs:
         - template: /eng/common/pipelines/templates/steps/validate-filename.yml
 
         - template: /eng/common/pipelines/templates/steps/check-spelling.yml
-
-        - template: /eng/common/pipelines/templates/steps/verify-links.yml
           parameters:
-            ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: ''
-              Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
-            ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-              Directory: sdk/${{ parameters.ServiceDirectory }}
-            CheckLinkGuidance: $true
+            ScriptToValidateUpgrade: eng/scripts/spell-check-public-api.ps1
 
         - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
           parameters:
             SourceDirectory: $(Build.SourcesDirectory)
 
+        - template: /eng/common/pipelines/templates/steps/verify-codeowners-sections.yml
+          parameters:
+            Sections:
+              - 'Client Libraries'
+
         - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+
+        - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
+          displayName: Validate NoWarn enforcement targets
 
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
@@ -189,7 +219,7 @@ jobs:
             - "!SessionRecords"
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 20
+          PRJobBatchSize: 10
           PRMatrixIndirectFilters:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct DocumentIntelligenceLayoutSkillOutputFormat : IEquatable<DocumentIntelligenceLayoutSkillOutputFormat>
     {
         private readonly string _value;
+        /// <summary> Specify the format of the output as text. </summary>
+        private const string TextValue = "text";
+        /// <summary> Specify the format of the output as markdown. </summary>
+        private const string MarkdownValue = "markdown";
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentIntelligenceLayoutSkillOutputFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TextValue = "text";
-        private const string MarkdownValue = "markdown";
+            _value = value;
+        }
 
         /// <summary> Specify the format of the output as text. </summary>
         public static DocumentIntelligenceLayoutSkillOutputFormat Text { get; } = new DocumentIntelligenceLayoutSkillOutputFormat(TextValue);
+
         /// <summary> Specify the format of the output as markdown. </summary>
         public static DocumentIntelligenceLayoutSkillOutputFormat Markdown { get; } = new DocumentIntelligenceLayoutSkillOutputFormat(MarkdownValue);
+
         /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentIntelligenceLayoutSkillOutputFormat left, DocumentIntelligenceLayoutSkillOutputFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentIntelligenceLayoutSkillOutputFormat left, DocumentIntelligenceLayoutSkillOutputFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentIntelligenceLayoutSkillOutputFormat(string value) => new DocumentIntelligenceLayoutSkillOutputFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillOutputFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentIntelligenceLayoutSkillOutputFormat?(string value) => value == null ? null : new DocumentIntelligenceLayoutSkillOutputFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentIntelligenceLayoutSkillOutputFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentIntelligenceLayoutSkillOutputFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

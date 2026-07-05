@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the SiteLogsConfig data model.
-    /// Configuration of App Service site logs.
-    /// </summary>
+    /// <summary> Configuration of App Service site logs. </summary>
     public partial class SiteLogsConfigData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         public SiteLogsConfigData()
@@ -57,64 +25,98 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="applicationLogs"> Application logs configuration. </param>
-        /// <param name="httpLogs"> HTTP logs configuration. </param>
-        /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
-        /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SiteLogsConfig resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SiteLogsConfigProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ApplicationLogs = applicationLogs;
-            HttpLogs = httpLogs;
-            IsFailedRequestsTracing = isFailedRequestsTracing;
-            IsDetailedErrorMessages = isDetailedErrorMessages;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Application logs configuration. </summary>
-        [WirePath("properties.applicationLogs")]
-        public ApplicationLogsConfig ApplicationLogs { get; set; }
-        /// <summary> HTTP logs configuration. </summary>
-        [WirePath("properties.httpLogs")]
-        public AppServiceHttpLogsConfig HttpLogs { get; set; }
-        /// <summary> Failed requests tracing configuration. </summary>
-        internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        [WirePath("properties.failedRequestsTracing.enabled")]
-        public bool? IsFailedRequestsTracingEnabled
-        {
-            get => IsFailedRequestsTracing is null ? default : IsFailedRequestsTracing.Enabled;
-            set
-            {
-                if (IsFailedRequestsTracing is null)
-                    IsFailedRequestsTracing = new WebAppEnabledConfig();
-                IsFailedRequestsTracing.Enabled = value;
-            }
-        }
-
-        /// <summary> Detailed error messages configuration. </summary>
-        internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
-        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        [WirePath("properties.detailedErrorMessages.enabled")]
-        public bool? IsDetailedErrorMessagesEnabled
-        {
-            get => IsDetailedErrorMessages is null ? default : IsDetailedErrorMessages.Enabled;
-            set
-            {
-                if (IsDetailedErrorMessages is null)
-                    IsDetailedErrorMessages = new WebAppEnabledConfig();
-                IsDetailedErrorMessages.Enabled = value;
-            }
-        }
+        /// <summary> SiteLogsConfig resource specific properties. </summary>
+        [WirePath("properties")]
+        internal SiteLogsConfigProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> Application logs configuration. </summary>
+        [WirePath("properties.applicationLogs")]
+        public ApplicationLogsConfig ApplicationLogs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationLogs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteLogsConfigProperties();
+                }
+                Properties.ApplicationLogs = value;
+            }
+        }
+
+        /// <summary> HTTP logs configuration. </summary>
+        [WirePath("properties.httpLogs")]
+        public AppServiceHttpLogsConfig HttpLogs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpLogs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteLogsConfigProperties();
+                }
+                Properties.HttpLogs = value;
+            }
+        }
+
+        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.failedRequestsTracing.enabled")]
+        public bool? IsFailedRequestsTracingEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFailedRequestsTracingEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteLogsConfigProperties();
+                }
+                Properties.IsFailedRequestsTracingEnabled = value;
+            }
+        }
+
+        /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.detailedErrorMessages.enabled")]
+        public bool? IsDetailedErrorMessagesEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDetailedErrorMessagesEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteLogsConfigProperties();
+                }
+                Properties.IsDetailedErrorMessagesEnabled = value;
+            }
+        }
     }
 }

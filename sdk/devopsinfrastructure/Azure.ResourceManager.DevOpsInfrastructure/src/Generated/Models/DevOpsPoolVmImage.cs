@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The VM image of the machines in the pool. </summary>
     public partial class DevOpsPoolVmImage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsPoolVmImage"/>. </summary>
         public DevOpsPoolVmImage()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
         /// <param name="ephemeralType"> The ephemeral type of the image. </param>
         /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IList<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IList<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             WellKnownImageName = wellKnownImageName;
@@ -67,19 +39,24 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             Buffer = buffer;
             EphemeralType = ephemeralType;
             IsEphemeral = isEphemeral;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource id of the image. </summary>
         public string ResourceId { get; set; }
+
         /// <summary> The image to use from a well-known set of images made available to customers. </summary>
         public string WellKnownImageName { get; set; }
+
         /// <summary> List of aliases to reference the image by. </summary>
         public IList<string> Aliases { get; }
+
         /// <summary> The percentage of the buffer to be allocated to this image. </summary>
         public string Buffer { get; set; }
+
         /// <summary> The ephemeral type of the image. </summary>
         public DevOpsEphemeralType? EphemeralType { get; set; }
+
         /// <summary> Read only. Determines if the image is ephemeral. </summary>
         public bool? IsEphemeral { get; }
     }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,73 +25,84 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class FirewallPolicyRuleCollectionGroupCollection : ArmCollection, IEnumerable<FirewallPolicyRuleCollectionGroupResource>, IAsyncEnumerable<FirewallPolicyRuleCollectionGroupResource>
     {
-        private readonly ClientDiagnostics _firewallPolicyRuleCollectionGroupClientDiagnostics;
-        private readonly FirewallPolicyRuleCollectionGroupsRestOperations _firewallPolicyRuleCollectionGroupRestClient;
+        private readonly ClientDiagnostics _firewallPolicyRuleCollectionGroupsClientDiagnostics;
+        private readonly FirewallPolicyRuleCollectionGroups _firewallPolicyRuleCollectionGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FirewallPolicyRuleCollectionGroupCollection for mocking. </summary>
         protected FirewallPolicyRuleCollectionGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FirewallPolicyRuleCollectionGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FirewallPolicyRuleCollectionGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _firewallPolicyRuleCollectionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyRuleCollectionGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FirewallPolicyRuleCollectionGroupResource.ResourceType, out string firewallPolicyRuleCollectionGroupApiVersion);
-            _firewallPolicyRuleCollectionGroupRestClient = new FirewallPolicyRuleCollectionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firewallPolicyRuleCollectionGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _firewallPolicyRuleCollectionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyRuleCollectionGroupResource.ResourceType.Namespace, Diagnostics);
+            _firewallPolicyRuleCollectionGroupsRestClient = new FirewallPolicyRuleCollectionGroups(_firewallPolicyRuleCollectionGroupsClientDiagnostics, Pipeline, Endpoint, firewallPolicyRuleCollectionGroupApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != FirewallPolicyResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, FirewallPolicyResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FirewallPolicyResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates the specified FirewallPolicyRuleCollectionGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to the create or update FirewallPolicyRuleCollectionGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<FirewallPolicyRuleCollectionGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _firewallPolicyRuleCollectionGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupOperationSource(Client), _firewallPolicyRuleCollectionGroupClientDiagnostics, Pipeline, _firewallPolicyRuleCollectionGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, FirewallPolicyRuleCollectionGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<FirewallPolicyRuleCollectionGroupResource> operation = new NetworkArmOperation<FirewallPolicyRuleCollectionGroupResource>(
+                    new FirewallPolicyRuleCollectionGroupResourceOperationSource(Client),
+                    _firewallPolicyRuleCollectionGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +116,51 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates the specified FirewallPolicyRuleCollectionGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to the create or update FirewallPolicyRuleCollectionGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<FirewallPolicyRuleCollectionGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _firewallPolicyRuleCollectionGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, data, cancellationToken);
-                var operation = new NetworkArmOperation<FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupOperationSource(Client), _firewallPolicyRuleCollectionGroupClientDiagnostics, Pipeline, _firewallPolicyRuleCollectionGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, FirewallPolicyRuleCollectionGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<FirewallPolicyRuleCollectionGroupResource> operation = new NetworkArmOperation<FirewallPolicyRuleCollectionGroupResource>(
+                    new FirewallPolicyRuleCollectionGroupResourceOperationSource(Client),
+                    _firewallPolicyRuleCollectionGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified FirewallPolicyRuleCollectionGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FirewallPolicyRuleCollectionGroupResource>> GetAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _firewallPolicyRuleCollectionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirewallPolicyRuleCollectionGroupData> response = Response.FromValue(FirewallPolicyRuleCollectionGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirewallPolicyRuleCollectionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified FirewallPolicyRuleCollectionGroup.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FirewallPolicyRuleCollectionGroupResource> Get(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _firewallPolicyRuleCollectionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirewallPolicyRuleCollectionGroupData> response = Response.FromValue(FirewallPolicyRuleCollectionGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirewallPolicyRuleCollectionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.Network
         /// Lists all FirewallPolicyRuleCollectionGroups in a FirewallPolicy resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirewallPolicyRuleCollectionGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FirewallPolicyRuleCollectionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirewallPolicyRuleCollectionGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firewallPolicyRuleCollectionGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firewallPolicyRuleCollectionGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirewallPolicyRuleCollectionGroupResource(Client, FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(e)), _firewallPolicyRuleCollectionGroupClientDiagnostics, Pipeline, "FirewallPolicyRuleCollectionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FirewallPolicyRuleCollectionGroupData, FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupsGetAllAsyncCollectionResultOfT(
+                _firewallPolicyRuleCollectionGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FirewallPolicyRuleCollectionGroupCollection.GetAll"), data => new FirewallPolicyRuleCollectionGroupResource(Client, data));
         }
 
         /// <summary>
         /// Lists all FirewallPolicyRuleCollectionGroups in a FirewallPolicy resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="FirewallPolicyRuleCollectionGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirewallPolicyRuleCollectionGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firewallPolicyRuleCollectionGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firewallPolicyRuleCollectionGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirewallPolicyRuleCollectionGroupResource(Client, FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(e)), _firewallPolicyRuleCollectionGroupClientDiagnostics, Pipeline, "FirewallPolicyRuleCollectionGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FirewallPolicyRuleCollectionGroupData, FirewallPolicyRuleCollectionGroupResource>(new FirewallPolicyRuleCollectionGroupsGetAllCollectionResultOfT(
+                _firewallPolicyRuleCollectionGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "FirewallPolicyRuleCollectionGroupCollection.GetAll"), data => new FirewallPolicyRuleCollectionGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Exists");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _firewallPolicyRuleCollectionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FirewallPolicyRuleCollectionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirewallPolicyRuleCollectionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirewallPolicyRuleCollectionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Exists");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _firewallPolicyRuleCollectionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FirewallPolicyRuleCollectionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirewallPolicyRuleCollectionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirewallPolicyRuleCollectionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<FirewallPolicyRuleCollectionGroupResource>> GetIfExistsAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _firewallPolicyRuleCollectionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FirewallPolicyRuleCollectionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirewallPolicyRuleCollectionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirewallPolicyRuleCollectionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FirewallPolicyRuleCollectionGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirewallPolicyRuleCollectionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyRuleCollectionGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
+        /// <param name="ruleCollectionGroupName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<FirewallPolicyRuleCollectionGroupResource> GetIfExists(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
-            using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _firewallPolicyRuleCollectionGroupsClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _firewallPolicyRuleCollectionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyRuleCollectionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FirewallPolicyRuleCollectionGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirewallPolicyRuleCollectionGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirewallPolicyRuleCollectionGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FirewallPolicyRuleCollectionGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirewallPolicyRuleCollectionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FirewallPolicyRuleCollectionGroupResource> IAsyncEnumerable<FirewallPolicyRuleCollectionGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ConnectedCache;
 
 namespace Azure.ResourceManager.ConnectedCache.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public readonly partial struct MccCacheNodeBgpReviewState : IEquatable<MccCacheNodeBgpReviewState>
     {
         private readonly string _value;
+        /// <summary> bgp not configured. </summary>
+        private const string NotConfiguredValue = "NotConfigured";
+        /// <summary> bgp is in review state. </summary>
+        private const string InReviewValue = "InReview";
+        /// <summary> bgp is in Approved state. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> bgp is setup need an attention for more troubleshoot. </summary>
+        private const string AttentionRequiredValue = "AttentionRequired";
 
         /// <summary> Initializes a new instance of <see cref="MccCacheNodeBgpReviewState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MccCacheNodeBgpReviewState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotConfiguredValue = "NotConfigured";
-        private const string InReviewValue = "InReview";
-        private const string ApprovedValue = "Approved";
-        private const string AttentionRequiredValue = "AttentionRequired";
+            _value = value;
+        }
 
         /// <summary> bgp not configured. </summary>
         public static MccCacheNodeBgpReviewState NotConfigured { get; } = new MccCacheNodeBgpReviewState(NotConfiguredValue);
+
         /// <summary> bgp is in review state. </summary>
         public static MccCacheNodeBgpReviewState InReview { get; } = new MccCacheNodeBgpReviewState(InReviewValue);
+
         /// <summary> bgp is in Approved state. </summary>
         public static MccCacheNodeBgpReviewState Approved { get; } = new MccCacheNodeBgpReviewState(ApprovedValue);
+
         /// <summary> bgp is setup need an attention for more troubleshoot. </summary>
         public static MccCacheNodeBgpReviewState AttentionRequired { get; } = new MccCacheNodeBgpReviewState(AttentionRequiredValue);
+
         /// <summary> Determines if two <see cref="MccCacheNodeBgpReviewState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MccCacheNodeBgpReviewState left, MccCacheNodeBgpReviewState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MccCacheNodeBgpReviewState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MccCacheNodeBgpReviewState left, MccCacheNodeBgpReviewState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MccCacheNodeBgpReviewState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MccCacheNodeBgpReviewState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MccCacheNodeBgpReviewState(string value) => new MccCacheNodeBgpReviewState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MccCacheNodeBgpReviewState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MccCacheNodeBgpReviewState?(string value) => value == null ? null : new MccCacheNodeBgpReviewState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MccCacheNodeBgpReviewState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MccCacheNodeBgpReviewState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

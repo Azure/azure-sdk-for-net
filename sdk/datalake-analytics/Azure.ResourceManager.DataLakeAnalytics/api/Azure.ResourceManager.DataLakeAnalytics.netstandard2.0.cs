@@ -404,9 +404,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public static Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType ServicePrincipal { get { throw null; } }
         public static Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType left, Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataLakeAnalytics.Models.AadObjectIdentifierType (string value) { throw null; }
@@ -701,9 +699,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public DataLakeAnalyticsResourceType(string value) { throw null; }
         public static Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType MicrosoftDataLakeAnalyticsAccounts { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType left, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsResourceType (string value) { throw null; }
@@ -767,9 +763,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         public static Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState Unregistered { get { throw null; } }
         public static Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState Warned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState left, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsSubscriptionState (string value) { throw null; }

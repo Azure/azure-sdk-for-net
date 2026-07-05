@@ -7,7 +7,7 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class FabricDataAgentToolParameters
     {
-        public FabricDataAgentToolParameters( string connectionId )
+        public FabricDataAgentToolParameters(string connectionId)
         {
             // Additional initialization logic if needed
             var toolConnection = new ToolConnection

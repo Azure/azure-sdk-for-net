@@ -6,118 +6,116 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a ManagementGroupNetworkManagerConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupNetworkManagerConnectionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupNetworkManagerConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupNetworkManagerConnection method.
+    /// A class representing a ManagementGroupNetworkManagerConnection along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupNetworkManagerConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupNetworkManagerConnections method.
     /// </summary>
     public partial class ManagementGroupNetworkManagerConnectionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ManagementGroupNetworkManagerConnectionResource"/> instance. </summary>
-        /// <param name="managementGroupId"> The managementGroupId. </param>
-        /// <param name="networkManagerConnectionName"> The networkManagerConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string networkManagerConnectionName)
-        {
-            var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _managementGroupNetworkManagerConnectionClientDiagnostics;
-        private readonly ManagementGroupNetworkManagerConnectionsRestOperations _managementGroupNetworkManagerConnectionRestClient;
-        private readonly NetworkManagerConnectionData _data;
-
+        private readonly ClientDiagnostics _managementGroupNetworkManagerConnectionsClientDiagnostics;
+        private readonly ManagementGroupNetworkManagerConnections _managementGroupNetworkManagerConnectionsRestClient;
+        private readonly SubscriptionNetworkManagerConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagerConnections";
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupNetworkManagerConnectionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ManagementGroupNetworkManagerConnectionResource for mocking. </summary>
         protected ManagementGroupNetworkManagerConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupNetworkManagerConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupNetworkManagerConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagementGroupNetworkManagerConnectionResource(ArmClient client, NetworkManagerConnectionData data) : this(client, data.Id)
+        internal ManagementGroupNetworkManagerConnectionResource(ArmClient client, SubscriptionNetworkManagerConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupNetworkManagerConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupNetworkManagerConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagementGroupNetworkManagerConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _managementGroupNetworkManagerConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managementGroupNetworkManagerConnectionApiVersion);
-            _managementGroupNetworkManagerConnectionRestClient = new ManagementGroupNetworkManagerConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupNetworkManagerConnectionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _managementGroupNetworkManagerConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _managementGroupNetworkManagerConnectionsRestClient = new ManagementGroupNetworkManagerConnections(_managementGroupNetworkManagerConnectionsClientDiagnostics, Pipeline, Endpoint, managementGroupNetworkManagerConnectionApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual NetworkManagerConnectionData Data
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="networkManagerConnectionName"> The networkManagerConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string networkManagerConnectionName)
         {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
+            string resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}";
+            return new ResourceIdentifier(resourceId);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a specified connection created by this management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagementGroupNetworkManagerConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ManagementGroupNetworkManagerConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Get");
+            using DiagnosticScope scope = _managementGroupNetworkManagerConnectionsClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _managementGroupNetworkManagerConnectionRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +129,41 @@ namespace Azure.ResourceManager.Network
         /// Get a specified connection created by this management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagementGroupNetworkManagerConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ManagementGroupNetworkManagerConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Get");
+            using DiagnosticScope scope = _managementGroupNetworkManagerConnectionsClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _managementGroupNetworkManagerConnectionRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +177,20 @@ namespace Azure.ResourceManager.Network
         /// Delete specified pending connection created by this management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagementGroupNetworkManagerConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,16 +198,23 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Delete");
+            using DiagnosticScope scope = _managementGroupNetworkManagerConnectionsClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _managementGroupNetworkManagerConnectionRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _managementGroupNetworkManagerConnectionRestClient.CreateDeleteRequestUri(Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation operation = new NetworkArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +228,20 @@ namespace Azure.ResourceManager.Network
         /// Delete specified pending connection created by this management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagementGroupNetworkManagerConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,16 +249,23 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Delete");
+            using DiagnosticScope scope = _managementGroupNetworkManagerConnectionsClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _managementGroupNetworkManagerConnectionRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _managementGroupNetworkManagerConnectionRestClient.CreateDeleteRequestUri(Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation operation = new NetworkArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -256,23 +276,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Create a network manager connection on this management group.
+        /// Update a ManagementGroupNetworkManagerConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagementGroupNetworkManagerConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,20 +300,28 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Network manager connection to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagementGroupNetworkManagerConnectionResource>> UpdateAsync(WaitUntil waitUntil, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroupNetworkManagerConnectionResource>> UpdateAsync(WaitUntil waitUntil, SubscriptionNetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Update");
+            using DiagnosticScope scope = _managementGroupNetworkManagerConnectionsClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _managementGroupNetworkManagerConnectionRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _managementGroupNetworkManagerConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, SubscriptionNetworkManagerConnectionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource> operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -304,23 +332,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Create a network manager connection on this management group.
+        /// Update a ManagementGroupNetworkManagerConnection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagementGroupNetworkManagerConnections_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ManagementGroupNetworkManagerConnections_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagementGroupNetworkManagerConnectionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagementGroupNetworkManagerConnectionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,20 +356,28 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Network manager connection to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ManagementGroupNetworkManagerConnectionResource> Update(WaitUntil waitUntil, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroupNetworkManagerConnectionResource> Update(WaitUntil waitUntil, SubscriptionNetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managementGroupNetworkManagerConnectionClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Update");
+            using DiagnosticScope scope = _managementGroupNetworkManagerConnectionsClientDiagnostics.CreateScope("ManagementGroupNetworkManagerConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _managementGroupNetworkManagerConnectionRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _managementGroupNetworkManagerConnectionRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, SubscriptionNetworkManagerConnectionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource> operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> The network profile definition. </summary>
     public partial class DedicatedHsmNetworkProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmNetworkProfile"/>. </summary>
         public DedicatedHsmNetworkProfile()
@@ -55,29 +27,35 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmNetworkProfile"/>. </summary>
         /// <param name="subnet"> Specifies the identifier of the subnet. </param>
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmNetworkProfile(ApiEntityReference subnet, IList<DedicatedHsmNetworkInterface> networkInterfaces, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DedicatedHsmNetworkProfile(ApiEntityReference subnet, IList<DedicatedHsmNetworkInterface> networkInterfaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             NetworkInterfaces = networkInterfaces;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the identifier of the subnet. </summary>
         internal ApiEntityReference Subnet { get; set; }
-        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
-        public ResourceIdentifier SubnetResourceId
-        {
-            get => Subnet is null ? default : Subnet.ResourceId;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new ApiEntityReference();
-                Subnet.ResourceId = value;
-            }
-        }
 
         /// <summary> Specifies the list of resource Ids for the network interfaces associated with the dedicated HSM. </summary>
         public IList<DedicatedHsmNetworkInterface> NetworkInterfaces { get; }
+
+        /// <summary> The Azure resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier SubnetResourceId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.ResourceId;
+            }
+            set
+            {
+                if (Subnet is null)
+                {
+                    Subnet = new ApiEntityReference();
+                }
+                Subnet.ResourceId = value;
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ internal class EventGridSystemTopicFeature : AzureProjectFeature
         Source = source;
     }
 
-    public string TopicName { get;  }
+    public string TopicName { get; }
     public string TopicType { get; }
     public StorageAccountFeature Source { get; }
 

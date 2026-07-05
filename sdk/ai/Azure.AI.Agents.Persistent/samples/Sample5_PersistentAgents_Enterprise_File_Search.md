@@ -46,7 +46,7 @@ var ds = new VectorStoreDataSource(
 PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "sample_vector_store",
     storeConfiguration: new VectorStoreConfiguration(
-        dataSources: [ ds ]
+        dataSources: [ds]
     )
 );
 

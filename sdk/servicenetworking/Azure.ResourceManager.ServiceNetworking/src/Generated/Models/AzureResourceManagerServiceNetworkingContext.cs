@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
@@ -14,20 +15,27 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyData))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyPatch))]
     [ModelReaderWriterBuildable(typeof(ApplicationGatewayForContainersSecurityPolicyResource))]
     [ModelReaderWriterBuildable(typeof(AssociationListResult))]
+    [ModelReaderWriterBuildable(typeof(AssociationProperties))]
+    [ModelReaderWriterBuildable(typeof(AssociationSubnet))]
+    [ModelReaderWriterBuildable(typeof(AssociationSubnetUpdate))]
+    [ModelReaderWriterBuildable(typeof(AssociationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(FrontendListResult))]
+    [ModelReaderWriterBuildable(typeof(FrontendProperties))]
     [ModelReaderWriterBuildable(typeof(FrontendUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(IPAccessRulesPolicy))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecurityPolicyConfigurations))]
     [ModelReaderWriterBuildable(typeof(SecurityPolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(SecurityPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(SecurityPolicyUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceNetworkingIPAccessRule))]
+    [ModelReaderWriterBuildable(typeof(ServiceNetworkingIPAccessRulesPolicy))]
+    [ModelReaderWriterBuildable(typeof(ServiceNetworkingIPAccessRulesSecurityPolicy))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerAssociationData))]
@@ -39,9 +47,11 @@ namespace Azure.ResourceManager.ServiceNetworking
     [ModelReaderWriterBuildable(typeof(TrafficControllerFrontendResource))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerListResult))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerPatch))]
+    [ModelReaderWriterBuildable(typeof(TrafficControllerProperties))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerResource))]
     [ModelReaderWriterBuildable(typeof(TrafficControllerUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
+    [ModelReaderWriterBuildable(typeof(WafPolicy))]
+    [ModelReaderWriterBuildable(typeof(WafSecurityPolicy))]
     public partial class AzureResourceManagerServiceNetworkingContext : ModelReaderWriterContext
     {
     }

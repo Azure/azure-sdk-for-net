@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [CodeGenModel("UnknownDataBoxValidationInputContent")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownDataBoxValidationInputContent")]
     internal partial class UnknownValidationInputRequest : DataBoxValidationInputContent
     {
     }

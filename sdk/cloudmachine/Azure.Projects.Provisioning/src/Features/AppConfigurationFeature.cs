@@ -33,7 +33,8 @@ public class AppConfigurationFeature : AzureProjectFeature
         EmitConnection(infrastructure, "Azure.Data.AppConfiguration.ConfigurationClient", endpoint);
     }
 
-    public enum SkuName {
+    public enum SkuName
+    {
         Free,
         Developer,
         Standard,
@@ -77,7 +78,8 @@ public class AppConfigurationSettingFeature : AzureProjectFeature
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
         AppConfigurationStore store = infrastructure.GetConstruct<AppConfigurationStore>(typeof(AppConfigurationFeature).FullName!);
-        if (_bicepIdentifier == null) _bicepIdentifier = store.BicepIdentifier + "_setting";
+        if (_bicepIdentifier == null)
+            _bicepIdentifier = store.BicepIdentifier + "_setting";
 
         string bicepIdentifier = infrastructure.Features.CreateUniqueBicepIdentifier(_bicepIdentifier);
         AppConfigurationKeyValue kvp = new(bicepIdentifier, AppConfigurationKeyValue.ResourceVersions.V2024_05_01)

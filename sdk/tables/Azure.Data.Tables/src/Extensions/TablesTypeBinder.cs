@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.Data.Tables
 {
-    internal class TablesTypeBinder: TypeBinder<IDictionary<string, object>>
+    internal class TablesTypeBinder : TypeBinder<IDictionary<string, object>>
     {
         public static TablesTypeBinder Shared { get; } = new();
         protected override void Set<T>(IDictionary<string, object> destination, T value, BoundMemberInfo memberInfo)
@@ -77,67 +77,67 @@ namespace Azure.Data.Tables
 
             if (typeof(T) == typeof(byte[]))
             {
-                value = (T)(object) Convert.FromBase64String(propertyValue as string);
+                value = (T)(object)Convert.FromBase64String(propertyValue as string);
             }
             else if (typeof(T) == typeof(BinaryData))
             {
-                value = (T)(object) BinaryData.FromBytes(Convert.FromBase64String(propertyValue as string));
+                value = (T)(object)BinaryData.FromBytes(Convert.FromBase64String(propertyValue as string));
             }
             else if (typeof(T) == typeof(long))
             {
-                value = (T)(object) long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(long?))
             {
-                value = (T)(object) long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)long.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(ulong))
             {
-                value = (T)(object) ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(ulong?))
             {
-                value = (T)(object) ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
+                value = (T)(object)ulong.Parse(propertyValue as string, CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(double))
             {
-                value = (T) Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
+                value = (T)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(double?))
             {
-                value = (T)(object) (double?)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
+                value = (T)(object)(double?)Convert.ChangeType(propertyValue, typeof(double), CultureInfo.InvariantCulture);
             }
             else if (typeof(T) == typeof(bool))
             {
-                value = (T)(object) (bool)propertyValue;
+                value = (T)(object)(bool)propertyValue;
             }
             else if (typeof(T) == typeof(bool?))
             {
-                value = (T)(object) (bool?)propertyValue;
+                value = (T)(object)(bool?)propertyValue;
             }
             else if (typeof(T) == typeof(Guid))
             {
-                value = (T)(object) Guid.Parse(propertyValue as string);
+                value = (T)(object)Guid.Parse(propertyValue as string);
             }
             else if (typeof(T) == typeof(Guid?))
             {
-                value = (T)(object) Guid.Parse(propertyValue as string);
+                value = (T)(object)Guid.Parse(propertyValue as string);
             }
             else if (typeof(T) == typeof(DateTimeOffset))
             {
-                value = (T)(object) DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(DateTimeOffset?))
             {
-                value = (T)(object) DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTimeOffset.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(DateTime))
             {
-                value = (T)(object) DateTime.Parse((string)propertyValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTime.Parse((string)propertyValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(DateTime?))
             {
-                value = (T)(object) DateTime.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                value = (T)(object)DateTime.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
             else if (typeof(T) == typeof(TimeSpan))
             {

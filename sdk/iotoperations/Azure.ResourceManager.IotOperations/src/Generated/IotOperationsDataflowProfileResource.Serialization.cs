@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.IotOperations
 {
+    /// <summary></summary>
     public partial class IotOperationsDataflowProfileResource : IJsonModel<IotOperationsDataflowProfileData>
     {
-        private static IotOperationsDataflowProfileData s_dataDeserializationInstance;
-        private static IotOperationsDataflowProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotOperationsDataflowProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotOperationsDataflowProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotOperationsDataflowProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotOperationsDataflowProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsDataflowProfileData>)Data).Write(writer, options);
 
-        IotOperationsDataflowProfileData IJsonModel<IotOperationsDataflowProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsDataflowProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsDataflowProfileData IJsonModel<IotOperationsDataflowProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotOperationsDataflowProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotOperationsDataflowProfileData>(Data, options, AzureResourceManagerIotOperationsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotOperationsDataflowProfileData IPersistableModel<IotOperationsDataflowProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsDataflowProfileData>(data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        string IPersistableModel<IotOperationsDataflowProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsDataflowProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotOperationsDataflowProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

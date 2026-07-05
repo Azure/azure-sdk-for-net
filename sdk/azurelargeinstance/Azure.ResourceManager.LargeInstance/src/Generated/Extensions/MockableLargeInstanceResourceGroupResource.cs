@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.LargeInstance;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.LargeInstance.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableLargeInstanceResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableLargeInstanceResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableLargeInstanceResourceGroupResource for mocking. </summary>
         protected MockableLargeInstanceResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableLargeInstanceResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableLargeInstanceResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableLargeInstanceResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of LargeInstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LargeInstanceResources and their operations over a LargeInstanceResource. </returns>
+        /// <summary> Gets a collection of LargeInstances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of LargeInstances and their operations over a LargeInstanceResource. </returns>
         public virtual LargeInstanceCollection GetLargeInstances()
         {
             return GetCachedClient(client => new LargeInstanceCollection(client, Id));
@@ -45,20 +43,16 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,6 +63,8 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<LargeInstanceResource>> GetLargeInstanceAsync(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
+
             return await GetLargeInstances().GetAsync(azureLargeInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -77,20 +73,16 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeInstances/{azureLargeInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeInstance_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,11 +93,13 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         [ForwardsClientCalls]
         public virtual Response<LargeInstanceResource> GetLargeInstance(string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureLargeInstanceName, nameof(azureLargeInstanceName));
+
             return GetLargeInstances().Get(azureLargeInstanceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LargeStorageInstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LargeStorageInstanceResources and their operations over a LargeStorageInstanceResource. </returns>
+        /// <summary> Gets a collection of LargeStorageInstances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of LargeStorageInstances and their operations over a LargeStorageInstanceResource. </returns>
         public virtual LargeStorageInstanceCollection GetLargeStorageInstances()
         {
             return GetCachedClient(client => new LargeStorageInstanceCollection(client, Id));
@@ -116,20 +110,16 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// group, and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeStorageInstance_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeStorageInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeStorageInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,6 +130,8 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<LargeStorageInstanceResource>> GetLargeStorageInstanceAsync(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
+
             return await GetLargeStorageInstances().GetAsync(azureLargeStorageInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -148,20 +140,16 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         /// group, and instance name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureLargeInstance/azureLargeStorageInstances/{azureLargeStorageInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureLargeStorageInstance_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureLargeStorageInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-07-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LargeStorageInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +160,8 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
         [ForwardsClientCalls]
         public virtual Response<LargeStorageInstanceResource> GetLargeStorageInstance(string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(azureLargeStorageInstanceName, nameof(azureLargeStorageInstanceName));
+
             return GetLargeStorageInstances().Get(azureLargeStorageInstanceName, cancellationToken);
         }
     }

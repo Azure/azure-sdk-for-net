@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Creates a particular correlation between services. </summary>
     public partial class ManagedServiceCorrelation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedServiceCorrelation"/>. </summary>
         /// <param name="scheme"> The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName. </param>
@@ -60,21 +32,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ManagedServiceCorrelation"/>. </summary>
         /// <param name="scheme"> The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName. </param>
         /// <param name="serviceName"> The Arm Resource ID of the service that the correlation relationship is established with. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceCorrelation(ManagedServiceCorrelationScheme scheme, string serviceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServiceCorrelation(ManagedServiceCorrelationScheme scheme, string serviceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scheme = scheme;
             ServiceName = serviceName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceCorrelation"/> for deserialization. </summary>
-        internal ManagedServiceCorrelation()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName. </summary>
         public ManagedServiceCorrelationScheme Scheme { get; set; }
+
         /// <summary> The Arm Resource ID of the service that the correlation relationship is established with. </summary>
         public string ServiceName { get; set; }
     }

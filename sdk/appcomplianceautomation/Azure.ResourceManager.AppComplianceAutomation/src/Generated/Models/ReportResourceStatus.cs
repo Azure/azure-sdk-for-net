@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppComplianceAutomation;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     public readonly partial struct ReportResourceStatus : IEquatable<ReportResourceStatus>
     {
         private readonly string _value;
+        /// <summary> The resource is healthy. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> The resource is unhealthy. </summary>
+        private const string UnhealthyValue = "Unhealthy";
 
         /// <summary> Initializes a new instance of <see cref="ReportResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReportResourceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HealthyValue = "Healthy";
-        private const string UnhealthyValue = "Unhealthy";
+            _value = value;
+        }
 
         /// <summary> The resource is healthy. </summary>
         public static ReportResourceStatus Healthy { get; } = new ReportResourceStatus(HealthyValue);
+
         /// <summary> The resource is unhealthy. </summary>
         public static ReportResourceStatus Unhealthy { get; } = new ReportResourceStatus(UnhealthyValue);
+
         /// <summary> Determines if two <see cref="ReportResourceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReportResourceStatus left, ReportResourceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReportResourceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReportResourceStatus left, ReportResourceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportResourceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReportResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReportResourceStatus(string value) => new ReportResourceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReportResourceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReportResourceStatus?(string value) => value == null ? null : new ReportResourceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReportResourceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReportResourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

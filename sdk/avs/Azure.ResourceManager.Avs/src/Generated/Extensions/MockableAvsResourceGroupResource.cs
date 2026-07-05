@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Avs;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Avs.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAvsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAvsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAvsResourceGroupResource for mocking. </summary>
         protected MockableAvsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAvsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAvsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAvsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
+        /// <summary> Gets a collection of AvsPrivateClouds in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AvsPrivateClouds and their operations over a AvsPrivateCloudResource. </returns>
         public virtual AvsPrivateCloudCollection GetAvsPrivateClouds()
         {
             return GetCachedClient(client => new AvsPrivateCloudCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// Get a PrivateCloud
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateCloud_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(string privateCloudName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
             return await GetAvsPrivateClouds().GetAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// Get a PrivateCloud
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateCloud_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateClouds_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Avs.Mocking
         [ForwardsClientCalls]
         public virtual Response<AvsPrivateCloudResource> GetAvsPrivateCloud(string privateCloudName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(privateCloudName, nameof(privateCloudName));
+
             return GetAvsPrivateClouds().Get(privateCloudName, cancellationToken);
         }
     }

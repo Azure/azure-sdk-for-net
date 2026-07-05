@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Quota
 {
+    /// <summary></summary>
     public partial class SubscriptionQuotaAllocationsListResource : IJsonModel<SubscriptionQuotaAllocationsListData>
     {
-        private static SubscriptionQuotaAllocationsListData s_dataDeserializationInstance;
-        private static SubscriptionQuotaAllocationsListData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SubscriptionQuotaAllocationsListData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SubscriptionQuotaAllocationsListData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SubscriptionQuotaAllocationsListData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SubscriptionQuotaAllocationsListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionQuotaAllocationsListData>)Data).Write(writer, options);
 
-        SubscriptionQuotaAllocationsListData IJsonModel<SubscriptionQuotaAllocationsListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubscriptionQuotaAllocationsListData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SubscriptionQuotaAllocationsListData IJsonModel<SubscriptionQuotaAllocationsListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SubscriptionQuotaAllocationsListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubscriptionQuotaAllocationsListData>(Data, options, AzureResourceManagerQuotaContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SubscriptionQuotaAllocationsListData IPersistableModel<SubscriptionQuotaAllocationsListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubscriptionQuotaAllocationsListData>(data, options, AzureResourceManagerQuotaContext.Default);
 
-        string IPersistableModel<SubscriptionQuotaAllocationsListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubscriptionQuotaAllocationsListData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SubscriptionQuotaAllocationsListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

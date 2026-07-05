@@ -6,288 +6,105 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class AgreementsRestOperations
+    internal partial class Agreements
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AgreementsRestOperations. </summary>
+        /// <summary> Initializes a new instance of Agreements for mocking. </summary>
+        protected Agreements()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Agreements. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AgreementsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Agreements(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string billingAccountName, string agreementName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string billingAccountName, string agreementName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/agreements/", false);
             uri.AppendPath(agreementName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string billingAccountName, string agreementName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/agreements/", false);
-            uri.AppendPath(agreementName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets an agreement by ID. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="agreementName"> The ID that uniquely identifies an agreement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="agreementName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="agreementName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingAgreementData>> GetAsync(string billingAccountName, string agreementName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string expand, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(agreementName, nameof(agreementName));
-
-            using var message = CreateGetRequest(billingAccountName, agreementName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingAgreementData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingAgreementData.DeserializeBillingAgreementData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingAgreementData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets an agreement by ID. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="agreementName"> The ID that uniquely identifies an agreement. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="agreementName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="agreementName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingAgreementData> Get(string billingAccountName, string agreementName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(agreementName, nameof(agreementName));
-
-            using var message = CreateGetRequest(billingAccountName, agreementName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingAgreementData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingAgreementData.DeserializeBillingAgreementData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingAgreementData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountName, string expand)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/agreements", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("expand", expand, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/agreements", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("expand", expand, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the agreements for a billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand the participants. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AgreementListResult>> ListByBillingAccountAsync(string billingAccountName, string expand = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, string expand, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        AgreementListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AgreementListResult.DeserializeAgreementListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Lists the agreements for a billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand the participants. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AgreementListResult> ListByBillingAccount(string billingAccountName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        AgreementListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AgreementListResult.DeserializeAgreementListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountName, string expand)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountName, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Lists the agreements for a billing account. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand the participants. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AgreementListResult>> ListByBillingAccountNextPageAsync(string nextLink, string billingAccountName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AgreementListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AgreementListResult.DeserializeAgreementListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the agreements for a billing account. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand the participants. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AgreementListResult> ListByBillingAccountNextPage(string nextLink, string billingAccountName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AgreementListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AgreementListResult.DeserializeAgreementListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

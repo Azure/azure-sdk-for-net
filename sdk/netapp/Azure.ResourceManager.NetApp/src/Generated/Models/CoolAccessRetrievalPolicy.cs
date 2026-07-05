@@ -7,53 +7,72 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary>
     /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-    ///  Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-    ///  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-    ///  Never - No client-driven data is pulled from cool tier to standard storage.
+    /// Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+    /// OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+    /// Never - No client-driven data is pulled from cool tier to standard storage.
     /// </summary>
     public readonly partial struct CoolAccessRetrievalPolicy : IEquatable<CoolAccessRetrievalPolicy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CoolAccessRetrievalPolicy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CoolAccessRetrievalPolicy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DefaultValue = "Default";
         private const string OnReadValue = "OnRead";
         private const string NeverValue = "Never";
 
-        /// <summary> Default. </summary>
+        /// <summary> Initializes a new instance of <see cref="CoolAccessRetrievalPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CoolAccessRetrievalPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Default. </summary>
         public static CoolAccessRetrievalPolicy Default { get; } = new CoolAccessRetrievalPolicy(DefaultValue);
-        /// <summary> OnRead. </summary>
+
+        /// <summary> Gets the OnRead. </summary>
         public static CoolAccessRetrievalPolicy OnRead { get; } = new CoolAccessRetrievalPolicy(OnReadValue);
-        /// <summary> Never. </summary>
+
+        /// <summary> Gets the Never. </summary>
         public static CoolAccessRetrievalPolicy Never { get; } = new CoolAccessRetrievalPolicy(NeverValue);
+
         /// <summary> Determines if two <see cref="CoolAccessRetrievalPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CoolAccessRetrievalPolicy left, CoolAccessRetrievalPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CoolAccessRetrievalPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CoolAccessRetrievalPolicy left, CoolAccessRetrievalPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CoolAccessRetrievalPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CoolAccessRetrievalPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CoolAccessRetrievalPolicy(string value) => new CoolAccessRetrievalPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CoolAccessRetrievalPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CoolAccessRetrievalPolicy?(string value) => value == null ? null : new CoolAccessRetrievalPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CoolAccessRetrievalPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CoolAccessRetrievalPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. </summary>
+    /// <summary> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. Previously undocumented values might be returned. </summary>
     public readonly partial struct DynamicThresholdSensitivity : IEquatable<DynamicThresholdSensitivity>
     {
         private readonly string _value;
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Medium. </summary>
+        private const string MediumValue = "Medium";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="DynamicThresholdSensitivity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DynamicThresholdSensitivity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowValue = "Low";
-        private const string MediumValue = "Medium";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Low. </summary>
         public static DynamicThresholdSensitivity Low { get; } = new DynamicThresholdSensitivity(LowValue);
+
         /// <summary> Medium. </summary>
         public static DynamicThresholdSensitivity Medium { get; } = new DynamicThresholdSensitivity(MediumValue);
+
         /// <summary> High. </summary>
         public static DynamicThresholdSensitivity High { get; } = new DynamicThresholdSensitivity(HighValue);
+
         /// <summary> Determines if two <see cref="DynamicThresholdSensitivity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DynamicThresholdSensitivity left, DynamicThresholdSensitivity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DynamicThresholdSensitivity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DynamicThresholdSensitivity left, DynamicThresholdSensitivity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DynamicThresholdSensitivity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DynamicThresholdSensitivity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DynamicThresholdSensitivity(string value) => new DynamicThresholdSensitivity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DynamicThresholdSensitivity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DynamicThresholdSensitivity?(string value) => value == null ? null : new DynamicThresholdSensitivity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DynamicThresholdSensitivity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DynamicThresholdSensitivity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

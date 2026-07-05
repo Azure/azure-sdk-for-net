@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct SelfHelpImportanceLevel : IEquatable<SelfHelpImportanceLevel>
     {
         private readonly string _value;
+        /// <summary> A critical insight has been found after running the diagnostic. </summary>
+        private const string CriticalValue = "Critical";
+        /// <summary> A warning insight has been found after running the diagnostic. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> An information insight has been found after running the diagnostic. </summary>
+        private const string InformationValue = "Information";
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpImportanceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SelfHelpImportanceLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CriticalValue = "Critical";
-        private const string WarningValue = "Warning";
-        private const string InformationValue = "Information";
+            _value = value;
+        }
 
         /// <summary> A critical insight has been found after running the diagnostic. </summary>
         public static SelfHelpImportanceLevel Critical { get; } = new SelfHelpImportanceLevel(CriticalValue);
+
         /// <summary> A warning insight has been found after running the diagnostic. </summary>
         public static SelfHelpImportanceLevel Warning { get; } = new SelfHelpImportanceLevel(WarningValue);
+
         /// <summary> An information insight has been found after running the diagnostic. </summary>
         public static SelfHelpImportanceLevel Information { get; } = new SelfHelpImportanceLevel(InformationValue);
+
         /// <summary> Determines if two <see cref="SelfHelpImportanceLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHelpImportanceLevel left, SelfHelpImportanceLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelfHelpImportanceLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHelpImportanceLevel left, SelfHelpImportanceLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpImportanceLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelfHelpImportanceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelfHelpImportanceLevel(string value) => new SelfHelpImportanceLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelfHelpImportanceLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelfHelpImportanceLevel?(string value) => value == null ? null : new SelfHelpImportanceLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHelpImportanceLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelfHelpImportanceLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

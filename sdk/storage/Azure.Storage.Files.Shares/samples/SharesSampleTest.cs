@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using Azure.Storage.Files.Shares.Models;
+using NUnit.Framework;
 
 namespace Azure.Storage.Files.Shares.Samples.Tests
 {

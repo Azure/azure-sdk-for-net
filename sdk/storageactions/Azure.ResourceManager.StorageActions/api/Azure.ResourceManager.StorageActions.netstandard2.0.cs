@@ -106,13 +106,18 @@ namespace Azure.ResourceManager.StorageActions.Models
 {
     public static partial class ArmStorageActionsModelFactory
     {
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskAction StorageTaskAction(Azure.ResourceManager.StorageActions.Models.StorageTaskIfCondition @if = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageActions.Models.StorageTaskOperationInfo> elseOperations = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.StorageTaskData StorageTaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.StorageActions.Models.StorageTaskProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskIfCondition StorageTaskIfCondition(string condition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageActions.Models.StorageTaskOperationInfo> operations = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskOperationInfo StorageTaskOperationInfo(Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName name = default(Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName), System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.StorageActions.Models.OnSuccessAction? onSuccess = default(Azure.ResourceManager.StorageActions.Models.OnSuccessAction?), Azure.ResourceManager.StorageActions.Models.OnFailureAction? onFailure = default(Azure.ResourceManager.StorageActions.Models.OnFailureAction?)) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskPatch StorageTaskPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.StorageActions.Models.StorageTaskUpdateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewAction StorageTaskPreviewAction(Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionCondition StorageTaskPreviewActionCondition(string ifCondition = null, bool elseBlockExists = false) { throw null; }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionIfCondition StorageTaskPreviewActionIfCondition(string condition = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionProperties StorageTaskPreviewActionProperties(Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewContainerProperties container = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewBlobProperties> blobs = null, Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewActionCondition action = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewBlobProperties StorageTaskPreviewBlobProperties(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewKeyValueProperties> properties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewKeyValueProperties> metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewKeyValueProperties> tags = null, Azure.ResourceManager.StorageActions.Models.MatchedBlockName? matchedBlock = default(Azure.ResourceManager.StorageActions.Models.MatchedBlockName?)) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewContainerProperties StorageTaskPreviewContainerProperties(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewKeyValueProperties> metadata = null) { throw null; }
+        public static Azure.ResourceManager.StorageActions.Models.StorageTaskPreviewKeyValueProperties StorageTaskPreviewKeyValueProperties(string key = null, string value = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskProperties StorageTaskProperties(long? taskVersion = default(long?), bool isEnabled = false, string description = null, Azure.ResourceManager.StorageActions.Models.StorageTaskAction action = null, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState? provisioningState = default(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState?), System.DateTimeOffset? creationTimeInUtc = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskReportInstance StorageTaskReportInstance(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskReportProperties StorageTaskReportProperties(Azure.Core.ResourceIdentifier taskAssignmentId = null, Azure.Core.ResourceIdentifier storageAccountId = null, string startTime = null, string finishTime = null, string objectsTargetedCount = null, string objectsOperatedOnCount = null, string objectFailedCount = null, string objectsSucceededCount = null, string runStatusError = null, Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus? runStatusEnum = default(Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus?), string summaryReportPath = null, Azure.Core.ResourceIdentifier taskId = null, string taskVersion = null, Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult? runResult = default(Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult?)) { throw null; }
@@ -128,9 +133,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static Azure.ResourceManager.StorageActions.Models.MatchedBlockName If { get { throw null; } }
         public static Azure.ResourceManager.StorageActions.Models.MatchedBlockName None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageActions.Models.MatchedBlockName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageActions.Models.MatchedBlockName left, Azure.ResourceManager.StorageActions.Models.MatchedBlockName right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageActions.Models.MatchedBlockName (string value) { throw null; }
@@ -146,9 +149,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public OnFailureAction(string value) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.OnFailureAction Break { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageActions.Models.OnFailureAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageActions.Models.OnFailureAction left, Azure.ResourceManager.StorageActions.Models.OnFailureAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageActions.Models.OnFailureAction (string value) { throw null; }
@@ -164,9 +165,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public OnSuccessAction(string value) { throw null; }
         public static Azure.ResourceManager.StorageActions.Models.OnSuccessAction Continue { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageActions.Models.OnSuccessAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageActions.Models.OnSuccessAction left, Azure.ResourceManager.StorageActions.Models.OnSuccessAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageActions.Models.OnSuccessAction (string value) { throw null; }
@@ -235,9 +234,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName SetBlobTier { get { throw null; } }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName UndeleteBlob { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName left, Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageActions.Models.StorageTaskOperationName (string value) { throw null; }
@@ -402,9 +399,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState ValidateSubscriptionQuotaBegin { get { throw null; } }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState ValidateSubscriptionQuotaEnd { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState left, Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageActions.Models.StorageTaskProvisioningState (string value) { throw null; }
@@ -462,9 +457,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult Failed { get { throw null; } }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult left, Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageActions.Models.StorageTaskRunResult (string value) { throw null; }
@@ -481,9 +474,7 @@ namespace Azure.ResourceManager.StorageActions.Models
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus Finished { get { throw null; } }
         public static Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus left, Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.StorageActions.Models.StorageTaskRunStatus (string value) { throw null; }

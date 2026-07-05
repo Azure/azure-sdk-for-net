@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -19,21 +21,16 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// See https://raw.githubusercontent.com/kubernetes/kubernetes/refs/heads/master/api/openapi-spec/v3/apis__apps__v1_openapi.json#/components/schemas/io.k8s.api.apps.v1.StatefulSetSpec
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statefulSetConfigurationSettings"/> is null. </exception>
-        public AkriConnectorTemplateRuntimeStatefulSetConfiguration(IDictionary<string, BinaryData> statefulSetConfigurationSettings)
+        public AkriConnectorTemplateRuntimeStatefulSetConfiguration(IDictionary<string, BinaryData> statefulSetConfigurationSettings) : base(AkriConnectorTemplateManagedConfigurationType.StatefulSetConfiguration)
         {
             Argument.AssertNotNull(statefulSetConfigurationSettings, nameof(statefulSetConfigurationSettings));
 
             StatefulSetConfigurationSettings = statefulSetConfigurationSettings;
-            ManagedConfigurationType = AkriConnectorTemplateManagedConfigurationType.StatefulSetConfiguration;
         }
 
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeStatefulSetConfiguration"/>. </summary>
         /// <param name="managedConfigurationType"> The type of the managed configuration. </param>
-        /// <param name="allocation">
-        /// Allocation settings for the managed configuration.
-        /// Please note <see cref="AkriConnectorTemplateAllocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AkriConnectorTemplateBucketizedAllocation"/>.
-        /// </param>
+        /// <param name="allocation"> Allocation settings for the managed configuration. </param>
         /// <param name="persistentVolumeClaims"> The persistent volume claims for the managed configuration. </param>
         /// <param name="additionalConfiguration"> Additional configuration for the image of the managed configuration. </param>
         /// <param name="persistentVolumeClaimTemplates">
@@ -42,49 +39,39 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// </param>
         /// <param name="secrets"> Connector secrets that will be mounted onto all connector instances. </param>
         /// <param name="trustSettings"> Trust list for the connector. This is used to specify the certificates that all connector instances should trust. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="statefulSetConfigurationSettings">
         /// The stateful set configuration settings. This corresponds to the Kubernetes StatefulSet resource.
         /// See https://raw.githubusercontent.com/kubernetes/kubernetes/refs/heads/master/api/openapi-spec/v3/apis__apps__v1_openapi.json#/components/schemas/io.k8s.api.apps.v1.StatefulSetSpec
         /// </param>
-        internal AkriConnectorTemplateRuntimeStatefulSetConfiguration(AkriConnectorTemplateManagedConfigurationType managedConfigurationType, AkriConnectorTemplateAllocation allocation, IList<AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims, IDictionary<string, string> additionalConfiguration, IList<IDictionary<string, BinaryData>> persistentVolumeClaimTemplates, IList<AkriConnectorsSecret> secrets, AkriConnectorTemplateTrustList trustSettings, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, BinaryData> statefulSetConfigurationSettings) : base(managedConfigurationType, allocation, persistentVolumeClaims, additionalConfiguration, persistentVolumeClaimTemplates, secrets, trustSettings, serializedAdditionalRawData)
+        internal AkriConnectorTemplateRuntimeStatefulSetConfiguration(AkriConnectorTemplateManagedConfigurationType managedConfigurationType, AkriConnectorTemplateAllocation allocation, IList<AkriConnectorTemplatePersistentVolumeClaim> persistentVolumeClaims, IDictionary<string, string> additionalConfiguration, IList<IDictionary<string, BinaryData>> persistentVolumeClaimTemplates, IList<AkriConnectorsSecret> secrets, AkriConnectorTemplateTrustList trustSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, BinaryData> statefulSetConfigurationSettings) : base(managedConfigurationType, allocation, persistentVolumeClaims, additionalConfiguration, persistentVolumeClaimTemplates, secrets, trustSettings, additionalBinaryDataProperties)
         {
             StatefulSetConfigurationSettings = statefulSetConfigurationSettings;
-            ManagedConfigurationType = managedConfigurationType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateRuntimeStatefulSetConfiguration"/> for deserialization. </summary>
-        internal AkriConnectorTemplateRuntimeStatefulSetConfiguration()
-        {
         }
 
         /// <summary>
         /// The stateful set configuration settings. This corresponds to the Kubernetes StatefulSet resource.
         /// See https://raw.githubusercontent.com/kubernetes/kubernetes/refs/heads/master/api/openapi-spec/v3/apis__apps__v1_openapi.json#/components/schemas/io.k8s.api.apps.v1.StatefulSetSpec
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

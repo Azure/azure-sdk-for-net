@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppContainers
 {
+    /// <summary></summary>
     public partial class ContainerAppConnectedEnvironmentDaprComponentResource : IJsonModel<ContainerAppDaprComponentData>
     {
-        private static ContainerAppDaprComponentData s_dataDeserializationInstance;
-        private static ContainerAppDaprComponentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ContainerAppDaprComponentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ContainerAppDaprComponentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ContainerAppDaprComponentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)Data).Write(writer, options);
 
-        ContainerAppDaprComponentData IJsonModel<ContainerAppDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppDaprComponentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppDaprComponentData IJsonModel<ContainerAppDaprComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppDaprComponentData>(Data, options, AzureResourceManagerAppContainersContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ContainerAppDaprComponentData IPersistableModel<ContainerAppDaprComponentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppDaprComponentData>(data, options, AzureResourceManagerAppContainersContext.Default);
 
-        string IPersistableModel<ContainerAppDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppDaprComponentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerAppDaprComponentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

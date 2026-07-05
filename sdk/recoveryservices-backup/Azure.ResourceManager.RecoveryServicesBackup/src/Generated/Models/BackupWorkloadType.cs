@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupWorkloadType : IEquatable<BackupWorkloadType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupWorkloadType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupWorkloadType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
@@ -39,55 +32,94 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string SapAseDatabaseValue = "SAPAseDatabase";
         private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupWorkloadType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupWorkloadType Invalid { get; } = new BackupWorkloadType(InvalidValue);
-        /// <summary> VM. </summary>
+
+        /// <summary> Gets the Vm. </summary>
         public static BackupWorkloadType Vm { get; } = new BackupWorkloadType(VmValue);
-        /// <summary> FileFolder. </summary>
+
+        /// <summary> Gets the FileFolder. </summary>
         public static BackupWorkloadType FileFolder { get; } = new BackupWorkloadType(FileFolderValue);
-        /// <summary> AzureSqlDb. </summary>
+
+        /// <summary> Gets the AzureSqlDB. </summary>
         public static BackupWorkloadType AzureSqlDB { get; } = new BackupWorkloadType(AzureSqlDBValue);
-        /// <summary> SQLDB. </summary>
+
+        /// <summary> Gets the SqlDB. </summary>
         public static BackupWorkloadType SqlDB { get; } = new BackupWorkloadType(SqlDBValue);
-        /// <summary> Exchange. </summary>
+
+        /// <summary> Gets the Exchange. </summary>
         public static BackupWorkloadType Exchange { get; } = new BackupWorkloadType(ExchangeValue);
-        /// <summary> Sharepoint. </summary>
+
+        /// <summary> Gets the Sharepoint. </summary>
         public static BackupWorkloadType Sharepoint { get; } = new BackupWorkloadType(SharepointValue);
-        /// <summary> VMwareVM. </summary>
+
+        /// <summary> Gets the VMwareVm. </summary>
         public static BackupWorkloadType VMwareVm { get; } = new BackupWorkloadType(VMwareVmValue);
-        /// <summary> SystemState. </summary>
+
+        /// <summary> Gets the SystemState. </summary>
         public static BackupWorkloadType SystemState { get; } = new BackupWorkloadType(SystemStateValue);
-        /// <summary> Client. </summary>
+
+        /// <summary> Gets the Client. </summary>
         public static BackupWorkloadType Client { get; } = new BackupWorkloadType(ClientValue);
-        /// <summary> GenericDataSource. </summary>
+
+        /// <summary> Gets the GenericDataSource. </summary>
         public static BackupWorkloadType GenericDataSource { get; } = new BackupWorkloadType(GenericDataSourceValue);
-        /// <summary> SQLDataBase. </summary>
+
+        /// <summary> Gets the SqlDatabase. </summary>
         public static BackupWorkloadType SqlDatabase { get; } = new BackupWorkloadType(SqlDatabaseValue);
-        /// <summary> AzureFileShare. </summary>
+
+        /// <summary> Gets the AzureFileShare. </summary>
         public static BackupWorkloadType AzureFileShare { get; } = new BackupWorkloadType(AzureFileShareValue);
-        /// <summary> SAPHanaDatabase. </summary>
+
+        /// <summary> Gets the SapHanaDatabase. </summary>
         public static BackupWorkloadType SapHanaDatabase { get; } = new BackupWorkloadType(SapHanaDatabaseValue);
-        /// <summary> SAPAseDatabase. </summary>
+
+        /// <summary> Gets the SapAseDatabase. </summary>
         public static BackupWorkloadType SapAseDatabase { get; } = new BackupWorkloadType(SapAseDatabaseValue);
-        /// <summary> SAPHanaDBInstance. </summary>
+
+        /// <summary> Gets the SapHanaDBInstance. </summary>
         public static BackupWorkloadType SapHanaDBInstance { get; } = new BackupWorkloadType(SapHanaDBInstanceValue);
+
         /// <summary> Determines if two <see cref="BackupWorkloadType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupWorkloadType left, BackupWorkloadType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupWorkloadType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupWorkloadType left, BackupWorkloadType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupWorkloadType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupWorkloadType(string value) => new BackupWorkloadType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupWorkloadType?(string value) => value == null ? null : new BackupWorkloadType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupWorkloadType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupWorkloadType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

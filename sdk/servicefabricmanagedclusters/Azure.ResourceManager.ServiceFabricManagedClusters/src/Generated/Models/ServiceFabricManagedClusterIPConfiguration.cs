@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies an IP configuration of the network interface. </summary>
     public partial class ServiceFabricManagedClusterIPConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPConfiguration"/>. </summary>
         /// <param name="name"> Name of the network interface. </param>
@@ -68,8 +40,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="subnet"> Specifies the subnet of the network interface. </param>
         /// <param name="privateIPAddressVersion"> Specifies whether the IP configuration's private IP is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="publicIPAddressConfiguration"> The public IP address configuration of the network interface. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedClusterIPConfiguration(string name, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, WritableSubResource subnet, ServiceFabricManagedClusterPrivateIPAddressVersion? privateIPAddressVersion, ServiceFabricManagedClusterPublicIPAddressConfiguration publicIPAddressConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedClusterIPConfiguration(string name, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, SubResource subnet, ServiceFabricManagedClusterPrivateIPAddressVersion? privateIPAddressVersion, ServiceFabricManagedClusterPublicIPAddressConfiguration publicIPAddressConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -78,39 +50,45 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Subnet = subnet;
             PrivateIPAddressVersion = privateIPAddressVersion;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPConfiguration"/> for deserialization. </summary>
-        internal ServiceFabricManagedClusterIPConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the network interface. </summary>
         public string Name { get; set; }
+
         /// <summary> Specifies an array of references to backend address pools of application gateways. A node type can reference backend address pools of multiple application gateways. Multiple node types cannot use the same application gateway. </summary>
         public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }
+
         /// <summary> Specifies an array of references to backend address pools of load balancers. A node type can reference backend address pools of one public and one internal load balancer. Multiple node types cannot use the same basic sku load balancer. </summary>
         public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; }
+
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. A node type can reference inbound nat pools of one public and one internal load balancer. Multiple node types cannot use the same basic sku load balancer. </summary>
         public IList<WritableSubResource> LoadBalancerInboundNatPools { get; }
+
         /// <summary> Specifies the subnet of the network interface. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
-        }
+        internal SubResource Subnet { get; set; }
 
         /// <summary> Specifies whether the IP configuration's private IP is IPv4 or IPv6. Default is IPv4. </summary>
         public ServiceFabricManagedClusterPrivateIPAddressVersion? PrivateIPAddressVersion { get; set; }
+
         /// <summary> The public IP address configuration of the network interface. </summary>
         public ServiceFabricManagedClusterPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+
+        /// <summary> Azure resource identifier. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.Id;
+            }
+            set
+            {
+                if (Subnet is null)
+                {
+                    Subnet = new SubResource();
+                }
+                Subnet.Id = value;
+            }
+        }
     }
 }

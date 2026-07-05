@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    /// <summary></summary>
     public partial class ConnectedRegistryResource : IJsonModel<ConnectedRegistryData>
     {
-        private static ConnectedRegistryData s_dataDeserializationInstance;
-        private static ConnectedRegistryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ConnectedRegistryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ConnectedRegistryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConnectedRegistryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectedRegistryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedRegistryData>)Data).Write(writer, options);
 
-        ConnectedRegistryData IJsonModel<ConnectedRegistryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedRegistryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectedRegistryData IJsonModel<ConnectedRegistryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConnectedRegistryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedRegistryData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ConnectedRegistryData IPersistableModel<ConnectedRegistryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedRegistryData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
 
-        string IPersistableModel<ConnectedRegistryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedRegistryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectedRegistryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

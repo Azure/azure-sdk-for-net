@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public readonly partial struct SqlVmDiskConfigurationType : IEquatable<SqlVmDiskConfigurationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SqlVmDiskConfigurationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SqlVmDiskConfigurationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NewValue = "NEW";
         private const string ExtendValue = "EXTEND";
         private const string AddValue = "ADD";
 
-        /// <summary> NEW. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmDiskConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SqlVmDiskConfigurationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the New. </summary>
         public static SqlVmDiskConfigurationType New { get; } = new SqlVmDiskConfigurationType(NewValue);
-        /// <summary> EXTEND. </summary>
+
+        /// <summary> Gets the Extend. </summary>
         public static SqlVmDiskConfigurationType Extend { get; } = new SqlVmDiskConfigurationType(ExtendValue);
-        /// <summary> ADD. </summary>
+
+        /// <summary> Gets the Add. </summary>
         public static SqlVmDiskConfigurationType Add { get; } = new SqlVmDiskConfigurationType(AddValue);
+
         /// <summary> Determines if two <see cref="SqlVmDiskConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlVmDiskConfigurationType left, SqlVmDiskConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlVmDiskConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlVmDiskConfigurationType left, SqlVmDiskConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlVmDiskConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlVmDiskConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlVmDiskConfigurationType(string value) => new SqlVmDiskConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlVmDiskConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlVmDiskConfigurationType?(string value) => value == null ? null : new SqlVmDiskConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlVmDiskConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlVmDiskConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

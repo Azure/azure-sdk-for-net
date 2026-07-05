@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateEndPointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateLinkServiceGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateLinkServiceGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateLinkServices_GetPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateEndPointConnectionForAPrivateLinkService()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateLinkServiceDeletePrivateEndpointConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateLinkServiceDeletePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateLinkServices_DeletePrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkPrivateEndpointConnectionResource networkPrivateEndpointConnection = client.GetNetworkPrivateEndpointConnectionResource(networkPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await networkPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
+            await networkPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ApproveOrRejectPrivateEndPointConnectionForAPrivateLinkService()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateLinkServiceUpdatePrivateEndpointConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/PrivateLinkServiceUpdatePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateLinkServices_UpdatePrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,9 +103,8 @@ namespace Azure.ResourceManager.Network.Samples
                     Status = "Approved",
                     Description = "approved it for some reason.",
                 },
-                Name = "testPlePeConnection",
             };
-            ArmOperation<NetworkPrivateEndpointConnectionResource> lro = await networkPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkPrivateEndpointConnectionResource> lro = await networkPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

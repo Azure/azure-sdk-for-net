@@ -98,10 +98,17 @@ namespace Azure.ResourceManager.Dell.Storage.Models
 {
     public static partial class ArmDellStorageModelFactory
     {
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity DellFileSystemCapacity(string min = null, string max = null, string incremental = null, string current = null) { throw null; }
         public static Azure.ResourceManager.Dell.Storage.DellFileSystemData DellFileSystemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityPatchProperties DellFileSystemEncryptionIdentityPatchProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType? identityType = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType?), Azure.Core.ResourceIdentifier identityResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityProperties DellFileSystemEncryptionIdentityProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType? identityType = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType?), Azure.Core.ResourceIdentifier identityResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionPatchProperties DellFileSystemEncryptionPatchProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType? encryptionType = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType?), string keyUri = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityPatchProperties encryptionIdentityProperties = null) { throw null; }
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties DellFileSystemEncryptionProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType encryptionType = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType), string keyUri = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityProperties encryptionIdentityProperties = null) { throw null; }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails DellFileSystemMarketplaceDetails(string marketplaceSubscriptionId = null, string planId = null, string offerId = null, string publisherId = null, string privateOfferId = null, string planName = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus?), string endDate = null, string termUnit = null) { throw null; }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatch DellFileSystemPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemPatchProperties DellFileSystemPatchProperties(Azure.Core.ResourceIdentifier delegatedSubnetId = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity capacity = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionPatchProperties encryption = null) { throw null; }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProperties DellFileSystemProperties(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity capacity = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceDetails marketplace = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState? provisioningState = default(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState?), Azure.Core.ResourceIdentifier delegatedSubnetId = null, string delegatedSubnetCidr = null, string userEmail = null, string fileSystemId = null, string smartConnectFqdn = null, System.Uri oneFsUri = null, string dellReferenceNumber = null, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionProperties encryption = null) { throw null; }
+        public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemUserDetails DellFileSystemUserDetails(string email = null) { throw null; }
     }
     public partial class DellFileSystemCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dell.Storage.Models.DellFileSystemCapacity>
     {
@@ -159,9 +166,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType SystemAssigned { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType UserAssigned { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionIdentityType (string value) { throw null; }
@@ -210,9 +215,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType CustomerManagedKeysCmk { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType MicrosoftManagedKeysMmk { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemEncryptionType (string value) { throw null; }
@@ -253,9 +256,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus Suspended { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus Unsubscribed { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemMarketplaceSubscriptionStatus (string value) { throw null; }
@@ -335,9 +336,7 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState left, Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Dell.Storage.Models.DellFileSystemProvisioningState (string value) { throw null; }

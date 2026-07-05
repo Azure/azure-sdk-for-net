@@ -5,6 +5,9 @@ namespace Azure.Communication.JobRouter
 {
     public abstract partial class DistributionMode
     {
+        /// <summary> Initializes a new instance of DistributionMode for deserialization. </summary>
+        protected DistributionMode() { }
+
         /// <summary> The type discriminator describing a sub-type of DistributionMode. </summary>
         public DistributionModeKind Kind { get; protected set; }
 

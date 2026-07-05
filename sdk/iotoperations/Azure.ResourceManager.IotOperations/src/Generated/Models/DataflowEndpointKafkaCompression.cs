@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct DataflowEndpointKafkaCompression : IEquatable<DataflowEndpointKafkaCompression>
     {
         private readonly string _value;
+        /// <summary> NONE Option. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Gzip Option. </summary>
+        private const string GzipValue = "Gzip";
+        /// <summary> SNAPPY Option. </summary>
+        private const string SnappyValue = "Snappy";
+        /// <summary> LZ4 Option. </summary>
+        private const string Lz4Value = "Lz4";
 
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointKafkaCompression"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataflowEndpointKafkaCompression(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string GzipValue = "Gzip";
-        private const string SnappyValue = "Snappy";
-        private const string Lz4Value = "Lz4";
+            _value = value;
+        }
 
         /// <summary> NONE Option. </summary>
         public static DataflowEndpointKafkaCompression None { get; } = new DataflowEndpointKafkaCompression(NoneValue);
+
         /// <summary> Gzip Option. </summary>
         public static DataflowEndpointKafkaCompression Gzip { get; } = new DataflowEndpointKafkaCompression(GzipValue);
+
         /// <summary> SNAPPY Option. </summary>
         public static DataflowEndpointKafkaCompression Snappy { get; } = new DataflowEndpointKafkaCompression(SnappyValue);
+
         /// <summary> LZ4 Option. </summary>
         public static DataflowEndpointKafkaCompression Lz4 { get; } = new DataflowEndpointKafkaCompression(Lz4Value);
+
         /// <summary> Determines if two <see cref="DataflowEndpointKafkaCompression"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataflowEndpointKafkaCompression left, DataflowEndpointKafkaCompression right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataflowEndpointKafkaCompression"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataflowEndpointKafkaCompression left, DataflowEndpointKafkaCompression right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataflowEndpointKafkaCompression"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaCompression"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataflowEndpointKafkaCompression(string value) => new DataflowEndpointKafkaCompression(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataflowEndpointKafkaCompression"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataflowEndpointKafkaCompression?(string value) => value == null ? null : new DataflowEndpointKafkaCompression(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataflowEndpointKafkaCompression other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataflowEndpointKafkaCompression other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
             ResourceGroup = "aio-validation-113034243";
             CustomLocationName = "location-sxy3o";
-            InstanceName =  "aio-113034243";
+            InstanceName = "aio-113034243";
             BrokersName = "default";
             BrokersListenersName = "default";
             BrokersAuthenticationsName = "default";
             DataflowProfilesName = "default";
             DataflowEndpointsName = "default";
             RegistryEndpointName = "default";
-            DataflowGraphName =  "default";
+            DataflowGraphName = "default";
             AkriConnectorName = "default";
             ExtendedLocation =
                 $"/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups{ResourceGroup}/providers/Microsoft.ExtendedLocation/customLocations/{CustomLocationName}";
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             IotOperationsAkriConnectorTemplateCollection templates = await GetAkriConnectorTemplateResourceCollectionAsync(resourceGroupName);
             return await templates.GetAsync(akriConnectorTemplateName);
         }
-         // Get DataflowGraph
+        // Get DataflowGraph
         protected async Task<IotOperationsDataflowGraphResource> GetDataflowGraphCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
@@ -208,5 +208,5 @@ namespace Azure.ResourceManager.IotOperations.Tests
             IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
             return instance.GetIotOperationsDataflowProfiles();
         }
-}
+    }
 }

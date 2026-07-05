@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Search
 {
+    /// <summary></summary>
     public partial class SearchServiceResource : IJsonModel<SearchServiceData>
     {
-        private static SearchServiceData s_dataDeserializationInstance;
-        private static SearchServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SearchServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SearchServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SearchServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SearchServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceData>)Data).Write(writer, options);
 
-        SearchServiceData IJsonModel<SearchServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SearchServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SearchServiceData IJsonModel<SearchServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SearchServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SearchServiceData>(Data, options, AzureResourceManagerSearchContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SearchServiceData IPersistableModel<SearchServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SearchServiceData>(data, options, AzureResourceManagerSearchContext.Default);
 
-        string IPersistableModel<SearchServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SearchServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SearchServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

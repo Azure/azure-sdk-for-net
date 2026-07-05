@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct SolutionInstanceState : IEquatable<SolutionInstanceState>
     {
         private readonly string _value;
+        /// <summary> Solution Instance is in review. </summary>
+        private const string InReviewValue = "InReview";
+        /// <summary> Solution Instance upgrade is in review. </summary>
+        private const string UpgradeInReviewValue = "UpgradeInReview";
+        /// <summary> Solution Instance is ready to deploy. </summary>
+        private const string ReadyToDeployValue = "ReadyToDeploy";
+        /// <summary> Solution Instance is ready to upgrade. </summary>
+        private const string ReadyToUpgradeValue = "ReadyToUpgrade";
+        /// <summary> Solution Instance is deploying. </summary>
+        private const string DeployingValue = "Deploying";
+        /// <summary> Solution Instance is deployed. </summary>
+        private const string DeployedValue = "Deployed";
+        /// <summary> Solution Instance failed to deploy. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Solution Instance is undeployed. </summary>
+        private const string UndeployedValue = "Undeployed";
+        /// <summary> Solution Instance is pending external validation. </summary>
+        private const string PendingExternalValidationValue = "PendingExternalValidation";
+        /// <summary> Solution Instance failed external validation. </summary>
+        private const string ExternalValidationFailedValue = "ExternalValidationFailed";
+        /// <summary> Solution Instance is staging the images. </summary>
+        private const string StagingValue = "Staging";
 
         /// <summary> Initializes a new instance of <see cref="SolutionInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SolutionInstanceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InReviewValue = "InReview";
-        private const string UpgradeInReviewValue = "UpgradeInReview";
-        private const string ReadyToDeployValue = "ReadyToDeploy";
-        private const string ReadyToUpgradeValue = "ReadyToUpgrade";
-        private const string DeployingValue = "Deploying";
-        private const string DeployedValue = "Deployed";
-        private const string FailedValue = "Failed";
-        private const string UndeployedValue = "Undeployed";
-        private const string PendingExternalValidationValue = "PendingExternalValidation";
-        private const string ExternalValidationFailedValue = "ExternalValidationFailed";
-        private const string StagingValue = "Staging";
+            _value = value;
+        }
 
         /// <summary> Solution Instance is in review. </summary>
         public static SolutionInstanceState InReview { get; } = new SolutionInstanceState(InReviewValue);
+
         /// <summary> Solution Instance upgrade is in review. </summary>
         public static SolutionInstanceState UpgradeInReview { get; } = new SolutionInstanceState(UpgradeInReviewValue);
+
         /// <summary> Solution Instance is ready to deploy. </summary>
         public static SolutionInstanceState ReadyToDeploy { get; } = new SolutionInstanceState(ReadyToDeployValue);
+
         /// <summary> Solution Instance is ready to upgrade. </summary>
         public static SolutionInstanceState ReadyToUpgrade { get; } = new SolutionInstanceState(ReadyToUpgradeValue);
+
         /// <summary> Solution Instance is deploying. </summary>
         public static SolutionInstanceState Deploying { get; } = new SolutionInstanceState(DeployingValue);
+
         /// <summary> Solution Instance is deployed. </summary>
         public static SolutionInstanceState Deployed { get; } = new SolutionInstanceState(DeployedValue);
+
         /// <summary> Solution Instance failed to deploy. </summary>
         public static SolutionInstanceState Failed { get; } = new SolutionInstanceState(FailedValue);
+
         /// <summary> Solution Instance is undeployed. </summary>
         public static SolutionInstanceState Undeployed { get; } = new SolutionInstanceState(UndeployedValue);
+
         /// <summary> Solution Instance is pending external validation. </summary>
         public static SolutionInstanceState PendingExternalValidation { get; } = new SolutionInstanceState(PendingExternalValidationValue);
+
         /// <summary> Solution Instance failed external validation. </summary>
         public static SolutionInstanceState ExternalValidationFailed { get; } = new SolutionInstanceState(ExternalValidationFailedValue);
+
         /// <summary> Solution Instance is staging the images. </summary>
         public static SolutionInstanceState Staging { get; } = new SolutionInstanceState(StagingValue);
+
         /// <summary> Determines if two <see cref="SolutionInstanceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SolutionInstanceState left, SolutionInstanceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SolutionInstanceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SolutionInstanceState left, SolutionInstanceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SolutionInstanceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SolutionInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SolutionInstanceState(string value) => new SolutionInstanceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SolutionInstanceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SolutionInstanceState?(string value) => value == null ? null : new SolutionInstanceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SolutionInstanceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SolutionInstanceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -20,14 +20,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         internal PipelineMessage CreateStartRecordRequest(BinaryContent content, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Record/Start", false);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -37,14 +34,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         internal PipelineMessage CreateStopRecordRequest(string recordingId, BinaryContent content, string recordingSkip, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Record/Stop", false);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("x-recording-id", recordingId);
             if (recordingSkip != null)
             {
@@ -59,14 +53,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         internal PipelineMessage CreateStartPlaybackRequest(BinaryContent content, string recordingId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Playback/Start", false);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             if (recordingId != null)
             {
                 request.Headers.Set("x-recording-id", recordingId);
@@ -80,14 +71,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         internal PipelineMessage CreateStopPlaybackRequest(string recordingId, RequestOptions options)
         {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/Playback/Stop", false);
-            request.Uri = uri.ToUri();
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
             request.Headers.Set("x-recording-id", recordingId);
             request.Headers.Set("Accept", "application/json");
             message.Apply(options);

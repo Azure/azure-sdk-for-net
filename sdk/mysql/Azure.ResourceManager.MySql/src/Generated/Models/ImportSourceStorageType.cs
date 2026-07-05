@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct ImportSourceStorageType : IEquatable<ImportSourceStorageType>
     {
         private readonly string _value;
+        private const string AzureBlobValue = "AzureBlob";
 
         /// <summary> Initializes a new instance of <see cref="ImportSourceStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImportSourceStorageType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AzureBlobValue = "AzureBlob";
-
-        /// <summary> AzureBlob. </summary>
+        /// <summary> Gets the AzureBlob. </summary>
         public static ImportSourceStorageType AzureBlob { get; } = new ImportSourceStorageType(AzureBlobValue);
+
         /// <summary> Determines if two <see cref="ImportSourceStorageType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImportSourceStorageType left, ImportSourceStorageType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImportSourceStorageType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImportSourceStorageType left, ImportSourceStorageType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImportSourceStorageType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImportSourceStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImportSourceStorageType(string value) => new ImportSourceStorageType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImportSourceStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImportSourceStorageType?(string value) => value == null ? null : new ImportSourceStorageType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImportSourceStorageType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImportSourceStorageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

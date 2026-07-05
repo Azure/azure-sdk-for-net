@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Authentication;
 using System.Xml.Serialization;
@@ -114,8 +115,17 @@ namespace Azure.Storage
         public static RequestFailedException ClientRequestIdMismatch(Response response, string echo, string original)
             => new RequestFailedException(response.Status, $"Response x-ms-client-request-id '{echo}' does not match the original expected request id, '{original}'.", null);
 
+        public static InvalidDataException StructuredMessageNotAcknowledgedGET(Response response)
+            => new InvalidDataException($"Response does not acknowledge structured message was requested. Unknown data structure in response body.");
+
+        public static InvalidDataException StructuredMessageNotAcknowledgedPUT(Response response)
+            => new InvalidDataException($"Response does not acknowledge structured message was sent. Unexpected data may have been persisted to storage.");
+
         public static ArgumentException TransactionalHashingNotSupportedWithClientSideEncryption()
             => new ArgumentException("Client-side encryption and transactional hashing are not supported at the same time.");
+
+        public static InvalidDataException ExpectedStructuredMessage()
+            => new InvalidDataException($"Expected {Constants.StructuredMessage.StructuredMessageHeader} in response, but found none.");
 
         public static void VerifyHttpsTokenAuth(Uri uri)
         {

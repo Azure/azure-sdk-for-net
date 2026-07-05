@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NspLoggingConfigurationGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NspLoggingConfigurationGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspLoggingConfigurationGet.json
             // this example is just showing the usage of "NetworkSecurityPerimeterLoggingConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_NspLoggingConfigurationDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NspLoggingConfigurationDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspLoggingConfigurationDelete.json
             // this example is just showing the usage of "NetworkSecurityPerimeterLoggingConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkSecurityPerimeterLoggingConfigurationResource networkSecurityPerimeterLoggingConfiguration = client.GetNetworkSecurityPerimeterLoggingConfigurationResource(networkSecurityPerimeterLoggingConfigurationResourceId);
 
             // invoke the operation
-            await networkSecurityPerimeterLoggingConfiguration.DeleteAsync(WaitUntil.Completed);
+            await networkSecurityPerimeterLoggingConfiguration.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_NspLoggingConfigurationPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NspLoggingConfigurationPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NspLoggingConfigurationPut.json
             // this example is just showing the usage of "NetworkSecurityPerimeterLoggingConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
             };
-            ArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource> lro = await networkSecurityPerimeterLoggingConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource> lro = await networkSecurityPerimeterLoggingConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkSecurityPerimeterLoggingConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -22,151 +23,213 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRequestRoutingRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ruleType"> Rule type. </param>
-        /// <param name="priority"> Priority of the request routing rule. </param>
-        /// <param name="backendAddressPool"> Backend address pool resource of the application gateway. </param>
-        /// <param name="backendHttpSettings"> Backend http settings resource of the application gateway. </param>
-        /// <param name="httpListener"> Http listener resource of the application gateway. </param>
-        /// <param name="urlPathMap"> URL path map resource of the application gateway. </param>
-        /// <param name="rewriteRuleSet"> Rewrite Rule Set resource in Basic rule of the application gateway. </param>
-        /// <param name="redirectConfiguration"> Redirect configuration resource of the application gateway. </param>
-        /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of the application gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
-        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource httpListener, WritableSubResource urlPathMap, WritableSubResource rewriteRuleSet, WritableSubResource redirectConfiguration, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the application gateway request routing rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ApplicationGatewayRequestRoutingRulePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RuleType = ruleType;
-            Priority = priority;
-            BackendAddressPool = backendAddressPool;
-            BackendHttpSettings = backendHttpSettings;
-            HttpListener = httpListener;
-            UrlPathMap = urlPathMap;
-            RewriteRuleSet = rewriteRuleSet;
-            RedirectConfiguration = redirectConfiguration;
-            LoadDistributionPolicy = loadDistributionPolicy;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the application gateway request routing rule. </summary>
+        [WirePath("properties")]
+        internal ApplicationGatewayRequestRoutingRulePropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Rule type. </summary>
         [WirePath("properties.ruleType")]
-        public ApplicationGatewayRequestRoutingRuleType? RuleType { get; set; }
+        public ApplicationGatewayRequestRoutingRuleType? RuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.RuleType = value;
+            }
+        }
+
         /// <summary> Priority of the request routing rule. </summary>
         [WirePath("properties.priority")]
-        public int? Priority { get; set; }
-        /// <summary> Backend address pool resource of the application gateway. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendAddressPool.id")]
-        public ResourceIdentifier BackendAddressPoolId
+        public int? Priority
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
             set
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.Priority = value;
             }
         }
 
-        /// <summary> Backend http settings resource of the application gateway. </summary>
-        internal WritableSubResource BackendHttpSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendHttpSettings.id")]
-        public ResourceIdentifier BackendHttpSettingsId
+        /// <summary> Entra JWT validation configuration resource of the application gateway. </summary>
+        [WirePath("properties.entraJWTValidationConfig")]
+        public ResourceIdentifier EntraJWTValidationConfig
         {
-            get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
-            set
+            get
             {
-                if (BackendHttpSettings is null)
-                    BackendHttpSettings = new WritableSubResource();
-                BackendHttpSettings.Id = value;
+                return Properties is null ? default : Properties.EntraJWTValidationConfig;
             }
-        }
-
-        /// <summary> Http listener resource of the application gateway. </summary>
-        internal WritableSubResource HttpListener { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.httpListener.id")]
-        public ResourceIdentifier HttpListenerId
-        {
-            get => HttpListener is null ? default : HttpListener.Id;
             set
             {
-                if (HttpListener is null)
-                    HttpListener = new WritableSubResource();
-                HttpListener.Id = value;
-            }
-        }
-
-        /// <summary> URL path map resource of the application gateway. </summary>
-        internal WritableSubResource UrlPathMap { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.urlPathMap.id")]
-        public ResourceIdentifier UrlPathMapId
-        {
-            get => UrlPathMap is null ? default : UrlPathMap.Id;
-            set
-            {
-                if (UrlPathMap is null)
-                    UrlPathMap = new WritableSubResource();
-                UrlPathMap.Id = value;
-            }
-        }
-
-        /// <summary> Rewrite Rule Set resource in Basic rule of the application gateway. </summary>
-        internal WritableSubResource RewriteRuleSet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.rewriteRuleSet.id")]
-        public ResourceIdentifier RewriteRuleSetId
-        {
-            get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
-            set
-            {
-                if (RewriteRuleSet is null)
-                    RewriteRuleSet = new WritableSubResource();
-                RewriteRuleSet.Id = value;
-            }
-        }
-
-        /// <summary> Redirect configuration resource of the application gateway. </summary>
-        internal WritableSubResource RedirectConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.redirectConfiguration.id")]
-        public ResourceIdentifier RedirectConfigurationId
-        {
-            get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
-            set
-            {
-                if (RedirectConfiguration is null)
-                    RedirectConfiguration = new WritableSubResource();
-                RedirectConfiguration.Id = value;
-            }
-        }
-
-        /// <summary> Load Distribution Policy resource of the application gateway. </summary>
-        internal WritableSubResource LoadDistributionPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.loadDistributionPolicy.id")]
-        public ResourceIdentifier LoadDistributionPolicyId
-        {
-            get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
-            set
-            {
-                if (LoadDistributionPolicy is null)
-                    LoadDistributionPolicy = new WritableSubResource();
-                LoadDistributionPolicy.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.EntraJWTValidationConfig = value;
             }
         }
 
         /// <summary> The provisioning state of the request routing rule resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.backendAddressPool.id")]
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.BackendAddressPoolId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.backendHttpSettings.id")]
+        public ResourceIdentifier BackendHttpSettingsId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendHttpSettingsId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.BackendHttpSettingsId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.httpListener.id")]
+        public ResourceIdentifier HttpListenerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpListenerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.HttpListenerId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.urlPathMap.id")]
+        public ResourceIdentifier UrlPathMapId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UrlPathMapId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.UrlPathMapId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.rewriteRuleSet.id")]
+        public ResourceIdentifier RewriteRuleSetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RewriteRuleSetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.RewriteRuleSetId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.redirectConfiguration.id")]
+        public ResourceIdentifier RedirectConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RedirectConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.RedirectConfigurationId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.loadDistributionPolicy.id")]
+        public ResourceIdentifier LoadDistributionPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadDistributionPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.LoadDistributionPolicyId = value;
+            }
+        }
     }
 }

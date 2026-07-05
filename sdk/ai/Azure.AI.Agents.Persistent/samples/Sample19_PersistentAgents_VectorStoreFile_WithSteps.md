@@ -64,7 +64,7 @@ Asynchronous sample:
 PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
     name: "my_vector_store");
 // Add file ID to vector store.
-VectorStoreFile vctFile =  await client.VectorStores.CreateVectorStoreFileAsync(
+VectorStoreFile vctFile = await client.VectorStores.CreateVectorStoreFileAsync(
     vectorStoreId: vectorStore.Id,
     fileId: uploadedAgentFile.Id
 );

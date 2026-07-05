@@ -28,7 +28,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             {
                 if (_configuration != null)
                 {
-                    _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
+                    var azureMonitorSection = _configuration.GetSection(AzureMonitorSectionFromConfig);
+                    azureMonitorSection.Bind(options);
+                    if (azureMonitorSection["TracesPerSecond"] == null && azureMonitorSection["SamplingRatio"] != null)
+                    {
+                        // This is so user does not have to explicitly set TracesPerSecond to null in config to use fixed-percentage sampling.
+                        options.TracesPerSecond = null;
+                    }
 
                     // IConfiguration can read from EnvironmentVariables or InMemoryCollection if configured to do so.
                     var connectionStringFromIConfig = _configuration[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
@@ -97,6 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             if (ratio >= 0.0 && ratio <= 1.0)
                             {
                                 options.SamplingRatio = (float)ratio;
+                                options.TracesPerSecond = null; // Explicitly set to null to use fixed-percentage sampling
                             }
                             else
                             {

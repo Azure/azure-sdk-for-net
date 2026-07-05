@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct HighAvailabilityMode : IEquatable<HighAvailabilityMode>
     {
         private readonly string _value;
+        /// <summary> High availability mode is disabled. This mode is can see availability impact during faults or maintenance and is not recommended for production. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> High availability mode is enabled, where each server in a shard is placed in the same availability zone. </summary>
+        private const string SameZoneValue = "SameZone";
+        /// <summary> High availability mode is enabled and preferences ZoneRedundant if availability zones capacity is available in the region, otherwise falls-back to provisioning with SameZone. </summary>
+        private const string ZoneRedundantPreferredValue = "ZoneRedundantPreferred";
 
         /// <summary> Initializes a new instance of <see cref="HighAvailabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HighAvailabilityMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string SameZoneValue = "SameZone";
-        private const string ZoneRedundantPreferredValue = "ZoneRedundantPreferred";
+            _value = value;
+        }
 
         /// <summary> High availability mode is disabled. This mode is can see availability impact during faults or maintenance and is not recommended for production. </summary>
         public static HighAvailabilityMode Disabled { get; } = new HighAvailabilityMode(DisabledValue);
+
         /// <summary> High availability mode is enabled, where each server in a shard is placed in the same availability zone. </summary>
         public static HighAvailabilityMode SameZone { get; } = new HighAvailabilityMode(SameZoneValue);
+
         /// <summary> High availability mode is enabled and preferences ZoneRedundant if availability zones capacity is available in the region, otherwise falls-back to provisioning with SameZone. </summary>
         public static HighAvailabilityMode ZoneRedundantPreferred { get; } = new HighAvailabilityMode(ZoneRedundantPreferredValue);
+
         /// <summary> Determines if two <see cref="HighAvailabilityMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HighAvailabilityMode left, HighAvailabilityMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HighAvailabilityMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HighAvailabilityMode left, HighAvailabilityMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HighAvailabilityMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HighAvailabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HighAvailabilityMode(string value) => new HighAvailabilityMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HighAvailabilityMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HighAvailabilityMode?(string value) => value == null ? null : new HighAvailabilityMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HighAvailabilityMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HighAvailabilityMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

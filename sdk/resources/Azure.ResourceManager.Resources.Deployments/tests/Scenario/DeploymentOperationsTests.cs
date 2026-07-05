@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests
             ResourceGroupResource rg = lro.Value;
             string deployName = Recording.GenerateAssetName("deployEx-D-");
             var deploymentData = CreateDeploymentData(CreateDeploymentProperties());
-            var deployment = (await rg.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
+            var deployment = (await Client.GetArmDeployments(rg.Id).CreateOrUpdateAsync(WaitUntil.Completed, deployName, deploymentData)).Value;
             await deployment.DeleteAsync(WaitUntil.Completed);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await deployment.GetAsync());
             Assert.AreEqual(404, ex.Status);

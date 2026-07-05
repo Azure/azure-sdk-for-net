@@ -8,16 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CalculateModelCapacityResult : IUtf8JsonSerializable, IJsonModel<CalculateModelCapacityResult>
+    /// <summary> Calculate Model Capacity result. </summary>
+    public partial class CalculateModelCapacityResult : IJsonModel<CalculateModelCapacityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalculateModelCapacityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CalculateModelCapacityResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCalculateModelCapacityResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CalculateModelCapacityResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CalculateModelCapacityResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CalculateModelCapacityResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CalculateModelCapacityResult IPersistableModel<CalculateModelCapacityResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CalculateModelCapacityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CalculateModelCapacityResult"/> from. </param>
+        internal static CalculateModelCapacityResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCalculateModelCapacityResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CalculateModelCapacityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +77,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CalculateModelCapacityResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
@@ -50,15 +97,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("estimatedCapacity"u8);
                 writer.WriteObjectValue(EstimatedCapacity, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,22 +114,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
         }
 
-        CalculateModelCapacityResult IJsonModel<CalculateModelCapacityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CalculateModelCapacityResult IJsonModel<CalculateModelCapacityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CalculateModelCapacityResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CalculateModelCapacityResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCalculateModelCapacityResult(document.RootElement, options);
         }
 
-        internal static CalculateModelCapacityResult DeserializeCalculateModelCapacityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CalculateModelCapacityResult DeserializeCalculateModelCapacityResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,141 +142,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesAccountDeploymentModel model = default;
             string skuName = default;
             CalculateModelCapacityResultEstimatedCapacity estimatedCapacity = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("model"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(property.Value, options);
+                    model = CognitiveServicesAccountDeploymentModel.DeserializeCognitiveServicesAccountDeploymentModel(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("skuName"u8))
+                if (prop.NameEquals("skuName"u8))
                 {
-                    skuName = property.Value.GetString();
+                    skuName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("estimatedCapacity"u8))
+                if (prop.NameEquals("estimatedCapacity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedCapacity = CalculateModelCapacityResultEstimatedCapacity.DeserializeCalculateModelCapacityResultEstimatedCapacity(property.Value, options);
+                    estimatedCapacity = CalculateModelCapacityResultEstimatedCapacity.DeserializeCalculateModelCapacityResultEstimatedCapacity(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CalculateModelCapacityResult(model, skuName, estimatedCapacity, serializedAdditionalRawData);
+            return new CalculateModelCapacityResult(model, skuName, estimatedCapacity, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  model: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Model))
-                {
-                    builder.Append("  model: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Model, options, 2, false, "  model: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  skuName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SkuName))
-                {
-                    builder.Append("  skuName: ");
-                    if (SkuName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SkuName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SkuName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EstimatedCapacity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  estimatedCapacity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EstimatedCapacity))
-                {
-                    builder.Append("  estimatedCapacity: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, EstimatedCapacity, options, 2, false, "  estimatedCapacity: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CalculateModelCapacityResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CalculateModelCapacityResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CalculateModelCapacityResult IPersistableModel<CalculateModelCapacityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateModelCapacityResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCalculateModelCapacityResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CalculateModelCapacityResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CalculateModelCapacityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

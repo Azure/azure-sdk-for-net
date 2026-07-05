@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesDataReplication;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> Represent remote private endpoint information for the private endpoint connection proxy. </summary>
     public partial class RemotePrivateEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpoint"/>. </summary>
         /// <param name="id"> Gets or sets private link service proxy id. </param>
@@ -65,30 +37,29 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="manualPrivateLinkServiceConnections"> Gets or sets the list of Manual Private Link Service Connections and gets populated for Manual approval flow. </param>
         /// <param name="privateLinkServiceProxies"> Gets or sets the list of private link service proxies. </param>
         /// <param name="connectionDetails"> Gets or sets the list of Connection Details. This is the connection details for private endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemotePrivateEndpoint(string id, IList<DataReplicationPrivateLinkServiceConnection> privateLinkServiceConnections, IList<DataReplicationPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<DataReplicationPrivateLinkServiceProxy> privateLinkServiceProxies, IList<RemotePrivateEndpointConnectionDetails> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RemotePrivateEndpoint(string id, IList<DataReplicationPrivateLinkServiceConnection> privateLinkServiceConnections, IList<DataReplicationPrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<DataReplicationPrivateLinkServiceProxy> privateLinkServiceProxies, IList<RemotePrivateEndpointConnectionDetails> connectionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PrivateLinkServiceConnections = privateLinkServiceConnections;
             ManualPrivateLinkServiceConnections = manualPrivateLinkServiceConnections;
             PrivateLinkServiceProxies = privateLinkServiceProxies;
             ConnectionDetails = connectionDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RemotePrivateEndpoint"/> for deserialization. </summary>
-        internal RemotePrivateEndpoint()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets private link service proxy id. </summary>
         public string Id { get; set; }
+
         /// <summary> Gets or sets the list of Private Link Service Connections and gets populated for Auto approval flow. </summary>
         public IList<DataReplicationPrivateLinkServiceConnection> PrivateLinkServiceConnections { get; }
+
         /// <summary> Gets or sets the list of Manual Private Link Service Connections and gets populated for Manual approval flow. </summary>
         public IList<DataReplicationPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get; }
+
         /// <summary> Gets or sets the list of private link service proxies. </summary>
         public IList<DataReplicationPrivateLinkServiceProxy> PrivateLinkServiceProxies { get; }
+
         /// <summary> Gets or sets the list of Connection Details. This is the connection details for private endpoint. </summary>
         public IList<RemotePrivateEndpointConnectionDetails> ConnectionDetails { get; }
     }

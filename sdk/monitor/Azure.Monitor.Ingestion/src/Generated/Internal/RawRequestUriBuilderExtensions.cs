@@ -19,5 +19,42 @@ namespace Azure.Monitor.Ingestion
             IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
             builder.AppendQuery(name, string.Join(delimiter, stringValues), escape);
         }
+
+        public static void UpdateQuery(this RawRequestUriBuilder builder, string name, string value)
+        {
+            string currentQuery = builder.Query;
+            string searchPattern = string.Concat(name, "=");
+            int paramStartIndex = -1;
+            if (currentQuery.StartsWith(string.Concat("?", searchPattern)))
+            {
+                paramStartIndex = 1;
+            }
+            if (paramStartIndex == -1)
+            {
+                string prefixedPattern = string.Concat("&", searchPattern);
+                int prefixedIndex = currentQuery.IndexOf(prefixedPattern);
+                if (prefixedIndex >= 0)
+                {
+                    paramStartIndex = prefixedIndex + 1;
+                }
+            }
+            if (paramStartIndex >= 0)
+            {
+                int valueStartIndex = paramStartIndex + searchPattern.Length;
+                int valueEndIndex = currentQuery.IndexOf('&', valueStartIndex);
+                if (valueEndIndex == -1)
+                {
+                    valueEndIndex = currentQuery.Length;
+                }
+                string beforeParam = currentQuery.Substring(0, valueStartIndex);
+                string afterParam = currentQuery.Substring(valueEndIndex);
+                string newQuery = string.Concat(beforeParam, value, afterParam);
+                builder.Query = newQuery;
+            }
+            else
+            {
+                builder.AppendQuery(name, value, true);
+            }
+        }
     }
 }

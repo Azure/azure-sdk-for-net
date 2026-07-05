@@ -34,12 +34,33 @@ namespace Azure.Core.Pipeline
         /// <value></value>
         public IList<X509Certificate2> ClientCertificates { get; }
 
-         /// <summary>
+        /// <summary>
         /// Gets or sets a value that indicates whether the redirect policy should follow redirection responses.
         /// </summary>
         /// <value>
         /// <c>true</c> if the redirect policy should follow redirection responses; otherwise <c>false</c>. The default value is <c>false</c>.
         /// </value>
         public bool IsClientRedirectEnabled { get; set; }
+
+        /// <summary>
+        /// Creates a clone of the current <see cref="HttpPipelineTransportOptions"/> instance with the same settings.
+        /// </summary>
+        /// <returns></returns>
+        /// <returns>
+        /// A new <see cref="HttpPipelineTransportOptions"/> instance with the same settings as the current instance.
+        /// </returns>
+        internal HttpPipelineTransportOptions Clone()
+        {
+            var clone = new HttpPipelineTransportOptions
+            {
+                ServerCertificateCustomValidationCallback = ServerCertificateCustomValidationCallback,
+                IsClientRedirectEnabled = IsClientRedirectEnabled,
+            };
+            foreach (X509Certificate2 certificate in ClientCertificates)
+            {
+                clone.ClientCertificates.Add(certificate);
+            }
+            return clone;
+        }
     }
 }

@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -21,51 +23,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteRecommendationCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _siteRecommendationRecommendationsClientDiagnostics;
-        private readonly RecommendationsRestOperations _siteRecommendationRecommendationsRestClient;
+        private readonly ClientDiagnostics _recommendationsClientDiagnostics;
+        private readonly Recommendations _recommendationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecommendationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteRecommendationCollection for mocking. </summary>
         protected SiteRecommendationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecommendationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecommendationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteRecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteRecommendationRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteRecommendationResource.ResourceType, out string siteRecommendationRecommendationsApiVersion);
-            _siteRecommendationRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecommendationRecommendationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SiteRecommendationResource.ResourceType, out string siteRecommendationApiVersion);
+            _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendationResource.ResourceType.Namespace, Diagnostics);
+            _recommendationsRestClient = new Recommendations(_recommendationsClientDiagnostics, Pipeline, Endpoint, siteRecommendationApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != WebSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WebSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get a recommendation rule for an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_GetRuleDetailsByWebApp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,19 +73,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<SiteRecommendationResource>> GetAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SiteRecommendationResource>> GetAsync(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Get");
+            using DiagnosticScope scope = _recommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -99,20 +107,16 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get a recommendation rule for an app.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_GetRuleDetailsByWebApp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,19 +124,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<SiteRecommendationResource> Get(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SiteRecommendationResource> Get(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Get");
+            using DiagnosticScope scope = _recommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecommendationRuleData> response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,20 +158,16 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_GetRuleDetailsByWebApp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,17 +175,35 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Exists");
+            using DiagnosticScope scope = _recommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +217,16 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_GetRuleDetailsByWebApp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,17 +234,35 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Exists");
+            using DiagnosticScope scope = _recommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -236,20 +276,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_GetRuleDetailsByWebApp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -257,19 +293,39 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<SiteRecommendationResource>> GetIfExistsAsync(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SiteRecommendationResource>> GetIfExistsAsync(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExists");
+            using DiagnosticScope scope = _recommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteRecommendationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,20 +339,16 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/recommendations/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Recommendations_GetRuleDetailsByWebApp</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_GetRuleDetailsByWebApp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecommendationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,19 +356,39 @@ namespace Azure.ResourceManager.AppService
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<SiteRecommendationResource> GetIfExists(string name, bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SiteRecommendationResource> GetIfExists(string name, bool? updateSeen = default, string recommendationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExists");
+            using DiagnosticScope scope = _recommendationsClientDiagnostics.CreateScope("SiteRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _siteRecommendationRecommendationsRestClient.GetRuleDetailsByWebApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _recommendationsRestClient.CreateGetRuleDetailsByWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, updateSeen, recommendationId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RecommendationRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RecommendationRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RecommendationRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteRecommendationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

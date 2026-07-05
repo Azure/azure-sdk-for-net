@@ -4,6 +4,9 @@ parameters:
 - name: Condition
   type: string
   default: succeeded()
+- name: ForRelease
+  type: boolean
+  default: false
 
 steps:
   - task: Powershell@2
@@ -11,6 +14,7 @@ steps:
       filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-ChangeLogs.ps1
       arguments: >
         -PackagePropertiesFolder '${{ parameters.PackagePropertiesFolder }}'
+        -ForRelease $${{ parameters.ForRelease }}
       pwsh: true
     displayName: Verify ChangeLogEntries
     condition: ${{ parameters.Condition }}

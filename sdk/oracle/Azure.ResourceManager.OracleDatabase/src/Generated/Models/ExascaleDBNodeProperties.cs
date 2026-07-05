@@ -13,45 +13,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> The properties of DbNodeResource. </summary>
     public partial class ExascaleDBNodeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExascaleDBNodeProperties"/>. </summary>
         /// <param name="ocid"> DbNode OCID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ocid"/> is null. </exception>
         internal ExascaleDBNodeProperties(string ocid)
         {
-            Argument.AssertNotNull(ocid, nameof(ocid));
-
             Ocid = ocid;
         }
 
@@ -69,8 +37,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="maintenanceWindowEndOn"> End date and time of maintenance window. </param>
         /// <param name="maintenanceWindowStartOn"> Start date and time of maintenance window. </param>
         /// <param name="totalCpuCoreCount"> The total number of CPU cores reserved on the Db node. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExascaleDBNodeProperties(string ocid, string additionalDetails, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, string faultDomain, string hostname, DBNodeProvisioningState? lifecycleState, string maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset? maintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, int? totalCpuCoreCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExascaleDBNodeProperties(string ocid, string additionalDetails, int? cpuCoreCount, int? dbNodeStorageSizeInGbs, string faultDomain, string hostname, DBNodeProvisioningState? lifecycleState, string maintenanceType, int? memorySizeInGbs, int? softwareStorageSizeInGb, DateTimeOffset? maintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, int? totalCpuCoreCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ocid = ocid;
             AdditionalDetails = additionalDetails;
@@ -85,38 +53,45 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             MaintenanceWindowEndOn = maintenanceWindowEndOn;
             MaintenanceWindowStartOn = maintenanceWindowStartOn;
             TotalCpuCoreCount = totalCpuCoreCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExascaleDBNodeProperties"/> for deserialization. </summary>
-        internal ExascaleDBNodeProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> DbNode OCID. </summary>
         public string Ocid { get; }
+
         /// <summary> Additional information about the planned maintenance. </summary>
         public string AdditionalDetails { get; }
+
         /// <summary> The number of CPU cores enabled on the Db node. </summary>
         public int? CpuCoreCount { get; }
+
         /// <summary> The allocated local node storage in GBs on the Db node. </summary>
         public int? DBNodeStorageSizeInGbs { get; }
+
         /// <summary> The name of the Fault Domain the instance is contained in. </summary>
         public string FaultDomain { get; }
+
         /// <summary> The host name for the database node. </summary>
         public string Hostname { get; }
+
         /// <summary> The current state of the database node. </summary>
         public DBNodeProvisioningState? LifecycleState { get; }
+
         /// <summary> The type of database node maintenance. </summary>
         public string MaintenanceType { get; }
+
         /// <summary> The allocated memory in GBs on the Db node. </summary>
         public int? MemorySizeInGbs { get; }
+
         /// <summary> The size (in GB) of the block storage volume allocation for the DB system. This attribute applies only for virtual machine DB systems. </summary>
         public int? SoftwareStorageSizeInGb { get; }
+
         /// <summary> End date and time of maintenance window. </summary>
         public DateTimeOffset? MaintenanceWindowEndOn { get; }
+
         /// <summary> Start date and time of maintenance window. </summary>
         public DateTimeOffset? MaintenanceWindowStartOn { get; }
+
         /// <summary> The total number of CPU cores reserved on the Db node. </summary>
         public int? TotalCpuCoreCount { get; }
     }

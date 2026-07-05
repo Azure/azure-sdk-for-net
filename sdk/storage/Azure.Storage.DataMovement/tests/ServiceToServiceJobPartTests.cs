@@ -9,9 +9,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
-using Azure.Storage.Test;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
             var mock = new Mock<JobPartInternal.QueueChunkDelegate>(MockBehavior.Strict);
             mock.Setup(del => del(It.IsAny<Func<Task>>(), It.IsAny<CancellationToken>()))
                 .Callback<Func<Task>, CancellationToken>(
-                async(funcTask, _) =>
+                async (funcTask, _) =>
                 {
                     await funcTask().ConfigureAwait(false);
                 })
@@ -100,7 +100,8 @@ namespace Azure.Storage.DataMovement.Tests
                     {
                         destinationMock.Verify(expectedInvocation, Times.Exactly(numberOfInvocationCalls));
                         verified = true;
-                    } catch (MockException)
+                    }
+                    catch (MockException)
                     {
                         // This exception tells us it hasn't seen the expected invocation
                         // which might happen due to parallelism.

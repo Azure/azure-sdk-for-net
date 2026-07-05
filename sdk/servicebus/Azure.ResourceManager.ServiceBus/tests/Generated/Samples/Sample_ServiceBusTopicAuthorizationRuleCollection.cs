@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TopicAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicAuthorizationRuleCreate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Topics/SBTopicAuthorizationRuleCreate.json
             // this example is just showing the usage of "TopicAuthorizationRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TopicAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicAuthorizationRuleGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Topics/SBTopicAuthorizationRuleGet.json
             // this example is just showing the usage of "TopicAuthorizationRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TopicAuthorizationRuleListAll()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicAuthorizationRuleListAll.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Topics/SBTopicAuthorizationRuleListAll.json
             // this example is just showing the usage of "TopicAuthorizationRules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_TopicAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicAuthorizationRuleGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Topics/SBTopicAuthorizationRuleGet.json
             // this example is just showing the usage of "TopicAuthorizationRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TopicAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicAuthorizationRuleGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Topics/SBTopicAuthorizationRuleGet.json
             // this example is just showing the usage of "TopicAuthorizationRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

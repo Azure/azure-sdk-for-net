@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerPatchStrategy : IEquatable<MySqlFlexibleServerPatchStrategy>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatchStrategy"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MySqlFlexibleServerPatchStrategy(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RegularValue = "Regular";
         private const string VirtualCanaryValue = "VirtualCanary";
 
-        /// <summary> Regular. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatchStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MySqlFlexibleServerPatchStrategy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Regular. </summary>
         public static MySqlFlexibleServerPatchStrategy Regular { get; } = new MySqlFlexibleServerPatchStrategy(RegularValue);
-        /// <summary> VirtualCanary. </summary>
+
+        /// <summary> Gets the VirtualCanary. </summary>
         public static MySqlFlexibleServerPatchStrategy VirtualCanary { get; } = new MySqlFlexibleServerPatchStrategy(VirtualCanaryValue);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerPatchStrategy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerPatchStrategy left, MySqlFlexibleServerPatchStrategy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerPatchStrategy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerPatchStrategy left, MySqlFlexibleServerPatchStrategy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerPatchStrategy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerPatchStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerPatchStrategy(string value) => new MySqlFlexibleServerPatchStrategy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerPatchStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerPatchStrategy?(string value) => value == null ? null : new MySqlFlexibleServerPatchStrategy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerPatchStrategy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerPatchStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -3,14 +3,12 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary>
-    /// Renamed to ServiceInitiativeEnforcement.
+    /// ServiceInitiativeEnforcement.
     /// </summary>
-    [CodeGenModel("GovernedServiceItemEnforcement")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("GovernedServiceItemEnforcement")]
     public readonly partial struct ServiceInitiativeEnforcement
     {
     }

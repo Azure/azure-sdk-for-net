@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 {
-    public partial class Sample1_AnalyzeTextAsync_LanguageDetection: SamplesBase<TextAnalysisClientTestEnvironment>
+    public partial class Sample1_AnalyzeTextAsync_LanguageDetection : SamplesBase<TextAnalysisClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
@@ -121,7 +121,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 {
                     TextInput = new LanguageDetectionTextInput()
                     {
-                        LanguageInputs   =
+                        LanguageInputs =
                         {
                             new LanguageInput("A", textA) { CountryHint = "es" },
                             new LanguageInput("B", textB) { CountryHint = "us" },

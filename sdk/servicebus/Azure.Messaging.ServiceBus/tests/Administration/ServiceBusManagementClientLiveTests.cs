@@ -33,15 +33,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
                     "\\u003CPrimaryKey\\u003E.*\\u003C/PrimaryKey\\u003E")
-                    {
-                        Value = $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"
-                    });
+                {
+                    Value = $"\u003CPrimaryKey\u003E{SanitizedKeyValue}\u003C/PrimaryKey\u003E"
+                });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
                     "\\u003CSecondaryKey\\u003E.*\\u003C/SecondaryKey\\u003E")
-                    {
-                        Value = $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"
-                    });
+                {
+                    Value = $"\u003CSecondaryKey\u003E{SanitizedKeyValue}\u003C/SecondaryKey\u003E"
+                });
             BodyRegexSanitizers.Add(
                 new BodyRegexSanitizer(
                     "[^\\r](?<break>\\n)")

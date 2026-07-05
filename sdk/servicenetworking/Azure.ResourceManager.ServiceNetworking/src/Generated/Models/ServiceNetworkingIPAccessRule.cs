@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> Ip Access Policy Rules. </summary>
     public partial class ServiceNetworkingIPAccessRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRule"/>. </summary>
         /// <param name="name"> Name of the Ip Access Rule. </param>
@@ -68,27 +40,25 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="priority"> The priority of the rule. The value can be between 1 and 500. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="sourceAddressPrefixes"> Source Address Prefixed Applied by the Rule. Asterisk '*' can also be used to match all source IPs. </param>
         /// <param name="action"> Action of the Rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceNetworkingIPAccessRule(string name, int priority, IList<string> sourceAddressPrefixes, ServiceNetworkingIPAccessRuleAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceNetworkingIPAccessRule(string name, int priority, IList<string> sourceAddressPrefixes, ServiceNetworkingIPAccessRuleAction action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Priority = priority;
             SourceAddressPrefixes = sourceAddressPrefixes;
             Action = action;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceNetworkingIPAccessRule"/> for deserialization. </summary>
-        internal ServiceNetworkingIPAccessRule()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Ip Access Rule. </summary>
         public string Name { get; set; }
+
         /// <summary> The priority of the rule. The value can be between 1 and 500. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </summary>
         public int Priority { get; set; }
+
         /// <summary> Source Address Prefixed Applied by the Rule. Asterisk '*' can also be used to match all source IPs. </summary>
         public IList<string> SourceAddressPrefixes { get; }
+
         /// <summary> Action of the Rule. </summary>
         public ServiceNetworkingIPAccessRuleAction Action { get; set; }
     }

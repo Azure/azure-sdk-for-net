@@ -124,6 +124,51 @@ Describe "Generate and Build SDK" -Tag "Unit" {
     }
 }
 
+Describe "Update-MgmtPackageFolder function" -Tag "UnitTest" {
+    BeforeEach {
+        $script:testRootDir = Join-Path ([System.IO.Path]::GetTempPath()) "mgmt-package-folder-test-$(Get-Random)"
+        $script:testSdkRoot = Join-Path $script:testRootDir "sdk-root"
+        $script:testServiceDir = Join-Path $script:testSdkRoot "sdk" "resources"
+        $script:testLegacyPackageDir = Join-Path $script:testServiceDir "Azure.ResourceManager.Resources"
+        $script:testLegacySrcDir = Join-Path $script:testLegacyPackageDir "src"
+        $script:testOutputJson = Join-Path $script:testRootDir "output.json"
+
+        New-Item -ItemType Directory -Path $script:testLegacySrcDir -Force | Out-Null
+        New-Item -ItemType Directory -Path (Join-Path $script:testServiceDir "Azure.ResourceManager.Resources.Bicep") -Force | Out-Null
+        New-Item -ItemType Directory -Path (Join-Path $script:testServiceDir "Azure.ResourceManager.Resources.Deployments") -Force | Out-Null
+        Set-Content -Path (Join-Path $script:testLegacySrcDir "autorest.md") -Value "require: old/readme.md"
+    }
+
+    AfterEach {
+        if (Test-Path $script:testRootDir) {
+            Remove-Item -Recurse -Force $script:testRootDir
+        }
+    }
+
+    It "should select the package containing autorest.md when multiple management packages match" {
+        $readme = "https://github.com/Azure/azure-rest-api-specs/blob/test/specification/resources/resource-manager/Microsoft.Resources/resources/readme.md"
+
+        $projectFolder = Update-MgmtPackageFolder `
+            -service "resources" `
+            -packageName "resources" `
+            -sdkPath $script:testSdkRoot `
+            -readme $readme `
+            -outputJsonFile $script:testOutputJson
+
+        $expectedProjectFolder = $script:testLegacyPackageDir -replace "\\", "/"
+        $projectFolder | Should -Be $expectedProjectFolder
+
+        $outputJson = Get-Content $script:testOutputJson -Raw | ConvertFrom-Json
+        $outputJson.packageName | Should -Be "Azure.ResourceManager.Resources"
+        $outputJson.projectFolder | Should -Be $expectedProjectFolder
+
+        $autorestContent = Get-Content (Join-Path $script:testLegacySrcDir "autorest.md") -Raw
+        $autorestContent | Should -Match ([regex]::Escape("require: $readme"))
+        $outputJson.projectFolder | Should -Not -Match "Azure\.ResourceManager\.Resources\.Bicep"
+        $outputJson.projectFolder | Should -Not -Match "Azure\.ResourceManager\.Resources\.Deployments"
+    }
+}
+
 Describe "GetSDKProjectFolder function" -Tag "UnitTest" {
     BeforeAll {
         $testTspConfigDir = Join-Path $PSScriptRoot "test-data"
@@ -341,5 +386,457 @@ options:
         $testConfigEmitterMissingNamespace | Out-File -FilePath $testTspEmitterMissingNamespace -Encoding UTF8
 
         { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingNamespace -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'namespace'*"
+    }
+
+    it("should interpolate package-name in namespace") {
+        $testTspConfigPackageName = Join-Path $testTspConfigDir "tspconfig-package-name-namespace.yaml"
+        $testConfigPackageName = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    package-name: Azure.ResourceManager.Compute.Bulkactions
+    namespace: "{package-name}"
+    service-dir: testservice
+"@
+        $testConfigPackageName | Out-File -FilePath $testTspConfigPackageName -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigPackageName -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.ResourceManager.Compute.Bulkactions"
+        $result | Should -Be $expected
+    }
+
+    it("should interpolate package-name in namespace with emitter-output-dir") {
+        $testTspConfigPackageNameEmitter = Join-Path $testTspConfigDir "tspconfig-package-name-emitter-output.yaml"
+        $testConfigPackageNameEmitter = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp-mgmt":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    package-name: Azure.ResourceManager.Compute.Bulkactions
+    namespace: "{package-name}"
+    service-dir: sdk/compute
+"@
+        $testConfigPackageNameEmitter | Out-File -FilePath $testTspConfigPackageNameEmitter -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigPackageNameEmitter -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "sdk" "compute" "Azure.ResourceManager.Compute.Bulkactions"
+        $result | Should -Be $expected
+    }
+
+    it("should interpolate namespace in package-name") {
+        $testTspConfigNsInPkgName = Join-Path $testTspConfigDir "tspconfig-ns-in-package-name.yaml"
+        $testConfigNsInPkgName = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-typespec/http-client-csharp":
+    namespace: Azure.TestService.Client
+    package-name: "{namespace}"
+    service-dir: testservice
+"@
+        $testConfigNsInPkgName | Out-File -FilePath $testTspConfigNsInPkgName -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigNsInPkgName -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.Client"
+        $result | Should -Be $expected
+    }
+
+}
+
+Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
+    BeforeAll {
+        $script:testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        
+        if (!(Test-Path $script:testProjectDir)) {
+            New-Item -ItemType Directory -Path $script:testProjectDir | Out-Null
+        }
+    }
+    
+    AfterAll {
+        if (Test-Path $script:testProjectDir) {
+            Remove-Item -Recurse -Force $script:testProjectDir
+        }
+    }
+    
+    BeforeEach {
+        # Clean up any existing CHANGELOG.md before each test
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        if (Test-Path $changelogPath) {
+            Remove-Item $changelogPath
+        }
+    }
+    
+    it("should create CHANGELOG.md when it doesn't exist") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        Test-Path $changelogPath | Should -Be $true
+    }
+    
+    it("should create CHANGELOG.md with correct version") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "1\.0\.0-beta\.1"
+    }
+    
+    it("should create CHANGELOG.md with Release History header") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "# Release History"
+    }
+    
+    it("should create CHANGELOG.md with Unreleased status") {
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "\(Unreleased\)"
+    }
+    
+    it("should not overwrite existing CHANGELOG.md") {
+        $version = "1.0.0-beta.1"
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $existingContent = "# Existing Content"
+        Set-Content -Path $changelogPath -Value $existingContent
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $content = Get-Content $changelogPath -Raw
+        # Should contain the existing content (ignoring line ending differences)
+        $content.Trim() | Should -Be $existingContent.Trim()
+    }
+    
+    it("should handle different version formats") {
+        $version = "2.0.0"
+        
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
+        
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "2\.0\.0"
+    }
+}
+
+Describe "New-MgmtPackageScaffolding function" -Tag "UnitTest" {
+    BeforeAll {
+        $script:testRootDir = Join-Path ([System.IO.Path]::GetTempPath()) "mgmt-scaffold-test-$(Get-Random)"
+        New-Item -ItemType Directory -Path $script:testRootDir -Force | Out-Null
+
+        # Set up a mock SDK structure: sdk/<service>/<package>/
+        $script:testService = "horizondb"
+        $script:testPackageName = "Azure.ResourceManager.HorizonDb"
+        $script:testSdkRoot = Join-Path $script:testRootDir "sdk-root"
+        $script:testServiceDir = Join-Path $script:testSdkRoot "sdk" $script:testService
+        $script:testProjectDir = Join-Path $script:testServiceDir $script:testPackageName
+        $script:testSrcDir = Join-Path $script:testProjectDir "src"
+
+        New-Item -ItemType Directory -Path $script:testSrcDir -Force | Out-Null
+
+        # Copy the real mgmt template into the mock SDK root so Read-MgmtTemplate can find it
+        $realTemplateDir = Join-Path $PSScriptRoot ".." ".." ".." ".." "eng" "templates" "Azure.ResourceManager.Template"
+        $realTemplateDir = Resolve-Path $realTemplateDir
+        $mockTemplateDir = Join-Path $script:testSdkRoot "eng" "templates" "Azure.ResourceManager.Template"
+        Copy-Item -Path $realTemplateDir -Destination $mockTemplateDir -Recurse -Force
+
+        # Create a minimal .csproj (simulating emitter output)
+        $csprojContent = @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+  </PropertyGroup>
+</Project>
+"@
+        Set-Content -Path (Join-Path $script:testSrcDir "$($script:testPackageName).csproj") -Value $csprojContent
+
+        # Create a minimal .sln (simulating emitter output)
+        $slnContent = @"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "$($script:testPackageName)", "src\$($script:testPackageName).csproj", "{00000000-0000-0000-0000-000000000001}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00000000-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00000000-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00000000-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00000000-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
+"@
+        Set-Content -Path (Join-Path $script:testProjectDir "$($script:testPackageName).sln") -Value $slnContent
+    }
+
+    AfterAll {
+        if (Test-Path $script:testRootDir) {
+            Remove-Item -Recurse -Force $script:testRootDir
+        }
+    }
+
+    It "should create ci.mgmt.yml in the service directory" {
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $script:testProjectDir `
+            -packageName $script:testPackageName `
+            -sdkRootPath $script:testSdkRoot
+
+        $ciPath = Join-Path $script:testSdkRoot "sdk" $script:testService "ci.mgmt.yml"
+        Test-Path $ciPath | Should -Be $true
+    }
+
+    It "should create ci.mgmt.yml with correct service directory and artifact" {
+        $ciPath = Join-Path $script:testSdkRoot "sdk" $script:testService "ci.mgmt.yml"
+        $content = Get-Content $ciPath -Raw
+        $content | Should -Match "ServiceDirectory: horizondb"
+        $content | Should -Match "name: Azure.ResourceManager.HorizonDb"
+        $content | Should -Match "safeName: AzureResourceManagerHorizonDb"
+    }
+
+    It "should create Directory.Build.props" {
+        $propsPath = Join-Path $script:testProjectDir "Directory.Build.props"
+        Test-Path $propsPath | Should -Be $true
+        $content = Get-Content $propsPath -Raw
+        $content | Should -Match "Directory\.Build\.props"
+    }
+
+    It "should create README.md with package name" {
+        $readmePath = Join-Path $script:testProjectDir "README.md"
+        Test-Path $readmePath | Should -Be $true
+        $content = Get-Content $readmePath -Raw
+        $content | Should -Match "Azure\.ResourceManager\.HorizonDb"
+        $content | Should -Match "dotnet add package"
+    }
+
+    It "should create CHANGELOG.md" {
+        $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
+        Test-Path $changelogPath | Should -Be $true
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "Release History"
+    }
+
+    It "should create AssemblyInfo.cs with correct provider namespace" {
+        $asmInfoPath = Join-Path $script:testProjectDir "src" "Properties" "AssemblyInfo.cs"
+        Test-Path $asmInfoPath | Should -Be $true
+        $content = Get-Content $asmInfoPath -Raw
+        $content | Should -Match 'AzureResourceProviderNamespace\("Microsoft\.HorizonDb"\)'
+        $content | Should -Match "InternalsVisibleTo.*Azure\.ResourceManager\.HorizonDb\.Tests"
+    }
+
+    It "should create test project csproj" {
+        $testCsprojPath = Join-Path $script:testProjectDir "tests" "$($script:testPackageName).Tests.csproj"
+        Test-Path $testCsprojPath | Should -Be $true
+        $content = Get-Content $testCsprojPath -Raw
+        $content | Should -Match "ProjectReference.*src.*$([regex]::Escape($script:testPackageName))\.csproj"
+    }
+
+    It "should create test base class" {
+        $testBasePath = Join-Path $script:testProjectDir "tests" "HorizonDbManagementTestBase.cs"
+        Test-Path $testBasePath | Should -Be $true
+        $content = Get-Content $testBasePath -Raw
+        $content | Should -Match "class HorizonDbManagementTestBase"
+        $content | Should -Match "ManagementRecordedTestBase<HorizonDbManagementTestEnvironment>"
+    }
+
+    It "should create test environment class" {
+        $testEnvPath = Join-Path $script:testProjectDir "tests" "HorizonDbManagementTestEnvironment.cs"
+        Test-Path $testEnvPath | Should -Be $true
+        $content = Get-Content $testEnvPath -Raw
+        $content | Should -Match "class HorizonDbManagementTestEnvironment"
+        $content | Should -Match "TestEnvironment"
+    }
+
+    It "should not overwrite existing files when called again" {
+        # Modify README to have custom content
+        $readmePath = Join-Path $script:testProjectDir "README.md"
+        $customContent = "# Custom README content"
+        Set-Content -Path $readmePath -Value $customContent
+
+        # Call scaffolding again
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $script:testProjectDir `
+            -packageName $script:testPackageName `
+            -sdkRootPath $script:testSdkRoot
+
+        # Verify README was not overwritten
+        $content = Get-Content $readmePath -Raw
+        $content.Trim() | Should -Be $customContent
+    }
+
+    It "should handle multi-segment provider names correctly" {
+        $multiSegDir = Join-Path $script:testRootDir "multi-seg"
+        $multiSegService = "compute"
+        $multiSegPkg = "Azure.ResourceManager.Compute.Bulkactions"
+        $multiSegSdkRoot = Join-Path $multiSegDir "sdk-root"
+        $multiSegProjectDir = Join-Path $multiSegSdkRoot "sdk" $multiSegService $multiSegPkg
+        $multiSegSrcDir = Join-Path $multiSegProjectDir "src"
+        New-Item -ItemType Directory -Path $multiSegSrcDir -Force | Out-Null
+
+        # Copy template into this mock SDK root too
+        $realTemplateDir = Join-Path $PSScriptRoot ".." ".." ".." ".." "eng" "templates" "Azure.ResourceManager.Template"
+        $realTemplateDir = Resolve-Path $realTemplateDir
+        $mockTemplateDir = Join-Path $multiSegSdkRoot "eng" "templates" "Azure.ResourceManager.Template"
+        Copy-Item -Path $realTemplateDir -Destination $mockTemplateDir -Recurse -Force
+
+        $csprojContent = @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+  </PropertyGroup>
+</Project>
+"@
+        Set-Content -Path (Join-Path $multiSegSrcDir "$multiSegPkg.csproj") -Value $csprojContent
+
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $multiSegProjectDir `
+            -packageName $multiSegPkg `
+            -sdkRootPath $multiSegSdkRoot
+
+        # Provider should be Microsoft.Compute.Bulkactions
+        $asmInfoPath = Join-Path $multiSegProjectDir "src" "Properties" "AssemblyInfo.cs"
+        $content = Get-Content $asmInfoPath -Raw
+        $content | Should -Match 'AzureResourceProviderNamespace\("Microsoft\.Compute\.Bulkactions"\)'
+
+        # Test class names should use last segment
+        $testBasePath = Join-Path $multiSegProjectDir "tests" "BulkactionsManagementTestBase.cs"
+        Test-Path $testBasePath | Should -Be $true
+    }
+
+    It "should find .slnx solution file when .sln does not exist" {
+        # Remove the .sln and create a .slnx instead
+        $slnPath = Join-Path $script:testProjectDir "$($script:testPackageName).sln"
+        $slnxPath = Join-Path $script:testProjectDir "$($script:testPackageName).slnx"
+        if (Test-Path $slnPath) { Remove-Item $slnPath }
+        # Create a minimal .slnx (XML-based solution format)
+        $slnxContent = @"
+<Solution>
+  <Project Path="src\$($script:testPackageName).csproj" />
+</Solution>
+"@
+        Set-Content -Path $slnxPath -Value $slnxContent
+
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $script:testProjectDir `
+            -packageName $script:testPackageName `
+            -sdkRootPath $script:testSdkRoot
+
+        # Verify the .slnx still exists (wasn't replaced with .sln)
+        Test-Path $slnxPath | Should -Be $true
+        Test-Path $slnPath | Should -Be $false
+
+        # Restore the .sln for other tests
+        Remove-Item $slnxPath
+        $slnContent = @"
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "$($script:testPackageName)", "src\$($script:testPackageName).csproj", "{00000000-0000-0000-0000-000000000001}"
+EndProject
+Global
+EndGlobal
+"@
+        Set-Content -Path $slnPath -Value $slnContent
+    }
+
+    It "should update existing ci.mgmt.yml when it already exists" {
+        # Create a second package in same service directory to test ci.mgmt.yml update path
+        $secondPkg = "Azure.ResourceManager.HorizonDb.SecondPkg"
+        $secondProjectDir = Join-Path $script:testServiceDir $secondPkg
+        $secondSrcDir = Join-Path $secondProjectDir "src"
+        New-Item -ItemType Directory -Path $secondSrcDir -Force | Out-Null
+
+        $csprojContent = @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+  </PropertyGroup>
+</Project>
+"@
+        Set-Content -Path (Join-Path $secondSrcDir "$secondPkg.csproj") -Value $csprojContent
+
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $secondProjectDir `
+            -packageName $secondPkg `
+            -sdkRootPath $script:testSdkRoot
+
+        # ci.mgmt.yml should contain both packages
+        $ciPath = Join-Path $script:testSdkRoot "sdk" $script:testService "ci.mgmt.yml"
+        $content = Get-Content $ciPath -Raw
+        $content | Should -Match "Azure\.ResourceManager\.HorizonDb"
+        $content | Should -Match "Azure\.ResourceManager\.HorizonDb\.SecondPkg"
+    }
+}
+
+Describe "New-MgmtPackageScaffolding multi-segment package" -Tag "UnitTest" {
+    # Regression test: for multi-segment packages like Azure.ResourceManager.Compute.Bulkactions
+    # placed under sdk/compute/, the ci.mgmt.yml ServiceDirectory must be the actual service
+    # directory leaf ("compute"), not the package's last segment ("bulkactions").
+    BeforeAll {
+        $script:msTestRootDir = Join-Path ([System.IO.Path]::GetTempPath()) "mgmt-scaffold-ms-test-$(Get-Random)"
+        New-Item -ItemType Directory -Path $script:msTestRootDir -Force | Out-Null
+
+        $script:msService = "compute"
+        $script:msPackageName = "Azure.ResourceManager.Compute.Bulkactions"
+        $script:msSdkRoot = Join-Path $script:msTestRootDir "sdk-root"
+        $script:msServiceDir = Join-Path $script:msSdkRoot "sdk" $script:msService
+        $script:msProjectDir = Join-Path $script:msServiceDir $script:msPackageName
+        $script:msSrcDir = Join-Path $script:msProjectDir "src"
+
+        New-Item -ItemType Directory -Path $script:msSrcDir -Force | Out-Null
+
+        $realTemplateDir = Join-Path $PSScriptRoot ".." ".." ".." ".." "eng" "templates" "Azure.ResourceManager.Template"
+        $realTemplateDir = Resolve-Path $realTemplateDir
+        $mockTemplateDir = Join-Path $script:msSdkRoot "eng" "templates" "Azure.ResourceManager.Template"
+        Copy-Item -Path $realTemplateDir -Destination $mockTemplateDir -Recurse -Force
+
+        $csprojContent = @"
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+  </PropertyGroup>
+</Project>
+"@
+        Set-Content -Path (Join-Path $script:msSrcDir "$($script:msPackageName).csproj") -Value $csprojContent
+    }
+
+    AfterAll {
+        if (Test-Path $script:msTestRootDir) {
+            Remove-Item -Recurse -Force $script:msTestRootDir
+        }
+    }
+
+    It "should derive ServiceDirectory from the service folder, not the package's last segment" {
+        New-MgmtPackageScaffolding `
+            -sdkProjectFolder $script:msProjectDir `
+            -packageName $script:msPackageName `
+            -sdkRootPath $script:msSdkRoot
+
+        $ciPath = Join-Path $script:msSdkRoot "sdk" $script:msService "ci.mgmt.yml"
+        $content = Get-Content $ciPath -Raw
+        $content | Should -Match "ServiceDirectory: compute"
+        $content | Should -Not -Match "ServiceDirectory: bulkactions"
+        $content | Should -Match "name: Azure.ResourceManager.Compute.Bulkactions"
     }
 }

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.CodeTransparency.Receipt;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.CodeTransparency
 {
@@ -33,6 +34,16 @@ namespace Azure.Security.CodeTransparency
         public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
 
         /// <summary>
+        /// Public key storage used to verify receipts. The value can be set through the verification options.
+        /// </summary>
+        private IReadOnlyDictionary<string, JwksDocument> _offlineKeys = null;
+
+        /// <summary>
+        /// Indicates whether offline keys can fallback to network retrieval when a key is not found locally.
+        /// </summary>
+        private bool _offlineKeysAllowNetworkFallback = true;
+
+        /// <summary>
         /// Initializes a new instance of CodeTransparencyClient. The client will download its own
         /// TLS CA cert to perform server cert authentication.
         /// If the CA changes then there is a TTL which will help healing the long lived clients.
@@ -50,13 +61,12 @@ namespace Azure.Security.CodeTransparency
             HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(
+            Pipeline = HttpPipelineBuilder.Build(
                 options,
-                Array.Empty<HttpPipelinePolicy>(),
-                _keyCredential == null ?
+                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy(endpoint) },
+                credential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
-                    new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
+                    new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix) },
                 transportOptions,
                 new ResponseClassifier());
             _endpoint = endpoint;
@@ -193,13 +203,13 @@ namespace Azure.Security.CodeTransparency
         public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
+                Response response = Pipeline.ProcessMessage(message, context, cancellationToken);
 
                 string operationId = string.Empty;
                 try
@@ -242,13 +252,13 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
-                Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
+                Response response = await Pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
 
                 string operationId = string.Empty;
                 try
@@ -345,7 +355,6 @@ namespace Azure.Security.CodeTransparency
 
             Dictionary<string, CodeTransparencyClient> clientInstances = new Dictionary<string, CodeTransparencyClient>();
 
-            // Prepare authorized list state. If no authorized list provided, implicitly authorized all detected issuer domains encountered in receipts.
             var configuredAuthorizedList = verificationOptions?.AuthorizedDomains ?? Array.Empty<string>();
             bool userProvidedAuthorizedList = configuredAuthorizedList.Count > 0;
             HashSet<string> authorizedListNormalized = new(StringComparer.OrdinalIgnoreCase);
@@ -358,6 +367,12 @@ namespace Azure.Security.CodeTransparency
                         authorizedListNormalized.Add(domain.Trim());
                     }
                 }
+            }
+
+            // if no authorized domains are provided and the remaining ones are set to be ignored, then all receipts would be ignored
+            if (authorizedListNormalized.Count == 0 && verificationOptions.UnauthorizedReceiptBehavior == UnauthorizedReceiptBehavior.IgnoreAll)
+            {
+                throw new InvalidOperationException("No receipts would be verified as no authorized domains were provided and the unauthorized receipt behavior is set to ignore all.");
             }
 
             // Tracking for behaviors
@@ -420,10 +435,16 @@ namespace Azure.Security.CodeTransparency
                     if (!clientInstances.TryGetValue(issuer, out CodeTransparencyClient clientInstance))
                     {
                         clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
+                        if (verificationOptions?.OfflineKeys != null)
+                        {
+                            clientInstance._offlineKeys = verificationOptions.OfflineKeys.ByIssuer;
+                            clientInstance._offlineKeysAllowNetworkFallback = verificationOptions.OfflineKeysBehavior == OfflineKeysBehavior.FallbackToNetwork;
+                        }
                         clientInstances[issuer] = clientInstance;
                     }
                     clientInstance.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes, receiptBytes);
 
+                    // If we reach here, verification succeeded
                     if (isAuthorized)
                     {
                         validAuthorizedDomainsEncountered.Add(issuer);
@@ -446,7 +467,7 @@ namespace Azure.Security.CodeTransparency
             switch (verificationOptions.AuthorizedReceiptBehavior)
             {
                 case AuthorizedReceiptBehavior.VerifyAnyMatching:
-                    if (validAuthorizedDomainsEncountered.Count == 0)
+                    if (authorizedListNormalized.Count > 0 && validAuthorizedDomainsEncountered.Count == 0)
                     {
                         authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
@@ -458,7 +479,7 @@ namespace Azure.Security.CodeTransparency
                     break;
                 case AuthorizedReceiptBehavior.VerifyAllMatching:
                     // All receipts from authorized domains must be valid: i.e., any receipt from an authorized domain that failed adds failure (already captured) -> if any authorized domain had receipt but not all successful? We check failures now.
-                    if (authorizedDomainsWithReceipt.Count == 0)
+                    if (authorizedListNormalized.Count > 0 && authorizedDomainsWithReceipt.Count == 0)
                     {
                         authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
@@ -508,8 +529,19 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
-            // Get all the public keys from the JWKS endpoint
-            JwksDocument jwksDocument = GetPublicKeys().Value;
+            JwksDocument jwksDocument = null;
+            // Check if we have offline keys for this domain
+            if (_offlineKeys?.TryGetValue(issuer, out jwksDocument) != true && _offlineKeysAllowNetworkFallback)
+            {
+                // Get all the public keys from the JWKS endpoint
+                jwksDocument = GetPublicKeys().Value;
+            }
+
+            // Ensure jwksDocument was obtained from either offline keys or network
+            if (jwksDocument == null)
+            {
+                throw new InvalidOperationException($"No keys available for issuer '{issuer}'. Either offline keys are not configured or network fallback is disabled.");
+            }
 
             // Ensure there is at least one entry in the JWKS document
             if (jwksDocument.Keys.Count == 0)
@@ -542,7 +574,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetTransparencyConfigCborRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -556,7 +588,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -570,7 +602,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201202);
+            var message = Pipeline.CreateMessage(context, ResponseClassifier201202);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -586,7 +618,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -601,7 +633,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -616,7 +648,7 @@ namespace Azure.Security.CodeTransparency
 
         internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -629,6 +661,72 @@ namespace Azure.Security.CodeTransparency
             request.Headers.Add("Accept", "application/cose");
             return message;
         }
+
+        // Backward-compatible wrapper methods delegating to the V09 generated methods.
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09 instead.")]
+        public virtual Response CreateEntry(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => CreateEntryV09(content, waitForCommit, context);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09Async instead.")]
+        public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09 instead.")]
+        public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        [Obsolete("Use CreateEntryV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09 instead.")]
+        public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09Async instead.")]
+        public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context) => await GetEntryV09Async(entryId, context).ConfigureAwait(false);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09 instead.")]
+        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
+
+        /// <summary> Get receipt. </summary>
+        [Obsolete("Use GetEntryV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09 instead.")]
+        public virtual Response GetEntryStatement(string entryId, RequestContext context) => GetEntryStatementV09(entryId, context);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09Async instead.")]
+        public virtual async Task<Response> GetEntryStatementAsync(string entryId, RequestContext context) => await GetEntryStatementV09Async(entryId, context).ConfigureAwait(false);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09 instead.")]
+        public virtual Response<BinaryData> GetEntryStatement(string entryId, CancellationToken cancellationToken = default) => GetEntryStatementV09(entryId, cancellationToken);
+
+        /// <summary> Get the transparent statement. </summary>
+        [Obsolete("Use GetEntryStatementV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryStatementV09Async(entryId, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09 instead.")]
+        public virtual Response GetOperation(string operationId, RequestContext context) => GetOperationV09(operationId, context);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09Async instead.")]
+        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context) => await GetOperationV09Async(operationId, context).ConfigureAwait(false);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09 instead.")]
+        public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
+
+        /// <summary> Get operation status. </summary>
+        [Obsolete("Use GetOperationV09Async instead.")]
+        public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });

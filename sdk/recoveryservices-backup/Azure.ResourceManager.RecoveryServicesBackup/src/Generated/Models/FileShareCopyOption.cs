@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct FileShareCopyOption : IEquatable<FileShareCopyOption>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FileShareCopyOption"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FileShareCopyOption(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string CreateCopyValue = "CreateCopy";
         private const string SkipValue = "Skip";
         private const string OverwriteValue = "Overwrite";
         private const string FailOnConflictValue = "FailOnConflict";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareCopyOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FileShareCopyOption(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static FileShareCopyOption Invalid { get; } = new FileShareCopyOption(InvalidValue);
-        /// <summary> CreateCopy. </summary>
+
+        /// <summary> Gets the CreateCopy. </summary>
         public static FileShareCopyOption CreateCopy { get; } = new FileShareCopyOption(CreateCopyValue);
-        /// <summary> Skip. </summary>
+
+        /// <summary> Gets the Skip. </summary>
         public static FileShareCopyOption Skip { get; } = new FileShareCopyOption(SkipValue);
-        /// <summary> Overwrite. </summary>
+
+        /// <summary> Gets the Overwrite. </summary>
         public static FileShareCopyOption Overwrite { get; } = new FileShareCopyOption(OverwriteValue);
-        /// <summary> FailOnConflict. </summary>
+
+        /// <summary> Gets the FailOnConflict. </summary>
         public static FileShareCopyOption FailOnConflict { get; } = new FileShareCopyOption(FailOnConflictValue);
+
         /// <summary> Determines if two <see cref="FileShareCopyOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FileShareCopyOption left, FileShareCopyOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FileShareCopyOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FileShareCopyOption left, FileShareCopyOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FileShareCopyOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FileShareCopyOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FileShareCopyOption(string value) => new FileShareCopyOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FileShareCopyOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FileShareCopyOption?(string value) => value == null ? null : new FileShareCopyOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FileShareCopyOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FileShareCopyOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

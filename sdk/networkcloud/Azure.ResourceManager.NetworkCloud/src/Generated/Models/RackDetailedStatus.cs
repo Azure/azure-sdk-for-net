@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct RackDetailedStatus : IEquatable<RackDetailedStatus>
     {
         private readonly string _value;
+        /// <summary> The Error status. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> The Available status. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> The Provisioning status. </summary>
+        private const string ProvisioningValue = "Provisioning";
 
         /// <summary> Initializes a new instance of <see cref="RackDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RackDetailedStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ErrorValue = "Error";
-        private const string AvailableValue = "Available";
-        private const string ProvisioningValue = "Provisioning";
-
-        /// <summary> Error. </summary>
+        /// <summary> The Error status. </summary>
         public static RackDetailedStatus Error { get; } = new RackDetailedStatus(ErrorValue);
-        /// <summary> Available. </summary>
+
+        /// <summary> The Available status. </summary>
         public static RackDetailedStatus Available { get; } = new RackDetailedStatus(AvailableValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Provisioning status. </summary>
         public static RackDetailedStatus Provisioning { get; } = new RackDetailedStatus(ProvisioningValue);
+
         /// <summary> Determines if two <see cref="RackDetailedStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RackDetailedStatus left, RackDetailedStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RackDetailedStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RackDetailedStatus left, RackDetailedStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RackDetailedStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RackDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RackDetailedStatus(string value) => new RackDetailedStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RackDetailedStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RackDetailedStatus?(string value) => value == null ? null : new RackDetailedStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RackDetailedStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RackDetailedStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

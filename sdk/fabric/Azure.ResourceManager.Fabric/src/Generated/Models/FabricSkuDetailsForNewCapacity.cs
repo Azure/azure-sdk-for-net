@@ -15,49 +15,15 @@ namespace Azure.ResourceManager.Fabric.Models
     /// <summary> The SKU details. </summary>
     public partial class FabricSkuDetailsForNewCapacity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForNewCapacity"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The SKU's name. </param>
         /// <param name="locations"> The list of available locations for the SKU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="name"/> or <paramref name="locations"/> is null. </exception>
         internal FabricSkuDetailsForNewCapacity(string resourceType, string name, IEnumerable<AzureLocation> locations)
         {
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(locations, nameof(locations));
-
             ResourceType = resourceType;
             Name = name;
             Locations = locations.ToList();
@@ -67,24 +33,21 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The SKU's name. </param>
         /// <param name="locations"> The list of available locations for the SKU. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FabricSkuDetailsForNewCapacity(string resourceType, string name, IReadOnlyList<AzureLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FabricSkuDetailsForNewCapacity(string resourceType, string name, IReadOnlyList<AzureLocation> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             Name = name;
             Locations = locations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FabricSkuDetailsForNewCapacity"/> for deserialization. </summary>
-        internal FabricSkuDetailsForNewCapacity()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource type. </summary>
         public string ResourceType { get; }
+
         /// <summary> The SKU's name. </summary>
         public string Name { get; }
+
         /// <summary> The list of available locations for the SKU. </summary>
         public IReadOnlyList<AzureLocation> Locations { get; }
     }

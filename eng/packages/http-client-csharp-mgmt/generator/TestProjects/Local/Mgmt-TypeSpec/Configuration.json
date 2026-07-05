@@ -2,6 +2,7 @@
   "package-name": "Azure.Generator.MgmtTypeSpec.Tests",
   "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
   "enable-wire-path-attribute": true,
+  "skip-api-version-override": true,
   "model-namespace": true,
   "license": {
     "name": "MIT License",

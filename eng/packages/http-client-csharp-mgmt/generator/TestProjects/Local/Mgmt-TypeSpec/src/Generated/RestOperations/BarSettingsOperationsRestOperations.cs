@@ -54,7 +54,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/bars/", false);
             uri.AppendPath(barName, true);
             uri.AppendPath("/settings/current", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -78,7 +81,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             uri.AppendPath("/bars/", false);
             uri.AppendPath(barName, true);
             uri.AppendPath("/settings/current", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

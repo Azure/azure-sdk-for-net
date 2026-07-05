@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     public partial class SingleServerRecommendationResult : SapSizingRecommendationResult
     {
         /// <summary> Initializes a new instance of <see cref="SingleServerRecommendationResult"/>. </summary>
-        internal SingleServerRecommendationResult()
+        internal SingleServerRecommendationResult() : base(SapDeploymentType.SingleServer)
         {
-            DeploymentType = SapDeploymentType.SingleServer;
         }
 
         /// <summary> Initializes a new instance of <see cref="SingleServerRecommendationResult"/>. </summary>
         /// <param name="deploymentType"> The deployment type. Eg: SingleServer/ThreeTier. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmSku"> The recommended VM SKU for single server. </param>
-        internal SingleServerRecommendationResult(SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmSku) : base(deploymentType, serializedAdditionalRawData)
+        internal SingleServerRecommendationResult(SapDeploymentType deploymentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vmSku) : base(deploymentType, additionalBinaryDataProperties)
         {
             VmSku = vmSku;
-            DeploymentType = deploymentType;
         }
 
         /// <summary> The recommended VM SKU for single server. </summary>

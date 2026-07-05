@@ -27,7 +27,8 @@
             "$ref": "1"
           },
           "doc": "Monday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -41,7 +42,8 @@
             "$ref": "1"
           },
           "doc": "Tuesday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -55,7 +57,8 @@
             "$ref": "1"
           },
           "doc": "Wednesday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "6",
@@ -69,7 +72,8 @@
             "$ref": "1"
           },
           "doc": "Thursday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -83,7 +87,8 @@
             "$ref": "1"
           },
           "doc": "Friday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -97,7 +102,8 @@
             "$ref": "1"
           },
           "doc": "Saturday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "9",
@@ -111,7 +117,8 @@
             "$ref": "1"
           },
           "doc": "Sunday.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Type.Enum.Fixed",
@@ -119,14 +126,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "10",
       "kind": "constant",
-      "name": "getKnownValueContentType",
+      "name": "GetKnownValueResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -137,12 +145,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType",
+      "name": "GetKnownValueResponseContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -153,12 +162,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType1",
+      "name": "GetKnownValueResponseContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -169,12 +179,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType2",
+      "name": "GetKnownValueResponseContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -185,12 +196,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType3",
+      "name": "GetKnownValueResponseContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -201,12 +213,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
       "kind": "constant",
-      "name": "GetKnownValueResponseContentType4",
+      "name": "GetKnownValueResponseContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -217,7 +230,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -226,6 +240,7 @@
       "$id": "22",
       "kind": "client",
       "name": "FixedClient",
+      "isExactName": false,
       "namespace": "Type.Enum.Fixed",
       "methods": [],
       "parameters": [
@@ -257,9 +272,11 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
+          "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Enum.Fixed",
       "apiVersions": [],
@@ -268,18 +285,21 @@
           "$id": "26",
           "kind": "client",
           "name": "String",
+          "isExactName": false,
           "namespace": "Type.Enum.Fixed",
           "methods": [
             {
               "$id": "27",
               "kind": "basic",
               "name": "getKnownValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "getKnownValue",
               "operation": {
                 "$id": "28",
                 "name": "getKnownValue",
+                "isExactName": false,
                 "resourceName": "String",
                 "doc": "getKnownValue",
                 "accessibility": "public",
@@ -298,7 +318,28 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue.accept"
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "30",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "10"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -321,7 +362,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -331,25 +377,12 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
-                  "$id": "30",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "10"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Type.Enum.Fixed.String.getKnownValue.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "30"
                 }
               ],
               "response": {
@@ -366,12 +399,14 @@
               "$id": "31",
               "kind": "basic",
               "name": "putKnownValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "putKnownValue",
               "operation": {
                 "$id": "32",
                 "name": "putKnownValue",
+                "isExactName": false,
                 "resourceName": "String",
                 "doc": "putKnownValue",
                 "accessibility": "public",
@@ -390,10 +425,31 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.contentType"
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "34",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "14"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "34",
+                    "$id": "35",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -410,7 +466,34 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.body"
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "36",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "doc": "_",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -419,7 +502,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -432,43 +516,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
-                  "$id": "35",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "16"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "34"
                 },
                 {
-                  "$id": "36",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "doc": "_",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putKnownValue.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "36"
                 }
               ],
               "response": {},
@@ -481,12 +537,14 @@
               "$id": "37",
               "kind": "basic",
               "name": "putUnknownValue",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "putUnknownValue",
               "operation": {
                 "$id": "38",
                 "name": "putUnknownValue",
+                "isExactName": false,
                 "resourceName": "String",
                 "doc": "putUnknownValue",
                 "accessibility": "public",
@@ -505,10 +563,31 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.contentType"
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "40",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "18"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "40",
+                    "$id": "41",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -525,7 +604,34 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.body"
+                    "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "42",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "doc": "_",
+                        "type": {
+                          "$ref": "1"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -534,7 +640,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -547,43 +654,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Type.Enum.Fixed"
               },
               "parameters": [
                 {
-                  "$id": "41",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "20"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "40"
                 },
                 {
-                  "$id": "42",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "doc": "_",
-                  "type": {
-                    "$ref": "1"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Type.Enum.Fixed.String.putUnknownValue.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "42"
                 }
               ],
               "response": {},
@@ -622,17 +701,21 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Type.Enum.Fixed.endpoint"
+              "crossLanguageDefinitionId": "Type.Enum.Fixed.String.endpoint",
+              "isExactName": false
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Type.Enum.Fixed.String",
           "apiVersions": [],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

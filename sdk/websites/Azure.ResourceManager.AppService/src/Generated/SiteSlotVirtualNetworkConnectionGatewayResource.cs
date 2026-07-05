@@ -6,48 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteSlotVirtualNetworkConnectionGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteSlotVirtualNetworkConnectionGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteSlotVirtualNetworkConnectionResource"/> using the GetSiteSlotVirtualNetworkConnectionGateway method.
+    /// A class representing a SiteSlotVirtualNetworkConnectionGateway along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteSlotVirtualNetworkConnectionResource"/> using the GetSiteSlotVirtualNetworkConnectionGateways method.
     /// </summary>
     public partial class SiteSlotVirtualNetworkConnectionGatewayResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="slot"> The slot. </param>
-        /// <param name="vnetName"> The vnetName. </param>
-        /// <param name="gatewayName"> The gatewayName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient;
+        private readonly ClientDiagnostics _vnetGatewayOperationGroupClientDiagnostics;
+        private readonly VnetGatewayOperationGroup _vnetGatewayOperationGroupRestClient;
         private readonly AppServiceVirtualNetworkGatewayData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/virtualNetworkConnections/gateways";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteSlotVirtualNetworkConnectionGatewayResource for mocking. </summary>
         protected SiteSlotVirtualNetworkConnectionGatewayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteSlotVirtualNetworkConnectionGatewayResource(ArmClient client, AppServiceVirtualNetworkGatewayData data) : this(client, data.Id)
@@ -56,71 +43,95 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteSlotVirtualNetworkConnectionGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteSlotVirtualNetworkConnectionGatewayWebAppsApiVersion);
-            _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotVirtualNetworkConnectionGatewayWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteSlotVirtualNetworkConnectionGatewayApiVersion);
+            _vnetGatewayOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _vnetGatewayOperationGroupRestClient = new VnetGatewayOperationGroup(_vnetGatewayOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotVirtualNetworkConnectionGatewayApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AppServiceVirtualNetworkGatewayData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="slot"> The slot. </param>
+        /// <param name="vnetName"> The vnetName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Gets an app's Virtual Network gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetVnetConnectionGatewaySlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> VnetGatewayOperationGroup_GetVnetConnectionGatewaySlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SiteSlotVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Get");
+            using DiagnosticScope scope = _vnetGatewayOperationGroupClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Get");
             scope.Start();
             try
             {
-                var response = await _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vnetGatewayOperationGroupRestClient.CreateGetVnetConnectionGatewaySlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Gets an app's Virtual Network gateway.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetVnetConnectionGatewaySlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> VnetGatewayOperationGroup_GetVnetConnectionGatewaySlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SiteSlotVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Get");
+            using DiagnosticScope scope = _vnetGatewayOperationGroupClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Get");
             scope.Start();
             try
             {
-                var response = _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vnetGatewayOperationGroupRestClient.CreateGetVnetConnectionGatewaySlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,35 +193,45 @@ namespace Azure.ResourceManager.AppService
         /// Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_UpdateVnetConnectionGatewaySlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> VnetGatewayOperationGroup_UpdateVnetConnectionGatewaySlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The properties to update this gateway with. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<SiteSlotVirtualNetworkConnectionGatewayResource>> UpdateAsync(AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Update");
+            using DiagnosticScope scope = _vnetGatewayOperationGroupClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Update");
             scope.Start();
             try
             {
-                var response = await _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.UpdateVnetConnectionGatewaySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vnetGatewayOperationGroupRestClient.CreateUpdateVnetConnectionGatewaySlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AppServiceVirtualNetworkGatewayData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -216,35 +245,45 @@ namespace Azure.ResourceManager.AppService
         /// Description for Adds a gateway to a connected Virtual Network (PUT) or updates it (PATCH).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_UpdateVnetConnectionGatewaySlot</description>
+        /// <term> Operation Id. </term>
+        /// <description> VnetGatewayOperationGroup_UpdateVnetConnectionGatewaySlot. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteSlotVirtualNetworkConnectionGatewayResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The properties to update this gateway with. </param>
+        /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<SiteSlotVirtualNetworkConnectionGatewayResource> Update(AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteSlotVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Update");
+            using DiagnosticScope scope = _vnetGatewayOperationGroupClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionGatewayResource.Update");
             scope.Start();
             try
             {
-                var response = _siteSlotVirtualNetworkConnectionGatewayWebAppsRestClient.UpdateVnetConnectionGatewaySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vnetGatewayOperationGroupRestClient.CreateUpdateVnetConnectionGatewaySlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AppServiceVirtualNetworkGatewayData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AppServiceVirtualNetworkGatewayData> response = Response.FromValue(AppServiceVirtualNetworkGatewayData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteSlotVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

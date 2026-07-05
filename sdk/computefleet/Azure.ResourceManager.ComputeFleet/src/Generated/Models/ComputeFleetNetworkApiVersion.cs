@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -18,35 +19,52 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetNetworkApiVersion : IEquatable<ComputeFleetNetworkApiVersion>
     {
         private readonly string _value;
+        /// <summary> Initial version supported. Later versions are supported as well. </summary>
+        private const string V20201101Value = "2020-11-01";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetNetworkApiVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetNetworkApiVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string V20201101Value = "2020-11-01";
+            _value = value;
+        }
 
         /// <summary> Initial version supported. Later versions are supported as well. </summary>
         public static ComputeFleetNetworkApiVersion V20201101 { get; } = new ComputeFleetNetworkApiVersion(V20201101Value);
+
         /// <summary> Determines if two <see cref="ComputeFleetNetworkApiVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetNetworkApiVersion left, ComputeFleetNetworkApiVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetNetworkApiVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetNetworkApiVersion left, ComputeFleetNetworkApiVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetNetworkApiVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkApiVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetNetworkApiVersion(string value) => new ComputeFleetNetworkApiVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkApiVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetNetworkApiVersion?(string value) => value == null ? null : new ComputeFleetNetworkApiVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetNetworkApiVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetNetworkApiVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

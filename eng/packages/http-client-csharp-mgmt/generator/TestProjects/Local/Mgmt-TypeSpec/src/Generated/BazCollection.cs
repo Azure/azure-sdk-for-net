@@ -21,8 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BazResource"/> and their operations.
-    /// Each <see cref="BazResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="BazCollection"/> instance call the GetBazs method from an instance of the parent resource.
+    /// Each <see cref="BazResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="BazCollection"/> instance call the GetBazs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class BazCollection : ArmCollection, IEnumerable<BazResource>, IAsyncEnumerable<BazResource>
     {
@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Bazs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -94,12 +94,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bazName, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
-                    new BazOperationSource(Client),
+                    new BazResourceOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -122,7 +123,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Bazs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -152,12 +153,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bazName, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
-                    new BazOperationSource(Client),
+                    new BazResourceOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -180,7 +182,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bazs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +231,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bazs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +271,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> List Baz resources by resource group. </summary>
+        /// <summary>
+        /// List Baz resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BazResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -278,10 +296,26 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetAllAsyncCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new BazResource(Client, data));
+            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetAllAsyncCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BazCollection.GetAll"), data => new BazResource(Client, data));
         }
 
-        /// <summary> List Baz resources by resource group. </summary>
+        /// <summary>
+        /// List Baz resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/bazs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bazs_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BazResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BazResource> GetAll(CancellationToken cancellationToken = default)
@@ -290,11 +324,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BazData, BazResource>(new BazsGetAllCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new BazResource(Client, data));
+            return new PageableWrapper<BazData, BazResource>(new BazsGetAllCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BazCollection.GetAll"), data => new BazResource(Client, data));
         }
 
         /// <summary>
-        /// Get a Baz
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +336,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bazs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +385,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Baz
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,7 +393,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bazs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,7 +442,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Baz
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,7 +450,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bazs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +503,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Baz
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,7 +511,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bazs_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

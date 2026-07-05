@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Nginx
 {
+    /// <summary></summary>
     public partial class NginxDeploymentResource : IJsonModel<NginxDeploymentData>
     {
-        private static NginxDeploymentData s_dataDeserializationInstance;
-        private static NginxDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NginxDeploymentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NginxDeploymentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NginxDeploymentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NginxDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentData>)Data).Write(writer, options);
 
-        NginxDeploymentData IJsonModel<NginxDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NginxDeploymentData IJsonModel<NginxDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NginxDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NginxDeploymentData>(Data, options, AzureResourceManagerNginxContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NginxDeploymentData IPersistableModel<NginxDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentData>(data, options, AzureResourceManagerNginxContext.Default);
 
-        string IPersistableModel<NginxDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NginxDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

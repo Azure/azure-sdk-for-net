@@ -16,31 +16,26 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Initializes a new instance of <see cref="WeightResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The weight Unit of measurement. </param>
-        internal WeightResolution(double value, WeightUnit unit)
+        internal WeightResolution(double value, WeightUnit unit) : base(ResolutionKind.WeightResolution)
         {
-            ResolutionKind = ResolutionKind.WeightResolution;
             Value = value;
             Unit = unit;
         }
 
         /// <summary> Initializes a new instance of <see cref="WeightResolution"/>. </summary>
         /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> The weight Unit of measurement. </param>
-        internal WeightResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> serializedAdditionalRawData, double value, WeightUnit unit) : base(resolutionKind, serializedAdditionalRawData)
+        internal WeightResolution(ResolutionKind resolutionKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, WeightUnit unit) : base(resolutionKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WeightResolution"/> for deserialization. </summary>
-        internal WeightResolution()
-        {
-        }
-
         /// <summary> The numeric value that the extracted text denotes. </summary>
         public double Value { get; }
+
         /// <summary> The weight Unit of measurement. </summary>
         public WeightUnit Unit { get; }
     }

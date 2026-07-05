@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,7 +68,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     Metadata = default
                 };
             }
-            return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() {
+            return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
+            {
                 BlobPrefix = directoryPath,
                 BlobType = BlobType.Block,
                 BlobOptions = options

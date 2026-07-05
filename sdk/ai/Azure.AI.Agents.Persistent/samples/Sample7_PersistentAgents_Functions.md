@@ -126,7 +126,7 @@ PersistentAgent agent = await client.Administration.CreateAgentAsync(
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
             + "nicknames for cities whenever possible.",
-    tools: [ getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool ]
+    tools: [getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool]
     );
 ```
 
@@ -199,7 +199,7 @@ do
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }
-        run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs);
+        run = await client.Runs.SubmitToolOutputsToRunAsync(run, toolOutputs, toolApprovals: null);
     }
 }
 while (run.Status == RunStatus.Queued

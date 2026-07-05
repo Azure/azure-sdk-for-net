@@ -29,12 +29,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal BarQuotaResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarQuotaProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BarQuotaResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BarQuotaProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -43,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> enabled. </summary>
         [WirePath("properties.left")]
-        public int? BarQuotaLeft
+        public string BarQuotaLeft
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                Properties = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                Properties = new BarQuotaProperties(value);
             }
         }
     }

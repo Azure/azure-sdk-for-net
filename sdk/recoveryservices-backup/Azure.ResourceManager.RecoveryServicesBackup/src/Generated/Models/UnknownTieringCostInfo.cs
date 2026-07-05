@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Unknown version of TieringCostInfo. </summary>
     internal partial class UnknownTieringCostInfo : TieringCostInfo
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTieringCostInfo"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTieringCostInfo(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
-        {
-            ObjectType = objectType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownTieringCostInfo"/> for deserialization. </summary>
-        internal UnknownTieringCostInfo()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTieringCostInfo(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

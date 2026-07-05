@@ -12,19 +12,6 @@ trigger:
     - sdk/servicebus/Azure.Messaging.ServiceBus
     - sdk/servicebus/ci.yml
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/servicebus/service.projects
-    - sdk/servicebus/Azure.Messaging.ServiceBus
-    - sdk/servicebus/ci.yml
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             CancellationToken cancellationTokenVar = default;
             WebAppKeyInfo result = await siteFunctionResourceVar.CreateOrUpdateFunctionSecretAsync(
                 keyName: keyNameVar,
-                info: infoVar,
+                content: infoVar,
                 cancellationToken: cancellationTokenVar);
             Assert.AreEqual(keyNameVar, result.Properties.Name);
             Assert.AreEqual(infoVar.Properties.Value, result.Properties.Value);

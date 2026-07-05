@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     /// <summary> The schedule details for the user request. </summary>
     public partial class UserRequestSchedule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserRequestSchedule"/>. </summary>
         /// <param name="deadlineType"> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </param>
@@ -58,30 +29,29 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="timezone"> The timezone for the operation. </param>
         /// <param name="userRequestTimezone"> The timezone for the operation. </param>
         /// <param name="deadlineType"> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserRequestSchedule(DateTimeOffset? deadline, DateTimeOffset? userRequestDeadline, string timezone, string userRequestTimezone, ScheduledActionDeadlineType deadlineType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UserRequestSchedule(DateTimeOffset? deadline, DateTimeOffset? userRequestDeadline, string timezone, string userRequestTimezone, ScheduledActionDeadlineType deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Deadline = deadline;
             UserRequestDeadline = userRequestDeadline;
             Timezone = timezone;
             UserRequestTimezone = userRequestTimezone;
             DeadlineType = deadlineType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UserRequestSchedule"/> for deserialization. </summary>
-        internal UserRequestSchedule()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The deadline for the operation. </summary>
         public DateTimeOffset? Deadline { get; set; }
+
         /// <summary> The deadline for the operation. </summary>
         public DateTimeOffset? UserRequestDeadline { get; set; }
+
         /// <summary> The timezone for the operation. </summary>
         public string Timezone { get; set; }
+
         /// <summary> The timezone for the operation. </summary>
         public string UserRequestTimezone { get; set; }
+
         /// <summary> The deadlinetype of the operation, this can either be InitiateAt or CompleteBy. </summary>
         public ScheduledActionDeadlineType DeadlineType { get; }
     }

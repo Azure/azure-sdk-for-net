@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> ResourceGuardProxyBase object, used in ResourceGuardProxyBaseResource. </summary>
     public partial class ResourceGuardProxyBase
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBase"/>. </summary>
         public ResourceGuardProxyBase()
@@ -56,23 +28,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationDetails"></param>
         /// <param name="lastUpdatedTime"></param>
         /// <param name="description"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceGuardProxyBase(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardProxyBase(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceGuardResourceId = resourceGuardResourceId;
             ResourceGuardOperationDetails = resourceGuardOperationDetails;
             LastUpdatedTime = lastUpdatedTime;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the resource guard resource id. </summary>
+        /// <summary> Gets or sets the ResourceGuardResourceId. </summary>
         public string ResourceGuardResourceId { get; set; }
-        /// <summary> Gets the resource guard operation details. </summary>
+
+        /// <summary> Gets the ResourceGuardOperationDetails. </summary>
         public IList<ResourceGuardOperationDetail> ResourceGuardOperationDetails { get; }
-        /// <summary> Gets or sets the last updated time. </summary>
+
+        /// <summary> Gets or sets the LastUpdatedTime. </summary>
         public string LastUpdatedTime { get; set; }
-        /// <summary> Gets or sets the description. </summary>
+
+        /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
     }
 }

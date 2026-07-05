@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class MongoDBRoleDefinitionCollection : ArmCollection, IEnumerable<MongoDBRoleDefinitionResource>, IAsyncEnumerable<MongoDBRoleDefinitionResource>
     {
-        private readonly ClientDiagnostics _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics;
-        private readonly MongoDBResourcesRestOperations _mongoDBRoleDefinitionMongoDBResourcesRestClient;
+        private readonly ClientDiagnostics _mongoDBResourcesClientDiagnostics;
+        private readonly MongoDBResources _mongoDBResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MongoDBRoleDefinitionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MongoDBRoleDefinitionCollection for mocking. </summary>
         protected MongoDBRoleDefinitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MongoDBRoleDefinitionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBRoleDefinitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MongoDBRoleDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MongoDBRoleDefinitionResource.ResourceType, out string mongoDBRoleDefinitionMongoDBResourcesApiVersion);
-            _mongoDBRoleDefinitionMongoDBResourcesRestClient = new MongoDBResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mongoDBRoleDefinitionMongoDBResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(MongoDBRoleDefinitionResource.ResourceType, out string mongoDBRoleDefinitionApiVersion);
+            _mongoDBResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoDBRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
+            _mongoDBResourcesRestClient = new MongoDBResources(_mongoDBResourcesClientDiagnostics, Pipeline, Endpoint, mongoDBRoleDefinitionApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CosmosDBAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates an Azure Cosmos DB Mongo Role Definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_CreateUpdateMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_CreateUpdateMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="content"> The properties required to create or update a Role Definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<MongoDBRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mongoRoleDefinitionId, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateUpdateMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(new MongoDBRoleDefinitionOperationSource(Client), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, MongoDBRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<MongoDBRoleDefinitionResource> operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(
+                    new MongoDBRoleDefinitionResourceOperationSource(Client),
+                    _mongoDBResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Creates or updates an Azure Cosmos DB Mongo Role Definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_CreateUpdateMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_CreateUpdateMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="content"> The properties required to create or update a Role Definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<MongoDBRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string mongoRoleDefinitionId, MongoDBRoleDefinitionCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateUpdateMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(new MongoDBRoleDefinitionOperationSource(Client), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateCreateUpdateMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, MongoDBRoleDefinitionCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<MongoDBRoleDefinitionResource> operation = new CosmosDBArmOperation<MongoDBRoleDefinitionResource>(
+                    new MongoDBRoleDefinitionResourceOperationSource(Client),
+                    _mongoDBResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the properties of an existing Azure Cosmos DB Mongo Role Definition with the given Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_GetMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MongoDBRoleDefinitionResource>> GetAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Get");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MongoDBRoleDefinitionData> response = Response.FromValue(MongoDBRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the properties of an existing Azure Cosmos DB Mongo Role Definition with the given Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_GetMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MongoDBRoleDefinitionResource> Get(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Get");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MongoDBRoleDefinitionData> response = Response.FromValue(MongoDBRoleDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,49 +273,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the list of all Azure Cosmos DB Mongo Role Definitions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_ListMongoRoleDefinitions</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_ListMongoRoleDefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoDBRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MongoDBRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoDBRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateListMongoRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBRoleDefinitionResource(Client, MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(e)), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MongoDBRoleDefinitionData, MongoDBRoleDefinitionResource>(new MongoDBResourcesGetMongoRoleDefinitionsAsyncCollectionResultOfT(
+                _mongoDBResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoDBRoleDefinitionCollection.GetAll"), data => new MongoDBRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
         /// Retrieves the list of all Azure Cosmos DB Mongo Role Definitions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_ListMongoRoleDefinitions</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_ListMongoRoleDefinitions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,44 +324,67 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="MongoDBRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoDBRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBRoleDefinitionMongoDBResourcesRestClient.CreateListMongoRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBRoleDefinitionResource(Client, MongoDBRoleDefinitionData.DeserializeMongoDBRoleDefinitionData(e)), _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MongoDBRoleDefinitionData, MongoDBRoleDefinitionResource>(new MongoDBResourcesGetMongoRoleDefinitionsCollectionResultOfT(
+                _mongoDBResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoDBRoleDefinitionCollection.GetAll"), data => new MongoDBRoleDefinitionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_GetMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Exists");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MongoDBRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MongoDBRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MongoDBRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -345,36 +398,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_GetMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Exists");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MongoDBRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MongoDBRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MongoDBRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,38 +455,54 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_GetMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<MongoDBRoleDefinitionResource>> GetIfExistsAsync(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<MongoDBRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MongoDBRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MongoDBRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MongoDBRoleDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -433,38 +516,54 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbRoleDefinitions/{mongoRoleDefinitionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MongoDBResources_GetMongoRoleDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> MongoRoleDefinitionGetResultsOperationGroup_GetMongoRoleDefinition. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MongoDBRoleDefinitionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoRoleDefinitionId"> The ID for the Role Definition {dbName.roleName}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mongoRoleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mongoRoleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<MongoDBRoleDefinitionResource> GetIfExists(string mongoRoleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mongoRoleDefinitionId, nameof(mongoRoleDefinitionId));
 
-            using var scope = _mongoDBRoleDefinitionMongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
+            using DiagnosticScope scope = _mongoDBResourcesClientDiagnostics.CreateScope("MongoDBRoleDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _mongoDBRoleDefinitionMongoDBResourcesRestClient.GetMongoRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _mongoDBResourcesRestClient.CreateGetMongoRoleDefinitionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, mongoRoleDefinitionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<MongoDBRoleDefinitionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(MongoDBRoleDefinitionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((MongoDBRoleDefinitionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<MongoDBRoleDefinitionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new MongoDBRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -484,6 +583,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<MongoDBRoleDefinitionResource> IAsyncEnumerable<MongoDBRoleDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

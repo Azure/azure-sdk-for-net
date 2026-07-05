@@ -7,44 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> The updatable properties of the GlobalRulestackResource. </summary>
     public partial class GlobalRulestackUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GlobalRulestackUpdateProperties"/>. </summary>
         public GlobalRulestackUpdateProperties()
@@ -61,8 +34,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="defaultMode"> Mode for default rules creation. </param>
         /// <param name="minAppIdVersion"> minimum version. </param>
         /// <param name="securityServices"> Security Profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalRulestackUpdateProperties(ETag? panETag, AzureLocation? panLocation, RulestackScopeType? scope, IList<string> associatedSubscriptions, string description, RuleCreationDefaultMode? defaultMode, string minAppIdVersion, RulestackSecurityServices securityServices, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalRulestackUpdateProperties(ETag? panETag, AzureLocation? panLocation, RulestackScopeType? scope, IList<string> associatedSubscriptions, string description, RuleCreationDefaultMode? defaultMode, string minAppIdVersion, RulestackSecurityServices securityServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PanETag = panETag;
             PanLocation = panLocation;
@@ -72,23 +45,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             DefaultMode = defaultMode;
             MinAppIdVersion = minAppIdVersion;
             SecurityServices = securityServices;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> PanEtag info. </summary>
         public ETag? PanETag { get; set; }
+
         /// <summary> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </summary>
         public AzureLocation? PanLocation { get; set; }
+
         /// <summary> Rulestack Type. </summary>
         public RulestackScopeType? Scope { get; set; }
+
         /// <summary> subscription scope of global rulestack. </summary>
         public IList<string> AssociatedSubscriptions { get; }
+
         /// <summary> rulestack description. </summary>
         public string Description { get; set; }
+
         /// <summary> Mode for default rules creation. </summary>
         public RuleCreationDefaultMode? DefaultMode { get; set; }
+
         /// <summary> minimum version. </summary>
         public string MinAppIdVersion { get; set; }
+
         /// <summary> Security Profile. </summary>
         public RulestackSecurityServices SecurityServices { get; set; }
     }

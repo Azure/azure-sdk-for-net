@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 #region Snippet:Changelog_NewCode_Namespaces
-            using System;
-            using Azure.Identity;
-            using Azure.ResourceManager.Network.Models;
-            using Azure.ResourceManager.Resources;
-            using Azure.ResourceManager.Resources.Models;
+using System;
+using Azure.Identity;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 #endregion
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
             vnet.Subnets.Add(new SubnetData
             {
-                Name = "mySubnet",
                 AddressPrefix = "10.0.0.0/24",
             });
 

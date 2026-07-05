@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DataSafeStatusType : IEquatable<DataSafeStatusType>
     {
         private readonly string _value;
+        /// <summary> Registering status. </summary>
+        private const string RegisteringValue = "Registering";
+        /// <summary> Registered status. </summary>
+        private const string RegisteredValue = "Registered";
+        /// <summary> Deregistering status. </summary>
+        private const string DeregisteringValue = "Deregistering";
+        /// <summary> NotRegistered status. </summary>
+        private const string NotRegisteredValue = "NotRegistered";
+        /// <summary> Failed status. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="DataSafeStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataSafeStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegisteringValue = "Registering";
-        private const string RegisteredValue = "Registered";
-        private const string DeregisteringValue = "Deregistering";
-        private const string NotRegisteredValue = "NotRegistered";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Registering status. </summary>
         public static DataSafeStatusType Registering { get; } = new DataSafeStatusType(RegisteringValue);
+
         /// <summary> Registered status. </summary>
         public static DataSafeStatusType Registered { get; } = new DataSafeStatusType(RegisteredValue);
+
         /// <summary> Deregistering status. </summary>
         public static DataSafeStatusType Deregistering { get; } = new DataSafeStatusType(DeregisteringValue);
+
         /// <summary> NotRegistered status. </summary>
         public static DataSafeStatusType NotRegistered { get; } = new DataSafeStatusType(NotRegisteredValue);
+
         /// <summary> Failed status. </summary>
         public static DataSafeStatusType Failed { get; } = new DataSafeStatusType(FailedValue);
+
         /// <summary> Determines if two <see cref="DataSafeStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataSafeStatusType left, DataSafeStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataSafeStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataSafeStatusType left, DataSafeStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataSafeStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataSafeStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataSafeStatusType(string value) => new DataSafeStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataSafeStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataSafeStatusType?(string value) => value == null ? null : new DataSafeStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataSafeStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataSafeStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

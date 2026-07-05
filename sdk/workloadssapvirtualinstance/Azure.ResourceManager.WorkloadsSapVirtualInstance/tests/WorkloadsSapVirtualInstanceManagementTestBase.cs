@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.IO;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.IO;
-using System.Text.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 {
@@ -47,13 +48,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             return JsonDocument.Parse(stream);
         }
 
-        public async Task<string> getObjectAsString<T>(T data)
+        public string GetObjectAsString<T>(T model) where T: IJsonModel<T>
         {
-            var _stream = new MemoryStream();
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
-            await content.WriteToAsync(_stream, System.Threading.CancellationToken.None);
-            return Encoding.UTF8.GetString(_stream.ToArray());
+            var data = ModelReaderWriter.Write(model);
+            return data.ToString();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

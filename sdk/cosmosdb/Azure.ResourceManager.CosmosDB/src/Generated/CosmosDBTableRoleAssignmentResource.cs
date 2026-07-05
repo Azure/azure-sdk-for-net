@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a CosmosDBTableRoleAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBTableRoleAssignmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBTableRoleAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCosmosDBTableRoleAssignment method.
+    /// A class representing a CosmosDBTableRoleAssignment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBTableRoleAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetCosmosDBTableRoleAssignments method.
     /// </summary>
     public partial class CosmosDBTableRoleAssignmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CosmosDBTableRoleAssignmentResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="roleAssignmentId"> The roleAssignmentId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics;
-        private readonly TableResourcesRestOperations _cosmosDBTableRoleAssignmentTableResourcesRestClient;
+        private readonly ClientDiagnostics _tableResourcesClientDiagnostics;
+        private readonly TableResources _tableResourcesRestClient;
         private readonly CosmosDBTableRoleAssignmentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments";
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBTableRoleAssignmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBTableRoleAssignmentResource for mocking. </summary>
         protected CosmosDBTableRoleAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBTableRoleAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableRoleAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBTableRoleAssignmentResource(ArmClient client, CosmosDBTableRoleAssignmentData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.CosmosDB
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBTableRoleAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableRoleAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBTableRoleAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string cosmosDBTableRoleAssignmentTableResourcesApiVersion);
-            _cosmosDBTableRoleAssignmentTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBTableRoleAssignmentTableResourcesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string cosmosDBTableRoleAssignmentApiVersion);
+            _tableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            _tableResourcesRestClient = new TableResources(_tableResourcesClientDiagnostics, Pipeline, Endpoint, cosmosDBTableRoleAssignmentApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CosmosDBTableRoleAssignmentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="roleAssignmentId"> The roleAssignmentId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB Table Role Assignment with the given Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_GetTableRoleAssignment</description>
+        /// <term> Operation Id. </term>
+        /// <description> TableRoleAssignmentResources_GetTableRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBTableRoleAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CosmosDBTableRoleAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Get");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBTableRoleAssignmentTableResourcesRestClient.GetTableRoleAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBTableRoleAssignmentData> response = Response.FromValue(CosmosDBTableRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBTableRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.CosmosDB
         /// Retrieves the properties of an existing Azure Cosmos DB Table Role Assignment with the given Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_GetTableRoleAssignment</description>
+        /// <term> Operation Id. </term>
+        /// <description> TableRoleAssignmentResources_GetTableRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBTableRoleAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CosmosDBTableRoleAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Get");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBTableRoleAssignmentTableResourcesRestClient.GetTableRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tableResourcesRestClient.CreateGetTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBTableRoleAssignmentData> response = Response.FromValue(CosmosDBTableRoleAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBTableRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Deletes an existing Azure Cosmos DB Table Role Assignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_DeleteTableRoleAssignment</description>
+        /// <term> Operation Id. </term>
+        /// <description> TableRoleAssignmentResources_DeleteTableRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBTableRoleAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Delete");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _cosmosDBTableRoleAssignmentTableResourcesRestClient.DeleteTableRoleAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableRoleAssignmentTableResourcesRestClient.CreateDeleteTableRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tableResourcesRestClient.CreateDeleteTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation operation = new CosmosDBArmOperation(_tableResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.CosmosDB
         /// Deletes an existing Azure Cosmos DB Table Role Assignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_DeleteTableRoleAssignment</description>
+        /// <term> Operation Id. </term>
+        /// <description> TableRoleAssignmentResources_DeleteTableRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBTableRoleAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Delete");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _cosmosDBTableRoleAssignmentTableResourcesRestClient.DeleteTableRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableRoleAssignmentTableResourcesRestClient.CreateDeleteTableRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tableResourcesRestClient.CreateDeleteTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation operation = new CosmosDBArmOperation(_tableResourcesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates or updates an Azure Cosmos DB Table Role Assignment.
+        /// Update a CosmosDBTableRoleAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_CreateUpdateTableRoleAssignment</description>
+        /// <term> Operation Id. </term>
+        /// <description> TableRoleAssignmentResources_CreateUpdateTableRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBTableRoleAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Update");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _cosmosDBTableRoleAssignmentTableResourcesRestClient.CreateUpdateTableRoleAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource>(new CosmosDBTableRoleAssignmentOperationSource(Client), _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableRoleAssignmentTableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBTableRoleAssignmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource> operation = new CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource>(
+                    new CosmosDBTableRoleAssignmentResourceOperationSource(Client),
+                    _tableResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Creates or updates an Azure Cosmos DB Table Role Assignment.
+        /// Update a CosmosDBTableRoleAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tableRoleAssignments/{roleAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TableResources_CreateUpdateTableRoleAssignment</description>
+        /// <term> Operation Id. </term>
+        /// <description> TableRoleAssignmentResources_CreateUpdateTableRoleAssignment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBTableRoleAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CosmosDBTableRoleAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Update");
+            using DiagnosticScope scope = _tableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _cosmosDBTableRoleAssignmentTableResourcesRestClient.CreateUpdateTableRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource>(new CosmosDBTableRoleAssignmentOperationSource(Client), _cosmosDBTableRoleAssignmentTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableRoleAssignmentTableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tableResourcesRestClient.CreateCreateUpdateTableRoleAssignmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBTableRoleAssignmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource> operation = new CosmosDBArmOperation<CosmosDBTableRoleAssignmentResource>(
+                    new CosmosDBTableRoleAssignmentResourceOperationSource(Client),
+                    _tableResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

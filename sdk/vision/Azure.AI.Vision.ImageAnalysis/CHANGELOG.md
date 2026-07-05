@@ -5,6 +5,7 @@
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Added `ImageAnalysisClientSettings` to support creating a `ImageAnalysisClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 

@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> Unknown version of ResourcePredictionsProfile. </summary>
     internal partial class UnknownResourcePredictionsProfile : ResourcePredictionsProfile
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResourcePredictionsProfile"/>. </summary>
         /// <param name="kind"> Determines how the stand-by scheme should be provided. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownResourcePredictionsProfile(ResourcePredictionsProfileType kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownResourcePredictionsProfile"/> for deserialization. </summary>
-        internal UnknownResourcePredictionsProfile()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownResourcePredictionsProfile(ResourcePredictionsProfileType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", additionalBinaryDataProperties)
         {
         }
     }

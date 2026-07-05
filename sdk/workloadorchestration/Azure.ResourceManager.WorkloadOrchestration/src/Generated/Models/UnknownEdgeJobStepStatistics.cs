@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> Unknown version of EdgeJobStepStatistics. </summary>
     internal partial class UnknownEdgeJobStepStatistics : EdgeJobStepStatistics
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEdgeJobStepStatistics"/>. </summary>
         /// <param name="statisticsType"> Statistics type discriminator value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEdgeJobStepStatistics(EdgeJobType statisticsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(statisticsType, serializedAdditionalRawData)
-        {
-            StatisticsType = statisticsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownEdgeJobStepStatistics"/> for deserialization. </summary>
-        internal UnknownEdgeJobStepStatistics()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownEdgeJobStepStatistics(EdgeJobType statisticsType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(statisticsType != default ? statisticsType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

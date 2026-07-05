@@ -74,15 +74,15 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     },
 };
 
-Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult AnalyzeTextOperationResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextOperationResult taskResult in analyzeTextJobState.Tasks.Items)
 {
-    if (AnalyzeTextOperationResult is EntityRecognitionOperationResult)
+    if (taskResult is EntityRecognitionOperationResult)
     {
-        EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)AnalyzeTextOperationResult;
+        EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
@@ -118,9 +118,9 @@ foreach (AnalyzeTextOperationResult AnalyzeTextOperationResult in analyzeTextJob
         }
     }
     Console.WriteLine();
-    if (AnalyzeTextOperationResult is KeyPhraseExtractionOperationResult)
+    if (taskResult is KeyPhraseExtractionOperationResult)
     {
-        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)AnalyzeTextOperationResult;
+        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)taskResult;
 
         // View the classifications recognized in the input documents.
         foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

@@ -285,9 +285,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static Azure.ResourceManager.IotCentral.Models.IotCentralAppSku ST1 { get { throw null; } }
         public static Azure.ResourceManager.IotCentral.Models.IotCentralAppSku ST2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralAppSku other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralAppSku left, Azure.ResourceManager.IotCentral.Models.IotCentralAppSku right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralAppSku (string value) { throw null; }
@@ -314,9 +312,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static Azure.ResourceManager.IotCentral.Models.IotCentralAppState Created { get { throw null; } }
         public static Azure.ResourceManager.IotCentral.Models.IotCentralAppState Suspended { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralAppState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralAppState left, Azure.ResourceManager.IotCentral.Models.IotCentralAppState right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralAppState (string value) { throw null; }
@@ -362,9 +358,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction Allow { get { throw null; } }
         public static Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction Deny { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction left, Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralNetworkAction (string value) { throw null; }
@@ -408,9 +402,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState left, Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointConnectionProvisioningState (string value) { throw null; }
@@ -427,9 +419,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointServiceConnectionStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointServiceConnectionStatus Rejected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointServiceConnectionStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointServiceConnectionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralPrivateEndpointServiceConnectionStatus (string value) { throw null; }
@@ -462,9 +452,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Succeeded { get { throw null; } }
         public static Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState Updating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState left, Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralProvisioningState (string value) { throw null; }
@@ -480,9 +468,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess Disabled { get { throw null; } }
         public static Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess left, Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.IotCentral.Models.IotCentralPublicNetworkAccess (string value) { throw null; }

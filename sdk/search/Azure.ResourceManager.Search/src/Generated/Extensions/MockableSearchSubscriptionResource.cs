@@ -8,144 +8,201 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSearchSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _searchServiceServicesClientDiagnostics;
-        private ServicesRestOperations _searchServiceServicesRestClient;
+        private ClientDiagnostics _servicesClientDiagnostics;
+        private Services _servicesRestClient;
+        private ClientDiagnostics _searchClientClientDiagnostics;
+        private SearchClient _searchClientRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
-        private UsagesRestOperations _usagesRestClient;
-        private ClientDiagnostics _defaultClientDiagnostics;
-        private SearchManagementRestOperations _defaultRestClient;
+        private Usages _usagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSearchSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSearchSubscriptionResource for mocking. </summary>
         protected MockableSearchSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSearchSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSearchSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSearchSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SearchServiceServicesClientDiagnostics => _searchServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
-        private ServicesRestOperations SearchServiceServicesRestClient => _searchServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SearchServiceResource.ResourceType));
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SearchManagementRestOperations DefaultRestClient => _defaultRestClient ??= new SearchManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+
+        private ClientDiagnostics SearchClientClientDiagnostics => _searchClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SearchClient SearchClientRestClient => _searchClientRestClient ??= new SearchClient(SearchClientClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
 
         /// <summary>
-        /// Gets a list of all Search services in the given subscription.
+        /// Gets a list of all search services in the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SearchServiceResource> GetSearchServicesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SearchServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), SearchServiceServicesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetSearchServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all Search services in the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SearchServiceResource> GetSearchServices(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchServiceResource> GetSearchServicesAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SearchServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, searchManagementRequestOptions);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SearchServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchServiceResource(Client, SearchServiceData.DeserializeSearchServiceData(e)), SearchServiceServicesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetSearchServices", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetBySubscriptionAsyncCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), default, context, "MockableSearchSubscriptionResource.GetSearchServices"), data => new SearchServiceResource(Client, data));
         }
 
         /// <summary>
-        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
+        /// Gets a list of all search services in the given subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/searchServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> SearchServices_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The resource name and type to check. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SearchServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SearchServiceResource> GetSearchServices(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SearchServiceData, SearchServiceResource>(new ServicesGetBySubscriptionCollectionResultOfT(ServicesRestClient, Guid.Parse(Id.SubscriptionId), default, context, "MockableSearchSubscriptionResource.GetSearchServices"), data => new SearchServiceResource(Client, data));
+        }
 
-            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability");
+        /// <summary>
+        /// Gets the quota usage for a search SKU in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages/{skuName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Search_UsageBySubscriptionSku. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
+            using DiagnosticScope scope = SearchClientClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
             scope.Start();
             try
             {
-                var response = await SearchServiceServicesRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SearchClientRestClient.CreateUsageBySubscriptionSkuRequest(location, Guid.Parse(Id.SubscriptionId), skuName, default, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<QuotaUsageResult> response = Response.FromValue(QuotaUsageResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the quota usage for a search SKU in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages/{skuName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Search_UsageBySubscriptionSku. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<QuotaUsageResult> UsageBySubscriptionSku(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
+            using DiagnosticScope scope = SearchClientClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SearchClientRestClient.CreateUsageBySubscriptionSkuRequest(location, Guid.Parse(Id.SubscriptionId), skuName, default, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<QuotaUsageResult> response = Response.FromValue(QuotaUsageResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -159,36 +216,91 @@ namespace Azure.ResourceManager.Search.Mocking
         /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Services_CheckNameAvailability</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServicesOperationGroup_CheckNameAvailability. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SearchServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The resource name and type to check. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SearchServiceServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability");
+            using DiagnosticScope scope = ServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = SearchServiceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, content, searchManagementRequestOptions, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServicesRestClient.CreateCheckSearchServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SearchServiceNameAvailabilityResult> response = Response.FromValue(SearchServiceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether or not the given search service name is available for use. Search service names must be globally unique since they are part of the service URI (https://&lt;name&gt;.search.windows.net).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServicesOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The resource name and type to check. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ServicesClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServicesRestClient.CreateCheckSearchServiceNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SearchServiceNameAvailabilityContent.ToRequestContent(content), default, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SearchServiceNameAvailabilityResult> response = Response.FromValue(SearchServiceNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -202,138 +314,72 @@ namespace Azure.ResourceManager.Search.Mocking
         /// Get a list of all Azure AI Search quota usages across the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaUsageResult> GetUsagesBySubscriptionAsync(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaUsageResult.DeserializeQuotaUsageResult(e), UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of all Azure AI Search quota usages across the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaUsageResult> GetUsagesBySubscription(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QuotaUsageResult> GetUsagesBySubscriptionAsync(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaUsageResult.DeserializeQuotaUsageResult(e), UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesBySubscriptionAsyncCollectionResultOfT(
+                UsagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                default,
+                context,
+                "MockableSearchSubscriptionResource.GetUsagesBySubscription");
         }
 
         /// <summary>
-        /// Gets the quota usage for a search SKU in the given subscription.
+        /// Get a list of all Azure AI Search quota usages across the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages/{skuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UsageBySubscriptionSku</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
-        /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public virtual async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuotaUsageResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaUsageResult> GetUsagesBySubscription(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
-
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await DefaultRestClient.UsageBySubscriptionSkuAsync(Id.SubscriptionId, location, skuName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the quota usage for a search SKU in the given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages/{skuName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UsageBySubscriptionSku</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
-        /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
-        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
-        public virtual Response<QuotaUsageResult> UsageBySubscriptionSku(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
-
-            using var scope = DefaultClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
-            scope.Start();
-            try
-            {
-                var response = DefaultRestClient.UsageBySubscriptionSku(Id.SubscriptionId, location, skuName, searchManagementRequestOptions, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesBySubscriptionCollectionResultOfT(
+                UsagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                default,
+                context,
+                "MockableSearchSubscriptionResource.GetUsagesBySubscription");
         }
     }
 }

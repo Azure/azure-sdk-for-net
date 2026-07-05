@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FirewallsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_FirewallsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_FirewallsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_FirewallsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_FirewallsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,6 +224,7 @@ ResourceId = new ResourceIdentifier("/subscriptions/01c7d41f-afaf-464e-8a8b-5c6f
 Address = "20.22.92.111",
 }},
                         TrustedRanges = { "20.22.92.11" },
+                        PrivateSourceNatRulesDestination = { "20.22.92.11" },
                     },
                     IsPanoramaManaged = FirewallBooleanType.True,
                     PanoramaConfig = new FirewallPanoramaConfiguration("bas64EncodedString"),
@@ -275,7 +276,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task Update_FirewallsUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -306,7 +307,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task GetGlobalRulestack_FirewallsGetGlobalRulestackMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getGlobalRulestack_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_getGlobalRulestack_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_GetGlobalRulestack" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,7 +333,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task GetGlobalRulestack_FirewallsGetGlobalRulestackMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getGlobalRulestack_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_getGlobalRulestack_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_GetGlobalRulestack" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -358,7 +359,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task GetLogProfile_FirewallsGetLogProfileMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getLogProfile_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_getLogProfile_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_GetLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -384,7 +385,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task GetLogProfile_FirewallsGetLogProfileMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getLogProfile_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_getLogProfile_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_GetLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -410,7 +411,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfo_FirewallsGetSupportInfoMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getSupportInfo_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_getSupportInfo_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_GetSupportInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -437,7 +438,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task GetSupportInfo_FirewallsGetSupportInfoMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getSupportInfo_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_getSupportInfo_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_GetSupportInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -463,7 +464,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task SaveLogProfile_FirewallsSaveLogProfileMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_saveLogProfile_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_saveLogProfile_MaximumSet_Gen.json
             // this example is just showing the usage of "Firewalls_SaveLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -599,7 +600,7 @@ Address = "20.22.32.136",
         [Ignore("Only validating compilation of examples")]
         public async Task SaveLogProfile_FirewallsSaveLogProfileMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_saveLogProfile_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/Firewalls_saveLogProfile_MinimumSet_Gen.json
             // this example is just showing the usage of "Firewalls_SaveLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

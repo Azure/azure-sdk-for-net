@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class AdministratorConfigurationPatch : IUtf8JsonSerializable, IJsonModel<AdministratorConfigurationPatch>
+    /// <summary> AdministratorConfigurationPatch represents the patching capabilities for the administrator configuration. </summary>
+    internal partial class AdministratorConfigurationPatch : IJsonModel<AdministratorConfigurationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdministratorConfigurationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AdministratorConfigurationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAdministratorConfigurationPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdministratorConfigurationPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AdministratorConfigurationPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AdministratorConfigurationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AdministratorConfigurationPatch IPersistableModel<AdministratorConfigurationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AdministratorConfigurationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AdministratorConfigurationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +69,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AdministratorConfigurationPatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(SshPublicKeys))
             {
                 writer.WritePropertyName("sshPublicKeys"u8);
                 writer.WriteStartArray();
-                foreach (var item in SshPublicKeys)
+                foreach (NetworkCloudSshPublicKey item in SshPublicKeys)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,39 +101,43 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        AdministratorConfigurationPatch IJsonModel<AdministratorConfigurationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AdministratorConfigurationPatch IJsonModel<AdministratorConfigurationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AdministratorConfigurationPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AdministratorConfigurationPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAdministratorConfigurationPatch(document.RootElement, options);
         }
 
-        internal static AdministratorConfigurationPatch DeserializeAdministratorConfigurationPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AdministratorConfigurationPatch DeserializeAdministratorConfigurationPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<NetworkCloudSshPublicKey> sshPublicKeys = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sshPublicKeys"u8))
+                if (prop.NameEquals("sshPublicKeys"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NetworkCloudSshPublicKey> array = new List<NetworkCloudSshPublicKey>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item, options));
                     }
@@ -102,42 +146,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AdministratorConfigurationPatch(sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), serializedAdditionalRawData);
+            return new AdministratorConfigurationPatch(sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AdministratorConfigurationPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AdministratorConfigurationPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AdministratorConfigurationPatch IPersistableModel<AdministratorConfigurationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAdministratorConfigurationPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AdministratorConfigurationPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AdministratorConfigurationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

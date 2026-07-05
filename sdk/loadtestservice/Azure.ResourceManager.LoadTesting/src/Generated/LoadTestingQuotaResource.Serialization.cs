@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.LoadTesting
 {
+    /// <summary></summary>
     public partial class LoadTestingQuotaResource : IJsonModel<LoadTestingQuotaData>
     {
-        private static LoadTestingQuotaData s_dataDeserializationInstance;
-        private static LoadTestingQuotaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LoadTestingQuotaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LoadTestingQuotaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LoadTestingQuotaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LoadTestingQuotaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingQuotaData>)Data).Write(writer, options);
 
-        LoadTestingQuotaData IJsonModel<LoadTestingQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingQuotaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTestingQuotaData IJsonModel<LoadTestingQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LoadTestingQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadTestingQuotaData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LoadTestingQuotaData IPersistableModel<LoadTestingQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestingQuotaData>(data, options, AzureResourceManagerLoadTestingContext.Default);
 
-        string IPersistableModel<LoadTestingQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadTestingQuotaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LoadTestingQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

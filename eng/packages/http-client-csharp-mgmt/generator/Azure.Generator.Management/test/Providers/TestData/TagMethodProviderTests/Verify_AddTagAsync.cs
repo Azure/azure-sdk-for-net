@@ -28,7 +28,7 @@ try
             patch.Tags.Add(tag);
         }
         patch.Tags[key] = value;
-        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

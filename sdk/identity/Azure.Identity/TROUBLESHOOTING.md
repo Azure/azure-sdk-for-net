@@ -173,10 +173,16 @@ DefaultAzureCredentialOptions options = new
 
 `CredentialUnavailableException`
 
-| Error Message |Description| Mitigation |
+| Error Message | Description | Mitigation |
 |---|---|---|
 |`CredentialUnavailableException` raised with message. "WorkloadIdentityCredential authentication unavailable. The workload options are not fully configured."|The `WorkloadIdentityCredential` requires `ClientId`, `TenantId` and `TokenFilePath` to authenticate with Microsoft Entra ID.| <ul><li>If using `DefaultAzureCredential` then:</li><ul><li>Ensure client ID is specified via `WorkloadIdentityClientId` property on `DefaultAzureCredentialOptions` or `AZURE_CLIENT_ID` env variable.</li><li>Ensure tenant ID is specified via `AZURE_TENANT_ID` env variable.</li><li>Ensure token file path is specified via `AZURE_FEDERATED_TOKEN_FILE` env variable.</li><li>Ensure authority host is specified via `AZURE_AUTHORITY_HOST` env variable.</ul><li>If using `WorkloadIdentityCredential` then:</li><ul><li>Ensure tenant ID is specified via the `TenantId` property on the `WorkloadIdentityCredentialOptions` or `AZURE_TENANT_ID` env variable.</li><li>Ensure client ID is specified via the `ClientId` property on the `WorkloadIdentityCredentialOptions` or `AZURE_CLIENT_ID` env variable.</li><li>Ensure token file path is specified via the `TokenFilePath` property on the `WorkloadIdentityCredentialOptions` instance or `AZURE_FEDERATED_TOKEN_FILE` environment variable. </li></ul></li><li>Consult the [product troubleshooting guide](https://azure.github.io/azure-workload-identity/docs/troubleshooting.html) for other issues.</li></ul>
-|The workload options are not fully configured.|The workload identity configuration wasn't provided in environment variables or through `WorkloadIdentityCredentialOptions`.|Ensure the appropriate environment variables are set **prior to application startup** or are specified in code.</p><ul><li>To configure the `WorkloadIdentityCredential` via the environment, ensure the variables `AZURE_AUTHORITY_HOST`, `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_FEDERATED_TOKEN_FILE` are set by the admission webhook.</li><li>To configure the `WorkloadIdentityCredential` in code, ensure `ClientId`, `TenantId`, and `TokenFilePath` are set on the `WorkloadIdentityCredentialOptions` passed to the `WorkloadIdentityCredential` constructor.</li><ul>|
+|The workload options are not fully configured.|The workload identity configuration wasn't provided in environment variables or through `WorkloadIdentityCredentialOptions`.|Ensure the appropriate environment variables are set **prior to application startup** or are specified in code.<ul><li>To configure the `WorkloadIdentityCredential` via the environment, ensure the variables `AZURE_AUTHORITY_HOST`, `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, and `AZURE_FEDERATED_TOKEN_FILE` are set by the admission webhook.</li><li>To configure the `WorkloadIdentityCredential` in code, ensure `ClientId`, `TenantId`, and `TokenFilePath` are set on the `WorkloadIdentityCredentialOptions` passed to the `WorkloadIdentityCredential` constructor.</li></ul>|
+
+#### AuthenticationFailedException for applications using [Azure Kubernetes Service identity bindings](https://learn.microsoft.com/azure/aks/identity-bindings-concepts)
+
+| Error Message | Description | Mitigation |
+|---|---|---|
+| <ul><li>AADSTS700211: No matching federated identity record found for presented assertion issuer ...</li><li>AADSTS700212: No matching federated identity record found for presented assertion audience 'api://AKSIdentityBinding'.</li></ul> | `WorkloadIdentityCredential` isn't configured to use the identity binding proxy. | When using `WorkloadIdentityCredential` directly, set `WorkloadIdentityCredentialOptions.IsAzureProxyEnabled` to `true`. Identity binding mode isn't supported when `WorkloadIdentityCredential` is used via `DefaultAzureCredential`, so construct and use a `WorkloadIdentityCredential` explicitly to enable this option. |
 
 ## Troubleshoot `ManagedIdentityCredential` authentication issues
 
@@ -278,21 +284,30 @@ az account get-access-token --output json --resource https://management.core.win
 | Error Message |Description| Mitigation |
 |---|---|---|
 |Azure Developer CLI not installed|The Azure Developer CLI isn't installed or couldn't be found.|<ul><li>Ensure the Azure Developer CLI is properly installed. Installation instructions can be found at [Install or update the Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd).</li><li>Validate the installation location has been added to the `PATH` environment variable.</li></ul>|
-|Please run 'azd login' to set up account|No account is currently logged into the Azure Developer CLI, or the login has expired.|<ul><li>Log in to the Azure Developer CLI using the `azd login` command.</li><li>Validate that the Azure Developer CLI can obtain tokens. For instructions, see [Verify the Azure Developer CLI can obtain tokens](#verify-the-azure-developer-cli-can-obtain-tokens).</li></ul>|
+|Please run 'azd auth login' to set up account|No account is currently logged into the Azure Developer CLI, or the login has expired.|<ul><li>Log in to the Azure Developer CLI using the `azd auth login` command.</li><li>Validate that the Azure Developer CLI can obtain tokens. For instructions, see [Verify the Azure Developer CLI can obtain tokens](#verify-the-azure-developer-cli-can-obtain-tokens).</li></ul>|
 
 ### Verify the Azure Developer CLI can obtain tokens
 
-You can manually verify that the Azure Developer CLI is properly authenticated and can obtain tokens. First, use the `config` command to verify the account that is currently logged in to the Azure Developer CLI.
+You can manually verify that the Azure Developer CLI is properly authenticated and can obtain tokens. Execute the command corresponding to your CLI version to verify the account currently logged in.
 
-```bash
-azd config list
-```
+- In Azure Developer CLI versions >= 1.23.0:
+
+    ```sh
+    azd auth status
+    ```
+
+- In Azure Developer CLI versions < 1.23.0:
+
+    ```sh
+    azd config list
+    ```
 
 Once you've verified the Azure Developer CLI is using correct account, you can validate that it's able to obtain tokens for this account.
 
 ```bash
 azd auth token --output json --scope https://management.core.windows.net/.default
 ```
+
 >Note that output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
 
 ## Troubleshoot `AzurePowerShellCredential` authentication issues
@@ -333,6 +348,25 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 |The current credential is not configured to acquire tokens for tenant \<tenant ID\>.|The app must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in the credential's options:<ul><li>Set property `TenantId` to the requested tenant ID if your app only needs to authenticate to a single, known tenant.</li><li>Add the requested tenant ID to property `AdditionallyAllowedTenants` if your app needs to authenticate to multiple tenants or if the tenant is determined at runtime.</li><li>Set property `AdditionallyAllowedTenants` to include the known tenants, or `*` if the tenants are unknown, to allow token acquisition for additional tenants (use `*` with caution in production as it will trust any tenant).</li></ul><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
 
 ## Troubleshoot brokered authentication issues
+
+### `TypeLoadException` for `IMsalSettablePublicClientInitializerOptions` or `IMsalPublicClientInitializerOptions` after updating `Azure.Identity`
+
+If you see the following error after updating to `Azure.Identity` 1.21.0+ or `Azure.Core` 1.53.0+:
+
+```
+TypeLoadException: Could not load type 'Azure.Identity.IMsalSettablePublicClientInitializerOptions'
+from assembly 'Azure.Identity, Version=1.21.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8'.
+```
+
+Or if brokered authentication fails (e.g., `DefaultAzureCredential` can no longer use WAM, or connections using `Authentication=ActiveDirectoryDefault` fail), you need to update `Azure.Identity.Broker` to version **1.6.0 or later**.
+
+Older `Azure.Identity.Broker` versions (1.5.0 and earlier) reference internal types that moved from `Azure.Identity` to `Azure.Core` as part of the type consolidation. Update your package reference:
+
+```xml
+<PackageReference Include="Azure.Identity.Broker" Version="1.6.0" />
+```
+
+See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md#azureidentitybroker-compatibility) for more details.
 
 ### Common error messages for Web Account Manager (WAM)
 | Error Message |Description| Mitigation |

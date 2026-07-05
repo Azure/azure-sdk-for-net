@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    /// <summary> Unknown version of AkriConnectorsRegistrySettings. </summary>
     internal partial class UnknownAkriConnectorsRegistrySettings : AkriConnectorsRegistrySettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorsRegistrySettings"/>. </summary>
         /// <param name="registrySettingsType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownAkriConnectorsRegistrySettings(AkriConnectorsRegistrySettingsType registrySettingsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(registrySettingsType, serializedAdditionalRawData)
-        {
-            RegistrySettingsType = registrySettingsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownAkriConnectorsRegistrySettings"/> for deserialization. </summary>
-        internal UnknownAkriConnectorsRegistrySettings()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAkriConnectorsRegistrySettings(AkriConnectorsRegistrySettingsType registrySettingsType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(registrySettingsType != default ? registrySettingsType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

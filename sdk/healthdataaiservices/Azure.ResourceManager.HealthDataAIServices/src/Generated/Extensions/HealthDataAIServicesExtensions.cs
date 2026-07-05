@@ -37,7 +37,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return subscriptionResource.GetCachedClient(client => new MockableHealthDataAIServicesSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="DeidServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="DeidServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHealthDataAIServicesArmClient.GetDeidServiceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -49,7 +55,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return GetMockableHealthDataAIServicesArmClient(client).GetDeidServiceResource(id);
         }
 
-        /// <summary> Gets an object representing a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="HealthDataAIServicesPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHealthDataAIServicesArmClient.GetHealthDataAIServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -61,7 +73,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return GetMockableHealthDataAIServicesArmClient(client).GetHealthDataAIServicesPrivateEndpointConnectionResource(id);
         }
 
-        /// <summary> Gets a collection of DeidServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of DeidServices in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHealthDataAIServicesResourceGroupResource.GetDeidServices()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DeidServices and their operations over a DeidServiceResource. </returns>
@@ -72,7 +90,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return GetMockableHealthDataAIServicesResourceGroupResource(resourceGroupResource).GetDeidServices();
         }
 
-        /// <summary> Get a DeidService. </summary>
+        /// <summary>
+        /// Get a DeidService
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHealthDataAIServicesResourceGroupResource.GetDeidServiceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="deidServiceName"> The name of the deid service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,7 +109,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return await GetMockableHealthDataAIServicesResourceGroupResource(resourceGroupResource).GetDeidServiceAsync(deidServiceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a DeidService. </summary>
+        /// <summary>
+        /// Get a DeidService
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHealthDataAIServicesResourceGroupResource.GetDeidService(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="deidServiceName"> The name of the deid service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +128,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return GetMockableHealthDataAIServicesResourceGroupResource(resourceGroupResource).GetDeidService(deidServiceName, cancellationToken);
         }
 
-        /// <summary> List DeidService resources by subscription ID. </summary>
+        /// <summary>
+        /// List DeidService resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHealthDataAIServicesSubscriptionResource.GetDeidServicesAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -110,7 +146,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return GetMockableHealthDataAIServicesSubscriptionResource(subscriptionResource).GetDeidServicesAsync(cancellationToken);
         }
 
-        /// <summary> List DeidService resources by subscription ID. </summary>
+        /// <summary>
+        /// List DeidService resources by subscription ID
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHealthDataAIServicesSubscriptionResource.GetDeidServices(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>

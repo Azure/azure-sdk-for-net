@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary>
-    /// A class representing the CosmosDBThroughputPoolAccount data model.
-    /// An Azure Cosmos DB Throughputpool Account
-    /// </summary>
+    /// <summary> An Azure Cosmos DB Throughputpool Account. </summary>
     public partial class CosmosDBThroughputPoolAccountData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolAccountData"/>. </summary>
         public CosmosDBThroughputPoolAccountData()
@@ -57,35 +25,76 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> A provisioning state of the ThroughputPool Account. </param>
-        /// <param name="accountResourceIdentifier"> The resource identifier of global database account in the throughputPool. </param>
-        /// <param name="accountLocation"> The location of  global database account in the throughputPool. </param>
-        /// <param name="accountInstanceId"> The instance id of global database account in the throughputPool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBThroughputPoolAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBStatus? provisioningState, ResourceIdentifier accountResourceIdentifier, AzureLocation? accountLocation, string accountInstanceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> An Azure Cosmos DB Global Database Account which is part of a Throughputpool. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBThroughputPoolAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThroughputPoolAccountProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            AccountResourceIdentifier = accountResourceIdentifier;
-            AccountLocation = accountLocation;
-            AccountInstanceId = accountInstanceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> An Azure Cosmos DB Global Database Account which is part of a Throughputpool. </summary>
+        [WirePath("properties")]
+        internal ThroughputPoolAccountProperties Properties { get; set; }
 
         /// <summary> A provisioning state of the ThroughputPool Account. </summary>
         [WirePath("properties.provisioningState")]
-        public CosmosDBStatus? ProvisioningState { get; set; }
+        public CosmosDBStatus? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The resource identifier of global database account in the throughputPool. </summary>
         [WirePath("properties.accountResourceIdentifier")]
-        public ResourceIdentifier AccountResourceIdentifier { get; set; }
+        public ResourceIdentifier AccountResourceIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountResourceIdentifier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThroughputPoolAccountProperties();
+                }
+                Properties.AccountResourceIdentifier = value;
+            }
+        }
+
         /// <summary> The location of  global database account in the throughputPool. </summary>
         [WirePath("properties.accountLocation")]
-        public AzureLocation? AccountLocation { get; set; }
+        public AzureLocation? AccountLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountLocation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThroughputPoolAccountProperties();
+                }
+                Properties.AccountLocation = value;
+            }
+        }
+
         /// <summary> The instance id of global database account in the throughputPool. </summary>
         [WirePath("properties.accountInstanceId")]
-        public string AccountInstanceId { get; }
+        public string AccountInstanceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccountInstanceId;
+            }
+        }
     }
 }

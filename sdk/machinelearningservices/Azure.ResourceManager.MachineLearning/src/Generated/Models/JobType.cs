@@ -7,54 +7,83 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum to determine the type of job. </summary>
-    internal readonly partial struct JobType : IEquatable<JobType>
+    public readonly partial struct JobType : IEquatable<JobType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="JobType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AutoMLValue = "AutoML";
         private const string CommandValue = "Command";
         private const string SweepValue = "Sweep";
         private const string PipelineValue = "Pipeline";
         private const string SparkValue = "Spark";
+        private const string FineTuningValue = "FineTuning";
+        private const string DistillationValue = "Distillation";
 
-        /// <summary> AutoML. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public JobType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AutoML. </summary>
         public static JobType AutoML { get; } = new JobType(AutoMLValue);
-        /// <summary> Command. </summary>
+
+        /// <summary> Gets the Command. </summary>
         public static JobType Command { get; } = new JobType(CommandValue);
-        /// <summary> Sweep. </summary>
+
+        /// <summary> Gets the Sweep. </summary>
         public static JobType Sweep { get; } = new JobType(SweepValue);
-        /// <summary> Pipeline. </summary>
+
+        /// <summary> Gets the Pipeline. </summary>
         public static JobType Pipeline { get; } = new JobType(PipelineValue);
-        /// <summary> Spark. </summary>
+
+        /// <summary> Gets the Spark. </summary>
         public static JobType Spark { get; } = new JobType(SparkValue);
+
+        /// <summary> Gets the FineTuning. </summary>
+        public static JobType FineTuning { get; } = new JobType(FineTuningValue);
+
+        /// <summary> Gets the Distillation. </summary>
+        public static JobType Distillation { get; } = new JobType(DistillationValue);
+
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="JobType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(JobType left, JobType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="JobType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="JobType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator JobType(string value) => new JobType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="JobType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator JobType?(string value) => value == null ? null : new JobType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is JobType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(JobType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

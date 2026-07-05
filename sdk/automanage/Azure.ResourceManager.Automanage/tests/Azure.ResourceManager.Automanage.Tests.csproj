@@ -7,8 +7,8 @@
     <Folder Include="SessionRecords\BestPracticeTests\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager.Compute" VersionOverride="1.0.0" />
-    <PackageReference Include="Azure.ResourceManager.Resources" VersionOverride="1.3.0" />
+    <PackageReference Include="Azure.ResourceManager.Compute" />
+    <PackageReference Include="Azure.ResourceManager.Resources" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />

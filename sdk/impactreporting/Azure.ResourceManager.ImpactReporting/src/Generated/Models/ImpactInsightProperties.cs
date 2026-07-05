@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
     /// <summary> Impact category properties. </summary>
     public partial class ImpactInsightProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImpactInsightProperties"/>. </summary>
         /// <param name="category"> category of the insight. </param>
@@ -76,8 +49,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="insightUniqueId"> unique id of the insight. </param>
         /// <param name="impact"> details of of the impact for which insight has been generated. </param>
         /// <param name="additionalDetails"> additional details of the insight. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactInsightProperties(ImpactReportingProvisioningState? provisioningState, string category, string status, string eventId, string groupId, ImpactInsightContent content, DateTimeOffset? eventOn, string insightUniqueId, ImpactDetails impact, IDictionary<string, BinaryData> additionalDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImpactInsightProperties(ImpactReportingProvisioningState? provisioningState, string category, string status, string eventId, string groupId, ImpactInsightContent content, DateTimeOffset? eventOn, string insightUniqueId, ImpactDetails impact, IDictionary<string, BinaryData> additionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Category = category;
@@ -89,58 +62,58 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             InsightUniqueId = insightUniqueId;
             Impact = impact;
             AdditionalDetails = additionalDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ImpactInsightProperties"/> for deserialization. </summary>
-        internal ImpactInsightProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource provisioning state. </summary>
         public ImpactReportingProvisioningState? ProvisioningState { get; }
+
         /// <summary> category of the insight. </summary>
         public string Category { get; set; }
+
         /// <summary> status of the insight. example resolved, repaired, other. </summary>
         public string Status { get; set; }
+
         /// <summary> Identifier of the event that has been correlated with this insight. This can be used to aggregate insights for the same event. </summary>
         public string EventId { get; set; }
+
         /// <summary> Identifier that can be used to group similar insights. </summary>
         public string GroupId { get; set; }
+
         /// <summary> Contains title &amp; description for the insight. </summary>
         public ImpactInsightContent Content { get; set; }
+
         /// <summary> Time of the event, which has been correlated the impact. </summary>
         public DateTimeOffset? EventOn { get; set; }
+
         /// <summary> unique id of the insight. </summary>
         public string InsightUniqueId { get; set; }
+
         /// <summary> details of of the impact for which insight has been generated. </summary>
         public ImpactDetails Impact { get; set; }
+
         /// <summary>
         /// additional details of the insight.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

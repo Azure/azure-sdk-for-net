@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateLinkResourcesList()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_getprivatelinkresources.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_getprivatelinkresources.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

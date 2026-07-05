@@ -6,10 +6,18 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net46</TargetFrameworks>
+    <TargetFrameworks>$(BatchToolsTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == '$(BatchToolsRunnableFramework)'">
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
+    <Compile Remove="**\*.cs" />
+  </ItemGroup>
+
+  <Target Name="WarnNonNetFrameworkBuild" BeforeTargets="CoreCompile" Condition="'$(TargetFramework)' != '$(BatchToolsRunnableFramework)'">
+    <Message Text="CodeGenerationLibrary only works on .NET Framework. This $(TargetFramework) build produces an empty assembly." />
+  </Target>
 </Project>

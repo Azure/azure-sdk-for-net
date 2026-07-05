@@ -18,6 +18,7 @@
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\ObserveStructuredMessagePolicy.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

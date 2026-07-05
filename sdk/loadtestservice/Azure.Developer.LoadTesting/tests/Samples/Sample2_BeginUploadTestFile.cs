@@ -55,7 +55,8 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                 Response validatedFileResponse = operation.GetRawResponse();
                 Console.WriteLine(validatedFileResponse.Content.ToString());
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex.Message);
             }
             #endregion

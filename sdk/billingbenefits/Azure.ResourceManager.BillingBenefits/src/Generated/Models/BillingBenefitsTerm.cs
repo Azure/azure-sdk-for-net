@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -14,41 +15,63 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public readonly partial struct BillingBenefitsTerm : IEquatable<BillingBenefitsTerm>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BillingBenefitsTerm"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BillingBenefitsTerm(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        private const string P1MValue = "P1M";
         private const string P1YValue = "P1Y";
         private const string P3YValue = "P3Y";
         private const string P5YValue = "P5Y";
 
-        /// <summary> P1Y. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BillingBenefitsTerm(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the P1M. </summary>
+        public static BillingBenefitsTerm P1M { get; } = new BillingBenefitsTerm(P1MValue);
+
+        /// <summary> Gets the P1Y. </summary>
         public static BillingBenefitsTerm P1Y { get; } = new BillingBenefitsTerm(P1YValue);
-        /// <summary> P3Y. </summary>
+
+        /// <summary> Gets the P3Y. </summary>
         public static BillingBenefitsTerm P3Y { get; } = new BillingBenefitsTerm(P3YValue);
-        /// <summary> P5Y. </summary>
+
+        /// <summary> Gets the P5Y. </summary>
         public static BillingBenefitsTerm P5Y { get; } = new BillingBenefitsTerm(P5YValue);
+
         /// <summary> Determines if two <see cref="BillingBenefitsTerm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingBenefitsTerm left, BillingBenefitsTerm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingBenefitsTerm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingBenefitsTerm left, BillingBenefitsTerm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingBenefitsTerm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingBenefitsTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingBenefitsTerm(string value) => new BillingBenefitsTerm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingBenefitsTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingBenefitsTerm?(string value) => value == null ? null : new BillingBenefitsTerm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingBenefitsTerm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingBenefitsTerm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

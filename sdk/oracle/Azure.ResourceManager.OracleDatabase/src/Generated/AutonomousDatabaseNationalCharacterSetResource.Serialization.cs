@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
+    /// <summary></summary>
     public partial class AutonomousDatabaseNationalCharacterSetResource : IJsonModel<AutonomousDatabaseNationalCharacterSetData>
     {
-        private static AutonomousDatabaseNationalCharacterSetData s_dataDeserializationInstance;
-        private static AutonomousDatabaseNationalCharacterSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutonomousDatabaseNationalCharacterSetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutonomousDatabaseNationalCharacterSetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutonomousDatabaseNationalCharacterSetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseNationalCharacterSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseNationalCharacterSetData>)Data).Write(writer, options);
 
-        AutonomousDatabaseNationalCharacterSetData IJsonModel<AutonomousDatabaseNationalCharacterSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseNationalCharacterSetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutonomousDatabaseNationalCharacterSetData IJsonModel<AutonomousDatabaseNationalCharacterSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutonomousDatabaseNationalCharacterSetData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutonomousDatabaseNationalCharacterSetData IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDatabaseNationalCharacterSetData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDatabaseNationalCharacterSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

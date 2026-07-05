@@ -1,8 +1,6 @@
 #private preview
 https://github.com/Azure/adx-documentation-pr/blob/master/engineering/adx_netsdk_process.md
 https://github.com/Azure/azure-digital-twins/blob/private-preview/Documentation/how-to-manage-routes.md#filter-events
-https://github.com/Azure/azure-sdk-for-net-pr/tree/feature/IoT-ADT/sdk/digitaltwins/Azure.DigitalTwins.Core/samples/DigitalTwinsClientSample/DTDL/DigitalTwins
-https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure.Iot.DigitalTwins/samples/DigitalTwinServiceClientSample/DTDL/Relationships/HospitalRelationships.json
 https://www.nuget.org/packages/Azure.ResourceManager.DigitalTwins
 https://contoso.azureedge.net/urlsigning/test?expires=2145916800&amp;keyid:key1&amp;signature=iTsrLX9rVAIJkSahBA_j5o9Azf5-j331ohxDR1Gx2js=
 https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1
@@ -11,3 +9,10 @@ https://www.nuget.org/packages/Azure.Monitor.Query.Logs
 https://learn.microsoft.com/dotnet/api/azure.monitor.query.logs.logsqueryclient.queryworkspaceasync
 https://www.nuget.org/packages/Azure.Monitor.Query.Metrics
 https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query.metrics-readme?view=azure-dotnet
+#pre-release packages and directories not yet on main
+https://www.nuget.org/packages/Azure.AI.AgentServer.Core
+https://www.nuget.org/packages/Azure.AI.AgentServer.Responses
+https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
+https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples
+https://www.nuget.org/packages/Microsoft.Azure.PostgreSQL.Auth

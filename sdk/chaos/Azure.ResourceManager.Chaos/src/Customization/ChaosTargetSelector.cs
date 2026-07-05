@@ -9,6 +9,16 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ChaosTargetSelector
     {
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetSelector"/>. </summary>
+        /// <param name="id"> String of the selector ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        protected ChaosTargetSelector(string id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
+        }
+
         /// <summary>
         /// Additional Properties
         /// <para>

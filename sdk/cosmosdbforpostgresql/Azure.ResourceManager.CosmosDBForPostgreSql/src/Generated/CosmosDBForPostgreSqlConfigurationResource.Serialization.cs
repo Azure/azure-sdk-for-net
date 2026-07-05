@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
+    /// <summary></summary>
     public partial class CosmosDBForPostgreSqlConfigurationResource : IJsonModel<CosmosDBForPostgreSqlConfigurationData>
     {
-        private static CosmosDBForPostgreSqlConfigurationData s_dataDeserializationInstance;
-        private static CosmosDBForPostgreSqlConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CosmosDBForPostgreSqlConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CosmosDBForPostgreSqlConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CosmosDBForPostgreSqlConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBForPostgreSqlConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlConfigurationData>)Data).Write(writer, options);
 
-        CosmosDBForPostgreSqlConfigurationData IJsonModel<CosmosDBForPostgreSqlConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBForPostgreSqlConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBForPostgreSqlConfigurationData IJsonModel<CosmosDBForPostgreSqlConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CosmosDBForPostgreSqlConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBForPostgreSqlConfigurationData>(Data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CosmosDBForPostgreSqlConfigurationData IPersistableModel<CosmosDBForPostgreSqlConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBForPostgreSqlConfigurationData>(data, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
 
-        string IPersistableModel<CosmosDBForPostgreSqlConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBForPostgreSqlConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBForPostgreSqlConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

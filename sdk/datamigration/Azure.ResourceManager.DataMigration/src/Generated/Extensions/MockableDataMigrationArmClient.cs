@@ -5,75 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDataMigrationArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDataMigrationArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDataMigrationArmClient for mocking. </summary>
         protected MockableDataMigrationArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDataMigrationArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDataMigrationArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDataMigrationArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDataMigrationArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlDBResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlDBResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlDBResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DatabaseMigrationsMongoToCosmosDbvCoreMongoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource"/> object. </returns>
-        public virtual DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseMigrationsMongoToCosmosDbvCoreMongoResource"/> object. </returns>
+        public virtual DatabaseMigrationsMongoToCosmosDbvCoreMongoResource GetDatabaseMigrationsMongoToCosmosDbvCoreMongoResource(ResourceIdentifier id)
         {
-            DatabaseMigrationSqlDBResource.ValidateResourceId(id);
-            return new DatabaseMigrationSqlDBResource(Client, id);
+            DatabaseMigrationsMongoToCosmosDbvCoreMongoResource.ValidateResourceId(id);
+            return new DatabaseMigrationsMongoToCosmosDbvCoreMongoResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlMIResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlMIResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlMIResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="DatabaseMigrationsMongoToCosmosDbvCoreMongoCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DatabaseMigrationsMongoToCosmosDbvCoreMongoResource"/> objects. </returns>
+        public virtual DatabaseMigrationsMongoToCosmosDbvCoreMongoCollection GetDatabaseMigrationsMongoToCosmosDbvCoreMongos(ResourceIdentifier scope)
+        {
+            return new DatabaseMigrationsMongoToCosmosDbvCoreMongoCollection(Client, scope);
+        }
+
+        /// <summary> Get Database Migration resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="migrationName"> Name of the migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource> GetDatabaseMigrationsMongoToCosmosDbvCoreMongo(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            return GetDatabaseMigrationsMongoToCosmosDbvCoreMongos(scope).Get(migrationName, cancellationToken);
+        }
+
+        /// <summary> Get Database Migration resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="migrationName"> Name of the migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseMigrationsMongoToCosmosDbvCoreMongoResource>> GetDatabaseMigrationsMongoToCosmosDbvCoreMongoAsync(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            return await GetDatabaseMigrationsMongoToCosmosDbvCoreMongos(scope).GetAsync(migrationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MigrationServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource"/> object. </returns>
-        public virtual DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationServiceResource"/> object. </returns>
+        public virtual MigrationServiceResource GetMigrationServiceResource(ResourceIdentifier id)
         {
-            DatabaseMigrationSqlMIResource.ValidateResourceId(id);
-            return new DatabaseMigrationSqlMIResource(Client, id);
+            MigrationServiceResource.ValidateResourceId(id);
+            return new MigrationServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlVmResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlVmResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlVmResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlVmResource"/> object. </returns>
-        public virtual DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(ResourceIdentifier id)
-        {
-            DatabaseMigrationSqlVmResource.ValidateResourceId(id);
-            return new DatabaseMigrationSqlVmResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SqlMigrationServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SqlMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="SqlMigrationServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SqlMigrationServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlMigrationServiceResource"/> object. </returns>
         public virtual SqlMigrationServiceResource GetSqlMigrationServiceResource(ResourceIdentifier id)
@@ -82,34 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             return new SqlMigrationServiceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataMigrationServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMigrationServiceResource"/> object. </returns>
-        public virtual DataMigrationServiceResource GetDataMigrationServiceResource(ResourceIdentifier id)
-        {
-            DataMigrationServiceResource.ValidateResourceId(id);
-            return new DataMigrationServiceResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DataMigrationServiceTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMigrationServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
-        public virtual DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(ResourceIdentifier id)
-        {
-            DataMigrationServiceTaskResource.ValidateResourceId(id);
-            return new DataMigrationServiceTaskResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceServiceTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceServiceTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceServiceTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceServiceTaskResource"/> object. </returns>
         public virtual ServiceServiceTaskResource GetServiceServiceTaskResource(ResourceIdentifier id)
@@ -118,10 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             return new ServiceServiceTaskResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataMigrationProjectResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMigrationProjectResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationProjectResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DataMigrationProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataMigrationProjectResource"/> object. </returns>
         public virtual DataMigrationProjectResource GetDataMigrationProjectResource(ResourceIdentifier id)
@@ -130,10 +111,217 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             return new DataMigrationProjectResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DataMigrationProjectFileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataMigrationProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationProjectFileResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> object. </returns>
+        public virtual DatabaseMigrationsMongoToCosmosDbRUMongoResource GetDatabaseMigrationsMongoToCosmosDbRUMongoResource(ResourceIdentifier id)
+        {
+            DatabaseMigrationsMongoToCosmosDbRUMongoResource.ValidateResourceId(id);
+            return new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> objects. </returns>
+        public virtual DatabaseMigrationsMongoToCosmosDbRUMongoCollection GetDatabaseMigrationsMongoToCosmosDbRUMongos(ResourceIdentifier scope)
+        {
+            return new DatabaseMigrationsMongoToCosmosDbRUMongoCollection(Client, scope);
+        }
+
+        /// <summary> Get Database Migration resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="migrationName"> Name of the migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseMigrationsMongoToCosmosDbRUMongoResource> GetDatabaseMigrationsMongoToCosmosDbRUMongo(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            return GetDatabaseMigrationsMongoToCosmosDbRUMongos(scope).Get(migrationName, cancellationToken);
+        }
+
+        /// <summary> Get Database Migration resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="migrationName"> Name of the migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseMigrationsMongoToCosmosDbRUMongoResource>> GetDatabaseMigrationsMongoToCosmosDbRUMongoAsync(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            return await GetDatabaseMigrationsMongoToCosmosDbRUMongos(scope).GetAsync(migrationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DatabaseMigrationSqlDBResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource"/> object. </returns>
+        public virtual DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(ResourceIdentifier id)
+        {
+            DatabaseMigrationSqlDBResource.ValidateResourceId(id);
+            return new DatabaseMigrationSqlDBResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DatabaseMigrationSqlDBCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DatabaseMigrationSqlDBResource"/> objects. </returns>
+        public virtual DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(ResourceIdentifier scope)
+        {
+            return new DatabaseMigrationSqlDBCollection(Client, scope);
+        }
+
+        /// <summary> Retrieve the Database Migration resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
+        /// <param name="expand"> Complete migration details be included in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+
+            return GetDatabaseMigrationSqlDBs(scope).Get(targetDbName, migrationOperationId, expand, cancellationToken);
+        }
+
+        /// <summary> Retrieve the Database Migration resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
+        /// <param name="expand"> Complete migration details be included in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+
+            return await GetDatabaseMigrationSqlDBs(scope).GetAsync(targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DatabaseMigrationSqlMIResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource"/> object. </returns>
+        public virtual DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(ResourceIdentifier id)
+        {
+            DatabaseMigrationSqlMIResource.ValidateResourceId(id);
+            return new DatabaseMigrationSqlMIResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DatabaseMigrationSqlMICollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DatabaseMigrationSqlMIResource"/> objects. </returns>
+        public virtual DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(ResourceIdentifier scope)
+        {
+            return new DatabaseMigrationSqlMICollection(Client, scope);
+        }
+
+        /// <summary> Retrieve the specified database migration for a given SQL Managed Instance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
+        /// <param name="expand"> Complete migration details be included in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+
+            return GetDatabaseMigrationSqlMIs(scope).Get(targetDbName, migrationOperationId, expand, cancellationToken);
+        }
+
+        /// <summary> Retrieve the specified database migration for a given SQL Managed Instance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
+        /// <param name="expand"> Complete migration details be included in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+
+            return await GetDatabaseMigrationSqlMIs(scope).GetAsync(targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DatabaseMigrationSqlVmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlVmResource"/> object. </returns>
+        public virtual DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(ResourceIdentifier id)
+        {
+            DatabaseMigrationSqlVmResource.ValidateResourceId(id);
+            return new DatabaseMigrationSqlVmResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DatabaseMigrationSqlVmCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DatabaseMigrationSqlVmResource"/> objects. </returns>
+        public virtual DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms(ResourceIdentifier scope)
+        {
+            return new DatabaseMigrationSqlVmCollection(Client, scope);
+        }
+
+        /// <summary> Retrieve the specified database migration for a given SQL VM. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
+        /// <param name="expand"> Complete migration details be included in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+
+            return GetDatabaseMigrationSqlVms(scope).Get(targetDbName, migrationOperationId, expand, cancellationToken);
+        }
+
+        /// <summary> Retrieve the specified database migration for a given SQL VM. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
+        /// <param name="expand"> Complete migration details be included in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+
+            return await GetDatabaseMigrationSqlVms(scope).GetAsync(targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataMigrationServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataMigrationServiceResource"/> object. </returns>
+        public virtual DataMigrationServiceResource GetDataMigrationServiceResource(ResourceIdentifier id)
+        {
+            DataMigrationServiceResource.ValidateResourceId(id);
+            return new DataMigrationServiceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataMigrationServiceTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
+        public virtual DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(ResourceIdentifier id)
+        {
+            DataMigrationServiceTaskResource.ValidateResourceId(id);
+            return new DataMigrationServiceTaskResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DataMigrationProjectFileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataMigrationProjectFileResource"/> object. </returns>
         public virtual DataMigrationProjectFileResource GetDataMigrationProjectFileResource(ResourceIdentifier id)

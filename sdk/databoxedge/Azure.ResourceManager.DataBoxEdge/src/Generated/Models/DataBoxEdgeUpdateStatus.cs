@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeUpdateStatus : IEquatable<DataBoxEdgeUpdateStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeUpdateStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DownloadPendingValue = "DownloadPending";
         private const string DownloadStartedValue = "DownloadStarted";
         private const string DownloadCompletedValue = "DownloadCompleted";
         private const string InstallStartedValue = "InstallStarted";
         private const string InstallCompletedValue = "InstallCompleted";
 
-        /// <summary> DownloadPending. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeUpdateStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the DownloadPending. </summary>
         public static DataBoxEdgeUpdateStatus DownloadPending { get; } = new DataBoxEdgeUpdateStatus(DownloadPendingValue);
-        /// <summary> DownloadStarted. </summary>
+
+        /// <summary> Gets the DownloadStarted. </summary>
         public static DataBoxEdgeUpdateStatus DownloadStarted { get; } = new DataBoxEdgeUpdateStatus(DownloadStartedValue);
-        /// <summary> DownloadCompleted. </summary>
+
+        /// <summary> Gets the DownloadCompleted. </summary>
         public static DataBoxEdgeUpdateStatus DownloadCompleted { get; } = new DataBoxEdgeUpdateStatus(DownloadCompletedValue);
-        /// <summary> InstallStarted. </summary>
+
+        /// <summary> Gets the InstallStarted. </summary>
         public static DataBoxEdgeUpdateStatus InstallStarted { get; } = new DataBoxEdgeUpdateStatus(InstallStartedValue);
-        /// <summary> InstallCompleted. </summary>
+
+        /// <summary> Gets the InstallCompleted. </summary>
         public static DataBoxEdgeUpdateStatus InstallCompleted { get; } = new DataBoxEdgeUpdateStatus(InstallCompletedValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeUpdateStatus left, DataBoxEdgeUpdateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeUpdateStatus left, DataBoxEdgeUpdateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeUpdateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeUpdateStatus(string value) => new DataBoxEdgeUpdateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeUpdateStatus?(string value) => value == null ? null : new DataBoxEdgeUpdateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeUpdateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeUpdateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

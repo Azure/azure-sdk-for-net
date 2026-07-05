@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct OperationsInsightsStatusType : IEquatable<OperationsInsightsStatusType>
     {
         private readonly string _value;
+        /// <summary> Enabling status. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> Enabled status. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabling status. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> NotEnabled status. </summary>
+        private const string NotEnabledValue = "NotEnabled";
+        /// <summary> FailedEnabling status. </summary>
+        private const string FailedEnablingValue = "FailedEnabling";
+        /// <summary> FailedDisabling status. </summary>
+        private const string FailedDisablingValue = "FailedDisabling";
 
         /// <summary> Initializes a new instance of <see cref="OperationsInsightsStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationsInsightsStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnablingValue = "Enabling";
-        private const string EnabledValue = "Enabled";
-        private const string DisablingValue = "Disabling";
-        private const string NotEnabledValue = "NotEnabled";
-        private const string FailedEnablingValue = "FailedEnabling";
-        private const string FailedDisablingValue = "FailedDisabling";
+            _value = value;
+        }
 
         /// <summary> Enabling status. </summary>
         public static OperationsInsightsStatusType Enabling { get; } = new OperationsInsightsStatusType(EnablingValue);
+
         /// <summary> Enabled status. </summary>
         public static OperationsInsightsStatusType Enabled { get; } = new OperationsInsightsStatusType(EnabledValue);
+
         /// <summary> Disabling status. </summary>
         public static OperationsInsightsStatusType Disabling { get; } = new OperationsInsightsStatusType(DisablingValue);
+
         /// <summary> NotEnabled status. </summary>
         public static OperationsInsightsStatusType NotEnabled { get; } = new OperationsInsightsStatusType(NotEnabledValue);
+
         /// <summary> FailedEnabling status. </summary>
         public static OperationsInsightsStatusType FailedEnabling { get; } = new OperationsInsightsStatusType(FailedEnablingValue);
+
         /// <summary> FailedDisabling status. </summary>
         public static OperationsInsightsStatusType FailedDisabling { get; } = new OperationsInsightsStatusType(FailedDisablingValue);
+
         /// <summary> Determines if two <see cref="OperationsInsightsStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationsInsightsStatusType left, OperationsInsightsStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationsInsightsStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationsInsightsStatusType left, OperationsInsightsStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationsInsightsStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationsInsightsStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationsInsightsStatusType(string value) => new OperationsInsightsStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationsInsightsStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationsInsightsStatusType?(string value) => value == null ? null : new OperationsInsightsStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationsInsightsStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationsInsightsStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

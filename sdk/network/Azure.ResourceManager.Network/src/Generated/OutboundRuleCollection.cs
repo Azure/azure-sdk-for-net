@@ -8,85 +8,92 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="OutboundRuleResource"/> and their operations.
     /// Each <see cref="OutboundRuleResource"/> in the collection will belong to the same instance of <see cref="LoadBalancerResource"/>.
-    /// To get an <see cref="OutboundRuleCollection"/> instance call the GetOutboundRules method from an instance of <see cref="LoadBalancerResource"/>.
+    /// To get a <see cref="OutboundRuleCollection"/> instance call the GetOutboundRules method from an instance of <see cref="LoadBalancerResource"/>.
     /// </summary>
     public partial class OutboundRuleCollection : ArmCollection, IEnumerable<OutboundRuleResource>, IAsyncEnumerable<OutboundRuleResource>
     {
-        private readonly ClientDiagnostics _outboundRuleLoadBalancerOutboundRulesClientDiagnostics;
-        private readonly LoadBalancerOutboundRulesRestOperations _outboundRuleLoadBalancerOutboundRulesRestClient;
+        private readonly ClientDiagnostics _loadBalancerOutboundRulesClientDiagnostics;
+        private readonly LoadBalancerOutboundRules _loadBalancerOutboundRulesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="OutboundRuleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of OutboundRuleCollection for mocking. </summary>
         protected OutboundRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="OutboundRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OutboundRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _outboundRuleLoadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", OutboundRuleResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OutboundRuleResource.ResourceType, out string outboundRuleLoadBalancerOutboundRulesApiVersion);
-            _outboundRuleLoadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, outboundRuleLoadBalancerOutboundRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(OutboundRuleResource.ResourceType, out string outboundRuleApiVersion);
+            _loadBalancerOutboundRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", OutboundRuleResource.ResourceType.Namespace, Diagnostics);
+            _loadBalancerOutboundRulesRestClient = new LoadBalancerOutboundRules(_loadBalancerOutboundRulesClientDiagnostics, Pipeline, Endpoint, outboundRuleApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != LoadBalancerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LoadBalancerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified load balancer outbound rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<OutboundRuleResource>> GetAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
-            using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Get");
+            using DiagnosticScope scope = _loadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _outboundRuleLoadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerOutboundRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OutboundRuleData> response = Response.FromValue(OutboundRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OutboundRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified load balancer outbound rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<OutboundRuleResource> Get(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
-            using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Get");
+            using DiagnosticScope scope = _loadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _outboundRuleLoadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerOutboundRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OutboundRuleData> response = Response.FromValue(OutboundRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new OutboundRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,50 @@ namespace Azure.ResourceManager.Network
         /// Gets all the outbound rules in a load balancer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OutboundRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OutboundRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OutboundRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OutboundRuleData, OutboundRuleResource>(new LoadBalancerOutboundRulesGetAllAsyncCollectionResultOfT(
+                _loadBalancerOutboundRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OutboundRuleCollection.GetAll"), data => new OutboundRuleResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the outbound rules in a load balancer.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +207,67 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="OutboundRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OutboundRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundRuleLoadBalancerOutboundRulesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OutboundRuleResource(Client, OutboundRuleData.DeserializeOutboundRuleData(e)), _outboundRuleLoadBalancerOutboundRulesClientDiagnostics, Pipeline, "OutboundRuleCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OutboundRuleData, OutboundRuleResource>(new LoadBalancerOutboundRulesGetAllCollectionResultOfT(
+                _loadBalancerOutboundRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OutboundRuleCollection.GetAll"), data => new OutboundRuleResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
-            using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
+            using DiagnosticScope scope = _loadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _outboundRuleLoadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerOutboundRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OutboundRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OutboundRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OutboundRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +281,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
-            using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
+            using DiagnosticScope scope = _loadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _outboundRuleLoadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerOutboundRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OutboundRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OutboundRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OutboundRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +338,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<OutboundRuleResource>> GetIfExistsAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
-            using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _loadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _outboundRuleLoadBalancerOutboundRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerOutboundRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<OutboundRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OutboundRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OutboundRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OutboundRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OutboundRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +399,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/outboundRules/{outboundRuleName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancerOutboundRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OutboundRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OutboundRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<OutboundRuleResource> GetIfExists(string outboundRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(outboundRuleName, nameof(outboundRuleName));
 
-            using var scope = _outboundRuleLoadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _loadBalancerOutboundRulesClientDiagnostics.CreateScope("OutboundRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _outboundRuleLoadBalancerOutboundRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundRuleName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _loadBalancerOutboundRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, outboundRuleName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<OutboundRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(OutboundRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((OutboundRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<OutboundRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new OutboundRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<OutboundRuleResource> IAsyncEnumerable<OutboundRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

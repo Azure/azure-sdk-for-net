@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.LargeInstance
 {
+    /// <summary></summary>
     public partial class LargeInstanceResource : IJsonModel<LargeInstanceData>
     {
-        private static LargeInstanceData s_dataDeserializationInstance;
-        private static LargeInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LargeInstanceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LargeInstanceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LargeInstanceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LargeInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LargeInstanceData>)Data).Write(writer, options);
 
-        LargeInstanceData IJsonModel<LargeInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LargeInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LargeInstanceData IJsonModel<LargeInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LargeInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LargeInstanceData>(Data, options, AzureResourceManagerLargeInstanceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LargeInstanceData IPersistableModel<LargeInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LargeInstanceData>(data, options, AzureResourceManagerLargeInstanceContext.Default);
 
-        string IPersistableModel<LargeInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LargeInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LargeInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

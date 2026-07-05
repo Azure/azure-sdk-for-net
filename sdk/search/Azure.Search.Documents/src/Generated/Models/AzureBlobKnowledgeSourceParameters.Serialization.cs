@@ -9,14 +9,61 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Search.Documents;
+using Azure.Search.Documents.KnowledgeBases.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AzureBlobKnowledgeSourceParameters : IUtf8JsonSerializable, IJsonModel<AzureBlobKnowledgeSourceParameters>
+    /// <summary> Parameters for Azure Blob Storage knowledge source. </summary>
+    public partial class AzureBlobKnowledgeSourceParameters : IJsonModel<AzureBlobKnowledgeSourceParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobKnowledgeSourceParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AzureBlobKnowledgeSourceParameters"/> for deserialization. </summary>
+        internal AzureBlobKnowledgeSourceParameters()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureBlobKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureBlobKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureBlobKnowledgeSourceParameters IPersistableModel<AzureBlobKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureBlobKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureBlobKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +75,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(Identity))
-            {
-                if (Identity != null)
-                {
-                    writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity, options);
-                }
-                else
-                {
-                    writer.WriteNull("identity");
-                }
             }
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
@@ -55,67 +89,30 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (Optional.IsDefined(EmbeddingModel))
+            if (Optional.IsDefined(IsADLSGen2))
             {
-                if (EmbeddingModel != null)
-                {
-                    writer.WritePropertyName("embeddingModel"u8);
-                    writer.WriteObjectValue(EmbeddingModel, options);
-                }
-                else
-                {
-                    writer.WriteNull("embeddingModel");
-                }
+                writer.WritePropertyName("isADLSGen2"u8);
+                writer.WriteBooleanValue(IsADLSGen2.Value);
             }
-            if (Optional.IsDefined(ChatCompletionModel))
+            if (Optional.IsDefined(IngestionParameters))
             {
-                if (ChatCompletionModel != null)
-                {
-                    writer.WritePropertyName("chatCompletionModel"u8);
-                    writer.WriteObjectValue(ChatCompletionModel, options);
-                }
-                else
-                {
-                    writer.WriteNull("chatCompletionModel");
-                }
+                writer.WritePropertyName("ingestionParameters"u8);
+                writer.WriteObjectValue(IngestionParameters, options);
             }
-            if (Optional.IsDefined(IngestionSchedule))
-            {
-                if (IngestionSchedule != null)
-                {
-                    writer.WritePropertyName("ingestionSchedule"u8);
-                    writer.WriteObjectValue(IngestionSchedule, options);
-                }
-                else
-                {
-                    writer.WriteNull("ingestionSchedule");
-                }
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CreatedResources))
+            if (options.Format != "W" && Optional.IsDefined(CreatedResources))
             {
                 writer.WritePropertyName("createdResources"u8);
-                writer.WriteStartObject();
-                foreach (var item in CreatedResources)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(CreatedResources, options);
             }
-            if (Optional.IsDefined(DisableImageVerbalization))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("disableImageVerbalization"u8);
-                writer.WriteBooleanValue(DisableImageVerbalization.Value);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -124,181 +121,101 @@ namespace Azure.Search.Documents.Indexes.Models
             }
         }
 
-        AzureBlobKnowledgeSourceParameters IJsonModel<AzureBlobKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureBlobKnowledgeSourceParameters IJsonModel<AzureBlobKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureBlobKnowledgeSourceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement, options);
         }
 
-        internal static AzureBlobKnowledgeSourceParameters DeserializeAzureBlobKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureBlobKnowledgeSourceParameters DeserializeAzureBlobKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SearchIndexerDataIdentity identity = default;
             string connectionString = default;
             string containerName = default;
             string folderPath = default;
-            VectorSearchVectorizer embeddingModel = default;
-            KnowledgeAgentModel chatCompletionModel = default;
-            IndexingSchedule ingestionSchedule = default;
-            IReadOnlyDictionary<string, string> createdResources = default;
-            bool? disableImageVerbalization = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isADLSGen2 = default;
+            KnowledgeSourceIngestionParameters ingestionParameters = default;
+            CreatedResources createdResources = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("connectionString"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    connectionString = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("containerName"u8))
+                {
+                    containerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("folderPath"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        identity = null;
+                        folderPath = null;
                         continue;
                     }
-                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
+                    folderPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionString"u8))
+                if (prop.NameEquals("isADLSGen2"u8))
                 {
-                    connectionString = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("containerName"u8))
-                {
-                    containerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("folderPath"u8))
-                {
-                    folderPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("embeddingModel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        embeddingModel = null;
-                        continue;
-                    }
-                    embeddingModel = VectorSearchVectorizer.DeserializeVectorSearchVectorizer(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("chatCompletionModel"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        chatCompletionModel = null;
-                        continue;
-                    }
-                    chatCompletionModel = KnowledgeAgentModel.DeserializeKnowledgeAgentModel(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("ingestionSchedule"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        ingestionSchedule = null;
-                        continue;
-                    }
-                    ingestionSchedule = IndexingSchedule.DeserializeIndexingSchedule(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("createdResources"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    createdResources = dictionary;
+                    isADLSGen2 = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("disableImageVerbalization"u8))
+                if (prop.NameEquals("ingestionParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        ingestionParameters = null;
+                        continue;
+                    }
+                    ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("createdResources"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disableImageVerbalization = property.Value.GetBoolean();
+                    createdResources = CreatedResources.DeserializeCreatedResources(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AzureBlobKnowledgeSourceParameters(
-                identity,
                 connectionString,
                 containerName,
                 folderPath,
-                embeddingModel,
-                chatCompletionModel,
-                ingestionSchedule,
-                createdResources ?? new ChangeTrackingDictionary<string, string>(),
-                disableImageVerbalization,
-                serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<AzureBlobKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureBlobKnowledgeSourceParameters IPersistableModel<AzureBlobKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureBlobKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureBlobKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureBlobKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureBlobKnowledgeSourceParameters FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAzureBlobKnowledgeSourceParameters(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+                isADLSGen2,
+                ingestionParameters,
+                createdResources,
+                additionalBinaryDataProperties);
         }
     }
 }

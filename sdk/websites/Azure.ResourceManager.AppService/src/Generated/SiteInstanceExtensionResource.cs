@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a SiteInstanceExtension along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceExtensionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSiteInstanceExtensionResource method.
+    /// A class representing a SiteInstanceExtension along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteInstanceExtensionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="SiteInstanceResource"/> using the GetSiteInstanceExtension method.
     /// </summary>
     public partial class SiteInstanceExtensionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SiteInstanceExtensionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="instanceId"> The instanceId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _siteInstanceExtensionWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _siteInstanceExtensionWebAppsRestClient;
+        private readonly ClientDiagnostics _msDeployStatusOperationGroupClientDiagnostics;
+        private readonly MSDeployStatusOperationGroup _msDeployStatusOperationGroupRestClient;
         private readonly MSDeployStatusData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/instances/extensions";
 
-        /// <summary> Initializes a new instance of the <see cref="SiteInstanceExtensionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteInstanceExtensionResource for mocking. </summary>
         protected SiteInstanceExtensionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteInstanceExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteInstanceExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteInstanceExtensionResource(ArmClient client, MSDeployStatusData data) : this(client, data.Id)
@@ -55,117 +44,51 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteInstanceExtensionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteInstanceExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteInstanceExtensionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteInstanceExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string siteInstanceExtensionWebAppsApiVersion);
-            _siteInstanceExtensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteInstanceExtensionWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string siteInstanceExtensionApiVersion);
+            _msDeployStatusOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _msDeployStatusOperationGroupRestClient = new MSDeployStatusOperationGroup(_msDeployStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, siteInstanceExtensionApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MSDeployStatusData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="instanceId"> The instanceId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string instanceId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Description for Get the status of the last MSDeploy operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetInstanceMsDeployStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteInstanceExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _siteInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Description for Get the status of the last MSDeploy operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetInstanceMsDeployStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteInstanceExtensionResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _siteInstanceExtensionWebAppsRestClient.GetInstanceMsDeployStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -173,20 +96,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Invoke the MSDeploy web app extension.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_CreateInstanceMSDeployOperation</description>
+        /// <term> Operation Id. </term>
+        /// <description> MSDeployStatusOperationGroup_CreateInstanceMSDeployOperation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,14 +121,27 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdate");
+            using DiagnosticScope scope = _msDeployStatusOperationGroupClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteInstanceExtensionWebAppsRestClient.CreateInstanceMSDeployOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteInstanceExtensionResource>(new SiteInstanceExtensionOperationSource(Client), _siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _msDeployStatusOperationGroupRestClient.CreateCreateInstanceMSDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, WebAppMSDeploy.ToRequestContent(msDeploy), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation<SiteInstanceExtensionResource> operation = new AppServiceArmOperation<SiteInstanceExtensionResource>(
+                    new SiteInstanceExtensionResourceOperationSource(Client),
+                    _msDeployStatusOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -219,20 +155,20 @@ namespace Azure.ResourceManager.AppService
         /// Description for Invoke the MSDeploy web app extension.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_CreateInstanceMSDeployOperation</description>
+        /// <term> Operation Id. </term>
+        /// <description> MSDeployStatusOperationGroup_CreateInstanceMSDeployOperation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,15 +180,124 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdate");
+            using DiagnosticScope scope = _msDeployStatusOperationGroupClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteInstanceExtensionWebAppsRestClient.CreateInstanceMSDeployOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteInstanceExtensionResource>(new SiteInstanceExtensionOperationSource(Client), _siteInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _msDeployStatusOperationGroupRestClient.CreateCreateInstanceMSDeployOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, WebAppMSDeploy.ToRequestContent(msDeploy), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation<SiteInstanceExtensionResource> operation = new AppServiceArmOperation<SiteInstanceExtensionResource>(
+                    new SiteInstanceExtensionResourceOperationSource(Client),
+                    _msDeployStatusOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MSDeployStatusOperationGroup_GetInstanceMsDeployStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceExtensionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SiteInstanceExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _msDeployStatusOperationGroupClientDiagnostics.CreateScope("SiteInstanceExtensionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _msDeployStatusOperationGroupRestClient.CreateGetInstanceMsDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MSDeployStatusData> response = Response.FromValue(MSDeployStatusData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SiteInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Get the status of the last MSDeploy operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MSDeployStatusOperationGroup_GetInstanceMsDeployStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceExtensionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SiteInstanceExtensionResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _msDeployStatusOperationGroupClientDiagnostics.CreateScope("SiteInstanceExtensionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _msDeployStatusOperationGroupRestClient.CreateGetInstanceMsDeployStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MSDeployStatusData> response = Response.FromValue(MSDeployStatusData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SiteInstanceExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -265,31 +310,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get the MSDeploy Log for the last MSDeploy operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy/log</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy/log. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetInstanceMSDeployLog</description>
+        /// <term> Operation Id. </term>
+        /// <description> MSDeployStatusOperationGroup_GetInstanceMSDeployLog. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WebAppMSDeployLog>> GetInstanceMSDeployLogAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetInstanceMSDeployLog");
+            using DiagnosticScope scope = _msDeployStatusOperationGroupClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetInstanceMSDeployLog");
             scope.Start();
             try
             {
-                var response = await _siteInstanceExtensionWebAppsRestClient.GetInstanceMSDeployLogAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _msDeployStatusOperationGroupRestClient.CreateGetInstanceMSDeployLogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WebAppMSDeployLog> response = Response.FromValue(WebAppMSDeployLog.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -303,31 +358,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get the MSDeploy Log for the last MSDeploy operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy/log</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy/log. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetInstanceMSDeployLog</description>
+        /// <term> Operation Id. </term>
+        /// <description> MSDeployStatusOperationGroup_GetInstanceMSDeployLog. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteInstanceExtensionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SiteInstanceExtensionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebAppMSDeployLog> GetInstanceMSDeployLog(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetInstanceMSDeployLog");
+            using DiagnosticScope scope = _msDeployStatusOperationGroupClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetInstanceMSDeployLog");
             scope.Start();
             try
             {
-                var response = _siteInstanceExtensionWebAppsRestClient.GetInstanceMSDeployLog(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _msDeployStatusOperationGroupRestClient.CreateGetInstanceMSDeployLogRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WebAppMSDeployLog> response = Response.FromValue(WebAppMSDeployLog.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

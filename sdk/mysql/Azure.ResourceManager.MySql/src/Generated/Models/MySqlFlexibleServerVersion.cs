@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
@@ -14,33 +15,49 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     public readonly partial struct MySqlFlexibleServerVersion : IEquatable<MySqlFlexibleServerVersion>
     {
         private readonly string _value;
+        private const string Five7Value = "5.7";
+        private const string Eight021Value = "8.0.21";
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MySqlFlexibleServerVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Ver5_7Value = "5.7";
-        private const string Ver8_0_21Value = "8.0.21";
         /// <summary> Determines if two <see cref="MySqlFlexibleServerVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MySqlFlexibleServerVersion left, MySqlFlexibleServerVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MySqlFlexibleServerVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MySqlFlexibleServerVersion left, MySqlFlexibleServerVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MySqlFlexibleServerVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MySqlFlexibleServerVersion(string value) => new MySqlFlexibleServerVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MySqlFlexibleServerVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MySqlFlexibleServerVersion?(string value) => value == null ? null : new MySqlFlexibleServerVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MySqlFlexibleServerVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MySqlFlexibleServerVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

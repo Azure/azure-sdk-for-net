@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.NetApp;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableNetAppResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableNetAppResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNetAppResourceGroupResource for mocking. </summary>
         protected MockableNetAppResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetAppResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNetAppResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNetAppResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of NetAppAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NetAppAccountResources and their operations over a NetAppAccountResource. </returns>
+        /// <summary> Gets a collection of NetAppAccounts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NetAppAccounts and their operations over a NetAppAccountResource. </returns>
         public virtual NetAppAccountCollection GetNetAppAccounts()
         {
             return GetCachedClient(client => new NetAppAccountCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// Get the NetApp account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.NetApp.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetAppAccountResource>> GetNetAppAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return await GetNetAppAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// Get the NetApp account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetAppAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.NetApp.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetAppAccountResource> GetNetAppAccount(string accountName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
             return GetNetAppAccounts().Get(accountName, cancellationToken);
         }
     }

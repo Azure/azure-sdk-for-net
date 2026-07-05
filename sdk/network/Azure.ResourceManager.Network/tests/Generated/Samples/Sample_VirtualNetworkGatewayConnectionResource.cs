@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionGet.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionDelete.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
 
             // invoke the operation
-            await virtualNetworkGatewayConnection.DeleteAsync(WaitUntil.Completed);
+            await virtualNetworkGatewayConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVirtualNetworkGatewayConnectionTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionUpdateTags.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<VirtualNetworkGatewayConnectionResource> lro = await virtualNetworkGatewayConnection.UpdateAsync(WaitUntil.Completed, networkTagsObject);
+            ArmOperation<VirtualNetworkGatewayConnectionResource> lro = await virtualNetworkGatewayConnection.UpdateAsync(WaitUntil.Completed, networkTagsObject, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkGatewayConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task VpnDeviceConfigurationScript_GetVPNDeviceConfigurationScript()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayVpnDeviceConfigurationScript.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayVpnDeviceConfigurationScript.json
             // this example is just showing the usage of "VirtualNetworkGateways_VpnDeviceConfigurationScript" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task SetSharedKey_SetVirtualNetworkGatewayConnectionSharedKey()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionSetSharedKey.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionSetSharedKey.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_SetSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             ConnectionSharedKey connectionSharedKey = new ConnectionSharedKey("AzureAbc123");
-            ArmOperation<ConnectionSharedKey> lro = await virtualNetworkGatewayConnection.SetSharedKeyAsync(WaitUntil.Completed, connectionSharedKey);
+            ArmOperation<ConnectionSharedKey> lro = await virtualNetworkGatewayConnection.SetSharedKeyAsync(WaitUntil.Completed, connectionSharedKey, cancellationToken: System.Threading.CancellationToken.None);
             ConnectionSharedKey result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSharedKey_GetVirtualNetworkGatewayConnectionSharedKey()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionGetSharedKey.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionGetSharedKey.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_GetSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResetSharedKey_ResetVirtualNetworkGatewayConnectionSharedKey()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionResetSharedKey.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionResetSharedKey.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_ResetSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             ConnectionResetSharedKey connectionResetSharedKey = new ConnectionResetSharedKey(128);
-            ArmOperation<ConnectionResetSharedKey> lro = await virtualNetworkGatewayConnection.ResetSharedKeyAsync(WaitUntil.Completed, connectionResetSharedKey);
+            ArmOperation<ConnectionResetSharedKey> lro = await virtualNetworkGatewayConnection.ResetSharedKeyAsync(WaitUntil.Completed, connectionResetSharedKey, cancellationToken: System.Threading.CancellationToken.None);
             ConnectionResetSharedKey result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayConnectionWithFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionStartPacketCaptureFilterData.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionStartPacketCaptureFilterData.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
-            ArmOperation<string> lro = await virtualNetworkGatewayConnection.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await virtualNetworkGatewayConnection.StartPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayConnectionWithoutFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionStartPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionStartPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<string> lro = await virtualNetworkGatewayConnection.StartPacketCaptureAsync(WaitUntil.Completed);
+            ArmOperation<string> lro = await virtualNetworkGatewayConnection.StartPacketCaptureAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StopPacketCapture_StopPacketCaptureOnVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionStopPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionStopPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_StopPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
-            ArmOperation<string> lro = await virtualNetworkGatewayConnection.StopPacketCaptureAsync(WaitUntil.Completed, content);
+            ArmOperation<string> lro = await virtualNetworkGatewayConnection.StopPacketCaptureAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIkeSas_GetVirtualNetworkGatewayConnectionIkeSa()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionGetIkeSas.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionGetIkeSas.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_GetIkeSas" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
 
             // invoke the operation
-            ArmOperation<string> lro = await virtualNetworkGatewayConnection.GetIkeSasAsync(WaitUntil.Completed);
+            ArmOperation<string> lro = await virtualNetworkGatewayConnection.GetIkeSasAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResetConnection_ResetVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/VirtualNetworkGatewayConnectionReset.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayConnectionReset.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_ResetConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
 
             // invoke the operation
-            await virtualNetworkGatewayConnection.ResetConnectionAsync(WaitUntil.Completed);
+            await virtualNetworkGatewayConnection.ResetConnectionAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

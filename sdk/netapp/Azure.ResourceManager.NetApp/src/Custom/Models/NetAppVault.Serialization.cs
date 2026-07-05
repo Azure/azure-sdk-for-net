@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                writer.WriteObjectValue(SystemData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<Azure.ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<Azure.ResourceManager.Models.SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

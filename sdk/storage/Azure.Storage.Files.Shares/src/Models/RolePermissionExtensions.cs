@@ -159,7 +159,7 @@ namespace Azure.Storage.Files.Shares.Models
                 throw new ArgumentException($"Invalid character in symbolic role permission: {s[2]}");
             }
 
-           return rolePermissions;
+            return rolePermissions;
         }
     }
 }

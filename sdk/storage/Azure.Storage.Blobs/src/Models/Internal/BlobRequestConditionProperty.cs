@@ -19,6 +19,8 @@ namespace Azure.Storage.Blobs.Models
         IfMaxSizeLessThanOrEqual = 128,
         IfSequenceNumberLessThan = 256,
         IfSequenceNumberLessThanOrEqual = 512,
-        IfSequenceNumberEqual = 1024
+        IfSequenceNumberEqual = 1024,
+        AccessTierIfModifiedSince = 2048,
+        AccessTierIfUnmodifiedSince = 4096
     }
 }

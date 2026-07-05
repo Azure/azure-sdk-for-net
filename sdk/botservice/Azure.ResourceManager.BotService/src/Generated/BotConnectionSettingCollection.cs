@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.BotService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.BotService
     /// </summary>
     public partial class BotConnectionSettingCollection : ArmCollection, IEnumerable<BotConnectionSettingResource>, IAsyncEnumerable<BotConnectionSettingResource>
     {
-        private readonly ClientDiagnostics _botConnectionSettingBotConnectionClientDiagnostics;
-        private readonly BotConnectionRestOperations _botConnectionSettingBotConnectionRestClient;
+        private readonly ClientDiagnostics _connectionSettingsClientDiagnostics;
+        private readonly ConnectionSettings _connectionSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BotConnectionSettingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BotConnectionSettingCollection for mocking. </summary>
         protected BotConnectionSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BotConnectionSettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotConnectionSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BotConnectionSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _botConnectionSettingBotConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotConnectionSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BotConnectionSettingResource.ResourceType, out string botConnectionSettingBotConnectionApiVersion);
-            _botConnectionSettingBotConnectionRestClient = new BotConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botConnectionSettingBotConnectionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BotConnectionSettingResource.ResourceType, out string botConnectionSettingApiVersion);
+            _connectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotConnectionSettingResource.ResourceType.Namespace, Diagnostics);
+            _connectionSettingsRestClient = new ConnectionSettings(_connectionSettingsClientDiagnostics, Pipeline, Endpoint, botConnectionSettingApiVersion ?? "2023-09-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BotResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BotResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BotResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Register a new Auth Connection for a Bot Service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.BotService
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="data"> The parameters to provide for creating the Connection Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<BotConnectionSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string connectionName, BotConnectionSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _botConnectionSettingBotConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new BotServiceArmOperation<BotConnectionSettingResource>(Response.FromValue(new BotConnectionSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, BotConnectionSettingData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BotConnectionSettingData> response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                BotServiceArmOperation<BotConnectionSettingResource> operation = new BotServiceArmOperation<BotConnectionSettingResource>(Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.BotService
         /// Register a new Auth Connection for a Bot Service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.BotService
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="data"> The parameters to provide for creating the Connection Setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<BotConnectionSettingResource> CreateOrUpdate(WaitUntil waitUntil, string connectionName, BotConnectionSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken);
-                var uri = _botConnectionSettingBotConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new BotServiceArmOperation<BotConnectionSettingResource>(Response.FromValue(new BotConnectionSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, BotConnectionSettingData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BotConnectionSettingData> response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                BotServiceArmOperation<BotConnectionSettingResource> operation = new BotServiceArmOperation<BotConnectionSettingResource>(Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.BotService
         /// Get a Connection Setting registration for a Bot Service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<BotConnectionSettingResource>> GetAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BotConnectionSettingData> response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.BotService
         /// Get a Connection Setting registration for a Bot Service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<BotConnectionSettingResource> Get(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BotConnectionSettingData> response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,50 @@ namespace Azure.ResourceManager.BotService
         /// Returns all the Connection Settings registered to a particular BotService resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_ListByBotService</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_ListByBotService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BotConnectionSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BotConnectionSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotConnectionSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceAsyncCollectionResultOfT(
+                _connectionSettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotConnectionSettingCollection.GetAll"), data => new BotConnectionSettingResource(Client, data));
         }
 
         /// <summary>
         /// Returns all the Connection Settings registered to a particular BotService resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_ListByBotService</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_ListByBotService. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +317,67 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotConnectionSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotConnectionSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BotConnectionSettingData, BotConnectionSettingResource>(new ConnectionSettingsGetByBotServiceCollectionResultOfT(
+                _connectionSettingsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BotConnectionSettingCollection.GetAll"), data => new BotConnectionSettingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BotConnectionSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BotConnectionSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +391,50 @@ namespace Azure.ResourceManager.BotService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BotConnectionSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BotConnectionSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +448,54 @@ namespace Azure.ResourceManager.BotService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<BotConnectionSettingResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BotConnectionSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BotConnectionSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BotConnectionSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +509,54 @@ namespace Azure.ResourceManager.BotService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSettings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-09-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<BotConnectionSettingResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
+            using DiagnosticScope scope = _connectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectionSettingsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BotConnectionSettingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BotConnectionSettingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BotConnectionSettingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BotConnectionSettingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +576,7 @@ namespace Azure.ResourceManager.BotService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BotConnectionSettingResource> IAsyncEnumerable<BotConnectionSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

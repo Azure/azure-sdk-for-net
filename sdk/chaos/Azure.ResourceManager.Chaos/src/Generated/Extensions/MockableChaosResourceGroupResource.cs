@@ -8,113 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Chaos;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableChaosResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableChaosResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableChaosResourceGroupResource for mocking. </summary>
         protected MockableChaosResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableChaosResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableChaosResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableChaosResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ChaosTargetResources in the ResourceGroupResource. </summary>
-        /// <param name="parentProviderNamespace"> The parent resource provider namespace. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
-        /// <param name="parentResourceName"> The parent resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/> or <paramref name="parentResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ChaosTargetResources and their operations over a ChaosTargetResource. </returns>
-        public virtual ChaosTargetCollection GetChaosTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName)
-        {
-            return new ChaosTargetCollection(Client, Id, parentProviderNamespace, parentResourceType, parentResourceName);
-        }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="parentProviderNamespace"> The parent resource provider namespace. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
-        /// <param name="parentResourceName"> The parent resource name. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosTargetResource>> GetChaosTargetAsync(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            return await GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Target_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="parentProviderNamespace"> The parent resource provider namespace. </param>
-        /// <param name="parentResourceType"> The parent resource type. </param>
-        /// <param name="parentResourceName"> The parent resource name. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ChaosTargetResource> GetChaosTarget(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            return GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ChaosExperimentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ChaosExperimentResources and their operations over a ChaosExperimentResource. </returns>
+        /// <summary> Gets a collection of ChaosExperiments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosExperiments and their operations over a ChaosExperimentResource. </returns>
         public virtual ChaosExperimentCollection GetChaosExperiments()
         {
             return GetCachedClient(client => new ChaosExperimentCollection(client, Id));
@@ -124,20 +42,16 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// Get a Experiment resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Experiments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,6 +62,8 @@ namespace Azure.ResourceManager.Chaos.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ChaosExperimentResource>> GetChaosExperimentAsync(string experimentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
             return await GetChaosExperiments().GetAsync(experimentName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -155,20 +71,16 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// Get a Experiment resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Experiment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Experiments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ChaosExperimentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +91,139 @@ namespace Azure.ResourceManager.Chaos.Mocking
         [ForwardsClientCalls]
         public virtual Response<ChaosExperimentResource> GetChaosExperiment(string experimentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+
             return GetChaosExperiments().Get(experimentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ChaosPrivateAccesses in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosPrivateAccesses and their operations over a ChaosPrivateAccessResource. </returns>
+        public virtual ChaosPrivateAccessCollection GetChaosPrivateAccesses()
+        {
+            return GetCachedClient(client => new ChaosPrivateAccessCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a private access resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/privateAccesses/{privateAccessName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateAccesses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateAccessName"> The name of the private access resource that is being created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateAccessName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosPrivateAccessResource>> GetChaosPrivateAccessAsync(string privateAccessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateAccessName, nameof(privateAccessName));
+
+            return await GetChaosPrivateAccesses().GetAsync(privateAccessName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a private access resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/privateAccesses/{privateAccessName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateAccesses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateAccessName"> The name of the private access resource that is being created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateAccessName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosPrivateAccessResource> GetChaosPrivateAccess(string privateAccessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateAccessName, nameof(privateAccessName));
+
+            return GetChaosPrivateAccesses().Get(privateAccessName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ChaosWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ChaosWorkspaces and their operations over a ChaosWorkspaceResource. </returns>
+        public virtual ChaosWorkspaceCollection GetChaosWorkspaces()
+        {
+            return GetCachedClient(client => new ChaosWorkspaceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Workspace resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/workspaces/{workspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> String that represents a Workspace resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosWorkspaceResource>> GetChaosWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            return await GetChaosWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Workspace resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/workspaces/{workspaceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> String that represents a Workspace resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosWorkspaceResource> GetChaosWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            return GetChaosWorkspaces().Get(workspaceName, cancellationToken);
         }
     }
 }

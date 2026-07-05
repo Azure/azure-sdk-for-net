@@ -33,8 +33,10 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
+    "cspell.yaml",
     "assets.json",
-    "eng/Packages.Data.props",
+    "eng/centralpackagemanagement/**",
+    "eng/NoWarnSkipValidation.txt",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -63,12 +65,14 @@
     "aadds",
     "aadkerb",
     "adls",
+    "agentic",
     "aoai",
     "apos",
     "azsdk",
     "blazor",
     "byok",
     "centralus",
+    "clippy",
     "colls",
     "contoso",
     "cpus",
@@ -211,17 +215,6 @@
       ]
     },
     {
-      "filename": "**/sdk/ai/**/*.cs",
-      "words": [
-        "ansii",
-        "atbash",
-        "azureai",
-        "bleu",
-        "gleu",
-        "ubinary"
-      ]
-    },
-    {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
         "dmts"
@@ -280,6 +273,7 @@
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
+        "esxi",
         "iscsi",
         "mirrorings",
         "nsxt",
@@ -338,6 +332,12 @@
         "alexa",
         "cmek",
         "omnichannel"
+      ]
+    },
+    {
+      "filename": "**/sdk/certificateregistration/**/*.cs",
+      "words": [
+        "guage"
       ]
     },
     {
@@ -436,22 +436,6 @@
       ]
     },
     {
-      "filename": "**/sdk/connectedvmwarevsphere/**/*",
-      "words": [
-        "cpus",
-        "ctlr",
-        "lsilogic",
-        "lsilogicsas",
-        "pcnet",
-        "pmem",
-        "pvscsi",
-        "sesparse",
-        "vcenter",
-        "vmware",
-        "vsphere"
-      ]
-    },
-    {
       "filename": "**/sdk/containerapps/**/*",
       "words": [
         "agentic",
@@ -489,6 +473,8 @@
         "somaxconn",
         "sysctls",
         "tcpkeepalive",
+        "undrainable",
+        "vtpm",
         "wasi",
         "wmem"
       ]
@@ -538,6 +524,7 @@
     {
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
+        "cspm",
         "liftr"
       ]
     },
@@ -648,16 +635,6 @@
       ]
     },
     {
-      "filename": "**/sdk/desktopvirtualization/**/*.cs",
-      "words": [
-        "adfs",
-        "fslogix",
-        "msix",
-        "sso",
-        "unhide"
-      ]
-    },
-    {
       "filename": "**/sdk/deviceupdate/**/*.cs",
       "words": [
         "fqdns"
@@ -763,13 +740,6 @@
       "filename": "**/sdk/hybriddatamanager/**/*.cs",
       "words": [
         "oaep"
-      ]
-    },
-    {
-      "filename": "**/sdk/hybridaks/**/*.cs",
-      "words": [
-        "kubevirt",
-        "vmip"
       ]
     },
     {
@@ -984,31 +954,13 @@
       ]
     },
     {
-      "filename": "**/sdk/kusto/**/*.cs",
-      "words": [
-        "openai",
-        "scsv",
-        "sohsv",
-        "tbps",
-        "tsve"
-      ]
-    },
-    {
       "filename": "**/sdk/labservices/**/*.cs",
       "words": [
         "reimage",
         "reimaging"
       ]
     },
-    {
-      "filename": "**/sdk/managednetworkfabric/**/*.cs",
-      "words": [
-        "dscp",
-        "evpn",
-        "gshut",
-        "mbps"
-      ]
-    },
+
     {
       "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [
@@ -1021,18 +973,6 @@
         "actuals",
         "bangla",
         "hecto"
-      ]
-    },
-    {
-      "filename": "**/sdk/mediaservices/**/*.cs",
-      "words": [
-        "cabac",
-        "cavlc",
-        "cbcs",
-        "cenc",
-        "deinterlace",
-        "rtmp",
-        "scms"
       ]
     },
     {
@@ -1197,15 +1137,6 @@
       ]
     },
     {
-      "filename": "**/sdk/postgresql/**/*.cs",
-      "words": [
-        "awsec",
-        "byok",
-        "vcore",
-        "vcores"
-      ]
-    },
-    {
       "filename": "**/sdk/powerbidedicated/**/*.cs",
       "words": [
         "pbie",
@@ -1228,46 +1159,6 @@
       ]
     },
     {
-      "filename": "**/sdk/provisioning/Azure.Provisioning.Kusto/**/*.cs",
-      "words": [
-        "apacheavro",
-        "openai",
-        "scsv",
-        "sohsv",
-        "tbps",
-        "tsve"
-      ]
-    },
-    {
-      "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
-      "words": [
-        "awsec"
-      ]
-    },
-    {
-      "filename": "**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs",
-      "words": [
-        "freemium"
-      ]
-    },
-    {
-      "filename": "**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs",
-      "words": [
-        "mibps"
-      ]
-    },
-    {
-      "filename": "**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs",
-      "words": [
-        "dscp",
-        "fqdns",
-        "ipam",
-        "snat",
-        "vnets",
-        "vxlan"
-      ]
-    },
-    {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
         "qumulo"
@@ -1282,67 +1173,9 @@
       ]
     },
     {
-      "filename": "**/sdk/recoveryservices/**/*.cs",
-      "words": [
-        "bcdr"
-      ]
-    },
-    {
-      "filename": "**/sdk/recoveryservices-backup/**/*.cs",
-      "words": [
-        "dedup",
-        "dpm",
-        "hana",
-        "kpis",
-        "mab",
-        "rehydrated",
-        "reregister",
-        "vmilr",
-        "xcool",
-        "xsmb"
-      ]
-    },
-    {
-      "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
-      "words": [
-        "dras",
-        "fqdns",
-        "nics",
-        "reprotect"
-      ]
-    },
-    {
-      "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
-      "words": [
-        "ahub",
-        "bcdr",
-        "distro",
-        "dras",
-        "esxi",
-        "fqdns",
-        "nics",
-        "orignal",
-        "payg",
-        "reassociate",
-        "reprotect",
-        "seleted",
-        "vcenter",
-        "vcpus",
-        "vmware"
-      ]
-    },
-    {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "unprovisioning"
-      ]
-    },
-    {
-      "filename": "**/sdk/resourceconnector/Azure.ResourceManager.ResourceConnector/api/*.cs",
-      "words": [
-        "capi",
-        "kvaio",
-        "scvmm"
       ]
     },
     {
@@ -1440,6 +1273,7 @@
         "hkey",
         "mcas",
         "mdatp",
+        "mdti",
         "msti",
         "nlstext",
         "puid",
@@ -1486,6 +1320,7 @@
       "filename": "**/sdk/search/**/*.cs",
       "words": [
         "adls",
+        "agentic",
         "bangla",
         "beider",
         "bokmaal",
@@ -1539,13 +1374,6 @@
       ]
     },
     {
-      "filename": "**/sdk/storagemover/**/*.cs",
-      "words": [
-        "mbps",
-        "unregistering"
-      ]
-    },
-    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"
@@ -1570,6 +1398,7 @@
         "informix",
         "magento",
         "netezza",
+        "ondemand",
         "oozie",
         "responsys",
         "sasl",
@@ -1732,12 +1561,6 @@
         "rpath",
         "runpath",
         "sbom"
-      ]
-    },
-    {
-      "filename": "**/sdk/monitor/**/*.cs",
-      "words": [
-        "resourceid"
       ]
     },
     {

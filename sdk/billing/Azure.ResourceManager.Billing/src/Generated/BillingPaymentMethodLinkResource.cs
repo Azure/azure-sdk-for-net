@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingPaymentMethodLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodLinkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingProfileResource"/> using the GetBillingPaymentMethodLink method.
+    /// A class representing a BillingPaymentMethodLink along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingProfileResource"/> using the GetBillingPaymentMethodLinks method.
     /// </summary>
     public partial class BillingPaymentMethodLinkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodLinkResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="billingProfileName"> The billingProfileName. </param>
-        /// <param name="paymentMethodName"> The paymentMethodName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string paymentMethodName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingPaymentMethodLinkPaymentMethodsClientDiagnostics;
-        private readonly PaymentMethodsRestOperations _billingPaymentMethodLinkPaymentMethodsRestClient;
+        private readonly ClientDiagnostics _paymentMethodsClientDiagnostics;
+        private readonly PaymentMethods _paymentMethodsRestClient;
         private readonly BillingPaymentMethodLinkData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/paymentMethodLinks";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingPaymentMethodLinkResource for mocking. </summary>
         protected BillingPaymentMethodLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodLinkResource(ArmClient client, BillingPaymentMethodLinkData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingPaymentMethodLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingPaymentMethodLinkPaymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingPaymentMethodLinkPaymentMethodsApiVersion);
-            _billingPaymentMethodLinkPaymentMethodsRestClient = new PaymentMethodsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingPaymentMethodLinkPaymentMethodsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingPaymentMethodLinkApiVersion);
+            _paymentMethodsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _paymentMethodsRestClient = new PaymentMethods(_paymentMethodsClientDiagnostics, Pipeline, Endpoint, billingPaymentMethodLinkApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingPaymentMethodLinkData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="billingProfileName"> The billingProfileName. </param>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string paymentMethodName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentMethodLinks_GetByBillingProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPaymentMethodLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingPaymentMethodLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Get");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfileAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingPaymentMethodLinkData> response = Response.FromValue(BillingPaymentMethodLinkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets a payment method linked with a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/paymentMethodLinks/{paymentMethodName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PaymentMethods_GetByBillingProfile</description>
+        /// <term> Operation Id. </term>
+        /// <description> PaymentMethodLinks_GetByBillingProfile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPaymentMethodLinkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPaymentMethodLinkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingPaymentMethodLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPaymentMethodLinkPaymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Get");
+            using DiagnosticScope scope = _paymentMethodsClientDiagnostics.CreateScope("BillingPaymentMethodLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _billingPaymentMethodLinkPaymentMethodsRestClient.GetByBillingProfile(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _paymentMethodsRestClient.CreateGetByBillingProfileRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingPaymentMethodLinkData> response = Response.FromValue(BillingPaymentMethodLinkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPaymentMethodLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

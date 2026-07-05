@@ -17,17 +17,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="globalAcsNamespace"> ACS namespace name - tenant for our service. </param>
         /// <param name="globalAcsHostName"> Acs mgmt host name to connect to. </param>
         /// <param name="globalAcsRPRealm"> Global ACS namespace RP realm. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="globalAcsNamespace"/>, <paramref name="globalAcsHostName"/> or <paramref name="globalAcsRPRealm"/> is null. </exception>
-        internal ResourceCertificateAndAcsDetails(string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm)
+        internal ResourceCertificateAndAcsDetails(string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base("AccessControlService")
         {
-            Argument.AssertNotNull(globalAcsNamespace, nameof(globalAcsNamespace));
-            Argument.AssertNotNull(globalAcsHostName, nameof(globalAcsHostName));
-            Argument.AssertNotNull(globalAcsRPRealm, nameof(globalAcsRPRealm));
-
             GlobalAcsNamespace = globalAcsNamespace;
             GlobalAcsHostName = globalAcsHostName;
             GlobalAcsRPRealm = globalAcsRPRealm;
-            AuthType = "AccessControlService";
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAcsDetails"/>. </summary>
@@ -40,27 +34,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="validStartOn"> Certificate Validity start Date time. </param>
         /// <param name="validEndOn"> Certificate Validity End Date time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="globalAcsNamespace"> ACS namespace name - tenant for our service. </param>
         /// <param name="globalAcsHostName"> Acs mgmt host name to connect to. </param>
         /// <param name="globalAcsRPRealm"> Global ACS namespace RP realm. </param>
-        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, serializedAdditionalRawData)
+        internal ResourceCertificateAndAcsDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string globalAcsNamespace, string globalAcsHostName, string globalAcsRPRealm) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, additionalBinaryDataProperties)
         {
             GlobalAcsNamespace = globalAcsNamespace;
             GlobalAcsHostName = globalAcsHostName;
             GlobalAcsRPRealm = globalAcsRPRealm;
-            AuthType = authType ?? "AccessControlService";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceCertificateAndAcsDetails"/> for deserialization. </summary>
-        internal ResourceCertificateAndAcsDetails()
-        {
         }
 
         /// <summary> ACS namespace name - tenant for our service. </summary>
         public string GlobalAcsNamespace { get; }
+
         /// <summary> Acs mgmt host name to connect to. </summary>
         public string GlobalAcsHostName { get; }
+
         /// <summary> Global ACS namespace RP realm. </summary>
         public string GlobalAcsRPRealm { get; }
     }

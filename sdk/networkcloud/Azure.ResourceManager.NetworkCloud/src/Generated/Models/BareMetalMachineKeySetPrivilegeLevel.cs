@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct BareMetalMachineKeySetPrivilegeLevel : IEquatable<BareMetalMachineKeySetPrivilegeLevel>
     {
         private readonly string _value;
+        /// <summary> Standard access level. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Superuser access level. </summary>
+        private const string SuperuserValue = "Superuser";
+        /// <summary> Other access level. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineKeySetPrivilegeLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BareMetalMachineKeySetPrivilegeLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StandardValue = "Standard";
-        private const string SuperuserValue = "Superuser";
-        private const string OtherValue = "Other";
-
-        /// <summary> Standard. </summary>
+        /// <summary> Standard access level. </summary>
         public static BareMetalMachineKeySetPrivilegeLevel Standard { get; } = new BareMetalMachineKeySetPrivilegeLevel(StandardValue);
-        /// <summary> Superuser. </summary>
+
+        /// <summary> Superuser access level. </summary>
         public static BareMetalMachineKeySetPrivilegeLevel Superuser { get; } = new BareMetalMachineKeySetPrivilegeLevel(SuperuserValue);
-        /// <summary> Other. </summary>
+
+        /// <summary> Other access level. </summary>
         public static BareMetalMachineKeySetPrivilegeLevel Other { get; } = new BareMetalMachineKeySetPrivilegeLevel(OtherValue);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetPrivilegeLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BareMetalMachineKeySetPrivilegeLevel left, BareMetalMachineKeySetPrivilegeLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BareMetalMachineKeySetPrivilegeLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BareMetalMachineKeySetPrivilegeLevel left, BareMetalMachineKeySetPrivilegeLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BareMetalMachineKeySetPrivilegeLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetPrivilegeLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BareMetalMachineKeySetPrivilegeLevel(string value) => new BareMetalMachineKeySetPrivilegeLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BareMetalMachineKeySetPrivilegeLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BareMetalMachineKeySetPrivilegeLevel?(string value) => value == null ? null : new BareMetalMachineKeySetPrivilegeLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BareMetalMachineKeySetPrivilegeLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BareMetalMachineKeySetPrivilegeLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

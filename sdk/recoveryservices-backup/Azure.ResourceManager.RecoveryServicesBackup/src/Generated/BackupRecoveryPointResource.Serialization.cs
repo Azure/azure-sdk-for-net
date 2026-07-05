@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    public partial class BackupRecoveryPointResource : IJsonModel<BackupRecoveryPointData>
+    /// <summary></summary>
+    public partial class BackupRecoveryPointResource : ArmResource, IJsonModel<BackupRecoveryPointData>
     {
-        private static BackupRecoveryPointData s_dataDeserializationInstance;
-        private static BackupRecoveryPointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BackupRecoveryPointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BackupRecoveryPointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BackupRecoveryPointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackupRecoveryPointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupRecoveryPointData>)Data).Write(writer, options);
 
-        BackupRecoveryPointData IJsonModel<BackupRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupRecoveryPointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupRecoveryPointData IJsonModel<BackupRecoveryPointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BackupRecoveryPointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupRecoveryPointData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BackupRecoveryPointData IPersistableModel<BackupRecoveryPointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupRecoveryPointData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupRecoveryPointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupRecoveryPointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

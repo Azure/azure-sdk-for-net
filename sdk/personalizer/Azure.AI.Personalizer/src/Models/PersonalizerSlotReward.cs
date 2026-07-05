@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> The SlotReward. </summary>
     [CodeGenModel("SlotReward")]
-    public partial class PersonalizerSlotReward {}
+    public partial class PersonalizerSlotReward { }
 }

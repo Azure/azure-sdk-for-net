@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.MongoCluster.Models
     internal readonly partial struct IdentityProviderType : IEquatable<IdentityProviderType>
     {
         private readonly string _value;
+        /// <summary> Microsoft Entra ID provider. </summary>
+        private const string MicrosoftEntraIDValue = "MicrosoftEntraID";
 
         /// <summary> Initializes a new instance of <see cref="IdentityProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IdentityProviderType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string MicrosoftEntraIdValue = "MicrosoftEntraID";
-
         /// <summary> Microsoft Entra ID provider. </summary>
-        public static IdentityProviderType MicrosoftEntraId { get; } = new IdentityProviderType(MicrosoftEntraIdValue);
+        public static IdentityProviderType MicrosoftEntraID { get; } = new IdentityProviderType(MicrosoftEntraIDValue);
+
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IdentityProviderType left, IdentityProviderType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IdentityProviderType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IdentityProviderType left, IdentityProviderType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IdentityProviderType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IdentityProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IdentityProviderType(string value) => new IdentityProviderType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IdentityProviderType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IdentityProviderType?(string value) => value == null ? null : new IdentityProviderType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IdentityProviderType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IdentityProviderType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

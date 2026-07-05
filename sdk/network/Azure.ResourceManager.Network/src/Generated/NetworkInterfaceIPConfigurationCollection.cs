@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkInterfaceIPConfigurationCollection : ArmCollection, IEnumerable<NetworkInterfaceIPConfigurationResource>, IAsyncEnumerable<NetworkInterfaceIPConfigurationResource>
     {
-        private readonly ClientDiagnostics _networkInterfaceIPConfigurationClientDiagnostics;
-        private readonly NetworkInterfaceIPConfigurationsRestOperations _networkInterfaceIPConfigurationRestClient;
+        private readonly ClientDiagnostics _networkInterfaceIPConfigurationsClientDiagnostics;
+        private readonly NetworkInterfaceIPConfigurations _networkInterfaceIPConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationCollection for mocking. </summary>
         protected NetworkInterfaceIPConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceIPConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkInterfaceIPConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkInterfaceIPConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkInterfaceIPConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceIPConfigurationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NetworkInterfaceIPConfigurationResource.ResourceType, out string networkInterfaceIPConfigurationApiVersion);
-            _networkInterfaceIPConfigurationRestClient = new NetworkInterfaceIPConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceIPConfigurationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkInterfaceIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceIPConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurations(_networkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Endpoint, networkInterfaceIPConfigurationApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkInterfaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkInterfaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkInterfaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified network interface ip configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
+        /// <param name="ipConfigurationName"> The name of the ip configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkInterfaceIPConfigurationResource>> GetAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
-            using var scope = _networkInterfaceIPConfigurationClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Get");
+            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkInterfaceIPConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkInterfaceIPConfigurationData> response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkInterfaceIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified network interface ip configuration.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
+        /// <param name="ipConfigurationName"> The name of the ip configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkInterfaceIPConfigurationResource> Get(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
-            using var scope = _networkInterfaceIPConfigurationClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Get");
+            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkInterfaceIPConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkInterfaceIPConfigurationData> response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkInterfaceIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,50 @@ namespace Azure.ResourceManager.Network
         /// Get all ip configurations in a network interface.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceIPConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkInterfaceIPConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceIPConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceIPConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceIPConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceIPConfigurationResource(Client, NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(e)), _networkInterfaceIPConfigurationClientDiagnostics, Pipeline, "NetworkInterfaceIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkInterfaceIPConfigurationData, NetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationsGetAllAsyncCollectionResultOfT(
+                _networkInterfaceIPConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkInterfaceIPConfigurationCollection.GetAll"), data => new NetworkInterfaceIPConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Get all ip configurations in a network interface.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +207,67 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="NetworkInterfaceIPConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceIPConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceIPConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceIPConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceIPConfigurationResource(Client, NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(e)), _networkInterfaceIPConfigurationClientDiagnostics, Pipeline, "NetworkInterfaceIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkInterfaceIPConfigurationData, NetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationsGetAllCollectionResultOfT(
+                _networkInterfaceIPConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetworkInterfaceIPConfigurationCollection.GetAll"), data => new NetworkInterfaceIPConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
+        /// <param name="ipConfigurationName"> The name of the ip configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
-            using var scope = _networkInterfaceIPConfigurationClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
+            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkInterfaceIPConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkInterfaceIPConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkInterfaceIPConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +281,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
+        /// <param name="ipConfigurationName"> The name of the ip configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
-            using var scope = _networkInterfaceIPConfigurationClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
+            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkInterfaceIPConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkInterfaceIPConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkInterfaceIPConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +338,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
+        /// <param name="ipConfigurationName"> The name of the ip configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkInterfaceIPConfigurationResource>> GetIfExistsAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
-            using var scope = _networkInterfaceIPConfigurationClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkInterfaceIPConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkInterfaceIPConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkInterfaceIPConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkInterfaceIPConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkInterfaceIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +399,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceIPConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
+        /// <param name="ipConfigurationName"> The name of the ip configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkInterfaceIPConfigurationResource> GetIfExists(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
 
-            using var scope = _networkInterfaceIPConfigurationClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("NetworkInterfaceIPConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkInterfaceIPConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ipConfigurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkInterfaceIPConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkInterfaceIPConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkInterfaceIPConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkInterfaceIPConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkInterfaceIPConfigurationResource> IAsyncEnumerable<NetworkInterfaceIPConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

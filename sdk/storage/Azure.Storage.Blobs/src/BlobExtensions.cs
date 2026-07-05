@@ -3,15 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Core;
-using System.IO;
-using System.Globalization;
-using System.ComponentModel;
 
 namespace Azure.Storage.Blobs
 {
@@ -803,7 +803,8 @@ namespace Azure.Storage.Blobs
                 rehydratePriority: response.Headers.RehydratePriority,
                 lastAccessed: response.Headers.LastAccessed.GetValueOrDefault(),
                 immutabilityPolicy: immutabilityPolicy,
-                hasLegalHold: response.Headers.LegalHold.GetValueOrDefault());
+                hasLegalHold: response.Headers.LegalHold.GetValueOrDefault(),
+                smartAccessTier: response.Headers.SmartAccessTier);
         }
         #endregion
 
@@ -1265,7 +1266,8 @@ namespace Azure.Storage.Blobs
                 DeletedOn = blobPropertiesInternal.DeletedTime,
                 AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime,
                 ImmutabilityPolicy = immutabilityPolicy,
-                HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault()
+                HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault(),
+                SmartAccessTier = blobPropertiesInternal.SmartAccessTier
             };
         }
 
@@ -1785,6 +1787,18 @@ namespace Azure.Storage.Blobs
             {
                 invalidList ??= new List<string>();
                 invalidList.Add(nameof(BlobRequestConditions.LeaseId));
+            }
+            if ((invalidConditions & BlobRequestConditionProperty.AccessTierIfModifiedSince) == BlobRequestConditionProperty.AccessTierIfModifiedSince
+                && requestConditions.AccessTierIfModifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.AccessTierIfModifiedSince));
+            }
+            if ((invalidConditions & BlobRequestConditionProperty.AccessTierIfUnmodifiedSince) == BlobRequestConditionProperty.AccessTierIfUnmodifiedSince
+                && requestConditions.AccessTierIfUnmodifiedSince != null)
+            {
+                invalidList ??= new List<string>();
+                invalidList.Add(nameof(BlobRequestConditions.AccessTierIfUnmodifiedSince));
             }
         }
         #endregion

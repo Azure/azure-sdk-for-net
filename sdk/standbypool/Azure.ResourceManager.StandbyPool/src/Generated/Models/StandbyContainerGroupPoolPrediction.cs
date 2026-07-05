@@ -13,78 +13,43 @@ namespace Azure.ResourceManager.StandbyPool.Models
     /// <summary> Displays prediction information of the standby pool. </summary>
     public partial class StandbyContainerGroupPoolPrediction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPrediction"/>. </summary>
-        /// <param name="forecastValues"> Displays the forecast information of the standby pool. </param>
-        /// <param name="forecastStartOn"> Displays the UTC timestamp of when the prediction was retrieved for the standby pool. </param>
-        /// <param name="forecastInfo"> Displays additional information for the prediction of the standby pool. </param>
-        internal StandbyContainerGroupPoolPrediction(StandbyContainerGroupPoolForecastValues forecastValues, DateTimeOffset forecastStartOn, string forecastInfo)
-        {
-            ForecastValues = forecastValues;
-            ForecastStartOn = forecastStartOn;
-            ForecastInfo = forecastInfo;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPrediction"/>. </summary>
-        /// <param name="forecastValues"> Displays the forecast information of the standby pool. </param>
-        /// <param name="forecastStartOn"> Displays the UTC timestamp of when the prediction was retrieved for the standby pool. </param>
-        /// <param name="forecastInfo"> Displays additional information for the prediction of the standby pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolPrediction(StandbyContainerGroupPoolForecastValues forecastValues, DateTimeOffset forecastStartOn, string forecastInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            ForecastValues = forecastValues;
-            ForecastStartOn = forecastStartOn;
-            ForecastInfo = forecastInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPrediction"/> for deserialization. </summary>
         internal StandbyContainerGroupPoolPrediction()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPrediction"/>. </summary>
+        /// <param name="forecastValues"> Displays the forecast information of the standby pool. </param>
+        /// <param name="forecastStartOn"> Displays the UTC timestamp of when the prediction was retrieved for the standby pool. </param>
+        /// <param name="forecastInfo"> Displays additional information for the prediction of the standby pool. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StandbyContainerGroupPoolPrediction(StandbyContainerGroupPoolForecastValues forecastValues, DateTimeOffset forecastStartOn, string forecastInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            ForecastValues = forecastValues;
+            ForecastStartOn = forecastStartOn;
+            ForecastInfo = forecastInfo;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> Displays the forecast information of the standby pool. </summary>
         internal StandbyContainerGroupPoolForecastValues ForecastValues { get; }
-        /// <summary> Displays the predicted count of instances to be requested from the standby pool. </summary>
-        public IReadOnlyList<long> ForecastValuesInstancesRequestedCount
-        {
-            get => ForecastValues?.InstancesRequestedCount;
-        }
 
         /// <summary> Displays the UTC timestamp of when the prediction was retrieved for the standby pool. </summary>
         public DateTimeOffset ForecastStartOn { get; }
+
         /// <summary> Displays additional information for the prediction of the standby pool. </summary>
         public string ForecastInfo { get; }
+
+        /// <summary> Displays the predicted count of instances to be requested from the standby pool. </summary>
+        public IReadOnlyList<long> ForecastValuesInstancesRequestedCount
+        {
+            get
+            {
+                return ForecastValues is null ? default : ForecastValues.InstancesRequestedCount;
+            }
+        }
     }
 }

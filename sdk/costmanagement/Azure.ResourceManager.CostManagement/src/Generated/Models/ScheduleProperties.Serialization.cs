@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ScheduleProperties : IUtf8JsonSerializable, IJsonModel<ScheduleProperties>
+    /// <summary> The properties of the schedule. </summary>
+    public partial class ScheduleProperties : IJsonModel<ScheduleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/> for deserialization. </summary>
+        internal ScheduleProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScheduleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScheduleProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScheduleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduleProperties IPersistableModel<ScheduleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScheduleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
             if (Optional.IsDefined(HourOfDay))
@@ -45,7 +90,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
-                foreach (var item in DaysOfWeek)
+                foreach (ScheduledActionDaysOfWeek item in DaysOfWeek)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -55,7 +100,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 writer.WritePropertyName("weeksOfMonth"u8);
                 writer.WriteStartArray();
-                foreach (var item in WeeksOfMonth)
+                foreach (ScheduledActionWeeksOfMonth item in WeeksOfMonth)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -70,15 +115,15 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endDate"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,22 +132,27 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
         }
 
-        ScheduleProperties IJsonModel<ScheduleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScheduleProperties IJsonModel<ScheduleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScheduleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScheduleProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScheduleProperties(document.RootElement, options);
         }
 
-        internal static ScheduleProperties DeserializeScheduleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScheduleProperties DeserializeScheduleProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,119 +162,86 @@ namespace Azure.ResourceManager.CostManagement.Models
             IList<ScheduledActionDaysOfWeek> daysOfWeek = default;
             IList<ScheduledActionWeeksOfMonth> weeksOfMonth = default;
             int? dayOfMonth = default;
-            DateTimeOffset startDate = default;
-            DateTimeOffset endDate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset startOn = default;
+            DateTimeOffset endOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("frequency"u8))
+                if (prop.NameEquals("frequency"u8))
                 {
-                    frequency = new ScheduleFrequency(property.Value.GetString());
+                    frequency = new ScheduleFrequency(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hourOfDay"u8))
+                if (prop.NameEquals("hourOfDay"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hourOfDay = property.Value.GetInt32();
+                    hourOfDay = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("daysOfWeek"u8))
+                if (prop.NameEquals("daysOfWeek"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ScheduledActionDaysOfWeek> array = new List<ScheduledActionDaysOfWeek>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ScheduledActionDaysOfWeek(item.GetString()));
                     }
                     daysOfWeek = array;
                     continue;
                 }
-                if (property.NameEquals("weeksOfMonth"u8))
+                if (prop.NameEquals("weeksOfMonth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ScheduledActionWeeksOfMonth> array = new List<ScheduledActionWeeksOfMonth>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ScheduledActionWeeksOfMonth(item.GetString()));
                     }
                     weeksOfMonth = array;
                     continue;
                 }
-                if (property.NameEquals("dayOfMonth"u8))
+                if (prop.NameEquals("dayOfMonth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dayOfMonth = property.Value.GetInt32();
+                    dayOfMonth = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startDate"u8))
+                if (prop.NameEquals("startDate"u8))
                 {
-                    startDate = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endDate"u8))
+                if (prop.NameEquals("endDate"u8))
                 {
-                    endDate = property.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduleProperties(
                 frequency,
                 hourOfDay,
                 daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>(),
                 weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>(),
                 dayOfMonth,
-                startDate,
-                endDate,
-                serializedAdditionalRawData);
+                startOn,
+                endOn,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ScheduleProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ScheduleProperties IPersistableModel<ScheduleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScheduleProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ScheduleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

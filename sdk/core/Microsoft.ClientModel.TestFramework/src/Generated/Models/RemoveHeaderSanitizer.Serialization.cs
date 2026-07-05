@@ -14,7 +14,7 @@ using Microsoft.ClientModel.TestFramework;
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The RemoveHeaderSanitizer. </summary>
-    public partial class RemoveHeaderSanitizer : IJsonModel<RemoveHeaderSanitizer>
+    public partial class RemoveHeaderSanitizer : SanitizerAddition, IJsonModel<RemoveHeaderSanitizer>
     {
         /// <summary> Initializes a new instance of <see cref="RemoveHeaderSanitizer"/> for deserialization. </summary>
         internal RemoveHeaderSanitizer()
@@ -120,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeRemoveHeaderSanitizer(document.RootElement, options);
                     }

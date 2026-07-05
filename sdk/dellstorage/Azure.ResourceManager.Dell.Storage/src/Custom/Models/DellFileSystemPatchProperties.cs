@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Dell.Storage.Models
 {
     /// <summary> The updatable properties of the FileSystemResource. </summary>

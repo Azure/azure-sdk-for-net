@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkRackType : IEquatable<NetworkRackType>
     {
         private readonly string _value;
+        /// <summary> NetworkRackType-Aggregate. </summary>
+        private const string AggregateValue = "Aggregate";
+        /// <summary> NetworkRackType-Compute. </summary>
+        private const string ComputeValue = "Compute";
+        /// <summary> NetworkRackType-Combined. </summary>
+        private const string CombinedValue = "Combined";
 
         /// <summary> Initializes a new instance of <see cref="NetworkRackType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkRackType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AggregateValue = "Aggregate";
-        private const string ComputeValue = "Compute";
-        private const string CombinedValue = "Combined";
-
-        /// <summary> Aggregate. </summary>
+        /// <summary> NetworkRackType-Aggregate. </summary>
         public static NetworkRackType Aggregate { get; } = new NetworkRackType(AggregateValue);
-        /// <summary> Compute. </summary>
+
+        /// <summary> NetworkRackType-Compute. </summary>
         public static NetworkRackType Compute { get; } = new NetworkRackType(ComputeValue);
-        /// <summary> Combined. </summary>
+
+        /// <summary> NetworkRackType-Combined. </summary>
         public static NetworkRackType Combined { get; } = new NetworkRackType(CombinedValue);
+
         /// <summary> Determines if two <see cref="NetworkRackType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkRackType left, NetworkRackType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkRackType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkRackType left, NetworkRackType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkRackType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkRackType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkRackType(string value) => new NetworkRackType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkRackType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkRackType?(string value) => value == null ? null : new NetworkRackType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkRackType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkRackType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

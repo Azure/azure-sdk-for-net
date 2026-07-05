@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.OnlineExperimentation;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OnlineExperimentation.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableOnlineExperimentationResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableOnlineExperimentationResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableOnlineExperimentationResourceGroupResource for mocking. </summary>
         protected MockableOnlineExperimentationResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOnlineExperimentationResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableOnlineExperimentationResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableOnlineExperimentationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of OnlineExperimentationWorkspaceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OnlineExperimentationWorkspaceResources and their operations over a OnlineExperimentationWorkspaceResource. </returns>
+        /// <summary> Gets a collection of OnlineExperimentationWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of OnlineExperimentationWorkspaces and their operations over a OnlineExperimentationWorkspaceResource. </returns>
         public virtual OnlineExperimentationWorkspaceCollection GetOnlineExperimentationWorkspaces()
         {
             return GetCachedClient(client => new OnlineExperimentationWorkspaceCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OnlineExperimentationWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<OnlineExperimentationWorkspaceResource>> GetOnlineExperimentationWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
             return await GetOnlineExperimentationWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// Gets an online experimentation workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OnlineExperimentation/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OnlineExperimentationWorkspace_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> OnlineExperimentationWorkspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OnlineExperimentationWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         [ForwardsClientCalls]
         public virtual Response<OnlineExperimentationWorkspaceResource> GetOnlineExperimentationWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
             return GetOnlineExperimentationWorkspaces().Get(workspaceName, cancellationToken);
         }
     }

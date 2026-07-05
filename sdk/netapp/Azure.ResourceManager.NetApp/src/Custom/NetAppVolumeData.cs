@@ -1,27 +1,65 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A class representing the NetAppVolume data model.
-    /// Volume resource
-    /// </summary>
-    [CodeGenSerialization(nameof(IsRestoring), "isRestoring")]
-    public partial class NetAppVolumeData : TrackedResourceData
+    // The spec now generates the GA ETag shape. The remaining custom member restores the
+    // GA setter for IsRestoring, which is read-only in the current service contract.
+    public partial class NetAppVolumeData
     {
-        /// <summary> Restoring. ReadOnly property indicating if volume is being resored </summary>
+        private NetAppVolumeLanguage? _language;
+        private NetAppLdapServerType? _ldapServerType;
+        private LargeVolumeType? _largeVolumeType;
+        private BreakthroughMode? _breakthroughMode;
+
+        // The new spec marks isRestoring as read-only; restore the GA setter for source compat.
+        /// <summary> Restoring. </summary>
         public bool? IsRestoring
         {
-            get;
+            get
+            {
+                return Properties is null ? default : Properties.IsRestoring;
+            }
             [EditorBrowsable(EditorBrowsableState.Never)]
-            set;
+            set
+            {
+                // Setter retained for backward compatibility; isRestoring is read-only on the
+                // service, so the value is not propagated to the request payload.
+            }
+        }
+
+        /// <summary> Language supported for volume. </summary>
+        public NetAppVolumeLanguage? Language
+        {
+            get => _language;
+            set => _language = value;
+        }
+
+        /// <summary> The type of the LDAP server. </summary>
+        public NetAppLdapServerType? LdapServerType
+        {
+            get => _ldapServerType;
+            set => _ldapServerType = value;
+        }
+
+        /// <summary> Specifies whether volume is a Large Volume or Regular Volume. </summary>
+        public LargeVolumeType? LargeVolumeType
+        {
+            get => _largeVolumeType;
+            set => _largeVolumeType = value;
+        }
+
+        /// <summary> Breakthrough mode. </summary>
+        public BreakthroughMode? BreakthroughMode
+        {
+            get => _breakthroughMode;
+            set => _breakthroughMode = value;
         }
     }
 }

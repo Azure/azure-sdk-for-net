@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.StorageActions
             return subscriptionResource.GetCachedClient(client => new MockableStorageActionsSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="StorageTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageTaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsArmClient.GetStorageTaskResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -50,7 +56,13 @@ namespace Azure.ResourceManager.StorageActions
             return GetMockableStorageActionsArmClient(client).GetStorageTaskResource(id);
         }
 
-        /// <summary> Gets a collection of StorageTasks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary>
+        /// Gets a collection of StorageTasks in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsResourceGroupResource.GetStorageTasks()"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StorageTasks and their operations over a StorageTaskResource. </returns>
@@ -61,7 +73,13 @@ namespace Azure.ResourceManager.StorageActions
             return GetMockableStorageActionsResourceGroupResource(resourceGroupResource).GetStorageTasks();
         }
 
-        /// <summary> Get the storage task properties. </summary>
+        /// <summary>
+        /// Get the storage task properties
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsResourceGroupResource.GetStorageTaskAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -74,7 +92,13 @@ namespace Azure.ResourceManager.StorageActions
             return await GetMockableStorageActionsResourceGroupResource(resourceGroupResource).GetStorageTaskAsync(storageTaskName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get the storage task properties. </summary>
+        /// <summary>
+        /// Get the storage task properties
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsResourceGroupResource.GetStorageTask(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -87,7 +111,13 @@ namespace Azure.ResourceManager.StorageActions
             return GetMockableStorageActionsResourceGroupResource(resourceGroupResource).GetStorageTask(storageTaskName, cancellationToken);
         }
 
-        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the storage tasks available under the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.GetStorageTasksAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -99,7 +129,13 @@ namespace Azure.ResourceManager.StorageActions
             return GetMockableStorageActionsSubscriptionResource(subscriptionResource).GetStorageTasksAsync(cancellationToken);
         }
 
-        /// <summary> Lists all the storage tasks available under the subscription. </summary>
+        /// <summary>
+        /// Lists all the storage tasks available under the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.GetStorageTasks(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
@@ -111,7 +147,13 @@ namespace Azure.ResourceManager.StorageActions
             return GetMockableStorageActionsSubscriptionResource(subscriptionResource).GetStorageTasks(cancellationToken);
         }
 
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.PreviewActionsAsync(AzureLocation, StorageTaskPreviewAction, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
         /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
@@ -124,7 +166,13 @@ namespace Azure.ResourceManager.StorageActions
             return await GetMockableStorageActionsSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, storageTaskPreviewAction, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
+        /// <summary>
+        /// Runs the input conditions against input object metadata properties and designates matched objects in response.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableStorageActionsSubscriptionResource.PreviewActions(AzureLocation, StorageTaskPreviewAction, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"></param>
         /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>

@@ -224,7 +224,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 SimulateNetworkFailure(client);
 
-                await receiver.AbandonMessageAsync(message, new Dictionary<string, object>{{ "test key", "test value" }});
+                await receiver.AbandonMessageAsync(message, new Dictionary<string, object> { { "test key", "test value" } });
                 message = await receiver.ReceiveMessageAsync();
                 Assert.AreEqual("test value", message.ApplicationProperties["test key"]);
             }
@@ -244,7 +244,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 SimulateNetworkFailure(client);
 
-                await receiver.DeferMessageAsync(message, new Dictionary<string, object>{{ "test key", "test value" }});
+                await receiver.DeferMessageAsync(message, new Dictionary<string, object> { { "test key", "test value" } });
                 message = await receiver.ReceiveDeferredMessageAsync(message.SequenceNumber);
                 Assert.AreEqual("test value", message.ApplicationProperties["test key"]);
             }
@@ -264,7 +264,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 SimulateNetworkFailure(client);
 
-                await receiver.DeadLetterMessageAsync(message, new Dictionary<string, object>{{ "test key", "test value" }}, "test reason", "test description");
+                await receiver.DeadLetterMessageAsync(message, new Dictionary<string, object> { { "test key", "test value" } }, "test reason", "test description");
 
                 var dlqReceiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions { SubQueue = SubQueue.DeadLetter });
                 var dlqMessage = await dlqReceiver.ReceiveMessageAsync();

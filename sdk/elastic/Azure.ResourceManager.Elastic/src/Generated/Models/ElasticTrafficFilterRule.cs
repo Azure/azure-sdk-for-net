@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Elastic traffic filter rule object. </summary>
     public partial class ElasticTrafficFilterRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticTrafficFilterRule"/>. </summary>
         internal ElasticTrafficFilterRule()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="azureEndpointGuid"> Guid of Private Endpoint in the elastic filter rule. </param>
         /// <param name="azureEndpointName"> Name of the Private Endpoint in the elastic filter rule. </param>
         /// <param name="id"> Id of the elastic filter rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticTrafficFilterRule(string source, string description, string azureEndpointGuid, string azureEndpointName, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticTrafficFilterRule(string source, string description, string azureEndpointGuid, string azureEndpointName, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Description = description;
             AzureEndpointGuid = azureEndpointGuid;
             AzureEndpointName = azureEndpointName;
             Id = id;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP of the elastic filter rule. </summary>
         public string Source { get; }
+
         /// <summary> Description of the elastic filter rule. </summary>
         public string Description { get; }
+
         /// <summary> Guid of Private Endpoint in the elastic filter rule. </summary>
         public string AzureEndpointGuid { get; }
+
         /// <summary> Name of the Private Endpoint in the elastic filter rule. </summary>
         public string AzureEndpointName { get; }
+
         /// <summary> Id of the elastic filter rule. </summary>
         public string Id { get; }
     }

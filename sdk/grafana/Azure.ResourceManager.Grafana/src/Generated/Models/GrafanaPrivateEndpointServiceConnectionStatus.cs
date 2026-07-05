@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Grafana.Models
     public readonly partial struct GrafanaPrivateEndpointServiceConnectionStatus : IEquatable<GrafanaPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Connection waiting for approval or rejection. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Connection approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Connection Rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GrafanaPrivateEndpointServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
+            _value = value;
+        }
 
         /// <summary> Connection waiting for approval or rejection. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Pending { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(PendingValue);
+
         /// <summary> Connection approved. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Approved { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(ApprovedValue);
+
         /// <summary> Connection Rejected. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Rejected { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GrafanaPrivateEndpointServiceConnectionStatus(string value) => new GrafanaPrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GrafanaPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new GrafanaPrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GrafanaPrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GrafanaPrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

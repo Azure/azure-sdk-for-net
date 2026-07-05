@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Returns which action to use as rewardActionId, and additional information about each action as a result of a Rank request. </summary>
     [CodeGenModel("RankResponse")]
-    public partial class PersonalizerRankResult {}
+    public partial class PersonalizerRankResult { }
 }

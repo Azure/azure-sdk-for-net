@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct ServiceAccountEncryptionKeySource : IEquatable<ServiceAccountEncryptionKeySource>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionKeySource"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceAccountEncryptionKeySource(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MicrosoftCognitiveServicesValue = "Microsoft.CognitiveServices";
         private const string MicrosoftKeyVaultValue = "Microsoft.KeyVault";
 
-        /// <summary> Microsoft.CognitiveServices. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceAccountEncryptionKeySource(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the MicrosoftCognitiveServices. </summary>
         public static ServiceAccountEncryptionKeySource MicrosoftCognitiveServices { get; } = new ServiceAccountEncryptionKeySource(MicrosoftCognitiveServicesValue);
-        /// <summary> Microsoft.KeyVault. </summary>
+
+        /// <summary> Gets the MicrosoftKeyVault. </summary>
         public static ServiceAccountEncryptionKeySource MicrosoftKeyVault { get; } = new ServiceAccountEncryptionKeySource(MicrosoftKeyVaultValue);
+
         /// <summary> Determines if two <see cref="ServiceAccountEncryptionKeySource"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceAccountEncryptionKeySource left, ServiceAccountEncryptionKeySource right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceAccountEncryptionKeySource"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceAccountEncryptionKeySource left, ServiceAccountEncryptionKeySource right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAccountEncryptionKeySource"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceAccountEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceAccountEncryptionKeySource(string value) => new ServiceAccountEncryptionKeySource(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceAccountEncryptionKeySource"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceAccountEncryptionKeySource?(string value) => value == null ? null : new ServiceAccountEncryptionKeySource(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceAccountEncryptionKeySource other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceAccountEncryptionKeySource other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

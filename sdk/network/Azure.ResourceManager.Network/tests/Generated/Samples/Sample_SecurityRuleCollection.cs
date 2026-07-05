@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSecurityRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkSecurityGroupRuleCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkSecurityGroupRuleCreate.json
             // this example is just showing the usage of "SecurityRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Priority = 100,
                 Direction = SecurityRuleDirection.Outbound,
             };
-            ArmOperation<SecurityRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityRuleName, data);
+            ArmOperation<SecurityRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityRuleName, data, cancellationToken: System.Threading.CancellationToken.None);
             SecurityRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkSecurityRuleInNetworkSecurityGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkSecurityGroupRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkSecurityGroupRuleGet.json
             // this example is just showing the usage of "SecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListNetworkSecurityRulesInNetworkSecurityGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkSecurityGroupRuleList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkSecurityGroupRuleList.json
             // this example is just showing the usage of "SecurityRules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkSecurityRuleInNetworkSecurityGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkSecurityGroupRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkSecurityGroupRuleGet.json
             // this example is just showing the usage of "SecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkSecurityRuleInNetworkSecurityGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/NetworkSecurityGroupRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkSecurityGroupRuleGet.json
             // this example is just showing the usage of "SecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

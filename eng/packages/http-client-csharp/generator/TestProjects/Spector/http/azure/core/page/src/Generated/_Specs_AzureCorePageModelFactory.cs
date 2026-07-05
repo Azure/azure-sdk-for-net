@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
-namespace _Specs_.Azure.Core.Page
+namespace Specs.Azure.Core.Page
 {
     public static partial class _Specs_AzureCorePageModelFactory
     {

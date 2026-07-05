@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceProvisioningServices;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDeviceProvisioningServicesResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceProvisioningServicesResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDeviceProvisioningServicesResourceGroupResource for mocking. </summary>
         protected MockableDeviceProvisioningServicesResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDeviceProvisioningServicesResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDeviceProvisioningServicesResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDeviceProvisioningServicesResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DeviceProvisioningServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
+        /// <summary> Gets a collection of DeviceProvisioningServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DeviceProvisioningServices and their operations over a DeviceProvisioningServiceResource. </returns>
         public virtual DeviceProvisioningServiceCollection GetDeviceProvisioningServices()
         {
             return GetCachedClient(client => new DeviceProvisioningServiceCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// Get the metadata of the provisioning service without SAS keys.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisioningServiceDescription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
             return await GetDeviceProvisioningServices().GetAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// Get the metadata of the provisioning service without SAS keys.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisioningServiceDescription_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisioningServiceDescriptions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         [ForwardsClientCalls]
         public virtual Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(string provisioningServiceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(provisioningServiceName, nameof(provisioningServiceName));
+
             return GetDeviceProvisioningServices().Get(provisioningServiceName, cancellationToken);
         }
     }

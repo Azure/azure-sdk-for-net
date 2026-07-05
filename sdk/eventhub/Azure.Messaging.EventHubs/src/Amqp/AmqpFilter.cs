@@ -59,17 +59,17 @@ namespace Azure.Messaging.EventHubs
 
             if (!string.IsNullOrEmpty(eventPosition.OffsetString))
             {
-                return $"{ OffsetName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.OffsetString }";
+                return $"{OffsetName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.OffsetString}";
             }
 
             if (!string.IsNullOrEmpty(eventPosition.SequenceNumber))
             {
-                return $"{ SequenceNumberName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.SequenceNumber }";
+                return $"{SequenceNumberName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.SequenceNumber}";
             }
 
             if (eventPosition.EnqueuedTime.HasValue)
             {
-                return $"{ EnqueuedTimeName } > { eventPosition.EnqueuedTime.Value.ToUnixTimeMilliseconds() }";
+                return $"{EnqueuedTimeName} > {eventPosition.EnqueuedTime.Value.ToUnixTimeMilliseconds()}";
             }
 
             // If no filter was built, then the event position is not valid for filtering.

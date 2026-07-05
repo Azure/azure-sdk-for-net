@@ -10,9 +10,7 @@ namespace Azure.Communication
         public static Azure.Communication.CommunicationCloudEnvironment Gcch { get { throw null; } }
         public static Azure.Communication.CommunicationCloudEnvironment Public { get { throw null; } }
         public bool Equals(Azure.Communication.CommunicationCloudEnvironment other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Communication.CommunicationCloudEnvironment left, Azure.Communication.CommunicationCloudEnvironment right) { throw null; }
         public static implicit operator Azure.Communication.CommunicationCloudEnvironment (string value) { throw null; }
@@ -24,7 +22,6 @@ namespace Azure.Communication
         protected CommunicationIdentifier() { }
         public virtual string RawId { get { throw null; } }
         public abstract bool Equals(Azure.Communication.CommunicationIdentifier other);
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public static Azure.Communication.CommunicationIdentifier FromRawId(string rawId) { throw null; }
         public override int GetHashCode() { throw null; }

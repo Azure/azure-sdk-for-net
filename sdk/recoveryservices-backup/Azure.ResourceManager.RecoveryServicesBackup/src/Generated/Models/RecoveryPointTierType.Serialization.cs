@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal static partial class RecoveryPointTierTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RecoveryPointTierType value) => value switch
         {
             RecoveryPointTierType.Invalid => "Invalid",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecoveryPointTierType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RecoveryPointTierType ToRecoveryPointTierType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return RecoveryPointTierType.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InstantRP")) return RecoveryPointTierType.InstantRP;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HardenedRP")) return RecoveryPointTierType.HardenedRP;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ArchivedRP")) return RecoveryPointTierType.ArchivedRP;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return RecoveryPointTierType.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InstantRP"))
+            {
+                return RecoveryPointTierType.InstantRP;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HardenedRP"))
+            {
+                return RecoveryPointTierType.HardenedRP;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ArchivedRP"))
+            {
+                return RecoveryPointTierType.ArchivedRP;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecoveryPointTierType value.");
         }
     }

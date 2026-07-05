@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ComputeFleet;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -17,47 +18,72 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetNetworkInterfaceAuxiliarySku : IEquatable<ComputeFleetNetworkInterfaceAuxiliarySku>
     {
         private readonly string _value;
+        /// <summary> no sku. </summary>
+        private const string NoneValue = "None";
+        /// <summary> A1 sku. </summary>
+        private const string A1Value = "A1";
+        /// <summary> A2 sku. </summary>
+        private const string A2Value = "A2";
+        /// <summary> A4 sku. </summary>
+        private const string A4Value = "A4";
+        /// <summary> A8 sku. </summary>
+        private const string A8Value = "A8";
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeFleetNetworkInterfaceAuxiliarySku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string A1Value = "A1";
-        private const string A2Value = "A2";
-        private const string A4Value = "A4";
-        private const string A8Value = "A8";
+            _value = value;
+        }
 
         /// <summary> no sku. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliarySku None { get; } = new ComputeFleetNetworkInterfaceAuxiliarySku(NoneValue);
+
         /// <summary> A1 sku. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliarySku A1 { get; } = new ComputeFleetNetworkInterfaceAuxiliarySku(A1Value);
+
         /// <summary> A2 sku. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliarySku A2 { get; } = new ComputeFleetNetworkInterfaceAuxiliarySku(A2Value);
+
         /// <summary> A4 sku. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliarySku A4 { get; } = new ComputeFleetNetworkInterfaceAuxiliarySku(A4Value);
+
         /// <summary> A8 sku. </summary>
         public static ComputeFleetNetworkInterfaceAuxiliarySku A8 { get; } = new ComputeFleetNetworkInterfaceAuxiliarySku(A8Value);
+
         /// <summary> Determines if two <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeFleetNetworkInterfaceAuxiliarySku left, ComputeFleetNetworkInterfaceAuxiliarySku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeFleetNetworkInterfaceAuxiliarySku left, ComputeFleetNetworkInterfaceAuxiliarySku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeFleetNetworkInterfaceAuxiliarySku(string value) => new ComputeFleetNetworkInterfaceAuxiliarySku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeFleetNetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeFleetNetworkInterfaceAuxiliarySku?(string value) => value == null ? null : new ComputeFleetNetworkInterfaceAuxiliarySku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeFleetNetworkInterfaceAuxiliarySku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeFleetNetworkInterfaceAuxiliarySku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

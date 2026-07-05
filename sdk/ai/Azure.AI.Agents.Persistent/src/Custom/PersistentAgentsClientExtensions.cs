@@ -22,9 +22,10 @@ namespace Azure.AI.Agents.Persistent
         /// <see cref="IChatClient.GetResponseAsync"/> or <see cref="IChatClient.GetStreamingResponseAsync"/> via the <see cref="ChatOptions.ConversationId"/>
         /// property. If no thread ID is provided via either mechanism, a new thread will be created for the request.
         /// </param>
+        /// <param name="throwOnContentErrors">Throws an exception if content errors are returned from the service. Default is <c>true</c>. This is useful to detect errors when tools are misconfigured that otherwise would be unnoticed because those come as a streaming data update.</param>
         /// <returns>An <see cref="IChatClient"/> instance configured to interact with the specified agent and thread.</returns>
-        public static IChatClient AsIChatClient(this PersistentAgentsClient client, string agentId, string? defaultThreadId = null) =>
-            new PersistentAgentsChatClient(client, agentId, defaultThreadId);
+        public static IChatClient AsIChatClient(this PersistentAgentsClient client, string agentId, string? defaultThreadId = null, bool throwOnContentErrors = true) =>
+            new PersistentAgentsChatClient(client, agentId, defaultThreadId, throwOnContentErrors);
 
         /// <summary>Creates an <see cref="AITool"/> to represent a <see cref="ToolDefinition"/>.</summary>
         /// <param name="tool">The tool to wrap as an <see cref="AITool"/>.</param>

@@ -1,17 +1,20 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary>
     /// QueuesModelFactory provides utilities for mocking.
     /// </summary>
-    [CodeGenType("StorageQueuesModelFactory")]
+    [CodeGenSuppress("QueueMessage", typeof(string))]
+    [CodeGenSuppress("PeekedMessage", typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(long), typeof(string))]
+    [CodeGenSuppress("QueueSignedIdentifier", typeof(string), typeof(QueueAccessPolicy))]
     public static partial class QueuesModelFactory
     {
         /// <summary>
@@ -217,7 +220,34 @@ namespace Azure.Storage.Queues.Models
             DateTimeOffset signedExpiresOn = default,
             string signedService = default,
             string signedVersion = default,
+            string signedDelegatedUserTenantId = default,
             string value = default)
+        {
+            return new UserDelegationKey()
+            {
+                SignedObjectId = signedObjectId,
+                SignedTenantId = signedTenantId,
+                SignedStartsOn = signedStartsOn,
+                SignedExpiresOn = signedExpiresOn,
+                SignedService = signedService,
+                SignedVersion = signedVersion,
+                SignedDelegatedUserTenantId = signedDelegatedUserTenantId,
+                Value = value
+            };
+        }
+
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId,
+            string signedTenantId,
+            DateTimeOffset signedStartsOn,
+            DateTimeOffset signedExpiresOn,
+            string signedService,
+            string signedVersion,
+            string value)
         {
             return new UserDelegationKey()
             {

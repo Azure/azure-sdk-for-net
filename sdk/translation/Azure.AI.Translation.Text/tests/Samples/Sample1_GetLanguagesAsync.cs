@@ -32,7 +32,7 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Number of supported languages for translate operation: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for transliterate operation: {languages.Transliteration.Count}.");
-                Console.WriteLine($"Number of supported languages for dictionary operations: {languages.Dictionary.Count}.");
+                Console.WriteLine($"Number of available LLM Models for translation: {languages.Models.Count}.");
 
                 Console.WriteLine("Translation Languages:");
                 foreach (var translationLanguage in languages.Translation)
@@ -46,10 +46,10 @@ namespace Azure.AI.Translation.Text.Samples
                     Console.WriteLine($"{transliterationLanguage.Key} -- name: {transliterationLanguage.Value.Name}, supported script count: {transliterationLanguage.Value.Scripts.Count}");
                 }
 
-                Console.WriteLine("Dictionary Languages:");
-                foreach (var dictionaryLanguage in languages.Dictionary)
+                Console.WriteLine("Available LLM Models:");
+                foreach (var model in languages.Models)
                 {
-                    Console.WriteLine($"{dictionaryLanguage.Key} -- name: {dictionaryLanguage.Value.Name}, supported target languages count: {dictionaryLanguage.Value.Translations.Count}");
+                    Console.WriteLine(model);
                 }
             }
             catch (RequestFailedException exception)
@@ -74,7 +74,7 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
-                Console.WriteLine($"Number of supported languages for translate operations: {languages.Dictionary.Count}.");
+                Console.WriteLine($"Number of available LLM Models for translation: {languages.Models.Count}.");
 
                 Console.WriteLine("Translation Languages:");
                 foreach (var translationLanguage in languages.Translation)
@@ -88,10 +88,10 @@ namespace Azure.AI.Translation.Text.Samples
                     Console.WriteLine($"{transliterationLanguage.Key} -- name: {transliterationLanguage.Value.Name}, supported script count: {transliterationLanguage.Value.Scripts.Count}");
                 }
 
-                Console.WriteLine("Dictionary Languages:");
-                foreach (var dictionaryLanguage in languages.Dictionary)
+                Console.WriteLine("Available LLM Models:");
+                foreach (var model in languages.Models)
                 {
-                    Console.WriteLine($"{dictionaryLanguage.Key} -- name: {dictionaryLanguage.Value.Name}, supported target languages count: {dictionaryLanguage.Value.Translations.Count}");
+                    Console.WriteLine(model);
                 }
             }
             catch (RequestFailedException exception)
@@ -116,7 +116,7 @@ namespace Azure.AI.Translation.Text.Samples
 
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
                 Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
-                Console.WriteLine($"Number of supported languages for translate operations: {languages.Dictionary.Count}.");
+                Console.WriteLine($"Number of available LLM Models for translation: {languages.Models.Count}.");
 
                 Console.WriteLine("Translation Languages:");
                 foreach (var translationLanguage in languages.Translation)
@@ -130,10 +130,10 @@ namespace Azure.AI.Translation.Text.Samples
                     Console.WriteLine($"{transliterationLanguage.Key} -- name: {transliterationLanguage.Value.Name}, supported script count: {transliterationLanguage.Value.Scripts.Count}");
                 }
 
-                Console.WriteLine("Dictionary Languages:");
-                foreach (var dictionaryLanguage in languages.Dictionary)
+                Console.WriteLine("Available LLM Models:");
+                foreach (var model in languages.Models)
                 {
-                    Console.WriteLine($"{dictionaryLanguage.Key} -- name: {dictionaryLanguage.Value.Name}, supported target languages count: {dictionaryLanguage.Value.Translations.Count}");
+                    Console.WriteLine(model);
                 }
             }
             catch (RequestFailedException exception)

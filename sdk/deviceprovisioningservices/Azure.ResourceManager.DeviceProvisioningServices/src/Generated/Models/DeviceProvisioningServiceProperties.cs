@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     /// <summary> the service specific properties of a provisioning service, including keys, linked iot hubs, current state, and system generated properties such as hostname and idScope. </summary>
     public partial class DeviceProvisioningServiceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServiceProperties"/>. </summary>
         public DeviceProvisioningServiceProperties()
@@ -72,8 +44,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </param>
         /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceRegistryNamespaceDescription deviceRegistryNamespace, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, string portalOperationsHostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceRegistryNamespaceDescription deviceRegistryNamespace, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, string portalOperationsHostName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             PublicNetworkAccess = publicNetworkAccess;
@@ -89,38 +61,51 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             AuthorizationPolicies = authorizationPolicies;
             IsDataResidencyEnabled = isDataResidencyEnabled;
             PortalOperationsHostName = portalOperationsHostName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Current state of the provisioning service. </summary>
         public DeviceProvisioningServicesState? State { get; set; }
+
         /// <summary> Whether requests from Public Network are allowed. </summary>
         public DeviceProvisioningServicesPublicNetworkAccess? PublicNetworkAccess { get; set; }
+
         /// <summary> The IP filter rules. </summary>
         public IList<DeviceProvisioningServicesIPFilterRule> IPFilterRules { get; }
+
         /// <summary> Private endpoint connections created on this IotHub. </summary>
         public IList<DeviceProvisioningServicesPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+
         /// <summary> The ARM provisioning state of the provisioning service. </summary>
         public string ProvisioningState { get; set; }
+
         /// <summary> List of IoT hubs associated with this provisioning service. </summary>
         public IList<IotHubDefinitionDescription> IotHubs { get; }
+
         /// <summary> The Device Registry namespace that is linked to the provisioning service. </summary>
         public DeviceRegistryNamespaceDescription DeviceRegistryNamespace { get; set; }
+
         /// <summary> Allocation policy to be used by this provisioning service. </summary>
         public DeviceProvisioningServicesAllocationPolicy? AllocationPolicy { get; set; }
+
         /// <summary> Service endpoint for provisioning service. </summary>
         public string ServiceOperationsHostName { get; }
+
         /// <summary> Device endpoint for this provisioning service. </summary>
         public string DeviceProvisioningHostName { get; }
+
         /// <summary> Unique identifier of this provisioning service. </summary>
         public string IdScope { get; }
+
         /// <summary> List of authorization keys for a provisioning service. </summary>
         public IList<DeviceProvisioningServicesSharedAccessKey> AuthorizationPolicies { get; }
+
         /// <summary>
         /// Optional.
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </summary>
         public bool? IsDataResidencyEnabled { get; set; }
+
         /// <summary> Portal endpoint to enable CORS for this provisioning service. </summary>
         public string PortalOperationsHostName { get; set; }
     }

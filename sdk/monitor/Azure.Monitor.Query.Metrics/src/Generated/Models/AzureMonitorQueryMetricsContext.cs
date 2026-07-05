@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.Monitor.Query.Metrics.Models;
 
 namespace Azure.Monitor.Query.Metrics
@@ -22,6 +23,7 @@ namespace Azure.Monitor.Query.Metrics
     [ModelReaderWriterBuildable(typeof(MetricTimeSeriesElement))]
     [ModelReaderWriterBuildable(typeof(MetricValue))]
     [ModelReaderWriterBuildable(typeof(ResourceIdList))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureMonitorQueryMetricsContext : ModelReaderWriterContext
     {
     }

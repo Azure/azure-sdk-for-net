@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -14,7 +17,7 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("ConfigurationClientOptions", typeof(ServiceVersion))]
     public partial class ConfigurationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
         private const string AzConfigUsGovCloudHostName = "azconfig.azure.us";
         private const string AzConfigChinaCloudHostName = "azconfig.azure.cn";
         private const string AppConfigUsGovCloudHostName = "appconfig.azure.us";
@@ -39,7 +42,17 @@ namespace Azure.Data.AppConfiguration
             /// <summary>
             /// Version 2023-11-01.
             /// </summary>
-            V2023_11_01 = 2
+            V2023_11_01 = 2,
+
+            /// <summary>
+            /// Version 2024-09-01.
+            /// </summary>
+            V2024_09_01 = 3,
+
+            /// <summary>
+            /// Version 2026-04-01.
+            /// </summary>
+            V2026_04_01 = 4
         }
 
         /// <summary>
@@ -59,16 +72,35 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         public ConfigurationClientOptions(ServiceVersion version = LatestVersion)
         {
-            Version = version switch
-            {
-                ServiceVersion.V1_0 => "1.0",
-                ServiceVersion.V2023_10_01 => "2023-10-01",
-                ServiceVersion.V2023_11_01 => "2023-11-01",
-
-                _ => throw new NotSupportedException()
-            };
+            Version = GetVersionString(version);
             this.ConfigureLogging();
         }
+
+        [Experimental("SCME0002")]
+        internal ConfigurationClientOptions(IConfigurationSection section)
+            : base(section, null)
+        {
+            Version = GetVersionString(LatestVersion);
+
+            string audience = section["Audience"];
+            if (!string.IsNullOrEmpty(audience))
+            {
+                Audience = new AppConfigurationAudience(audience);
+            }
+
+            this.ConfigureLogging();
+        }
+
+        private static string GetVersionString(ServiceVersion version) => version switch
+        {
+            ServiceVersion.V1_0 => "1.0",
+            ServiceVersion.V2023_10_01 => "2023-10-01",
+            ServiceVersion.V2023_11_01 => "2023-11-01",
+            ServiceVersion.V2024_09_01 => "2024-09-01",
+            ServiceVersion.V2026_04_01 => "2026-04-01",
+
+            _ => throw new NotSupportedException()
+        };
 
         internal string GetDefaultScope(Uri uri)
         {

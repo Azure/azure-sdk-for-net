@@ -3,10 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The UnknownEndpointBaseUpdateProperties. </summary>

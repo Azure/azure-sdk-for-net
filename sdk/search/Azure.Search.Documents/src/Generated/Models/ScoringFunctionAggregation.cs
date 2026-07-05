@@ -19,6 +19,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Boost scores by the maximum of all scoring function results. </summary>
         Maximum,
         /// <summary> Boost scores using the first applicable scoring function in the scoring profile. </summary>
-        FirstMatching
+        FirstMatching,
+        /// <summary> Boost scores by the product of all scoring function results. </summary>
+        Product
     }
 }

@@ -1724,7 +1724,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await using DisposingShare test = await GetTestShareAsync();
             ShareDirectoryClient directoryClient = await test.Share.CreateDirectoryAsync(GetNewDirectoryName());
             string specialCharDirectoryName = "directory\uFFFE";
-            ShareDirectoryClient specialCharDirectoryClient =  await directoryClient.CreateSubdirectoryAsync(specialCharDirectoryName);
+            ShareDirectoryClient specialCharDirectoryClient = await directoryClient.CreateSubdirectoryAsync(specialCharDirectoryName);
 
             // Act
             List<ShareFileItem> shareFileItems = new List<ShareFileItem>();

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> [Placeholder] Description for page model. </summary>
     internal partial class CommunicationsListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommunicationsListResult"/>. </summary>
         internal CommunicationsListResult()
@@ -54,17 +26,18 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of <see cref="CommunicationsListResult"/>. </summary>
         /// <param name="nextLink"> [Placeholder] Description for nextLink property. </param>
         /// <param name="value"> [Placeholder] Description for value property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationsListResult(string nextLink, IReadOnlyList<SupportTicketCommunicationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationsListResult(string nextLink, IList<SupportTicketCommunicationData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> [Placeholder] Description for nextLink property. </summary>
         public string NextLink { get; }
+
         /// <summary> [Placeholder] Description for value property. </summary>
-        public IReadOnlyList<SupportTicketCommunicationData> Value { get; }
+        public IList<SupportTicketCommunicationData> Value { get; }
     }
 }

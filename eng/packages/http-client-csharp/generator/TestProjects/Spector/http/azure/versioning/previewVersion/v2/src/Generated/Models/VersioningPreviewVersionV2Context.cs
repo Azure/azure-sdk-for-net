@@ -6,7 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using _Specs_.Azure.Versioning.PreviewVersion;
+using Specs.Azure.Versioning.PreviewVersion;
 
 namespace Versioning.PreviewVersion.V2
 {

@@ -12,19 +12,6 @@ trigger:
     - sdk/onlineexperimentation/ci.yml
     - sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/onlineexperimentation
-    - sdk/onlineexperimentation/ci.yml
-    - sdk/onlineexperimentation/Azure.Analytics.OnlineExperimentation
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

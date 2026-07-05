@@ -279,11 +279,24 @@ public partial struct JsonPatch
                 else
                 {
                     var valueSpan = kvp.Value.Value.Span;
-                    if (valueSpan.SequenceEqual(currentValue.Span) ||
-                        (valueSpan.Length > 2 && valueSpan[0] == (byte)'"' && valueSpan[valueSpan.Length - 1] == '"' && valueSpan.Slice(1, valueSpan.Length - 2).SequenceEqual(currentValue.Span)))
+                    if (valueSpan.SequenceEqual(currentValue.Span))
                     {
                         // same value we can skip
                         continue;
+                    }
+                    if (kvp.Value.Kind.HasFlag(ValueKind.Utf8String))
+                    {
+                        // currentValue comes from _rawJson which means strings will be quoted
+                        // if kvp is Utf8String we need to remove quotes from currentValue to compare
+                        ReadOnlySpan<byte> currentValueSpan = currentValue.Span;
+                        if (currentValueSpan.Length >= 2 &&
+                            currentValueSpan[0] == (byte)'"' &&
+                            currentValueSpan[currentValueSpan.Length - 1] == (byte)'"' &&
+                            currentValueSpan.Slice(1, currentValueSpan.Length - 2).SequenceEqual(valueSpan))
+                        {
+                            // same value we can skip
+                            continue;
+                        }
                     }
                     opType = "replace"u8;
                 }
@@ -310,20 +323,16 @@ public partial struct JsonPatch
         }
     }
 
-    private string SerializeToJson()
+    private BinaryData SerializeToBinaryDataJson()
     {
         using UnsafeBufferSequence buffer = new();
         using Utf8JsonWriter writer = new(buffer);
         WriteTo(writer);
         writer.Flush();
-#if NET6_0_OR_GREATER
-        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToMemory().Span);
-#else
-        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToArray());
-#endif
+        return buffer.ExtractReader().ToBinaryData();
     }
 
-    private string SerializeToJsonPatch()
+    private BinaryData SerializeToBinaryDataJsonPatch()
     {
         using UnsafeBufferSequence buffer = new();
         using Utf8JsonWriter writer = new(buffer);
@@ -331,10 +340,26 @@ public partial struct JsonPatch
         WriteAsJsonPatchTo(writer);
         writer.WriteEndArray();
         writer.Flush();
+        return buffer.ExtractReader().ToBinaryData();
+    }
+
+    private string SerializeToJson()
+    {
+        BinaryData data = SerializeToBinaryDataJson();
 #if NET6_0_OR_GREATER
-        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToMemory().Span);
+        return Encoding.UTF8.GetString(data.ToMemory().Span);
 #else
-        return Encoding.UTF8.GetString(buffer.ExtractReader().ToBinaryData().ToArray());
+        return Encoding.UTF8.GetString(data.ToArray());
+#endif
+    }
+
+    private string SerializeToJsonPatch()
+    {
+        BinaryData data = SerializeToBinaryDataJsonPatch();
+#if NET6_0_OR_GREATER
+        return Encoding.UTF8.GetString(data.ToMemory().Span);
+#else
+        return Encoding.UTF8.GetString(data.ToArray());
 #endif
     }
 }

@@ -70,5 +70,30 @@ namespace Azure.Monitor.Query.Metrics
                 throw new ArgumentException("Value cannot be an empty string.", name);
             }
         }
+
+        /// <param name="value"> The value. </param>
+        /// <param name="minimum"> The minimum value. </param>
+        /// <param name="maximum"> The maximum value. </param>
+        /// <param name="name"> The name. </param>
+        public static void AssertInRange<T>(T value, T minimum, T maximum, string name)
+            where T : notnull, IComparable<T>
+        {
+            if (minimum.CompareTo(value) > 0)
+            {
+                throw new ArgumentOutOfRangeException(name, "Value is less than the minimum allowed.");
+            }
+            if (maximum.CompareTo(value) < 0)
+            {
+                throw new ArgumentOutOfRangeException(name, "Value is greater than the maximum allowed.");
+            }
+        }
+
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
+        public static string CheckNotNullOrEmpty(string value, string name)
+        {
+            AssertNotNullOrEmpty(value, name);
+            return value;
+        }
     }
 }

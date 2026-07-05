@@ -13,7 +13,8 @@ public partial class OfxClient : ProjectClient
     /// <summary>
     /// Oppinionated API client
     /// </summary>
-    public OfxClient() {
+    public OfxClient()
+    {
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
@@ -23,7 +24,7 @@ public partial class OfxClient : ProjectClient
     /// </summary>
     /// <param name="projectId"></param>
     /// <param name="connections"></param>
-    public OfxClient(string projectId, ClientConnectionProvider connections):
+    public OfxClient(string projectId, ClientConnectionProvider connections) :
         base(projectId, connections)
     {
         Messaging = new MessagingServices(this);

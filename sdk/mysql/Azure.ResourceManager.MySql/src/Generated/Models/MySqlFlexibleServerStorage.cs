@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Storage Profile properties of a server. </summary>
     public partial class MySqlFlexibleServerStorage
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerStorage"/>. </summary>
         public MySqlFlexibleServerStorage()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="storageSku"> The sku name of the server storage. </param>
         /// <param name="autoIoScaling"> Enable IO Auto Scaling or not. </param>
         /// <param name="storageRedundancy"> The redundant type of the server storage. The parameter is used for server creation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerStorage(int? storageSizeInGB, int? iops, MySqlFlexibleServerEnableStatusEnum? autoGrow, MySqlFlexibleServerEnableStatusEnum? logOnDisk, string storageSku, MySqlFlexibleServerEnableStatusEnum? autoIoScaling, MySqlFlexibleServerStorageRedundancyType? storageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerStorage(int? storageSizeInGB, int? iops, MySqlFlexibleServerEnableStatusEnum? autoGrow, MySqlFlexibleServerEnableStatusEnum? logOnDisk, string storageSku, MySqlFlexibleServerEnableStatusEnum? autoIoScaling, MySqlFlexibleServerStorageRedundancyType? storageRedundancy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageSizeInGB = storageSizeInGB;
             Iops = iops;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             StorageSku = storageSku;
             AutoIoScaling = autoIoScaling;
             StorageRedundancy = storageRedundancy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Max storage size allowed for a server. </summary>
         public int? StorageSizeInGB { get; set; }
+
         /// <summary> Storage IOPS for a server. </summary>
         public int? Iops { get; set; }
+
         /// <summary> Enable Storage Auto Grow or not. </summary>
         public MySqlFlexibleServerEnableStatusEnum? AutoGrow { get; set; }
+
         /// <summary> Enable Log On Disk or not. </summary>
         public MySqlFlexibleServerEnableStatusEnum? LogOnDisk { get; set; }
+
         /// <summary> The sku name of the server storage. </summary>
         public string StorageSku { get; }
+
         /// <summary> Enable IO Auto Scaling or not. </summary>
         public MySqlFlexibleServerEnableStatusEnum? AutoIoScaling { get; set; }
+
         /// <summary> The redundant type of the server storage. The parameter is used for server creation. </summary>
         public MySqlFlexibleServerStorageRedundancyType? StorageRedundancy { get; set; }
     }

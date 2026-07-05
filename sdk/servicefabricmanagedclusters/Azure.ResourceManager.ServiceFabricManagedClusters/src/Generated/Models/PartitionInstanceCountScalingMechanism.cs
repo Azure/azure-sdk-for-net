@@ -17,37 +17,32 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="minInstanceCount"> Minimum number of instances of the partition. </param>
         /// <param name="maxInstanceCount"> Maximum number of instances of the partition. </param>
         /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
-        public PartitionInstanceCountScalingMechanism(int minInstanceCount, int maxInstanceCount, int scaleIncrement)
+        public PartitionInstanceCountScalingMechanism(int minInstanceCount, int maxInstanceCount, int scaleIncrement) : base(ServiceScalingMechanismKind.ScalePartitionInstanceCount)
         {
             MinInstanceCount = minInstanceCount;
             MaxInstanceCount = maxInstanceCount;
             ScaleIncrement = scaleIncrement;
-            Kind = ServiceScalingMechanismKind.ScalePartitionInstanceCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="PartitionInstanceCountScalingMechanism"/>. </summary>
         /// <param name="kind"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minInstanceCount"> Minimum number of instances of the partition. </param>
         /// <param name="maxInstanceCount"> Maximum number of instances of the partition. </param>
         /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
-        internal PartitionInstanceCountScalingMechanism(ServiceScalingMechanismKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int minInstanceCount, int maxInstanceCount, int scaleIncrement) : base(kind, serializedAdditionalRawData)
+        internal PartitionInstanceCountScalingMechanism(ServiceScalingMechanismKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, int minInstanceCount, int maxInstanceCount, int scaleIncrement) : base(kind, additionalBinaryDataProperties)
         {
             MinInstanceCount = minInstanceCount;
             MaxInstanceCount = maxInstanceCount;
             ScaleIncrement = scaleIncrement;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PartitionInstanceCountScalingMechanism"/> for deserialization. </summary>
-        internal PartitionInstanceCountScalingMechanism()
-        {
         }
 
         /// <summary> Minimum number of instances of the partition. </summary>
         public int MinInstanceCount { get; set; }
+
         /// <summary> Maximum number of instances of the partition. </summary>
         public int MaxInstanceCount { get; set; }
+
         /// <summary> The number of instances to add or remove during a scaling operation. </summary>
         public int ScaleIncrement { get; set; }
     }

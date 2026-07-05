@@ -6,15 +6,15 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.VirtualEnclaves.Models;
 
 namespace Azure.ResourceManager.VirtualEnclaves
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApprovalActionContent))]
     [ModelReaderWriterBuildable(typeof(ApprovalActionResult))]
@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.VirtualEnclaves
     [ModelReaderWriterBuildable(typeof(EnclaveVirtualNetwork))]
     [ModelReaderWriterBuildable(typeof(ManagedOnBehalfOfConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MoboBrokerResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TransitHubResourceListResult))]
     [ModelReaderWriterBuildable(typeof(TransitOptionParams))]

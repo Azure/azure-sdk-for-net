@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.ResourceManager.StorageMover.Models;
-using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageMover.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 {

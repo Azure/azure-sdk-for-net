@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public readonly partial struct SolutionInstanceValidationStatus : IEquatable<SolutionInstanceValidationStatus>
     {
         private readonly string _value;
+        /// <summary> Solution Instance is valid. </summary>
+        private const string ValidValue = "Valid";
+        /// <summary> Solution Instance is invalid. </summary>
+        private const string InvalidValue = "Invalid";
 
         /// <summary> Initializes a new instance of <see cref="SolutionInstanceValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SolutionInstanceValidationStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ValidValue = "Valid";
-        private const string InvalidValue = "Invalid";
+            _value = value;
+        }
 
         /// <summary> Solution Instance is valid. </summary>
         public static SolutionInstanceValidationStatus Valid { get; } = new SolutionInstanceValidationStatus(ValidValue);
+
         /// <summary> Solution Instance is invalid. </summary>
         public static SolutionInstanceValidationStatus Invalid { get; } = new SolutionInstanceValidationStatus(InvalidValue);
+
         /// <summary> Determines if two <see cref="SolutionInstanceValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SolutionInstanceValidationStatus left, SolutionInstanceValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SolutionInstanceValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SolutionInstanceValidationStatus left, SolutionInstanceValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SolutionInstanceValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SolutionInstanceValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SolutionInstanceValidationStatus(string value) => new SolutionInstanceValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SolutionInstanceValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SolutionInstanceValidationStatus?(string value) => value == null ? null : new SolutionInstanceValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SolutionInstanceValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SolutionInstanceValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -1,14 +1,33 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Renamed `ActivateBringYourOwnRootRequest` to `ActivateBringYourOwnRootContent` and `DeviceCredentialsRevokeRequest` to `DeviceCredentialsRevokeContent` to follow Azure SDK model-naming guidelines (input models use a `Content` suffix). These types were introduced in the preview line and have not shipped in a stable release.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2026-04-01)
+
+### Features Added
+
+- Aligned resource types to Microsoft.DeviceRegistry API version `2026-03-01-preview`.
+
+### Breaking Changes
+
+- `PolicyData` no longer extends `TrackedResourceData`; it now extends `ResourceData`. The `Location` property is now of type `string` instead of `AzureLocation`.
+
+## 1.1.0-beta.2 (2025-11-19)
+
+### Features Added
+
+- Aligned resource types to Microsoft.DeviceRegistry API version `2025-11-01-preview`.
+- Added `Credentials` and `Policies` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2025-11-01-preview`.
 
 ## 1.1.0-beta.1 (2025-10-23)
 

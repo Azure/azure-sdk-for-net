@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server Endpoint sync status. </summary>
     public partial class ServerEndpointSyncStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncStatus"/>. </summary>
         internal ServerEndpointSyncStatus()
@@ -63,8 +34,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="downloadActivity"> Download sync activity. </param>
         /// <param name="offlineDataTransferStatus"> Offline Data Transfer State. </param>
         /// <param name="backgroundDataDownloadActivity"> Background data download activity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEndpointSyncStatus(ServerEndpointHealthState? downloadHealth, ServerEndpointHealthState? uploadHealth, ServerEndpointHealthState? combinedHealth, ServerEndpointSyncActivityState? syncActivity, long? totalPersistentFilesNotSyncingCount, DateTimeOffset? lastUpdatedOn, ServerEndpointSyncSessionStatus uploadStatus, ServerEndpointSyncSessionStatus downloadStatus, ServerEndpointSyncActivityStatus uploadActivity, ServerEndpointSyncActivityStatus downloadActivity, ServerEndpointOfflineDataTransferState? offlineDataTransferStatus, ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEndpointSyncStatus(ServerEndpointHealthState? downloadHealth, ServerEndpointHealthState? uploadHealth, ServerEndpointHealthState? combinedHealth, ServerEndpointSyncActivityState? syncActivity, long? totalPersistentFilesNotSyncingCount, DateTimeOffset? lastUpdatedOn, ServerEndpointSyncSessionStatus uploadStatus, ServerEndpointSyncSessionStatus downloadStatus, ServerEndpointSyncActivityStatus uploadActivity, ServerEndpointSyncActivityStatus downloadActivity, ServerEndpointOfflineDataTransferState? offlineDataTransferStatus, ServerEndpointBackgroundDataDownloadActivity backgroundDataDownloadActivity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DownloadHealth = downloadHealth;
             UploadHealth = uploadHealth;
@@ -78,31 +49,42 @@ namespace Azure.ResourceManager.StorageSync.Models
             DownloadActivity = downloadActivity;
             OfflineDataTransferStatus = offlineDataTransferStatus;
             BackgroundDataDownloadActivity = backgroundDataDownloadActivity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Download Health Status. </summary>
         public ServerEndpointHealthState? DownloadHealth { get; }
+
         /// <summary> Upload Health Status. </summary>
         public ServerEndpointHealthState? UploadHealth { get; }
+
         /// <summary> Combined Health Status. </summary>
         public ServerEndpointHealthState? CombinedHealth { get; }
+
         /// <summary> Sync activity. </summary>
         public ServerEndpointSyncActivityState? SyncActivity { get; }
+
         /// <summary> Total count of persistent files not syncing (combined upload + download). </summary>
         public long? TotalPersistentFilesNotSyncingCount { get; }
+
         /// <summary> Last Updated Timestamp. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
+
         /// <summary> Upload Status. </summary>
         public ServerEndpointSyncSessionStatus UploadStatus { get; }
+
         /// <summary> Download Status. </summary>
         public ServerEndpointSyncSessionStatus DownloadStatus { get; }
+
         /// <summary> Upload sync activity. </summary>
         public ServerEndpointSyncActivityStatus UploadActivity { get; }
+
         /// <summary> Download sync activity. </summary>
         public ServerEndpointSyncActivityStatus DownloadActivity { get; }
+
         /// <summary> Offline Data Transfer State. </summary>
         public ServerEndpointOfflineDataTransferState? OfflineDataTransferStatus { get; }
+
         /// <summary> Background data download activity. </summary>
         public ServerEndpointBackgroundDataDownloadActivity BackgroundDataDownloadActivity { get; }
     }

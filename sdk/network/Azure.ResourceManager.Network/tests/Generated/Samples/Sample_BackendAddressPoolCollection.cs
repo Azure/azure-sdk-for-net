@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateLoadBalancerBackendPoolWithBackendAddressesContainingVirtualNetworkAndIPAddress()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LBBackendAddressPoolWithBackendAddressesPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LBBackendAddressPoolWithBackendAddressesPut.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,17 +45,15 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 LoadBalancerBackendAddresses = {new LoadBalancerBackendAddress
 {
-Name = "address1",
 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb"),
 IPAddress = "10.0.0.4",
 }, new LoadBalancerBackendAddress
 {
-Name = "address2",
 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb"),
 IPAddress = "10.0.0.5",
 }},
             };
-            ArmOperation<BackendAddressPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendAddressPoolName, data);
+            ArmOperation<BackendAddressPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, backendAddressPoolName, data, cancellationToken: System.Threading.CancellationToken.None);
             BackendAddressPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -69,7 +67,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_LoadBalancerWithBackendAddressPoolWithBackendAddresses()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LBBackendAddressPoolWithBackendAddressesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LBBackendAddressPoolWithBackendAddressesGet.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +101,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_LoadBalancerBackendAddressPoolGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LoadBalancerBackendAddressPoolGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LoadBalancerBackendAddressPoolGet.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +135,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_LoadBalancerWithBackendAddressPoolContainingBackendAddresses()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LBBackendAddressPoolListWithBackendAddressesPoolType.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LBBackendAddressPoolListWithBackendAddressesPoolType.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,7 +171,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_LoadBalancerBackendAddressPoolList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LoadBalancerBackendAddressPoolList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LoadBalancerBackendAddressPoolList.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -209,7 +207,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_LoadBalancerWithBackendAddressPoolWithBackendAddresses()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LBBackendAddressPoolWithBackendAddressesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LBBackendAddressPoolWithBackendAddressesGet.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,7 +237,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_LoadBalancerBackendAddressPoolGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LoadBalancerBackendAddressPoolGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LoadBalancerBackendAddressPoolGet.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -269,7 +267,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_LoadBalancerWithBackendAddressPoolWithBackendAddresses()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LBBackendAddressPoolWithBackendAddressesGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LBBackendAddressPoolWithBackendAddressesGet.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -311,7 +309,7 @@ IPAddress = "10.0.0.5",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_LoadBalancerBackendAddressPoolGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/LoadBalancerBackendAddressPoolGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/LoadBalancerBackendAddressPoolGet.json
             // this example is just showing the usage of "LoadBalancerBackendAddressPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

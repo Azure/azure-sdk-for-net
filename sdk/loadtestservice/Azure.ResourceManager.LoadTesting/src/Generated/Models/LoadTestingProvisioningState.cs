@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.LoadTesting;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.LoadTesting.Models
     public readonly partial struct LoadTestingProvisioningState : IEquatable<LoadTestingProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Deleted state. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadTestingProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeletedValue = "Deleted";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static LoadTestingProvisioningState Succeeded { get; } = new LoadTestingProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Resource creation failed. </summary>
         public static LoadTestingProvisioningState Failed { get; } = new LoadTestingProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Resource creation was canceled. </summary>
         public static LoadTestingProvisioningState Canceled { get; } = new LoadTestingProvisioningState(CanceledValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Deleted state. </summary>
         public static LoadTestingProvisioningState Deleted { get; } = new LoadTestingProvisioningState(DeletedValue);
+
         /// <summary> Determines if two <see cref="LoadTestingProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadTestingProvisioningState left, LoadTestingProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoadTestingProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadTestingProvisioningState left, LoadTestingProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadTestingProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoadTestingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoadTestingProvisioningState(string value) => new LoadTestingProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LoadTestingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LoadTestingProvisioningState?(string value) => value == null ? null : new LoadTestingProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoadTestingProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoadTestingProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

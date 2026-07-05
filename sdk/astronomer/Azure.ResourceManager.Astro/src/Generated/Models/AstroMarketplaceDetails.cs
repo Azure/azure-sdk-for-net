@@ -7,54 +7,23 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Models
 {
     /// <summary> Marketplace details for an organization. </summary>
     public partial class AstroMarketplaceDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AstroMarketplaceDetails"/>. </summary>
-        /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="offerDetails"/> is null. </exception>
-        public AstroMarketplaceDetails(string subscriptionId, AstroOfferDetails offerDetails)
+        /// <exception cref="ArgumentNullException"> <paramref name="offerDetails"/> is null. </exception>
+        public AstroMarketplaceDetails(AstroOfferDetails offerDetails)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(offerDetails, nameof(offerDetails));
 
-            SubscriptionId = subscriptionId;
             OfferDetails = offerDetails;
         }
 
@@ -62,24 +31,21 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AstroMarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, AstroOfferDetails offerDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AstroMarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, AstroOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
             OfferDetails = offerDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AstroMarketplaceDetails"/> for deserialization. </summary>
-        internal AstroMarketplaceDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure subscription id for the the marketplace offer is purchased from. </summary>
         public string SubscriptionId { get; set; }
+
         /// <summary> Marketplace subscription status. </summary>
         public MarketplaceSubscriptionStatus? SubscriptionStatus { get; set; }
+
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         public AstroOfferDetails OfferDetails { get; set; }
     }

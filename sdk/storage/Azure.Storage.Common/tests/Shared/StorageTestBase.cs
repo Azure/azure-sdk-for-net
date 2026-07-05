@@ -11,13 +11,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 using Azure.Storage.Sas;
 using Azure.Storage.Tests.Shared;
 using Microsoft.Identity.Client;
-using NUnit.Framework;
-using Azure.Core.TestFramework.Models;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -42,12 +42,15 @@ namespace Azure.Storage.Test.Shared
         private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
         private const string FileRenameSource = "x-ms-file-rename-source";
         private const string SasVersion = "sv";
+        private const string SasSignedTenantId = "sktid";
+        private const string BlockId = "blockid";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
         {
             SanitizedQueryParameters.Add(SignatureQueryName);
             IgnoredQueryParameters.Add(SasVersion);
+            IgnoredQueryParameters.Add(BlockId);
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceName)
             {
                 Value = "sanitized-value",
@@ -87,6 +90,7 @@ namespace Azure.Storage.Test.Shared
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization));
 
             SanitizedQueryParametersInHeaders.Add((CopySourceName, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((CopySourceName, SasSignedTenantId));
             SanitizedQueryParametersInHeaders.Add((RenameSource, SignatureQueryName));
             SanitizedQueryParametersInHeaders.Add((PreviousSnapshotUrl, SignatureQueryName));
             SanitizedQueryParametersInHeaders.Add((FileRenameSource, SignatureQueryName));
@@ -97,7 +101,25 @@ namespace Azure.Storage.Test.Shared
                 Value = SanitizeValue
             });
 
+            // Sanitize randomly generated block IDs (64-char Base64 strings) in XML request/response bodies
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"<Latest>(?<group>[A-Za-z0-9+/=]{64})</Latest>")
+            {
+                GroupForReplace = "group",
+                Value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"<Uncommitted>(?<group>[A-Za-z0-9+/=]{64})</Uncommitted>")
+            {
+                GroupForReplace = "group",
+                Value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"<Committed>(?<group>[A-Za-z0-9+/=]{64})</Committed>")
+            {
+                GroupForReplace = "group",
+                Value = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            });
+
             Tenants = new TenantConfigurationBuilder(this);
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         public string SanitizeUri(string uri)

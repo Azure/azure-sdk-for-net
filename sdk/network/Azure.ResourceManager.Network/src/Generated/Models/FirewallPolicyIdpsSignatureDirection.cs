@@ -11,16 +11,16 @@ namespace Azure.ResourceManager.Network.Models
     public enum FirewallPolicyIdpsSignatureDirection
     {
         /// <summary> 0. </summary>
-        Zero = 0,
+        Zero,
         /// <summary> 1. </summary>
-        One = 1,
+        One,
         /// <summary> 2. </summary>
-        Two = 2,
+        Two,
         /// <summary> 3. </summary>
-        Three = 3,
+        Three,
         /// <summary> 4. </summary>
-        Four = 4,
+        Four,
         /// <summary> 5. </summary>
-        Five = 5
+        Five
     }
 }

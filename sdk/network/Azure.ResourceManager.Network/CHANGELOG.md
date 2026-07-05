@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.17.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.16.1 (2026-06-30)
+
+### Bugs Fixed
+
+- Fixed duplicate public APIs with different casing that were accidentally introduced during TypeSpec migration, and restored affected model properties to their previous GA API shape.
+
+## 1.16.0 (2026-06-22)
+
+### Features Added
+
+- Upgraded api-version to 2025-07-01.
+
+### Breaking Changes
+
+- This is the first GA release generated from TypeSpec. Some obsolete APIs were added as migration compatibility shims and are not supported by the TypeSpec-generated SDK; please review obsolete messages for replacement guidance.
+
+### Other Changes
+
+- Migrated code generation from AutoRest to TypeSpec.
+
+## 1.15.0 (2026-02-02)
+
+### Features Added
+
+- Upgraded api-version to 2025-05-01.
+
+## 1.14.0 (2025-12-04)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2025-01-01' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4db9e81042ec3ffd1eee8df1bf2b8489a1e7fa0a/specification/network/resource-manager/readme.md.
 
 ## 1.13.0 (2025-10-24)
 
@@ -438,7 +470,6 @@ VirtualNetworkData vnet = new VirtualNetworkData()
 vnet.AddressSpace.AddressPrefixes.Add("10.0.0.0/16");
 vnet.Subnets.Add(new SubnetData
 {
-    Name = "mySubnet",
     AddressPrefix = "10.0.0.0/24",
 });
 

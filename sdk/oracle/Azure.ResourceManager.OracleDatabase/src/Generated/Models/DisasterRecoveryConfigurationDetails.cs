@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> Configurations of a Disaster Recovery Details. </summary>
     public partial class DisasterRecoveryConfigurationDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DisasterRecoveryConfigurationDetails"/>. </summary>
         public DisasterRecoveryConfigurationDetails()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="timeSnapshotStandbyEnabledTill"> Time and date stored as an RFC 3339 formatted timestamp string. For example, 2022-01-01T12:00:00.000Z would set a limit for the snapshot standby to be converted back to a cross-region standby database. </param>
         /// <param name="isSnapshotStandby"> Indicates if user wants to convert to a snapshot standby. For example, true would set a standby database to snapshot standby database. False would set a snapshot standby database back to regular standby database. </param>
         /// <param name="isReplicateAutomaticBackups"> If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DisasterRecoveryConfigurationDetails(DisasterRecoveryType? disasterRecoveryType, DateTimeOffset? timeSnapshotStandbyEnabledTill, bool? isSnapshotStandby, bool? isReplicateAutomaticBackups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DisasterRecoveryConfigurationDetails(DisasterRecoveryType? disasterRecoveryType, DateTimeOffset? timeSnapshotStandbyEnabledTill, bool? isSnapshotStandby, bool? isReplicateAutomaticBackups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisasterRecoveryType = disasterRecoveryType;
             TimeSnapshotStandbyEnabledTill = timeSnapshotStandbyEnabledTill;
             IsSnapshotStandby = isSnapshotStandby;
             IsReplicateAutomaticBackups = isReplicateAutomaticBackups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates the disaster recovery (DR) type of the Autonomous Database Serverless instance. Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover. Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover. </summary>
         public DisasterRecoveryType? DisasterRecoveryType { get; set; }
+
         /// <summary> Time and date stored as an RFC 3339 formatted timestamp string. For example, 2022-01-01T12:00:00.000Z would set a limit for the snapshot standby to be converted back to a cross-region standby database. </summary>
         public DateTimeOffset? TimeSnapshotStandbyEnabledTill { get; set; }
+
         /// <summary> Indicates if user wants to convert to a snapshot standby. For example, true would set a standby database to snapshot standby database. False would set a snapshot standby database back to regular standby database. </summary>
         public bool? IsSnapshotStandby { get; set; }
+
         /// <summary> If true, 7 days worth of backups are replicated across regions for Cross-Region ADB or Backup-Based DR between Primary and Standby. If false, the backups taken on the Primary are not replicated to the Standby database. </summary>
         public bool? IsReplicateAutomaticBackups { get; set; }
     }

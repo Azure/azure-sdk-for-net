@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.IotHub.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_IotHubResourceAddCosmosDbEndpoint()
+        public async Task CreateOrUpdate_CreateOrReplaceIoTHubWithDeviceRegistry()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_addRoutingCosmosDBEndpoint.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/CreateOrReplace_IoTHub_With_DeviceRegistry.json
             // this example is just showing the usage of "IotHubResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // invoke the operation
             string resourceName = "testHub";
-            IotHubDescriptionData data = new IotHubDescriptionData(new AzureLocation("centraluseuap"), new IotHubSkuInfo(IotHubSku.S1)
+            IotHubDescriptionData data = new IotHubDescriptionData(new AzureLocation("centraluseuap"), new IotHubSkuInfo(IotHubSku.Gen2)
             {
                 Capacity = 1L,
             })
@@ -82,16 +82,6 @@ PartitionCount = 2,
                             ServiceBusTopics = { },
                             EventHubs = { },
                             StorageContainers = { },
-                            CosmosDBSqlContainers = {new RoutingCosmosDBSqlApiProperties("endpointcosmos", new Uri("https://test-systemstore-test2.documents.azure.com"), "systemstore", "test")
-{
-SubscriptionId = "<subscription-id>",
-ResourceGroup = "rg-test",
-AuthenticationType = IotHubAuthenticationType.KeyBased,
-PrimaryKey = "<primary-key>",
-SecondaryKey = "<secondary-key>",
-PartitionKeyName = "keystamped",
-PartitionKeyTemplate = "{deviceid}-{YYYY}-{MM}",
-}},
                         },
                         Routes = { },
                         FallbackRoute = new IotHubFallbackRouteProperties(IotHubRoutingSource.DeviceMessages, new string[] { "events" }, true)
@@ -129,7 +119,17 @@ MaxDeliveryCount = 10,
                         },
                     },
                     Features = IotHubCapability.None,
-                    EnableDataResidency = false,
+                    EnableDataResidency = true,
+                    RootCertificate = new IotHubRootCertificateProperties
+                    {
+                        IsRootCertificateV2Enabled = true,
+                    },
+                    IPVersion = IotHubIPVersion.IPv4IPv6,
+                    DeviceRegistry = new IotHubDeviceRegistry
+                    {
+                        NamespaceResourceId = new ResourceIdentifier("/subscriptions/ae24ff83-d2ca-4fc8-9717-05dae4bba489/resourceGroups/myResourceGroup/providers/Microsoft.DeviceRegistry/namespaces/testNamespace"),
+                        IdentityResourceId = new ResourceIdentifier("/subscriptions/ae24ff83-d2ca-4fc8-9717-05dae4bba489/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testIdentity"),
+                    },
                 },
                 Tags = { },
             };
@@ -147,7 +147,7 @@ MaxDeliveryCount = 10,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_IotHubResourceCreateOrUpdate()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_createOrUpdate.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_createOrUpdate.json
             // this example is just showing the usage of "IotHubResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -244,7 +244,12 @@ MaxDeliveryCount = 10,
                         },
                     },
                     Features = IotHubCapability.None,
-                    EnableDataResidency = false,
+                    EnableDataResidency = true,
+                    RootCertificate = new IotHubRootCertificateProperties
+                    {
+                        IsRootCertificateV2Enabled = true,
+                    },
+                    IPVersion = IotHubIPVersion.IPv4IPv6,
                 },
                 Tags = { },
             };
@@ -262,7 +267,7 @@ MaxDeliveryCount = 10,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_IotHubResourceGet()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_get.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_get.json
             // this example is just showing the usage of "IotHubResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -295,7 +300,7 @@ MaxDeliveryCount = 10,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_IotHubResourceListByResourceGroup()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_listbyrg.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_listbyrg.json
             // this example is just showing the usage of "IotHubResource_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -330,7 +335,7 @@ MaxDeliveryCount = 10,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_IotHubResourceGet()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_get.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_get.json
             // this example is just showing the usage of "IotHubResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -359,7 +364,7 @@ MaxDeliveryCount = 10,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_IotHubResourceGet()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_get.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_get.json
             // this example is just showing the usage of "IotHubResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

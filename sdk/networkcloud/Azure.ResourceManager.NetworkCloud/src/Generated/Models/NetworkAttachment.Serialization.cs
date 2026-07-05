@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkAttachment : IUtf8JsonSerializable, IJsonModel<NetworkAttachment>
+    /// <summary> NetworkAttachment represents the single network attachment. </summary>
+    public partial class NetworkAttachment : IJsonModel<NetworkAttachment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAttachment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetworkAttachment"/> for deserialization. </summary>
+        internal NetworkAttachment()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkAttachment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkAttachment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkAttachment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkAttachment IPersistableModel<NetworkAttachment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkAttachment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkAttachment)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("attachedNetworkId"u8);
             writer.WriteStringValue(AttachedNetworkArmId);
             if (Optional.IsDefined(DefaultGateway))
@@ -63,15 +109,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("networkAttachmentName"u8);
                 writer.WriteStringValue(NetworkAttachmentName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -80,122 +126,94 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        NetworkAttachment IJsonModel<NetworkAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkAttachment IJsonModel<NetworkAttachment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkAttachment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkAttachment)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkAttachment(document.RootElement, options);
         }
 
-        internal static NetworkAttachment DeserializeNetworkAttachment(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkAttachment DeserializeNetworkAttachment(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier attachedNetworkId = default;
+            ResourceIdentifier attachedNetworkArmId = default;
             DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
-            string ipv4Address = default;
-            string ipv6Address = default;
+            string iPv4Address = default;
+            string iPv6Address = default;
             string macAddress = default;
             string networkAttachmentName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("attachedNetworkId"u8))
+                if (prop.NameEquals("attachedNetworkId"u8))
                 {
-                    attachedNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    attachedNetworkArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("defaultGateway"u8))
+                if (prop.NameEquals("defaultGateway"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    defaultGateway = new DefaultGateway(property.Value.GetString());
+                    defaultGateway = new DefaultGateway(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipAllocationMethod"u8))
+                if (prop.NameEquals("ipAllocationMethod"u8))
                 {
-                    ipAllocationMethod = new VirtualMachineIPAllocationMethod(property.Value.GetString());
+                    ipAllocationMethod = new VirtualMachineIPAllocationMethod(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipv4Address"u8))
+                if (prop.NameEquals("ipv4Address"u8))
                 {
-                    ipv4Address = property.Value.GetString();
+                    iPv4Address = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipv6Address"u8))
+                if (prop.NameEquals("ipv6Address"u8))
                 {
-                    ipv6Address = property.Value.GetString();
+                    iPv6Address = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("macAddress"u8))
+                if (prop.NameEquals("macAddress"u8))
                 {
-                    macAddress = property.Value.GetString();
+                    macAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkAttachmentName"u8))
+                if (prop.NameEquals("networkAttachmentName"u8))
                 {
-                    networkAttachmentName = property.Value.GetString();
+                    networkAttachmentName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkAttachment(
-                attachedNetworkId,
+                attachedNetworkArmId,
                 defaultGateway,
                 ipAllocationMethod,
-                ipv4Address,
-                ipv6Address,
+                iPv4Address,
+                iPv6Address,
                 macAddress,
                 networkAttachmentName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetworkAttachment>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkAttachment IPersistableModel<NetworkAttachment>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkAttachment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkAttachment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkAttachment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkAttachment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

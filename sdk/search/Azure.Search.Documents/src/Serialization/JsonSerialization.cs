@@ -10,9 +10,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
-using Azure.Core.GeoJson;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
@@ -130,7 +130,8 @@ namespace Azure.Search.Documents
                 // JsonSerializerOptions uses 0 to mean pick their default of 64
                 recursionDepth = Constants.MaxJsonRecursionDepth;
             }
-            if (recursionDepth.Value < 0) { throw new JsonException("Exceeded maximum recursion depth."); }
+            if (recursionDepth.Value < 0)
+            { throw new JsonException("Exceeded maximum recursion depth."); }
 
             SearchDocument doc = new SearchDocument();
             Expects(reader, JsonTokenType.StartObject);
@@ -149,21 +150,35 @@ namespace Azure.Search.Documents
                 }
                 else
                 {
-                    reader.Skip();
+                    // Use TrySkip rather than Skip so we don't throw
+                    // "Cannot skip tokens on partial JSON" when this converter
+                    // is invoked over a non-final block (e.g. on the async
+                    // deserialization path for large documents). The value is
+                    // always fully buffered by the time the converter runs, so
+                    // TrySkip succeeds; we only fall back to throwing a
+                    // JsonException in the unexpected case it cannot.
+                    if (!reader.TrySkip())
+                    {
+                        throw new JsonException(
+                            "Unable to skip OData property '" + propertyName + "' on partial JSON.");
+                    }
                 }
             }
             return doc;
 
             object ReadSearchDocObject(ref Utf8JsonReader reader, int depth)
             {
-                if (depth < 0) { throw new JsonException("Exceeded maximum recursion depth."); }
+                if (depth < 0)
+                { throw new JsonException("Exceeded maximum recursion depth."); }
                 switch (reader.TokenType)
                 {
                     case JsonTokenType.String:
                         return reader.GetString();
                     case JsonTokenType.Number:
-                        if (reader.TryGetInt32(out int intValue)) { return intValue; }
-                        if (reader.TryGetInt64(out long longValue)) { return longValue; }
+                        if (reader.TryGetInt32(out int intValue))
+                        { return intValue; }
+                        if (reader.TryGetInt64(out long longValue))
+                        { return longValue; }
                         return reader.GetDouble();
                     case JsonTokenType.True:
                         return true;
@@ -249,7 +264,7 @@ namespace Azure.Search.Documents
             writer.WriteEndObject();
         }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize a JSON stream.
         /// </summary>
@@ -272,7 +287,7 @@ namespace Azure.Search.Documents
             ObjectSerializer serializer,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             if (json is null)
             {

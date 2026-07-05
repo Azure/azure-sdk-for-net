@@ -35,7 +35,8 @@ public readonly struct StorageServices
     [EditorBrowsable(EditorBrowsableState.Never)]
     public BlobContainerClient GetContainer(string containerName = default)
     {
-        if (containerName == default) containerName = "default";
+        if (containerName == default)
+            containerName = "default";
         string blobContainerClientId = $"{typeof(BlobContainerClient).FullName}@{containerName}";
 
         ProjectClient project = _project;
@@ -118,7 +119,8 @@ public readonly struct StorageServices
     private BlockBlobClient GetBlobClient(ref string name)
     {
         BlobContainerClient container = GetContainer(default);
-        if (name == default) name = $"b{Guid.NewGuid()}";
+        if (name == default)
+            name = $"b{Guid.NewGuid()}";
         BlockBlobClient client = container.GetBlockBlobClient(name);
         return client;
     }
@@ -184,7 +186,8 @@ public readonly struct StorageServices
         BinaryData content = result.Content;
 
         string contentType = result.Details.ContentType;
-        if (contentType!=default) content = content.WithMediaType(contentType);
+        if (contentType != default)
+            content = content.WithMediaType(contentType);
 
         return content;
     }

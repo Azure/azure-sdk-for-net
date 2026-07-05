@@ -12,46 +12,18 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Abstract placement policy properties
-    /// Please note <see cref="PlacementPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VmHostPlacementPolicyProperties"/> and <see cref="VmPlacementPolicyProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmPlacementPolicyProperties"/> and <see cref="VmHostPlacementPolicyProperties"/>.
     /// </summary>
     public abstract partial class PlacementPolicyProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PlacementPolicyProperties"/>. </summary>
-        protected PlacementPolicyProperties()
+        /// <param name="type"> Placement Policy type. </param>
+        private protected PlacementPolicyProperties(PlacementPolicyType @type)
         {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="PlacementPolicyProperties"/>. </summary>
@@ -59,22 +31,25 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PlacementPolicyProperties(PlacementPolicyType @type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             State = state;
             DisplayName = displayName;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Placement Policy type. </summary>
         internal PlacementPolicyType Type { get; set; }
+
         /// <summary> Whether the placement policy is enabled or disabled. </summary>
         public PlacementPolicyState? State { get; set; }
+
         /// <summary> Display name of the placement policy. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> The provisioning state. </summary>
         public PlacementPolicyProvisioningState? ProvisioningState { get; }
     }

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -31,7 +30,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly InputServiceMethod _getMethodProvider;
         protected readonly ClientProvider _updateRestClient;
         protected readonly ClientProvider _getRestClient;
-        protected readonly RequestPathPattern _contextualPath;
+        protected readonly OperationContext _operationContext;
         protected readonly FieldProvider _updateClientDiagnosticsField;
         protected readonly FieldProvider _getRestClientField;
         protected readonly bool _isPatch;
@@ -40,10 +39,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
+        private readonly ParameterContextRegistry _parameterMappings;
+
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
-            RequestPathPattern contextualPath,
+            OperationContext operationContext,
             ResourceOperationMethodProvider updateMethodProvider,
             InputServiceMethod getMethod,
             RestClientInfo updateRestClientInfo,
@@ -56,13 +57,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _resource = resource;
             _updateMethodProvider = updateMethodProvider;
             _getMethodProvider = getMethod;
-            _contextualPath = contextualPath;
+            _operationContext = operationContext;
+            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
             _enclosingType = resource;
             _updateRestClient = updateRestClientInfo.RestClientProvider;
             _getRestClient = getRestClientInfo.RestClientProvider;
             _isPatch = isPatch;
             _isAsync = isAsync;
-            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
+            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation || updateMethodProvider.IsFakeLongRunningOperation;
             _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
             _getRestClientField = getRestClientInfo.RestClientField;
 
@@ -118,9 +120,9 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             var requestMethod = _getRestClient.GetRequestMethodByOperation(_getMethodProvider.Operation);
 
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
+            var arguments = _parameterMappings.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
 
-            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, "CreateGetRequest", arguments, out var messageVariable));
+            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
@@ -204,7 +206,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
 
             parameters.Add(dataVar);
-            parameters.Add(cancellationTokenParam);
+            parameters.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
 
             return Declare(
                 "result",
@@ -228,11 +230,21 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             VariableExpression resultVar;
             if (_isPatch) // patch case
             {
+                // The patch type's parameterless ctor is the internal deserialization ctor,
+                // which leaves required collections like `Tags` uninitialized (null). Resolve
+                // the public initialization constructor and forward each required argument
+                // from `current` so collections are initialized via the public
+                // [InitializationConstructor]. For ResourceData-derived (untracked) patches
+                // the init ctor takes no parameters, so this naturally falls back to
+                // `new TPatch()`. For TrackedResourceData-derived patches it forwards
+                // `current.Location`, etc.
+                ValueExpression patchCtorCall = BuildPatchCtorCall(updateParam.Type, resourceDataVar);
+
                 // Create a new instance of the update patch type
                 statements.Add(Declare(
                     "patch",
                     updateParam.Type,
-                    New.Instance(updateParam.Type),
+                    patchCtorCall,
                     out var patchVar));
 
                 if (copyExistingTags)
@@ -246,6 +258,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                         out var tagVariable);
                     foreachStatement.Add(patchVar.Property("Tags").Invoke("Add", tagVariable).Terminate());
                     statements.Add(foreachStatement);
+                }
+
+                if (_resource.TagPatchHookMethodName is not null)
+                {
+                    statements.Add(This.Invoke(_resource.TagPatchHookMethodName, [patchVar, resourceDataVar]).Terminate());
                 }
 
                 // Apply the specific tag operation to the patch
@@ -317,6 +334,44 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 tagMethodProvider._signature,
                 tagMethodProvider._bodyStatements,
                 tagMethodProvider._enclosingType);
+        }
+
+        /// <summary>
+        /// Builds a constructor invocation for the patch type using its public
+        /// initialization constructor. Each required parameter is forwarded from
+        /// <paramref name="currentVar"/> by matching the constructor parameter to
+        /// its source property. If the patch type's initialization constructor
+        /// has no parameters (e.g. untracked <c>ResourceData</c>), falls back to
+        /// <c>new TPatch()</c>.
+        /// </summary>
+        private static ValueExpression BuildPatchCtorCall(CSharpType patchType, VariableExpression currentVar)
+        {
+            // Patch models for tag methods are always generated TypeSpec models (ModelProvider) —
+            // they originate from PopulateUpdateMethod() on the resource.
+            var patchModel = (ModelProvider)ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[patchType]!;
+
+            // The "initialization constructor" is the public ctor with required-property
+            // parameters. The public mocking ctor (parameterless) is filtered out by the
+            // parameter-count check; if the only public ctor is the mocking one (no required
+            // properties), we fall back to `new TPatch()`.
+            var initCtor = patchModel.Constructors
+                .FirstOrDefault(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                    && c.Signature.Parameters.Count > 0);
+            if (initCtor is null)
+            {
+                return New.Instance(patchType);
+            }
+
+            var args = new ValueExpression[initCtor.Signature.Parameters.Count];
+            for (int i = 0; i < initCtor.Signature.Parameters.Count; i++)
+            {
+                var param = initCtor.Signature.Parameters[i];
+                // ParameterProvider.Property points back to the originating PropertyProvider;
+                // fall back to the parameter name (Pascal-cased) if unavailable.
+                var propertyName = param.Property?.Name ?? char.ToUpperInvariant(param.Name[0]) + param.Name.Substring(1);
+                args[i] = currentVar.Property(propertyName);
+            }
+            return New.Instance(patchType, args);
         }
     }
 }

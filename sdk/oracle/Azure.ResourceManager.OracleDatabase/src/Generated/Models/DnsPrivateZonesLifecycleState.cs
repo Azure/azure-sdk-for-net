@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct DnsPrivateZonesLifecycleState : IEquatable<DnsPrivateZonesLifecycleState>
     {
         private readonly string _value;
+        /// <summary> DNS Private Zones is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> DNS Private Zones is creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> DNS Private Zones is deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> DNS Private Zones is deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> DNS Private Zones is updating. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="DnsPrivateZonesLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DnsPrivateZonesLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string CreatingValue = "Creating";
-        private const string DeletedValue = "Deleted";
-        private const string DeletingValue = "Deleting";
-        private const string UpdatingValue = "Updating";
+            _value = value;
+        }
 
         /// <summary> DNS Private Zones is active. </summary>
         public static DnsPrivateZonesLifecycleState Active { get; } = new DnsPrivateZonesLifecycleState(ActiveValue);
+
         /// <summary> DNS Private Zones is creating. </summary>
         public static DnsPrivateZonesLifecycleState Creating { get; } = new DnsPrivateZonesLifecycleState(CreatingValue);
+
         /// <summary> DNS Private Zones is deleted. </summary>
         public static DnsPrivateZonesLifecycleState Deleted { get; } = new DnsPrivateZonesLifecycleState(DeletedValue);
+
         /// <summary> DNS Private Zones is deleting. </summary>
         public static DnsPrivateZonesLifecycleState Deleting { get; } = new DnsPrivateZonesLifecycleState(DeletingValue);
+
         /// <summary> DNS Private Zones is updating. </summary>
         public static DnsPrivateZonesLifecycleState Updating { get; } = new DnsPrivateZonesLifecycleState(UpdatingValue);
+
         /// <summary> Determines if two <see cref="DnsPrivateZonesLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsPrivateZonesLifecycleState left, DnsPrivateZonesLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DnsPrivateZonesLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsPrivateZonesLifecycleState left, DnsPrivateZonesLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsPrivateZonesLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DnsPrivateZonesLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DnsPrivateZonesLifecycleState(string value) => new DnsPrivateZonesLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DnsPrivateZonesLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DnsPrivateZonesLifecycleState?(string value) => value == null ? null : new DnsPrivateZonesLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsPrivateZonesLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DnsPrivateZonesLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Versioning.Removed
 {
@@ -14,6 +16,9 @@ namespace Versioning.Removed
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         public RemovedClientOptions(ServiceVersion version = LatestVersion) => throw null;
+
+        [Experimental("SCME0002")]
+        internal RemovedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion
         {

@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A Class representing a WebSiteWebJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteWebJobResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteWebJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteWebJob method.
+    /// A class representing a WebSiteWebJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteWebJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteWebJobs method.
     /// </summary>
     public partial class WebSiteWebJobResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="WebSiteWebJobResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="webJobName"> The webJobName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _webSiteWebJobWebAppsClientDiagnostics;
-        private readonly WebAppsRestOperations _webSiteWebJobWebAppsRestClient;
+        private readonly ClientDiagnostics _webJobOperationGroupClientDiagnostics;
+        private readonly WebJobOperationGroup _webJobOperationGroupRestClient;
         private readonly WebJobData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/webjobs";
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteWebJobResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WebSiteWebJobResource for mocking. </summary>
         protected WebSiteWebJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteWebJobResource(ArmClient client, WebJobData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.AppService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WebSiteWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebSiteWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebSiteWebJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webSiteWebJobWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string webSiteWebJobWebAppsApiVersion);
-            _webSiteWebJobWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteWebJobWebAppsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string webSiteWebJobApiVersion);
+            _webJobOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            _webJobOperationGroupRestClient = new WebJobOperationGroup(_webJobOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteWebJobApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual WebJobData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="webJobName"> The webJobName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Description for Get webjob information for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWebJob</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebJobOperationGroup_GetWebJob. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WebSiteWebJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebJobWebAppsClientDiagnostics.CreateScope("WebSiteWebJobResource.Get");
+            using DiagnosticScope scope = _webJobOperationGroupClientDiagnostics.CreateScope("WebSiteWebJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _webSiteWebJobWebAppsRestClient.GetWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webJobOperationGroupRestClient.CreateGetWebJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WebJobData> response = Response.FromValue(WebJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteWebJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.AppService
         /// Description for Get webjob information for an app, or a deployment slot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetWebJob</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebJobOperationGroup_GetWebJob. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebSiteWebJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="WebSiteWebJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebSiteWebJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebJobWebAppsClientDiagnostics.CreateScope("WebSiteWebJobResource.Get");
+            using DiagnosticScope scope = _webJobOperationGroupClientDiagnostics.CreateScope("WebSiteWebJobResource.Get");
             scope.Start();
             try
             {
-                var response = _webSiteWebJobWebAppsRestClient.GetWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webJobOperationGroupRestClient.CreateGetWebJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WebJobData> response = Response.FromValue(WebJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WebSiteWebJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

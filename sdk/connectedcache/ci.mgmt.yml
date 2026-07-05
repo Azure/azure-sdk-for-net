@@ -2,18 +2,6 @@
 
 trigger: none
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/connectedcache/ci.mgmt.yml
-    - sdk/connectedcache/Azure.ResourceManager.ConnectedCache/
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

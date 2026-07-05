@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
     /// <summary> Pre Restore request object. </summary>
     public partial class PreRestoreContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PreRestoreContent"/>. </summary>
         public PreRestoreContent()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="backupMetadataPropertyBag"> Pre Restore backup metadata property bag. </param>
         /// <param name="restoreFileSpec"> Pre Restore restore file spec array. </param>
         /// <param name="pauseWaitForSyncDrainTimePeriodInSeconds"> Pre Restore pause wait for sync drain time period in seconds. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PreRestoreContent(string partition, string replicaGroup, string requestId, Uri azureFileShareUri, string status, Uri sourceAzureFileShareUri, string backupMetadataPropertyBag, IList<RestoreFileSpec> restoreFileSpec, int? pauseWaitForSyncDrainTimePeriodInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PreRestoreContent(string partition, string replicaGroup, string requestId, Uri azureFileShareUri, string status, Uri sourceAzureFileShareUri, string backupMetadataPropertyBag, IList<RestoreFileSpec> restoreFileSpec, int? pauseWaitForSyncDrainTimePeriodInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Partition = partition;
             ReplicaGroup = replicaGroup;
@@ -73,25 +45,33 @@ namespace Azure.ResourceManager.StorageSync.Models
             BackupMetadataPropertyBag = backupMetadataPropertyBag;
             RestoreFileSpec = restoreFileSpec;
             PauseWaitForSyncDrainTimePeriodInSeconds = pauseWaitForSyncDrainTimePeriodInSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Pre Restore partition. </summary>
         public string Partition { get; set; }
+
         /// <summary> Pre Restore replica group. </summary>
         public string ReplicaGroup { get; set; }
+
         /// <summary> Pre Restore request id. </summary>
         public string RequestId { get; set; }
+
         /// <summary> Pre Restore Azure file share uri. </summary>
         public Uri AzureFileShareUri { get; set; }
+
         /// <summary> Pre Restore Azure status. </summary>
         public string Status { get; set; }
+
         /// <summary> Pre Restore Azure source azure file share uri. </summary>
         public Uri SourceAzureFileShareUri { get; set; }
+
         /// <summary> Pre Restore backup metadata property bag. </summary>
         public string BackupMetadataPropertyBag { get; set; }
+
         /// <summary> Pre Restore restore file spec array. </summary>
         public IList<RestoreFileSpec> RestoreFileSpec { get; }
+
         /// <summary> Pre Restore pause wait for sync drain time period in seconds. </summary>
         public int? PauseWaitForSyncDrainTimePeriodInSeconds { get; set; }
     }

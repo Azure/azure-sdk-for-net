@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
 {
     /// <summary>
     /// A class representing a collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> and their operations.
-    /// Each <see cref="LambdaTestHyperExecuteOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="LambdaTestHyperExecuteOrganizationCollection"/> instance call the GetLambdaTestHyperExecuteOrganizations method from an instance of the parent resource.
+    /// Each <see cref="LambdaTestHyperExecuteOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="LambdaTestHyperExecuteOrganizationCollection"/> instance call the GetLambdaTestHyperExecuteOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class LambdaTestHyperExecuteOrganizationCollection : ArmCollection, IEnumerable<LambdaTestHyperExecuteOrganizationResource>, IAsyncEnumerable<LambdaTestHyperExecuteOrganizationResource>
     {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Organizations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, LambdaTestHyperExecuteOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource> operation = new LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource>(
-                    new LambdaTestHyperExecuteOrganizationOperationSource(Client),
+                    new LambdaTestHyperExecuteOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Organizations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, LambdaTestHyperExecuteOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource> operation = new LambdaTestHyperExecuteArmOperation<LambdaTestHyperExecuteOrganizationResource>(
-                    new LambdaTestHyperExecuteOrganizationOperationSource(Client),
+                    new LambdaTestHyperExecuteOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             }
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/LambdaTest.HyperExecute/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LambdaTestHyperExecuteOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -278,10 +294,26 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LambdaTestHyperExecuteOrganizationCollection.GetAll"), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/LambdaTest.HyperExecute/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-02-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LambdaTestHyperExecuteOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LambdaTestHyperExecuteOrganizationResource> GetAll(CancellationToken cancellationToken = default)
@@ -290,11 +322,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
+            return new PageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "LambdaTestHyperExecuteOrganizationCollection.GetAll"), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
         }
 
         /// <summary>
-        /// Get a OrganizationResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +334,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         }
 
         /// <summary>
-        /// Get a OrganizationResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,7 +391,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,7 +440,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         }
 
         /// <summary>
-        /// Get a OrganizationResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,7 +448,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +501,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         }
 
         /// <summary>
-        /// Get a OrganizationResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,7 +509,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

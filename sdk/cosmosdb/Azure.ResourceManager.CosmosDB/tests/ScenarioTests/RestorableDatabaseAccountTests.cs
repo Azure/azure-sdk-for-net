@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
-using Azure.Core;
-using System;
-using System.Threading;
-using System.ComponentModel;
 using NUnit.Framework.Internal;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestorableDatabaseAccountList()
         {
@@ -65,7 +64,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestorableDatabaseAccountListWithContinuous7Account()
         {
@@ -73,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestorableDatabaseAccountListWithContinuous30Account()
         {
@@ -81,7 +78,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
         }
 
-        [Test]
         [RecordedTest]
         [Ignore("Not recorded")]
         public async Task RestorableDatabaseAccountListByLocation()
@@ -92,7 +88,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
         }
 
-        [Test]
         [RecordedTest]
         public async Task RestoreSqlDatabaseAccount()
         {
@@ -150,6 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(location, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
                 IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
@@ -204,6 +200,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             CosmosDBAccountCreateOrUpdateContent databaseAccountCreateUpdateParameters = new CosmosDBAccountCreateOrUpdateContent(armLocation, locations)
             {
+                DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                 Kind = kind,
                 CreateMode = CosmosDBAccountCreateMode.Restore,
                 RestoreParameters = restoreParameters
@@ -242,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return databaseLro.Value;
         }
 
-        internal async Task<CosmosDBSqlContainerResource> CreateSqlContainer(string containerName, CosmosDBSqlDatabaseResource database,  AutoscaleSettings autoscale)
+        internal async Task<CosmosDBSqlContainerResource> CreateSqlContainer(string containerName, CosmosDBSqlDatabaseResource database, AutoscaleSettings autoscale)
         {
             return await CreateSqlContainer(containerName, autoscale, database.GetCosmosDBSqlContainers());
         }
@@ -286,7 +283,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     }, null),
                         },
                         new List<CosmosDBVectorIndex>(),
-                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
+                        new List<FullTextIndexPath>(),
+                        additionalBinaryDataProperties: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

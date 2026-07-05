@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The KnowledgeSourceReference. </summary>
+    /// <summary> Reference to a knowledge source. </summary>
     public partial class KnowledgeSourceReference
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceReference"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
@@ -57,39 +29,24 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceReference"/>. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
-        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
-        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
-        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
-        /// <param name="maxSubQueries"> The maximum number of queries that can be issued at a time when retrieving data from this source. </param>
-        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceReference(string name, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, int? maxSubQueries, float? rerankerThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source. When true, images extracted during ingestion are delivered to downstream models at query time. </param>
+        /// <param name="enableFreshness"> Indicates whether freshness-aware retrieval should be enabled for this knowledge source. When true, a freshness scoring profile is applied during retrieval to bias results toward newer documents. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeSourceReference(string name, bool? enableImageServing, bool? enableFreshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IncludeReferences = includeReferences;
-            IncludeReferenceSourceData = includeReferenceSourceData;
-            AlwaysQuerySource = alwaysQuerySource;
-            MaxSubQueries = maxSubQueries;
-            RerankerThreshold = rerankerThreshold;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeSourceReference"/> for deserialization. </summary>
-        internal KnowledgeSourceReference()
-        {
+            EnableImageServing = enableImageServing;
+            EnableFreshness = enableFreshness;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the knowledge source. </summary>
         public string Name { get; set; }
-        /// <summary> Indicates whether references should be included for data retrieved from this source. </summary>
-        public bool? IncludeReferences { get; set; }
-        /// <summary> Indicates whether references should include the structured data obtained during retrieval in their payload. </summary>
-        public bool? IncludeReferenceSourceData { get; set; }
-        /// <summary> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </summary>
-        public bool? AlwaysQuerySource { get; set; }
-        /// <summary> The maximum number of queries that can be issued at a time when retrieving data from this source. </summary>
-        public int? MaxSubQueries { get; set; }
-        /// <summary> The reranker threshold all retrieved documents must meet to be included in the response. </summary>
-        public float? RerankerThreshold { get; set; }
+
+        /// <summary> Indicates whether image serving should be enabled for this knowledge source. When true, images extracted during ingestion are delivered to downstream models at query time. </summary>
+        public bool? EnableImageServing { get; set; }
+
+        /// <summary> Indicates whether freshness-aware retrieval should be enabled for this knowledge source. When true, a freshness scoring profile is applied during retrieval to bias results toward newer documents. </summary>
+        public bool? EnableFreshness { get; set; }
     }
 }

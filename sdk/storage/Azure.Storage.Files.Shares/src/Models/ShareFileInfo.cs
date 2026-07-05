@@ -141,7 +141,7 @@ namespace Azure.Storage.Files.Shares.Models
                 PosixProperties = new FilePosixProperties
                 {
                     FileMode = nfsFileMode,
-                    Owner =  owner,
+                    Owner = owner,
                     Group = group,
                     FileType = nfsFileType,
                 }

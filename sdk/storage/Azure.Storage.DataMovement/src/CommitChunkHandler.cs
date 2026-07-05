@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement

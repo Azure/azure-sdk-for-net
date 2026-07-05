@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Marketplace;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Marketplace.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableMarketplaceTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableMarketplaceTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMarketplaceTenantResource for mocking. </summary>
         protected MockableMarketplaceTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMarketplaceTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMarketplaceTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMarketplaceTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of PrivateStoreResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
+        /// <summary> Gets a collection of PrivateStores in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateStores and their operations over a PrivateStoreResource. </returns>
         public virtual PrivateStoreCollection GetPrivateStores()
         {
             return GetCachedClient(client => new PrivateStoreCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// Get information about the private store
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateStore_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,20 +67,16 @@ namespace Azure.ResourceManager.Marketplace.Mocking
         /// Get information about the private store
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Marketplace/privateStores/{privateStoreId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateStore_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateStores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateStoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

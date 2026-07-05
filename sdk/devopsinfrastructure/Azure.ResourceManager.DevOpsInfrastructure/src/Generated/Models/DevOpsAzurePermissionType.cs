@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
     public readonly partial struct DevOpsAzurePermissionType : IEquatable<DevOpsAzurePermissionType>
     {
         private readonly string _value;
+        /// <summary> Pool will inherit permissions from the project or organization. </summary>
+        private const string InheritValue = "Inherit";
+        /// <summary> Only the pool creator will be an admin of the pool. </summary>
+        private const string CreatorOnlyValue = "CreatorOnly";
+        /// <summary> Only the specified accounts will be admins of the pool. </summary>
+        private const string SpecificAccountsValue = "SpecificAccounts";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsAzurePermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DevOpsAzurePermissionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InheritValue = "Inherit";
-        private const string CreatorOnlyValue = "CreatorOnly";
-        private const string SpecificAccountsValue = "SpecificAccounts";
+            _value = value;
+        }
 
         /// <summary> Pool will inherit permissions from the project or organization. </summary>
         public static DevOpsAzurePermissionType Inherit { get; } = new DevOpsAzurePermissionType(InheritValue);
+
         /// <summary> Only the pool creator will be an admin of the pool. </summary>
         public static DevOpsAzurePermissionType CreatorOnly { get; } = new DevOpsAzurePermissionType(CreatorOnlyValue);
+
         /// <summary> Only the specified accounts will be admins of the pool. </summary>
         public static DevOpsAzurePermissionType SpecificAccounts { get; } = new DevOpsAzurePermissionType(SpecificAccountsValue);
+
         /// <summary> Determines if two <see cref="DevOpsAzurePermissionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevOpsAzurePermissionType left, DevOpsAzurePermissionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevOpsAzurePermissionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevOpsAzurePermissionType left, DevOpsAzurePermissionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevOpsAzurePermissionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevOpsAzurePermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevOpsAzurePermissionType(string value) => new DevOpsAzurePermissionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevOpsAzurePermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevOpsAzurePermissionType?(string value) => value == null ? null : new DevOpsAzurePermissionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevOpsAzurePermissionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevOpsAzurePermissionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

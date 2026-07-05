@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PowerBIDedicated;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockablePowerBIDedicatedResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockablePowerBIDedicatedResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePowerBIDedicatedResourceGroupResource for mocking. </summary>
         protected MockablePowerBIDedicatedResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePowerBIDedicatedResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePowerBIDedicatedResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePowerBIDedicatedResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of DedicatedCapacityResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DedicatedCapacityResources and their operations over a DedicatedCapacityResource. </returns>
+        /// <summary> Gets a collection of DedicatedCapacities in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DedicatedCapacities and their operations over a DedicatedCapacityResource. </returns>
         public virtual DedicatedCapacityCollection GetDedicatedCapacities()
         {
             return GetCachedClient(client => new DedicatedCapacityCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// Gets details about the specified dedicated capacity.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_GetDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capacities_GetDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DedicatedCapacityResource>> GetDedicatedCapacityAsync(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+
             return await GetDedicatedCapacities().GetAsync(dedicatedCapacityName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// Gets details about the specified dedicated capacity.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/capacities/{dedicatedCapacityName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Capacities_GetDetails</description>
+        /// <term> Operation Id. </term>
+        /// <description> Capacities_GetDetails. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,11 +91,13 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         [ForwardsClientCalls]
         public virtual Response<DedicatedCapacityResource> GetDedicatedCapacity(string dedicatedCapacityName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dedicatedCapacityName, nameof(dedicatedCapacityName));
+
             return GetDedicatedCapacities().Get(dedicatedCapacityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AutoScaleVCoreResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AutoScaleVCoreResources and their operations over a AutoScaleVCoreResource. </returns>
+        /// <summary> Gets a collection of AutoScaleVCores in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AutoScaleVCores and their operations over a AutoScaleVCoreResource. </returns>
         public virtual AutoScaleVCoreCollection GetAutoScaleVCores()
         {
             return GetCachedClient(client => new AutoScaleVCoreCollection(client, Id));
@@ -113,20 +107,16 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// Gets details about the specified auto scale v-core.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoScaleVCores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +127,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AutoScaleVCoreResource>> GetAutoScaleVCoreAsync(string vcoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
+
             return await GetAutoScaleVCores().GetAsync(vcoreName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +136,16 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// Gets details about the specified auto scale v-core.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutoScaleVCores_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoScaleVCores_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +156,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         [ForwardsClientCalls]
         public virtual Response<AutoScaleVCoreResource> GetAutoScaleVCore(string vcoreName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
+
             return GetAutoScaleVCores().Get(vcoreName, cancellationToken);
         }
     }

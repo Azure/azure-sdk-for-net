@@ -8,6 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Bicep.Mocking;
 using Azure.ResourceManager.Resources.Bicep.Models;
 
@@ -16,73 +18,46 @@ namespace Azure.ResourceManager.Resources.Bicep
     /// <summary> A class to add extension methods to Azure.ResourceManager.Resources.Bicep. </summary>
     public static partial class ResourcesBicepExtensions
     {
-        private static MockableResourcesBicepSubscriptionResource GetMockableResourcesBicepSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableResourcesBicepSubscriptionResource GetMockableResourcesBicepSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableResourcesBicepSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableResourcesBicepSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
         /// Decompiles an ARM json template into a Bicep template
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/decompileBicep</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DecompileOperationGroup_Bicep</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesBicepSubscriptionResource.BicepDecompileOperationGroup(DecompileOperationContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesBicepSubscriptionResource.BicepDecompileAsync(DecompileOperationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<DecompileOperationSuccessResult>> BicepDecompileOperationGroupAsync(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<DecompileOperationSuccessResult>> BicepDecompileAsync(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableResourcesBicepSubscriptionResource(subscriptionResource).BicepDecompileOperationGroupAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesBicepSubscriptionResource(subscriptionResource).BicepDecompileAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Decompiles an ARM json template into a Bicep template
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Resources/decompileBicep</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DecompileOperationGroup_Bicep</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesBicepSubscriptionResource.BicepDecompileOperationGroup(DecompileOperationContent,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableResourcesBicepSubscriptionResource.BicepDecompile(DecompileOperationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<DecompileOperationSuccessResult> BicepDecompileOperationGroup(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<DecompileOperationSuccessResult> BicepDecompile(this SubscriptionResource subscriptionResource, DecompileOperationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourcesBicepSubscriptionResource(subscriptionResource).BicepDecompileOperationGroup(content, cancellationToken);
+            return GetMockableResourcesBicepSubscriptionResource(subscriptionResource).BicepDecompile(content, cancellationToken);
         }
     }
 }

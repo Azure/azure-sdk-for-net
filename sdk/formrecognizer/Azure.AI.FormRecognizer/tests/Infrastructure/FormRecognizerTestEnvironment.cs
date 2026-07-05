@@ -11,7 +11,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// <summary>
     /// A helper class used to retrieve information to be used for tests.
     /// </summary>
-    public class FormRecognizerTestEnvironment: TestEnvironment
+    public class FormRecognizerTestEnvironment : TestEnvironment
     {
         private const string SanitizedSasUrl = "https://sanitized.blob.core.windows.net";
 

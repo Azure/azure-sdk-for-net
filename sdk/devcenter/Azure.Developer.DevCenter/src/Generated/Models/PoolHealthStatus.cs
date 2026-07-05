@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.Developer.DevCenter.Models
     public readonly partial struct PoolHealthStatus : IEquatable<PoolHealthStatus>
     {
         private readonly string _value;
+        /// <summary> The pool health status is not known. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> The pool health status waiting for health checks to run. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> The pool health status is healthy. </summary>
+        private const string HealthyValue = "Healthy";
+        /// <summary> The pool health status has one or more warnings. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> The pool health status is not healthy. </summary>
+        private const string UnhealthyValue = "Unhealthy";
 
         /// <summary> Initializes a new instance of <see cref="PoolHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PoolHealthStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string PendingValue = "Pending";
-        private const string HealthyValue = "Healthy";
-        private const string WarningValue = "Warning";
-        private const string UnhealthyValue = "Unhealthy";
+            _value = value;
+        }
 
         /// <summary> The pool health status is not known. </summary>
         public static PoolHealthStatus Unknown { get; } = new PoolHealthStatus(UnknownValue);
+
         /// <summary> The pool health status waiting for health checks to run. </summary>
         public static PoolHealthStatus Pending { get; } = new PoolHealthStatus(PendingValue);
+
         /// <summary> The pool health status is healthy. </summary>
         public static PoolHealthStatus Healthy { get; } = new PoolHealthStatus(HealthyValue);
+
         /// <summary> The pool health status has one or more warnings. </summary>
         public static PoolHealthStatus Warning { get; } = new PoolHealthStatus(WarningValue);
+
         /// <summary> The pool health status is not healthy. </summary>
         public static PoolHealthStatus Unhealthy { get; } = new PoolHealthStatus(UnhealthyValue);
+
         /// <summary> Determines if two <see cref="PoolHealthStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PoolHealthStatus left, PoolHealthStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PoolHealthStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PoolHealthStatus left, PoolHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PoolHealthStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PoolHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PoolHealthStatus(string value) => new PoolHealthStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PoolHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PoolHealthStatus?(string value) => value == null ? null : new PoolHealthStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PoolHealthStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PoolHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

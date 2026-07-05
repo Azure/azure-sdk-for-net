@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class L2ServiceLoadBalancerConfiguration : IUtf8JsonSerializable, IJsonModel<L2ServiceLoadBalancerConfiguration>
+    /// <summary> L2ServiceLoadBalancerConfiguration represents the configuration of a layer 2 service load balancer. </summary>
+    internal partial class L2ServiceLoadBalancerConfiguration : IJsonModel<L2ServiceLoadBalancerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L2ServiceLoadBalancerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual L2ServiceLoadBalancerConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeL2ServiceLoadBalancerConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(L2ServiceLoadBalancerConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(L2ServiceLoadBalancerConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<L2ServiceLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        L2ServiceLoadBalancerConfiguration IPersistableModel<L2ServiceLoadBalancerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<L2ServiceLoadBalancerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<L2ServiceLoadBalancerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,31 +69,30 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(L2ServiceLoadBalancerConfiguration)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsCollectionDefined(IPAddressPools))
+            if (Optional.IsCollectionDefined(L2ServiceLoadBalancerIPAddressPools))
             {
                 writer.WritePropertyName("ipAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPAddressPools)
+                foreach (IPAddressPool item in L2ServiceLoadBalancerIPAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,83 +101,55 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        L2ServiceLoadBalancerConfiguration IJsonModel<L2ServiceLoadBalancerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        L2ServiceLoadBalancerConfiguration IJsonModel<L2ServiceLoadBalancerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual L2ServiceLoadBalancerConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(L2ServiceLoadBalancerConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeL2ServiceLoadBalancerConfiguration(document.RootElement, options);
         }
 
-        internal static L2ServiceLoadBalancerConfiguration DeserializeL2ServiceLoadBalancerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static L2ServiceLoadBalancerConfiguration DeserializeL2ServiceLoadBalancerConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IPAddressPool> ipAddressPools = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<IPAddressPool> l2ServiceLoadBalancerIPAddressPools = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddressPools"u8))
+                if (prop.NameEquals("ipAddressPools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IPAddressPool> array = new List<IPAddressPool>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IPAddressPool.DeserializeIPAddressPool(item, options));
                     }
-                    ipAddressPools = array;
+                    l2ServiceLoadBalancerIPAddressPools = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new L2ServiceLoadBalancerConfiguration(ipAddressPools ?? new ChangeTrackingList<IPAddressPool>(), serializedAdditionalRawData);
+            return new L2ServiceLoadBalancerConfiguration(l2ServiceLoadBalancerIPAddressPools ?? new ChangeTrackingList<IPAddressPool>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<L2ServiceLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(L2ServiceLoadBalancerConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        L2ServiceLoadBalancerConfiguration IPersistableModel<L2ServiceLoadBalancerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<L2ServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeL2ServiceLoadBalancerConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(L2ServiceLoadBalancerConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<L2ServiceLoadBalancerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

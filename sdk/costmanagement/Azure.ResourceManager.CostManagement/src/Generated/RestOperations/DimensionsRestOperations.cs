@@ -6,44 +6,52 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    internal partial class DimensionsRestOperations
+    internal partial class Dimensions
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DimensionsRestOperations. </summary>
+        /// <summary> Initializes a new instance of Dimensions for mocking. </summary>
+        protected Dimensions()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Dimensions. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DimensionsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Dimensions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string scope, string filter, string expand, string skiptoken, int? top)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetDimensionsRequest(string scope, string filter, string expand, string skiptoken, int? top, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.CostManagement/dimensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
@@ -58,226 +66,97 @@ namespace Azure.ResourceManager.CostManagement
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", top.Value, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string scope, string filter, string expand, string skiptoken, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(scope, false);
-            uri.AppendPath("/providers/Microsoft.CostManagement/dimensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the dimensions by the defined scope. </summary>
-        /// <param name="scope"> The scope associated with dimension operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}' for invoiceSection scope, and 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public async Task<Response<CostManagementDimensionsListResult>> ListAsync(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetDimensionsRequest(Uri nextPage, string scope, string filter, string expand, string skiptoken, int? top, RequestContext context)
         {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var message = CreateListRequest(scope, filter, expand, skiptoken, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        CostManagementDimensionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                    return Response.FromValue((CostManagementDimensionsListResult)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Lists the dimensions by the defined scope. </summary>
-        /// <param name="scope"> The scope associated with dimension operations. This includes '/subscriptions/{subscriptionId}/' for subscription scope, '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for billingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}' for invoiceSection scope, and 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/customers/{customerId}' specific for partners. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public Response<CostManagementDimensionsListResult> List(string scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var message = CreateListRequest(scope, filter, expand, skiptoken, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        CostManagementDimensionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 204:
-                    return Response.FromValue((CostManagementDimensionsListResult)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateByExternalCloudProviderTypeRequestUri(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
-            uri.AppendPath(externalCloudProviderType.ToString(), true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(externalCloudProviderId, true);
-            uri.AppendPath("/dimensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$filter", filter, true);
+                uri.UpdateQuery("api-version", _apiVersion);
             }
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateByExternalCloudProviderTypeRequest(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
-            uri.AppendPath(externalCloudProviderType.ToString(), true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(externalCloudProviderId, true);
-            uri.AppendPath("/dimensions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("$top", top.Value, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the dimensions by the external cloud provider type. </summary>
-        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
-        /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CostManagementDimensionsListResult>> ByExternalCloudProviderTypeAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateByExternalCloudProviderTypeDimensionsRequest(string externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-
-            using var message = CreateByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, filter, expand, skiptoken, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
+            uri.AppendPath(externalCloudProviderType, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(externalCloudProviderId, true);
+            uri.AppendPath("/dimensions", false);
+            if (_apiVersion != null)
             {
-                case 200:
-                    {
-                        CostManagementDimensionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Lists the dimensions by the external cloud provider type. </summary>
-        /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
-        /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
-        /// <param name="filter"> May be used to filter dimensions by properties/category, properties/usageStart, properties/usageEnd. Supported operators are 'eq','lt', 'gt', 'le', 'ge'. </param>
-        /// <param name="expand"> May be used to expand the properties/data within a dimension category. By default, data is not included when listing dimensions. </param>
-        /// <param name="skiptoken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="top"> May be used to limit the number of results to the most recent N dimension data. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CostManagementDimensionsListResult> ByExternalCloudProviderType(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextByExternalCloudProviderTypeDimensionsRequest(Uri nextPage, string externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
-
-            using var message = CreateByExternalCloudProviderTypeRequest(externalCloudProviderType, externalCloudProviderId, filter, expand, skiptoken, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        CostManagementDimensionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }

@@ -82,11 +82,6 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchAnswersKeyJson = JsonEncodedText.Encode("@search.answers");
 
         /// <summary>
-        /// The @search.debugInfo key.
-        /// </summary>
-        public static readonly JsonEncodedText SearchDebugKeyJson = JsonEncodedText.Encode("@search.debug");
-
-        /// <summary>
         /// The @search.semanticQueryRewritesResultType key.
         /// </summary>
         public static readonly JsonEncodedText SearchSemanticQueryRewritesResultTypeKeyJson = JsonEncodedText.Encode("@search.semanticQueryRewritesResultType");
@@ -115,6 +110,11 @@ namespace Azure.Search.Documents
         /// The @search.captions key.
         /// </summary>
         public static readonly JsonEncodedText SearchDocumentDebugInfoKeyJson = JsonEncodedText.Encode("@search.documentDebugInfo");
+
+        /// <summary>
+        /// The @search.debug key — page-level debug envelope containing query rewrites and other diagnostics.
+        /// </summary>
+        public static readonly JsonEncodedText SearchDebugKeyJson = JsonEncodedText.Encode("@search.debug");
 
         /// <summary>
         /// The @search.action key.
@@ -155,21 +155,6 @@ namespace Azure.Search.Documents
         /// The count key.
         /// </summary>
         public static readonly JsonEncodedText CountKeyJson = JsonEncodedText.Encode(CountKey);
-
-        /// <summary>
-        /// The sum key.
-        /// </summary>
-        public const string SumKey = "sum";
-
-        /// <summary>
-        /// The sum key.
-        /// </summary>
-        public static readonly JsonEncodedText SumKeyJson = JsonEncodedText.Encode(SumKey);
-
-        /// <summary>
-        /// The facets key.
-        /// </summary>
-        public static readonly JsonEncodedText FacetsKeyJson = JsonEncodedText.Encode("@search.facets");
 
         /// <summary>
         /// The to key.

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Result of the List Network Security Perimeter configuration operation. </summary>
     internal partial class NetworkSecurityPerimeterConfigurationList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationList"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationList()
@@ -52,19 +24,22 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationList"/>. </summary>
-        /// <param name="value"> A collection of Network Security Perimeter configurations. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationList(IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The NetworkSecurityPerimeterConfiguration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterConfigurationList(IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A collection of Network Security Perimeter configurations. </summary>
+        /// <summary> The NetworkSecurityPerimeterConfiguration items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<NetworkSecurityPerimeterConfigurationData> Value { get; }
-        /// <summary> The URI that can be used to request the next set of paged results. </summary>
-        public string NextLink { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public readonly partial struct DedicatedHsmSkuName : IEquatable<DedicatedHsmSkuName>
     {
         private readonly string _value;
+        /// <summary> The dedicated HSM is a Safenet Luna Network HSM A790 device. </summary>
+        private const string SafeNetLunaNetworkHsmA790Value = "SafeNet Luna Network HSM A790";
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 60 calls per second. </summary>
+        private const string PayShield10KLmk1Cps60Value = "payShield10K_LMK1_CPS60";
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 250 calls per second. </summary>
+        private const string PayShield10KLmk1Cps250Value = "payShield10K_LMK1_CPS250";
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 2500 calls per second. </summary>
+        private const string PayShield10KLmk1Cps2500Value = "payShield10K_LMK1_CPS2500";
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 60 calls per second. </summary>
+        private const string PayShield10KLmk2Cps60Value = "payShield10K_LMK2_CPS60";
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 250 calls per second. </summary>
+        private const string PayShield10KLmk2Cps250Value = "payShield10K_LMK2_CPS250";
+        /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 2500 calls per second. </summary>
+        private const string PayShield10KLmk2Cps2500Value = "payShield10K_LMK2_CPS2500";
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DedicatedHsmSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SafeNetLunaNetworkHsmA790Value = "SafeNet Luna Network HSM A790";
-        private const string PayShield10KLmk1Cps60Value = "payShield10K_LMK1_CPS60";
-        private const string PayShield10KLmk1Cps250Value = "payShield10K_LMK1_CPS250";
-        private const string PayShield10KLmk1Cps2500Value = "payShield10K_LMK1_CPS2500";
-        private const string PayShield10KLmk2Cps60Value = "payShield10K_LMK2_CPS60";
-        private const string PayShield10KLmk2Cps250Value = "payShield10K_LMK2_CPS250";
-        private const string PayShield10KLmk2Cps2500Value = "payShield10K_LMK2_CPS2500";
+            _value = value;
+        }
 
         /// <summary> The dedicated HSM is a Safenet Luna Network HSM A790 device. </summary>
         public static DedicatedHsmSkuName SafeNetLunaNetworkHsmA790 { get; } = new DedicatedHsmSkuName(SafeNetLunaNetworkHsmA790Value);
+
         /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 60 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk1Cps60 { get; } = new DedicatedHsmSkuName(PayShield10KLmk1Cps60Value);
+
         /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 250 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk1Cps250 { get; } = new DedicatedHsmSkuName(PayShield10KLmk1Cps250Value);
+
         /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 1 local master key which supports up to 2500 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk1Cps2500 { get; } = new DedicatedHsmSkuName(PayShield10KLmk1Cps2500Value);
+
         /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 60 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk2Cps60 { get; } = new DedicatedHsmSkuName(PayShield10KLmk2Cps60Value);
+
         /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 250 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk2Cps250 { get; } = new DedicatedHsmSkuName(PayShield10KLmk2Cps250Value);
+
         /// <summary> The dedicated HSM is a payShield 10K, model PS10-D, 10Gb Ethernet Hardware Platform device with 2 local master keys which supports up to 2500 calls per second. </summary>
         public static DedicatedHsmSkuName PayShield10KLmk2Cps2500 { get; } = new DedicatedHsmSkuName(PayShield10KLmk2Cps2500Value);
+
         /// <summary> Determines if two <see cref="DedicatedHsmSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DedicatedHsmSkuName left, DedicatedHsmSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DedicatedHsmSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DedicatedHsmSkuName left, DedicatedHsmSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DedicatedHsmSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DedicatedHsmSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DedicatedHsmSkuName(string value) => new DedicatedHsmSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DedicatedHsmSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DedicatedHsmSkuName?(string value) => value == null ? null : new DedicatedHsmSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DedicatedHsmSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DedicatedHsmSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

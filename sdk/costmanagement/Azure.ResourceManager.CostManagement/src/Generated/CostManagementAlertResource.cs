@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A Class representing a CostManagementAlert along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CostManagementAlertResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCostManagementAlertResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCostManagementAlert method.
+    /// A class representing a CostManagementAlert along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CostManagementAlertResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetCostManagementAlerts method.
     /// </summary>
     public partial class CostManagementAlertResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CostManagementAlertResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="alertId"> The alertId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string alertId)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.CostManagement/alerts/{alertId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _costManagementAlertAlertsClientDiagnostics;
-        private readonly AlertsRestOperations _costManagementAlertAlertsRestClient;
+        private readonly ClientDiagnostics _alertsClientDiagnostics;
+        private readonly Alerts _alertsRestClient;
         private readonly CostManagementAlertData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CostManagement/alerts";
 
-        /// <summary> Initializes a new instance of the <see cref="CostManagementAlertResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CostManagementAlertResource for mocking. </summary>
         protected CostManagementAlertResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CostManagementAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CostManagementAlertResource(ArmClient client, CostManagementAlertData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.CostManagement
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CostManagementAlertResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CostManagementAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _costManagementAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string costManagementAlertAlertsApiVersion);
-            _costManagementAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementAlertAlertsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string costManagementAlertApiVersion);
+            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, costManagementAlertApiVersion ?? "2025-03-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual CostManagementAlertData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="alertId"> The alertId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string alertId)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.CostManagement/alerts/{alertId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the alert for the scope by alert ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Alerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CostManagementAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<CostManagementAlertResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertResource.Get");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("CostManagementAlertResource.Get");
             scope.Start();
             try
             {
-                var response = await _costManagementAlertAlertsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.CostManagement
         /// Gets the alert for the scope by alert ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Alerts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CostManagementAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<CostManagementAlertResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertResource.Get");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("CostManagementAlertResource.Get");
             scope.Start();
             try
             {
-                var response = _costManagementAlertAlertsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.CostManagement
         /// Dismisses the specified alert
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Dismiss</description>
+        /// <term> Operation Id. </term>
+        /// <description> Alerts_Dismiss. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CostManagementAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,11 +214,21 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertResource.Update");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("CostManagementAlertResource.Update");
             scope.Start();
             try
             {
-                var response = await _costManagementAlertAlertsRestClient.DismissAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Id.Parent.ToString(), Id.Name, CostManagementAlertPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -213,20 +242,20 @@ namespace Azure.ResourceManager.CostManagement
         /// Dismisses the specified alert
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.CostManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_Dismiss</description>
+        /// <term> Operation Id. </term>
+        /// <description> Alerts_Dismiss. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CostManagementAlertResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,11 +266,21 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _costManagementAlertAlertsClientDiagnostics.CreateScope("CostManagementAlertResource.Update");
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("CostManagementAlertResource.Update");
             scope.Start();
             try
             {
-                var response = _costManagementAlertAlertsRestClient.Dismiss(Id.Parent, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateDismissRequest(Id.Parent.ToString(), Id.Name, CostManagementAlertPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CostManagementAlertData> response = Response.FromValue(CostManagementAlertData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CostManagementAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

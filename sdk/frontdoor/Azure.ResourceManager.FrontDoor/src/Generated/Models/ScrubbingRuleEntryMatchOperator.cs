@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct ScrubbingRuleEntryMatchOperator : IEquatable<ScrubbingRuleEntryMatchOperator>
     {
         private readonly string _value;
+        /// <summary> EqualsAny. </summary>
+        private const string EqualsAnyValue = "EqualsAny";
+        /// <summary> Equals. </summary>
+        private const string EqualsValueValue = "Equals";
 
         /// <summary> Initializes a new instance of <see cref="ScrubbingRuleEntryMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScrubbingRuleEntryMatchOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsAnyValue = "EqualsAny";
-        private const string EqualsValueValue = "Equals";
+            _value = value;
+        }
 
         /// <summary> EqualsAny. </summary>
         public static ScrubbingRuleEntryMatchOperator EqualsAny { get; } = new ScrubbingRuleEntryMatchOperator(EqualsAnyValue);
+
         /// <summary> Equals. </summary>
         public static ScrubbingRuleEntryMatchOperator EqualsValue { get; } = new ScrubbingRuleEntryMatchOperator(EqualsValueValue);
+
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScrubbingRuleEntryMatchOperator left, ScrubbingRuleEntryMatchOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScrubbingRuleEntryMatchOperator left, ScrubbingRuleEntryMatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScrubbingRuleEntryMatchOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScrubbingRuleEntryMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScrubbingRuleEntryMatchOperator(string value) => new ScrubbingRuleEntryMatchOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScrubbingRuleEntryMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScrubbingRuleEntryMatchOperator?(string value) => value == null ? null : new ScrubbingRuleEntryMatchOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScrubbingRuleEntryMatchOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScrubbingRuleEntryMatchOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

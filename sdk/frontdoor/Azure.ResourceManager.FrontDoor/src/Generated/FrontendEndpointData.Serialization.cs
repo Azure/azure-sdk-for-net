@@ -8,18 +8,65 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontendEndpointData : IUtf8JsonSerializable, IJsonModel<FrontendEndpointData>
+    /// <summary> A frontend endpoint used for routing. </summary>
+    public partial class FrontendEndpointData : FrontDoorResourceData, IJsonModel<FrontendEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontendEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FrontDoorResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFrontendEndpointData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontendEndpointData IPersistableModel<FrontendEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (FrontendEndpointData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontendEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FrontendEndpointData"/> from. </param>
+        internal static FrontendEndpointData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeFrontendEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontendEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,461 +78,89 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(SessionAffinityEnabledState))
-            {
-                writer.WritePropertyName("sessionAffinityEnabledState"u8);
-                writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
-            }
-            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
-            {
-                writer.WritePropertyName("sessionAffinityTtlSeconds"u8);
-                writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
-            }
-            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
-            {
-                writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                ((IJsonModel<WritableSubResource>)WebApplicationFirewallPolicyLink).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
-            {
-                writer.WritePropertyName("resourceState"u8);
-                writer.WriteStringValue(ResourceState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningState))
-            {
-                if (CustomHttpsProvisioningState != null)
-                {
-                    writer.WritePropertyName("customHttpsProvisioningState"u8);
-                    writer.WriteStringValue(CustomHttpsProvisioningState.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("customHttpsProvisioningState");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningSubstate))
-            {
-                if (CustomHttpsProvisioningSubstate != null)
-                {
-                    writer.WritePropertyName("customHttpsProvisioningSubstate"u8);
-                    writer.WriteStringValue(CustomHttpsProvisioningSubstate.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("customHttpsProvisioningSubstate");
-                }
-            }
-            if (options.Format != "W" && Optional.IsDefined(CustomHttpsConfiguration))
-            {
-                if (CustomHttpsConfiguration != null)
-                {
-                    writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue(CustomHttpsConfiguration, options);
-                }
-                else
-                {
-                    writer.WriteNull("customHttpsConfiguration");
-                }
-            }
-            writer.WriteEndObject();
         }
 
-        FrontendEndpointData IJsonModel<FrontendEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontendEndpointData IJsonModel<FrontendEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FrontendEndpointData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FrontDoorResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFrontendEndpointData(document.RootElement, options);
         }
 
-        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
-            string hostName = default;
-            SessionAffinityEnabledState? sessionAffinityEnabledState = default;
-            int? sessionAffinityTtlSeconds = default;
-            WritableSubResource webApplicationFirewallPolicyLink = default;
-            FrontDoorResourceState? resourceState = default;
-            FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = default;
-            FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default;
-            CustomHttpsConfiguration customHttpsConfiguration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ResourceType? resourceType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            FrontendEndpointProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sessionAffinityEnabledState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sessionAffinityEnabledState = new SessionAffinityEnabledState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("sessionAffinityTtlSeconds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sessionAffinityTtlSeconds = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            webApplicationFirewallPolicyLink = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceState = new FrontDoorResourceState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("customHttpsProvisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                customHttpsProvisioningState = null;
-                                continue;
-                            }
-                            customHttpsProvisioningState = new FrontendEndpointCustomHttpsProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("customHttpsProvisioningSubstate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                customHttpsProvisioningSubstate = null;
-                                continue;
-                            }
-                            customHttpsProvisioningSubstate = new FrontendEndpointCustomHttpsProvisioningSubstate(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("customHttpsConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                customHttpsConfiguration = null;
-                                continue;
-                            }
-                            customHttpsConfiguration = CustomHttpsConfiguration.DeserializeCustomHttpsConfiguration(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = FrontendEndpointProperties.DeserializeFrontendEndpointProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FrontendEndpointData(
-                id,
-                name,
-                type,
-                serializedAdditionalRawData,
-                hostName,
-                sessionAffinityEnabledState,
-                sessionAffinityTtlSeconds,
-                webApplicationFirewallPolicyLink,
-                resourceState,
-                customHttpsProvisioningState,
-                customHttpsProvisioningSubstate,
-                customHttpsConfiguration);
+            return new FrontendEndpointData(id, name, resourceType, additionalBinaryDataProperties, properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    hostName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostName))
-                {
-                    builder.Append("    hostName: ");
-                    if (HostName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HostName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HostName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionAffinityEnabledState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sessionAffinityEnabledState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SessionAffinityEnabledState))
-                {
-                    builder.Append("    sessionAffinityEnabledState: ");
-                    builder.AppendLine($"'{SessionAffinityEnabledState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionAffinityTtlInSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sessionAffinityTtlSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SessionAffinityTtlInSeconds))
-                {
-                    builder.Append("    sessionAffinityTtlSeconds: ");
-                    builder.AppendLine($"{SessionAffinityTtlInSeconds.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("WebApplicationFirewallPolicyLinkId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    webApplicationFirewallPolicyLink: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      webApplicationFirewallPolicyLink: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
-                {
-                    builder.Append("    webApplicationFirewallPolicyLink: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, WebApplicationFirewallPolicyLink, options, 4, false, "    webApplicationFirewallPolicyLink: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceState))
-                {
-                    builder.Append("    resourceState: ");
-                    builder.AppendLine($"'{ResourceState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHttpsProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customHttpsProvisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomHttpsProvisioningState))
-                {
-                    builder.Append("    customHttpsProvisioningState: ");
-                    builder.AppendLine($"'{CustomHttpsProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHttpsProvisioningSubstate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customHttpsProvisioningSubstate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomHttpsProvisioningSubstate))
-                {
-                    builder.Append("    customHttpsProvisioningSubstate: ");
-                    builder.AppendLine($"'{CustomHttpsProvisioningSubstate.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHttpsConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customHttpsConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomHttpsConfiguration))
-                {
-                    builder.Append("    customHttpsConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CustomHttpsConfiguration, options, 4, false, "    customHttpsConfiguration: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFrontDoorContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FrontendEndpointData IPersistableModel<FrontendEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFrontendEndpointData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FrontendEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

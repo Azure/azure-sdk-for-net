@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.Core
 {
@@ -53,6 +54,23 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Creates a new instance of <see cref="AccessToken"/> using the provided <paramref name="accessToken"/> and <paramref name="expiresOn"/>.
+        /// </summary>
+        /// <param name="accessToken">The access token value.</param>
+        /// <param name="expiresOn">The access token expiry date.</param>
+        /// <param name="refreshOn">Specifies the time when the cached token should be proactively refreshed.</param>
+        /// <param name="tokenType">The access token type.</param>
+        /// <param name="bindingCertificate">The binding certificate for the access token.</param>
+        public AccessToken(string accessToken, DateTimeOffset expiresOn, DateTimeOffset? refreshOn, string tokenType, X509Certificate2 bindingCertificate)
+        {
+            Token = accessToken;
+            ExpiresOn = expiresOn;
+            RefreshOn = refreshOn;
+            TokenType = tokenType;
+            BindingCertificate = bindingCertificate;
+        }
+
+        /// <summary>
         /// Get the access token value.
         /// </summary>
         public string Token { get; }
@@ -71,6 +89,13 @@ namespace Azure.Core
         /// Identifies the type of access token.
         /// </summary>
         public string TokenType { get; }
+
+        /// <summary>
+        /// Gets or sets the binding certificate for the access token.
+        /// This is used when authenticating via Proof of Possession (PoP).
+        /// </summary>
+        /// <seealso href="https://learn.microsoft.com/entra/msal/dotnet/advanced/proof-of-possession-tokens"/>
+        public X509Certificate2? BindingCertificate { get; }
 
         /// <inheritdoc />
         public override bool Equals(object? obj)

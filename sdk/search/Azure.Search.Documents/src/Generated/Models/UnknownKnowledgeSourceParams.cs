@@ -7,25 +7,24 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents.Agents.Models;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.KnowledgeBases.Models
 {
-    /// <summary> Unknown version of KnowledgeSourceParams. </summary>
     internal partial class UnknownKnowledgeSourceParams : KnowledgeSourceParams
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
+        /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeSourceParams(string knowledgeSourceName, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(knowledgeSourceName, kind, serializedAdditionalRawData)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeSourceParams"/> for deserialization. </summary>
-        internal UnknownKnowledgeSourceParams()
+        /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, failOnError, rerankerThreshold, maxOutputDocuments, kind != default ? kind : "unknown", enableImageServing, additionalBinaryDataProperties)
         {
         }
     }

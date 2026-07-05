@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics.Tracing;
-using Azure.Core.Diagnostics;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 
 namespace Azure.Data.SchemaRegistry.Serialization
 {

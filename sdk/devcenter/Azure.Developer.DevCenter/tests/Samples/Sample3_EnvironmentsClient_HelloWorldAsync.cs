@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Developer.DevCenter;
 using Azure.Developer.DevCenter.Models;
 using Azure.Identity;
-using Azure.Core.TestFramework;
-using System.Threading.Tasks;
 
 namespace Azure.Developer.DevCenter.Tests.Samples
 {

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.WorkloadsSapVirtualInstance;
 
 namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
     internal readonly partial struct SapOSType : IEquatable<SapOSType>
     {
         private readonly string _value;
+        /// <summary> Linux OS Type. </summary>
+        private const string LinuxValue = "Linux";
+        /// <summary> Windows OS Type. </summary>
+        private const string WindowsValue = "Windows";
 
         /// <summary> Initializes a new instance of <see cref="SapOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapOSType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LinuxValue = "Linux";
-        private const string WindowsValue = "Windows";
+            _value = value;
+        }
 
         /// <summary> Linux OS Type. </summary>
         public static SapOSType Linux { get; } = new SapOSType(LinuxValue);
+
         /// <summary> Windows OS Type. </summary>
         public static SapOSType Windows { get; } = new SapOSType(WindowsValue);
+
         /// <summary> Determines if two <see cref="SapOSType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapOSType left, SapOSType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapOSType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapOSType left, SapOSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapOSType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapOSType(string value) => new SapOSType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapOSType?(string value) => value == null ? null : new SapOSType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapOSType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

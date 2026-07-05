@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DependencyMap;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
     /// <summary> GetConnectionsForProcessOnFocusedMachine request model. </summary>
     public partial class GetConnectionsForProcessOnFocusedMachineContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GetConnectionsForProcessOnFocusedMachineContent"/>. </summary>
         /// <param name="focusedMachineId"> Machine arm id. </param>
@@ -63,24 +35,21 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <param name="processIdOnFocusedMachine"> Process id. </param>
         /// <param name="filters"> Filters for GetProcessNetworkConnections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetConnectionsForProcessOnFocusedMachineContent(ResourceIdentifier focusedMachineId, string processIdOnFocusedMachine, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GetConnectionsForProcessOnFocusedMachineContent(ResourceIdentifier focusedMachineId, string processIdOnFocusedMachine, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FocusedMachineId = focusedMachineId;
             ProcessIdOnFocusedMachine = processIdOnFocusedMachine;
             Filters = filters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GetConnectionsForProcessOnFocusedMachineContent"/> for deserialization. </summary>
-        internal GetConnectionsForProcessOnFocusedMachineContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Machine arm id. </summary>
         public ResourceIdentifier FocusedMachineId { get; }
+
         /// <summary> Process id. </summary>
         public string ProcessIdOnFocusedMachine { get; }
+
         /// <summary> Filters for GetProcessNetworkConnections. </summary>
         public DependencyMapVisualizationFilter Filters { get; set; }
     }

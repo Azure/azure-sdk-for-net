@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
+    /// <summary></summary>
     public partial class HciVmGuestAgentResource : IJsonModel<HciVmGuestAgentData>
     {
-        private static HciVmGuestAgentData s_dataDeserializationInstance;
-        private static HciVmGuestAgentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HciVmGuestAgentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HciVmGuestAgentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HciVmGuestAgentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmGuestAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciVmGuestAgentData>)Data).Write(writer, options);
 
-        HciVmGuestAgentData IJsonModel<HciVmGuestAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciVmGuestAgentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmGuestAgentData IJsonModel<HciVmGuestAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HciVmGuestAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciVmGuestAgentData>(Data, options, AzureResourceManagerHciVmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HciVmGuestAgentData IPersistableModel<HciVmGuestAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciVmGuestAgentData>(data, options, AzureResourceManagerHciVmContext.Default);
 
-        string IPersistableModel<HciVmGuestAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciVmGuestAgentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmGuestAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

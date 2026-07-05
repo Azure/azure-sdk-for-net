@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class RecoveryPointDiskConfiguration : IUtf8JsonSerializable, IJsonModel<RecoveryPointDiskConfiguration>
+    /// <summary> Disk configuration. </summary>
+    public partial class RecoveryPointDiskConfiguration : IJsonModel<RecoveryPointDiskConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPointDiskConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecoveryPointDiskConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecoveryPointDiskConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecoveryPointDiskConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryPointDiskConfiguration IPersistableModel<RecoveryPointDiskConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoveryPointDiskConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoveryPointDiskConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(NumberOfDisksIncludedInBackup))
             {
                 writer.WritePropertyName("numberOfDisksIncludedInBackup"u8);
@@ -48,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("includedDiskList"u8);
                 writer.WriteStartArray();
-                foreach (var item in IncludedDiskList)
+                foreach (DiskInformation item in IncludedDiskList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,21 +98,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("excludedDiskList"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExcludedDiskList)
+                foreach (DiskInformation item in ExcludedDiskList)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +121,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        RecoveryPointDiskConfiguration IJsonModel<RecoveryPointDiskConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryPointDiskConfiguration IJsonModel<RecoveryPointDiskConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecoveryPointDiskConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRecoveryPointDiskConfiguration(document.RootElement, options);
         }
 
-        internal static RecoveryPointDiskConfiguration DeserializeRecoveryPointDiskConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RecoveryPointDiskConfiguration DeserializeRecoveryPointDiskConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,50 +150,49 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? numberOfDisksAttachedToVm = default;
             IList<DiskInformation> includedDiskList = default;
             IList<DiskInformation> excludedDiskList = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("numberOfDisksIncludedInBackup"u8))
+                if (prop.NameEquals("numberOfDisksIncludedInBackup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    numberOfDisksIncludedInBackup = property.Value.GetInt32();
+                    numberOfDisksIncludedInBackup = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("numberOfDisksAttachedToVm"u8))
+                if (prop.NameEquals("numberOfDisksAttachedToVm"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    numberOfDisksAttachedToVm = property.Value.GetInt32();
+                    numberOfDisksAttachedToVm = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("includedDiskList"u8))
+                if (prop.NameEquals("includedDiskList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DiskInformation> array = new List<DiskInformation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DiskInformation.DeserializeDiskInformation(item, options));
                     }
                     includedDiskList = array;
                     continue;
                 }
-                if (property.NameEquals("excludedDiskList"u8))
+                if (prop.NameEquals("excludedDiskList"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DiskInformation> array = new List<DiskInformation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DiskInformation.DeserializeDiskInformation(item, options));
                     }
@@ -157,42 +201,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RecoveryPointDiskConfiguration(numberOfDisksIncludedInBackup, numberOfDisksAttachedToVm, includedDiskList ?? new ChangeTrackingList<DiskInformation>(), excludedDiskList ?? new ChangeTrackingList<DiskInformation>(), serializedAdditionalRawData);
+            return new RecoveryPointDiskConfiguration(numberOfDisksIncludedInBackup, numberOfDisksAttachedToVm, includedDiskList ?? new ChangeTrackingList<DiskInformation>(), excludedDiskList ?? new ChangeTrackingList<DiskInformation>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RecoveryPointDiskConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RecoveryPointDiskConfiguration IPersistableModel<RecoveryPointDiskConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRecoveryPointDiskConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryPointDiskConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RecoveryPointDiskConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

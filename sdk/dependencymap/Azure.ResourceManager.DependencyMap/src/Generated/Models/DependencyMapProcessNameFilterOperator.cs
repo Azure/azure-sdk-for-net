@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DependencyMap;
 
 namespace Azure.ResourceManager.DependencyMap.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DependencyMap.Models
     public readonly partial struct DependencyMapProcessNameFilterOperator : IEquatable<DependencyMapProcessNameFilterOperator>
     {
         private readonly string _value;
+        /// <summary> Operator to include items in the result. </summary>
+        private const string ContainsValue = "contains";
+        /// <summary> Operator to exclude items in the result. </summary>
+        private const string NotContainsValue = "notContains";
 
         /// <summary> Initializes a new instance of <see cref="DependencyMapProcessNameFilterOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DependencyMapProcessNameFilterOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ContainsValue = "contains";
-        private const string NotContainsValue = "notContains";
+            _value = value;
+        }
 
         /// <summary> Operator to include items in the result. </summary>
         public static DependencyMapProcessNameFilterOperator Contains { get; } = new DependencyMapProcessNameFilterOperator(ContainsValue);
+
         /// <summary> Operator to exclude items in the result. </summary>
         public static DependencyMapProcessNameFilterOperator NotContains { get; } = new DependencyMapProcessNameFilterOperator(NotContainsValue);
+
         /// <summary> Determines if two <see cref="DependencyMapProcessNameFilterOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DependencyMapProcessNameFilterOperator left, DependencyMapProcessNameFilterOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DependencyMapProcessNameFilterOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DependencyMapProcessNameFilterOperator left, DependencyMapProcessNameFilterOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DependencyMapProcessNameFilterOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DependencyMapProcessNameFilterOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DependencyMapProcessNameFilterOperator(string value) => new DependencyMapProcessNameFilterOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DependencyMapProcessNameFilterOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DependencyMapProcessNameFilterOperator?(string value) => value == null ? null : new DependencyMapProcessNameFilterOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DependencyMapProcessNameFilterOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DependencyMapProcessNameFilterOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OracleDatabase
 {
+    /// <summary></summary>
     public partial class AutonomousDatabaseResource : IJsonModel<AutonomousDatabaseData>
     {
-        private static AutonomousDatabaseData s_dataDeserializationInstance;
-        private static AutonomousDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutonomousDatabaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutonomousDatabaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutonomousDatabaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutonomousDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseData>)Data).Write(writer, options);
 
-        AutonomousDatabaseData IJsonModel<AutonomousDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutonomousDatabaseData IJsonModel<AutonomousDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutonomousDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutonomousDatabaseData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutonomousDatabaseData IPersistableModel<AutonomousDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDatabaseData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<AutonomousDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutonomousDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

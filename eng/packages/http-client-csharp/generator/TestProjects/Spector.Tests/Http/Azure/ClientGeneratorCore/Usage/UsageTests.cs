@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using _Specs_.Azure.ClientGenerator.Core.Usage;
-using _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation;
+using Specs.Azure.ClientGenerator.Core.Usage;
+using Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Usage

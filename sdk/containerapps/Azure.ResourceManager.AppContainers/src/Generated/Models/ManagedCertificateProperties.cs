@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Certificate resource specific properties. </summary>
     public partial class ManagedCertificateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         public ManagedCertificateProperties()
@@ -56,29 +28,33 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="error"> Any error occurred during the certificate provision. </param>
         /// <param name="domainControlValidation"> Selected type of domain control validation for managed certificates. </param>
         /// <param name="validationToken"> A TXT token used for DNS TXT domain control validation when issuing this type of managed certificates. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string subjectName, string error, ManagedCertificateDomainControlValidation? domainControlValidation, string validationToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string subjectName, string error, ManagedCertificateDomainControlValidation? domainControlValidation, string validationToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SubjectName = subjectName;
             Error = error;
             DomainControlValidation = domainControlValidation;
             ValidationToken = validationToken;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning state of the certificate. </summary>
         [WirePath("provisioningState")]
         public ContainerAppCertificateProvisioningState? ProvisioningState { get; }
+
         /// <summary> Subject name of the certificate. </summary>
         [WirePath("subjectName")]
         public string SubjectName { get; set; }
+
         /// <summary> Any error occurred during the certificate provision. </summary>
         [WirePath("error")]
         public string Error { get; }
+
         /// <summary> Selected type of domain control validation for managed certificates. </summary>
         [WirePath("domainControlValidation")]
         public ManagedCertificateDomainControlValidation? DomainControlValidation { get; set; }
+
         /// <summary> A TXT token used for DNS TXT domain control validation when issuing this type of managed certificates. </summary>
         [WirePath("validationToken")]
         public string ValidationToken { get; }

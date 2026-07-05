@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
     /// <summary>
-    /// A Class representing a NewRelicObservabilityTagRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NewRelicObservabilityTagRuleResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNewRelicObservabilityTagRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NewRelicMonitorResource"/> using the GetNewRelicObservabilityTagRule method.
+    /// A class representing a NewRelicObservabilityTagRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NewRelicObservabilityTagRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NewRelicMonitorResource"/> using the GetNewRelicObservabilityTagRules method.
     /// </summary>
     public partial class NewRelicObservabilityTagRuleResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NewRelicObservabilityTagRuleResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="monitorName"> The monitorName. </param>
-        /// <param name="ruleSetName"> The ruleSetName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _newRelicObservabilityTagRuleTagRulesClientDiagnostics;
-        private readonly TagRulesRestOperations _newRelicObservabilityTagRuleTagRulesRestClient;
+        private readonly ClientDiagnostics _tagRulesClientDiagnostics;
+        private readonly TagRules _tagRulesRestClient;
         private readonly NewRelicObservabilityTagRuleData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "NewRelic.Observability/monitors/tagRules";
 
-        /// <summary> Initializes a new instance of the <see cref="NewRelicObservabilityTagRuleResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NewRelicObservabilityTagRuleResource for mocking. </summary>
         protected NewRelicObservabilityTagRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NewRelicObservabilityTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NewRelicObservabilityTagRuleResource(ArmClient client, NewRelicObservabilityTagRuleData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.NewRelicObservability
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NewRelicObservabilityTagRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityTagRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NewRelicObservabilityTagRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _newRelicObservabilityTagRuleTagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string newRelicObservabilityTagRuleTagRulesApiVersion);
-            _newRelicObservabilityTagRuleTagRulesRestClient = new TagRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicObservabilityTagRuleTagRulesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string newRelicObservabilityTagRuleApiVersion);
+            _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", ResourceType.Namespace, Diagnostics);
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, newRelicObservabilityTagRuleApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NewRelicObservabilityTagRuleData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="ruleSetName"> The ruleSetName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NewRelicObservabilityTagRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NewRelicObservabilityTagRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _newRelicObservabilityTagRuleTagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Get");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Get");
             scope.Start();
             try
             {
-                var response = await _newRelicObservabilityTagRuleTagRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NewRelicObservabilityTagRuleData> response = Response.FromValue(NewRelicObservabilityTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NewRelicObservabilityTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,118 +144,42 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// Retrieves the details of the tag rules for a specific New Relic monitor resource, providing insight into its setup and status
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NewRelicObservabilityTagRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NewRelicObservabilityTagRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _newRelicObservabilityTagRuleTagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Get");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Get");
             scope.Start();
             try
             {
-                var response = _newRelicObservabilityTagRuleTagRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NewRelicObservabilityTagRuleData> response = Response.FromValue(NewRelicObservabilityTagRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NewRelicObservabilityTagRuleResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _newRelicObservabilityTagRuleTagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _newRelicObservabilityTagRuleTagRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NewRelicObservabilityArmOperation(_newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _newRelicObservabilityTagRuleTagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _newRelicObservabilityTagRuleTagRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NewRelicObservabilityArmOperation(_newRelicObservabilityTagRuleTagRulesClientDiagnostics, Pipeline, _newRelicObservabilityTagRuleTagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -257,20 +192,20 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NewRelicObservabilityTagRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,11 +216,21 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _newRelicObservabilityTagRuleTagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Update");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Update");
             scope.Start();
             try
             {
-                var response = await _newRelicObservabilityTagRuleTagRulesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NewRelicObservabilityTagRulePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NewRelicObservabilityTagRuleData> response = Response.FromValue(NewRelicObservabilityTagRuleData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NewRelicObservabilityTagRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,20 +244,20 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// Updates the tag rules for a specific New Relic monitor resource, allowing you to modify the rules that control which Azure resources are monitored
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TagRules_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NewRelicObservabilityTagRuleResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NewRelicObservabilityTagRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,12 +268,120 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _newRelicObservabilityTagRuleTagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Update");
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Update");
             scope.Start();
             try
             {
-                var response = _newRelicObservabilityTagRuleTagRulesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, NewRelicObservabilityTagRulePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NewRelicObservabilityTagRuleData> response = Response.FromValue(NewRelicObservabilityTagRuleData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NewRelicObservabilityTagRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NewRelicObservabilityTagRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NewRelicObservabilityArmOperation operation = new NewRelicObservabilityArmOperation(_tagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a tag rule set for a given New Relic monitor resource, removing fine-grained control over observability based on resource tags
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TagRules_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NewRelicObservabilityTagRuleResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _tagRulesClientDiagnostics.CreateScope("NewRelicObservabilityTagRuleResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _tagRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NewRelicObservabilityArmOperation operation = new NewRelicObservabilityArmOperation(_tagRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

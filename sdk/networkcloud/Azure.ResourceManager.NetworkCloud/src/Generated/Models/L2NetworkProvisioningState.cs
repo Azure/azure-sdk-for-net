@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct L2NetworkProvisioningState : IEquatable<L2NetworkProvisioningState>
     {
         private readonly string _value;
+        /// <summary> The Succeeded status. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The Failed status. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Canceled status. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The Provisioning status. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The Accepted status. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="L2NetworkProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public L2NetworkProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
-        private const string AcceptedValue = "Accepted";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> The Succeeded status. </summary>
         public static L2NetworkProvisioningState Succeeded { get; } = new L2NetworkProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The Failed status. </summary>
         public static L2NetworkProvisioningState Failed { get; } = new L2NetworkProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The Canceled status. </summary>
         public static L2NetworkProvisioningState Canceled { get; } = new L2NetworkProvisioningState(CanceledValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Provisioning status. </summary>
         public static L2NetworkProvisioningState Provisioning { get; } = new L2NetworkProvisioningState(ProvisioningValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The Accepted status. </summary>
         public static L2NetworkProvisioningState Accepted { get; } = new L2NetworkProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="L2NetworkProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(L2NetworkProvisioningState left, L2NetworkProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="L2NetworkProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(L2NetworkProvisioningState left, L2NetworkProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="L2NetworkProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="L2NetworkProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator L2NetworkProvisioningState(string value) => new L2NetworkProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="L2NetworkProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator L2NetworkProvisioningState?(string value) => value == null ? null : new L2NetworkProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is L2NetworkProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(L2NetworkProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

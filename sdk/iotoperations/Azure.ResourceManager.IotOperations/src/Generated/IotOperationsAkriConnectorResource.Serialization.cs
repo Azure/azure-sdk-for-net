@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.IotOperations
 {
+    /// <summary></summary>
     public partial class IotOperationsAkriConnectorResource : IJsonModel<IotOperationsAkriConnectorData>
     {
-        private static IotOperationsAkriConnectorData s_dataDeserializationInstance;
-        private static IotOperationsAkriConnectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotOperationsAkriConnectorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotOperationsAkriConnectorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotOperationsAkriConnectorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotOperationsAkriConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsAkriConnectorData>)Data).Write(writer, options);
 
-        IotOperationsAkriConnectorData IJsonModel<IotOperationsAkriConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotOperationsAkriConnectorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotOperationsAkriConnectorData IJsonModel<IotOperationsAkriConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotOperationsAkriConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotOperationsAkriConnectorData>(Data, options, AzureResourceManagerIotOperationsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotOperationsAkriConnectorData IPersistableModel<IotOperationsAkriConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotOperationsAkriConnectorData>(data, options, AzureResourceManagerIotOperationsContext.Default);
 
-        string IPersistableModel<IotOperationsAkriConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotOperationsAkriConnectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotOperationsAkriConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DisconnectedOperations;
 
 namespace Azure.ResourceManager.DisconnectedOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     public readonly partial struct DisconnectedOperationsConnectionIntent : IEquatable<DisconnectedOperationsConnectionIntent>
     {
         private readonly string _value;
+        /// <summary> Device is connected to cloud. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> Device is disconnected from cloud. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="DisconnectedOperationsConnectionIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DisconnectedOperationsConnectionIntent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> Device is connected to cloud. </summary>
         public static DisconnectedOperationsConnectionIntent Connected { get; } = new DisconnectedOperationsConnectionIntent(ConnectedValue);
+
         /// <summary> Device is disconnected from cloud. </summary>
         public static DisconnectedOperationsConnectionIntent Disconnected { get; } = new DisconnectedOperationsConnectionIntent(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsConnectionIntent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DisconnectedOperationsConnectionIntent left, DisconnectedOperationsConnectionIntent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DisconnectedOperationsConnectionIntent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DisconnectedOperationsConnectionIntent left, DisconnectedOperationsConnectionIntent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DisconnectedOperationsConnectionIntent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsConnectionIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DisconnectedOperationsConnectionIntent(string value) => new DisconnectedOperationsConnectionIntent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DisconnectedOperationsConnectionIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DisconnectedOperationsConnectionIntent?(string value) => value == null ? null : new DisconnectedOperationsConnectionIntent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DisconnectedOperationsConnectionIntent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DisconnectedOperationsConnectionIntent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

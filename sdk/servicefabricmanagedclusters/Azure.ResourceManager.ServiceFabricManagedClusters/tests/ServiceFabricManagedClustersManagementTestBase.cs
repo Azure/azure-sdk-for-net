@@ -1,17 +1,17 @@
-﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using Azure.ResourceManager.ManagedServiceIdentities;
-using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 {

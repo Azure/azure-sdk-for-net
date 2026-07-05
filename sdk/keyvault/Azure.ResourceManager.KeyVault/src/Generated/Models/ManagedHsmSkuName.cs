@@ -10,15 +10,15 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> SKU of the managed HSM Pool. </summary>
     public enum ManagedHsmSkuName
     {
-        /// <summary> Standard_B1. </summary>
+        /// <summary> StandardB1. </summary>
         StandardB1,
-        /// <summary> Custom_B32. </summary>
+        /// <summary> CustomB32. </summary>
         CustomB32,
-        /// <summary> Custom_B6. </summary>
+        /// <summary> CustomB6. </summary>
         CustomB6,
-        /// <summary> Custom_C42. </summary>
+        /// <summary> CustomC42. </summary>
         CustomC42,
-        /// <summary> Custom_C10. </summary>
+        /// <summary> CustomC10. </summary>
         CustomC10
     }
 }

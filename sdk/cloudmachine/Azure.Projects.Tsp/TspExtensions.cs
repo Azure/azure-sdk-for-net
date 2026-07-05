@@ -53,7 +53,8 @@ public static class TspExtensions
 
     private static RequestDelegate CreateRequestDelegate<T>(T service, MethodInfo implementationMethod) where T : class
     {
-        return async (context) => {
+        return async (context) =>
+        {
             HttpRequest request = context.Request;
 
             Type serviceType = service.GetType();

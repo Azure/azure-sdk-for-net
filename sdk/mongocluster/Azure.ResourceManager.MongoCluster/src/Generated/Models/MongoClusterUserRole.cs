@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public readonly partial struct MongoClusterUserRole : IEquatable<MongoClusterUserRole>
     {
         private readonly string _value;
+        /// <summary> Root role permissions on the target scope. </summary>
+        private const string RootValue = "root";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterUserRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MongoClusterUserRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RootValue = "root";
+            _value = value;
+        }
 
         /// <summary> Root role permissions on the target scope. </summary>
         public static MongoClusterUserRole Root { get; } = new MongoClusterUserRole(RootValue);
+
         /// <summary> Determines if two <see cref="MongoClusterUserRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MongoClusterUserRole left, MongoClusterUserRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MongoClusterUserRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MongoClusterUserRole left, MongoClusterUserRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoClusterUserRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MongoClusterUserRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MongoClusterUserRole(string value) => new MongoClusterUserRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MongoClusterUserRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoClusterUserRole?(string value) => value == null ? null : new MongoClusterUserRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoClusterUserRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MongoClusterUserRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

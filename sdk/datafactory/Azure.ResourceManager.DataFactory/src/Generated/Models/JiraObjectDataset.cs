@@ -15,16 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class JiraObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="JiraObjectDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public JiraObjectDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "JiraObject";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JiraObjectDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -33,20 +23,65 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
-        internal JiraObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Properties specific to this dataset type. </param>
+        internal JiraObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, JiraTableDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            TableName = tableName;
-            DatasetType = datasetType ?? "JiraObject";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="JiraObjectDataset"/> for deserialization. </summary>
-        internal JiraObjectDataset()
+        /// <summary> Properties specific to this dataset type. </summary>
+        internal JiraTableDatasetTypeProperties TypeProperties { get; set; }
+
+        /// <summary> This property is only supported in Jira V1 Dataset, please consider upgrading to V2 dataset. </summary>
+        public DataFactoryElement<string> TableName
         {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.TableName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new JiraTableDatasetTypeProperties();
+                }
+                TypeProperties.TableName = value;
+            }
         }
 
-        /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> TableName { get; set; }
+        /// <summary> The schema name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> SchemaTypePropertiesSchema
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SchemaTypePropertiesSchema;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new JiraTableDatasetTypeProperties();
+                }
+                TypeProperties.SchemaTypePropertiesSchema = value;
+            }
+        }
+
+        /// <summary> The table name of the Jira, applies only for Jira V2 dataset. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Table
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Table;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new JiraTableDatasetTypeProperties();
+                }
+                TypeProperties.Table = value;
+            }
+        }
     }
 }
