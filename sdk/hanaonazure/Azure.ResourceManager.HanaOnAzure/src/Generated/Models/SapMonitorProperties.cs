@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="sapMonitorCollectorVersion"> The version of the payload running in the Collector VM. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapMonitorProperties(HanaProvisioningStatesEnum? provisioningState, string managedResourceGroupName, string logAnalyticsWorkspaceArmId, bool? enableCustomerAnalytics, string logAnalyticsWorkspaceId, string logAnalyticsWorkspaceSharedKey, string sapMonitorCollectorVersion, string monitorSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapMonitorProperties(HanaProvisioningState? provisioningState, string managedResourceGroupName, string logAnalyticsWorkspaceArmId, bool? enableCustomerAnalytics, string logAnalyticsWorkspaceId, string logAnalyticsWorkspaceSharedKey, string sapMonitorCollectorVersion, string monitorSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedResourceGroupName = managedResourceGroupName;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         }
 
         /// <summary> State of provisioning of the HanaInstance. </summary>
-        public HanaProvisioningStatesEnum? ProvisioningState { get; }
+        public HanaProvisioningState? ProvisioningState { get; }
 
         /// <summary> The name of the resource group the SAP Monitor resources get deployed into. </summary>
         public string ManagedResourceGroupName { get; }

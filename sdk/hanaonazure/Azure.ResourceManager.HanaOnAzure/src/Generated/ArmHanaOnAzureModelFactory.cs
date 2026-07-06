@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="name"> The name of the operation being performed on this particular object. This name should match the action name that appears in RBAC / the event service. </param>
         /// <param name="display"> Displayed HANA operation information. </param>
         /// <returns> A new <see cref="Models.HanaOnAzureOperationInfo"/> instance for mocking. </returns>
-        public static HanaOnAzureOperationInfo HanaOnAzureOperationInfo(string name = default, Display display = default)
+        public static HanaOnAzureOperationInfo HanaOnAzureOperationInfo(string name = default, HanaOnAzureOperationDisplay display = default)
         {
             return new HanaOnAzureOperationInfo(name, display, default);
         }
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="operation"> The localized friendly name for the operation as shown to the user. This name should be concise (to fit in drop downs), but clear (self-documenting). Use Title Casing and include the entity/resource to which it applies. </param>
         /// <param name="description"> The localized friendly description for the operation as shown to the user. This description should be thorough, yet concise. It will be used in tool-tips and detailed views. </param>
         /// <param name="origin"> The intended executor of the operation; governs the display of the operation in the RBAC UX and the audit logs UX. Default value is 'user,system'. </param>
-        /// <returns> A new <see cref="Models.Display"/> instance for mocking. </returns>
-        public static Display Display(string provider = default, string resource = default, string operation = default, string description = default, string origin = default)
+        /// <returns> A new <see cref="Models.HanaOnAzureOperationDisplay"/> instance for mocking. </returns>
+        public static HanaOnAzureOperationDisplay HanaOnAzureOperationDisplay(string provider = default, string resource = default, string operation = default, string description = default, string origin = default)
         {
-            return new Display(
+            return new HanaOnAzureOperationDisplay(
                 provider,
                 resource,
                 operation,
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="sapMonitorCollectorVersion"> The version of the payload running in the Collector VM. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <returns> A new <see cref="HanaOnAzure.SapMonitorData"/> instance for mocking. </returns>
-        public static SapMonitorData SapMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HanaProvisioningStatesEnum? provisioningState = default, string managedResourceGroupName = default, string logAnalyticsWorkspaceArmId = default, bool? enableCustomerAnalytics = default, string logAnalyticsWorkspaceId = default, string logAnalyticsWorkspaceSharedKey = default, string sapMonitorCollectorVersion = default, string monitorSubnet = default)
+        public static SapMonitorData SapMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HanaProvisioningState? provisioningState = default, string managedResourceGroupName = default, string logAnalyticsWorkspaceArmId = default, bool? enableCustomerAnalytics = default, string logAnalyticsWorkspaceId = default, string logAnalyticsWorkspaceSharedKey = default, string sapMonitorCollectorVersion = default, string monitorSubnet = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="metadata"> A JSON string containing metadata of the provider instance. </param>
         /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
         /// <returns> A new <see cref="HanaOnAzure.ProviderInstanceData"/> instance for mocking. </returns>
-        public static ProviderInstanceData ProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @type = default, string providerProperties = default, string metadata = default, HanaProvisioningStatesEnum? provisioningState = default)
+        public static ProviderInstanceData ProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string @type = default, string providerProperties = default, string metadata = default, HanaProvisioningState? provisioningState = default)
         {
             return new ProviderInstanceData(
                 id,

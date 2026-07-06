@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="name"> The name of the operation being performed on this particular object. This name should match the action name that appears in RBAC / the event service. </param>
         /// <param name="display"> Displayed HANA operation information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HanaOnAzureOperationInfo(string name, Display display, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HanaOnAzureOperationInfo(string name, HanaOnAzureOperationDisplay display, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Display = display;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         public string Name { get; }
 
         /// <summary> Displayed HANA operation information. </summary>
-        public Display Display { get; }
+        public HanaOnAzureOperationDisplay Display { get; }
     }
 }
