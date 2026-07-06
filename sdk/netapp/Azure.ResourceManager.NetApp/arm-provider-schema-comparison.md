@@ -99,3 +99,26 @@ These differences are outside the requested comparison axes but may still be use
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.netapp/netappaccounts/{}/quotalimits/{}` | `NetAppResourceQuotaLimitsAccount` | `NetAppAccountsQuotaLimits` |
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.netapp/netappaccounts/{}/volumegroups/{}` | `NetAppVolumeGroup` | `VolumeGroupDetails` |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`.
+
+**Result:** All resolve-only resource types checked in the Bicep reference exist. This supports that these are real ARM resources; the mismatch is about SDK version/projection rather than resource validity.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 9 |
+| Found in Bicep reference | 9 |
+| Not found in Bicep reference | 0 |
+
+| Side | Resource type | Bicep reference |
+| --- | --- | --- |
+| resolveArmResources only | [Microsoft.NetApp/activeDirectoryConfigs](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/activedirectoryconfigs?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts/elasticBackupPolicies](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts/elasticbackuppolicies?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts/elasticBackupVaults](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts/elasticbackupvaults?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts/elasticBackupVaults/elasticBackups](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts/elasticbackupvaults/elasticbackups?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts/elasticCapacityPools](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts/elasticcapacitypools?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts/elasticCapacityPools/elasticVolumes](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts/elasticcapacitypools/elasticvolumes?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts/elasticCapacityPools/elasticVolumes/elasticSnapshots](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts/elasticcapacitypools/elasticvolumes/elasticsnapshots?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.NetApp/elasticAccounts/elasticSnapshotPolicies](https://learn.microsoft.com/en-us/azure/templates/microsoft.netapp/elasticaccounts/elasticsnapshotpolicies?pivots=deployment-language-bicep) | Found |

@@ -84,3 +84,8 @@ These differences are outside the requested comparison axes but may still be use
 | --- | --- | --- | --- |
 | `Azure.ResourceManager.Legacy.Operations.list` | `/providers/Microsoft.Advisor/operations` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`.
+
+**Result:** No resource ID coverage mismatch was found, so no Bicep reference validation was needed.

@@ -113,3 +113,8 @@ These differences are outside the requested comparison axes but may still be use
 | `Azure.ResourceManager.ProviderOperations.list` | `/providers/Microsoft.DevTestLab/operations` | Missing. | Present. |
 | `Microsoft.DevTestLab.Operations.get` | `/subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/locations/{locationName}/operations/{name}` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`.
+
+**Result:** The raw resource ID differences are path variable-name differences only. After normalization there is no resource ID coverage mismatch, so no resource type correctness dispute remains.

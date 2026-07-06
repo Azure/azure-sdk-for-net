@@ -118,3 +118,26 @@ These differences are outside the requested comparison axes but may still be use
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.automation/automationaccounts/{}/watchers/{}` | `AutomationWatcher` | `Watcher` |
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.automation/automationaccounts/{}/webhooks/{}` | `AutomationWebhook` | `Webhook` |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`.
+
+**Result:** Most resolve-only resource types are not Bicep resources, supporting the conclusion that several read operations should be modeled as actions. One resolve-only type exists (`sourceControlSyncJobs`), so that item may represent a real nested resource even though it is not part of the legacy result.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 9 |
+| Found in Bicep reference | 1 |
+| Not found in Bicep reference | 8 |
+
+| Side | Resource type | Bicep reference |
+| --- | --- | --- |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/jobs/streams](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/jobs/streams?pivots=deployment-language-bicep) | Not found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/modules/activities](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/modules/activities?pivots=deployment-language-bicep) | Not found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/nodecounts](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/nodecounts?pivots=deployment-language-bicep) | Not found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/nodes/reports](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/nodes/reports?pivots=deployment-language-bicep) | Not found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/objectDataTypes](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/objectdatatypes?pivots=deployment-language-bicep) | Not found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/softwareUpdateConfigurationMachineRuns](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/softwareupdateconfigurationmachineruns?pivots=deployment-language-bicep) | Not found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/softwareUpdateConfigurationRuns](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/softwareupdateconfigurationruns?pivots=deployment-language-bicep) | Not found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/sourceControls/sourceControlSyncJobs](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/sourcecontrols/sourcecontrolsyncjobs?pivots=deployment-language-bicep) | Found |
+| resolveArmResources only | [Microsoft.Automation/automationAccounts/sourceControls/sourceControlSyncJobs/streams](https://learn.microsoft.com/en-us/azure/templates/microsoft.automation/automationaccounts/sourcecontrols/sourcecontrolsyncjobs/streams?pivots=deployment-language-bicep) | Not found |

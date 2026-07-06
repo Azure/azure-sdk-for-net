@@ -807,3 +807,16 @@ These differences are outside the requested comparison axes but may still be use
 | `Microsoft.Network.WebApplicationFirewallPolicies.list` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies` | Missing. | Present. |
 | `Microsoft.Network.WebApplicationFirewallPolicies.listAll` | `/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`.
+
+**Result:** All legacy-only resource types checked in the Bicep reference exist. This supports the earlier conclusion that legacy detected real ARM resources and `resolveArmResources` missed them.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 140 |
+| Found in Bicep reference | 140 |
+| Not found in Bicep reference | 0 |
+
+All 139 unique legacy-only resource types were found in the Bicep reference.
