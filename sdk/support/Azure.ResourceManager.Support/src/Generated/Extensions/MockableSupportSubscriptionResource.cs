@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Support.Mocking
 
         private ClientDiagnostics ClassifyServicesClientDiagnostics => _classifyServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClassifyServices ClassifyServicesRestClient => _classifyServicesRestClient ??= new ClassifyServices(ClassifyServicesClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private ClassifyServices ClassifyServicesRestClient => _classifyServicesRestClient ??= new ClassifyServices(ClassifyServicesClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ClassifyProblemsClientDiagnostics => _classifyProblemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClassifyProblems ClassifyProblemsRestClient => _classifyProblemsRestClient ??= new ClassifyProblems(ClassifyProblemsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private ClassifyProblems ClassifyProblemsRestClient => _classifyProblemsRestClient ??= new ClassifyProblems(ClassifyProblemsClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
 
         private ClientDiagnostics SubscriptionSupportTicketClientDiagnostics => _subscriptionSupportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private SubscriptionSupportTicket SubscriptionSupportTicketRestClient => _subscriptionSupportTicketRestClient ??= new SubscriptionSupportTicket(SubscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, "2026-07-01");
 
         /// <summary> Gets a collection of SubscriptionSupportTickets in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of SubscriptionSupportTickets and their operations over a SubscriptionSupportTicketResource. </returns>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Support.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
