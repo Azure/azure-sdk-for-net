@@ -169,6 +169,15 @@ interface Foos {
     void,
     ArmResponse<Record<unknown>>
   >;
+
+  /** Get operation status for a Foo resource. */
+  @get
+  @action("getOperationStatus")
+  getOperationStatus is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<Azure.ResourceManager.CommonTypes.OperationStatusResult>
+  >;
 }
 
 model FooActionRequest {

@@ -111,7 +111,6 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(EncryptionIdentity))]
     [ModelReaderWriterBuildable(typeof(LaunchBulkInstancesOperationListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(Models.Resources))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduledEventsAdditionalPublishingTargets))]
@@ -124,6 +123,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(VirtualMachineListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineNetworkInterfaceDnsSettingsConfiguration))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     public partial class AzureResourceManagerComputeBulkActionsContext : ModelReaderWriterContext
     {
     }
