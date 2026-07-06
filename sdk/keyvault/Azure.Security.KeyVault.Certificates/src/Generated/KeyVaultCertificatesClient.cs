@@ -1134,7 +1134,7 @@ namespace Azure.Security.KeyVault.Certificates
             scope.Start();
             try
             {
-                using HttpMessage message = this.CreateUpdateCertificateRequest(certificateName, certificateVersion, content, context);
+                using HttpMessage message = CreateUpdateCertificateRequest(certificateName, certificateVersion, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1164,7 +1164,7 @@ namespace Azure.Security.KeyVault.Certificates
             scope.Start();
             try
             {
-                using HttpMessage message = this.CreateUpdateCertificateRequest(certificateName, certificateVersion, content, context);
+                using HttpMessage message = CreateUpdateCertificateRequest(certificateName, certificateVersion, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

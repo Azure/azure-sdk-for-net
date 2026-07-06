@@ -3,11 +3,14 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
+using Azure.Generator.Provisioning.Providers;
 using Azure.Generator.Provisioning.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Generator.Provisioning.Tests
 {
@@ -176,6 +179,122 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(mixedNullProjection.SingletonResourceName, Is.Null);
         }
 
+        [Test]
+        public void ReadOnlyResourcePropertiesAreNotSettable()
+        {
+            var writableProperty = CreateProperty("WritableValue");
+            var model = CreateModel("ReadOnlyWidget", [writableProperty]);
+            var readOnlyResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(writableProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+        }
+
+        [Test]
+        public void WritableResourcePropertiesRemainSettable()
+        {
+            var writableProperty = CreateProperty("WritableValue");
+            var model = CreateModel("WritableWidget", [writableProperty]);
+            var writableResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([writableResource])[0]);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(writableProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.True);
+        }
+
+        [Test]
+        public void DerivedReadOnlyResourcePropertiesAreNotSettable()
+        {
+            var discriminatorProperty = CreateProperty("Kind", isRequired: true, isDiscriminator: true);
+            var baseModel = CreateModel("ReadOnlyWidget", [discriminatorProperty]);
+            var derivedProperty = CreateProperty("WritableValue");
+            var derivedModel = CreateModel(
+                "DerivedReadOnlyWidget",
+                [derivedProperty],
+                baseModel,
+                discriminatorValue: "derived",
+                discriminatorProperty);
+            var readOnlyResource = CreateMetadata(
+                baseModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel]);
+            var baseProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            RegisterResourceProviders(baseProvider);
+            var derivedProvider = new ProvisioningResourceProvider(derivedModel);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)derivedProvider).GetProvisioningPropertyInfo(derivedProperty);
+
+            Assert.That(derivedProvider.Name, Is.EqualTo("DerivedReadOnlyWidget"));
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+        }
+
+        [Test]
+        public void DerivedWritableResourcePropertiesRemainSettable()
+        {
+            var discriminatorProperty = CreateProperty("Kind", isRequired: true, isDiscriminator: true);
+            var baseModel = CreateModel("WritableWidget", [discriminatorProperty]);
+            var derivedProperty = CreateProperty("WritableValue");
+            var derivedModel = CreateModel(
+                "DerivedWritableWidget",
+                [derivedProperty],
+                baseModel,
+                discriminatorValue: "derived",
+                discriminatorProperty);
+            var writableResource = CreateMetadata(
+                baseModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel]);
+            var baseProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([writableResource])[0]);
+            RegisterResourceProviders(baseProvider);
+            var derivedProvider = new ProvisioningResourceProvider(derivedModel);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)derivedProvider).GetProvisioningPropertyInfo(derivedProperty);
+
+            Assert.That(derivedProvider.Name, Is.EqualTo("DerivedWritableWidget"));
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.True);
+        }
+
         private static ArmResourceMetadata CreateMetadata(
             InputModelType model,
             string resourceIdPattern,
@@ -186,7 +305,8 @@ namespace Azure.Generator.Provisioning.Tests
             string? resourceName = null,
             string? singletonResourceName = null,
             string? parentResourceId = null,
-            ArmResourceNameConstraints? nameConstraints = null)
+            ArmResourceNameConstraints? nameConstraints = null,
+            IReadOnlyList<ResourceMethod>? methods = null)
         {
             var path = new RequestPathPattern(resourceIdPattern);
             return new ArmResourceMetadata(
@@ -195,7 +315,7 @@ namespace Azure.Generator.Provisioning.Tests
                 resourceType,
                 model,
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
-                [],
+                methods ?? [],
                 singletonResourceName,
                 parentResourceId is null ? null : new RequestPathPattern(parentResourceId),
                 [],
@@ -204,7 +324,12 @@ namespace Azure.Generator.Provisioning.Tests
                 rbacRoles ?? [new ArmResourceRbacRole("FirstRole", "11111111-1111-1111-1111-111111111111")]);
         }
 
-        private static InputModelType CreateModel(string name, IReadOnlyList<InputModelProperty>? properties = null)
+        private static InputModelType CreateModel(
+            string name,
+            IReadOnlyList<InputModelProperty>? properties = null,
+            InputModelType? baseModel = null,
+            string? discriminatorValue = null,
+            InputModelProperty? discriminatorProperty = null)
             => new(
                 name,
                 "Sample.Models",
@@ -215,14 +340,103 @@ namespace Azure.Generator.Provisioning.Tests
                 "Test model.",
                 InputModelTypeUsage.Input | InputModelTypeUsage.Output,
                 properties ?? [],
-                null,
+                baseModel,
                 [],
-                null,
-                null,
+                discriminatorValue,
+                discriminatorProperty,
                 new Dictionary<string, InputModelType>(),
                 null,
                 false,
                 new InputSerializationOptions(),
                 false);
+
+        private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
+        {
+            var path = RequestPathPattern.GetFromScope(scope, new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"));
+            var methodName = $"{kind}Widget";
+            var operation = new InputOperation(
+                methodName,
+                null,
+                string.Empty,
+                $"{methodName} description",
+                null,
+                "public",
+                [],
+                [new InputOperationResponse([200], null, [], false, ["application/json"])],
+                kind == ResourceOperationKind.Read ? "GET" : "PUT",
+                string.Empty,
+                path.SerializedPath,
+                null,
+                null,
+                false,
+                true,
+                true,
+                $"Sample.{methodName}",
+                "Sample");
+            var method = new InputBasicServiceMethod(
+                methodName,
+                "public",
+                [],
+                null,
+                null,
+                operation,
+                [],
+                new InputServiceMethodResponse(null, null),
+                null,
+                false,
+                true,
+                true,
+                operation.CrossLanguageDefinitionId);
+            var client = new InputClient(
+                "Widgets",
+                "Sample",
+                "Sample.Widgets",
+                string.Empty,
+                "Widgets description",
+                isMultiServiceClient: false,
+                [method],
+                [],
+                null,
+                [],
+                ["2024-01-01"]);
+            return new ResourceMethod(kind, method, path, new ArmScopeInfo(scope, path, null), client);
+        }
+
+        private static void RegisterResourceProviders(params ProvisioningResourceProvider[] providers)
+        {
+            var outputLibrary = ProvisioningGenerator.Instance.OutputLibrary;
+            var resourcesByModel = providers
+                .Where(provider => provider.ResourceProjection is not null)
+                .GroupBy(provider => provider.ResourceProjection!.ResourceModel)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group.ToList());
+
+            typeof(ProvisioningOutputLibrary)
+                .GetField("_resources", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(outputLibrary, providers);
+            typeof(ProvisioningOutputLibrary)
+                .GetField("_resourcesByIdPattern", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(outputLibrary, new Dictionary<string, ProvisioningResourceProvider>());
+            typeof(ProvisioningOutputLibrary)
+                .GetField("_resourcesByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(outputLibrary, resourcesByModel);
+        }
+
+        private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false)
+            => new(
+                name: name,
+                summary: null,
+                doc: $"Description for {name}",
+                type: InputPrimitiveType.String,
+                isRequired: isRequired,
+                isReadOnly: isReadOnly,
+                isApiVersion: false,
+                defaultValue: null,
+                isHttpMetadata: false,
+                access: null,
+                isDiscriminator: isDiscriminator,
+                serializedName: name.ToVariableName(),
+                serializationOptions: new(json: new(name.ToVariableName())));
     }
 }

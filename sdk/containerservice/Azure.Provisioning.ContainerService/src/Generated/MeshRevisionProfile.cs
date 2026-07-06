@@ -63,18 +63,13 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal MeshRevisionProfileProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -83,15 +78,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return Properties is null ? default : Properties.MeshRevisions;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MeshRevisionProfileProperties();
-                }
-                Properties.MeshRevisions = value;
+                return Properties.MeshRevisions;
             }
         }
 
