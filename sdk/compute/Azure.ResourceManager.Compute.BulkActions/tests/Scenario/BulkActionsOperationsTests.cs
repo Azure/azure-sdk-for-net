@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
-            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationType.Start, ids.Count);
+            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationKind.Start, ids.Count);
 
             var opIds = ExtractOperationIds(result.Results);
             ClassicAssert.AreEqual(ids.Count, opIds.Count, "Expected one operation id per resource.");
             var status = await PollUntilProgressedAsync(opIds, ProgressPollWindow, PollInterval);
-            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationType.Start, DefaultSubscriptionGuid);
+            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationKind.Start, DefaultSubscriptionGuid);
         }
 
         [TestCase, Order(2), RecordedTest]
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
-            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationType.Deallocate, ids.Count);
+            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationKind.Deallocate, ids.Count);
 
             var opIds = ExtractOperationIds(result.Results);
             ClassicAssert.AreEqual(ids.Count, opIds.Count);
             var status = await PollUntilProgressedAsync(opIds, ProgressPollWindow, PollInterval);
-            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationType.Deallocate, DefaultSubscriptionGuid);
+            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationKind.Deallocate, DefaultSubscriptionGuid);
         }
 
         [TestCase, Order(3), RecordedTest]
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
-            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationType.Hibernate, ids.Count);
+            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationKind.Hibernate, ids.Count);
 
             var opIds = ExtractOperationIds(result.Results);
             ClassicAssert.AreEqual(ids.Count, opIds.Count);
             var status = await PollUntilProgressedAsync(opIds, ProgressPollWindow, PollInterval);
-            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationType.Hibernate, DefaultSubscriptionGuid);
+            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationKind.Hibernate, DefaultSubscriptionGuid);
         }
 
         [TestCase, Order(4), RecordedTest]
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
         {
             // Seed a fresh Start so we have known operation IDs to query, then call GetStatus
             // directly. This isolates the GetStatus contract: shape, mapping to operation IDs,
-            // and round-trip echo of OperationType/State.
+            // and round-trip echo of OperationKind/State.
             var ids = GetPreCreatedVmIds(4);
             var startResponse = await DefaultResourceGroup.BulkStartOperationAsync(Location, BuildStartContent(ids));
             var opIds = ExtractOperationIds(startResponse.Value.Results);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             foreach (var r in status.Results)
             {
                 ClassicAssert.IsNotNull(r.Operation?.State, $"State missing for {r.ResourceId}.");
-                ClassicAssert.AreEqual(ComputeBulkOperationType.Start, r.Operation.OperationType);
+                ClassicAssert.AreEqual(ComputeBulkOperationKind.Start, r.Operation.OperationKind);
                 ClassicAssert.AreEqual(DefaultSubscriptionGuid, r.Operation.SubscriptionId, $"SubscriptionId mismatch for {r.ResourceId}.");
             }
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
                     TerminalOperationStates.Contains(r.Operation.State.Value),
                     $"After cancel, expected a terminal state for {r.ResourceId} but got {r.Operation.State}.");
                 ClassicAssert.AreEqual(
-                    ScheduledActionOperationState.Cancelled,
+                    BulkActionOperationState.Cancelled,
                     r.Operation.State.Value,
                     $"Expected Cancelled for {r.ResourceId} but got {r.Operation.State}.");
                 ClassicAssert.AreEqual(DefaultSubscriptionGuid, r.Operation.SubscriptionId, $"SubscriptionId mismatch for {r.ResourceId}.");
@@ -162,19 +162,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             var result = response.Value;
 
             ClassicAssert.AreEqual(Location.ToString(), result.Location.ToString());
-            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationType.Delete, ids.Count);
+            AssertBulkResponseAccepted(result.Results, ComputeBulkOperationKind.Delete, ids.Count);
 
             var opIds = ExtractOperationIds(result.Results);
             ClassicAssert.AreEqual(ids.Count, opIds.Count);
             var status = await PollUntilProgressedAsync(opIds, ProgressPollWindow, PollInterval);
-            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationType.Delete, DefaultSubscriptionGuid);
+            AssertEveryOpProgressedPastPending(status, ComputeBulkOperationKind.Delete, DefaultSubscriptionGuid);
         }
 
         // Validates the poll result: every operation in the response moved past PendingScheduling
         // (which proves the service actually scheduled the work) and carries the expected opType.
         private static void AssertEveryOpProgressedPastPending(
             GetBulkOperationStatusResult status,
-            ComputeBulkOperationType expectedOpType,
+            ComputeBulkOperationKind expectedOpType,
             Guid expectedSubscriptionId)
         {
             ClassicAssert.IsNotNull(status, "Poll returned no status.");
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
             {
                 ClassicAssert.IsNotNull(r.Operation?.State, $"State missing for {r.ResourceId} after polling.");
                 ClassicAssert.AreNotEqual(
-                    ScheduledActionOperationState.PendingScheduling,
+                    BulkActionOperationState.PendingScheduling,
                     r.Operation.State.Value,
                     $"Operation {r.Operation.OperationId} for {r.ResourceId} never progressed past PendingScheduling.");
-                ClassicAssert.AreEqual(expectedOpType, r.Operation.OperationType, $"OperationType mismatch for {r.ResourceId}.");
+                ClassicAssert.AreEqual(expectedOpType, r.Operation.OperationKind, $"OperationKind mismatch for {r.ResourceId}.");
                 ClassicAssert.AreEqual(expectedSubscriptionId, r.Operation.SubscriptionId, $"SubscriptionId mismatch for {r.ResourceId}.");
             }
         }
