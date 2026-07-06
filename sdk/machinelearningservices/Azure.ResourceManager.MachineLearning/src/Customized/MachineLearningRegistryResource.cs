@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearningRegistryResource
     {
         // Customized: keep the historical MachineLearning*/MachineLearnin* method names for source compatibility.
+        /// <summary> Gets a collection of MachineLearningRegistryCodeContainerResources in the <see cref="MachineLearningRegistryResource"/>. </summary>
         public virtual MachineLearningRegistryCodeContainerCollection GetMachineLearningRegistryCodeContainers() => new MachineLearningRegistryCodeContainerCollection(Client, Id);
         /// <summary> Gets a registry code container. </summary>
         [ForwardsClientCalls]
