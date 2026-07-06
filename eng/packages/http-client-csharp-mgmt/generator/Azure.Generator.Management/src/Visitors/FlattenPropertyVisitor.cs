@@ -634,9 +634,10 @@ namespace Azure.Generator.Management.Visitors
                 // leaves must be provided. When the parent is required, the property stays
                 // as the inner property's original type.
                 var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
+                var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
                 var flattenPropertyBody = new MethodPropertyBody(
                     PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty),
-                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, shouldLiftToNullable)
+                    !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, shouldLiftToNullable, shouldPreserveSetter)
                 );
 
                 var flattenedProperty =
@@ -710,10 +711,14 @@ namespace Azure.Generator.Management.Visitors
             // at runtime. Symmetric with PropertyFlatten — see ShouldLiftToNullable.
             var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
 
+            var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
+            var shouldEmitCollectionSetter = shouldPreserveSetter
+                || !model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public)
+                || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
             var flattenPropertyBody = new MethodPropertyBody(
                 PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
-                // if the flattened property is read-only or a collection, we don't generate a setter
-                isFlattenedPropertyReadOnly || innerProperty.Type.IsCollection ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
+                // Preserve public collection setters only when the previous API contract had one.
+                isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
             );
 
             var flattenedProperty =
@@ -743,6 +748,30 @@ namespace Azure.Generator.Management.Visitors
                 propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(flattenedProperty, internalProperty) });
             }
             return isFlattened;
+        }
+
+        private static bool ShouldPreserveLastContractSetter(ModelProvider model, string propertyName)
+        {
+            return model.LastContractView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
+        }
+
+        private static bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)
+        {
+            foreach (var parent in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            {
+                if (parent == model || !ShouldPreserveLastContractSetter(parent, propertyName))
+                {
+                    continue;
+                }
+
+                if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(parent, out var propertiesToFlatten)
+                    && propertiesToFlatten.Any(p => p.Type.AreNamesEqual(model.Type)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void UpdateFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
