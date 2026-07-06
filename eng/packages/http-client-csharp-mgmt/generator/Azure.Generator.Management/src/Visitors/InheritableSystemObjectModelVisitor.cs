@@ -6,10 +6,12 @@ using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -79,7 +81,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        var basePropertyNames = EnumerateBaseModelProperties(model.BaseModelProvider!);
+        var baseProperties = EnumerateBaseModelProperties(model.BaseModelProvider!);
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
 
@@ -90,7 +92,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             // (for example a model-specific "DefaultName" serialized as "name").
             // Removing those by wire name would be a public API breaking change.
             if (prop.Modifiers.HasFlag(MethodSignatureModifiers.New)
-                || basePropertyNames.Contains(prop.Name))
+                || baseProperties.Names.Contains(prop.Name)
+                || IsCanonicalDuplicateWireProperty(prop, baseProperties.WirePaths))
             {
                 removedPropertyNames.Add(prop.Name);
             }
@@ -108,19 +111,61 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         _regularUpdated.Add(model);
     }
 
-    private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)
+    private static BaseModelPropertyInfo EnumerateBaseModelProperties(ModelProvider baseModel)
     {
         var basePropertyNames = new HashSet<string>(StringComparer.Ordinal);
+        var baseWirePaths = new HashSet<string>(StringComparer.Ordinal);
         ModelProvider? currentModel = baseModel;
         while (currentModel != null)
         {
-            foreach (var property in currentModel.Properties)
+            foreach (var property in currentModel.Properties.Concat(currentModel.CustomCodeView?.Properties ?? []))
             {
                 basePropertyNames.Add(property.Name);
+                if (TryGetWirePath(property, out var wirePath))
+                {
+                    baseWirePaths.Add(wirePath);
+                }
             }
             currentModel = currentModel.BaseModelProvider;
         }
-        return basePropertyNames;
+        return new BaseModelPropertyInfo(basePropertyNames, baseWirePaths);
+    }
+
+    private static bool IsCanonicalDuplicateWireProperty(PropertyProvider property, HashSet<string> baseWirePaths)
+    {
+        if (!TryGetWirePath(property, out var wirePath) || !baseWirePaths.Contains(wirePath))
+        {
+            return false;
+        }
+
+        return property.Name == wirePath.ToIdentifierName();
+    }
+
+    private static bool TryGetWirePath(PropertyProvider property, out string wirePath)
+    {
+        if (property.WireInfo is null)
+        {
+            wirePath = string.Empty;
+            return false;
+        }
+
+        if (property is not FlattenedPropertyProvider)
+        {
+            wirePath = property.WireInfo.SerializedName;
+            return true;
+        }
+
+        var propertyHierarchy = new List<PropertyProvider>();
+        var current = property;
+        while (current is FlattenedPropertyProvider flattenedProperty)
+        {
+            propertyHierarchy.Add(flattenedProperty.FlattenedProperty);
+            current = flattenedProperty.OriginalProperty;
+        }
+        propertyHierarchy.Add(current);
+
+        wirePath = string.Join('.', propertyHierarchy.Select(p => p.WireInfo!.SerializedName));
+        return true;
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
@@ -143,4 +188,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             current = current.BaseModelProvider;
         }
     }
+
+    private sealed record BaseModelPropertyInfo(HashSet<string> Names, HashSet<string> WirePaths);
 }

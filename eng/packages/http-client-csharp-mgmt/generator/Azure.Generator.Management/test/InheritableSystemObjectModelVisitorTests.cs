@@ -273,6 +273,92 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
         }
 
+        [Test]
+        public void CustomCodeBaseTypeOverride_RebuildsSerializationAsOverride()
+        {
+            var trackedResourceInputModel = InputFactory.Model(
+                "TrackedResource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var inputModel = InputFactory.Model(
+                "MyTrackedModel",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            _ = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel, trackedResourceInputModel]);
+
+            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
+                new SystemObjectModelProvider(trackedResourceType, trackedResourceInputModel);
+
+            var model = new ModelProvider(inputModel);
+            SetCustomCodeView(model, new TrackedResourceDataCustomCodeView());
+
+            _ = model.SerializationProviders.SelectMany(s => s.Methods).ToArray();
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.That(result, Is.Not.Null);
+            var serialization = result!.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var jsonModelWriteCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelWriteCore");
+            Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.True);
+
+            var serializationContent = new TypeProviderWriter(serialization).Write().Content;
+            Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
+            Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
+        }
+
+        [Test]
+        public void CustomCodeBaseTypeOverride_FiltersInheritedWirePathProperties()
+        {
+            var baseModelInput = InputFactory.Model(
+                "CustomTrackedBase",
+                properties: [
+                    InputFactory.Property("resourceType", InputPrimitiveType.String, isReadOnly: true, wireName: "type", serializedName: "type"),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            var inputModel = InputFactory.Model(
+                "DerivedTrackedModel",
+                properties: [
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModelInput, inputModel]);
+
+            var baseModel = new ModelProvider(baseModelInput);
+            var model = new ModelProvider(inputModel);
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[baseModel.Type] = baseModel;
+            SetCustomCodeView(model, new CustomTrackedBaseCustomCodeView(baseModel.Type));
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.That(result, Is.Not.Null);
+            var propertyNames = result!.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames, Does.Not.Contain("Type"));
+            Assert.That(propertyNames, Does.Contain("CustomProp"));
+        }
+
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
             typeProvider.GetType().BaseType!.GetField(
@@ -290,6 +376,13 @@ namespace Azure.Generator.Mgmt.Tests
             protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
             protected override string BuildName() => "MyTrackedModel";
             protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
+        }
+
+        private class CustomTrackedBaseCustomCodeView(CSharpType baseType) : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => baseType;
+            protected override string BuildName() => "DerivedTrackedModel";
+            protected override string BuildRelativeFilePath() => "DerivedTrackedModel.cs";
         }
 
         private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
