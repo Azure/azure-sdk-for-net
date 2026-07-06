@@ -5,15 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents a certificate/key ID pair, used to validate a <see cref="AttestationToken"/>.
     /// </summary>
-    [CodeGenModel("AttestationSigner")]
-    public class AttestationSigner
+    [CodeGenType("AttestationSigner")]
+    public partial class AttestationSigner
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationSigner"/> class.
@@ -28,6 +28,10 @@ namespace Azure.Security.Attestation
                 _ => signingCertificates.ToList().AsReadOnly()
             };
             CertificateKeyId = certificateKeyId;
+        }
+
+        internal AttestationSigner()
+        {
         }
 
         /// <summary>
@@ -56,9 +60,9 @@ namespace Azure.Security.Attestation
             List<X509Certificate2> certificates = new List<X509Certificate2>();
             string keyId = key.Kid;
 
-            if (key.X5C != null)
+            if (key.X5c != null)
             {
-                foreach (string x5c in key.X5C)
+                foreach (string x5c in key.X5c)
                 {
 #if NET9_0_OR_GREATER
                     certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(x5c)));

@@ -7,11 +7,16 @@
 **Target API version:** `2025-06-01`
 **Last Updated:** 2026-07-03
 
-> **▶ RESUME HERE:** Phase 5 (regenerate) is **done** — generation lands in `src/Generated`
-> correctly. We are in **Phase 6 (build-fix cycle)**, working **Path 1** (preserve the GA public
-> API surface). Currently applying **fix #1** (suppress the generated `AttestationClientOptions`
-> ctor; decide DI-files keep/exclude). See **## Phase 6 — Build-fix cycle** below for the live
-> error inventory and exact next action.
+> **▶ RESUME HERE:** Phase 5 (regenerate) is **done**. We are in **Phase 6 (build-fix cycle)**,
+> **Path 1** (preserve the GA public API surface), **fix #3 (Group C / CS0200)**. The SKILL-prescribed
+> **"move-aside diagnostic" is COMPLETE** (see `### fix #3 — diagnostic RESULT` below): all 25 custom
+> `src/Models/*.cs` with codegen transforms were moved to `../_migration_custom_backup/Models/` and a
+> regen was run. Result: build = **252 errors, 100% missing-type** (CS0246/CS0234/CS0051) — proving all
+> 25 files are genuinely needed and the raw generated models are now "rich" (emit `BinaryData`,
+> `AttestationSigner PolicySigner`, `Deprecated*` `[Obsolete]` themselves). **NEXT ACTION:** restore the
+> 25 files from backup to return to the known-good 231-error baseline (HEAD), then modernize per-model
+> **in place** (C-1: delete redundant `[CodeGenMember]`, migrate `[CodeGenModel]`→`[CodeGenType]`, and
+> push genuine renames/access to `client.tsp`). Start with `AttestationResult`.
 >
 > **Working regen command** (local mode — required to pick up the uncommitted spec edits):
 > ```powershell
@@ -167,6 +172,21 @@ per-member `@@clientName` in the spec (rejected Option C-2). Models to reconcile
 in `AttestationClient.cs`/`AttestationAdministrationClient.cs` (Group D). **START with `AttestationResult`
 as the pattern, rebuild, then replicate.**
 
+**DEFINITIVE PROOF it's customization-caused (not a generator bug):** a generated get-only auto-property
+`public T Foo { get; }` **is** assignable in the generated ctor (`Foo = foo;`) — legal C#. So the CS0200
+inside generated `AttestationResult.cs` cannot come from pure generated code; it occurs only because the
+hand-written partial redefines those members as **computed** read-only props (`get => ...`), which are not
+assignable. ⇒ the old `[CodeGenMember]` rename (backing member → `Internal*`) is **not applied by the new
+emitter**, so the generated ctor binds to the custom computed prop → CS0200. Customization/emitter-semantics
+incompatibility → **C-1 (modernize) is correct.**
+
+**Authoritative process (repo `.github/skills/dpg-migration/SKILL.md`):**
+- **Hard rule:** never edit files under `Generated/`; never silently `[CodeGenSuppress]` a *generator* bug.
+- Prescribed diagnostic before mass edits: move custom `Models/*.cs` **aside** → regen → inspect clean
+  generated shapes; then reintroduce only the customizations that still add value, modernized.
+- Attestation keeps customizations directly under `src/Models/` (not `Custom/BackwardCompat/`) — preserve
+  that existing layout.
+
 ### Live error counts (after fix #1; `dotnet build` in `src/`) — ~348 total
 | Code | Count | Group |
 |------|------:|-------|
@@ -190,6 +210,59 @@ as the pattern, rebuild, then replicate.**
   writable props via `[CodeGenMember]` or model-factory paths.
 - **Group G — `AttestationSigner`**: custom code calls `AttestationSigner.DeserializeAttestationSigner`
   (no longer generated). Restore via `[CodeGenMember]`/custom deserialization.
+
+### fix #3 — diagnostic RESULT (move-aside COMPLETE) ✅
+Moved all **25** custom `src/Models/*.cs` that carry codegen transforms to
+`sdk/attestation/_migration_custom_backup/Models/` (clean move — verified byte-identical to HEAD),
+then regenerated. **Result:** `dotnet build` in `src/` = **252 errors, ALL missing-type**:
+| Code | Count | Meaning |
+|------|------:|---------|
+| CS0246 | 192 | convenience types gone (`AttestationSigner`×138, `PolicyModificationResult`×30, `TpmAttestationRequest`×12, `PolicyCertificateResolution`×6, `JsonWebTokenHeader`×6) |
+| CS0234 | 54 | same, as `Azure.Security.Attestation.<T>` (from `Generated/AttestationModelFactory.cs` etc.) |
+| CS0051 | 6 | inconsistent accessibility knock-on |
+
+**Conclusions (locks in C-1):**
+1. All 25 files are genuinely required — reintroduce every one (modernized), none are pure-dead.
+2. Raw generated models are now **rich**: `AttestationResult` emits `BinaryData EnclaveHeldData/PolicyHash`,
+   `Attestation.AttestationSigner PolicySigner/DeprecatedPolicySigner`, and all `Deprecated*` `[Obsolete]`
+   members itself ⇒ the old `[CodeGenMember("…")] private string Internal…` renames are **redundant** (delete).
+3. Generated `AttestationResult(.Serialization).cs` now references `Attestation.AttestationSigner` and calls
+   `AttestationSigner.DeserializeAttestationSigner(...)` / `WriteObjectValue<Attestation.AttestationSigner>()`.
+   Spec has **no** `AttestationSigner` model (`policySigner?: JsonWebKey`), so `Attestation.AttestationSigner`
+   binds to the **hand-written** `Azure.Security.Attestation.AttestationSigner`. ⇒ that custom type must (a)
+   exist and (b) provide `DeserializeAttestationSigner` + `IJsonModel`/`WriteObjectValue` support (Group G) —
+   the richest single work item.
+
+**25 backed-up files — reintroduction categorization:**
+- **Pure accessibility stubs (empty body, just `[CodeGenType]` + accessibility)** — generated type ALREADY
+  matches this accessibility ⇒ likely **redundant, drop** (verify each): `AttestationResponse`(int),
+  `PolicyResponse`(int), `PolicyCertificatesModifyResponse`(int), `PolicyCertificatesResponse`(int),
+  `JsonWebKey`(int), `JsonWebKeySet`(int), `RuntimeData`(int), `DataType`(int),
+  `AttestOpenEnclaveRequest`(int), `AttestSevSnpVmRequest`(int), `AttestSgxRequest`→`AttestSgxEnclaveRequest`(int),
+  `AttestationType`(pub struct — generated already public), `PolicyCertificatesModificationResult`(pub — matches).
+- **Access MISMATCH stub → move to `client.tsp` `@@access`:** `PolicyModification` (generated **internal**
+  struct, custom wants **public**). Reintroduce as `client.tsp` `@@access(PolicyModification, Access.public)`
+  (or keep a public partial-struct stub if TCGC access can't promote a value type).
+- **RENAME stubs → keep as `[CodeGenType("<generatedName>")]` (already the mechanism):**
+  `CertificateModification`→`PolicyCertificateResolution` (pub struct),
+  `PolicyModificationResult` from `PolicyResult`, `PolicyCertificateModification` from
+  `AttestationCertificateManagementBody`.
+- **Genuine value-adds (ctors / computed props / helpers) — reintroduce, modernized:**
+  `AttestationSigner` (public type + `From*` + **add** `DeserializeAttestationSigner`/serialization),
+  `AttestationResult` (drop redundant `[CodeGenMember]`, keep computed `IssuedAt/Expiration/NotBefore/Issuer/UniqueIdentifier/Confirmation`),
+  `InitTimeData` (byte[]/object ctors; watch `DataType.Json` removal — Group E),
+  `JsonWebTokenHeader` (JWT header props),
+  `PolicyCertificatesResult` (`GetPolicyCertificates()`),
+  `PolicyModificationResult` (`PolicyResolution/PolicySigner/PolicyTokenHash/PolicyToken`),
+  `TpmAttestationRequest`/`TpmAttestationResponse` (`BinaryData Data`),
+  `StoredAttestationPolicy` (`AttestationPolicy` + JsonConverter),
+  `PolicyCertificateModification` (X509 ctor).
+
+**Modernization rules to apply on reintroduction:**
+- `[CodeGenModel("X")]` → `[CodeGenType("X")]`; add `using Microsoft.TypeSpec.Generator.Customizations;`.
+- Delete `[CodeGenMember]` renames whose target is now emitted directly (most `Internal*` in `AttestationResult`).
+- `key.X5C` → `key.X5c` (generated casing); JsonWebKey writes may need model-factory/`[CodeGenMember]`.
+- Prefer `client.tsp` (`@@access`/`@@clientName`) for access/name; C# customization for behavior/shims.
 
 ### After the build is green
 - Phase 7 changelog, Phase 8 test csproj build, Phase 9 tests, Phase 10 Export-API + snippets,
