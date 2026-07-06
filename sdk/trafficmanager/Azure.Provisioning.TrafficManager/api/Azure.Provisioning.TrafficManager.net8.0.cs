@@ -141,7 +141,7 @@ namespace Azure.Provisioning.TrafficManager
     public partial class TrafficManagerGeographicHierarchy : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public TrafficManagerGeographicHierarchy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.TrafficManager.TrafficManagerRegion GeographicHierarchy { get { throw null; } set { } }
+        public Azure.Provisioning.TrafficManager.TrafficManagerRegion GeographicHierarchy { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -154,13 +154,13 @@ namespace Azure.Provisioning.TrafficManager
     public partial class TrafficManagerHeatMap : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public TrafficManagerHeatMap(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerHeatMapEndpoint> Endpoints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerHeatMapEndpoint> Endpoints { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.TrafficManager.TrafficManagerProfile Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerHeatMapTrafficFlow> TrafficFlows { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerHeatMapTrafficFlow> TrafficFlows { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.TrafficManager.TrafficManagerHeatMap FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions

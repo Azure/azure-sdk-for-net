@@ -52,18 +52,13 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal HeatMapProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -87,15 +82,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HeatMapProperties();
-                }
-                Properties.StartOn = value;
+                return Properties.StartOn;
             }
         }
 
@@ -104,15 +91,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HeatMapProperties();
-                }
-                Properties.EndOn = value;
+                return Properties.EndOn;
             }
         }
 
@@ -121,15 +100,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties is null ? default : Properties.Endpoints;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HeatMapProperties();
-                }
-                Properties.Endpoints = value;
+                return Properties.Endpoints;
             }
         }
 
@@ -138,15 +109,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties is null ? default : Properties.TrafficFlows;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HeatMapProperties();
-                }
-                Properties.TrafficFlows = value;
+                return Properties.TrafficFlows;
             }
         }
 

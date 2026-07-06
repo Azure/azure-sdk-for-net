@@ -50,18 +50,13 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal GeographicHierarchyProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -70,15 +65,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties is null ? default : Properties.GeographicHierarchy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new GeographicHierarchyProperties();
-                }
-                Properties.GeographicHierarchy = value;
+                return Properties.GeographicHierarchy;
             }
         }
 
