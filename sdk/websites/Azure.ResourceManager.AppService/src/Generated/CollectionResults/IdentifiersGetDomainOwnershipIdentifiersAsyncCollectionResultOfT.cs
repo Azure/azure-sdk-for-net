@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AppServiceIdentifierListResult result = AppServiceIdentifierListResult.FromResponse(response);
-                yield return Page<AppServiceIdentifierData>.FromValues((IReadOnlyList<AppServiceIdentifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppServiceIdentifierData>.FromValues((IReadOnlyList<AppServiceIdentifierData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 CredentialListResult result = CredentialListResult.FromResponse(response);
-                yield return Page<AutomationCredentialData>.FromValues((IReadOnlyList<AutomationCredentialData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AutomationCredentialData>.FromValues((IReadOnlyList<AutomationCredentialData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

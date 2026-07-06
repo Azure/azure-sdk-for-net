@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 WatchlistList result = WatchlistList.FromResponse(response);
-                yield return Page<SecurityInsightsWatchlistData>.FromValues((IReadOnlyList<SecurityInsightsWatchlistData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityInsightsWatchlistData>.FromValues((IReadOnlyList<SecurityInsightsWatchlistData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

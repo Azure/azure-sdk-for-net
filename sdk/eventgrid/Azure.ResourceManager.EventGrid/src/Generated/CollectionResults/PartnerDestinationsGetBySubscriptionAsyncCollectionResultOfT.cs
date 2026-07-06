@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.EventGrid
                     yield break;
                 }
                 PartnerDestinationsListResult result = PartnerDestinationsListResult.FromResponse(response);
-                yield return Page<PartnerDestinationData>.FromValues((IReadOnlyList<PartnerDestinationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PartnerDestinationData>.FromValues((IReadOnlyList<PartnerDestinationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

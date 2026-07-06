@@ -83,9 +83,30 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>>? _outputFlattenPropertyMap;
         internal IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> OutputFlattenPropertyMap => _outputFlattenPropertyMap ??= BuildOutputFlattenPropertyMap();
         private IReadOnlyDictionary<ModelProvider, HashSet<PropertyProvider>> BuildOutputFlattenPropertyMap()
-            => ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap.ToDictionary(
-                kv => ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!,
-                kv => kv.Value.Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, ManagementClientGenerator.Instance.TypeFactory.CreateModel(kv.Key)!)!).ToHashSet());
+        {
+            Dictionary<ModelProvider, HashSet<PropertyProvider>> result = [];
+            foreach (var (inputModel, flattenedProperties) in ManagementClientGenerator.Instance.InputLibrary.FlattenPropertyMap)
+            {
+                foreach (var model in ResolveFlattenTargetModels(inputModel))
+                {
+                    result[model] = flattenedProperties
+                        .Select(p => ManagementClientGenerator.Instance.TypeFactory.CreateProperty(p, model)!)
+                        .ToHashSet();
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Resolves output model providers that should receive flattenProperty customizations for an input model.
+        /// </summary>
+        /// <param name="inputModel">The input model that owns the decorated flattened properties.</param>
+        /// <returns>The output model providers that represent the input model.</returns>
+        protected virtual IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
+        {
+            var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+            return model is null ? [] : [model];
+        }
 
         private HashSet<ModelProvider>? _safeFlattenDisabledModels;
         /// <summary>

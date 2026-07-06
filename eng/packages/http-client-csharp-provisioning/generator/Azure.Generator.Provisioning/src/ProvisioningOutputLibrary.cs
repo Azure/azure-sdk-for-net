@@ -115,6 +115,14 @@ namespace Azure.Generator.Provisioning
         }
 
         /// <inheritdoc/>
+        protected override IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
+        {
+            return TryGetResourcesByModel(inputModel, out var resources)
+                ? resources
+                : base.ResolveFlattenTargetModels(inputModel);
+        }
+
+        /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
             // TODO: Ideally we should call base.BuildTypeProviders() and filter the results

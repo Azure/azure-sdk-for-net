@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 GetServiceGatewayAddressLocationsResult result = GetServiceGatewayAddressLocationsResult.FromResponse(response);
-                yield return Page<ServiceGatewayAddressLocationResponse>.FromValues((IReadOnlyList<ServiceGatewayAddressLocationResponse>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceGatewayAddressLocationResponse>.FromValues((IReadOnlyList<ServiceGatewayAddressLocationResponse>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
