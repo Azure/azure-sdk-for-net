@@ -104,6 +104,8 @@ Resource type validity was checked against the public Bicep reference by opening
 
 **Result:** All six `resolveArmResources`-only resource types are not found in the Bicep reference. This supports the `client.tsp` comment that these are not standalone ARM resources; they are action endpoints or sub-operations on `Cluster` that are excluded from C# with `@@scope(..., "!csharp")`.
 
+Temporary experiment: removing `@@scope(Configurations.get, "!csharp")` and regenerating made `Microsoft.HDInsight.Configurations.get` visible to the legacy detector, but legacy classified it as an `Action` on the `Microsoft.HDInsight/clusters` resource, not as a `Microsoft.HDInsight/clusters/configurations` resource. This confirms that the legacy detector does not promote this endpoint to a resource even when it is in the C# SDK method model.
+
 ### Not found in Bicep reference
 
 These are problematic false-resource candidates. They are likely caused by `resolveArmResources` reading the full TypeSpec program and promoting scoped-out action/status endpoints into resources.
