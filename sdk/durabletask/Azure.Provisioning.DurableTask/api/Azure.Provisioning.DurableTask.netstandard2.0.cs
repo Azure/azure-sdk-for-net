@@ -157,9 +157,9 @@ namespace Azure.Provisioning.DurableTask
     {
         public DurableTaskSchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.DurableTask.DurableTaskScheduler Parent { get { throw null; } set { } }
-        public Azure.Provisioning.DurableTask.DurableTaskPrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.DurableTask.DurableTaskPrivateLinkResourceProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.DurableTask.DurableTaskSchedulerPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
