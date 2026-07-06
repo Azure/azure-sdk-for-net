@@ -117,7 +117,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseClusterResourceState? resourceState = default;
             string redisVersion = default;
             IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
-            string migratedEndpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default;
             foreach (var prop in element.EnumerateObject())
@@ -209,11 +208,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     privateEndpointConnections = array;
                     continue;
                 }
-                if (prop.NameEquals("migratedEndpoint"u8))
-                {
-                    migratedEndpoint = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("publicNetworkAccess"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -240,7 +234,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 resourceState,
                 redisVersion,
                 privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
-                migratedEndpoint,
                 additionalBinaryDataProperties,
                 publicNetworkAccess);
         }

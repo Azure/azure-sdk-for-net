@@ -105,7 +105,10 @@ namespace Azure.ResourceManager.CosmosDB
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            request.Headers.SetValue("Content-Type", "application/json");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;

@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             _value = value;
         }
 
-        /// <summary> 1.0. </summary>
+        /// <summary> Gets the Tls1_0. </summary>
         public static RedisEnterpriseTlsVersion Tls1_0 { get; } = new RedisEnterpriseTlsVersion(Tls1_0Value);
 
-        /// <summary> 1.1. </summary>
+        /// <summary> Gets the Tls1_1. </summary>
         public static RedisEnterpriseTlsVersion Tls1_1 { get; } = new RedisEnterpriseTlsVersion(Tls1_1Value);
 
-        /// <summary> 1.2. </summary>
+        /// <summary> Gets the Tls1_2. </summary>
         public static RedisEnterpriseTlsVersion Tls1_2 { get; } = new RedisEnterpriseTlsVersion(Tls1_2Value);
 
         /// <summary> Determines if two <see cref="RedisEnterpriseTlsVersion"/> values are the same. </summary>
