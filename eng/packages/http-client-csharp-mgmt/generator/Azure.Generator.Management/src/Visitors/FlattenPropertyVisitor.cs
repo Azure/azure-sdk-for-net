@@ -714,7 +714,6 @@ namespace Azure.Generator.Management.Visitors
 
             var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
             var shouldEmitCollectionSetter = shouldPreserveSetter
-                || !model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public)
                 || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
             var flattenPropertyBody = new MethodPropertyBody(
                 PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
@@ -766,7 +765,7 @@ namespace Azure.Generator.Management.Visitors
 
             foreach (var parent in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
             {
-                if (parent == model || !ShouldPreserveLastContractSetter(parent, propertyName))
+                if (parent == model || !ShouldPreserveLastContractSetter(parent, propertyName) || HasCustomSetter(parent, propertyName))
                 {
                     continue;
                 }
@@ -784,6 +783,9 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private sealed record FlattenedSetterCacheKey(string? Namespace, string Name, string PropertyName);
+
+        private static bool HasCustomSetter(ModelProvider model, string propertyName)
+            => model.CustomCodeView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
 
         private void UpdateFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
         {
