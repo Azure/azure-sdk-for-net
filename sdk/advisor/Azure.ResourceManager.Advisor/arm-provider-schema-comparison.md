@@ -86,6 +86,6 @@ These differences are outside the requested comparison axes but may still be use
 
 ## Bicep reference validation
 
-Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`.
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
 
 **Result:** No resource ID coverage mismatch was found, so no Bicep reference validation was needed.

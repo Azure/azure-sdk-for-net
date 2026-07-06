@@ -106,28 +106,41 @@ These differences are outside the requested comparison axes but may still be use
 
 ## Bicep reference validation
 
-Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`.
-
-**Result:** The Bicep reference has mixed results. Some operation-result resource types exist, but operation-status types generally do not. The singleton child resource types exist, while the collapsed parent type also exists but is less specific.
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
 
 | Metric | Count |
 | --- | ---: |
 | Checked rows | 15 |
 | Found in Bicep reference | 11 |
+| Found in package API version | 0 |
+| Found only outside package API versions | 11 |
 | Not found in Bicep reference | 4 |
 
-| Side | Resource type | Bicep reference |
-| --- | --- | --- |
-| Legacy resourceType for same path | [Microsoft.RecoveryServices/vaults/backupconfig](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupconfig?pivots=deployment-language-bicep) | Found |
-| Legacy resourceType for same path | [Microsoft.RecoveryServices/vaults/backupEncryptionConfigs](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupencryptionconfigs?pivots=deployment-language-bicep) | Found |
-| Legacy resourceType for same path | [Microsoft.RecoveryServices/vaults/backupstorageconfig](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupstorageconfig?pivots=deployment-language-bicep) | Found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults?pivots=deployment-language-bicep) | Found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupfabrics/protectioncontainers/operationresults?pivots=deployment-language-bicep) | Found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupfabrics/protectioncontainers/protecteditems/operationresults?pivots=deployment-language-bicep) | Found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/operationsStatus](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupfabrics/protectioncontainers/protecteditems/operationsstatus?pivots=deployment-language-bicep) | Not found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupJobs/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupjobs/operationresults?pivots=deployment-language-bicep) | Not found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupPolicies/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backuppolicies/operationresults?pivots=deployment-language-bicep) | Found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/operationresults?pivots=deployment-language-bicep) | Found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/operationStatus](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/operationstatus?pivots=deployment-language-bicep) | Not found |
-| resolveArmResources only | [Microsoft.RecoveryServices/vaults/privateEndpointConnections/operationsStatus](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/privateendpointconnections/operationsstatus?pivots=deployment-language-bicep) | Not found |
-| resolveArmResources resourceType for same path | [Microsoft.RecoveryServices/vaults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults?pivots=deployment-language-bicep) | Found |
+**Result:** Operation-status types that are not found in Bicep are likely false resources. Operation-result types that exist in Bicep currently appear only in `2026-05-01`, outside this package's API-version set, so they are not legacy misses for the current package. Singleton child resource types exist in Bicep; the `resolveArmResources` parent-type collapse remains a singleton parsing bug.
+
+### Found only outside package API versions
+
+These are real ARM resource types, but they do not overlap the API versions generated by this package. They usually point to version/projection differences rather than legacy detector misses.
+
+| Side | Resource type | Bicep API versions | Package API versions | Resource schema API versions |
+| --- | --- | --- | --- | --- |
+| Legacy resourceType for same path | [Microsoft.RecoveryServices/vaults/backupconfig](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupconfig?pivots=deployment-language-bicep) | `2020-06-01`, `2024-04-01`, `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` |
+| resolveArmResources resourceType for same path | [Microsoft.RecoveryServices/vaults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults?pivots=deployment-language-bicep) | `2020-06-01`, `2022-10-01`, `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` |
+| Legacy resourceType for same path | [Microsoft.RecoveryServices/vaults/backupEncryptionConfigs](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupencryptionconfigs?pivots=deployment-language-bicep) | `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` |
+| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupfabrics/protectioncontainers/operationresults?pivots=deployment-language-bicep) | `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | None |
+| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupfabrics/protectioncontainers/protecteditems/operationresults?pivots=deployment-language-bicep) | `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | None |
+| resolveArmResources only | [Microsoft.RecoveryServices/vaults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults?pivots=deployment-language-bicep) | `2020-06-01`, `2022-10-01`, `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | None |
+| resolveArmResources only | [Microsoft.RecoveryServices/vaults/backupPolicies/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backuppolicies/operationresults?pivots=deployment-language-bicep) | `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | None |
+| Legacy resourceType for same path | [Microsoft.RecoveryServices/vaults/backupstorageconfig](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/backupstorageconfig?pivots=deployment-language-bicep) | `2020-06-01`, `2022-10-01`, `2023-02-01`, `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` |
+| resolveArmResources only | [Microsoft.RecoveryServices/vaults/operationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.recoveryservices/vaults/operationresults?pivots=deployment-language-bicep) | `2026-05-01` | `2025-02-01`, `2025-08-01`, `2026-01-01`, `2026-01-31-preview` | None |
+
+### Not found in Bicep reference
+
+These are problematic false-resource candidates. They may be incorrect TypeSpec modeling or a `resolveArmResources` bug. If a resource is newly introduced, the Bicep reference might also not have published that API version yet; check the resource schema API versions.
+
+| Side | Resource type | Resource schema API versions | Notes |
+| --- | --- | --- | --- |
+| resolveArmResources only | `Microsoft.RecoveryServices/vaults/backupFabrics/protectionContainers/protectedItems/operationsStatus` | None | Not found in Bicep reference; likely false resource or docs missing for this API version |
+| resolveArmResources only | `Microsoft.RecoveryServices/vaults/backupJobs/operationResults` | None | Not found in Bicep reference; likely false resource or docs missing for this API version |
+| resolveArmResources only | `Microsoft.RecoveryServices/vaults/operationStatus` | None | Not found in Bicep reference; likely false resource or docs missing for this API version |
+| resolveArmResources only | `Microsoft.RecoveryServices/vaults/privateEndpointConnections/operationsStatus` | None | Not found in Bicep reference; likely false resource or docs missing for this API version |
