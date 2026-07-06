@@ -45,7 +45,7 @@ network:
 safe-outputs:
   report-failure-as-issue: false
   add-comment:
-    max: 1
+    max: 5
     target: "${{ github.event.inputs.pr_number }}"
   create-pull-request-review-comment:
     max: 100
@@ -284,7 +284,7 @@ Review the changed scope for these issues:
 
 1. Onboarding layout: new packages should follow the expected `Azure.Provisioning.{Service}` structure, include `.slnx`, src/tests projects, README examples, metadata, and service definitions.
 2. Regeneration intent: management package version updates should be present only when explicitly required or when the feature is absent from the current management package.
-3. Generated schema accuracy: run `.github/workflows/provisioning-review/Get-ProvisioningSchema.ps1` against the package. This script parses generated C# source files plus custom partial source files from anywhere under `src/**` except `src/Generated/**`, and does not build or execute PR code. Compare the emitted resource schema with the Azure Bicep reference on `learn.microsoft.com`. A generated resource MUST NOT expose an ARM resource type that does not exist in the official Bicep reference. Check missing resource types, missing properties, incorrect names, extra writable properties, writable reference properties incorrectly marked readonly, and type mismatches.
+3. Generated schema accuracy: run `.github/workflows/provisioning-review/Get-ProvisioningSchema.ps1 -Format Markdown` against the package. This script parses generated C# source files plus custom partial source files from anywhere under `src/**` except `src/Generated/**`, and does not build or execute PR code. Preserve the Markdown output exactly so it can be posted for human reviewers to verify. Compare the emitted resource schema with the Azure Bicep reference on `learn.microsoft.com`. A generated resource MUST NOT expose an ARM resource type that does not exist in the official Bicep reference. Check missing resource types, missing properties, incorrect names, extra writable properties, writable reference properties incorrectly marked readonly, and type mismatches.
 4. Resource identity and metadata: `Name` MUST NOT be output-only, optional, or non-writable for non-singleton resources. `Parent` and `Scope` MUST NOT be normal serialized Bicep properties; they must be provisioning metadata properties. `Parent` must be a concrete `ProvisionableResource`, while `Scope` may be `ProvisionableResource`.
 5. Compatibility: use backward-compatible customizations for removed types or renamed/changed properties. `src/ApiCompatBaseline.txt` is acceptable only for provisioning-supported `[DataMember]` attribute removal suppressions; flag broad or unrelated suppressions.
 6. Tests and snippets: basic tests should use `#region Snippet:` blocks and `Trycep.Compare()`; live tests should reuse the same factory methods; README examples should reference snippet regions.
@@ -318,6 +318,18 @@ Then submit exactly one review using `submit_pull_request_review`:
 - Use `REQUEST_CHANGES` if any blocking issue was found.
 - Use `COMMENT` if no blocking issue was found.
 - Do not use `APPROVE`.
+- If schema extraction ran, emit one `add_comment` per reviewed package before submitting the review. The comment must contain the script's Markdown output for that package so human reviewers can verify the schema inventory. Use this format:
+````markdown
+## Provisioning schema extractor output
+Package: `<package path>`
+<details>
+<summary>Schema extracted from generated and custom source</summary>
+```markdown
+<exact Get-ProvisioningSchema.ps1 -Format Markdown output>
+```
+</details>
+````
+If the output is too large for one GitHub comment, include as much complete table content as fits and clearly state that the remaining output was truncated by the workflow comment size limit.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit only after confirming the latest review is this workflow's new non-blocking comment on the current head.
 - After submitting the review, always emit the `publish_pr_check` safe-output tool with no arguments so workflow-dispatch runs leave a visible check on PR heads.
 
