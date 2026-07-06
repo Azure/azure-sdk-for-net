@@ -228,3 +228,30 @@ These differences are outside the requested comparison axes but may still be use
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.sql/servers/{}/virtualnetworkrules/{}` | `SqlServerVirtualNetworkRule` | `VirtualNetworkRule` |
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.sql/servers/{}/vulnerabilityassessments/{}` | `SqlServerVulnerabilityAssessment` | `ServerVulnerabilityAssessment` |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 5 |
+| Found in Bicep reference | 5 |
+| Found in package API version | 5 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 0 |
+
+**Result:** All five coverage-mismatch resource types are real ARM resources in this package's API versions. This is not a false-resource issue. It needs deeper follow-up to decide whether legacy missed valid resources, `resolveArmResources` produced the wrong representation, or C# projection intentionally reshaped/excluded parts of the surface.
+
+Initial observations:
+
+- `firewallRules` and `ipv6FirewallRules` are legacy-only real resources in `2025-02-01-preview`. The TypeSpec models use legacy/custom resource shapes such as `ProxyResourceWithWritableName` and `@Azure.ResourceManager.Legacy.feature`; `resolveArmResources` attaches their operations as actions on `servers` instead of separate resources.
+- `managedDatabaseMoveOperationResults`, `servers/databases/extensions`, and `servers/jobAgents/privateEndpoints` are `resolveArmResources`-only real resources in `2025-02-01-preview`; some are legacy-operation based and/or operation-result/private-endpoint shapes.
+- Several same-path resource type differences are non-default singleton paths ending in `current` where `resolveArmResources` collapses the resource type to the parent (`servers`, `servers/databases`, or `managedInstances`). This resembles the non-default singleton path parsing issue.
+
+| Side | Resource type | Bicep API versions | Resource schema API versions |
+| --- | --- | --- | --- |
+| Legacy only | [Microsoft.Sql/servers/firewallRules](https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers/firewallrules?pivots=deployment-language-bicep) | `2020-06-01`, `2020-11-01-preview`, `2021-02-01-preview`, `2025-02-01-preview` | `2025-01-01`, `2025-02-01-preview` |
+| Legacy only | [Microsoft.Sql/servers/ipv6FirewallRules](https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers/ipv6firewallrules?pivots=deployment-language-bicep) | `2025-02-01-preview` | `2025-01-01`, `2025-02-01-preview` |
+| `resolveArmResources` only | [Microsoft.Sql/locations/managedDatabaseMoveOperationResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/locations/manageddatabasemoveoperationresults?pivots=deployment-language-bicep) | `2025-02-01-preview` | None |
+| `resolveArmResources` only | [Microsoft.Sql/servers/databases/extensions](https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers/databases/extensions?pivots=deployment-language-bicep) | `2025-02-01-preview` | `2025-01-01`, `2025-02-01-preview` |
+| `resolveArmResources` only | [Microsoft.Sql/servers/jobAgents/privateEndpoints](https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers/jobagents/privateendpoints?pivots=deployment-language-bicep) | `2025-02-01-preview` | None |
