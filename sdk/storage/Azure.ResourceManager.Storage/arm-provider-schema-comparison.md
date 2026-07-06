@@ -96,3 +96,26 @@ These differences are outside the requested comparison axes but may still be use
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.storage/storageaccounts/{}/queueservices/default` | `QueueService` | `QueueServiceProperties` |
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.storage/storageaccounts/{}/tableservices/default` | `TableService` | `TableServiceProperties` |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 5 |
+| Found in Bicep reference | 5 |
+| Found in package API version | 2 |
+| Found only outside package API versions | 3 |
+| Not found in Bicep reference | 0 |
+
+**Result:** `inventoryPolicies` and `managementPolicies` are singleton resources in this package's API versions. Bicep shows fixed name `default`, matching the legacy paths. `resolveArmResources` uses parameterized names for those two resources, which does not match Bicep. `advancedPlatformMetrics` is a real ARM resource but appears only in `2026-04-01`, outside this package's generated API versions (`2025-06-01`, `2025-08-01`), so it is a version/projection mismatch rather than a current legacy miss.
+
+For operation differences, `immutabilityPolicies/default` and `tableServices/default/tables/{tableName}` are real resources in the package API versions, but `resolveArmResources` classifies their create/update operations as actions on the parent. These likely need separate operation-classification review.
+
+| Side | Resource type | Path shape | Bicep API versions | Resource schema API versions |
+| --- | --- | --- | --- | --- |
+| Legacy only | [Microsoft.Storage/storageAccounts/inventoryPolicies](https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts/inventorypolicies?pivots=deployment-language-bicep) | `default` singleton, matches Bicep `name: 'default'` | `2026-04-01`, `2025-08-01`, `2025-06-01`, `2025-01-01`, `2024-01-01`, `2023-05-01`, `2023-04-01`, `2023-01-01`, `2022-09-01`, `2022-05-01`, `2021-09-01`, `2021-08-01`, `2021-06-01`, `2021-04-01`, `2021-02-01`, `2021-01-01`, `2020-08-01-preview`, `2019-06-01` | `2025-06-01`, `2025-08-01` |
+| `resolveArmResources` only | [Microsoft.Storage/storageAccounts/inventoryPolicies](https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts/inventorypolicies?pivots=deployment-language-bicep) | parameterized `{blobInventoryPolicyName}`, does not match Bicep singleton name | `2026-04-01`, `2025-08-01`, `2025-06-01`, `2025-01-01`, `2024-01-01`, `2023-05-01`, `2023-04-01`, `2023-01-01`, `2022-09-01`, `2022-05-01`, `2021-09-01`, `2021-08-01`, `2021-06-01`, `2021-04-01`, `2021-02-01`, `2021-01-01`, `2020-08-01-preview`, `2019-06-01` | `2025-06-01`, `2025-08-01` |
+| Legacy only | [Microsoft.Storage/storageAccounts/managementPolicies](https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts/managementpolicies?pivots=deployment-language-bicep) | `default` singleton, matches Bicep `name: 'default'` | `2026-04-01`, `2025-08-01`, `2025-06-01`, `2025-01-01`, `2024-01-01`, `2023-05-01`, `2023-04-01`, `2023-01-01`, `2022-09-01`, `2022-05-01`, `2021-09-01`, `2021-08-01`, `2021-06-01`, `2021-04-01`, `2021-02-01`, `2021-01-01`, `2020-08-01-preview`, `2019-06-01`, `2019-04-01`, `2018-11-01`, `2018-03-01-preview` | `2025-06-01`, `2025-08-01` |
+| `resolveArmResources` only | [Microsoft.Storage/storageAccounts/managementPolicies](https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts/managementpolicies?pivots=deployment-language-bicep) | parameterized `{managementPolicyName}`, does not match Bicep singleton name | `2026-04-01`, `2025-08-01`, `2025-06-01`, `2025-01-01`, `2024-01-01`, `2023-05-01`, `2023-04-01`, `2023-01-01`, `2022-09-01`, `2022-05-01`, `2021-09-01`, `2021-08-01`, `2021-06-01`, `2021-04-01`, `2021-02-01`, `2021-01-01`, `2020-08-01-preview`, `2019-06-01`, `2019-04-01`, `2018-11-01`, `2018-03-01-preview` | `2025-06-01`, `2025-08-01` |
+| `resolveArmResources` only | [Microsoft.Storage/storageAccounts/advancedPlatformMetrics](https://learn.microsoft.com/en-us/azure/templates/microsoft.storage/storageaccounts/advancedplatformmetrics?pivots=deployment-language-bicep) | outside package version | `2026-04-01` | None |
