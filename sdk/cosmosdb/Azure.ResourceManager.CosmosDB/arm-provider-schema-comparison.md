@@ -149,3 +149,24 @@ These differences are outside the requested comparison axes but may still be use
 | `Microsoft.DocumentDB.SoftDeletedSqlDatabases.purge` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}/softDeletedSqlDatabases/{databaseName}?softDeleteActionKind=PermanentDeleteResource` | Missing. | Present. |
 | `Microsoft.DocumentDB.SoftDeletedSqlDatabases.restore` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/locations/{location}/softDeletedDatabaseAccounts/{accountName}/softDeletedSqlDatabases/{databaseName}?softDeleteActionKind=RestoreSoftDeletedResource` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 5 |
+| Found in Bicep reference | 4 |
+| Found in package API version | 3 |
+| Found only outside package API versions | 1 |
+| Not found in Bicep reference | 1 |
+
+**Result:** The three legacy-only soft-deleted SQL resources are real ARM resources in `2026-04-01-preview`, so they may represent a `resolveArmResources` miss or a projection/scope mismatch. `cassandraClusters/backups` is a real ARM resource but only in `2023-03-15-preview`, outside this package's generated API versions (`2026-03-15`, `2026-04-01-preview`). `cassandraClusters/commands` is not found in Bicep and is likely a false-resource candidate or documentation gap.
+
+| Side | Resource type | Bicep API versions | Resource schema API versions | Notes |
+| --- | --- | --- | --- | --- |
+| Legacy only | [Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts](https://learn.microsoft.com/en-us/azure/templates/microsoft.documentdb/locations/softdeleteddatabaseaccounts?pivots=deployment-language-bicep) | `2026-04-01-preview` | `2026-04-01-preview` | Real same-version resource; investigate why `resolveArmResources` misses it. |
+| Legacy only | [Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/softDeletedSqlDatabases](https://learn.microsoft.com/en-us/azure/templates/microsoft.documentdb/locations/softdeleteddatabaseaccounts/softdeletedsqldatabases?pivots=deployment-language-bicep) | `2026-04-01-preview` | `2026-04-01-preview` | Real same-version resource; investigate why `resolveArmResources` misses it. |
+| Legacy only | [Microsoft.DocumentDB/locations/softDeletedDatabaseAccounts/softDeletedSqlDatabases/softDeletedSqlContainers](https://learn.microsoft.com/en-us/azure/templates/microsoft.documentdb/locations/softdeleteddatabaseaccounts/softdeletedsqldatabases/softdeletedsqlcontainers?pivots=deployment-language-bicep) | `2026-04-01-preview` | `2026-04-01-preview` | Real same-version resource; investigate why `resolveArmResources` misses it. |
+| `resolveArmResources` only | [Microsoft.DocumentDB/cassandraClusters/backups](https://learn.microsoft.com/en-us/azure/templates/microsoft.documentdb/cassandraclusters/backups?pivots=deployment-language-bicep) | `2023-03-15-preview` | `2026-04-01-preview` | Real resource, but Bicep currently lists only an older API version. |
+| `resolveArmResources` only | `Microsoft.DocumentDB/cassandraClusters/commands` | Not found | `2026-04-01-preview` | Likely false resource or docs missing for this API version. |
