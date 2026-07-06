@@ -95,18 +95,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal VirtualMachineScaleSetRollingUpgradeProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -130,7 +125,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.Policy;
+                return Properties.Policy;
             }
         }
 
@@ -139,7 +134,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.RunningStatus;
+                return Properties.RunningStatus;
             }
         }
 
@@ -148,7 +143,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.Progress;
+                return Properties.Progress;
             }
         }
 
@@ -157,7 +152,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.Error;
+                return Properties.Error;
             }
         }
 

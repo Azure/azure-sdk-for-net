@@ -64,18 +64,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal DiskRestorePointProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -99,10 +94,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.TimeCreated;
             }
         }
@@ -112,10 +103,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.SourceResourceId;
             }
         }
@@ -125,10 +112,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.OSType;
             }
         }
@@ -138,15 +121,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.HyperVGeneration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.HyperVGeneration = value;
+                return Properties.HyperVGeneration;
             }
         }
 
@@ -155,15 +130,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.PurchasePlan;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.PurchasePlan = value;
+                return Properties.PurchasePlan;
             }
         }
 
@@ -172,15 +139,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedCapabilities;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.SupportedCapabilities = value;
+                return Properties.SupportedCapabilities;
             }
         }
 
@@ -189,10 +148,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.FamilyId;
             }
         }
@@ -202,10 +157,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.SourceUniqueId;
             }
         }
@@ -215,7 +166,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.Encryption;
+                return Properties.Encryption;
             }
         }
 
@@ -224,15 +175,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.SupportsHibernation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.SupportsHibernation = value;
+                return Properties.SupportsHibernation;
             }
         }
 
@@ -241,15 +184,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.NetworkAccessPolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.NetworkAccessPolicy = value;
+                return Properties.NetworkAccessPolicy;
             }
         }
 
@@ -258,15 +193,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.PublicNetworkAccess;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.PublicNetworkAccess = value;
+                return Properties.PublicNetworkAccess;
             }
         }
 
@@ -275,15 +202,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.DiskAccessId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.DiskAccessId = value;
+                return Properties.DiskAccessId;
             }
         }
 
@@ -292,15 +211,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.CompletionPercent;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.CompletionPercent = value;
+                return Properties.CompletionPercent;
             }
         }
 
@@ -309,10 +220,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.ReplicationState;
             }
         }
@@ -322,10 +229,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.SourceResourceLocation;
             }
         }
@@ -335,15 +238,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.SecurityProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
-                Properties.SecurityProfile = value;
+                return Properties.SecurityProfile;
             }
         }
 
@@ -352,10 +247,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.LogicalSectorSize;
             }
         }
@@ -365,10 +256,6 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new DiskRestorePointProperties();
-                }
                 return Properties.SnapshotAccessState;
             }
         }

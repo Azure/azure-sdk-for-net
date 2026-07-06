@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -122,6 +123,232 @@ namespace Azure.Provisioning.Compute
             {
                 Initialize();
                 _parent.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Source. </summary>
+        public VirtualMachineRunCommandScriptSource Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Parameters. </summary>
+        public BicepList<RunCommandInputParameter> Parameters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Parameters;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.Parameters = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ProtectedParameters. </summary>
+        public BicepList<RunCommandInputParameter> ProtectedParameters
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectedParameters;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.ProtectedParameters = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AsyncExecution. </summary>
+        public BicepValue<bool> AsyncExecution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AsyncExecution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.AsyncExecution = value;
+            }
+        }
+
+        /// <summary> Gets or sets the RunAsUser. </summary>
+        public BicepValue<string> RunAsUser
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunAsUser;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.RunAsUser = value;
+            }
+        }
+
+        /// <summary> Gets or sets the RunAsPassword. </summary>
+        public BicepValue<string> RunAsPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunAsPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.RunAsPassword = value;
+            }
+        }
+
+        /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        public BicepValue<int> TimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.TimeoutInSeconds = value;
+            }
+        }
+
+        /// <summary> Gets or sets the OutputBlobUri. </summary>
+        public BicepValue<Uri> OutputBlobUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutputBlobUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.OutputBlobUri = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ErrorBlobUri. </summary>
+        public BicepValue<Uri> ErrorBlobUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorBlobUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.ErrorBlobUri = value;
+            }
+        }
+
+        /// <summary> Gets or sets the OutputBlobManagedIdentity. </summary>
+        public RunCommandManagedIdentity OutputBlobManagedIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutputBlobManagedIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.OutputBlobManagedIdentity = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ErrorBlobManagedIdentity. </summary>
+        public RunCommandManagedIdentity ErrorBlobManagedIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorBlobManagedIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.ErrorBlobManagedIdentity = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<string> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the InstanceView. </summary>
+        public VirtualMachineRunCommandInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+        }
+
+        /// <summary> Gets or sets the TreatFailureAsDeploymentFailure. </summary>
+        public BicepValue<bool> TreatFailureAsDeploymentFailure
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TreatFailureAsDeploymentFailure;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.TreatFailureAsDeploymentFailure = value;
             }
         }
 

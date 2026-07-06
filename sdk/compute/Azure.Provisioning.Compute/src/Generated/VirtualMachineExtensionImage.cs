@@ -94,18 +94,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal VirtualMachineExtensionImageProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -114,15 +109,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.OperatingSystem;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionImageProperties();
-                }
-                Properties.OperatingSystem = value;
+                return Properties.OperatingSystem;
             }
         }
 
@@ -131,15 +118,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.ComputeRole;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionImageProperties();
-                }
-                Properties.ComputeRole = value;
+                return Properties.ComputeRole;
             }
         }
 
@@ -148,15 +127,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.HandlerSchema;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionImageProperties();
-                }
-                Properties.HandlerSchema = value;
+                return Properties.HandlerSchema;
             }
         }
 
@@ -165,15 +136,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.VirtualMachineScaleSetEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionImageProperties();
-                }
-                Properties.VirtualMachineScaleSetEnabled = value;
+                return Properties.VirtualMachineScaleSetEnabled;
             }
         }
 
@@ -182,15 +145,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.SupportsMultipleExtensions;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionImageProperties();
-                }
-                Properties.SupportsMultipleExtensions = value;
+                return Properties.SupportsMultipleExtensions;
             }
         }
 
