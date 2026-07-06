@@ -37,7 +37,7 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -45,25 +45,15 @@ namespace Azure.Provisioning.FrontDoor
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal FrontendEndpointProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -87,10 +77,6 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
                 return Properties.ResourceState;
             }
         }
@@ -100,10 +86,6 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
                 return Properties.CustomHttpsProvisioningState;
             }
         }
@@ -113,10 +95,6 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
                 return Properties.CustomHttpsProvisioningSubstate;
             }
         }
@@ -126,7 +104,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return Properties is null ? default : Properties.CustomHttpsConfiguration;
+                return Properties.CustomHttpsConfiguration;
             }
         }
 
@@ -135,15 +113,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return Properties is null ? default : Properties.HostName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                Properties.HostName = value;
+                return Properties.HostName;
             }
         }
 
@@ -152,15 +122,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return Properties is null ? default : Properties.SessionAffinityEnabledState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                Properties.SessionAffinityEnabledState = value;
+                return Properties.SessionAffinityEnabledState;
             }
         }
 
@@ -169,15 +131,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return Properties is null ? default : Properties.SessionAffinityTtlInSeconds;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                Properties.SessionAffinityTtlInSeconds = value;
+                return Properties.SessionAffinityTtlInSeconds;
             }
         }
 
@@ -186,15 +140,7 @@ namespace Azure.Provisioning.FrontDoor
         {
             get
             {
-                return Properties is null ? default : Properties.WebApplicationFirewallPolicyLinkId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                Properties.WebApplicationFirewallPolicyLinkId = value;
+                return Properties.WebApplicationFirewallPolicyLinkId;
             }
         }
 

@@ -75,15 +75,6 @@ public class BasicFrontDoorTests
                         Name = frontDoorName,
                         Location = new AzureLocation("global"),
                         EnabledState = FrontDoorEnabledState.Enabled,
-                        FrontendEndpoints =
-                        {
-                            new FrontendEndpoint(frontEndEndpointName.BicepIdentifier)
-                            {
-                                Name = frontEndEndpointName,
-                                HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
-                                SessionAffinityEnabledState = SessionAffinityEnabledState.Disabled
-                            }
-                        },
                         LoadBalancingSettings =
                         {
                             new FrontDoorLoadBalancingSettingsData
@@ -187,15 +178,6 @@ public class BasicFrontDoorTests
                         Name = frontDoorName,
                         Location = new AzureLocation("global"),
                         EnabledState = FrontDoorEnabledState.Enabled,
-                        FrontendEndpoints =
-                        {
-                            new FrontendEndpoint("frontendEndpoint1")
-                            {
-                                Name = "frontendEndpoint1",
-                                HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
-                                SessionAffinityEnabledState = SessionAffinityEnabledState.Disabled
-                            }
-                        },
                         LoadBalancingSettings =
                         {
                             new FrontDoorLoadBalancingSettingsData
@@ -364,15 +346,6 @@ public class BasicFrontDoorTests
                     name: backendPoolName
                   }
                 ]
-                frontendEndpoints: [
-                  {
-                    name: frontEndEndpointName
-                    properties: {
-                      hostName: '${frontDoorName}.azurefd.net'
-                      sessionAffinityEnabledState: 'Disabled'
-                    }
-                  }
-                ]
                 enabledState: 'Enabled'
               }
             }
@@ -467,15 +440,6 @@ public class BasicFrontDoorTests
                       }
                     }
                     name: 'backendPool1'
-                  }
-                ]
-                frontendEndpoints: [
-                  {
-                    name: 'frontendEndpoint1'
-                    properties: {
-                      hostName: '${frontDoorName}.azurefd.net'
-                      sessionAffinityEnabledState: 'Disabled'
-                    }
                   }
                 ]
                 enabledState: 'Enabled'

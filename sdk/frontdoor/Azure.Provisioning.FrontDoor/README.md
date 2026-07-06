@@ -86,15 +86,6 @@ FrontDoorResource frontDoor =
         Name = frontDoorName,
         Location = new AzureLocation("global"),
         EnabledState = FrontDoorEnabledState.Enabled,
-        FrontendEndpoints =
-        {
-            new FrontendEndpoint(frontEndEndpointName.BicepIdentifier)
-            {
-                Name = frontEndEndpointName,
-                HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
-                SessionAffinityEnabledState = SessionAffinityEnabledState.Disabled
-            }
-        },
         LoadBalancingSettings =
         {
             new FrontDoorLoadBalancingSettingsData
@@ -193,15 +184,6 @@ FrontDoorResource frontDoor =
         Name = frontDoorName,
         Location = new AzureLocation("global"),
         EnabledState = FrontDoorEnabledState.Enabled,
-        FrontendEndpoints =
-        {
-            new FrontendEndpoint("frontendEndpoint1")
-            {
-                Name = "frontendEndpoint1",
-                HostName = BicepFunction.Interpolate($"{frontDoorName}.azurefd.net"),
-                SessionAffinityEnabledState = SessionAffinityEnabledState.Disabled
-            }
-        },
         LoadBalancingSettings =
         {
             new FrontDoorLoadBalancingSettingsData
