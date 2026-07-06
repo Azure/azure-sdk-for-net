@@ -90,3 +90,29 @@ These differences are outside the requested comparison axes but may still be use
 | --- | --- | --- | --- |
 | `Microsoft.HDInsight.LocationsOperationGroup.getAzureAsyncOperationStatus` | `/subscriptions/{subscriptionId}/providers/Microsoft.HDInsight/locations/{location}/azureasyncoperations/{operationId}` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 6 |
+| Found in Bicep reference | 0 |
+| Found in package API version | 0 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 6 |
+
+**Result:** All six `resolveArmResources`-only resource types are not found in the Bicep reference. This supports the `client.tsp` comment that these are not standalone ARM resources; they are action endpoints or sub-operations on `Cluster` that are excluded from C# with `@@scope(..., "!csharp")`.
+
+### Not found in Bicep reference
+
+These are problematic false-resource candidates. They are likely caused by `resolveArmResources` reading the full TypeSpec program and promoting scoped-out action/status endpoints into resources.
+
+| Side | Resource type | Resource schema API versions | Notes |
+| --- | --- | --- | --- |
+| `resolveArmResources` only | `Microsoft.HDInsight/clusters/applications/azureasyncoperations` | None | Scoped out for C#; not a standalone Bicep resource. |
+| `resolveArmResources` only | `Microsoft.HDInsight/clusters/azureasyncoperations` | None | Scoped out for C#; not a standalone Bicep resource. |
+| `resolveArmResources` only | `Microsoft.HDInsight/clusters/configurations` | None | Scoped out for C#; not a standalone Bicep resource. |
+| `resolveArmResources` only | `Microsoft.HDInsight/clusters/extensions` | `2025-01-15-preview` | Scoped out for C#; not a standalone Bicep resource. |
+| `resolveArmResources` only | `Microsoft.HDInsight/clusters/extensions/azureAsyncOperations` | None | Scoped out for C#; not a standalone Bicep resource. |
+| `resolveArmResources` only | `Microsoft.HDInsight/clusters/scriptExecutionHistory` | None | Scoped out for C#; not a standalone Bicep resource. |
