@@ -120,8 +120,10 @@ jobs:
         - template: ${{ parameters.postEvalTemplate }}
 
       # JUnit is tiny — stage it always; heavy transcripts stage separately on failure.
+      # Also create the debug dir here so the failed()-gated debug publish always has a target
+      # (otherwise the publish errors "Path does not exist" when the dir was never created).
       - script: |
-          mkdir -p "$(Build.ArtifactStagingDirectory)/junit"
+          mkdir -p "$(Build.ArtifactStagingDirectory)/junit" "$(Build.ArtifactStagingDirectory)/debug"
           find "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" -name '*.junit.xml' -exec cp {} "$(Build.ArtifactStagingDirectory)/junit/" \;
         displayName: 'Collect $(shardName) JUnit'
         condition: always()
