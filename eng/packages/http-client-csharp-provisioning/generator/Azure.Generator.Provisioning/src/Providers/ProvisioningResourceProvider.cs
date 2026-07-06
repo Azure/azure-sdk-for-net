@@ -99,6 +99,7 @@ namespace Azure.Generator.Provisioning.Providers
         {
             if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
                 return null;
+
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
@@ -196,25 +197,7 @@ namespace Azure.Generator.Provisioning.Providers
             var properties = new List<PropertyProvider>();
             foreach (var propInfo in _allProperties)
             {
-                if (string.Equals(propInfo.BicepPath.LastOrDefault(), "name", StringComparison.OrdinalIgnoreCase)
-                    && GetSingletonResourceName() is not null)
-                {
-                    var bicepType = propInfo.TypeOverride ?? ProvisioningGenerator.Instance.TypeFactory.CreateCSharpType(propInfo.Property.Type);
-                    if (bicepType != null)
-                    {
-                        properties.Add(ProvisioningPropertyProvider.Create(
-                            propInfo.PropertyName,
-                            bicepType,
-                            propInfo.IsOutput,
-                            propInfo.IsRequired,
-                            propInfo.BicepPath,
-                            propInfo.DefaultValue,
-                            this));
-                    }
-                    continue;
-                }
-
-                var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(propInfo.Property, this);
+                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(propInfo.Property, this);
                 if (property != null)
                     properties.Add(property);
             }
@@ -515,7 +498,7 @@ namespace Azure.Generator.Provisioning.Providers
                 // For singleton resources, the "name" property is output-only with a default value
                 string? defaultValue = null;
                 if (string.Equals(serializedName, "name", StringComparison.OrdinalIgnoreCase)
-                    && GetSingletonResourceName() is string singletonResourceName)
+                    && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
                     defaultValue = singletonResourceName;
                     isOutput = true;
@@ -533,13 +516,6 @@ namespace Azure.Generator.Provisioning.Providers
                 result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
             }
         }
-
-        private string? GetSingletonResourceName()
-            => _resourceProjection?.SingletonResourceName
-                ?? (_resourceProjection?.ResourceIdPatterns.Count == 1
-                    && _resourceProjection.ResourceIdPatterns[0].LastOrDefault()?.IsConstant == true
-                        ? _resourceProjection.ResourceIdPatterns[0].Last().Value
-                        : null);
 
         // ── Method builders ──────────────────────────────────────────
 
