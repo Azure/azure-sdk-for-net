@@ -1,12 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-using OAI = OpenAI.Responses;
-
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
@@ -19,8 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
             /// <summary> Gets the StructuredOutputs. </summary>
             public static global::OpenAI.Responses.ResponseItemKind StructuredOutputs => new("structured_outputs");
 
-            /// <summary> Gets the OauthConsentRequest. </summary>
-            public static global::OpenAI.Responses.ResponseItemKind OauthConsentRequest => new("oauth_consent_request");
+            /// <summary> Gets the OAuthConsentRequest. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind OAuthConsentRequest => new("oauth_consent_request");
 
             /// <summary> Gets the MemorySearchCall. </summary>
             public static global::OpenAI.Responses.ResponseItemKind MemorySearchCall => new("memory_search_call");
@@ -52,11 +46,11 @@ namespace Azure.AI.Extensions.OpenAI
             /// <summary> Gets the SharepointGroundingPreviewCallOutput. </summary>
             public static global::OpenAI.Responses.ResponseItemKind SharepointGroundingPreviewCallOutput => new("sharepoint_grounding_preview_call_output");
 
-            /// <summary> Gets the AzureAiSearchCall. </summary>
-            public static global::OpenAI.Responses.ResponseItemKind AzureAiSearchCall => new("azure_ai_search_call");
+            /// <summary> Gets the AzureAISearchCall. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind AzureAISearchCall => new("azure_ai_search_call");
 
-            /// <summary> Gets the AzureAiSearchCallOutput. </summary>
-            public static global::OpenAI.Responses.ResponseItemKind AzureAiSearchCallOutput => new("azure_ai_search_call_output");
+            /// <summary> Gets the AzureAISearchCallOutput. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind AzureAISearchCallOutput => new("azure_ai_search_call_output");
 
             /// <summary> Gets the BingCustomSearchPreviewCall. </summary>
             public static global::OpenAI.Responses.ResponseItemKind BingCustomSearchPreviewCall => new("bing_custom_search_preview_call");
@@ -64,11 +58,11 @@ namespace Azure.AI.Extensions.OpenAI
             /// <summary> Gets the BingCustomSearchPreviewCallOutput. </summary>
             public static global::OpenAI.Responses.ResponseItemKind BingCustomSearchPreviewCallOutput => new("bing_custom_search_preview_call_output");
 
-            /// <summary> Gets the OpenapiCall. </summary>
-            public static global::OpenAI.Responses.ResponseItemKind OpenapiCall => new("openapi_call");
+            /// <summary> Gets the OpenApiCall. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind OpenApiCall => new("openapi_call");
 
-            /// <summary> Gets the OpenapiCallOutput. </summary>
-            public static global::OpenAI.Responses.ResponseItemKind OpenapiCallOutput => new("openapi_call_output");
+            /// <summary> Gets the OpenApiCallOutput. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind OpenApiCallOutput => new("openapi_call_output");
 
             /// <summary> Gets the BrowserAutomationPreviewCall. </summary>
             public static global::OpenAI.Responses.ResponseItemKind BrowserAutomationPreviewCall => new("browser_automation_preview_call");
@@ -76,11 +70,11 @@ namespace Azure.AI.Extensions.OpenAI
             /// <summary> Gets the BrowserAutomationPreviewCallOutput. </summary>
             public static global::OpenAI.Responses.ResponseItemKind BrowserAutomationPreviewCallOutput => new("browser_automation_preview_call_output");
 
-            /// <summary> Gets the FabricDataagentPreviewCall. </summary>
-            public static global::OpenAI.Responses.ResponseItemKind FabricDataagentPreviewCall => new("fabric_dataagent_preview_call");
+            /// <summary> Gets the FabricDataAgentPreviewCall. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind FabricDataAgentPreviewCall => new("fabric_dataagent_preview_call");
 
-            /// <summary> Gets the FabricDataagentPreviewCallOutput. </summary>
-            public static global::OpenAI.Responses.ResponseItemKind FabricDataagentPreviewCallOutput => new("fabric_dataagent_preview_call_output");
+            /// <summary> Gets the FabricDataAgentPreviewCallOutput. </summary>
+            public static global::OpenAI.Responses.ResponseItemKind FabricDataAgentPreviewCallOutput => new("fabric_dataagent_preview_call_output");
 
             /// <summary> Gets the AzureFunctionCall. </summary>
             public static global::OpenAI.Responses.ResponseItemKind AzureFunctionCall => new("azure_function_call");

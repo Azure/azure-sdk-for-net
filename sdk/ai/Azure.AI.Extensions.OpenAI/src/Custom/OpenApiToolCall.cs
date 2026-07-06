@@ -20,7 +20,7 @@ public partial class OpenApiToolCall
     /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
     /// <param name="status"> The status of the tool call. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal OpenApiToolCall(string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OpenapiCall)
+    internal OpenApiToolCall(string id, AgentReference agentReference, string responseId, string callId, string name, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OpenApiCall)
     {
         CallId = callId;
         Name = name;
@@ -30,7 +30,7 @@ public partial class OpenApiToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenApiToolCall"/> for deserialization. </summary>
-    internal OpenApiToolCall(): base(ResponseItemKind.OpenapiCall)
+    internal OpenApiToolCall(): base(ResponseItemKind.OpenApiCall)
     {
     }
 

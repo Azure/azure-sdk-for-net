@@ -6,7 +6,6 @@ using System;
 namespace Azure.AI.Extensions.OpenAI;
 
 [CodeGenType("A2APreviewTool")] public partial class A2APreviewTool { }
-//[CodeGenType("AISearchIndexResource")] public partial class AISearchIndexResource { }
 [CodeGenType("AzureFunctionBinding")] public partial class AzureFunctionBinding { }
 [CodeGenType("AzureFunctionDefinition")] public partial class AzureFunctionDefinition { }
 [CodeGenType("AzureFunctionDefinitionFunction")] public partial class AzureFunctionDefinitionFunction {

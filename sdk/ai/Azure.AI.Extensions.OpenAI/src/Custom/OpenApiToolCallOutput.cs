@@ -20,7 +20,7 @@ public partial class OpenApiToolCallOutput
     /// <param name="output"> The output from the OpenAPI tool call. </param>
     /// <param name="status"> The status of the tool call. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal OpenApiToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OpenapiCallOutput)
+    internal OpenApiToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OpenApiCallOutput)
     {
         CallId = callId;
         Name = name;
@@ -30,7 +30,7 @@ public partial class OpenApiToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="OpenApiToolCallOutput"/> for deserialization. </summary>
-    internal OpenApiToolCallOutput(): base(ResponseItemKind.OpenapiCallOutput)
+    internal OpenApiToolCallOutput(): base(ResponseItemKind.OpenApiCallOutput)
     {
     }
 

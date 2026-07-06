@@ -25,7 +25,7 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
     /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="consentLink"/> or <paramref name="serverLabel"/> is null. </exception>
-    public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) : base(ResponseItemKind.OauthConsentRequest)
+    public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) : base(ResponseItemKind.OAuthConsentRequest)
     {
         Argument.AssertNotNull(consentLink, nameof(consentLink));
         Argument.AssertNotNull(serverLabel, nameof(serverLabel));
@@ -41,7 +41,7 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
     /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal OAuthConsentRequestResponseItem(string id, AgentReference agentReference, string responseId, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OauthConsentRequest)
+    internal OAuthConsentRequestResponseItem(string id, AgentReference agentReference, string responseId, string internalConsentLink, string serverLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OAuthConsentRequest)
     {
         InternalConsentLink = internalConsentLink;
         ServerLabel = serverLabel;
@@ -49,7 +49,7 @@ public partial class OAuthConsentRequestResponseItem
     }
 
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
-    internal OAuthConsentRequestResponseItem(): base(ResponseItemKind.OauthConsentRequest)
+    internal OAuthConsentRequestResponseItem(): base(ResponseItemKind.OAuthConsentRequest)
     {
     }
 

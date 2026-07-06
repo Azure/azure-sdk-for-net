@@ -18,7 +18,7 @@ public partial class FabricDataAgentToolCallOutput
     /// <param name="output"> The output from the Fabric data agent tool call. </param>
     /// <param name="status"> The status of the tool call. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal FabricDataAgentToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.FabricDataagentPreviewCallOutput)
+    internal FabricDataAgentToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.FabricDataAgentPreviewCallOutput)
     {
         CallId = callId;
         Output = output;
@@ -27,7 +27,7 @@ public partial class FabricDataAgentToolCallOutput
     }
 
     /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCallOutput"/> for deserialization. </summary>
-    internal FabricDataAgentToolCallOutput(): base(ResponseItemKind.FabricDataagentPreviewCallOutput)
+    internal FabricDataAgentToolCallOutput(): base(ResponseItemKind.FabricDataAgentPreviewCallOutput)
     {
     }
 

@@ -19,7 +19,7 @@ public partial class FabricDataAgentToolCall
     /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
     /// <param name="status"> The status of the tool call. </param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal FabricDataAgentToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.FabricDataagentPreviewCall)
+    internal FabricDataAgentToolCall(string id, AgentReference agentReference, string responseId, string callId, string arguments, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.FabricDataAgentPreviewCall)
     {
         CallId = callId;
         Arguments = arguments;
@@ -28,7 +28,7 @@ public partial class FabricDataAgentToolCall
     }
 
     /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCall"/> for deserialization. </summary>
-    internal FabricDataAgentToolCall(): base(ResponseItemKind.FabricDataagentPreviewCall)
+    internal FabricDataAgentToolCall(): base(ResponseItemKind.FabricDataAgentPreviewCall)
     {
     }
 
