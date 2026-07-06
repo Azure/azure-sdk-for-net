@@ -18,7 +18,6 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
-        private const string AzConfigPublicCloudHostName = "azconfig.io";
         private const string AppConfigStagingCloudHostName = "appconfig-staging.azure.com";
 
         /// <summary>
@@ -110,10 +109,6 @@ namespace Azure.Data.AppConfiguration
             string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
             return host switch
             {
-                // The public cloud data-plane host ("azconfig.io") maps to a documented audience
-                // ("appconfig.azure.com") whose domain cannot be derived from the host, so it is mapped explicitly.
-                _ when IsHostInDomain(host, AzConfigPublicCloudHostName)
-                    => $"{AppConfigurationAudience.AzurePublicCloud}/.default",
                 // The staging host label is hyphenated ("appconfig-staging") and is not treated as a bare
                 // marker by the derivation below, so it is mapped explicitly.
                 _ when IsHostInDomain(host, AppConfigStagingCloudHostName)

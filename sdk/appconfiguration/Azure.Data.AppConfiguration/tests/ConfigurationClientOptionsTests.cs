@@ -38,8 +38,8 @@ namespace Azure.Data.AppConfiguration.Tests
         {
             get
             {
-                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloud, "https://locaLhost.azconfiG.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloud, "https://locaLhost.azconfiG.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloudAz, "https://locaLhost.azconfiG.com", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
+                yield return new TestCaseData(AppConfigurationAudience.AzurePublicCloudAz, "https://locaLhost.azconfiG.com/", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureChina, "https://other.AZconfig.cn/", $"{AppConfigurationAudience.AzureChina}/.default");
                 yield return new TestCaseData(AppConfigurationAudience.AzureGovernment, "https://gov-localhost-2353453.azconfig.us", $"{AppConfigurationAudience.AzureGovernment}/.default");
@@ -56,10 +56,10 @@ namespace Azure.Data.AppConfiguration.Tests
             get
             {
                 // public cloud
-                yield return new TestCaseData("http://locaLhost.azconfiG.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://locaLhost.azconfiG.io/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://locaLhost.azconfiG.io//", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
-                yield return new TestCaseData("https://contoso.azconfig.io", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
+                yield return new TestCaseData("http://locaLhost.azconfiG.io", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
+                yield return new TestCaseData("https://locaLhost.azconfiG.io/", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
+                yield return new TestCaseData("https://locaLhost.azconfiG.io//", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
+                yield return new TestCaseData("https://contoso.azconfig.io", $"{AppConfigurationAudience.AzurePublicCloudAz}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 yield return new TestCaseData("https://contoso.appconfig.azure.com/", $"{AppConfigurationAudience.AzurePublicCloud}/.default");
                 // staging is an explicitly recognized host

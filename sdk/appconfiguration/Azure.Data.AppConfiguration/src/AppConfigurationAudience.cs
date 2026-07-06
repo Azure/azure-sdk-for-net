@@ -12,6 +12,7 @@ namespace Azure.Data.AppConfiguration
         private readonly string _value;
         private const string AzureChinaValue = "https://appconfig.azure.cn";
         private const string AzureGovernmentValue = "https://appconfig.azure.us";
+        private const string AzurePublicCloudAzValue = "https://azconfig.io";
         private const string AzurePublicCloudValue = "https://appconfig.azure.com";
 
         /// <summary>
@@ -35,6 +36,9 @@ namespace Azure.Data.AppConfiguration
 
         /// <summary> Azure Public Cloud. </summary>
         public static AppConfigurationAudience AzurePublicCloud { get; } = new AppConfigurationAudience(AzurePublicCloudValue);
+
+        /// <summary> Azure Public Cloud (AzConfig). </summary>
+        public static AppConfigurationAudience AzurePublicCloudAz { get; } = new AppConfigurationAudience(AzurePublicCloudAzValue);
 
         /// <summary> Determines if two <see cref="AppConfigurationAudience"/> values are the same. </summary>
         public static bool operator ==(AppConfigurationAudience left, AppConfigurationAudience right) => left.Equals(right);
