@@ -105,17 +105,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollection for STAC spec compliance: {collectionId}");
 
             // Act
-            Response<StacCollectionResource> response = await stacClient.GetCollectionAsync(collectionId);
+            Response<StacCollection> response = await stacClient.GetCollectionAsync(collectionId);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollection");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacCollectionResource collection = response.Value;
+            StacCollection collection = response.Value;
 
             // Verify STAC Collection spec compliance
             Assert.That(collection.Id, Is.Not.Null, "Collection must have 'id'");
-            Assert.That(collection.Type, Is.EqualTo("Collection"), "Type must be 'Collection'");
+            Assert.That(collection.Kind, Is.EqualTo("Collection"), "Type must be 'Collection'");
             Assert.That(collection.StacVersion, Is.Not.Null, "Collection must have 'stac_version'");
             Assert.That(collection.StacVersion, Does.Match(@"^\d+\.\d+\.\d+"), "STAC version should be in format X.Y.Z");
 
@@ -168,7 +168,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Log first 5 collections with details
             for (int i = 0; i < Math.Min(5, collectionsResponse.Collections.Count); i++)
             {
-                StacCollectionResource collection = collectionsResponse.Collections[i];
+                StacCollection collection = collectionsResponse.Collections[i];
                 TestContext.WriteLine($"\nCollection {i + 1}:");
                 TestContext.WriteLine($"  ID: {collection.Id}");
                 if (!string.IsNullOrEmpty(collection.Title))
@@ -189,7 +189,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Validate collection structure
-            StacCollectionResource firstCollection = collectionsResponse.Collections[0];
+            StacCollection firstCollection = collectionsResponse.Collections[0];
             Assert.That(firstCollection.Id, Is.Not.Null, "Collection should have id");
             Assert.That(firstCollection.Id, Is.Not.Empty, "Collection ID should not be empty");
             Assert.That(firstCollection.Extent, Is.Not.Null, "Collection should have extent");
@@ -284,13 +284,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             searchParams.Limit = 50;
 
             // Act
-            Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
+            Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "Search");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacItemCollectionResource searchResponse = response.Value;
+            StacItemCollection searchResponse = response.Value;
             Assert.That(searchResponse, Is.Not.Null, "Search response should not be null");
             Assert.That(searchResponse.Features, Is.Not.Null, "Response should have features");
             Assert.That(searchResponse.Features.Count, Is.GreaterThanOrEqualTo(2), $"Expected at least 2 items in spatial search, got {searchResponse.Features.Count}");
@@ -300,7 +300,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Log details of first few items
             for (int i = 0; i < Math.Min(3, searchResponse.Features.Count); i++)
             {
-                StacItemResource item = searchResponse.Features[i];
+                StacItem item = searchResponse.Features[i];
                 TestContext.WriteLine($"\nItem {i + 1}:");
                 TestContext.WriteLine($"  ID: {item.Id}");
                 TestContext.WriteLine($"  Collection: {item.Collection}");
@@ -313,7 +313,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Validate items are from the correct collection
             if (searchResponse.Features.Count > 0)
             {
-                StacItemResource firstItem = searchResponse.Features[0];
+                StacItem firstItem = searchResponse.Features[0];
                 Assert.That(firstItem.Id, Is.Not.Null, "Item should have id");
                 Assert.That(firstItem.Collection, Is.Not.Null, "Item should have collection");
                 Assert.That(firstItem.Collection, Is.EqualTo(collectionId), "Item collection should match search collection");
@@ -338,13 +338,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetItemCollection for collection: {collectionId}");
 
             // Act
-            Response<StacItemCollectionResource> response = await stacClient.GetItemCollectionAsync(collectionId, limit: 10);
+            Response<StacItemCollection> response = await stacClient.GetItemCollectionAsync(collectionId, limit: 10);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetItemCollection");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacItemCollectionResource itemsResponse = response.Value;
+            StacItemCollection itemsResponse = response.Value;
             Assert.That(itemsResponse, Is.Not.Null, "Items response should not be null");
             Assert.That(itemsResponse.Features, Is.Not.Null, "Response should have features");
             Assert.That(itemsResponse.Features.Count, Is.GreaterThanOrEqualTo(5), $"Expected at least 5 items, got {itemsResponse.Features.Count}");
@@ -354,7 +354,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Log first few items
             for (int i = 0; i < Math.Min(5, itemsResponse.Features.Count); i++)
             {
-                StacItemResource item = itemsResponse.Features[i];
+                StacItem item = itemsResponse.Features[i];
                 TestContext.WriteLine($"\nItem {i + 1}:");
                 TestContext.WriteLine($"  ID: {item.Id}");
                 TestContext.WriteLine($"  Collection: {item.Collection}");
@@ -368,7 +368,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Validate items have expected asset types
             if (itemsResponse.Features.Count > 0)
             {
-                StacItemResource firstItem = itemsResponse.Features[0];
+                StacItem firstItem = itemsResponse.Features[0];
                 Assert.That(firstItem.Assets, Is.Not.Null, "Item should have assets");
                 Assert.That(firstItem.Assets.Count, Is.GreaterThanOrEqualTo(2), $"Expected at least 2 assets, got {firstItem.Assets.Count}");
 
@@ -397,7 +397,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionQueryables for collection: {collectionId}");
 
             // Act
-            Response<QueryableDefinitionsResponse> response = await stacClient.GetCollectionQueryablesAsync(collectionId);
+            Response<QueryableDefinitionsResult> response = await stacClient.GetCollectionQueryablesAsync(collectionId);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollectionQueryables");
@@ -478,13 +478,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             searchParams.Limit = 10;
 
             // Act
-            Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
+            Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "Search");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacItemCollectionResource searchResponse = response.Value;
+            StacItemCollection searchResponse = response.Value;
             Assert.That(searchResponse, Is.Not.Null, "Search response should not be null");
             Assert.That(searchResponse.Features, Is.Not.Null, "Response should have features");
             Assert.That(searchResponse.Features.Count, Is.GreaterThanOrEqualTo(5), $"Expected at least 5 items in temporal search, got {searchResponse.Features.Count}");
@@ -494,7 +494,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Validate temporal filtering - all items should have datetime
             for (int i = 0; i < Math.Min(3, searchResponse.Features.Count); i++)
             {
-                StacItemResource item = searchResponse.Features[i];
+                StacItem item = searchResponse.Features[i];
                 TestContext.WriteLine($"\nItem {i + 1}: {item.Id}");
                 Assert.That(item.Properties, Is.Not.Null, "Item should have properties");
 
@@ -534,13 +534,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             searchParamsDesc.Limit = 5;
 
             // Act - DESC sort
-            Response<StacItemCollectionResource> responseDesc = await stacClient.SearchAsync(searchParamsDesc);
+            Response<StacItemCollection> responseDesc = await stacClient.SearchAsync(searchParamsDesc);
 
             // Assert - DESC sort
             ValidateResponse(responseDesc.GetRawResponse(), "Search DESC");
             Assert.That(responseDesc.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacItemCollectionResource searchResponseDesc = responseDesc.Value;
+            StacItemCollection searchResponseDesc = responseDesc.Value;
             Assert.That(searchResponseDesc, Is.Not.Null, "Search response should not be null");
             Assert.That(searchResponseDesc.Features, Is.Not.Null, "Response should have features");
             Assert.That(searchResponseDesc.Features.Count, Is.GreaterThanOrEqualTo(3), $"Expected at least 3 items in DESC sort, got {searchResponseDesc.Features.Count}");
@@ -562,13 +562,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             searchParamsAsc.Limit = 5;
 
             // Act - ASC sort
-            Response<StacItemCollectionResource> responseAsc = await stacClient.SearchAsync(searchParamsAsc);
+            Response<StacItemCollection> responseAsc = await stacClient.SearchAsync(searchParamsAsc);
 
             // Assert - ASC sort
             ValidateResponse(responseAsc.GetRawResponse(), "Search ASC");
             Assert.That(responseAsc.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacItemCollectionResource searchResponseAsc = responseAsc.Value;
+            StacItemCollection searchResponseAsc = responseAsc.Value;
             Assert.That(searchResponseAsc, Is.Not.Null, "ASC search response should not be null");
             Assert.That(searchResponseAsc.Features, Is.Not.Null, "ASC response should have features");
             Assert.That(searchResponseAsc.Features.Count, Is.GreaterThanOrEqualTo(3), $"Expected at least 3 items in ASC sort, got {searchResponseAsc.Features.Count}");
@@ -602,7 +602,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetItem for collection: {collectionId}");
 
             // First, get an item ID from the collection
-            Response<StacItemCollectionResource> itemsResponse = await stacClient.GetItemCollectionAsync(collectionId, limit: 1);
+            Response<StacItemCollection> itemsResponse = await stacClient.GetItemCollectionAsync(collectionId, limit: 1);
 
             Assert.That(itemsResponse.Value.Features.Count, Is.GreaterThan(0), "Should have at least one item to test");
 
@@ -610,13 +610,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Getting item: {itemId}");
 
             // Act - Get the specific item
-            Response<StacItemResource> response = await stacClient.GetItemAsync(collectionId, itemId);
+            Response<StacItem> response = await stacClient.GetItemAsync(collectionId, itemId);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetItem");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacItemResource item = response.Value;
+            StacItem item = response.Value;
             Assert.That(item, Is.Not.Null, "Item should not be null");
             Assert.That(item.Id, Is.EqualTo(itemId), "Item ID should match requested ID");
             Assert.That(item.Collection, Is.EqualTo(collectionId), "Item collection should match");

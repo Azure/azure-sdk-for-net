@@ -82,10 +82,10 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WriteStringValue(Href);
             writer.WritePropertyName("rel"u8);
             writer.WriteStringValue(Rel);
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(Kind);
             }
             if (Optional.IsDefined(Title))
             {
@@ -136,7 +136,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string href = default;
             string rel = default;
-            string @type = default;
+            string kind = default;
             string title = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("title"u8))
@@ -166,7 +166,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TileSetLink(href, rel, @type, title, additionalBinaryDataProperties);
+            return new TileSetLink(href, rel, kind, title, additionalBinaryDataProperties);
         }
     }
 }

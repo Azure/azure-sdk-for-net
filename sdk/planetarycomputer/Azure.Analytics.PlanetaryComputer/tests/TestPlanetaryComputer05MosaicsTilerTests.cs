@@ -189,7 +189,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 assetBandIndices: new[] { "image|1,2,3" },
                 tileScale: 1,
                 minZoom: 9,
-                tileFormat: TilerImageFormat.Png,
+                tileFormat: "png",
                 collectionId: collectionId
             );
 
@@ -237,7 +237,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile image
-            Response<BinaryData> response = await dataClient.GetSearchTileAsync(
+            Response response = await dataClient.GetSearchTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -253,7 +253,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetMosaicsTile");
 
-            BinaryData imageData = response.Value;
+            BinaryData imageData = response.Content;
             byte[] imageBytes = imageData.ToArray();
 
             TestContext.WriteLine($"Image size: {imageBytes.Length} bytes");
@@ -297,10 +297,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get WMTS capabilities
-            Response<BinaryData> response = await dataClient.GetSearchWmtsCapabilitiesAsync(
+            Response response = await dataClient.GetSearchWmtsCapabilitiesAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: TilerImageFormat.Png,
+                tileFormat: "png",
                 tileScale: 1,
                 minZoom: 7,
                 maxZoom: 13,
@@ -311,7 +311,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetMosaicsWmtsCapabilities");
 
-            BinaryData xmlData = response.Value;
+            BinaryData xmlData = response.Content;
             byte[] xmlBytes = xmlData.ToArray();
             string xmlString = Encoding.UTF8.GetString(xmlBytes);
 

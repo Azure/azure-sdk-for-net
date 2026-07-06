@@ -332,15 +332,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
 
             TestContext.WriteLine("Ingestion definition created:");
-            TestContext.WriteLine($"  - Import Type: {ingestionDefinition.ImportType}");
+            TestContext.WriteLine($"  - Import Type: {ingestionDefinition.ImportKind}");
             TestContext.WriteLine($"  - Display Name: {ingestionDefinition.DisplayName}");
-            TestContext.WriteLine($"  - Source Catalog URL: {ingestionDefinition.SourceCatalogUrl}");
+            TestContext.WriteLine($"  - Source Catalog URL: {ingestionDefinition.SourceCatalogUri}");
             TestContext.WriteLine($"  - Keep Original Assets: {ingestionDefinition.KeepOriginalAssets}");
             TestContext.WriteLine($"  - Skip Existing Items: {ingestionDefinition.SkipExistingItems}");
 
@@ -377,7 +377,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Sample Dataset Ingestion",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -406,7 +406,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Updated ingestion:");
             TestContext.WriteLine($"  - ID: {updatedIngestion.Id}");
             TestContext.WriteLine($"  - Display Name: {updatedIngestion.DisplayName}");
-            TestContext.WriteLine($"  - Import Type: {updatedIngestion.ImportType}");
+            TestContext.WriteLine($"  - Import Type: {updatedIngestion.ImportKind}");
 
             Assert.That(updatedIngestion.Id, Is.EqualTo(ingestionId), "Ingestion ID should remain the same");
             Assert.That(updatedIngestion.DisplayName, Is.EqualTo("Updated Ingestion Name"), "Display name should be updated");
@@ -434,7 +434,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Run",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -479,7 +479,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Status Check",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -516,7 +516,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test getting a specific operation by ID.
         /// Python equivalent: test_08_get_operation_by_id
-        /// C# method: GetOperation(Guid operationId) - returns Response<LongRunningOperation>
+        /// C# method: GetOperation(Guid operationId) - returns Response<PlanetaryComputerOperation>
         /// </summary>
         [Test]
         [Category("Ingestion")]
@@ -535,7 +535,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Operation",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -549,17 +549,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Created operation with ID: {operationId}");
 
             // Act
-            Response<LongRunningOperation> operationResponse = await ingestionClient.GetOperationAsync(operationId);
+            Response<PlanetaryComputerOperation> operationResponse = await ingestionClient.GetOperationAsync(operationId);
 
             // Assert
             Assert.That(operationResponse, Is.Not.Null, "Operation response should not be null");
             Assert.That(operationResponse.Value, Is.Not.Null, "Operation should not be null");
-            LongRunningOperation operation = operationResponse.Value;
+            PlanetaryComputerOperation operation = operationResponse.Value;
 
             TestContext.WriteLine("Retrieved operation:");
             TestContext.WriteLine($"  - ID: {operation.Id}");
             TestContext.WriteLine($"  - Status: {operation.Status}");
-            TestContext.WriteLine($"  - Type: {operation.Type}");
+            TestContext.WriteLine($"  - Type: {operation.Kind}");
 
             Assert.That(operation.Id, Is.EqualTo(operationId), "Operation ID should match");
             Assert.That(operation.Status, Is.Not.Null, "Status should not be null");
@@ -656,7 +656,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Cancel Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -868,7 +868,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Lists Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -890,7 +890,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 TestContext.WriteLine($"  Ingestion {i + 1}:");
                 TestContext.WriteLine($"    - ID: {ingestions[i].Id}");
                 TestContext.WriteLine($"    - Display Name: {ingestions[i].DisplayName}");
-                TestContext.WriteLine($"    - Import Type: {ingestions[i].ImportType}");
+                TestContext.WriteLine($"    - Import Type: {ingestions[i].ImportKind}");
             }
 
             Assert.That(ingestions.Count, Is.GreaterThan(0), "Should have at least one ingestion");
@@ -918,7 +918,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for Get Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };
@@ -938,8 +938,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Retrieved ingestion:");
             TestContext.WriteLine($"  - ID: {retrievedIngestion.Id}");
             TestContext.WriteLine($"  - Display Name: {retrievedIngestion.DisplayName}");
-            TestContext.WriteLine($"  - Import Type: {retrievedIngestion.ImportType}");
-            TestContext.WriteLine($"  - Source Catalog URL: {retrievedIngestion.SourceCatalogUrl}");
+            TestContext.WriteLine($"  - Import Type: {retrievedIngestion.ImportKind}");
+            TestContext.WriteLine($"  - Source Catalog URL: {retrievedIngestion.SourceCatalogUri}");
 
             Assert.That(retrievedIngestion.Id, Is.EqualTo(ingestionId), "Ingestion ID should match");
         }
@@ -966,7 +966,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var ingestionDefinition = new IngestionInformation("StaticCatalog")
             {
                 DisplayName = "Ingestion for List Runs Test",
-                SourceCatalogUrl = new Uri(sourceCatalogUrl),
+                SourceCatalogUri = new Uri(sourceCatalogUrl),
                 KeepOriginalAssets = true,
                 SkipExistingItems = true
             };

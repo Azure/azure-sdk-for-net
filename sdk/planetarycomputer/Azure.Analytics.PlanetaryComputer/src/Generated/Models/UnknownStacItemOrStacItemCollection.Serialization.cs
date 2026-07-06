@@ -105,7 +105,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            StacModelType @type = default;
+            StacModelKind kind = default;
             string stacVersion = default;
             IList<StacLink> links = default;
             DateTimeOffset? createdOn = default;
@@ -115,9 +115,9 @@ namespace Azure.Analytics.PlanetaryComputer
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("Kind"u8))
                 {
-                    @type = new StacModelType(prop.Value.GetString());
+                    kind = new StacModelKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("stac_version"u8))
@@ -189,7 +189,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return new UnknownStacItemOrStacItemCollection(
-                @type,
+                kind,
                 stacVersion,
                 links ?? new ChangeTrackingList<StacLink>(),
                 createdOn,

@@ -105,7 +105,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WriteEndObject();
             writer.WritePropertyName("lastused"u8);
-            writer.WriteStringValue(LastUsed, "O");
+            writer.WriteStringValue(LastUsedOn, "O");
             writer.WritePropertyName("usecount"u8);
             writer.WriteNumberValue(UseCount);
             writer.WritePropertyName("metadata"u8);
@@ -154,7 +154,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string hash = default;
             IDictionary<string, BinaryData> search = default;
-            DateTimeOffset lastUsed = default;
+            DateTimeOffset lastUsedOn = default;
             int useCount = default;
             MosaicMetadata metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,7 +184,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("lastused"u8))
                 {
-                    lastUsed = prop.Value.GetDateTimeOffset("O");
+                    lastUsedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("usecount"u8))
@@ -205,7 +205,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new TilerStacSearchDefinition(
                 hash,
                 search,
-                lastUsed,
+                lastUsedOn,
                 useCount,
                 metadata,
                 additionalBinaryDataProperties);

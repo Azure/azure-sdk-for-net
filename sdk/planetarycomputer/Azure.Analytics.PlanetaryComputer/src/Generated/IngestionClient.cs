@@ -248,20 +248,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LongRunningOperation> GetOperation(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual Response<PlanetaryComputerOperation> GetOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
             Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
-            return Response.FromValue((LongRunningOperation)result, result);
+            return Response.FromValue((PlanetaryComputerOperation)result, result);
         }
 
         /// <summary> Get an operation of a geo-catalog collection. </summary>
         /// <param name="operationId"> Operation id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LongRunningOperation>> GetOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlanetaryComputerOperation>> GetOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
             Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LongRunningOperation)result, result);
+            return Response.FromValue((PlanetaryComputerOperation)result, result);
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<LongRunningOperation> GetOperations(int? maxCount = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PlanetaryComputerOperation> GetOperations(int? maxCount = default, int? skip = default, string collectionId = default, PlanetaryComputerOperationStatus? status = default, CancellationToken cancellationToken = default)
         {
             return new IngestionClientGetOperationsCollectionResultOfT(
                 this,
@@ -344,7 +344,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="status"> Operation status used to filter the results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<LongRunningOperation> GetOperationsAsync(int? maxCount = default, int? skip = default, string collectionId = default, OperationStatus? status = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PlanetaryComputerOperation> GetOperationsAsync(int? maxCount = default, int? skip = default, string collectionId = default, PlanetaryComputerOperationStatus? status = default, CancellationToken cancellationToken = default)
         {
             return new IngestionClientGetOperationsAsyncCollectionResultOfT(
                 this,
@@ -1202,13 +1202,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReplaceSource(Guid id, RequestContent content, RequestContext context = null)
+        public virtual Response ReplaceSource(Guid sourceId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.ReplaceSource");
             scope.Start();
@@ -1216,7 +1216,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateReplaceSourceRequest(id, content, context);
+                using HttpMessage message = CreateReplaceSourceRequest(sourceId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1234,13 +1234,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReplaceSourceAsync(Guid id, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> ReplaceSourceAsync(Guid sourceId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.ReplaceSource");
             scope.Start();
@@ -1248,7 +1248,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateReplaceSourceRequest(id, content, context);
+                using HttpMessage message = CreateReplaceSourceRequest(sourceId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1259,30 +1259,30 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Update an existing ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="body"> Definition of the ingestion source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionSource> ReplaceSource(Guid id, IngestionSource body, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionSource> ReplaceSource(Guid sourceId, IngestionSource body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceSource(id, body, cancellationToken.ToRequestContext());
+            Response result = ReplaceSource(sourceId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
         /// <summary> Update an existing ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="body"> Definition of the ingestion source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionSource>> ReplaceSourceAsync(Guid id, IngestionSource body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionSource>> ReplaceSourceAsync(Guid sourceId, IngestionSource body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceSourceAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await ReplaceSourceAsync(sourceId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1294,17 +1294,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteSource(Guid id, RequestContext context)
+        public virtual Response DeleteSource(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.DeleteSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteSourceRequest(id, context);
+                using HttpMessage message = CreateDeleteSourceRequest(sourceId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1322,17 +1322,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteSourceAsync(Guid id, RequestContext context)
+        public virtual async Task<Response> DeleteSourceAsync(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.DeleteSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteSourceRequest(id, context);
+                using HttpMessage message = CreateDeleteSourceRequest(sourceId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1343,21 +1343,21 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Delete an ingestion source from a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteSource(Guid id, CancellationToken cancellationToken = default)
+        public virtual Response DeleteSource(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            return DeleteSource(id, cancellationToken.ToRequestContext());
+            return DeleteSource(sourceId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete an ingestion source from a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSourceAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteSourceAsync(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            return await DeleteSourceAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteSourceAsync(sourceId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1368,17 +1368,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSource(Guid id, RequestContext context)
+        public virtual Response GetSource(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSourceRequest(id, context);
+                using HttpMessage message = CreateGetSourceRequest(sourceId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1396,17 +1396,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSourceAsync(Guid id, RequestContext context)
+        public virtual async Task<Response> GetSourceAsync(Guid sourceId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSourceRequest(id, context);
+                using HttpMessage message = CreateGetSourceRequest(sourceId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1417,22 +1417,22 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Get an ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IngestionSource> GetSource(Guid id, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionSource> GetSource(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            Response result = GetSource(id, cancellationToken.ToRequestContext());
+            Response result = GetSource(sourceId, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
         /// <summary> Get an ingestion source in a geo-catalog. </summary>
-        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="sourceId"> Ingestion source id. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IngestionSource>> GetSourceAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngestionSource>> GetSourceAsync(Guid sourceId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSourceAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSourceAsync(sourceId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 

@@ -38,7 +38,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             StacCatalogCollections collections = response.Value;
 
             Console.WriteLine($"Found {collections.Collections.Count} collections:");
-            foreach (StacCollectionResource collection in collections.Collections)
+            foreach (StacCollection collection in collections.Collections)
             {
                 Console.WriteLine($"  - {collection.Id}: {collection.Title}");
             }
@@ -61,8 +61,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a specific collection by ID
             string collectionId = "naip";
-            Response<StacCollectionResource> response = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = response.Value;
+            Response<StacCollection> response = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = response.Value;
 
             Console.WriteLine($"Collection: {collection.Id}");
             Console.WriteLine($"Title: {collection.Title}");
@@ -104,8 +104,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get partition type for a collection
             string collectionId = "naip";
-            Response<PartitionType> response = await stacClient.GetPartitionTypeAsync(collectionId);
-            PartitionType partitionType = response.Value;
+            Response<PartitionKind> response = await stacClient.GetPartitionTypeAsync(collectionId);
+            PartitionKind partitionType = response.Value;
 
             Console.WriteLine($"Partition scheme: {partitionType.Scheme}");
             #endregion
@@ -283,7 +283,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             // Create a new render option
             var renderOption = new RenderConfiguration("custom-render", "Custom Natural Color")
             {
-                Type = RenderOptionType.RasterTile,
+                Kind = RenderOptionKind.RasterTile,
                 Options = "assets=image&asset_bidx=image|1,2,3",
                 MinZoom = 6,
                 Description = "Custom RGB rendering"
@@ -359,12 +359,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get current partition type
-            Response<PartitionType> partitionResponse = await stacClient.GetPartitionTypeAsync(collectionId);
+            Response<PartitionKind> partitionResponse = await stacClient.GetPartitionTypeAsync(collectionId);
             Console.WriteLine($"Current partition scheme: {partitionResponse.Value.Scheme}");
 
             // Update partition type (only works on empty collections)
-            var newPartitionType = new PartitionType { Scheme = PartitionTypeScheme.Year };
-            await stacClient.ReplacePartitionTypeAsync(collectionId, newPartitionType);
+            var newPartitionKind = new PartitionKind { Scheme = PartitionKindScheme.Year };
+            await stacClient.ReplacePartitionTypeAsync(collectionId, newPartitionKind);
             Console.WriteLine("Partition type updated to Year");
             #endregion
         }

@@ -13,7 +13,7 @@ namespace Azure.Analytics.PlanetaryComputer
     internal partial class UnknownStacItemOrStacItemCollection : StacItemOrStacItemCollection
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStacItemOrStacItemCollection"/>. </summary>
-        /// <param name="type"> Discriminator property for StacItemOrStacItemCollection. </param>
+        /// <param name="kind"> Discriminator property for StacItemOrStacItemCollection. </param>
         /// <param name="stacVersion"> Stac Version. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="createdOn"> MSFT Created. </param>
@@ -21,7 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="shortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownStacItemOrStacItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
+        internal UnknownStacItemOrStacItemCollection(StacModelKind kind, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
         {
         }
     }

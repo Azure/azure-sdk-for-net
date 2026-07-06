@@ -73,10 +73,10 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 throw new FormatException($"The model {nameof(MosaicMetadata)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Bounds))
             {
@@ -171,7 +171,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            MosaicMetadataType? @type = default;
+            MosaicMetadataKind? kind = default;
             string bounds = default;
             int? minZoom = default;
             int? maxZoom = default;
@@ -187,7 +187,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    @type = new MosaicMetadataType(prop.Value.GetString());
+                    kind = new MosaicMetadataKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bounds"u8))
@@ -266,7 +266,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return new MosaicMetadata(
-                @type,
+                kind,
                 bounds,
                 minZoom,
                 maxZoom,

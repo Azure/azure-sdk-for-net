@@ -124,9 +124,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a legend as a PNG image
             string colorMapName = "rdylgn";
-            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
+            Response response = await dataClient.GetLegendAsync(colorMapName);
 
-            BinaryData legendData = response.Value;
+            BinaryData legendData = response.Content;
             byte[] legendBytes = legendData.ToArray();
 
             Console.WriteLine($"Legend PNG size: {legendBytes.Length} bytes");
@@ -173,9 +173,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a legend with the viridis color map
             string colorMapName = "viridis";
-            Response<BinaryData> response = await dataClient.GetLegendAsync(colorMapName);
+            Response response = await dataClient.GetLegendAsync(colorMapName);
 
-            BinaryData legendData = response.Value;
+            BinaryData legendData = response.Content;
             byte[] legendBytes = legendData.ToArray();
 
             Console.WriteLine($"Viridis legend PNG size: {legendBytes.Length} bytes");
@@ -258,8 +258,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             foreach (string colorMap in colorMaps)
             {
-                Response<BinaryData> response = await dataClient.GetLegendAsync(colorMap);
-                byte[] legendBytes = response.Value.ToArray();
+                Response response = await dataClient.GetLegendAsync(colorMap);
+                byte[] legendBytes = response.Content.ToArray();
 
                 Console.WriteLine($"{colorMap}: {legendBytes.Length} bytes");
                 System.IO.File.WriteAllBytes($"{colorMap}_legend.png", legendBytes);

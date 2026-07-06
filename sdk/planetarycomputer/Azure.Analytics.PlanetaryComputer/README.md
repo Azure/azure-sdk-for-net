@@ -134,7 +134,7 @@ Response<StacCatalogCollections> response = await stacClient.GetCollectionsAsync
 StacCatalogCollections collections = response.Value;
 
 Console.WriteLine($"Found {collections.Collections.Count} collections:");
-foreach (StacCollectionResource collection in collections.Collections)
+foreach (StacCollection collection in collections.Collections)
 {
     Console.WriteLine($"  - {collection.Id}: {collection.Title}");
 }
@@ -182,11 +182,11 @@ searchParams.Filter["args"] = BinaryData.FromObjectAsJson(new object[]
 
 searchParams.Limit = 10;
 
-Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
-StacItemCollectionResource results = response.Value;
+Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
+StacItemCollection results = response.Value;
 
 Console.WriteLine($"Found {results.Features.Count} items in the specified area");
-foreach (StacItemResource item in results.Features)
+foreach (StacItem item in results.Features)
 {
     Console.WriteLine($"  Item: {item.Id}");
 }
@@ -209,8 +209,8 @@ StacClient stacClient = client.GetStacClient();
 string collectionId = "naip";
 string itemId = "tx_m_2609719_se_14_060_20201216";
 
-Response<StacItemResource> response = await stacClient.GetItemAsync(collectionId, itemId);
-StacItemResource item = response.Value;
+Response<StacItem> response = await stacClient.GetItemAsync(collectionId, itemId);
+StacItem item = response.Value;
 
 Console.WriteLine($"Item ID: {item.Id}");
 Console.WriteLine($"Collection: {item.Collection}");
@@ -252,7 +252,7 @@ var temporalExtent = new StacCollectionTemporalExtent(
 var extent = new StacExtensionExtent(spatialExtent, temporalExtent);
 
 // Create collection resource
-var collection = new StacCollectionResource(
+var collection = new StacCollection(
     id: collectionId,
     description: "Test collection for demonstration",
     links: new List<StacLink>(),
@@ -261,7 +261,7 @@ var collection = new StacCollectionResource(
 {
     StacVersion = "1.0.0",
     Title = "Test Collection",
-    Type = "Collection"
+    Kind = "Collection"
 };
 
 // Start collection creation (asynchronous operation)
@@ -291,7 +291,7 @@ string collectionId = "naip";
 string itemId = "tx_m_2609719_se_14_060_20201216";
 
 // Get a specific tile
-Response<BinaryData> response = await dataClient.GetTileAsync(
+Response response = await dataClient.GetTileAsync(
     collectionId: collectionId,
     itemId: itemId,
     tileMatrixSetId: "WebMercatorQuad",
@@ -304,7 +304,7 @@ Response<BinaryData> response = await dataClient.GetTileAsync(
     assetBandIndices: new[] { "image|1,2,3" }
 );
 
-byte[] tileImage = response.Value.ToArray();
+byte[] tileImage = response.Content.ToArray();
 Console.WriteLine($"Tile image: {tileImage.Length} bytes");
 ```
 
@@ -349,7 +349,7 @@ string collectionId = "my-collection";
 // Add a render option for visualizing data
 var renderOption = new RenderConfiguration(id: "true-color", name: "True Color")
 {
-    Type = RenderOptionType.RasterTile,
+    Kind = RenderOptionKind.RasterTile,
     Options = "assets=image&asset_bidx=image|1,2,3&rescale=0,255"
 };
 await stacClient.CreateRenderOptionAsync(collectionId, renderOption);
@@ -376,7 +376,7 @@ PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new
 DataClient dataClient = client.GetDataClient();
 
 // Get a class map legend (categorical color map)
-Response<ClassMapLegendResponse> classMapResponse = await dataClient.GetClassMapLegendAsync("mtbs-severity");
+Response<ClassMapLegendResult> classMapResponse = await dataClient.GetClassMapLegendAsync("mtbs-severity");
 Console.WriteLine($"Legend entries: {classMapResponse.Value.Legend.Count}");
 
 // Get an interval legend (continuous color map)
@@ -384,8 +384,8 @@ Response<IReadOnlyList<IList<IList<long>>>> intervalResponse = await dataClient.
 Console.WriteLine($"Interval ranges: {intervalResponse.Value.Count}");
 
 // Get a legend as a PNG image
-Response<BinaryData> legendImage = await dataClient.GetLegendAsync("rdylgn");
-byte[] legendBytes = legendImage.Value.ToArray();
+Response legendImage = await dataClient.GetLegendAsync("rdylgn");
+byte[] legendBytes = legendImage.Content.ToArray();
 Console.WriteLine($"Legend image: {legendBytes.Length} bytes");
 ```
 
@@ -431,7 +431,7 @@ string sourceCatalogUrl = "https://example.com/catalog.json";
 var ingestionDefinition = new IngestionInformation("StaticCatalog")
 {
     DisplayName = "My Dataset Ingestion",
-    SourceCatalogUrl = new Uri(sourceCatalogUrl),
+    SourceCatalogUri = new Uri(sourceCatalogUrl),
     KeepOriginalAssets = true,
     SkipExistingItems = true
 };
@@ -500,7 +500,7 @@ StacClient stacClient = client.GetStacClient();
 
 try
 {
-    Response<StacCollectionResource> response = await stacClient.GetCollectionAsync(
+    Response<StacCollection> response = await stacClient.GetCollectionAsync(
         "nonexistent-collection");
 }
 catch (RequestFailedException ex) when (ex.Status == 404)

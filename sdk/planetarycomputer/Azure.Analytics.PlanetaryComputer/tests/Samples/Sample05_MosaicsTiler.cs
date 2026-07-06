@@ -135,7 +135,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 assetBandIndices: new[] { "image|1,2,3" },
                 tileScale: 1,
                 minZoom: 9,
-                tileFormat: TilerImageFormat.Png,
+                tileFormat: "png",
                 collectionId: collectionId
             );
 
@@ -168,7 +168,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get a specific tile image (z=13, x=2174, y=3282)
-            Response<BinaryData> response = await dataClient.GetSearchTileAsync(
+            Response response = await dataClient.GetSearchTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -181,7 +181,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 collection: collectionId
             );
 
-            byte[] imageBytes = response.Value.ToArray();
+            byte[] imageBytes = response.Content.ToArray();
             Console.WriteLine($"Downloaded tile: {imageBytes.Length} bytes");
             #endregion
         }
@@ -208,10 +208,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string searchId = "abc123"; // From previous registration
 
             // Get WMTS capabilities XML
-            Response<BinaryData> response = await dataClient.GetSearchWmtsCapabilitiesAsync(
+            Response response = await dataClient.GetSearchWmtsCapabilitiesAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: TilerImageFormat.Png,
+                tileFormat: "png",
                 tileScale: 1,
                 minZoom: 7,
                 maxZoom: 13,
@@ -219,7 +219,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 assetBandIndices: new[] { "image|1,2,3" }
             );
 
-            string xmlString = Encoding.UTF8.GetString(response.Value.ToArray());
+            string xmlString = Encoding.UTF8.GetString(response.Content.ToArray());
             Console.WriteLine($"WMTS Capabilities XML: {xmlString.Substring(0, 200)}...");
             #endregion
         }
@@ -377,14 +377,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 assetBandIndices: new[] { "image|1,2,3" },
                 tileScale: 1,
                 minZoom: 9,
-                tileFormat: TilerImageFormat.Png,
+                tileFormat: "png",
                 collectionId: collectionId
             );
 
             Console.WriteLine($"Step 2: TileJSON URL pattern: {tileJsonResponse.Value.Tiles[0]}");
 
             // Step 3: Get a specific tile
-            Response<BinaryData> tileResponse = await dataClient.GetSearchTileAsync(
+            Response tileResponse = await dataClient.GetSearchTileAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -397,7 +397,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 collection: collectionId
             );
 
-            Console.WriteLine($"Step 3: Downloaded tile: {tileResponse.Value.ToArray().Length} bytes");
+            Console.WriteLine($"Step 3: Downloaded tile: {tileResponse.Content.ToArray().Length} bytes");
 
             // Step 4: Get assets for a specific point
             Response<IReadOnlyList<StacItemPointAsset>> assetsResponse = await dataClient.GetSearchPointWithAssetsAsync(
@@ -428,7 +428,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get a tile with explicit scale and format in the URL path
-            Response<BinaryData> response = await dataClient.GetSearchTileByScaleAndFormatAsync(
+            Response response = await dataClient.GetSearchTileByScaleAndFormatAsync(
                 searchId: searchId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 13,
@@ -441,7 +441,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
                 collection: collectionId
             );
 
-            byte[] imageBytes = response.Value.ToArray();
+            byte[] imageBytes = response.Content.ToArray();
             Console.WriteLine($"Downloaded tile (by scale and format): {imageBytes.Length} bytes");
             #endregion
         }

@@ -83,7 +83,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 ids: null,
                 bbox: null,
                 query: null,
-                sortby: null,
+                sortBy: null,
                 datetime: null,
                 subdatasetName: null,
                 subdatasetBands: null,
@@ -160,7 +160,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionTileByScaleAndFormat for collection: {collectionId}");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetCollectionTileByScaleAndFormatAsync(
+            Response response = await dataClient.GetCollectionTileByScaleAndFormatAsync(
                 collectionId: collectionId,
                 tileMatrixSetId: "WebMercatorQuad",
                 z: 14,
@@ -175,7 +175,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetCollectionTileByScaleAndFormat");
 
-            byte[] imageBytes = response.Value.ToArray();
+            byte[] imageBytes = response.Content.ToArray();
             TestContext.WriteLine($"Tile size: {imageBytes.Length} bytes");
 
             Assert.That(imageBytes.Length, Is.GreaterThanOrEqualTo(8), "Tile bytes should be at least 8 bytes to contain a PNG header");
@@ -241,12 +241,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Bbox: [{minx}, {miny}, {maxx}, {maxy}]");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetCollectionBboxCropAsync(
+            Response response = await dataClient.GetCollectionBboxCropAsync(
                 collectionId: collectionId,
-                minx: minx,
-                miny: miny,
-                maxx: maxx,
-                maxy: maxy,
+                minX: minx,
+                minY: miny,
+                maxX: maxx,
+                maxY: maxy,
                 format: "png",
                 assets: new[] { "image" },
                 assetBandIndices: new[] { "image|1,2,3" }
@@ -255,7 +255,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetCollectionBboxCrop");
 
-            byte[] imageBytes = response.Value.ToArray();
+            byte[] imageBytes = response.Content.ToArray();
             TestContext.WriteLine($"Image size: {imageBytes.Length} bytes");
 
             Assert.That(imageBytes.Length, Is.GreaterThan(0), "Image bytes should not be empty");
@@ -279,7 +279,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionWmtsCapabilities for collection: {collectionId}");
 
             // Act
-            Response<BinaryData> response = await dataClient.GetCollectionWmtsCapabilitiesAsync(
+            Response response = await dataClient.GetCollectionWmtsCapabilitiesAsync(
                 collectionId: collectionId,
                 assets: new[] { "image" }
             );
@@ -287,7 +287,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Assert
             ValidateResponse(response, "GetCollectionWmtsCapabilities");
 
-            byte[] xmlBytes = response.Value.ToArray();
+            byte[] xmlBytes = response.Content.ToArray();
             string xmlString = Encoding.UTF8.GetString(xmlBytes);
 
             TestContext.WriteLine($"WMTS XML size: {xmlBytes.Length} bytes");
@@ -344,7 +344,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 ids: null,
                 bbox: null,
                 query: null,
-                sortby: null,
+                sortBy: null,
                 datetime: null,
                 subdatasetName: null,
                 subdatasetBands: null,

@@ -99,8 +99,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a collection and its thumbnail asset
             string collectionId = "naip";
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
 
             // Get the thumbnail asset HREF
             StacAsset thumbnailAsset = collection.Assets["thumbnail"];
@@ -141,8 +141,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get a collection thumbnail
             string collectionId = "naip";
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
             Uri thumbnailHref = new Uri(collection.Assets["thumbnail"].Href);
 
             // Get signed HREF
@@ -216,8 +216,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Step 1: Get a collection
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
             Console.WriteLine($"Retrieved collection: {collection.Id}");
 
             // Step 2: Extract asset HREFs that need signing

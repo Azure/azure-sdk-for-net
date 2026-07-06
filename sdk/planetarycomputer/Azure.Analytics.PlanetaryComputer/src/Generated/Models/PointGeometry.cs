@@ -17,7 +17,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="PointGeometry"/>. </summary>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public PointGeometry(IEnumerable<float> coordinates) : base(GeometryType.Point)
+        public PointGeometry(IEnumerable<float> coordinates) : base(GeometryKind.Point)
         {
             Argument.AssertNotNull(coordinates, nameof(coordinates));
 
@@ -29,7 +29,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
-        internal PointGeometry(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<float> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal PointGeometry(GeometryKind @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<float> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }

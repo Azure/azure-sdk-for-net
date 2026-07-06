@@ -17,33 +17,33 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
-        /// <param name="importType"> Ingestion type. </param>
-        public IngestionInformation(IngestionType importType)
+        /// <param name="importKind"> Ingestion type. </param>
+        public IngestionInformation(IngestionKind importKind)
         {
-            ImportType = importType;
+            ImportKind = importKind;
         }
 
         /// <summary> Initializes a new instance of <see cref="IngestionInformation"/>. </summary>
         /// <param name="id"> Ingestion id. </param>
-        /// <param name="importType"> Ingestion type. </param>
+        /// <param name="importKind"> Ingestion type. </param>
         /// <param name="displayName"> Ingestion name. </param>
-        /// <param name="sourceCatalogUrl"> Source catalog URL. Required for StaticCatalog ingestion type. </param>
-        /// <param name="stacGeoparquetUrl"> Parquet catalog URL. Required for StacGeoparquet ingestion type. </param>
+        /// <param name="sourceCatalogUri"> Source catalog URL. Required for StaticCatalog ingestion type. </param>
+        /// <param name="stacGeoparquetUri"> Parquet catalog URL. Required for StacGeoparquet ingestion type. </param>
         /// <param name="skipExistingItems"> Skip processing existing items in the catalog. </param>
         /// <param name="keepOriginalAssets"> Keep original source assets. </param>
-        /// <param name="creationTime"> Ingestion creation time. </param>
+        /// <param name="createdOn"> Ingestion creation time. </param>
         /// <param name="status"> Ingestion status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionInformation(Guid id, IngestionType importType, string displayName, Uri sourceCatalogUrl, Uri stacGeoparquetUrl, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset creationTime, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionInformation(Guid id, IngestionKind importKind, string displayName, Uri sourceCatalogUri, Uri stacGeoparquetUri, bool? skipExistingItems, bool? keepOriginalAssets, DateTimeOffset createdOn, IngestionStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            ImportType = importType;
+            ImportKind = importKind;
             DisplayName = displayName;
-            SourceCatalogUrl = sourceCatalogUrl;
-            StacGeoparquetUrl = stacGeoparquetUrl;
+            SourceCatalogUri = sourceCatalogUri;
+            StacGeoparquetUri = stacGeoparquetUri;
             SkipExistingItems = skipExistingItems;
             KeepOriginalAssets = keepOriginalAssets;
-            CreationTime = creationTime;
+            CreatedOn = createdOn;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,16 +52,16 @@ namespace Azure.Analytics.PlanetaryComputer
         public Guid Id { get; }
 
         /// <summary> Ingestion type. </summary>
-        public IngestionType ImportType { get; set; }
+        public IngestionKind ImportKind { get; set; }
 
         /// <summary> Ingestion name. </summary>
         public string DisplayName { get; set; }
 
         /// <summary> Source catalog URL. Required for StaticCatalog ingestion type. </summary>
-        public Uri SourceCatalogUrl { get; set; }
+        public Uri SourceCatalogUri { get; set; }
 
         /// <summary> Parquet catalog URL. Required for StacGeoparquet ingestion type. </summary>
-        public Uri StacGeoparquetUrl { get; set; }
+        public Uri StacGeoparquetUri { get; set; }
 
         /// <summary> Skip processing existing items in the catalog. </summary>
         public bool? SkipExistingItems { get; set; }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public bool? KeepOriginalAssets { get; set; }
 
         /// <summary> Ingestion creation time. </summary>
-        public DateTimeOffset CreationTime { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Ingestion status. </summary>
         public IngestionStatus Status { get; }

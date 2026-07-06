@@ -164,8 +164,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Get item to retrieve an asset HREF for signing
             TestContext.WriteLine("Getting item...");
-            Response<StacItemResource> itemResponse = await stacClient.GetItemAsync(collectionId, itemId);
-            StacItemResource item = itemResponse.Value;
+            Response<StacItem> itemResponse = await stacClient.GetItemAsync(collectionId, itemId);
+            StacItem item = itemResponse.Value;
 
             Assert.That(item, Is.Not.Null, "Item should not be null");
             Assert.That(item.Assets, Is.Not.Null, "Item should have assets");
@@ -261,8 +261,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Get item to retrieve an asset HREF
             TestContext.WriteLine("Getting item...");
-            Response<StacItemResource> itemResponse = await stacClient.GetItemAsync(collectionId, itemId);
-            StacItemResource item = itemResponse.Value;
+            Response<StacItem> itemResponse = await stacClient.GetItemAsync(collectionId, itemId);
+            StacItem item = itemResponse.Value;
 
             // Use the first available asset
             string assetHrefString = null;

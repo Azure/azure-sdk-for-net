@@ -55,7 +55,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             var extent = new StacExtensionExtent(spatialExtent, temporalExtent);
 
             // Create collection resource
-            var collection = new StacCollectionResource(
+            var collection = new StacCollection(
                 id: collectionId,
                 description: "Test collection for demonstration",
                 links: new List<StacLink>(),
@@ -64,7 +64,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             {
                 StacVersion = "1.0.0",
                 Title = "Test Collection",
-                Type = "Collection"
+                Kind = "Collection"
             };
 
             // Start collection creation (asynchronous operation)
@@ -100,14 +100,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "my-test-collection";
 
             // Get the existing collection
-            Response<StacCollectionResource> getResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = getResponse.Value;
+            Response<StacCollection> getResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = getResponse.Value;
 
             // Update the description
             collection.Description = "Test collection - UPDATED";
 
             // Replace the collection with the updated version
-            Response<StacCollectionResource> updateResponse = await stacClient.ReplaceCollectionAsync(
+            Response<StacCollection> updateResponse = await stacClient.ReplaceCollectionAsync(
                 collectionId,
                 collection
             );
@@ -290,7 +290,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string assetId = "test-asset";
 
             // Delete the asset
-            Response<StacCollectionResource> response = await stacClient.DeleteCollectionAssetAsync(
+            Response<StacCollection> response = await stacClient.DeleteCollectionAssetAsync(
                 collectionId,
                 assetId
             );
@@ -298,8 +298,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Console.WriteLine($"Asset '{assetId}' deleted successfully");
 
             // Verify deletion by checking collection assets
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
 
             if (collection.Assets != null && !collection.Assets.ContainsKey(assetId))
             {
@@ -388,7 +388,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Step 3: Delete the asset
             Console.WriteLine("Step 3: Deleting asset...");
-            Response<StacCollectionResource> deleteResponse = await stacClient.DeleteCollectionAssetAsync(
+            Response<StacCollection> deleteResponse = await stacClient.DeleteCollectionAssetAsync(
                 collectionId,
                 assetId
             );

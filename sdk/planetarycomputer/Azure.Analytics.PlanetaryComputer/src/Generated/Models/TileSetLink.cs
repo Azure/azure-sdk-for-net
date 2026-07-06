@@ -28,14 +28,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TileSetLink"/>. </summary>
         /// <param name="href"> The URL target of the link. </param>
         /// <param name="rel"> The relationship type of the link. </param>
-        /// <param name="type"> The media type of the linked resource. </param>
+        /// <param name="kind"> The media type of the linked resource. </param>
         /// <param name="title"> Human-readable title of the link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TileSetLink(string href, string rel, string @type, string title, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TileSetLink(string href, string rel, string kind, string title, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Href = href;
             Rel = rel;
-            Type = @type;
+            Kind = kind;
             Title = title;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Rel { get; }
 
         /// <summary> The media type of the linked resource. </summary>
-        public string Type { get; }
+        public string Kind { get; }
 
         /// <summary> Human-readable title of the link. </summary>
         public string Title { get; }

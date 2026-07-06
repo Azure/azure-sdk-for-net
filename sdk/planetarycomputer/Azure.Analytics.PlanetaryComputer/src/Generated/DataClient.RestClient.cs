@@ -3394,7 +3394,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemBboxCropRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string destinationCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal HttpMessage CreateGetItemBboxCropRequest(string collectionId, string itemId, float minX, float minY, float maxX, float maxY, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string destinationCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3403,13 +3403,13 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath(".", false);
             uri.AppendPath(format, true);
             if (_apiVersion != null)
@@ -3544,7 +3544,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetItemBboxCropWithDimensionsRequest(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string destinationCrs, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal HttpMessage CreateGetItemBboxCropWithDimensionsRequest(string collectionId, string itemId, float minX, float minY, float maxX, float maxY, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string algorithm, string algorithmParams, string colorFormula, string coordinateReferenceSystem, string destinationCrs, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3553,13 +3553,13 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendPath("/items/", false);
             uri.AppendPath(itemId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(width.ToString(), true);
             uri.AppendPath("x", false);
@@ -3690,7 +3690,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTilesetsRequest(string collectionId, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal HttpMessage CreateGetCollectionTilesetsRequest(string collectionId, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3713,9 +3713,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -3752,7 +3752,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTilesetMetadataRequest(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal HttpMessage CreateGetCollectionTilesetMetadataRequest(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3776,9 +3776,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -3815,7 +3815,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileByScaleAndFormatRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileByScaleAndFormatRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -3907,9 +3907,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -3997,7 +3997,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4085,9 +4085,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -4183,7 +4183,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileByFormatRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileByFormatRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4273,9 +4273,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -4367,7 +4367,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileByScaleRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileByScaleRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4458,9 +4458,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -4552,7 +4552,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileNoTmsByScaleAndFormatRequest(string collectionId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileNoTmsByScaleAndFormatRequest(string collectionId, float z, float x, float y, float scale, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4642,9 +4642,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -4736,7 +4736,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileNoTmsRequest(string collectionId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileNoTmsRequest(string collectionId, float z, float x, float y, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -4822,9 +4822,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -4924,7 +4924,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileNoTmsByFormatRequest(string collectionId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileNoTmsByFormatRequest(string collectionId, float z, float x, float y, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, int? scale, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -5012,9 +5012,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -5110,7 +5110,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileNoTmsByScaleRequest(string collectionId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileNoTmsByScaleRequest(string collectionId, float z, float x, float y, float scale, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string format, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -5199,9 +5199,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -5297,7 +5297,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileJsonRequest(string collectionId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileJsonRequest(string collectionId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -5378,9 +5378,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -5488,7 +5488,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionTileJsonByTmsRequest(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
+        internal HttpMessage CreateGetCollectionTileJsonByTmsRequest(string collectionId, string tileMatrixSetId, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, float? buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, int? padding, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -5571,9 +5571,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -5677,7 +5677,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionWmtsCapabilitiesRequest(string collectionId, string ids, string bbox, string query, string sortby, string datetime, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
+        internal HttpMessage CreateGetCollectionWmtsCapabilitiesRequest(string collectionId, string ids, string bbox, string query, string sortBy, string datetime, string tileMatrixSetId, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -5700,9 +5700,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -5774,7 +5774,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionWmtsCapabilitiesByTmsRequest(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortby, string datetime, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
+        internal HttpMessage CreateGetCollectionWmtsCapabilitiesByTmsRequest(string collectionId, string tileMatrixSetId, string ids, string bbox, string query, string sortBy, string datetime, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -5799,9 +5799,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -5869,7 +5869,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionAssetsForTileRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
+        internal HttpMessage CreateGetCollectionAssetsForTileRequest(string collectionId, string tileMatrixSetId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -5920,9 +5920,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -5959,7 +5959,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionAssetsForTileNoTmsRequest(string collectionId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string tileMatrixSetId, RequestContext context)
+        internal HttpMessage CreateGetCollectionAssetsForTileNoTmsRequest(string collectionId, float z, float x, float y, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string tileMatrixSetId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6008,9 +6008,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -6051,20 +6051,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionAssetsForBboxRequest(string collectionId, float minx, float miny, float maxx, float maxy, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
+        internal HttpMessage CreateGetCollectionAssetsForBboxRequest(string collectionId, float minX, float minY, float maxX, float maxY, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/mosaic/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath("/assets", false);
             if (_apiVersion != null)
             {
@@ -6102,9 +6102,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -6164,20 +6164,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionBboxCropRequest(string collectionId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetCollectionBboxCropRequest(string collectionId, float minX, float minY, float maxX, float maxY, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/mosaic/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath(".", false);
             uri.AppendPath(format, true);
             if (_apiVersion != null)
@@ -6254,9 +6254,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -6356,20 +6356,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionBboxCropWithDimensionsRequest(string collectionId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetCollectionBboxCropWithDimensionsRequest(string collectionId, float minX, float minY, float maxX, float maxY, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/mosaic/collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(width.ToString(), true);
             uri.AppendPath("x", false);
@@ -6450,9 +6450,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -6544,7 +6544,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCropCollectionFeatureRequest(string collectionId, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, string format, RequestContext context)
+        internal HttpMessage CreateCropCollectionFeatureRequest(string collectionId, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, string format, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6625,9 +6625,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -6733,7 +6733,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCropCollectionFeatureByFormatRequest(string collectionId, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
+        internal HttpMessage CreateCropCollectionFeatureByFormatRequest(string collectionId, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -6815,9 +6815,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -6919,7 +6919,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateCropCollectionFeatureWidthByHeightRequest(string collectionId, int width, int height, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
+        internal HttpMessage CreateCropCollectionFeatureWidthByHeightRequest(string collectionId, int width, int height, string format, RequestContent content, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string destinationCrs, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -7005,9 +7005,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -7101,7 +7101,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionPointRequest(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
+        internal HttpMessage CreateGetCollectionPointRequest(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, string coordinateReferenceSystem, string resampling, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -7147,9 +7147,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -7232,7 +7232,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetCollectionPointAssetsRequest(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortby, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
+        internal HttpMessage CreateGetCollectionPointAssetsRequest(string collectionId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string ids, string bbox, string query, string sortBy, string datetime, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -7279,9 +7279,9 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 uri.AppendQuery("query", query, true);
             }
-            if (sortby != null)
+            if (sortBy != null)
             {
-                uri.AppendQuery("sortby", sortby, true);
+                uri.AppendQuery("sortby", sortBy, true);
             }
             if (datetime != null)
             {
@@ -8430,20 +8430,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetSearchBboxCropRequest(string searchId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetSearchBboxCropRequest(string searchId, float minX, float minY, float maxX, float maxY, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, int? height, int? width, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/mosaic/searches/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath(".", false);
             uri.AppendPath(format, true);
             if (_apiVersion != null)
@@ -8606,20 +8606,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetSearchBboxCropWithDimensionsRequest(string searchId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal HttpMessage CreateGetSearchBboxCropWithDimensionsRequest(string searchId, float minX, float minY, float maxX, float maxY, int width, int height, string format, IEnumerable<int> bidx, IEnumerable<string> assets, string expression, IEnumerable<string> assetBandIndices, bool? assetAsBand, string noData, bool? unscale, string reproject, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string algorithm, string algorithmParams, string coordinateReferenceSystem, string destinationCrs, int? maxSize, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/mosaic/searches/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath("/", false);
             uri.AppendPath(width.ToString(), true);
             uri.AppendPath("x", false);
@@ -8778,20 +8778,20 @@ namespace Azure.Analytics.PlanetaryComputer
             return message;
         }
 
-        internal HttpMessage CreateGetSearchBboxAssetsRequest(string searchId, float minx, float miny, float maxx, float maxy, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
+        internal HttpMessage CreateGetSearchBboxAssetsRequest(string searchId, float minX, float minY, float maxX, float maxY, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string subdatasetName, IEnumerable<int> subdatasetBands, string crs, string datetime, IEnumerable<string> sel, string selMethod, string coordinateReferenceSystem, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/data/mosaic/searches/", false);
             uri.AppendPath(searchId, true);
             uri.AppendPath("/bbox/", false);
-            uri.AppendPath(minx.ToString(), true);
+            uri.AppendPath(minX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(miny.ToString(), true);
+            uri.AppendPath(minY.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxx.ToString(), true);
+            uri.AppendPath(maxX.ToString(), true);
             uri.AppendPath(",", false);
-            uri.AppendPath(maxy.ToString(), true);
+            uri.AppendPath(maxY.ToString(), true);
             uri.AppendPath("/assets", false);
             if (_apiVersion != null)
             {
