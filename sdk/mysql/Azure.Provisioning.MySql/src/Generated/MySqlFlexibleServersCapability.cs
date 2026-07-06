@@ -63,18 +63,13 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal CapabilityPropertiesV2 Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -83,10 +78,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CapabilityPropertiesV2();
-                }
                 return Properties.SupportedGeoBackupRegions;
             }
         }
@@ -96,10 +87,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CapabilityPropertiesV2();
-                }
                 return Properties.SupportedFlexibleServerEditions;
             }
         }
@@ -109,10 +96,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CapabilityPropertiesV2();
-                }
                 return Properties.SupportedServerVersions;
             }
         }
@@ -122,10 +105,6 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new CapabilityPropertiesV2();
-                }
                 return Properties.SupportedFeatures;
             }
         }
