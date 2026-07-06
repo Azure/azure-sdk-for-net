@@ -1,4 +1,4 @@
-# Azure.ResourceManager.Education management client library for .NET
+# Microsoft Azure Education management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
