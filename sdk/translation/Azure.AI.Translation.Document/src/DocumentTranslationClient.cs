@@ -80,10 +80,11 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Initializes a new instance of DocumentTranslation. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. When not specified, the API version configured on this client (via <see cref="DocumentTranslationClientOptions"/>) is used. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        internal virtual DocumentTranslationClient GetDocumentTranslationClient(string apiVersion = "2024-05-01")
+        internal virtual DocumentTranslationClient GetDocumentTranslationClient(string apiVersion = null)
         {
+            apiVersion ??= _apiVersion;
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
             return new DocumentTranslationClient(ClientDiagnostics, Pipeline, _endpoint, apiVersion);
