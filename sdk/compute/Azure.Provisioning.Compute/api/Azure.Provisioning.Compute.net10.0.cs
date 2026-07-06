@@ -788,27 +788,27 @@ namespace Azure.Provisioning.Compute
     public partial class DiskRestorePoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DiskRestorePoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<float> CompletionPercent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskAccessId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<float> CompletionPercent { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskAccessId { get { throw null; } }
         public Azure.Provisioning.Compute.DiskEncryption Encryption { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> FamilyId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> LogicalSectorSize { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.NetworkAccessPolicy> NetworkAccessPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.NetworkAccessPolicy> NetworkAccessPolicy { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SupportedOperatingSystemType> OSType { get { throw null; } }
         public Azure.Provisioning.Compute.RestorePoint Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.DiskPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
-        public Azure.Provisioning.Compute.DiskPurchasePlan PurchasePlan { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.DiskPublicNetworkAccess> PublicNetworkAccess { get { throw null; } }
+        public Azure.Provisioning.Compute.DiskPurchasePlan PurchasePlan { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ReplicationState { get { throw null; } }
-        public Azure.Provisioning.Compute.DiskSecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.DiskSecurityProfile SecurityProfile { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SnapshotAccessState> SnapshotAccessState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> SourceResourceLocation { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SourceUniqueId { get { throw null; } }
-        public Azure.Provisioning.Compute.SupportedCapabilities SupportedCapabilities { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> SupportsHibernation { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.SupportedCapabilities SupportedCapabilities { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> SupportsHibernation { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeCreated { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -2726,16 +2726,16 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineExtensionImage : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public VirtualMachineExtensionImage(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> ComputeRole { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> HandlerSchema { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ComputeRole { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> HandlerSchema { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OperatingSystem { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> SupportsMultipleExtensions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> OperatingSystem { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> SupportsMultipleExtensions { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> VirtualMachineScaleSetEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> VirtualMachineScaleSetEnabled { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Compute.VirtualMachineExtensionImage FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -3492,12 +3492,26 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineScaleSetVmRunCommand : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public VirtualMachineScaleSetVmRunCommand(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> AsyncExecution { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.RunCommandManagedIdentity ErrorBlobManagedIdentity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ErrorBlobUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Compute.VirtualMachineRunCommandInstanceView InstanceView { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.RunCommandManagedIdentity OutputBlobManagedIdentity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> OutputBlobUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.RunCommandInputParameter> Parameters { get { throw null; } set { } }
         public Azure.Provisioning.Compute.VirtualMachineScaleSetVm Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.RunCommandInputParameter> ProtectedParameters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> RunAsPassword { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RunAsUser { get { throw null; } set { } }
+        public Azure.Provisioning.Compute.VirtualMachineRunCommandScriptSource Source { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> TimeoutInSeconds { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> TreatFailureAsDeploymentFailure { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Compute.VirtualMachineScaleSetVmRunCommand FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
