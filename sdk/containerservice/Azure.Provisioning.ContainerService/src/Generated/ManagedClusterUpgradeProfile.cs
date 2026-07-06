@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ManagedClusterUpgradeProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ManagedClusterUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/upgradeProfiles", resourceVersion ?? "2026-01-01")
+        internal ManagedClusterUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/upgradeProfiles", resourceVersion ?? "2026-01-01")
         {
         }
 
