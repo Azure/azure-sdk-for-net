@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 HybridConnectionListResult result = HybridConnectionListResult.FromResponse(response);
-                yield return Page<HybridConnectionData>.FromValues((IReadOnlyList<HybridConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HybridConnectionData>.FromValues((IReadOnlyList<HybridConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

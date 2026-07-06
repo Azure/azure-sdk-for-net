@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 AppServiceEnvironmentListResult result = AppServiceEnvironmentListResult.FromResponse(response);
-                yield return Page<AppServiceEnvironmentData>.FromValues((IReadOnlyList<AppServiceEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppServiceEnvironmentData>.FromValues((IReadOnlyList<AppServiceEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

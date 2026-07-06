@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.StorageCache
                     yield break;
                 }
                 AmlFileSystemsResult result = AmlFileSystemsResult.FromResponse(response);
-                yield return Page<AmlFileSystemData>.FromValues((IReadOnlyList<AmlFileSystemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AmlFileSystemData>.FromValues((IReadOnlyList<AmlFileSystemData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

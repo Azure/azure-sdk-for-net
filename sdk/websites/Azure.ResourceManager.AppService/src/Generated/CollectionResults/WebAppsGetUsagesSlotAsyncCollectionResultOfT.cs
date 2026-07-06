@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 CsmUsageQuotaListResult result = CsmUsageQuotaListResult.FromResponse(response);
-                yield return Page<CsmUsageQuota>.FromValues((IReadOnlyList<CsmUsageQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CsmUsageQuota>.FromValues((IReadOnlyList<CsmUsageQuota>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 RoutingRuleCollectionListResult result = RoutingRuleCollectionListResult.FromResponse(response);
-                yield return Page<NetworkManagerRoutingRulesData>.FromValues((IReadOnlyList<NetworkManagerRoutingRulesData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkManagerRoutingRulesData>.FromValues((IReadOnlyList<NetworkManagerRoutingRulesData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WebAppProcessThreadInfoListResult result = WebAppProcessThreadInfoListResult.FromResponse(response);
-                yield return Page<WebAppProcessThreadInfo>.FromValues((IReadOnlyList<WebAppProcessThreadInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebAppProcessThreadInfo>.FromValues((IReadOnlyList<WebAppProcessThreadInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

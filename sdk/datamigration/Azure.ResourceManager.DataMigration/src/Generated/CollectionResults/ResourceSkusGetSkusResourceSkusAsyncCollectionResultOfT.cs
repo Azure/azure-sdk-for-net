@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.DataMigration
                     yield break;
                 }
                 ResourceSkusResult result = ResourceSkusResult.FromResponse(response);
-                yield return Page<DataMigrationSku>.FromValues((IReadOnlyList<DataMigrationSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataMigrationSku>.FromValues((IReadOnlyList<DataMigrationSku>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

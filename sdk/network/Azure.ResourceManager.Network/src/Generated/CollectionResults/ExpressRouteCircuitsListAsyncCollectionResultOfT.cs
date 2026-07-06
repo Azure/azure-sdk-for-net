@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 ExpressRouteCircuitListResult result = ExpressRouteCircuitListResult.FromResponse(response);
-                yield return Page<ExpressRouteCircuitData>.FromValues((IReadOnlyList<ExpressRouteCircuitData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ExpressRouteCircuitData>.FromValues((IReadOnlyList<ExpressRouteCircuitData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

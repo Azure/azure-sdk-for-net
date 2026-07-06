@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 SlotDifferenceListResult result = SlotDifferenceListResult.FromResponse(response);
-                yield return Page<SlotDifference>.FromValues((IReadOnlyList<SlotDifference>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SlotDifference>.FromValues((IReadOnlyList<SlotDifference>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

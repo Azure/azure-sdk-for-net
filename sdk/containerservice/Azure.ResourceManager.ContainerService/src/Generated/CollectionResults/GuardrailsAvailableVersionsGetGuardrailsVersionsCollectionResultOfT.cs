@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 GuardrailsAvailableVersionsList result = GuardrailsAvailableVersionsList.FromResponse(response);
-                yield return Page<ContainerServiceGuardrailsAvailableVersionData>.FromValues((IReadOnlyList<ContainerServiceGuardrailsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerServiceGuardrailsAvailableVersionData>.FromValues((IReadOnlyList<ContainerServiceGuardrailsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

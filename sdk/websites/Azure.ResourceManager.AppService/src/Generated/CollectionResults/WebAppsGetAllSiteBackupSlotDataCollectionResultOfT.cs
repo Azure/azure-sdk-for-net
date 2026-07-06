@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppService
                     yield break;
                 }
                 WebAppBackupItemListResult result = WebAppBackupItemListResult.FromResponse(response);
-                yield return Page<WebAppBackupData>.FromValues((IReadOnlyList<WebAppBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebAppBackupData>.FromValues((IReadOnlyList<WebAppBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
