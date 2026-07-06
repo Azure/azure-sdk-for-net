@@ -353,5 +353,5 @@ public partial class ProjectConversationsClient : ConversationClient
         => ModelReaderWriter.Read<ResponseItem>(
             BinaryData.FromString(element.GetRawText()),
             options,
-            OpenAIContext.Default);
+            AzureAIExtensionsOpenAIContext.Default);
 }
