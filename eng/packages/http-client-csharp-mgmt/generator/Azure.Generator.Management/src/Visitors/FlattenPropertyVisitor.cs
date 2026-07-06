@@ -508,7 +508,7 @@ namespace Azure.Generator.Management.Visitors
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
-        private readonly Dictionary<(CSharpType ModelType, string PropertyName), bool> _flattenedIntoParentWithLastContractSetterCache = [];
+        private readonly Dictionary<(string? Namespace, string Name, string PropertyName), bool> _flattenedIntoParentWithLastContractSetterCache = [];
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
@@ -718,7 +718,7 @@ namespace Azure.Generator.Management.Visitors
                 || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
             var flattenPropertyBody = new MethodPropertyBody(
                 PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
-                // Preserve public collection setters only when the previous API contract had one.
+                // Emit collection setters only when compatibility or parent delegation requires them.
                 isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
             );
 
@@ -758,7 +758,7 @@ namespace Azure.Generator.Management.Visitors
 
         private bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)
         {
-            var cacheKey = (model.Type, propertyName);
+            var cacheKey = (model.Type.Namespace, model.Type.Name, propertyName);
             if (_flattenedIntoParentWithLastContractSetterCache.TryGetValue(cacheKey, out var result))
             {
                 return result;
