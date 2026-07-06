@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added support for API version `2026-03-01-preview`.
+- Added `MongoDBAtlasProjectResource`, `MongoDBAtlasProjectCollection`, and related models for managing MongoDB Atlas projects.
+- Added `MongoDBAtlasClusterResource`, `MongoDBAtlasClusterCollection`, and related models for managing MongoDB Atlas clusters.
+- Added `GetClusterTierRegions` and `TierLimitReached` operations on `MongoDBAtlasProjectResource`.
+
 ### Breaking Changes
 
 - Renamed model `ProjectLimitStatus` to `MongoDBAtlasProjectLimitStatus`.
