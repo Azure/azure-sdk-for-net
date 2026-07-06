@@ -62,10 +62,10 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
-#pragma warning disable AAIP001
+    [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
+    [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
-#pragma warning restore AAIP001
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
