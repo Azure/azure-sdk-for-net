@@ -26,8 +26,7 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ### Create a Traffic Manager profile
 
-This example demonstrates how to create a Traffic Manager profile with an external endpoint.
-
+This example demonstrates how to create a Traffic Manager profile with an Azure endpoint.
 ```C# Snippet:TrafficManagerBasic
 Infrastructure infra = new();
 
