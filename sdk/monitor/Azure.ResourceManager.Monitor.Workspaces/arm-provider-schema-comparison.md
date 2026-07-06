@@ -73,3 +73,31 @@ These differences are outside the requested comparison axes but may still be use
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.monitor/accounts/{}/issues/{}` | `MonitorIssue` | `IssueResource` |
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.monitor/accounts/{}/metricscontainers/{}` | `MonitorMetricsContainer` | `MetricsContainerResource` |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 6 |
+| Found in Bicep reference | 6 |
+| Found in package API version | 6 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 0 |
+
+**Result:** All six `resolveArmResources`-only `healthmodels/*` resource types are real ARM resources in the same package API version (`2025-05-03-preview`). This points to a legacy/TCGC projection issue rather than a false `resolveArmResources` resource.
+
+The saved C# `tspCodeModel.json` contains no HealthModel/AuthenticationSetting/DiscoveryRule/Entity/Relationship/SignalDefinition clients or methods. The TypeSpec marks those interfaces with `@removed(Versions.v2025_10_03)`, while the package includes API versions `2025-05-03-preview`, `2025-10-03-preview`, and `2025-10-03`. This suggests the C# SDK projection drops the health model resources entirely because they are removed in the latest selected versions, while `resolveArmResources` still sees them from the full TypeSpec program.
+
+### Found in the same package API version
+
+These are possible misses in the legacy/TCGC-based detector unless intentionally excluded from the SDK surface.
+
+| Side | Resource type | Overlapping API versions | Resource schema API versions |
+| --- | --- | --- | --- |
+| `resolveArmResources` only | [Microsoft.Monitor/accounts/healthmodels](https://learn.microsoft.com/en-us/azure/templates/microsoft.monitor/accounts/healthmodels?pivots=deployment-language-bicep) | `2025-05-03-preview` | None |
+| `resolveArmResources` only | [Microsoft.Monitor/accounts/healthmodels/authenticationsettings](https://learn.microsoft.com/en-us/azure/templates/microsoft.monitor/accounts/healthmodels/authenticationsettings?pivots=deployment-language-bicep) | `2025-05-03-preview` | None |
+| `resolveArmResources` only | [Microsoft.Monitor/accounts/healthmodels/discoveryrules](https://learn.microsoft.com/en-us/azure/templates/microsoft.monitor/accounts/healthmodels/discoveryrules?pivots=deployment-language-bicep) | `2025-05-03-preview` | None |
+| `resolveArmResources` only | [Microsoft.Monitor/accounts/healthmodels/entities](https://learn.microsoft.com/en-us/azure/templates/microsoft.monitor/accounts/healthmodels/entities?pivots=deployment-language-bicep) | `2025-05-03-preview` | None |
+| `resolveArmResources` only | [Microsoft.Monitor/accounts/healthmodels/relationships](https://learn.microsoft.com/en-us/azure/templates/microsoft.monitor/accounts/healthmodels/relationships?pivots=deployment-language-bicep) | `2025-05-03-preview` | None |
+| `resolveArmResources` only | [Microsoft.Monitor/accounts/healthmodels/signaldefinitions](https://learn.microsoft.com/en-us/azure/templates/microsoft.monitor/accounts/healthmodels/signaldefinitions?pivots=deployment-language-bicep) | `2025-05-03-preview` | None |
