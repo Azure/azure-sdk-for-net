@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.OperationalInsights
                     yield break;
                 }
                 DataSourceListResult result = DataSourceListResult.FromResponse(response);
-                yield return Page<OperationalInsightsDataSourceData>.FromValues((IReadOnlyList<OperationalInsightsDataSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OperationalInsightsDataSourceData>.FromValues((IReadOnlyList<OperationalInsightsDataSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

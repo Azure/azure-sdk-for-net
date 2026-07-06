@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DataFactory
                     yield break;
                 }
                 DataFactoryManagedVirtualNetworkListResult result = DataFactoryManagedVirtualNetworkListResult.FromResponse(response);
-                yield return Page<DataFactoryManagedVirtualNetworkData>.FromValues((IReadOnlyList<DataFactoryManagedVirtualNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataFactoryManagedVirtualNetworkData>.FromValues((IReadOnlyList<DataFactoryManagedVirtualNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

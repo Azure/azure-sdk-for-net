@@ -82,13 +82,13 @@ namespace Azure.Provisioning.ContainerService
     {
         public AgentPoolUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> LatestNodeImageVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LatestNodeImageVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSType> OSType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerService.ContainerServiceOSType> OSType { get { throw null; } }
         public Azure.Provisioning.ContainerService.ContainerServiceAgentPool Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.AgentPoolUpgradeProfilePropertiesUpgradesItem> Upgrades { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ContainerService.AgentPoolUpgradeProfile FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -276,7 +276,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceAgentPool Parent { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerService.ContainerServiceMachineProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.ContainerServiceMachineProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -1271,8 +1271,8 @@ namespace Azure.Provisioning.ContainerService
     public partial class ManagedClusterUpgradeProfile : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ManagedClusterUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ManagedClusterPoolUpgradeProfile> AgentPoolProfiles { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerService.ManagedClusterPoolUpgradeProfile ControlPlaneProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.ManagedClusterPoolUpgradeProfile> AgentPoolProfiles { get { throw null; } }
+        public Azure.Provisioning.ContainerService.ManagedClusterPoolUpgradeProfile ControlPlaneProfile { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceManagedCluster Parent { get { throw null; } set { } }
@@ -1328,7 +1328,7 @@ namespace Azure.Provisioning.ContainerService
     {
         public MeshRevisionProfile(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.MeshRevision> MeshRevisions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerService.MeshRevision> MeshRevisions { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -1346,7 +1346,7 @@ namespace Azure.Provisioning.ContainerService
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ContainerService.ContainerServiceManagedCluster Parent { get { throw null; } set { } }
-        public Azure.Provisioning.ContainerService.MeshUpgradeProfileProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerService.MeshUpgradeProfileProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ContainerService.MeshUpgradeProfile FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

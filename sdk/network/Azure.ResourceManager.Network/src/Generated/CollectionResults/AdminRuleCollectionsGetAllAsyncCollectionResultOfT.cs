@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 AdminRuleCollectionListResult result = AdminRuleCollectionListResult.FromResponse(response);
-                yield return Page<AdminRuleGroupData>.FromValues((IReadOnlyList<AdminRuleGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AdminRuleGroupData>.FromValues((IReadOnlyList<AdminRuleGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

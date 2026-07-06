@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 ScheduledQueryRuleResourceCollection result = ScheduledQueryRuleResourceCollection.FromResponse(response);
-                yield return Page<ScheduledQueryRuleData>.FromValues((IReadOnlyList<ScheduledQueryRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ScheduledQueryRuleData>.FromValues((IReadOnlyList<ScheduledQueryRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
