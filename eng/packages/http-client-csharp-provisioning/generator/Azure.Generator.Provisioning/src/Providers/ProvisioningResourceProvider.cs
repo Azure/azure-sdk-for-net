@@ -292,7 +292,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var sig = new ConstructorSignature(
                     Type,
                     $"Creates a new {Name}.",
-                    MethodSignatureModifiers.Public,
+                    _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                     [bicepIdentifierParam, resourceVersionParam],
                     null,
                     initializer);
@@ -316,7 +316,7 @@ namespace Azure.Generator.Provisioning.Providers
             var baseSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
-                MethodSignatureModifiers.Public,
+                _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                 [bicepIdentifierParam, resourceVersionParam],
                 null,
                 baseInitializer);

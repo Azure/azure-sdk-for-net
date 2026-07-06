@@ -6,6 +6,7 @@ import "./backupPolicy.tsp";
 import "./item.tsp";
 import "./profileRevision.tsp";
 import "./extensionAssignment.tsp";
+import "./readOnlyResource.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
