@@ -14,9 +14,9 @@ namespace Azure.Provisioning.FrontDoor
     {
         /// <summary> 1.0. </summary>
         [DataMember(Name = "1.0")]
-        _10,
+        Tls1_0,
         /// <summary> 1.2. </summary>
         [DataMember(Name = "1.2")]
-        _12
+        Tls1_2
     }
 }

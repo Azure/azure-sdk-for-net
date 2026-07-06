@@ -270,9 +270,9 @@ namespace Azure.Provisioning.FrontDoor
     public enum FrontDoorRequiredMinimumTlsVersion
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.0")]
-        _10 = 0,
+        Tls1_0 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
-        _12 = 1,
+        Tls1_2 = 1,
     }
     public partial class FrontDoorResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
