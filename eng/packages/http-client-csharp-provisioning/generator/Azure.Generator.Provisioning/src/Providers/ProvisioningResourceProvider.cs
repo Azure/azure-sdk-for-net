@@ -502,7 +502,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var propertyName = prop.Name.ToIdentifierName();
                 // For singleton resources, the "name" property is output-only with a default value
                 string? defaultValue = null;
-                if (string.Equals(serializedName, "name", StringComparison.OrdinalIgnoreCase)
+                if (serializedName == "name"
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
                     defaultValue = singletonResourceName;
