@@ -17,11 +17,6 @@ namespace Azure.Security.Attestation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicyCertificatesModificationResult"/>. </summary>
-        internal PolicyCertificatesModificationResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PolicyCertificatesModificationResult"/>. </summary>
         /// <param name="certificateThumbprint">
         /// Hex encoded SHA1 Hash of the binary representation certificate which was added
         /// or removed
@@ -34,14 +29,5 @@ namespace Azure.Security.Attestation
             CertificateResolution = certificateResolution;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary>
-        /// Hex encoded SHA1 Hash of the binary representation certificate which was added
-        /// or removed
-        /// </summary>
-        public string CertificateThumbprint { get; }
-
-        /// <summary> The result of the operation. </summary>
-        public PolicyCertificateResolution? CertificateResolution { get; }
     }
 }
