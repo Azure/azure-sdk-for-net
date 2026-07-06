@@ -9,9 +9,7 @@ namespace Azure.ResourceManager.Education
     public static partial class EducationExtensions
     {
         public static Azure.Pageable<Azure.ResourceManager.Education.GrantDetailsResource> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, bool? includeAllocatedBudget = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Education.Models.OperationListResult> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Education.GrantDetailsResource> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, bool? includeAllocatedBudget = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Education.Models.OperationListResult>> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Education.JoinRequestDetailsCollection GetAllJoinRequestDetails(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Education.StudentDetailsCollection GetAllStudentDetails(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.Education.StudentLabDetailsCollection GetAllStudentLabDetails(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
@@ -304,9 +302,7 @@ namespace Azure.ResourceManager.Education.Mocking
     {
         protected MockableEducationTenantResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Education.GrantDetailsResource> GetAll(bool? includeAllocatedBudget = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Education.Models.OperationListResult> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Education.GrantDetailsResource> GetAllAsync(bool? includeAllocatedBudget = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Education.Models.OperationListResult>> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Education.StudentLabDetailsCollection GetAllStudentLabDetails() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Education.StudentLabDetailsResource> GetStudentLabDetails(string studentLabName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Education.StudentLabDetailsResource>> GetStudentLabDetailsAsync(string studentLabName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -316,22 +312,6 @@ namespace Azure.ResourceManager.Education.Mocking
 }
 namespace Azure.ResourceManager.Education.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionType : System.IEquatable<Azure.ResourceManager.Education.Models.ActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionType(string value) { throw null; }
-        public static Azure.ResourceManager.Education.Models.ActionType Internal { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Education.Models.ActionType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Education.Models.ActionType left, Azure.ResourceManager.Education.Models.ActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Education.Models.ActionType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Education.Models.ActionType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Education.Models.ActionType left, Azure.ResourceManager.Education.Models.ActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class Amount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.Amount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.Amount>
     {
         public Amount() { }
@@ -351,12 +331,9 @@ namespace Azure.ResourceManager.Education.Models
     {
         public static Azure.ResourceManager.Education.Models.Amount Amount(string currency = null, float? value = default(float?)) { throw null; }
         public static Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(float? maxStudentCount = default(float?)) { throw null; }
-        public static Azure.ResourceManager.Education.Models.EducationOperationInfo EducationOperationInfo(string name = null, bool? isDataAction = default(bool?), Azure.ResourceManager.Education.Models.OperationDisplay display = null, Azure.ResourceManager.Education.Models.Origin? origin = default(Azure.ResourceManager.Education.Models.Origin?), Azure.ResourceManager.Education.Models.ActionType? actionType = default(Azure.ResourceManager.Education.Models.ActionType?)) { throw null; }
         public static Azure.ResourceManager.Education.Models.EducationRedeemContent EducationRedeemContent(string redeemCode = null, string firstName = null, string lastName = null) { throw null; }
         public static Azure.ResourceManager.Education.GrantDetailsData GrantDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Education.Models.Amount offerCap = null, System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.GrantType? offerType = default(Azure.ResourceManager.Education.Models.GrantType?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.GrantStatus? status = default(Azure.ResourceManager.Education.Models.GrantStatus?), Azure.ResourceManager.Education.Models.Amount allocatedBudget = null) { throw null; }
         public static Azure.ResourceManager.Education.JoinRequestDetailsData JoinRequestDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string firstName = null, string lastName = null, string email = null, Azure.ResourceManager.Education.Models.JoinRequestStatus? status = default(Azure.ResourceManager.Education.Models.JoinRequestStatus?)) { throw null; }
-        public static Azure.ResourceManager.Education.Models.OperationDisplay OperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.Education.Models.OperationListResult OperationListResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Education.Models.EducationOperationInfo> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.ResourceManager.Education.StudentDetailsData StudentDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string firstName = null, string lastName = null, string email = null, Azure.ResourceManager.Education.Models.StudentRole? role = default(Azure.ResourceManager.Education.Models.StudentRole?), Azure.ResourceManager.Education.Models.Amount budget = null, string subscriptionId = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.StudentLabStatus? status = default(Azure.ResourceManager.Education.Models.StudentLabStatus?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string subscriptionAlias = null, System.DateTimeOffset? subscriptionInviteLastSentOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Education.StudentLabDetailsData StudentLabDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.StudentRole? role = default(Azure.ResourceManager.Education.Models.StudentRole?), Azure.ResourceManager.Education.Models.Amount budget = null, string subscriptionId = null, Azure.ResourceManager.Education.Models.StudentLabStatus? status = default(Azure.ResourceManager.Education.Models.StudentLabStatus?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string labScope = null) { throw null; }
     }
@@ -373,24 +350,6 @@ namespace Azure.ResourceManager.Education.Models
         Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EducationOperationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationOperationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationOperationInfo>
-    {
-        internal EducationOperationInfo() { }
-        public Azure.ResourceManager.Education.Models.ActionType? ActionType { get { throw null; } }
-        public Azure.ResourceManager.Education.Models.OperationDisplay Display { get { throw null; } }
-        public bool? IsDataAction { get { throw null; } }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.Education.Models.Origin? Origin { get { throw null; } }
-        protected virtual Azure.ResourceManager.Education.Models.EducationOperationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Education.Models.EducationOperationInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Education.Models.EducationOperationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationOperationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationOperationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Education.Models.EducationOperationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationOperationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationOperationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationOperationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EducationRedeemContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationRedeemContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationRedeemContent>
     {
@@ -475,56 +434,6 @@ namespace Azure.ResourceManager.Education.Models
         public static implicit operator Azure.ResourceManager.Education.Models.LabStatus (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Education.Models.LabStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Education.Models.LabStatus left, Azure.ResourceManager.Education.Models.LabStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class OperationDisplay : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.OperationDisplay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationDisplay>
-    {
-        internal OperationDisplay() { }
-        public string Description { get { throw null; } }
-        public string Operation { get { throw null; } }
-        public string Provider { get { throw null; } }
-        public string Resource { get { throw null; } }
-        protected virtual Azure.ResourceManager.Education.Models.OperationDisplay JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Education.Models.OperationDisplay PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Education.Models.OperationDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.OperationDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.OperationDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Education.Models.OperationDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationDisplay>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationDisplay>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class OperationListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.OperationListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationListResult>
-    {
-        internal OperationListResult() { }
-        public System.Uri NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Education.Models.EducationOperationInfo> Value { get { throw null; } }
-        protected virtual Azure.ResourceManager.Education.Models.OperationListResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Education.Models.OperationListResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Education.Models.OperationListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.OperationListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.OperationListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Education.Models.OperationListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.OperationListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Origin : System.IEquatable<Azure.ResourceManager.Education.Models.Origin>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Origin(string value) { throw null; }
-        public static Azure.ResourceManager.Education.Models.Origin System { get { throw null; } }
-        public static Azure.ResourceManager.Education.Models.Origin User { get { throw null; } }
-        public static Azure.ResourceManager.Education.Models.Origin UserSystem { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Education.Models.Origin other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Education.Models.Origin left, Azure.ResourceManager.Education.Models.Origin right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Education.Models.Origin (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Education.Models.Origin? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Education.Models.Origin left, Azure.ResourceManager.Education.Models.Origin right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

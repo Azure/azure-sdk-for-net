@@ -26,43 +26,6 @@ namespace Azure.ResourceManager.Education.Models
             return new EducationRedeemContent(redeemCode, firstName, lastName, default);
         }
 
-        /// <param name="value"> The Operation items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.OperationListResult"/> instance for mocking. </returns>
-        public static OperationListResult OperationListResult(IEnumerable<EducationOperationInfo> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<EducationOperationInfo>();
-
-            return new OperationListResult((value ?? new ChangeTrackingList<EducationOperationInfo>()).ToList(), nextLink, default);
-        }
-
-        /// <param name="name"> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </param>
-        /// <param name="isDataAction"> Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. </param>
-        /// <param name="display"> Localized display information for this particular operation. </param>
-        /// <param name="origin"> The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is "user,system". </param>
-        /// <param name="actionType"> Extensible enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs. </param>
-        /// <returns> A new <see cref="Models.EducationOperationInfo"/> instance for mocking. </returns>
-        public static EducationOperationInfo EducationOperationInfo(string name = default, bool? isDataAction = default, OperationDisplay display = default, Origin? origin = default, ActionType? actionType = default)
-        {
-            return new EducationOperationInfo(
-                name,
-                isDataAction,
-                display,
-                origin,
-                actionType,
-                default);
-        }
-
-        /// <param name="provider"> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </param>
-        /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </param>
-        /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </param>
-        /// <param name="description"> The short, localized friendly description of the operation; suitable for tool tips and detailed views. </param>
-        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
-        public static OperationDisplay OperationDisplay(string provider = default, string resource = default, string operation = default, string description = default)
-        {
-            return new OperationDisplay(provider, resource, operation, description, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

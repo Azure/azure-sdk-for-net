@@ -374,11 +374,8 @@ namespace Azure.ResourceManager.Education
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<OperationListResult>> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static async Task<Response<OperationListResult>> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return await GetMockableEducationTenantResource(tenantResource).GetAllAsync(cancellationToken).ConfigureAwait(false);
         }
 
@@ -391,11 +388,8 @@ namespace Azure.ResourceManager.Education
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<OperationListResult> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static Response<OperationListResult> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableEducationTenantResource(tenantResource).GetAll(cancellationToken);
         }
 

@@ -4,8 +4,4 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Initial release of the `Azure.ResourceManager.Education` management library, generated from TypeSpec for API version 2021-12-01-preview.

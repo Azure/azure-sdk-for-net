@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> REST API Operation. </summary>
-    public partial class EducationOperationInfo
+    internal partial class EducationOperationInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

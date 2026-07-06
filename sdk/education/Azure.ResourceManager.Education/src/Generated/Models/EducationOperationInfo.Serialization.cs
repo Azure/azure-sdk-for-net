@@ -14,7 +14,7 @@ using Azure.ResourceManager.Education;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> REST API Operation. </summary>
-    public partial class EducationOperationInfo : IJsonModel<EducationOperationInfo>
+    internal partial class EducationOperationInfo : IJsonModel<EducationOperationInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

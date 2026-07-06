@@ -15,7 +15,7 @@ using Azure.ResourceManager.Education;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
-    public partial class OperationListResult : IJsonModel<OperationListResult>
+    internal partial class OperationListResult : IJsonModel<OperationListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

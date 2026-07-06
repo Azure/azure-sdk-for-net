@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Education.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OperationListResult>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableEducationTenantResource.GetAll");
             scope.Start();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Education.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationListResult> GetAll(CancellationToken cancellationToken = default)
+        internal virtual Response<OperationListResult> GetAll(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableEducationTenantResource.GetAll");
             scope.Start();
