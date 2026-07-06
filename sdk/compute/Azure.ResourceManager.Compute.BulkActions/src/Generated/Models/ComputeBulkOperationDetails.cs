@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="operationKind"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadlineOn"> Deadline for the operation. </param>
-        /// <param name="deadlineType"> Type of deadline of the operation. </param>
+        /// <param name="deadlineKind"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
         /// <param name="timeZone"> Timezone for the operation. </param>
         /// <param name="error"> Operation level errors if they exist. </param>
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineType, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineKind, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
             OperationKind = operationKind;
             SubscriptionId = subscriptionId;
             DeadlineOn = deadlineOn;
-            DeadlineType = deadlineType;
+            DeadlineKind = deadlineKind;
             State = state;
             TimeZone = timeZone;
             Error = error;
@@ -69,9 +69,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Deadline for the operation. </summary>
         public DateTimeOffset? DeadlineOn { get; }
-
-        /// <summary> Type of deadline of the operation. </summary>
-        public BulkActionDeadlineKind? DeadlineType { get; }
 
         /// <summary> Current state of the operation. </summary>
         public BulkActionOperationState? State { get; }

@@ -210,8 +210,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
 
                 if (r.Operation.DeadlineOn.HasValue)
                 {
-                    ClassicAssert.AreEqual(BulkActionDeadlineKind.InitiateAt, r.Operation.DeadlineType,
-                        $"Unexpected DeadlineType for {r.ResourceId}.");
+                    ClassicAssert.AreEqual(BulkActionDeadlineKind.InitiateAt, r.Operation.DeadlineKind,
+                        $"Unexpected DeadlineKind for {r.ResourceId}.");
                 }
             }
         }

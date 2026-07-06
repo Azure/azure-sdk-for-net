@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("deadline"u8);
                 writer.WriteStringValue(DeadlineOn.Value, "O");
             }
-            if (Optional.IsDefined(DeadlineType))
+            if (Optional.IsDefined(DeadlineKind))
             {
                 writer.WritePropertyName("deadlineType"u8);
-                writer.WriteStringValue(DeadlineType.Value.ToString());
+                writer.WriteStringValue(DeadlineKind.Value.ToString());
             }
             if (Optional.IsDefined(State))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ComputeBulkOperationKind? operationKind = default;
             Guid? subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
-            BulkActionDeadlineKind? deadlineType = default;
+            BulkActionDeadlineKind? deadlineKind = default;
             BulkActionOperationState? state = default;
             string timeZone = default;
             ComputeBulkOperationError error = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    deadlineType = new BulkActionDeadlineKind(prop.Value.GetString());
+                    deadlineKind = new BulkActionDeadlineKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 operationKind,
                 subscriptionId,
                 deadlineOn,
-                deadlineType,
+                deadlineKind,
                 state,
                 timeZone,
                 error,

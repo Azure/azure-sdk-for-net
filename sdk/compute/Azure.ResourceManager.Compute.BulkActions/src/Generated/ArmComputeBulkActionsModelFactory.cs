@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="operationKind"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadlineOn"> Deadline for the operation. </param>
-        /// <param name="deadlineType"> Type of deadline of the operation. </param>
+        /// <param name="deadlineKind"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
         /// <param name="timeZone"> Timezone for the operation. </param>
         /// <param name="error"> Operation level errors if they exist. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationDetails"/> instance for mocking. </returns>
-        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationKind? operationKind = default, Guid? subscriptionId = default, DateTimeOffset? deadlineOn = default, BulkActionDeadlineKind? deadlineType = default, BulkActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
+        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationKind? operationKind = default, Guid? subscriptionId = default, DateTimeOffset? deadlineOn = default, BulkActionDeadlineKind? deadlineKind = default, BulkActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
         {
             return new ComputeBulkOperationDetails(
                 operationId,
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 operationKind,
                 subscriptionId,
                 deadlineOn,
-                deadlineType,
+                deadlineKind,
                 state,
                 timeZone,
                 error,
