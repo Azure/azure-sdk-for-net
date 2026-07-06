@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
-            if (Optional.IsCollectionDefined(VirtualRouterIps))
+            if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
                 writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
-                foreach (string item in VirtualRouterIps)
+                foreach (string item in VirtualRouterIPs)
                 {
                     if (item == null)
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             long? virtualRouterAsn = default;
-            IList<string> virtualRouterIps = default;
+            IList<string> virtualRouterIPs = default;
             NetworkSubResource hostedSubnet = default;
             NetworkSubResource hostedGateway = default;
             IReadOnlyList<WritableSubResource> peerings = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    virtualRouterIps = array;
+                    virtualRouterIPs = array;
                     continue;
                 }
                 if (prop.NameEquals("hostedSubnet"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new VirtualRouterPropertiesFormat(
                 virtualRouterAsn,
-                virtualRouterIps ?? new ChangeTrackingList<string>(),
+                virtualRouterIPs ?? new ChangeTrackingList<string>(),
                 hostedSubnet,
                 hostedGateway,
                 peerings ?? new ChangeTrackingList<WritableSubResource>(),

@@ -28,12 +28,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
+        /// <param name="interconnectGroupProfile"> Specifies the interconnect group profile to associate with the virtual machine. Minimum api-version: 2026-03-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkProfile(IList<VirtualMachineNetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineNetworkProfile(IList<VirtualMachineNetworkInterfaceReference> networkInterfaces, NetworkApiVersion? networkApiVersion, IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations, InterconnectGroupProfile interconnectGroupProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaces = networkInterfaces;
             NetworkApiVersion = networkApiVersion;
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
+            InterconnectGroupProfile = interconnectGroupProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,5 +47,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the networking configurations that will be used to create the virtual machine networking resources. </summary>
         public IList<VirtualMachineNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get; }
+
+        /// <summary> Specifies the interconnect group profile to associate with the virtual machine. Minimum api-version: 2026-03-01. </summary>
+        public InterconnectGroupProfile InterconnectGroupProfile { get; set; }
     }
 }

@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNetworkInterfaceConfigurationProperties"/>. </summary>
         public VirtualApplianceNetworkInterfaceConfigurationProperties()
         {
-            IpConfigurations = new ChangeTrackingList<VirtualApplianceIPConfiguration>();
+            VirtualApplianceNetworkInterfaceIPConfigurations = new ChangeTrackingList<VirtualApplianceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNetworkInterfaceConfigurationProperties"/>. </summary>
-        /// <param name="ipConfigurations"></param>
+        /// <param name="virtualApplianceNetworkInterfaceIPConfigurations"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceNetworkInterfaceConfigurationProperties(IList<VirtualApplianceIPConfiguration> ipConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualApplianceNetworkInterfaceConfigurationProperties(IList<VirtualApplianceIPConfiguration> virtualApplianceNetworkInterfaceIPConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfigurations = ipConfigurations;
+            VirtualApplianceNetworkInterfaceIPConfigurations = virtualApplianceNetworkInterfaceIPConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the IpConfigurations. </summary>
+        /// <summary> Gets the VirtualApplianceNetworkInterfaceIPConfigurations. </summary>
         [WirePath("ipConfigurations")]
-        public IList<VirtualApplianceIPConfiguration> IpConfigurations { get; }
+        public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIPConfigurations { get; }
     }
 }

@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="LearnedIPPrefixesListResult"/>. </summary>
         internal LearnedIPPrefixesListResult()
         {
-            IpPrefixes = new ChangeTrackingList<string>();
+            IPPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LearnedIPPrefixesListResult"/>. </summary>
         /// <param name="ipPrefixes"> IP Prefix value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LearnedIPPrefixesListResult(IList<string> ipPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LearnedIPPrefixesListResult(IReadOnlyList<string> ipPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpPrefixes = ipPrefixes;
+            IPPrefixes = ipPrefixes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Prefix value. </summary>
         [WirePath("ipPrefixes")]
-        public IList<string> IpPrefixes { get; }
+        public IReadOnlyList<string> IPPrefixes { get; }
     }
 }

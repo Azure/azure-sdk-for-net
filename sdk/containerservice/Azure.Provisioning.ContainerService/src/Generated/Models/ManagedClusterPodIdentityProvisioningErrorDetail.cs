@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" });
             _target = DefineProperty<string>(nameof(Target), new string[] { "target" });
             _details = DefineListProperty<ManagedClusterPodIdentityProvisioningErrorDetail>(nameof(Details), new string[] { "details" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentityProvisioningErrorDetail that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

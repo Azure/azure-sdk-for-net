@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _controlPlaneProfile = DefineModelProperty<ManagedClusterPoolUpgradeProfile>(nameof(ControlPlaneProfile), new string[] { "controlPlaneProfile" }, isRequired: true);
             _agentPoolProfiles = DefineListProperty<ManagedClusterPoolUpgradeProfile>(nameof(AgentPoolProfiles), new string[] { "agentPoolProfiles" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterUpgradeProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

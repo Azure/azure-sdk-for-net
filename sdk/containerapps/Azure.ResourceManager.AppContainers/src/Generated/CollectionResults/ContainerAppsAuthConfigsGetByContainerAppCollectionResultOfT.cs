@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 AuthConfigCollection result = AuthConfigCollection.FromResponse(response);
-                yield return Page<ContainerAppAuthConfigData>.FromValues((IReadOnlyList<ContainerAppAuthConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppAuthConfigData>.FromValues((IReadOnlyList<ContainerAppAuthConfigData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

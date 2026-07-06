@@ -1182,7 +1182,7 @@
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @benbp
+/eng/                                                              @danieljurek @benbp @raych1
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
@@ -1190,7 +1190,7 @@
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @raych1 @benbp
 
 # Add owners for package dependency changes
 /eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire

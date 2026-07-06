@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AutoscaleSettingPatch : IUtf8JsonSerializable, IJsonModel<AutoscaleSettingPatch>
+    /// <summary> The autoscale setting object for patch operations. </summary>
+    public partial class AutoscaleSettingPatch : IJsonModel<AutoscaleSettingPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleSettingPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoscaleSettingPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutoscaleSettingPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoscaleSettingPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutoscaleSettingPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoscaleSettingPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoscaleSettingPatch IPersistableModel<AutoscaleSettingPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoscaleSettingPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="autoscaleSettingPatch"> The <see cref="AutoscaleSettingPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AutoscaleSettingPatch autoscaleSettingPatch)
+        {
+            if (autoscaleSettingPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(autoscaleSettingPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoscaleSettingPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoscaleSettingPatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -41,81 +92,29 @@ namespace Azure.ResourceManager.Monitor.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Profiles))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("profiles"u8);
-                writer.WriteStartArray();
-                foreach (var item in Profiles)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                if (Notifications != null)
-                {
-                    writer.WritePropertyName("notifications"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Notifications)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("notifications");
-                }
-            }
-            if (Optional.IsDefined(IsEnabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
-            }
-            if (Optional.IsDefined(PredictiveAutoscalePolicy))
-            {
-                if (PredictiveAutoscalePolicy != null)
-                {
-                    writer.WritePropertyName("predictiveAutoscalePolicy"u8);
-                    writer.WriteObjectValue(PredictiveAutoscalePolicy, options);
-                }
-                else
-                {
-                    writer.WriteNull("predictiveAutoscalePolicy");
-                }
-            }
-            if (Optional.IsDefined(AutoscaleSettingName))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(AutoscaleSettingName);
-            }
-            if (Optional.IsDefined(TargetResourceId))
-            {
-                writer.WritePropertyName("targetResourceUri"u8);
-                writer.WriteStringValue(TargetResourceId);
-            }
-            if (Optional.IsDefined(TargetResourceLocation))
-            {
-                writer.WritePropertyName("targetResourceLocation"u8);
-                writer.WriteStringValue(TargetResourceLocation.Value);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -124,182 +123,72 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        AutoscaleSettingPatch IJsonModel<AutoscaleSettingPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoscaleSettingPatch IJsonModel<AutoscaleSettingPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoscaleSettingPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoscaleSettingPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutoscaleSettingPatch(document.RootElement, options);
         }
 
-        internal static AutoscaleSettingPatch DeserializeAutoscaleSettingPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutoscaleSettingPatch DeserializeAutoscaleSettingPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            IList<AutoscaleProfile> profiles = default;
-            IList<AutoscaleNotification> notifications = default;
-            bool? enabled = default;
-            PredictiveAutoscalePolicy predictiveAutoscalePolicy = default;
-            string name = default;
-            ResourceIdentifier targetResourceUri = default;
-            AzureLocation? targetResourceLocation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            AutoscaleSettingProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("profiles"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AutoscaleProfile> array = new List<AutoscaleProfile>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item, options));
-                            }
-                            profiles = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("notifications"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                notifications = null;
-                                continue;
-                            }
-                            List<AutoscaleNotification> array = new List<AutoscaleNotification>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item, options));
-                            }
-                            notifications = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("predictiveAutoscalePolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                predictiveAutoscalePolicy = null;
-                                continue;
-                            }
-                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("name"u8))
-                        {
-                            name = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetResourceUri = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceLocation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetResourceLocation = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = AutoscaleSettingProperties.DeserializeAutoscaleSettingProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AutoscaleSettingPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                profiles ?? new ChangeTrackingList<AutoscaleProfile>(),
-                notifications ?? new ChangeTrackingList<AutoscaleNotification>(),
-                enabled,
-                predictiveAutoscalePolicy,
-                name,
-                targetResourceUri,
-                targetResourceLocation,
-                serializedAdditionalRawData);
+            return new AutoscaleSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AutoscaleSettingPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutoscaleSettingPatch IPersistableModel<AutoscaleSettingPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutoscaleSettingPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoscaleSettingPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutoscaleSettingPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

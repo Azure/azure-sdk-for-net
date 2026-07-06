@@ -75,6 +75,10 @@ namespace Azure.Provisioning.CostManagement
             _suspensionCode = DefineProperty<string>(nameof(SuspensionCode), new string[] { "suspensionCode" });
             _suspensionReason = DefineProperty<string>(nameof(SuspensionReason), new string[] { "suspensionReason" });
             _suspensionOn = DefineProperty<DateTimeOffset>(nameof(SuspensionOn), new string[] { "suspensionTime" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportSuspensionContext that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

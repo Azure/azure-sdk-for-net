@@ -203,6 +203,10 @@ namespace Azure.Provisioning.Cdn
             _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" }, isRequired: true);
             _extendedProperties = DefineDictionaryProperty<string>(nameof(ExtendedProperties), new string[] { "extendedProperties" });
             _validationProperties = DefineModelProperty<DomainValidationProperties>(nameof(ValidationProperties), new string[] { "validationProperties" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FrontDoorCustomDomainProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

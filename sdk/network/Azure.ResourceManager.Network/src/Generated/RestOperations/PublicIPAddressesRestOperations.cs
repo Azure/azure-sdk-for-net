@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateReserveCloudServicePublicIpAddressRequest(Guid subscriptionId, string resourceGroupName, string publicIpAddressName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateReserveCloudServicePublicIPAddressRequest(Guid subscriptionId, string resourceGroupName, string publicIpAddressName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateDisassociateCloudServiceReservedPublicIpRequest(Guid subscriptionId, string resourceGroupName, string publicIpAddressName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDisassociateCloudServiceReservedPublicIPRequest(Guid subscriptionId, string resourceGroupName, string publicIpAddressName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

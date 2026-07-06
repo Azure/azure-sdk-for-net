@@ -75,6 +75,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _logAnalyticsWorkspaceResourceId = DefineProperty<ResourceIdentifier>(nameof(LogAnalyticsWorkspaceResourceId), new string[] { "logAnalyticsWorkspaceResourceId" });
             _securityMonitoring = DefineModelProperty<ManagedClusterSecurityProfileDefenderSecurityMonitoring>(nameof(SecurityMonitoring), new string[] { "securityMonitoring" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterSecurityProfileDefender that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

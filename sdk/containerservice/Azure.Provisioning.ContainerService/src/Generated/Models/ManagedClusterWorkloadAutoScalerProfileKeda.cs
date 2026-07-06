@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isKedaEnabled = DefineProperty<bool>(nameof(IsKedaEnabled), new string[] { "enabled" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterWorkloadAutoScalerProfileKeda that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

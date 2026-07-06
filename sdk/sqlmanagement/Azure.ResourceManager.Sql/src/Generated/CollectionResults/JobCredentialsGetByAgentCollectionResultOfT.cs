@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 JobCredentialListResult result = JobCredentialListResult.FromResponse(response);
-                yield return Page<SqlServerJobCredentialData>.FromValues((IReadOnlyList<SqlServerJobCredentialData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlServerJobCredentialData>.FromValues((IReadOnlyList<SqlServerJobCredentialData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

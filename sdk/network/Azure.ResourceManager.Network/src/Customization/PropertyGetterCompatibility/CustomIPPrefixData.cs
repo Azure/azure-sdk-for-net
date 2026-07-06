@@ -3,9 +3,14 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the CustomIPPrefixData type. </summary>
+    [CodeGenSuppress("ChildCustomIPPrefixes")]
+    [CodeGenSuppress("CustomIPPrefixParent")]
+    [CodeGenSuppress("PublicIPPrefixes")]
     public partial class CustomIPPrefixData
     {
         /// <summary> Compatibility member. </summary>

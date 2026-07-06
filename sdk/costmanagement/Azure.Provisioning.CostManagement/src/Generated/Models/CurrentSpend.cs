@@ -50,6 +50,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _amount = DefineProperty<float>(nameof(Amount), new string[] { "amount" }, isOutput: true);
             _unit = DefineProperty<string>(nameof(Unit), new string[] { "unit" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CurrentSpend that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

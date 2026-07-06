@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("autoScaleConfiguration"u8);
                 writer.WriteObjectValue(AutoScaleConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VirtualNetworkGatewayIPConfiguration item in IpConfigurations)
+                foreach (VirtualNetworkGatewayIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (Optional.IsDefined(EnablePrivateIpAddress))
+            if (Optional.IsDefined(EnablePrivateIPAddress))
             {
                 writer.WritePropertyName("enablePrivateIpAddress"u8);
-                writer.WriteBooleanValue(EnablePrivateIpAddress.Value);
+                writer.WriteBooleanValue(EnablePrivateIPAddress.Value);
             }
             if (Optional.IsDefined(VirtualNetworkGatewayMigrationStatus))
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network.Models
             VpnType? vpnType = default;
             VpnGatewayGeneration? vpnGatewayGeneration = default;
             bool? enableBgp = default;
-            bool? enablePrivateIpAddress = default;
+            bool? enablePrivateIPAddress = default;
             VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus = default;
             bool? activeActive = default;
             bool? enableHighBandwidthVpnGateway = default;
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    enablePrivateIpAddress = prop.Value.GetBoolean();
+                    enablePrivateIPAddress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("virtualNetworkGatewayMigrationStatus"u8))
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Network.Models
                 vpnType,
                 vpnGatewayGeneration,
                 enableBgp,
-                enablePrivateIpAddress,
+                enablePrivateIPAddress,
                 virtualNetworkGatewayMigrationStatus,
                 activeActive,
                 enableHighBandwidthVpnGateway,

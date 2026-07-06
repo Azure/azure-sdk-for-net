@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetVMSecurityRulesRequest(Guid subscriptionId, string resourceGroupName, string networkWatcherName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetVmSecurityRulesRequest(Guid subscriptionId, string resourceGroupName, string networkWatcherName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

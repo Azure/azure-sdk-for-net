@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpAddressType))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStartArray();
-                foreach (IpamIPType item in IpAddressType)
+                foreach (IpamIPType item in IPAddressType)
                 {
                     writer.WriteStringValue(item.ToString());
                 }

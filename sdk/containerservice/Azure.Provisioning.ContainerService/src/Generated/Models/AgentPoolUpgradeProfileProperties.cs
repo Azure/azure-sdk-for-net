@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerService
             _osType = DefineProperty<ContainerServiceOSType>(nameof(OSType), new string[] { "osType" }, isRequired: true);
             _upgrades = DefineListProperty<AgentPoolUpgradeProfilePropertiesUpgradesItem>(nameof(Upgrades), new string[] { "upgrades" });
             _latestNodeImageVersion = DefineProperty<string>(nameof(LatestNodeImageVersion), new string[] { "latestNodeImageVersion" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolUpgradeProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _versions = DefineListProperty<string>(nameof(Versions), new string[] { "versions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CompatibleVersions that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

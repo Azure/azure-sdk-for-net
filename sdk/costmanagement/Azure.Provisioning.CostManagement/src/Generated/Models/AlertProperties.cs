@@ -211,6 +211,10 @@ namespace Azure.Provisioning.CostManagement
             _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modificationTime" });
             _statusModificationUserName = DefineProperty<string>(nameof(StatusModificationUserName), new string[] { "statusModificationUserName" });
             _statusModifiedOn = DefineProperty<DateTimeOffset>(nameof(StatusModifiedOn), new string[] { "statusModificationTime" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AlertProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

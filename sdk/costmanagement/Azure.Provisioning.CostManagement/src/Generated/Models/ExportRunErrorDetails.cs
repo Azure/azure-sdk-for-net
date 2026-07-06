@@ -47,6 +47,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" }, isOutput: true);
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportRunErrorDetails that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

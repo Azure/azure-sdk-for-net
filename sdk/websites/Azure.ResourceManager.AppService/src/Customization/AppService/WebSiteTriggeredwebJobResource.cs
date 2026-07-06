@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -6,6 +6,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService
@@ -35,12 +36,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RunTriggeredWebJobSlotAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJobSlot");
+            TryGetApiVersion(WebSiteSlotTriggeredWebJobResource.ResourceType, out string apiVersion);
+            var clientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            var restClient = new TriggeredWebJobs(clientDiagnostics, Pipeline, Endpoint, apiVersion ?? "2026-03-15");
+            using var scope = clientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJobSlot");
             scope.Start();
             try
             {
-                var response = await _webSiteTriggeredwebJobWebAppsRestClient.RunTriggeredWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                using var message = restClient.CreateRunTriggeredWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -65,12 +70,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RunTriggeredWebJobSlot(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJobSlot");
+            TryGetApiVersion(WebSiteSlotTriggeredWebJobResource.ResourceType, out string apiVersion);
+            var clientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            var restClient = new TriggeredWebJobs(clientDiagnostics, Pipeline, Endpoint, apiVersion ?? "2026-03-15");
+            using var scope = clientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJobSlot");
             scope.Start();
             try
             {
-                var response = _webSiteTriggeredwebJobWebAppsRestClient.RunTriggeredWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                using var message = restClient.CreateRunTriggeredWebJobSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {

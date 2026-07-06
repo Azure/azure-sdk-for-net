@@ -84,21 +84,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpRanges))
+            if (Optional.IsCollectionDefined(SourceIPRanges))
             {
                 writer.WritePropertyName("sourceIpRanges"u8);
                 writer.WriteStartArray();
-                foreach (QosIPRange item in SourceIpRanges)
+                foreach (QosIPRange item in SourceIPRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationIpRanges))
+            if (Optional.IsCollectionDefined(DestinationIPRanges))
             {
                 writer.WritePropertyName("destinationIpRanges"u8);
                 writer.WriteStartArray();
-                foreach (QosIPRange item in DestinationIpRanges)
+                foreach (QosIPRange item in DestinationIPRanges)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IList<int> markings = default;
-            IList<QosIPRange> sourceIpRanges = default;
-            IList<QosIPRange> destinationIpRanges = default;
+            IList<QosIPRange> sourceIPRanges = default;
+            IList<QosIPRange> destinationIPRanges = default;
             IList<QosPortRange> sourcePortRanges = default;
             IList<QosPortRange> destinationPortRanges = default;
             ProtocolType? protocol = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
-                    sourceIpRanges = array;
+                    sourceIPRanges = array;
                     continue;
                 }
                 if (prop.NameEquals("destinationIpRanges"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(QosIPRange.DeserializeQosIPRange(item, options));
                     }
-                    destinationIpRanges = array;
+                    destinationIPRanges = array;
                     continue;
                 }
                 if (prop.NameEquals("sourcePortRanges"u8))
@@ -266,8 +266,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new DscpQosDefinition(
                 markings ?? new ChangeTrackingList<int>(),
-                sourceIpRanges ?? new ChangeTrackingList<QosIPRange>(),
-                destinationIpRanges ?? new ChangeTrackingList<QosIPRange>(),
+                sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(),
+                destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
                 sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
                 destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
                 protocol,

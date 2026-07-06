@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 DscpConfigurationListResult result = DscpConfigurationListResult.FromResponse(response);
-                yield return Page<DscpConfigurationData>.FromValues((IReadOnlyList<DscpConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DscpConfigurationData>.FromValues((IReadOnlyList<DscpConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
