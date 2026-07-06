@@ -5,7 +5,7 @@ namespace Azure.Provisioning.KeyVault
         public DeletedKeyVault(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.DeletedKeyVaultProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.DeletedKeyVaultProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.DeletedKeyVault FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -30,7 +30,7 @@ namespace Azure.Provisioning.KeyVault
         public DeletedManagedHsm(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.KeyVault.DeletedManagedHsmProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.DeletedManagedHsmProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.KeyVault.DeletedManagedHsm FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

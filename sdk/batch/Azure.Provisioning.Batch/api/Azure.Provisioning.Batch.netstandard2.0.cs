@@ -92,8 +92,8 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Batch.BatchAccountDetector FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -600,7 +600,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
         public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Batch.BatchPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -920,7 +920,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
-        public Azure.Provisioning.Batch.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Batch.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Batch.NetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
