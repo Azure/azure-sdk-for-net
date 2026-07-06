@@ -25,7 +25,7 @@ namespace Azure.Data.AppConfiguration.Tests
         private FeatureFlagClient GetClient(bool skipInstrumentation = false)
         {
             FeatureFlagClientOptions clientOptions = new FeatureFlagClientOptions(
-                Enum.Parse<FeatureFlagClientOptions.ServiceVersion>(_serviceVersion.ToString()));
+                (FeatureFlagClientOptions.ServiceVersion)Enum.Parse(typeof(FeatureFlagClientOptions.ServiceVersion), _serviceVersion.ToString()));
             FeatureFlagClientOptions options = InstrumentClientOptions(clientOptions);
             // Set audience AFTER InstrumentClientOptions, as it might reset the options
             options.Audience = TestEnvironment.GetAudience();
