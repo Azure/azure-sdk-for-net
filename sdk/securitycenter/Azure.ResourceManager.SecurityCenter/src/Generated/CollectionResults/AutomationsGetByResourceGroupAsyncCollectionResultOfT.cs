@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.SecurityCenter
                     yield break;
                 }
                 AutomationList result = AutomationList.FromResponse(response);
-                yield return Page<SecurityAutomationData>.FromValues((IReadOnlyList<SecurityAutomationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SecurityAutomationData>.FromValues((IReadOnlyList<SecurityAutomationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

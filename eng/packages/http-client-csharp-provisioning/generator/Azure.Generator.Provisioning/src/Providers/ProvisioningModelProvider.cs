@@ -63,6 +63,7 @@ namespace Azure.Generator.Provisioning.Providers
             return new ProvisioningPropertyInfo(
                 property.Name.ToIdentifierName(),
                 property.IsReadOnly,
+                !property.IsReadOnly,
                 property.IsRequired,
                 [serializedName]);
         }

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 ManagedDatabaseListResult result = ManagedDatabaseListResult.FromResponse(response);
-                yield return Page<ManagedDatabaseData>.FromValues((IReadOnlyList<ManagedDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedDatabaseData>.FromValues((IReadOnlyList<ManagedDatabaseData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

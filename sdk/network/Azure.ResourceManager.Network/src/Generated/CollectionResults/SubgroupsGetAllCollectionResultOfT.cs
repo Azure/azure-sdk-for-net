@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 SubgroupListResult result = SubgroupListResult.FromResponse(response);
-                yield return Page<InterconnectGroupSubgroupData>.FromValues((IReadOnlyList<InterconnectGroupSubgroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<InterconnectGroupSubgroupData>.FromValues((IReadOnlyList<InterconnectGroupSubgroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

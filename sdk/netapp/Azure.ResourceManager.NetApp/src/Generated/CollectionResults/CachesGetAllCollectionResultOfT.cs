@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 CacheList result = CacheList.FromResponse(response);
-                yield return Page<NetAppCacheData>.FromValues((IReadOnlyList<NetAppCacheData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetAppCacheData>.FromValues((IReadOnlyList<NetAppCacheData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

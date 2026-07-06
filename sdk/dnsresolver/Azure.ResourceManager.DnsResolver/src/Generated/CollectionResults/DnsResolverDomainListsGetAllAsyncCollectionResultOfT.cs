@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.DnsResolver
                     yield break;
                 }
                 DnsResolverDomainListListResult result = DnsResolverDomainListListResult.FromResponse(response);
-                yield return Page<DnsResolverDomainListData>.FromValues((IReadOnlyList<DnsResolverDomainListData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DnsResolverDomainListData>.FromValues((IReadOnlyList<DnsResolverDomainListData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

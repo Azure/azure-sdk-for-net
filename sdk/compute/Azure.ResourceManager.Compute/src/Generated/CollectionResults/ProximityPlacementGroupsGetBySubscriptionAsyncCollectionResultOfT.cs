@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 ProximityPlacementGroupListResult result = ProximityPlacementGroupListResult.FromResponse(response);
-                yield return Page<ProximityPlacementGroupData>.FromValues((IReadOnlyList<ProximityPlacementGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ProximityPlacementGroupData>.FromValues((IReadOnlyList<ProximityPlacementGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
