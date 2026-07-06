@@ -29,10 +29,12 @@ namespace Azure.Security.Attestation
     [ModelReaderWriterBuildable(typeof(JsonWebKey))]
     [ModelReaderWriterBuildable(typeof(JsonWebKeySet))]
     [ModelReaderWriterBuildable(typeof(OpenIDConfigurationResponse))]
+    [ModelReaderWriterBuildable(typeof(PolicyCertificateModification))]
     [ModelReaderWriterBuildable(typeof(PolicyCertificatesModificationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyCertificatesModifyResponse))]
     [ModelReaderWriterBuildable(typeof(PolicyCertificatesResponse))]
     [ModelReaderWriterBuildable(typeof(PolicyCertificatesResult))]
+    [ModelReaderWriterBuildable(typeof(PolicyModificationResult))]
     [ModelReaderWriterBuildable(typeof(PolicyResponse))]
     [ModelReaderWriterBuildable(typeof(RemoveRequest))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
@@ -41,6 +43,7 @@ namespace Azure.Security.Attestation
     [ModelReaderWriterBuildable(typeof(StoredAttestationPolicy))]
     [ModelReaderWriterBuildable(typeof(TcbBaseline))]
     [ModelReaderWriterBuildable(typeof(TcbBaselineResult))]
+    [ModelReaderWriterBuildable(typeof(TpmAttestationRequest))]
     [ModelReaderWriterBuildable(typeof(TpmAttestationResponse))]
     public partial class AzureSecurityAttestationContext : ModelReaderWriterContext
     {

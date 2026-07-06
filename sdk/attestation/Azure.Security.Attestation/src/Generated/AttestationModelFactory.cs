@@ -24,6 +24,14 @@ namespace Azure.Security.Attestation
             return new TpmAttestationResponse(data, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Attestation request for Trusted Platform Module (TPM) attestation. </summary>
+        /// <param name="data"> Protocol data containing artifacts for attestation. </param>
+        /// <returns> A new <see cref="Attestation.TpmAttestationRequest"/> instance for mocking. </returns>
+        public static TpmAttestationRequest TpmAttestationRequest(BinaryData data = default)
+        {
+            return new TpmAttestationRequest(data, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The result of a policy certificate modification. </summary>
         /// <param name="certificateThumbprint">
         /// Hex encoded SHA1 Hash of the binary representation certificate which was added

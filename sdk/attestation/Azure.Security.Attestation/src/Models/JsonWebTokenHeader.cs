@@ -3,14 +3,12 @@
 
 using System;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents the standardized claims in the header of a JSON Web Token.
     /// </summary>
-    [CodeGenModel("JsonWebTokenHeader")]
     internal partial class JsonWebTokenHeader
     {
         /// <summary>

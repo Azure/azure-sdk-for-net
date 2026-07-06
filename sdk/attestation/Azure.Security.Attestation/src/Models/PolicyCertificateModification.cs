@@ -47,4 +47,3 @@ namespace Azure.Security.Attestation
         internal X509Certificate2 PolicyCertificate { get; }
     }
 }
-}

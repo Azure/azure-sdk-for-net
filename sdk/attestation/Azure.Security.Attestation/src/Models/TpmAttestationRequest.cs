@@ -2,22 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents a request for a TPM attestation call. See <seealso href="https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol"/> for more information.
     /// </summary>
-    [CodeGenModel("TpmAttestationRequest")]
+    [CodeGenType("TpmAttestationRequest")]
     public partial class TpmAttestationRequest
     {
         /// <summary>
+        /// Initializes a new instance of <see cref="TpmAttestationRequest"/>.
+        /// </summary>
+        public TpmAttestationRequest()
+        {
+        }
+
+        /// <summary>
         /// Attestation Request data. See  <seealso href="https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol"/> for more details
         /// </summary>
-        public BinaryData Data { get => BinaryData.FromBytes(Base64Url.Decode(InternalData)); set => InternalData = Base64Url.Encode(value.ToArray()); }
-
         [CodeGenMember("Data")]
-        internal string InternalData { get; set; }
+        public BinaryData Data { get; set; }
     }
 }

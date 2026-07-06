@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
@@ -16,18 +15,6 @@ namespace Azure.Security.Attestation
     public partial class AttestationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2020_10_01;
-
-        /// <summary> Initializes a new instance of AttestationClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
-        public AttestationClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V2020_10_01 => "V2020_10_01",
-                _ => throw new NotSupportedException()
-            };
-            ConfigureLogging();
-        }
 
         /// <summary> Initializes a new instance of AttestationClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>

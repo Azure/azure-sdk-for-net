@@ -1,20 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
-using Azure.Core;
-using System.Runtime.CompilerServices;
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents a Policy Get or Set or Reset result.
     /// </summary>
-    [CodeGenModel("PolicyResult")]
+    [CodeGenType("PolicyResult")]
     public partial class PolicyModificationResult
     {
         /// <summary>
@@ -27,7 +22,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Resolution of the policy operation.
         /// </summary>
-        public PolicyModification PolicyResolution { get; private set; }
+        public PolicyModification PolicyResolution { get => BasePolicyResolution ?? default; }
 
         /// <summary>
         /// Signing Certificate used to set the policy.
@@ -47,29 +42,24 @@ namespace Azure.Security.Attestation
             }
         }
 
-        /// <summary>
-        /// Hash of the Base64Url encoded policy text. Calculated as SHA256(PolicySetToken).
-        /// </summary>
-        public BinaryData PolicyTokenHash { get => BasePolicyTokenHash != null ? BinaryData.FromBytes(Base64Url.Decode(BasePolicyTokenHash)) : null; }
+        [CodeGenMember("PolicyResolution")]
+        internal PolicyModification? BasePolicyResolution { get; }
 
         /// <summary>
         /// JSON Web Token containing the policy retrieved.
         /// </summary>
         [CodeGenMember("Policy")]
-        internal string BasePolicy { get; private set; }
+        internal string BasePolicy { get; }
 
         /// <summary>
         /// JSON Web Token containing the policy retrieved.
         /// </summary>
         internal AttestationToken PolicyToken { get => AttestationToken.Deserialize(BasePolicy); }
 
-        [CodeGenMember("PolicyTokenHash")]
-        internal string BasePolicyTokenHash { get; private set; }
-
         /// <summary>
         /// X.509 certificate used to sign the policy document.
         /// </summary>
         [CodeGenMember("PolicySigner")]
-        internal JsonWebKey BasePolicySigner { get; private set; }
+        internal JsonWebKey BasePolicySigner { get; }
     }
 }
