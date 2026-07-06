@@ -7,16 +7,29 @@
 **Target API version:** `2025-06-01`
 **Last Updated:** 2026-07-03
 
-> **▶ RESUME HERE:** Phase 5 (regenerate) is **done**. We are in **Phase 6 (build-fix cycle)**,
-> **Path 1** (preserve the GA public API surface), **fix #3 (Group C / CS0200)**. The SKILL-prescribed
-> **"move-aside diagnostic" is COMPLETE** (see `### fix #3 — diagnostic RESULT` below): all 25 custom
-> `src/Models/*.cs` with codegen transforms were moved to `../_migration_custom_backup/Models/` and a
-> regen was run. Result: build = **252 errors, 100% missing-type** (CS0246/CS0234/CS0051) — proving all
-> 25 files are genuinely needed and the raw generated models are now "rich" (emit `BinaryData`,
-> `AttestationSigner PolicySigner`, `Deprecated*` `[Obsolete]` themselves). **NEXT ACTION:** restore the
-> 25 files from backup to return to the known-good 231-error baseline (HEAD), then modernize per-model
-> **in place** (C-1: delete redundant `[CodeGenMember]`, migrate `[CodeGenModel]`→`[CodeGenType]`, and
-> push genuine renames/access to `client.tsp`). Start with `AttestationResult`.
+> **▶ RESUME HERE:** **`src` PROJECT BUILDS CLEAN + ApiCompat PASSES** (commit `b15be584a06`).
+> Phase 6 (build-fix) and Phase 11 (ApiCompat) for the main library are **DONE**. **NEXT ACTION:**
+> Phase 8 — build the **test project** (`tests/Azure.Security.Attestation.Tests.csproj`), fix any
+> test/sample compile errors against the reshaped API, then Phase 9 (run tests), Phase 7 (changelog),
+> Phase 10 (Export-API + snippets), Phase 12 (push spec `client.tsp`/`tspconfig.yaml`, re-pin commit).
+>
+> **What was done (fix #3 — the 2020→2025 model bump, Path 1 / C-1 modernize):** reintroduced all 25
+> custom `Models/*.cs` modernized to the new emitter — `[CodeGenModel]`→`[CodeGenType]`, deleted
+> redundant `[CodeGenMember]` renames (generator now emits rich `BinaryData`/`AttestationSigner`/
+> `Deprecated*` members), `X5C`→`X5c`, `DataType.Json`→`DataType.JSON`, `byte[]`→`BinaryData`.
+> Rewrote convenience clients (`AttestationClient`/`AttestationAdministrationClient`) to the new REST
+> protocol **spread overloads** (`AttestSgxEnclave(quote, runtimeData, initTimeData, draftPolicy, …)`,
+> `Uri` ctors). Rewrote `AttestationModelFactory` to new ctor shapes. Added serialization for the
+> hand-written `AttestationSigner` (`DeserializeAttestationSigner` + `IJsonModel`). Forced emission of
+> 4 JWT-token-body models via `client.tsp` `@@access(..., Access.public)` + `@@usage(TpmAttestationRequest,
+> Usage.input)`. ApiCompat: re-added **nested** `[JsonConverter]` converters (bridge to `IJsonModel`)
+> on `AttestationResult`/`PolicyModificationResult`/`PolicyCertificatesModificationResult`, and restored
+> `PolicyCertificatesModificationResult` public ctor + settable props.
+>
+> **⚠ Uncommitted spec edits (must be pushed in Phase 12):** `client.tsp` now also has 4 `@@access`
+> + 1 `@@usage` lines appended (force-emit token-body models); `tspconfig.yaml` emitter block. These
+> live in `C:\src\azure-rest-api-specs` and must be committed there, then `tsp-location.yaml` `commit`
+> re-pinned.
 >
 > **Working regen command** (local mode — required to pick up the uncommitted spec edits):
 > ```powershell
@@ -89,13 +102,13 @@ before the final PR (Phase 12).**
 | 3 — Legacy config | ✅ | No `autorest.md`; `autorest.md.bak` present |
 | 4 — client.tsp customizations | ✅ | **Fixed**: `@access` on interfaces is invalid in this TCGC version; rewrote to per-operation `@access(...op, Access.internal)`. Regen now compiles the spec cleanly. Local, uncommitted. |
 | 5 — Regenerate (local mode) | ✅ | **FIXED**: added `@azure-typespec/http-client-csharp` block (`emitter-output-dir` + `namespace` + `model-namespace:false`) to the spec's `tspconfig.yaml`. Output now lands in `src/Generated`; project files intact; renames + internal access applied. Committed as `e1793b110ce`. |
-| 6 — Build-fix cycle | 🔄 | **IN PROGRESS (Path 1 — preserve GA API).** `partial` added to `AttestationClient`/`AttestationClientOptions`/`AttestationModelFactory` (cleared CS0260, **uncommitted WIP**). Full build now shows **~236 errors / 10 codes** — this is a **2020-10-01 → 2025-06-01 model bump**. See table below. |
+| 6 — Build-fix cycle | ✅ | **DONE.** Full model-bump reconciled (Path 1 / C-1). `src` builds clean across all TFMs. See fix #3 parts 1–4 below. |
 | 7 — Changelog | ⏭️ | |
-| 8 — Test project build | ⏭️ | |
+| 8 — Test project build | 🔄 | **NEXT.** Build `tests/` csproj; fix test/sample compile errors against reshaped API. |
 | 9 — Test execution | ⏭️ | |
 | 10 — Finalization (Export-API, snippets) | ⏭️ | |
-| 11 — ApiCompat reconciliation | ⏭️ | GA library — no baseline suppression allowed |
-| 12 — Commit spec `client.tsp` + PRs | ⏭️ | Spec edits must be pushed & pinned in tsp-location.yaml |
+| 11 — ApiCompat reconciliation | ✅ | **DONE** (with src build). Nested `[JsonConverter]` restored; `PolicyCertificatesModificationResult` ctor/setters restored. GA — no baseline suppression used. |
+| 12 — Commit spec `client.tsp` + PRs | ⏭️ | Spec edits (`client.tsp` @@access/@@usage + `tspconfig.yaml`) must be pushed & pinned in tsp-location.yaml |
 
 ## Known open items after regeneration
 
