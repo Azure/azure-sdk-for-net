@@ -1,0 +1,6 @@
+directory: specification/hanaonazure/resource-manager/Microsoft.HanaOnAzure/HanaOnAzure
+commit: b0b8df6f59932a8ecb0016617235dc51d8302134
+repo: cxznmhdcxz/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
