@@ -55,3 +55,37 @@ No CRUD operation differences were found for matching normalized resource ID pat
 
 No list/action operation differences were found for matching normalized resource ID patterns.
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 6 |
+| Found in Bicep reference | 6 |
+| Found in package API version | 6 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 0 |
+
+**Result:** The six `resolveArmResources`-only rows are not new resource types. They are concrete scope-specific expansions of the same two resources that the legacy detector represents with generic `/{scope}` paths. Bicep confirms the resource types exist in `2025-07-01`.
+
+Legacy C# intentionally scopes out the resource-group/subscription/management-group specific interfaces and exposes a generic `DeploymentStacksAtScope` / `DeploymentStacksWhatIfAtScope` shape for C#:
+
+```typespec
+@@scope(DeploymentStacksAtResourceGroup.get, "!csharp");
+@@scope(DeploymentStacksAtSubscription.get, "!csharp");
+@@scope(DeploymentStacksAtManagementGroup.get, "!csharp");
+@@armResourceOperations(DeploymentStacksAtScope);
+@@scope(DeploymentStacksAtScope.get, "csharp");
+```
+
+Therefore this is primarily a representation mismatch: `resolveArmResources` returns both generic `/{scope}` and concrete expanded paths, while the legacy detector only keeps the generic C# projection.
+
+| Side | Resource type | Concrete path shape | Bicep API versions | Package resource API versions |
+| --- | --- | --- | --- | --- |
+| `resolveArmResources` only | [Microsoft.Resources/deploymentStacks](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentstacks?pivots=deployment-language-bicep) | Management group | `2025-07-01` | None |
+| `resolveArmResources` only | [Microsoft.Resources/deploymentStacksWhatIfResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentstackswhatifresults?pivots=deployment-language-bicep) | Management group | `2025-07-01` | None |
+| `resolveArmResources` only | [Microsoft.Resources/deploymentStacks](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentstacks?pivots=deployment-language-bicep) | Subscription | `2025-07-01` | None |
+| `resolveArmResources` only | [Microsoft.Resources/deploymentStacksWhatIfResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentstackswhatifresults?pivots=deployment-language-bicep) | Subscription | `2025-07-01` | None |
+| `resolveArmResources` only | [Microsoft.Resources/deploymentStacks](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentstacks?pivots=deployment-language-bicep) | Resource group | `2025-07-01` | None |
+| `resolveArmResources` only | [Microsoft.Resources/deploymentStacksWhatIfResults](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/deploymentstackswhatifresults?pivots=deployment-language-bicep) | Resource group | `2025-07-01` | None |
