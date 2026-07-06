@@ -73,5 +73,10 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns CollectionResult<ResponseResult>.", Scope = "member", Target = "~M:Azure.AI.Extensions.OpenAI.ProjectResponsesClient.GetProjectResponses(Azure.AI.Extensions.OpenAI.AgentReference,System.String,System.Nullable{System.Int32},System.String,System.String,System.String,System.Threading.CancellationToken)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns AsyncCollectionResult<ResponseResult>.", Scope = "member", Target = "~M:Azure.AI.Extensions.OpenAI.ProjectResponsesClient.GetProjectResponsesAsync(Azure.AI.Extensions.OpenAI.AgentReference,System.String,System.Nullable{System.Int32},System.String,System.String,System.String,System.Threading.CancellationToken)")]
+
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<ResponseResult>.", Scope = "member", Target = "~M:Azure.AI.Extensions.OpenAI.ProjectResponsesClient.GetResponse(OpenAI.Responses.GetResponseOptions,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult<ResponseResult>>.", Scope = "member", Target = "~M:Azure.AI.Extensions.OpenAI.ProjectResponsesClient.GetResponseAsync(OpenAI.Responses.GetResponseOptions,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<ResponseResult>.", Scope = "member", Target = "~M:Azure.AI.Extensions.OpenAI.ProjectResponsesClient.GetResponse(System.String,System.Threading.CancellationToken)")]
+[assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult<ResponseResult>>.", Scope = "member", Target = "~M:Azure.AI.Extensions.OpenAI.ProjectResponsesClient.GetResponseAsync(System.String,System.Threading.CancellationToken)")]
 // AZC0012
 [assembly: SuppressMessage("Usage", "AZC0012", Justification = "", Scope = "member", Target = "~T:Azure.AI.Extensions.OpenAI.Responses")]

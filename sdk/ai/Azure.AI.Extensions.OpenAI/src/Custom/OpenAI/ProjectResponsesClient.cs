@@ -218,6 +218,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = base.CreateResponse(options, cancellationToken);
             scope?.RecordResponse(result.Value);
+            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -256,7 +257,9 @@ public partial class ProjectResponsesClient : ResponsesClient
             options.InputItems.Add(inputItem);
         }
         ApplyClientDefaults(options);
-        return base.CreateResponse(options, cancellationToken);
+        var result = base.CreateResponse(options, cancellationToken);
+        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        return result;
     }
 
     /// <summary> Creates a response from user input text. </summary>
@@ -290,6 +293,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = base.CreateResponse(options, cancellationToken);
             scope?.RecordResponse(result.Value);
+            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -312,6 +316,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
             scope?.RecordResponse(result.Value);
+            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -356,6 +361,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
             scope?.RecordResponse(result.Value);
+            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -395,6 +401,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         {
             var result = await base.CreateResponseAsync(options, cancellationToken).ConfigureAwait(false);
             scope?.RecordResponse(result.Value);
+            AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
             return result;
         }
         catch (Exception ex)
@@ -659,6 +666,50 @@ public partial class ProjectResponsesClient : ResponsesClient
             cancellationToken.ToRequestOptions());
     }
 
+    /// <summary> Gets a previously created response by its ID. </summary>
+    /// <param name="options"> The options identifying the response to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The retrieved response result. </returns>
+    public override ClientResult<ResponseResult> GetResponse(GetResponseOptions options, CancellationToken cancellationToken = default)
+    {
+        var result = base.GetResponse(options, cancellationToken);
+        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        return result;
+    }
+
+    /// <summary> Asynchronously gets a previously created response by its ID. </summary>
+    /// <param name="options"> The options identifying the response to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The retrieved response result. </returns>
+    public override async Task<ClientResult<ResponseResult>> GetResponseAsync(GetResponseOptions options, CancellationToken cancellationToken = default)
+    {
+        var result = await base.GetResponseAsync(options, cancellationToken).ConfigureAwait(false);
+        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        return result;
+    }
+
+    /// <summary> Gets a previously created response by its ID. </summary>
+    /// <param name="responseId"> The ID of the response to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The retrieved response result. </returns>
+    public override ClientResult<ResponseResult> GetResponse(string responseId, CancellationToken cancellationToken = default)
+    {
+        var result = base.GetResponse(responseId, cancellationToken);
+        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        return result;
+    }
+
+    /// <summary> Asynchronously gets a previously created response by its ID. </summary>
+    /// <param name="responseId"> The ID of the response to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The retrieved response result. </returns>
+    public override async Task<ClientResult<ResponseResult>> GetResponseAsync(string responseId, CancellationToken cancellationToken = default)
+    {
+        var result = await base.GetResponseAsync(responseId, cancellationToken).ConfigureAwait(false);
+        AzureAIExtensions.NormalizeAgentOutputItems(result.Value);
+        return result;
+    }
+
     private void ApplyClientDefaults(CreateResponseOptions options)
     {
         if (options.Agent is null && !string.IsNullOrEmpty(_defaultAgentName))
@@ -681,10 +732,12 @@ public partial class ProjectResponsesClient : ResponsesClient
 
     private static ResponseResult DeserializeResponseResult(JsonElement element, ModelReaderWriterOptions options)
     {
-        return ModelReaderWriter.Read<ResponseResult>(
+        ResponseResult result = ModelReaderWriter.Read<ResponseResult>(
             BinaryData.FromString(element.GetRawText()),
             options,
             OpenAIContext.Default);
+        AzureAIExtensions.NormalizeAgentOutputItems(result);
+        return result;
     }
 
     internal static ClientPipeline CreatePipeline(AuthenticationPolicy authenticationPolicy, ProjectOAIResponsesClientOptions options)

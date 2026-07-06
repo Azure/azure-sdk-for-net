@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -32,6 +33,43 @@ public static partial class AzureAIExtensions
         return ModelReaderWriter.Read<ResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
     }
 
+    // The runtime type OpenAI materializes for any response item whose "type" discriminator
+    // it does not recognize (this includes all Azure-specific kinds). Matched by name because
+    // the type is internal to the OpenAI assembly.
+    private const string OpenAIUnknownResponseItemTypeName = "OpenAI.Responses.InternalUnknownItemResource";
+
+    /// <summary>
+    /// Re-dispatches any opaque (unrecognized) items in a response's output through the Azure
+    /// context so callers receive strongly-typed Azure subtypes without invoking
+    /// <see cref="AsAgentResponseItem(ResponseItem)"/> themselves. Mutates the output list in
+    /// place. Non-Azure unknowns round-trip back to the same opaque type, so this is a no-op for
+    /// them. This is a temporary client-side bridge until nested-item deserialization is handled
+    /// by the serialization proxy.
+    /// </summary>
+    internal static void NormalizeAgentOutputItems(ResponseResult response)
+    {
+        if (response is null)
+        {
+            return;
+        }
+
+        IList<ResponseItem> items = response.OutputItems;
+        if (items is null || items.IsReadOnly)
+        {
+            return;
+        }
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            ResponseItem item = items[i];
+            if (item is not null
+                && string.Equals(item.GetType().FullName, OpenAIUnknownResponseItemTypeName, StringComparison.Ordinal))
+            {
+                items[i] = item.AsAgentResponseItem();
+            }
+        }
+    }
+
     // ResponseResult
     extension(ResponseResult response)
     {
@@ -57,6 +95,7 @@ public static partial class AzureAIExtensions
             cancellationToken.ToRequestOptions() ?? new RequestOptions()
         );
         ResponseResult convenienceValue = (ResponseResult)protocolResult;
+        NormalizeAgentOutputItems(convenienceValue);
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
@@ -74,6 +113,7 @@ public static partial class AzureAIExtensions
             cancellationToken.ToRequestOptions() ?? new RequestOptions()
         ).ConfigureAwait(false);
         ResponseResult convenienceValue = (ResponseResult)protocolResult;
+        NormalizeAgentOutputItems(convenienceValue);
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
