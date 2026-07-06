@@ -127,6 +127,10 @@ namespace Azure.Provisioning.Cdn
             _matchProcessingBehavior = DefineProperty<MatchProcessingBehavior>(nameof(MatchProcessingBehavior), new string[] { "matchProcessingBehavior" });
             _provisioningState = DefineProperty<FrontDoorProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _deploymentStatus = DefineProperty<FrontDoorDeploymentStatus>(nameof(DeploymentStatus), new string[] { "deploymentStatus" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CdnRuleProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

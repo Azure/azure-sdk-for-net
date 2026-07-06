@@ -24,6 +24,8 @@ namespace Azure.AI.Projects.Evaluation
         private const string OpenaiGradersValue = "openai_graders";
         /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
         private const string RubricValue = "rubric";
+        /// <summary> Endpoint-based evaluator definition. References a customer-owned HTTP endpoint via a Project Connection. </summary>
+        private const string EndpointValue = "endpoint";
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -52,6 +54,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
         public static EvaluatorDefinitionType Rubric { get; } = new EvaluatorDefinitionType(RubricValue);
+
+        /// <summary> Endpoint-based evaluator definition. References a customer-owned HTTP endpoint via a Project Connection. </summary>
+        public static EvaluatorDefinitionType Endpoint { get; } = new EvaluatorDefinitionType(EndpointValue);
 
         /// <summary> Determines if two <see cref="EvaluatorDefinitionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

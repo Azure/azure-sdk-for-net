@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _paramIndicator = DefineProperty<ParamIndicator>(nameof(ParamIndicator), new string[] { "paramIndicator" }, isRequired: true);
             _paramName = DefineProperty<string>(nameof(ParamName), new string[] { "paramName" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UriSigningParamIdentifier that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the lifecycle hooks configured for the virtual machine scale set. </summary>
-        public IList<LifecycleHook> LifecycleHooks
+        public IList<VirtualMachineScaleSetLifecycleHook> LifecycleHooks
         {
             get
             {

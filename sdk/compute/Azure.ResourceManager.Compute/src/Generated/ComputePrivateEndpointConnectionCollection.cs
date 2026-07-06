@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ComputePrivateEndpointConnectionResource.ResourceType, out string computePrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ComputePrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, computePrivateEndpointConnectionApiVersion ?? "2025-01-02");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, computePrivateEndpointConnectionApiVersion ?? "2026-03-02");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-02. </description>
+        /// <description> 2026-03-02. </description>
         /// </item>
         /// </list>
         /// </summary>

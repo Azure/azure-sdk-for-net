@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 EdgeMachineDiskJobListResult result = EdgeMachineDiskJobListResult.FromResponse(response);
-                yield return Page<EdgeMachineDiskJobData>.FromValues((IReadOnlyList<EdgeMachineDiskJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EdgeMachineDiskJobData>.FromValues((IReadOnlyList<EdgeMachineDiskJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

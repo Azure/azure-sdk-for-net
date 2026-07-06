@@ -108,6 +108,10 @@ namespace Azure.Provisioning.ContainerService
             _weekly = DefineModelProperty<ContainerServiceMaintenanceWeeklySchedule>(nameof(Weekly), new string[] { "weekly" });
             _absoluteMonthly = DefineModelProperty<ContainerServiceMaintenanceAbsoluteMonthlySchedule>(nameof(AbsoluteMonthly), new string[] { "absoluteMonthly" });
             _relativeMonthly = DefineModelProperty<ContainerServiceMaintenanceRelativeMonthlySchedule>(nameof(RelativeMonthly), new string[] { "relativeMonthly" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceMaintenanceSchedule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

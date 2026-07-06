@@ -69,18 +69,13 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -318,6 +313,10 @@ namespace Azure.Provisioning.CostManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ExportRun that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

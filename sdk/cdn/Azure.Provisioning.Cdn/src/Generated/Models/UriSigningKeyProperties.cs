@@ -92,6 +92,10 @@ namespace Azure.Provisioning.Cdn
             _keyId = DefineProperty<string>(nameof(KeyId), new string[] { "keyId" }, isRequired: true);
             _secretSource = DefineModelProperty<CdnResourceReference>(nameof(SecretSource), new string[] { "secretSource" }, isRequired: true);
             _secretVersion = DefineProperty<string>(nameof(SecretVersion), new string[] { "secretVersion" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for UriSigningKeyProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

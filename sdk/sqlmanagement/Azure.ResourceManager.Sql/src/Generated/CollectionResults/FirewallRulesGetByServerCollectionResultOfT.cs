@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 FirewallRuleListResult result = FirewallRuleListResult.FromResponse(response);
-                yield return Page<SqlFirewallRuleData>.FromValues((IReadOnlyList<SqlFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SqlFirewallRuleData>.FromValues((IReadOnlyList<SqlFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

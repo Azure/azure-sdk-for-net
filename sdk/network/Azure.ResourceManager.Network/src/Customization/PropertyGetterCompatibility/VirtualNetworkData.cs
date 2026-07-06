@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the VirtualNetworkData type. </summary>
+    [CodeGenSuppress("IPAllocations")]
     public partial class VirtualNetworkData
     {
         /// <summary> Compatibility member. </summary>

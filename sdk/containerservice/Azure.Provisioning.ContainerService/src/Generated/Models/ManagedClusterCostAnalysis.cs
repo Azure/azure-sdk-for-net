@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isCostAnalysisEnabled = DefineProperty<bool>(nameof(IsCostAnalysisEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterCostAnalysis that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

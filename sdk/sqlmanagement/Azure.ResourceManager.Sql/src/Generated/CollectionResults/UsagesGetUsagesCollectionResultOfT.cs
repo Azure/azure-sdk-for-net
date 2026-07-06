@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 InstancePoolUsageListResult result = InstancePoolUsageListResult.FromResponse(response);
-                yield return Page<InstancePoolUsage>.FromValues((IReadOnlyList<InstancePoolUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<InstancePoolUsage>.FromValues((IReadOnlyList<InstancePoolUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

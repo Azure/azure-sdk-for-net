@@ -3,9 +3,15 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility declaration for the NatGatewayData type. </summary>
+    [CodeGenSuppress("PublicIPAddresses")]
+    [CodeGenSuppress("PublicIPAddressesV6")]
+    [CodeGenSuppress("PublicIPPrefixes")]
+    [CodeGenSuppress("PublicIPPrefixesV6")]
     public partial class NatGatewayData
     {
         /// <summary> Compatibility member. </summary>

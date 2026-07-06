@@ -6,9 +6,9 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.ResourceManager;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking

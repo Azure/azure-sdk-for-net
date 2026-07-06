@@ -126,6 +126,10 @@ namespace Azure.Provisioning.Cdn
             _minimumTlsVersion = DefineProperty<FrontDoorMinimumTlsVersion>(nameof(MinimumTlsVersion), new string[] { "minimumTlsVersion" });
             _customizedCipherSuiteSet = DefineModelProperty<FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet>(nameof(CustomizedCipherSuiteSet), new string[] { "customizedCipherSuiteSet" });
             _secret = DefineModelProperty<CdnResourceReference>(nameof(Secret), new string[] { "secret" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for FrontDoorCustomDomainHttpsContent that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

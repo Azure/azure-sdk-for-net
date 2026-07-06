@@ -579,6 +579,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Memory.DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = null, bool isDeleted = false) { throw null; }
         public static Azure.AI.Projects.DispatchRoutineResult DispatchRoutineResult(string dispatchId = null, string actionCorrelationId = null, string taskId = null) { throw null; }
         public static Azure.AI.Projects.EmbeddingConfiguration EmbeddingConfiguration(string modelDeploymentName = null, string embeddingField = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition EndpointBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, string connectionName = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvalResult EvalResult(string name = null, string type = null, float score = 0f, bool isPassed = false) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvalRunResultCompareItem EvalRunResultCompareItem(string treatmentRunId = null, Azure.AI.Projects.Evaluation.EvalRunResultSummary treatmentRunSummary = null, float deltaEstimate = 0f, float pValue = 0f, Azure.AI.Projects.TreatmentEffectType treatmentEffect = default(Azure.AI.Projects.TreatmentEffectType)) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvalRunResultComparison EvalRunResultComparison(string testingCriteria = null, string metricName = null, string evaluatorName = null, Azure.AI.Projects.Evaluation.EvalRunResultSummary baselineRunSummary = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvalRunResultCompareItem> compareItems = null) { throw null; }
@@ -2119,6 +2120,20 @@ namespace Azure.AI.Projects.Evaluation
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class EndpointBasedEvaluatorDefinition : Azure.AI.Projects.Evaluation.EvaluatorDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition>
+    {
+        public EndpointBasedEvaluatorDefinition(string connectionName) { }
+        public string ConnectionName { get { throw null; } set { } }
+        protected override Azure.AI.Projects.Evaluation.EvaluatorDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.Evaluation.EvaluatorDefinition PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class EvalResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Evaluation.EvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Evaluation.EvalResult>
     {
         internal EvalResult() { }
@@ -2512,6 +2527,7 @@ namespace Azure.AI.Projects.Evaluation
         private readonly int _dummyPrimitive;
         public EvaluatorDefinitionType(string value) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType Code { get { throw null; } }
+        public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType Endpoint { get { throw null; } }
         public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType OpenaiGraders { get { throw null; } }
         public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType Prompt { get { throw null; } }
         public static Azure.AI.Projects.Evaluation.EvaluatorDefinitionType PromptAndCode { get { throw null; } }

@@ -38,6 +38,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             DefineProperty<string>("name", new string[] { "name" }, defaultValue: "QueryString");
             _properties = DefineModelProperty<QueryStringMatchCondition>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for DeliveryRuleQueryStringCondition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

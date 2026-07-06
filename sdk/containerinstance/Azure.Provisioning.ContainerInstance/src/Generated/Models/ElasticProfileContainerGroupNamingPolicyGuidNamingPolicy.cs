@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _prefix = DefineProperty<string>(nameof(Prefix), new string[] { "prefix" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

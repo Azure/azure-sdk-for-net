@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ProviderPermissionsScope : IEquatable<ProviderPermissionsScope>
     {
         private readonly string _value;
+        /// <summary> Subscription. </summary>
+        private const string SubscriptionValue = "Subscription";
+        /// <summary> ResourceGroup. </summary>
+        private const string ResourceGroupValue = "ResourceGroup";
+        /// <summary> Workspace. </summary>
+        private const string WorkspaceValue = "Workspace";
 
         /// <summary> Initializes a new instance of <see cref="ProviderPermissionsScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProviderPermissionsScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SubscriptionValue = "Subscription";
-        private const string ResourceGroupValue = "ResourceGroup";
-        private const string WorkspaceValue = "Workspace";
+            _value = value;
+        }
 
         /// <summary> Subscription. </summary>
         public static ProviderPermissionsScope Subscription { get; } = new ProviderPermissionsScope(SubscriptionValue);
+
         /// <summary> ResourceGroup. </summary>
         public static ProviderPermissionsScope ResourceGroup { get; } = new ProviderPermissionsScope(ResourceGroupValue);
+
         /// <summary> Workspace. </summary>
         public static ProviderPermissionsScope Workspace { get; } = new ProviderPermissionsScope(WorkspaceValue);
+
         /// <summary> Determines if two <see cref="ProviderPermissionsScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProviderPermissionsScope left, ProviderPermissionsScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProviderPermissionsScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProviderPermissionsScope left, ProviderPermissionsScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderPermissionsScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProviderPermissionsScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProviderPermissionsScope(string value) => new ProviderPermissionsScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProviderPermissionsScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderPermissionsScope?(string value) => value == null ? null : new ProviderPermissionsScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProviderPermissionsScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProviderPermissionsScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

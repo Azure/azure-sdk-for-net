@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("properties")]
         internal VirtualApplianceNetworkInterfaceConfigurationProperties Properties { get; set; }
 
-        /// <summary> Gets the IpConfigurations. </summary>
+        /// <summary> Gets the VirtualApplianceNetworkInterfaceIPConfigurations. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIpConfigurations
+        public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIPConfigurations
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new VirtualApplianceNetworkInterfaceConfigurationProperties();
                 }
-                return Properties.IpConfigurations;
+                return Properties.VirtualApplianceNetworkInterfaceIPConfigurations;
             }
         }
     }

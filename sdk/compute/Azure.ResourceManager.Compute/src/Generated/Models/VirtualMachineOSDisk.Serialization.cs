@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiffDiskSettings diffDiskSettings = default;
             DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            StorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
+            ComputeStorageFaultDomainAlignmentType? storageFaultDomainAlignment = default;
             VirtualMachineManagedDisk managedDisk = default;
             DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    storageFaultDomainAlignment = new StorageFaultDomainAlignmentType(prop.Value.GetString());
+                    storageFaultDomainAlignment = new ComputeStorageFaultDomainAlignmentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedDisk"u8))

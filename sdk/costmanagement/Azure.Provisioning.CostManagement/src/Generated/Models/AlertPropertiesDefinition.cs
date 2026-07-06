@@ -74,6 +74,10 @@ namespace Azure.Provisioning.CostManagement
             _alertType = DefineProperty<CostManagementAlertType>(nameof(AlertType), new string[] { "type" });
             _category = DefineProperty<CostManagementAlertCategory>(nameof(Category), new string[] { "category" });
             _criteria = DefineProperty<AlertCriterion>(nameof(Criteria), new string[] { "criteria" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AlertPropertiesDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

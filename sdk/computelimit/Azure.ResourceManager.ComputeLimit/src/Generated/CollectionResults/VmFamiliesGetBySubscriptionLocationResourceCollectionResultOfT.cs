@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ComputeLimit
                     yield break;
                 }
                 VmFamilyListResult result = VmFamilyListResult.FromResponse(response);
-                yield return Page<ComputeLimitVmFamilyData>.FromValues((IReadOnlyList<ComputeLimitVmFamilyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ComputeLimitVmFamilyData>.FromValues((IReadOnlyList<ComputeLimitVmFamilyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

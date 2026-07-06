@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Automation
     /// <summary> A class representing an Automation account resource. </summary>
     public partial class AutomationAccountResource
     {
+        // Workaround for https://github.com/Azure/typespec-azure/issues/4729:
+        // Legacy.markAsPageable cannot currently specify the page item property. The
+        // listKeys response returns items under "keys" instead of "value", so these
+        // methods preserve the existing pageable API until TypeSpec can model this.
         /// <summary>
         /// Retrieve the automation keys for an account.
         /// <list type="bullet">

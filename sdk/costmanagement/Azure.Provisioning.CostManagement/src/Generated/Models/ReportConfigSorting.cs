@@ -57,6 +57,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _direction = DefineProperty<ReportConfigSortingType>(nameof(Direction), new string[] { "direction" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ReportConfigSorting that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

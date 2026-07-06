@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.HealthcareApis
                     yield break;
                 }
                 WorkspaceList result = WorkspaceList.FromResponse(response);
-                yield return Page<HealthcareApisWorkspaceData>.FromValues((IReadOnlyList<HealthcareApisWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HealthcareApisWorkspaceData>.FromValues((IReadOnlyList<HealthcareApisWorkspaceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

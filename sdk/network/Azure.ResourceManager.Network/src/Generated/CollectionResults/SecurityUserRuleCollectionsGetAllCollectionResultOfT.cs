@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 SecurityUserRuleCollectionListResult result = SecurityUserRuleCollectionListResult.FromResponse(response);
-                yield return Page<NetworkManagerSecurityUserRulesData>.FromValues((IReadOnlyList<NetworkManagerSecurityUserRulesData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkManagerSecurityUserRulesData>.FromValues((IReadOnlyList<NetworkManagerSecurityUserRulesData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

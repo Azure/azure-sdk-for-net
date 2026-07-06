@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _rules = DefineListProperty<DeliveryRule>(nameof(Rules), new string[] { "rules" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for EndpointDeliveryPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

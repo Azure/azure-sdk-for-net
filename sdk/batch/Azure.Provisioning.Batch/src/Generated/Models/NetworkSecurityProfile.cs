@@ -108,6 +108,10 @@ namespace Azure.Provisioning.Batch
             _accessRules = DefineListProperty<BatchAccessRule>(nameof(AccessRules), new string[] { "accessRules" });
             _diagnosticSettingsVersion = DefineProperty<int>(nameof(DiagnosticSettingsVersion), new string[] { "diagnosticSettingsVersion" });
             _enabledLogCategories = DefineListProperty<string>(nameof(EnabledLogCategories), new string[] { "enabledLogCategories" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NetworkSecurityProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

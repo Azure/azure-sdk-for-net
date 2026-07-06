@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
@@ -24,15 +25,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicIPDdosProtectionStatusResult"/>. </summary>
-        /// <param name="publicIpAddressId"> Public IP ARM resource ID. </param>
-        /// <param name="publicIpAddress"> IP Address of the Public IP Resource. </param>
+        /// <param name="publicIPAddressId"> Public IP ARM resource ID. </param>
+        /// <param name="publicIPAddress"> IP Address of the Public IP Resource. </param>
         /// <param name="isWorkloadProtected"> Value indicating whether the IP address is DDoS workload protected or not. </param>
         /// <param name="ddosProtectionPlanId"> DDoS protection plan Resource Id of a if IP address is protected through a plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIpAddressId, string publicIpAddress, WorkloadProtectedFlag? isWorkloadProtected, ResourceIdentifier ddosProtectionPlanId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPDdosProtectionStatusResult(ResourceIdentifier publicIPAddressId, IPAddress publicIPAddress, WorkloadProtectedFlag? isWorkloadProtected, ResourceIdentifier ddosProtectionPlanId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublicIpAddressId = publicIpAddressId;
-            PublicIpAddress = publicIpAddress;
+            PublicIPAddressId = publicIPAddressId;
+            PublicIPAddress = publicIPAddress;
             IsWorkloadProtected = isWorkloadProtected;
             DdosProtectionPlanId = ddosProtectionPlanId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,11 +41,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Public IP ARM resource ID. </summary>
         [WirePath("publicIpAddressId")]
-        public ResourceIdentifier PublicIpAddressId { get; }
+        public ResourceIdentifier PublicIPAddressId { get; }
 
         /// <summary> IP Address of the Public IP Resource. </summary>
         [WirePath("publicIpAddress")]
-        public string PublicIpAddress { get; }
+        public IPAddress PublicIPAddress { get; }
 
         /// <summary> Value indicating whether the IP address is DDoS workload protected or not. </summary>
         [WirePath("isWorkloadProtected")]

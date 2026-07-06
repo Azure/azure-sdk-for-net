@@ -214,6 +214,10 @@ namespace Azure.Provisioning.CostManagement
             _exportDescription = DefineProperty<string>(nameof(ExportDescription), new string[] { "exportDescription" });
             _nextRunTimeEstimate = DefineProperty<DateTimeOffset>(nameof(NextRunTimeEstimate), new string[] { "nextRunTimeEstimate" }, isOutput: true);
             _systemSuspensionContext = DefineModelProperty<ExportSuspensionContext>(nameof(SystemSuspensionContext), new string[] { "systemSuspensionContext" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CommonExportProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

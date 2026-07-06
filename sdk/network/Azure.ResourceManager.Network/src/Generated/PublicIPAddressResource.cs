@@ -528,11 +528,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PublicIPAddressResource>> DisassociateCloudServiceReservedPublicIpAsync(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PublicIPAddressResource>> DisassociateCloudServiceReservedPublicIPAsync(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIp");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIP");
             scope.Start();
             try
             {
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
+                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),
@@ -587,11 +587,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PublicIPAddressResource> DisassociateCloudServiceReservedPublicIp(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PublicIPAddressResource> DisassociateCloudServiceReservedPublicIP(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIp");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.DisassociateCloudServiceReservedPublicIP");
             scope.Start();
             try
             {
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
+                HttpMessage message = _publicIPAddressesRestClient.CreateDisassociateCloudServiceReservedPublicIPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisassociateCloudServicePublicIPContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),
@@ -646,11 +646,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PublicIPAddressResource>> ReserveCloudServicePublicIpAddressAsync(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PublicIPAddressResource>> ReserveCloudServicePublicIPAddressAsync(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIpAddress");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIPAddress");
             scope.Start();
             try
             {
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
+                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameter that define which Public IP Address should be associated in place of given Public IP Address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PublicIPAddressResource> ReserveCloudServicePublicIpAddress(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PublicIPAddressResource> ReserveCloudServicePublicIPAddress(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIpAddress");
+            using DiagnosticScope scope = _publicIPAddressesClientDiagnostics.CreateScope("PublicIPAddressResource.ReserveCloudServicePublicIPAddress");
             scope.Start();
             try
             {
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIpAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
+                HttpMessage message = _publicIPAddressesRestClient.CreateReserveCloudServicePublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ReserveCloudServicePublicIPAddressContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PublicIPAddressResource> operation = new NetworkArmOperation<PublicIPAddressResource>(
                     new PublicIPAddressResourceOperationSource(Client),

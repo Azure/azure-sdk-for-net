@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Hostname type.
-    /// Serialized Name: HostNameType
-    /// </summary>
+    /// <summary> Hostname type. </summary>
     public enum AppServiceHostNameType
     {
-        /// <summary>
-        /// Verified
-        /// Serialized Name: HostNameType.Verified
-        /// </summary>
+        /// <summary> Verified. </summary>
         Verified,
-        /// <summary>
-        /// Managed
-        /// Serialized Name: HostNameType.Managed
-        /// </summary>
+        /// <summary> Managed. </summary>
         Managed
     }
 }

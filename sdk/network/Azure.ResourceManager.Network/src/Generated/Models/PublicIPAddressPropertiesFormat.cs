@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressPropertiesFormat"/>. </summary>
         public PublicIPAddressPropertiesFormat()
         {
-            IpTags = new ChangeTrackingList<IPTag>();
+            IPTags = new ChangeTrackingList<IPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicIPAddressPropertiesFormat"/>. </summary>
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             PublicIPAllocationMethod = publicIPAllocationMethod;
             PublicIPAddressVersion = publicIPAddressVersion;
-            IpConfiguration = ipConfiguration;
+            IPConfiguration = ipConfiguration;
             DnsSettings = dnsSettings;
             DdosSettings = ddosSettings;
-            IpTags = ipTags;
-            IpAddress = ipAddress;
+            IPTags = ipTags;
+            IPAddress = ipAddress;
             PublicIPPrefix = publicIPPrefix;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             ResourceGuid = resourceGuid;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IP configuration associated with the public IP address. </summary>
         [WirePath("ipConfiguration")]
-        public NetworkIPConfiguration IpConfiguration { get; }
+        public NetworkIPConfiguration IPConfiguration { get; }
 
         /// <summary> The FQDN of the DNS record associated with the public IP address. </summary>
         [WirePath("dnsSettings")]
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of tags associated with the public IP address. </summary>
         [WirePath("ipTags")]
-        public IList<IPTag> IpTags { get; } = new ChangeTrackingList<IPTag>();
+        public IList<IPTag> IPTags { get; } = new ChangeTrackingList<IPTag>();
 
         /// <summary> The IP address associated with the public IP address resource. </summary>
         [WirePath("ipAddress")]
-        public string IpAddress { get; set; }
+        public string IPAddress { get; set; }
 
         /// <summary> The Public IP Prefix this Public IP Address should be allocated from. </summary>
         [WirePath("publicIPPrefix")]

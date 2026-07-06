@@ -108,6 +108,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(DoubleClickAction))]
     [ModelReaderWriterBuildable(typeof(DragParam))]
     [ModelReaderWriterBuildable(typeof(EmbeddingConfiguration))]
+    [ModelReaderWriterBuildable(typeof(EndpointBasedEvaluatorDefinition))]
     [ModelReaderWriterBuildable(typeof(EvalResult))]
     [ModelReaderWriterBuildable(typeof(EvalRunResultCompareItem))]
     [ModelReaderWriterBuildable(typeof(EvalRunResultComparison))]

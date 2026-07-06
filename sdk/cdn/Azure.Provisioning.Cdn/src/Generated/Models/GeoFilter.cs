@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Cdn
             _relativePath = DefineProperty<string>(nameof(RelativePath), new string[] { "relativePath" }, isRequired: true);
             _action = DefineProperty<GeoFilterAction>(nameof(Action), new string[] { "action" }, isRequired: true);
             _countryCodes = DefineListProperty<string>(nameof(CountryCodes), new string[] { "countryCodes" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for GeoFilter that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

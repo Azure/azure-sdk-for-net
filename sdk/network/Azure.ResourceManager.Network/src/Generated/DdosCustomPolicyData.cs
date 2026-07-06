@@ -67,19 +67,5 @@ namespace Azure.ResourceManager.Network
                 return Properties.DetectionRules;
             }
         }
-
-        /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
-        [WirePath("properties.frontEndIpConfiguration")]
-        public IList<NetworkSubResource> FrontEndIpConfiguration
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DdosCustomPolicyPropertiesFormat();
-                }
-                return Properties.FrontEndIpConfiguration;
-            }
-        }
     }
 }
