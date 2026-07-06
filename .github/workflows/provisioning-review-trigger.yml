@@ -82,11 +82,6 @@ jobs:
               return 0
             fi
 
-            if [ "$(gh pr view "$pr_number" --repo "$REPOSITORY" --json headRepositoryOwner --jq '.headRepositoryOwner.login')" != "${REPOSITORY%/*}" ]; then
-              echo "Skipping PR #$pr_number; provisioning review only runs schema extraction for same-repository branches."
-              return 0
-            fi
-
             if ! gh api --paginate "repos/$REPOSITORY/pulls/$pr_number/files" --jq '.[].filename' |
               grep -Eq '^sdk/[^/]+/Azure\.Provisioning\.[^/]+/'; then
               echo "Skipping PR #$pr_number; no Azure.Provisioning.* package files changed."

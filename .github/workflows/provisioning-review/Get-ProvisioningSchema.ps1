@@ -6,302 +6,232 @@ param(
     [string] $OutputPath,
 
     [ValidateSet('Json', 'Markdown')]
-    [string] $Format = 'Json',
-
-    [string] $Framework = 'net10.0'
+    [string] $Format = 'Json'
 )
 
 Set-StrictMode -Version 3.0
 $ErrorActionPreference = 'Stop'
 
-if ($env:GITHUB_ACTIONS -eq 'true')
+function Get-RelativePath
 {
-    $tokenVariables = @(
-        'GITHUB_TOKEN',
-        'GH_TOKEN',
-        'GH_ENTERPRISE_TOKEN',
-        'GITHUB_ENTERPRISE_TOKEN',
-        'COPILOT_GITHUB_TOKEN',
-        'GH_AW_GITHUB_TOKEN',
-        'GH_AW_GITHUB_MCP_SERVER_TOKEN'
+    param(
+        [Parameter(Mandatory)]
+        [string] $BasePath,
+
+        [Parameter(Mandatory)]
+        [string] $Path
     )
 
-    foreach ($variable in $tokenVariables)
+    $baseUri = [System.Uri]::new((Join-Path $BasePath '.'))
+    $pathUri = [System.Uri]::new($Path)
+    return [System.Uri]::UnescapeDataString($baseUri.MakeRelativeUri($pathUri).ToString()).Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+}
+
+function Get-PropertyTypes
+{
+    param([Parameter(Mandatory)][string] $Source)
+
+    $propertyTypes = @{}
+    $propertyPattern = '(?ms)^\s*public\s+(?<type>[A-Za-z_][A-Za-z0-9_<>,\.\?\s]*)\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*\{'
+    foreach ($match in [regex]::Matches($Source, $propertyPattern))
     {
-        [System.Environment]::SetEnvironmentVariable($variable, $null, 'Process')
+        $propertyTypes[$match.Groups['name'].Value] = ($match.Groups['type'].Value -replace '\s+', ' ').Trim()
+    }
+
+    return $propertyTypes
+}
+
+function Get-SerializedPath
+{
+    param([Parameter(Mandatory)][string] $PathSource)
+
+    $segments = [System.Collections.Generic.List[string]]::new()
+    foreach ($match in [regex]::Matches($PathSource, '"(?<segment>[^"]+)"'))
+    {
+        $segments.Add($match.Groups['segment'].Value)
+    }
+
+    return $segments.ToArray()
+}
+
+function Get-PropertyKind
+{
+    param([Parameter(Mandatory)][string] $DefineMethod)
+
+    switch ($DefineMethod)
+    {
+        'DefineProperty' { 'Property' }
+        'DefineModelProperty' { 'ModelProperty' }
+        'DefineListProperty' { 'ListProperty' }
+        'DefineDictionaryProperty' { 'DictionaryProperty' }
+        'DefineResource' { 'Resource' }
+        default { $DefineMethod }
+    }
+}
+
+function Get-ResourceProperties
+{
+    param(
+        [Parameter(Mandatory)]
+        [string] $Source,
+
+        [Parameter(Mandatory)]
+        [hashtable] $PropertyTypes
+    )
+
+    $properties = [System.Collections.Generic.List[object]]::new()
+    $definePattern = '(?ms)^\s*_[A-Za-z0-9_]+\s*=\s*(?<method>Define(?:Model|List|Dictionary)?Property|DefineResource)<(?<generic>[^>]+)>\(\s*"(?<name>[^"]+)"\s*,\s*\[(?<path>[^\]]*)\](?<args>.*?)\);'
+    foreach ($match in [regex]::Matches($Source, $definePattern))
+    {
+        $name = $match.Groups['name'].Value
+        $method = $match.Groups['method'].Value
+        $genericType = ($match.Groups['generic'].Value -replace '\s+', ' ').Trim()
+        $type = if ($PropertyTypes.ContainsKey($name)) { $PropertyTypes[$name] } else { $genericType }
+        $args = $match.Groups['args'].Value
+        $isMetadata = $method -eq 'DefineResource'
+
+        $properties.Add([ordered]@{
+            Name = $name
+            SerializedPath = @(Get-SerializedPath -PathSource $match.Groups['path'].Value)
+            Kind = if ($isMetadata) { 'Resource' } else { Get-PropertyKind -DefineMethod $method }
+            Type = $type
+            IsRequired = $args -match '\bisRequired\s*:\s*true\b'
+            IsOutput = $args -match '\bisOutput\s*:\s*true\b'
+            IsMetadata = $isMetadata
+        })
+    }
+
+    return $properties.ToArray()
+}
+
+function Get-ResourceInfo
+{
+    param(
+        [Parameter(Mandatory)]
+        [System.IO.FileInfo] $File,
+
+        [Parameter(Mandatory)]
+        [string] $PackagePath,
+
+        [Parameter(Mandatory)]
+        [System.IO.FileInfo[]] $AllSourceFiles
+    )
+
+    $source = Get-Content -LiteralPath $File.FullName -Raw
+    $classMatch = [regex]::Match($source, '(?m)^\s*public\s+partial\s+class\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*:\s*ProvisionableResource\b')
+    if (!$classMatch.Success)
+    {
+        return $null
+    }
+
+    $className = $classMatch.Groups['name'].Value
+    $classSources = [System.Collections.Generic.List[string]]::new()
+    $sourcePaths = [System.Collections.Generic.List[string]]::new()
+    foreach ($sourceFile in $AllSourceFiles)
+    {
+        $candidateSource = Get-Content -LiteralPath $sourceFile.FullName -Raw
+        if ($candidateSource -match "(?m)^\s*(?:public|internal|private)?\s*partial\s+class\s+$([regex]::Escape($className))\b")
+        {
+            $classSources.Add($candidateSource)
+            $sourcePaths.Add((Get-RelativePath -BasePath $PackagePath -Path $sourceFile.FullName))
+        }
+    }
+
+    $combinedSource = $classSources -join [Environment]::NewLine
+    $constructorPattern = '(?ms)public\s+' + [regex]::Escape($className) + '\s*\([^)]*string\s+bicepIdentifier[^)]*\)\s*:\s*base\(\s*bicepIdentifier\s*,\s*"(?<resourceType>[^"]+)"\s*,\s*resourceVersion\s*\?\?\s*"(?<defaultApiVersion>[^"]+)"\s*\)'
+    $constructorMatch = [regex]::Match($source, $constructorPattern)
+
+    $apiVersions = [System.Collections.Generic.List[string]]::new()
+    foreach ($match in [regex]::Matches($source, '(?m)^\s*public\s+static\s+readonly\s+string\s+V[A-Za-z0-9_]+\s*=\s*"(?<version>[^"]+)";'))
+    {
+        $apiVersions.Add($match.Groups['version'].Value)
+    }
+
+    $propertyTypes = Get-PropertyTypes -Source $combinedSource
+
+    return [ordered]@{
+        ClassName = $className
+        ResourceType = if ($constructorMatch.Success) { $constructorMatch.Groups['resourceType'].Value } else { '' }
+        DefaultApiVersion = if ($constructorMatch.Success) { $constructorMatch.Groups['defaultApiVersion'].Value } else { '' }
+        ApiVersions = $apiVersions.ToArray()
+        SourcePath = Get-RelativePath -BasePath $PackagePath -Path $File.FullName
+        AdditionalSourcePaths = @($sourcePaths.ToArray() | Where-Object { $_ -ne (Get-RelativePath -BasePath $PackagePath -Path $File.FullName) })
+        InitializationError = ''
+        Properties = @(Get-ResourceProperties -Source $combinedSource -PropertyTypes $propertyTypes)
     }
 }
 
 $resolvedPackagePath = (Resolve-Path -LiteralPath $PackagePath).Path
-$project = Get-ChildItem -LiteralPath (Join-Path $resolvedPackagePath 'src') -Filter '*.csproj' -File |
-    Select-Object -First 1
-if ($null -eq $project)
+$generatedPath = Join-Path $resolvedPackagePath 'src/Generated'
+if (!(Test-Path -LiteralPath $generatedPath))
 {
-    throw "Could not find a src project under $resolvedPackagePath"
+    throw "Could not find generated source under $resolvedPackagePath"
 }
 
-$tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) "azprov-schema-$([System.Guid]::NewGuid())"
-New-Item -ItemType Directory -Path $tempRoot -Force | Out-Null
-
-try
+$resources = [System.Collections.Generic.List[object]]::new()
+$allSourceFiles = @(Get-ChildItem -LiteralPath (Join-Path $resolvedPackagePath 'src') -Filter '*.cs' -File -Recurse | Sort-Object FullName)
+foreach ($file in Get-ChildItem -LiteralPath $generatedPath -Filter '*.cs' -File -Recurse | Sort-Object FullName)
 {
-    $escapedProjectPath = [System.Security.SecurityElement]::Escape($project.FullName)
-    $extractorProject = Join-Path $tempRoot 'SchemaExtractor.csproj'
-    $extractorProgram = Join-Path $tempRoot 'Program.cs'
-
-    @"
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>$Framework</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="$escapedProjectPath" />
-  </ItemGroup>
-</Project>
-"@ | Set-Content -LiteralPath $extractorProject -Encoding utf8
-
-    @'
-using System.Reflection;
-using System.Text.Json;
-using Azure.Core;
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
-static string GetFriendlyName(Type type)
-{
-    if (!type.IsGenericType)
+    $resource = Get-ResourceInfo -File $file -PackagePath $resolvedPackagePath -AllSourceFiles $allSourceFiles
+    if ($null -ne $resource)
     {
-        return type.Name;
+        $resources.Add($resource)
     }
-
-    string name = type.Name;
-    int tick = name.IndexOf('`');
-    if (tick >= 0)
-    {
-        name = name[..tick];
-    }
-
-    return $"{name}<{string.Join(", ", type.GetGenericArguments().Select(GetFriendlyName))}>";
 }
 
-static string GetResourceTypeString(ResourceType resourceType)
-{
-    PropertyInfo? namespaceProperty = resourceType.GetType().GetProperty("Namespace");
-    PropertyInfo? typeProperty = resourceType.GetType().GetProperty("Type");
-    string? resourceNamespace = namespaceProperty?.GetValue(resourceType)?.ToString();
-    string? type = typeProperty?.GetValue(resourceType)?.ToString();
-    return !string.IsNullOrEmpty(resourceNamespace) && !string.IsNullOrEmpty(type) ?
-        $"{resourceNamespace}/{type}" :
-        resourceType.ToString();
+$schema = [ordered]@{
+    PackagePath = $resolvedPackagePath
+    SourcePath = $generatedPath
+    ResourceCount = $resources.Count
+    Resources = $resources.ToArray()
 }
 
-static string GetKind(IBicepValue property)
+if ($Format -eq 'Json')
 {
-    Type type = property.GetType();
-    if (type.IsGenericType)
-    {
-        Type generic = type.GetGenericTypeDefinition();
-        if (generic == typeof(BicepValue<>))
-        {
-            return "Property";
-        }
-        if (generic == typeof(BicepList<>))
-        {
-            return "ListProperty";
-        }
-        if (generic == typeof(BicepDictionary<>))
-        {
-            return "DictionaryProperty";
-        }
-    }
-
-    return property is ProvisionableConstruct ? "ModelProperty" : type.Name;
+    $output = $schema | ConvertTo-Json -Depth 20
 }
-
-static PropertyInfo? GetVisibleProperty(Type resourceType, string propertyName) =>
-    resourceType.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-        .Where(p => p.Name == propertyName)
-        .OrderByDescending(p => p.DeclaringType == resourceType)
-        .ThenBy(p => p.GetMethod is null ? 1 : 0)
-        .FirstOrDefault();
-
-string assemblyPath = args[0];
-string packagePath = args[1];
-Assembly assembly = Assembly.LoadFrom(assemblyPath);
-MethodInfo initialize = typeof(ProvisionableConstruct).GetMethod("Initialize", BindingFlags.Instance | BindingFlags.NonPublic)
-    ?? throw new InvalidOperationException("Could not find ProvisionableConstruct.Initialize.");
-
-List<object> resources = [];
-foreach (Type type in assembly.GetTypes().Where(t => t is { IsClass: true, IsAbstract: false } && typeof(ProvisionableResource).IsAssignableFrom(t)).OrderBy(t => t.FullName))
+else
 {
-    ConstructorInfo? constructor = type.GetConstructor([typeof(string), typeof(string)]);
-    if (constructor is null)
-    {
-        continue;
-    }
+    $lines = [System.Collections.Generic.List[string]]::new()
+    $lines.Add("# Provisioning Resource Schema")
+    $lines.Add("")
+    $lines.Add("Package: ``$($schema.PackagePath)``")
+    $lines.Add("Source: ``$($schema.SourcePath)``")
+    $lines.Add("")
 
-    ProvisionableResource? resource = null;
-    string? constructionError = null;
-    try
+    foreach ($resource in $schema.Resources)
     {
-        resource = (ProvisionableResource)constructor.Invoke(["schemaResource", null]);
-    }
-    catch (TargetInvocationException ex)
-    {
-        constructionError = ex.InnerException?.Message ?? ex.Message;
-    }
-
-    if (resource is null)
-    {
-        resources.Add(new
-        {
-            ClassName = type.Name,
-            ResourceType = "",
-            DefaultApiVersion = "",
-            ApiVersions = Array.Empty<string>(),
-            Assembly = assemblyPath,
-            InitializationError = constructionError,
-            Properties = Array.Empty<object>()
-        });
-        continue;
-    }
-
-    string? initializationError = null;
-    try
-    {
-        initialize.Invoke(resource, []);
-    }
-    catch (TargetInvocationException ex)
-    {
-        initializationError = ex.InnerException?.Message ?? ex.Message;
-    }
-
-    List<object> properties = [];
-    if (initializationError is null)
-    {
-        foreach (KeyValuePair<string, IBicepValue> pair in resource.ProvisionableProperties.OrderBy(p => p.Key))
-        {
-            PropertyInfo? visibleProperty = GetVisibleProperty(type, pair.Key);
-            Type reflectedType = visibleProperty?.PropertyType ?? pair.Value.GetType();
-            bool isMetadata = typeof(ProvisionableResource).IsAssignableFrom(reflectedType);
-
-            properties.Add(new
-            {
-                Name = pair.Key,
-                SerializedPath = pair.Value.Self?.BicepPath?.ToArray() ?? [],
-                Kind = isMetadata ? "Resource" : GetKind(pair.Value),
-                Type = GetFriendlyName(reflectedType),
-                IsRequired = pair.Value.IsRequired,
-                IsOutput = pair.Value.IsOutput,
-                IsMetadata = isMetadata
-            });
-        }
-    }
-
-    Type? resourceVersions = type.GetNestedType("ResourceVersions", BindingFlags.Public | BindingFlags.NonPublic);
-    string[] apiVersions = resourceVersions?.GetFields(BindingFlags.Public | BindingFlags.Static)
-        .Where(f => f.FieldType == typeof(string))
-        .Select(f => (string?)f.GetValue(null))
-        .Where(v => v is not null)
-        .Cast<string>()
-        .ToArray() ?? [];
-
-    resources.Add(new
-    {
-        ClassName = type.Name,
-        ResourceType = GetResourceTypeString(resource.ResourceType),
-        DefaultApiVersion = resource.ResourceVersion,
-        ApiVersions = apiVersions,
-        Assembly = assemblyPath,
-        InitializationError = initializationError,
-        Properties = properties
-    });
-}
-
-var schema = new
-{
-    PackagePath = packagePath,
-    AssemblyPath = assemblyPath,
-    ResourceCount = resources.Count,
-    Resources = resources
-};
-
-Console.WriteLine(JsonSerializer.Serialize(schema, new JsonSerializerOptions { WriteIndented = true }));
-'@ | Set-Content -LiteralPath $extractorProgram -Encoding utf8
-
-    dotnet build $extractorProject --framework $Framework --verbosity quiet | Write-Verbose
-    if ($LASTEXITCODE -ne 0)
-    {
-        throw "dotnet build failed for schema extractor."
-    }
-
-    $assemblyPath = dotnet msbuild $project.FullName -getProperty:TargetPath -p:TargetFramework=$Framework
-    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($assemblyPath))
-    {
-        throw "Could not determine TargetPath for $($project.FullName)"
-    }
-    $assemblyPath = $assemblyPath.Trim()
-
-    $json = dotnet run --project $extractorProject --framework $Framework --no-build -- $assemblyPath $resolvedPackagePath
-    if ($LASTEXITCODE -ne 0)
-    {
-        throw "Schema extractor failed for $resolvedPackagePath"
-    }
-
-    if ($Format -eq 'Json')
-    {
-        $output = $json -join [Environment]::NewLine
-    }
-    else
-    {
-        $schema = ($json -join [Environment]::NewLine) | ConvertFrom-Json
-        $lines = [System.Collections.Generic.List[string]]::new()
-        $lines.Add("# Provisioning Resource Schema")
+        $lines.Add("## $($resource.ClassName)")
         $lines.Add("")
-        $lines.Add("Package: ``$($schema.PackagePath)``")
-        $lines.Add("Assembly: ``$($schema.AssemblyPath)``")
+        $lines.Add("- Resource type: ``$($resource.ResourceType)``")
+        $lines.Add("- Default API version: ``$($resource.DefaultApiVersion)``")
+        $lines.Add("- Source file: ``$($resource.SourcePath)``")
+        if ($resource.AdditionalSourcePaths.Count -gt 0)
+        {
+            $lines.Add("- Additional source files: ``$($resource.AdditionalSourcePaths -join '`, ``')``")
+        }
         $lines.Add("")
-
-        foreach ($resource in $schema.Resources)
+        $lines.Add("| Property | Path | Kind | Type | Required | Output | Metadata |")
+        $lines.Add("| --- | --- | --- | --- | --- | --- | --- |")
+        foreach ($property in $resource.Properties)
         {
-            $lines.Add("## $($resource.ClassName)")
-            $lines.Add("")
-            $lines.Add("- Resource type: ``$($resource.ResourceType)``")
-            $lines.Add("- Default API version: ``$($resource.DefaultApiVersion)``")
-            if (![string]::IsNullOrWhiteSpace($resource.InitializationError))
-            {
-                $lines.Add("- Initialization error: ``$($resource.InitializationError)``")
-            }
-            $lines.Add("")
-            $lines.Add("| Property | Path | Kind | Type | Required | Output | Metadata |")
-            $lines.Add("| --- | --- | --- | --- | --- | --- | --- |")
-            foreach ($property in $resource.Properties)
-            {
-                $path = if ($property.SerializedPath.Count -gt 0) { $property.SerializedPath -join '.' } else { '' }
-                $lines.Add("| ``$($property.Name)`` | ``$path`` | $($property.Kind) | ``$($property.Type)`` | $($property.IsRequired) | $($property.IsOutput) | $($property.IsMetadata) |")
-            }
-            $lines.Add("")
+            $path = if ($property.SerializedPath.Count -gt 0) { $property.SerializedPath -join '.' } else { '' }
+            $lines.Add("| ``$($property.Name)`` | ``$path`` | $($property.Kind) | ``$($property.Type)`` | $($property.IsRequired) | $($property.IsOutput) | $($property.IsMetadata) |")
         }
-
-        $output = $lines -join [Environment]::NewLine
+        $lines.Add("")
     }
 
-    if (![string]::IsNullOrWhiteSpace($OutputPath))
-    {
-        $outputDirectory = Split-Path -Parent $OutputPath
-        if (![string]::IsNullOrWhiteSpace($outputDirectory))
-        {
-            New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
-        }
-        Set-Content -LiteralPath $OutputPath -Value $output -Encoding utf8
-    }
-
-    $output
+    $output = $lines -join [Environment]::NewLine
 }
-finally
+
+if (![string]::IsNullOrWhiteSpace($OutputPath))
 {
-    Remove-Item -LiteralPath $tempRoot -Recurse -Force -ErrorAction SilentlyContinue
+    $outputDirectory = Split-Path -Parent $OutputPath
+    if (![string]::IsNullOrWhiteSpace($outputDirectory))
+    {
+        New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
+    }
+    Set-Content -LiteralPath $OutputPath -Value $output -Encoding utf8
 }
+
+$output
