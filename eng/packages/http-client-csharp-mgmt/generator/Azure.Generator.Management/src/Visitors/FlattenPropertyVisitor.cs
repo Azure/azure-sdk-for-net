@@ -508,6 +508,7 @@ namespace Azure.Generator.Management.Visitors
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
+        private readonly Dictionary<(CSharpType ModelType, string PropertyName), bool> _flattenedIntoParentWithLastContractSetterCache = [];
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
@@ -755,8 +756,14 @@ namespace Azure.Generator.Management.Visitors
             return model.LastContractView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
         }
 
-        private static bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)
+        private bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)
         {
+            var cacheKey = (model.Type, propertyName);
+            if (_flattenedIntoParentWithLastContractSetterCache.TryGetValue(cacheKey, out var result))
+            {
+                return result;
+            }
+
             foreach (var parent in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
             {
                 if (parent == model || !ShouldPreserveLastContractSetter(parent, propertyName))
@@ -767,10 +774,12 @@ namespace Azure.Generator.Management.Visitors
                 if (ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(parent, out var propertiesToFlatten)
                     && propertiesToFlatten.Any(p => p.Type.AreNamesEqual(model.Type)))
                 {
+                    _flattenedIntoParentWithLastContractSetterCache[cacheKey] = true;
                     return true;
                 }
             }
 
+            _flattenedIntoParentWithLastContractSetterCache[cacheKey] = false;
             return false;
         }
 
