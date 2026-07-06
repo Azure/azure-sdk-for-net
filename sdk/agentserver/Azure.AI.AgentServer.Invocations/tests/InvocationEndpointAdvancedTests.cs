@@ -237,6 +237,97 @@ public class InvocationEndpointAdvancedTests
         await app.StopAsync();
     }
 
+    [Test]
+    public async Task GetAsyncApiJson_Returns200_WhenHandlerOverrides()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddInvocationsServer();
+        builder.Services.AddScoped<InvocationHandler, FullOverrideHandler>();
+
+        var app = builder.Build();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+        var response = await client.GetAsync("/invocations/docs/asyncapi.json");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.That(body, Is.EqualTo("{\"asyncapi\":\"3.0\"}"));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/json"));
+
+        await app.StopAsync();
+    }
+
+    [Test]
+    public async Task GetAsyncApiYaml_Returns200_WhenHandlerOverrides()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddInvocationsServer();
+        builder.Services.AddScoped<InvocationHandler, FullOverrideHandler>();
+
+        var app = builder.Build();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+        var response = await client.GetAsync("/invocations/docs/asyncapi.yaml");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.That(body, Is.EqualTo("asyncapi: 3.0\n"));
+        Assert.That(response.Content.Headers.ContentType?.MediaType, Is.EqualTo("application/yaml"));
+
+        await app.StopAsync();
+    }
+
+    [Test]
+    public async Task GetAsyncApi_JsonAndYamlAreIndependent()
+    {
+        // Overriding only the JSON variant leaves YAML as 404 and vice versa —
+        // no format conversion, users may publish either or both.
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddInvocationsServer();
+        builder.Services.AddScoped<InvocationHandler, JsonOnlyAsyncApiHandler>();
+
+        var app = builder.Build();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+
+        var client = app.GetTestClient();
+
+        var json = await client.GetAsync("/invocations/docs/asyncapi.json");
+        Assert.That(json.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        var yaml = await client.GetAsync("/invocations/docs/asyncapi.yaml");
+        Assert.That(yaml.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+
+        await app.StopAsync();
+
+        // Symmetric direction: only YAML override → JSON returns 404.
+        builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddInvocationsServer();
+        builder.Services.AddScoped<InvocationHandler, YamlOnlyAsyncApiHandler>();
+
+        app = builder.Build();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+
+        client = app.GetTestClient();
+
+        yaml = await client.GetAsync("/invocations/docs/asyncapi.yaml");
+        Assert.That(yaml.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        json = await client.GetAsync("/invocations/docs/asyncapi.json");
+        Assert.That(json.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+
+        await app.StopAsync();
+    }
+
     // ─── Test handler implementations ───
 
     private sealed class ThrowingHandler : InvocationHandler
@@ -298,6 +389,64 @@ public class InvocationEndpointAdvancedTests
             response.StatusCode = 200;
             response.ContentType = "application/json";
             await response.WriteAsync("{\"openapi\":\"3.0\"}", cancellationToken);
+        }
+
+        public override async Task GetAsyncApiJsonAsync(
+            HttpRequest request, HttpResponse response,
+            CancellationToken cancellationToken)
+        {
+            response.StatusCode = 200;
+            response.ContentType = "application/json";
+            await response.WriteAsync("{\"asyncapi\":\"3.0\"}", cancellationToken);
+        }
+
+        public override async Task GetAsyncApiYamlAsync(
+            HttpRequest request, HttpResponse response,
+            CancellationToken cancellationToken)
+        {
+            response.StatusCode = 200;
+            response.ContentType = "application/yaml";
+            await response.WriteAsync("asyncapi: 3.0\n", cancellationToken);
+        }
+    }
+
+    private sealed class JsonOnlyAsyncApiHandler : InvocationHandler
+    {
+        public override async Task HandleAsync(
+            HttpRequest request, HttpResponse response,
+            InvocationContext context, CancellationToken cancellationToken)
+        {
+            response.StatusCode = 200;
+            await response.WriteAsync("ok", cancellationToken);
+        }
+
+        public override async Task GetAsyncApiJsonAsync(
+            HttpRequest request, HttpResponse response,
+            CancellationToken cancellationToken)
+        {
+            response.StatusCode = 200;
+            response.ContentType = "application/json";
+            await response.WriteAsync("{\"asyncapi\":\"3.0\"}", cancellationToken);
+        }
+    }
+
+    private sealed class YamlOnlyAsyncApiHandler : InvocationHandler
+    {
+        public override async Task HandleAsync(
+            HttpRequest request, HttpResponse response,
+            InvocationContext context, CancellationToken cancellationToken)
+        {
+            response.StatusCode = 200;
+            await response.WriteAsync("ok", cancellationToken);
+        }
+
+        public override async Task GetAsyncApiYamlAsync(
+            HttpRequest request, HttpResponse response,
+            CancellationToken cancellationToken)
+        {
+            response.StatusCode = 200;
+            response.ContentType = "application/yaml";
+            await response.WriteAsync("asyncapi: 3.0\n", cancellationToken);
         }
     }
 }

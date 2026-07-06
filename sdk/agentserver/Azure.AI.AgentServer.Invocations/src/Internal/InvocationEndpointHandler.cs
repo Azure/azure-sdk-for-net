@@ -138,6 +138,35 @@ internal sealed class InvocationEndpointHandler
     }
 
     /// <summary>
+    /// Handles <c>GET /invocations/docs/asyncapi.json</c>. Companion to the OpenAPI
+    /// endpoint for event-driven/streaming surfaces (e.g. <c>invocations_ws</c>).
+    /// </summary>
+    internal async Task HandleGetAsyncApiJsonAsync(HttpContext httpContext, InvocationHandler handler)
+    {
+        var sessionId = FoundryEnvironment.SessionId;
+        if (!string.IsNullOrEmpty(sessionId))
+        {
+            httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
+        }
+
+        await handler.GetAsyncApiJsonAsync(httpContext.Request, httpContext.Response, httpContext.RequestAborted);
+    }
+
+    /// <summary>
+    /// Handles <c>GET /invocations/docs/asyncapi.yaml</c>.
+    /// </summary>
+    internal async Task HandleGetAsyncApiYamlAsync(HttpContext httpContext, InvocationHandler handler)
+    {
+        var sessionId = FoundryEnvironment.SessionId;
+        if (!string.IsNullOrEmpty(sessionId))
+        {
+            httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
+        }
+
+        await handler.GetAsyncApiYamlAsync(httpContext.Request, httpContext.Response, httpContext.RequestAborted);
+    }
+
+    /// <summary>
     /// Builds an <see cref="InvocationContext"/> from the HTTP request.
     /// Used by GET and Cancel endpoints where the invocation ID comes from
     /// the route rather than a header.

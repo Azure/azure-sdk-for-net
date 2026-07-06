@@ -76,6 +76,24 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
             await handler.HandleGetOpenApiAsync(httpContext, invocationHandler);
         }).AddEndpointFilter<InvocationsErrorSourceFilter>();
 
+        // GET /invocations/docs/asyncapi.json — AsyncAPI spec (JSON)
+        group.MapGet("/invocations/docs/asyncapi.json", async (
+            HttpContext httpContext,
+            InvocationEndpointHandler handler,
+            InvocationHandler invocationHandler) =>
+        {
+            await handler.HandleGetAsyncApiJsonAsync(httpContext, invocationHandler);
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
+
+        // GET /invocations/docs/asyncapi.yaml — AsyncAPI spec (YAML)
+        group.MapGet("/invocations/docs/asyncapi.yaml", async (
+            HttpContext httpContext,
+            InvocationEndpointHandler handler,
+            InvocationHandler invocationHandler) =>
+        {
+            await handler.HandleGetAsyncApiYamlAsync(httpContext, invocationHandler);
+        }).AddEndpointFilter<InvocationsErrorSourceFilter>();
+
         // /invocations_ws — WebSocket transport.
         // Endpoint short-circuits to 404 when the handler does not override
         // `InvocationHandler.HandleWebSocketAsync`, so an upgrade attempt
