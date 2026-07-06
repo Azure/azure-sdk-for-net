@@ -12,7 +12,7 @@ on:
 
 permissions:
   actions: write
-  checks: read
+  checks: write
   contents: read
   pull-requests: read
 
@@ -55,6 +55,19 @@ jobs:
             review_check_ids="$(gh api --paginate "repos/$REPOSITORY/commits/$head_sha/check-runs?per_page=100" \
               --jq '.check_runs[] | select(.name == "Azure .NET Management SDK PR Review") | .id')"
             [ -n "$review_check_ids" ]
+          }
+
+          create_management_review_check() {
+            local head_sha="$1"
+            local details_url="${GITHUB_SERVER_URL:-https://github.com}/$REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+            gh api --method POST "repos/$REPOSITORY/check-runs" \
+              -f name='Azure .NET Management SDK PR Review' \
+              -f head_sha="$head_sha" \
+              -f status='in_progress' \
+              -f details_url="$details_url" \
+              -f 'output[title]=Azure .NET Management SDK PR Review' \
+              -f "output[summary]=Management SDK PR review is running. See $details_url" >/dev/null
           }
 
           get_terminal_net_pullrequest_check() {
@@ -105,6 +118,7 @@ jobs:
               -f check_run_head_sha="$check_run_head_sha" \
               -f check_run_url="$check_run_url"
 
+            create_management_review_check "$check_run_head_sha"
             echo "Dispatched management review for PR #$pr_number."
           }
 
