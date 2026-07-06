@@ -39,18 +39,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -64,18 +59,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ProfileProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -99,15 +89,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ProfileProperties();
-                }
-                Properties.Description = value;
+                return Properties.Description;
             }
         }
 
@@ -116,15 +98,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             get
             {
-                return Properties is null ? default : Properties.SkuName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ProfileProperties();
-                }
-                Properties.SkuName = value;
+                return Properties.SkuName;
             }
         }
 
