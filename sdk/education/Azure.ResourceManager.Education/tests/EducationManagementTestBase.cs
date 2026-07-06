@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Education.Tests
         protected async Task<TenantResource> GetTenantAsync()
         {
             var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
-            return tenants.First();
+            return tenants.FirstOrDefault();
         }
     }
 }
