@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegionsByTierResponse>> GetClusterTierRegionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoDBAtlasRegionsByTierResult>> GetClusterTierRegionsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.GetClusterTierRegions");
             scope.Start();
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 };
                 HttpMessage message = _projectsRestClient.CreateGetClusterTierRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RegionsByTierResponse> response = Response.FromValue(RegionsByTierResponse.FromResponse(result), result);
+                Response<MongoDBAtlasRegionsByTierResult> response = Response.FromValue(MongoDBAtlasRegionsByTierResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegionsByTierResponse> GetClusterTierRegions(CancellationToken cancellationToken = default)
+        public virtual Response<MongoDBAtlasRegionsByTierResult> GetClusterTierRegions(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.GetClusterTierRegions");
             scope.Start();
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 };
                 HttpMessage message = _projectsRestClient.CreateGetClusterTierRegionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RegionsByTierResponse> response = Response.FromValue(RegionsByTierResponse.FromResponse(result), result);
+                Response<MongoDBAtlasRegionsByTierResult> response = Response.FromValue(MongoDBAtlasRegionsByTierResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TierLimitReachedResponse>> TierLimitReachedAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoDBAtlasTierLimitReachedResult>> TierLimitReachedAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.TierLimitReached");
             scope.Start();
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 };
                 HttpMessage message = _projectsRestClient.CreateTierLimitReachedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TierLimitReachedResponse> response = Response.FromValue(TierLimitReachedResponse.FromResponse(result), result);
+                Response<MongoDBAtlasTierLimitReachedResult> response = Response.FromValue(MongoDBAtlasTierLimitReachedResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TierLimitReachedResponse> TierLimitReached(CancellationToken cancellationToken = default)
+        public virtual Response<MongoDBAtlasTierLimitReachedResult> TierLimitReached(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _projectsClientDiagnostics.CreateScope("MongoDBAtlasProjectResource.TierLimitReached");
             scope.Start();
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 };
                 HttpMessage message = _projectsRestClient.CreateTierLimitReachedRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TierLimitReachedResponse> response = Response.FromValue(TierLimitReachedResponse.FromResponse(result), result);
+                Response<MongoDBAtlasTierLimitReachedResult> response = Response.FromValue(MongoDBAtlasTierLimitReachedResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

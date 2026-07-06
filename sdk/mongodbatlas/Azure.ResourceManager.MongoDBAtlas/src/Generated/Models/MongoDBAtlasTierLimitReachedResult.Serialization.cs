@@ -15,58 +15,58 @@ using Azure.ResourceManager.MongoDBAtlas;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Response for tier limit check. </summary>
-    public partial class TierLimitReachedResponse : IJsonModel<TierLimitReachedResponse>
+    public partial class MongoDBAtlasTierLimitReachedResult : IJsonModel<MongoDBAtlasTierLimitReachedResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TierLimitReachedResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasTierLimitReachedResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TierLimitReachedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasTierLimitReachedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTierLimitReachedResponse(document.RootElement, options);
+                        return DeserializeMongoDBAtlasTierLimitReachedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TierLimitReachedResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasTierLimitReachedResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TierLimitReachedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasTierLimitReachedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TierLimitReachedResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasTierLimitReachedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TierLimitReachedResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MongoDBAtlasTierLimitReachedResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TierLimitReachedResponse IPersistableModel<TierLimitReachedResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MongoDBAtlasTierLimitReachedResult IPersistableModel<MongoDBAtlasTierLimitReachedResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TierLimitReachedResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasTierLimitReachedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TierLimitReachedResponse"/> from. </param>
-        internal static TierLimitReachedResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasTierLimitReachedResult"/> from. </param>
+        internal static MongoDBAtlasTierLimitReachedResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTierLimitReachedResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMongoDBAtlasTierLimitReachedResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TierLimitReachedResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasTierLimitReachedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TierLimitReachedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasTierLimitReachedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TierLimitReachedResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasTierLimitReachedResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteStartArray();
-                foreach (ProjectLimitStatus item in Limits)
+                foreach (MongoDBAtlasProjectLimitStatus item in Limits)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -111,39 +111,39 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TierLimitReachedResponse IJsonModel<TierLimitReachedResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MongoDBAtlasTierLimitReachedResult IJsonModel<MongoDBAtlasTierLimitReachedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TierLimitReachedResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasTierLimitReachedResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TierLimitReachedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasTierLimitReachedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TierLimitReachedResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasTierLimitReachedResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTierLimitReachedResponse(document.RootElement, options);
+            return DeserializeMongoDBAtlasTierLimitReachedResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TierLimitReachedResponse DeserializeTierLimitReachedResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static MongoDBAtlasTierLimitReachedResult DeserializeMongoDBAtlasTierLimitReachedResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<ProjectLimitStatus> limits = default;
+            IReadOnlyList<MongoDBAtlasProjectLimitStatus> limits = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("limits"u8))
                 {
-                    List<ProjectLimitStatus> array = new List<ProjectLimitStatus>();
+                    List<MongoDBAtlasProjectLimitStatus> array = new List<MongoDBAtlasProjectLimitStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProjectLimitStatus.DeserializeProjectLimitStatus(item, options));
+                        array.Add(MongoDBAtlasProjectLimitStatus.DeserializeMongoDBAtlasProjectLimitStatus(item, options));
                     }
                     limits = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TierLimitReachedResponse(limits, additionalBinaryDataProperties);
+            return new MongoDBAtlasTierLimitReachedResult(limits, additionalBinaryDataProperties);
         }
     }
 }

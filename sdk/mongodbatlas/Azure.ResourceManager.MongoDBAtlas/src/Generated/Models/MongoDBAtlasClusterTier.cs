@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
     {
         private readonly string _value;
         /// <summary> Free tier cluster. </summary>
-        private const string FREEValue = "FREE";
+        private const string FreeValue = "FREE";
         /// <summary> Flex tier cluster. </summary>
-        private const string FLEXValue = "FLEX";
+        private const string FlexValue = "FLEX";
         /// <summary> M10 tier cluster. </summary>
         private const string M10Value = "M10";
         /// <summary> M30 tier cluster. </summary>
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         }
 
         /// <summary> Free tier cluster. </summary>
-        public static MongoDBAtlasClusterTier FREE { get; } = new MongoDBAtlasClusterTier(FREEValue);
+        public static MongoDBAtlasClusterTier Free { get; } = new MongoDBAtlasClusterTier(FreeValue);
 
         /// <summary> Flex tier cluster. </summary>
-        public static MongoDBAtlasClusterTier FLEX { get; } = new MongoDBAtlasClusterTier(FLEXValue);
+        public static MongoDBAtlasClusterTier Flex { get; } = new MongoDBAtlasClusterTier(FlexValue);
 
         /// <summary> M10 tier cluster. </summary>
         public static MongoDBAtlasClusterTier M10 { get; } = new MongoDBAtlasClusterTier(M10Value);

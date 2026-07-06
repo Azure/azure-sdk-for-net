@@ -12,23 +12,23 @@ using Azure.ResourceManager.MongoDBAtlas;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Response for regions by cluster tier. </summary>
-    public partial class RegionsByTierResponse
+    public partial class MongoDBAtlasRegionsByTierResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RegionsByTierResponse"/>. </summary>
-        internal RegionsByTierResponse()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasRegionsByTierResult"/>. </summary>
+        internal MongoDBAtlasRegionsByTierResult()
         {
-            RegionsByTier = new ChangeTrackingList<TierRegions>();
+            RegionsByTier = new ChangeTrackingList<MongoDBAtlasTierRegions>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RegionsByTierResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasRegionsByTierResult"/>. </summary>
         /// <param name="organizationId"> Atlas organization id. </param>
         /// <param name="projectId"> Atlas project id. </param>
         /// <param name="regionsByTier"> List of cluster tiers and their supported regions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegionsByTierResponse(string organizationId, string projectId, IReadOnlyList<TierRegions> regionsByTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasRegionsByTierResult(string organizationId, string projectId, IReadOnlyList<MongoDBAtlasTierRegions> regionsByTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrganizationId = organizationId;
             ProjectId = projectId;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public string ProjectId { get; }
 
         /// <summary> List of cluster tiers and their supported regions. </summary>
-        public IReadOnlyList<TierRegions> RegionsByTier { get; }
+        public IReadOnlyList<MongoDBAtlasTierRegions> RegionsByTier { get; }
     }
 }

@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Usage and limit status for a resource quota in a MongoDB Atlas project. </summary>
-    public partial class ProjectLimitStatus
+    public partial class MongoDBAtlasProjectLimitStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProjectLimitStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasProjectLimitStatus"/>. </summary>
         /// <param name="type"> Type of the limit. </param>
         /// <param name="maximum"> Maximum allowed value. </param>
         /// <param name="current"> Current value. </param>
         /// <param name="isReached"> Whether the limit has been reached. </param>
-        internal ProjectLimitStatus(MongoDBAtlasClusterTier @type, int maximum, int current, bool isReached)
+        internal MongoDBAtlasProjectLimitStatus(MongoDBAtlasClusterTier @type, int maximum, int current, bool isReached)
         {
             Type = @type;
             Maximum = maximum;
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             IsReached = isReached;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProjectLimitStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasProjectLimitStatus"/>. </summary>
         /// <param name="type"> Type of the limit. </param>
         /// <param name="maximum"> Maximum allowed value. </param>
         /// <param name="current"> Current value. </param>
         /// <param name="isReached"> Whether the limit has been reached. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectLimitStatus(MongoDBAtlasClusterTier @type, int maximum, int current, bool isReached, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasProjectLimitStatus(MongoDBAtlasClusterTier @type, int maximum, int current, bool isReached, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Maximum = maximum;

@@ -6,6 +6,14 @@
 
 ### Breaking Changes
 
+- Renamed model `ProjectLimitStatus` to `MongoDBAtlasProjectLimitStatus`.
+- Renamed model `RegionsByTierResponse` to `MongoDBAtlasRegionsByTierResult`.
+- Renamed model `TierLimitReachedResponse` to `MongoDBAtlasTierLimitReachedResult`.
+- Renamed model `TierRegions` to `MongoDBAtlasTierRegions`.
+- Renamed property `Backups` to `IsBackupsEnabled` in `MongoDBAtlasClusterProperties`.
+- Renamed property `FREE` to `Free` in `MongoDBAtlasClusterTier`.
+- Renamed property `FLEX` to `Flex` in `MongoDBAtlasClusterTier`.
+
 ### Bugs Fixed
 
 ### Other Changes

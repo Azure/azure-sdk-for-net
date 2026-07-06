@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 writer.WritePropertyName("mongoDbVersion"u8);
                 writer.WriteStringValue(MongoDbVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Backups))
+            if (options.Format != "W" && Optional.IsDefined(IsBackupsEnabled))
             {
                 writer.WritePropertyName("backups"u8);
-                writer.WriteBooleanValue(Backups.Value);
+                writer.WriteBooleanValue(IsBackupsEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             MongoDBAtlasClusterTier clusterTier = default;
             string regionName = default;
             string mongoDbVersion = default;
-            bool? backups = default;
+            bool? isBackupsEnabled = default;
             string state = default;
             MongoDBAtlasResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        backups = null;
+                        isBackupsEnabled = null;
                         continue;
                     }
-                    backups = prop.Value.GetBoolean();
+                    isBackupsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 clusterTier,
                 regionName,
                 mongoDbVersion,
-                backups,
+                isBackupsEnabled,
                 state,
                 provisioningState,
                 additionalBinaryDataProperties);

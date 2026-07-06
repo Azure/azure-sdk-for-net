@@ -12,27 +12,27 @@ using Azure.ResourceManager.MongoDBAtlas;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Response for tier limit check. </summary>
-    public partial class TierLimitReachedResponse
+    public partial class MongoDBAtlasTierLimitReachedResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TierLimitReachedResponse"/>. </summary>
-        internal TierLimitReachedResponse()
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasTierLimitReachedResult"/>. </summary>
+        internal MongoDBAtlasTierLimitReachedResult()
         {
-            Limits = new ChangeTrackingList<ProjectLimitStatus>();
+            Limits = new ChangeTrackingList<MongoDBAtlasProjectLimitStatus>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TierLimitReachedResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasTierLimitReachedResult"/>. </summary>
         /// <param name="limits"> List of project limit statuses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TierLimitReachedResponse(IReadOnlyList<ProjectLimitStatus> limits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasTierLimitReachedResult(IReadOnlyList<MongoDBAtlasProjectLimitStatus> limits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Limits = limits;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of project limit statuses. </summary>
-        public IReadOnlyList<ProjectLimitStatus> Limits { get; }
+        public IReadOnlyList<MongoDBAtlasProjectLimitStatus> Limits { get; }
     }
 }

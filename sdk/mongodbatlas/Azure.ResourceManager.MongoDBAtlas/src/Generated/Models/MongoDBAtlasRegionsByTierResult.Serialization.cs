@@ -15,58 +15,58 @@ using Azure.ResourceManager.MongoDBAtlas;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Response for regions by cluster tier. </summary>
-    public partial class RegionsByTierResponse : IJsonModel<RegionsByTierResponse>
+    public partial class MongoDBAtlasRegionsByTierResult : IJsonModel<MongoDBAtlasRegionsByTierResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegionsByTierResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasRegionsByTierResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsByTierResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasRegionsByTierResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRegionsByTierResponse(document.RootElement, options);
+                        return DeserializeMongoDBAtlasRegionsByTierResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegionsByTierResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasRegionsByTierResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsByTierResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasRegionsByTierResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RegionsByTierResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBAtlasRegionsByTierResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegionsByTierResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MongoDBAtlasRegionsByTierResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegionsByTierResponse IPersistableModel<RegionsByTierResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MongoDBAtlasRegionsByTierResult IPersistableModel<MongoDBAtlasRegionsByTierResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegionsByTierResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBAtlasRegionsByTierResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RegionsByTierResponse"/> from. </param>
-        internal static RegionsByTierResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasRegionsByTierResult"/> from. </param>
+        internal static MongoDBAtlasRegionsByTierResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRegionsByTierResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMongoDBAtlasRegionsByTierResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RegionsByTierResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBAtlasRegionsByTierResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsByTierResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasRegionsByTierResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionsByTierResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasRegionsByTierResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             {
                 writer.WritePropertyName("regionsByTier"u8);
                 writer.WriteStartArray();
-                foreach (TierRegions item in RegionsByTier)
+                foreach (MongoDBAtlasTierRegions item in RegionsByTier)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegionsByTierResponse IJsonModel<RegionsByTierResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MongoDBAtlasRegionsByTierResult IJsonModel<MongoDBAtlasRegionsByTierResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegionsByTierResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MongoDBAtlasRegionsByTierResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsByTierResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasRegionsByTierResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionsByTierResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBAtlasRegionsByTierResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRegionsByTierResponse(document.RootElement, options);
+            return DeserializeMongoDBAtlasRegionsByTierResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegionsByTierResponse DeserializeRegionsByTierResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static MongoDBAtlasRegionsByTierResult DeserializeMongoDBAtlasRegionsByTierResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             }
             string organizationId = default;
             string projectId = default;
-            IReadOnlyList<TierRegions> regionsByTier = default;
+            IReadOnlyList<MongoDBAtlasTierRegions> regionsByTier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 }
                 if (prop.NameEquals("regionsByTier"u8))
                 {
-                    List<TierRegions> array = new List<TierRegions>();
+                    List<MongoDBAtlasTierRegions> array = new List<MongoDBAtlasTierRegions>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TierRegions.DeserializeTierRegions(item, options));
+                        array.Add(MongoDBAtlasTierRegions.DeserializeMongoDBAtlasTierRegions(item, options));
                     }
                     regionsByTier = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegionsByTierResponse(organizationId, projectId, regionsByTier, additionalBinaryDataProperties);
+            return new MongoDBAtlasRegionsByTierResult(organizationId, projectId, regionsByTier, additionalBinaryDataProperties);
         }
     }
 }

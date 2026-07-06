@@ -12,25 +12,25 @@ using System.Linq;
 namespace Azure.ResourceManager.MongoDBAtlas.Models
 {
     /// <summary> Cluster tier and its supported regions. </summary>
-    public partial class TierRegions
+    public partial class MongoDBAtlasTierRegions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TierRegions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasTierRegions"/>. </summary>
         /// <param name="tier"> Cluster tier name. </param>
         /// <param name="regions"> Supported region names. </param>
-        internal TierRegions(MongoDBAtlasClusterTier tier, IEnumerable<string> regions)
+        internal MongoDBAtlasTierRegions(MongoDBAtlasClusterTier tier, IEnumerable<string> regions)
         {
             Tier = tier;
             Regions = regions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TierRegions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasTierRegions"/>. </summary>
         /// <param name="tier"> Cluster tier name. </param>
         /// <param name="regions"> Supported region names. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TierRegions(MongoDBAtlasClusterTier tier, IList<string> regions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasTierRegions(MongoDBAtlasClusterTier tier, IList<string> regions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tier = tier;
             Regions = regions;

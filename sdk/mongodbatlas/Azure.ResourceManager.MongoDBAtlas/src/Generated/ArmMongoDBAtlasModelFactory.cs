@@ -164,43 +164,43 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         }
 
         /// <param name="limits"> List of project limit statuses. </param>
-        /// <returns> A new <see cref="Models.TierLimitReachedResponse"/> instance for mocking. </returns>
-        public static TierLimitReachedResponse TierLimitReachedResponse(IEnumerable<ProjectLimitStatus> limits = default)
+        /// <returns> A new <see cref="Models.MongoDBAtlasTierLimitReachedResult"/> instance for mocking. </returns>
+        public static MongoDBAtlasTierLimitReachedResult MongoDBAtlasTierLimitReachedResult(IEnumerable<MongoDBAtlasProjectLimitStatus> limits = default)
         {
-            limits ??= new ChangeTrackingList<ProjectLimitStatus>();
+            limits ??= new ChangeTrackingList<MongoDBAtlasProjectLimitStatus>();
 
-            return new TierLimitReachedResponse((limits ?? new ChangeTrackingList<ProjectLimitStatus>()).ToList(), default);
+            return new MongoDBAtlasTierLimitReachedResult((limits ?? new ChangeTrackingList<MongoDBAtlasProjectLimitStatus>()).ToList(), default);
         }
 
         /// <param name="type"> Type of the limit. </param>
         /// <param name="maximum"> Maximum allowed value. </param>
         /// <param name="current"> Current value. </param>
         /// <param name="isReached"> Whether the limit has been reached. </param>
-        /// <returns> A new <see cref="Models.ProjectLimitStatus"/> instance for mocking. </returns>
-        public static ProjectLimitStatus ProjectLimitStatus(MongoDBAtlasClusterTier @type = default, int maximum = default, int current = default, bool isReached = default)
+        /// <returns> A new <see cref="Models.MongoDBAtlasProjectLimitStatus"/> instance for mocking. </returns>
+        public static MongoDBAtlasProjectLimitStatus MongoDBAtlasProjectLimitStatus(MongoDBAtlasClusterTier @type = default, int maximum = default, int current = default, bool isReached = default)
         {
-            return new ProjectLimitStatus(@type, maximum, current, isReached, default);
+            return new MongoDBAtlasProjectLimitStatus(@type, maximum, current, isReached, default);
         }
 
         /// <param name="organizationId"> Atlas organization id. </param>
         /// <param name="projectId"> Atlas project id. </param>
         /// <param name="regionsByTier"> List of cluster tiers and their supported regions. </param>
-        /// <returns> A new <see cref="Models.RegionsByTierResponse"/> instance for mocking. </returns>
-        public static RegionsByTierResponse RegionsByTierResponse(string organizationId = default, string projectId = default, IEnumerable<TierRegions> regionsByTier = default)
+        /// <returns> A new <see cref="Models.MongoDBAtlasRegionsByTierResult"/> instance for mocking. </returns>
+        public static MongoDBAtlasRegionsByTierResult MongoDBAtlasRegionsByTierResult(string organizationId = default, string projectId = default, IEnumerable<MongoDBAtlasTierRegions> regionsByTier = default)
         {
-            regionsByTier ??= new ChangeTrackingList<TierRegions>();
+            regionsByTier ??= new ChangeTrackingList<MongoDBAtlasTierRegions>();
 
-            return new RegionsByTierResponse(organizationId, projectId, (regionsByTier ?? new ChangeTrackingList<TierRegions>()).ToList(), default);
+            return new MongoDBAtlasRegionsByTierResult(organizationId, projectId, (regionsByTier ?? new ChangeTrackingList<MongoDBAtlasTierRegions>()).ToList(), default);
         }
 
         /// <param name="tier"> Cluster tier name. </param>
         /// <param name="regions"> Supported region names. </param>
-        /// <returns> A new <see cref="Models.TierRegions"/> instance for mocking. </returns>
-        public static TierRegions TierRegions(MongoDBAtlasClusterTier tier = default, IEnumerable<string> regions = default)
+        /// <returns> A new <see cref="Models.MongoDBAtlasTierRegions"/> instance for mocking. </returns>
+        public static MongoDBAtlasTierRegions MongoDBAtlasTierRegions(MongoDBAtlasClusterTier tier = default, IEnumerable<string> regions = default)
         {
             regions ??= new ChangeTrackingList<string>();
 
-            return new TierRegions(tier, (regions ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new MongoDBAtlasTierRegions(tier, (regions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -224,18 +224,18 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>
         /// <param name="regionName"> Azure region where the cluster is deployed. </param>
         /// <param name="mongoDbVersion"> MongoDB version running on the cluster. </param>
-        /// <param name="backups"> Whether backups are active for the cluster; null if undetermined. </param>
+        /// <param name="isBackupsEnabled"> Whether backups are active for the cluster; null if undetermined. </param>
         /// <param name="state"> Current state of the cluster. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.MongoDBAtlasClusterProperties"/> instance for mocking. </returns>
-        public static MongoDBAtlasClusterProperties MongoDBAtlasClusterProperties(string clusterName = default, MongoDBAtlasClusterTier clusterTier = default, string regionName = default, string mongoDbVersion = default, bool? backups = default, string state = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
+        public static MongoDBAtlasClusterProperties MongoDBAtlasClusterProperties(string clusterName = default, MongoDBAtlasClusterTier clusterTier = default, string regionName = default, string mongoDbVersion = default, bool? isBackupsEnabled = default, string state = default, MongoDBAtlasResourceProvisioningState? provisioningState = default)
         {
             return new MongoDBAtlasClusterProperties(
                 clusterName,
                 clusterTier,
                 regionName,
                 mongoDbVersion,
-                backups,
+                isBackupsEnabled,
                 state,
                 provisioningState,
                 default);
