@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         }
 
         /// <summary> State of provisioning of the provider instance. </summary>
-        public HanaProvisioningStatesEnum? ProvisioningState
+        public HanaProvisioningState? ProvisioningState
         {
             get
             {

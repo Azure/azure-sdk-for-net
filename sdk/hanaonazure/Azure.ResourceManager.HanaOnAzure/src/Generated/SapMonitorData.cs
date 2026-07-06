@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         internal SapMonitorProperties Properties { get; set; }
 
         /// <summary> State of provisioning of the HanaInstance. </summary>
-        public HanaProvisioningStatesEnum? ProvisioningState
+        public HanaProvisioningState? ProvisioningState
         {
             get
             {

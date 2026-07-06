@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         public ProviderInstanceData() { }
         public string Metadata { get { throw null; } set { } }
         public string ProviderProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState? ProvisioningState { get { throw null; } }
         public string Type { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         public string LogAnalyticsWorkspaceSharedKey { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } }
         public string MonitorSubnet { get { throw null; } set { } }
-        public Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState? ProvisioningState { get { throw null; } }
         public string SapMonitorCollectorVersion { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -165,34 +165,34 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
 {
     public static partial class ArmHanaOnAzureModelFactory
     {
-        public static Azure.ResourceManager.HanaOnAzure.Models.Display Display(string provider = null, string resource = null, string operation = null, string description = null, string origin = null) { throw null; }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationInfo HanaOnAzureOperationInfo(string name = null, Azure.ResourceManager.HanaOnAzure.Models.Display display = null) { throw null; }
-        public static Azure.ResourceManager.HanaOnAzure.ProviderInstanceData ProviderInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string type = null, string providerProperties = null, string metadata = null, Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum? provisioningState = default(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum?)) { throw null; }
-        public static Azure.ResourceManager.HanaOnAzure.SapMonitorData SapMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum? provisioningState = default(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum?), string managedResourceGroupName = null, string logAnalyticsWorkspaceArmId = null, bool? enableCustomerAnalytics = default(bool?), string logAnalyticsWorkspaceId = null, string logAnalyticsWorkspaceSharedKey = null, string sapMonitorCollectorVersion = null, string monitorSubnet = null) { throw null; }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay HanaOnAzureOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null, string origin = null) { throw null; }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationInfo HanaOnAzureOperationInfo(string name = null, Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay display = null) { throw null; }
+        public static Azure.ResourceManager.HanaOnAzure.ProviderInstanceData ProviderInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string type = null, string providerProperties = null, string metadata = null, Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState? provisioningState = default(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.HanaOnAzure.SapMonitorData SapMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState? provisioningState = default(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState?), string managedResourceGroupName = null, string logAnalyticsWorkspaceArmId = null, bool? enableCustomerAnalytics = default(bool?), string logAnalyticsWorkspaceId = null, string logAnalyticsWorkspaceSharedKey = null, string sapMonitorCollectorVersion = null, string monitorSubnet = null) { throw null; }
         public static Azure.ResourceManager.HanaOnAzure.Models.SapMonitorPatch SapMonitorPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
     }
-    public partial class Display : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.Display>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.Display>
+    public partial class HanaOnAzureOperationDisplay : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay>
     {
-        internal Display() { }
+        internal HanaOnAzureOperationDisplay() { }
         public string Description { get { throw null; } }
         public string Operation { get { throw null; } }
         public string Origin { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
-        protected virtual Azure.ResourceManager.HanaOnAzure.Models.Display JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HanaOnAzure.Models.Display PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HanaOnAzure.Models.Display System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.Display>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.Display>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HanaOnAzure.Models.Display System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.Display>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.Display>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.Display>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HanaOnAzureOperationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationInfo>
     {
         internal HanaOnAzureOperationInfo() { }
-        public Azure.ResourceManager.HanaOnAzure.Models.Display Display { get { throw null; } }
+        public Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationDisplay Display { get { throw null; } }
         public string Name { get { throw null; } }
         protected virtual Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -205,25 +205,25 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.HanaOnAzureOperationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HanaProvisioningStatesEnum : System.IEquatable<Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum>
+    public readonly partial struct HanaProvisioningState : System.IEquatable<Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public HanaProvisioningStatesEnum(string value) { throw null; }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum Accepted { get { throw null; } }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum Creating { get { throw null; } }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum Deleting { get { throw null; } }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum Failed { get { throw null; } }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum Migrating { get { throw null; } }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum other) { throw null; }
+        public HanaProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState Migrating { get { throw null; } }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum left, Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum left, Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningStatesEnum right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState left, Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState left, Azure.ResourceManager.HanaOnAzure.Models.HanaProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SapMonitorPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HanaOnAzure.Models.SapMonitorPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HanaOnAzure.Models.SapMonitorPatch>

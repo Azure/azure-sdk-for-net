@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="metadata"> A JSON string containing metadata of the provider instance. </param>
         /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderInstanceProperties(string @type, string providerProperties, string metadata, HanaProvisioningStatesEnum? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProviderInstanceProperties(string @type, string providerProperties, string metadata, HanaProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ProviderProperties = providerProperties;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         public string Metadata { get; set; }
 
         /// <summary> State of provisioning of the provider instance. </summary>
-        public HanaProvisioningStatesEnum? ProvisioningState { get; }
+        public HanaProvisioningState? ProvisioningState { get; }
     }
 }

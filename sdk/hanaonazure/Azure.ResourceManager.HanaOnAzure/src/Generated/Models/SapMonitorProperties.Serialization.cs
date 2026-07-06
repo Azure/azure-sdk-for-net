@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             {
                 return null;
             }
-            HanaProvisioningStatesEnum? provisioningState = default;
+            HanaProvisioningState? provisioningState = default;
             string managedResourceGroupName = default;
             string logAnalyticsWorkspaceArmId = default;
             bool? enableCustomerAnalytics = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                     {
                         continue;
                     }
-                    provisioningState = new HanaProvisioningStatesEnum(prop.Value.GetString());
+                    provisioningState = new HanaProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedResourceGroupName"u8))

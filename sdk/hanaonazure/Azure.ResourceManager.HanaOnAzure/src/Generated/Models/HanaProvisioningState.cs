@@ -12,7 +12,7 @@ using Azure.ResourceManager.HanaOnAzure;
 namespace Azure.ResourceManager.HanaOnAzure.Models
 {
     /// <summary> State of provisioning of the HanaInstance. </summary>
-    public readonly partial struct HanaProvisioningStatesEnum : IEquatable<HanaProvisioningStatesEnum>
+    public readonly partial struct HanaProvisioningState : IEquatable<HanaProvisioningState>
     {
         private readonly string _value;
         /// <summary> Accepted. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <summary> Migrating. </summary>
         private const string MigratingValue = "Migrating";
 
-        /// <summary> Initializes a new instance of <see cref="HanaProvisioningStatesEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HanaProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HanaProvisioningStatesEnum(string value)
+        public HanaProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         }
 
         /// <summary> Accepted. </summary>
-        public static HanaProvisioningStatesEnum Accepted { get; } = new HanaProvisioningStatesEnum(AcceptedValue);
+        public static HanaProvisioningState Accepted { get; } = new HanaProvisioningState(AcceptedValue);
 
         /// <summary> Creating. </summary>
-        public static HanaProvisioningStatesEnum Creating { get; } = new HanaProvisioningStatesEnum(CreatingValue);
+        public static HanaProvisioningState Creating { get; } = new HanaProvisioningState(CreatingValue);
 
         /// <summary> Updating. </summary>
-        public static HanaProvisioningStatesEnum Updating { get; } = new HanaProvisioningStatesEnum(UpdatingValue);
+        public static HanaProvisioningState Updating { get; } = new HanaProvisioningState(UpdatingValue);
 
         /// <summary> Failed. </summary>
-        public static HanaProvisioningStatesEnum Failed { get; } = new HanaProvisioningStatesEnum(FailedValue);
+        public static HanaProvisioningState Failed { get; } = new HanaProvisioningState(FailedValue);
 
         /// <summary> Succeeded. </summary>
-        public static HanaProvisioningStatesEnum Succeeded { get; } = new HanaProvisioningStatesEnum(SucceededValue);
+        public static HanaProvisioningState Succeeded { get; } = new HanaProvisioningState(SucceededValue);
 
         /// <summary> Deleting. </summary>
-        public static HanaProvisioningStatesEnum Deleting { get; } = new HanaProvisioningStatesEnum(DeletingValue);
+        public static HanaProvisioningState Deleting { get; } = new HanaProvisioningState(DeletingValue);
 
         /// <summary> Migrating. </summary>
-        public static HanaProvisioningStatesEnum Migrating { get; } = new HanaProvisioningStatesEnum(MigratingValue);
+        public static HanaProvisioningState Migrating { get; } = new HanaProvisioningState(MigratingValue);
 
-        /// <summary> Determines if two <see cref="HanaProvisioningStatesEnum"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HanaProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(HanaProvisioningStatesEnum left, HanaProvisioningStatesEnum right) => left.Equals(right);
+        public static bool operator ==(HanaProvisioningState left, HanaProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HanaProvisioningStatesEnum"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HanaProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(HanaProvisioningStatesEnum left, HanaProvisioningStatesEnum right) => !left.Equals(right);
+        public static bool operator !=(HanaProvisioningState left, HanaProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HanaProvisioningStatesEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HanaProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HanaProvisioningStatesEnum(string value) => new HanaProvisioningStatesEnum(value);
+        public static implicit operator HanaProvisioningState(string value) => new HanaProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="HanaProvisioningStatesEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HanaProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HanaProvisioningStatesEnum?(string value) => value == null ? null : new HanaProvisioningStatesEnum(value);
+        public static implicit operator HanaProvisioningState?(string value) => value == null ? null : new HanaProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HanaProvisioningStatesEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is HanaProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(HanaProvisioningStatesEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HanaProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
