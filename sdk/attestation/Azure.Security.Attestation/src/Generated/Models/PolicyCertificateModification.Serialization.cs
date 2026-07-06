@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 namespace Azure.Security.Attestation
@@ -73,10 +72,10 @@ namespace Azure.Security.Attestation
             {
                 throw new FormatException($"The model {nameof(PolicyCertificateModification)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PolicyCertificate))
+            if (Optional.IsDefined(InternalPolicyCertificate))
             {
                 writer.WritePropertyName("policyCertificate"u8);
-                writer.WriteObjectValue(PolicyCertificate, options);
+                writer.WriteObjectValue(InternalPolicyCertificate, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -120,7 +119,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            X509Certificate2 policyCertificate = default;
+            JsonWebKey internalPolicyCertificate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +129,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    policyCertificate = X509Certificate2.DeserializeX509Certificate2(prop.Value, options);
+                    internalPolicyCertificate = JsonWebKey.DeserializeJsonWebKey(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +137,7 @@ namespace Azure.Security.Attestation
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicyCertificateModification(policyCertificate, additionalBinaryDataProperties);
+            return new PolicyCertificateModification(internalPolicyCertificate, additionalBinaryDataProperties);
         }
     }
 }

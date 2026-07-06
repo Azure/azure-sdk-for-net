@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Azure.Security.Attestation
 {
@@ -22,11 +21,11 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyCertificateModification"/>. </summary>
-        /// <param name="policyCertificate"> RFC 7517 Json Web Key describing the certificate. </param>
+        /// <param name="internalPolicyCertificate"> RFC 7517 Json Web Key describing the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyCertificateModification(X509Certificate2 policyCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyCertificateModification(JsonWebKey internalPolicyCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PolicyCertificate = policyCertificate;
+            InternalPolicyCertificate = internalPolicyCertificate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }

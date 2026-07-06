@@ -70,9 +70,9 @@ namespace Azure.Security.Attestation
             Endpoint = endpoint;
 
             // Initialize the Rest Client.
-            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _restClient = new AttestationRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
-            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _metadataClient = new SigningCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
         }
         /// <summary>
         /// Parameterless constructor for mocking.
@@ -123,46 +123,34 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                var attestSgxEnclaveRequest = new AttestSgxEnclaveRequest
-                {
-                    Quote = request.Evidence.ToArray(),
-                    DraftPolicyForAttestation = request.DraftPolicyForAttestation,
-                };
-
+                InitTimeData initTimeData = null;
                 if (request.InittimeData != null)
                 {
-                    attestSgxEnclaveRequest.InitTimeData = new InitTimeData
+                    initTimeData = new InitTimeData
                     {
-                        Data = request.InittimeData.BinaryData.ToArray(),
-                        DataType = request.InittimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.InittimeData.BinaryData,
+                        DataType = request.InittimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
-                }
-                else
-                {
-                    attestSgxEnclaveRequest.InitTimeData = null;
                 }
 
+                RuntimeData runtimeData = null;
                 if (request.RuntimeData != null)
                 {
-                    attestSgxEnclaveRequest.RuntimeData = new RuntimeData
+                    runtimeData = new RuntimeData
                     {
-                        Data = request.RuntimeData.BinaryData.ToArray(),
-                        DataType = request.RuntimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.RuntimeData.BinaryData,
+                        DataType = request.RuntimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
-                }
-                else
-                {
-                    attestSgxEnclaveRequest.RuntimeData = null;
                 }
 
                 Response<AttestationResponse> response;
                 if (async)
                 {
-                    response = await _restClient.AttestSgxEnclaveAsync(attestSgxEnclaveRequest, cancellationToken).ConfigureAwait(false);
+                    response = await _restClient.AttestSgxEnclaveAsync(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = _restClient.AttestSgxEnclave(attestSgxEnclaveRequest, cancellationToken);
+                    response = _restClient.AttestSgxEnclave(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, cancellationToken: cancellationToken);
                 }
                 var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
@@ -223,34 +211,28 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                var attestOpenEnclaveRequest = new AttestOpenEnclaveRequest
-                {
-                    Report = request.Evidence.ToArray(),
-                    DraftPolicyForAttestation = request.DraftPolicyForAttestation,
-                    RuntimeData = null,
-                    InitTimeData = null,
-            };
-
+                InitTimeData initTimeData = null;
                 if (request.InittimeData != null)
                 {
-                    attestOpenEnclaveRequest.InitTimeData = new InitTimeData
+                    initTimeData = new InitTimeData
                     {
-                        Data = request.InittimeData.BinaryData.ToArray(),
-                        DataType = request.InittimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.InittimeData.BinaryData,
+                        DataType = request.InittimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
                 }
 
+                RuntimeData runtimeData = null;
                 if (request.RuntimeData != null)
                 {
-                    attestOpenEnclaveRequest.RuntimeData = new RuntimeData
+                    runtimeData = new RuntimeData
                     {
-                        Data = request.RuntimeData.BinaryData.ToArray(),
-                        DataType = request.RuntimeData.DataIsJson ? DataType.Json : DataType.Binary,
+                        Data = request.RuntimeData.BinaryData,
+                        DataType = request.RuntimeData.DataIsJson ? DataType.JSON : DataType.Binary,
                     };
                 }
 
-                var response = async ? await _restClient.AttestOpenEnclaveAsync(attestOpenEnclaveRequest, cancellationToken).ConfigureAwait(false)
-                                    : _restClient.AttestOpenEnclave(attestOpenEnclaveRequest, cancellationToken);
+                var response = async ? await _restClient.AttestOpenEnclaveAsync(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, cancellationToken: cancellationToken).ConfigureAwait(false)
+                                    : _restClient.AttestOpenEnclave(request.Evidence, runtimeData, initTimeData, request.DraftPolicyForAttestation, cancellationToken: cancellationToken);
                 var attestationToken = AttestationToken.Deserialize(response.Value.Token, _clientDiagnostics);
 
                 if (_options.TokenOptions.ValidateToken)
@@ -285,7 +267,7 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                return _restClient.AttestTpm(request, cancellationToken);
+                return _restClient.AttestTpm(request.Data, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -308,7 +290,7 @@ namespace Azure.Security.Attestation
             scope.Start();
             try
             {
-                return await _restClient.AttestTpmAsync(request, cancellationToken).ConfigureAwait(false);
+                return await _restClient.AttestTpmAsync(request.Data, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

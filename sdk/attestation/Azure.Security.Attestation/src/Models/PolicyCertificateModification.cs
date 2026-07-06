@@ -19,7 +19,8 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="bodyCertificate"><see cref="X509Certificate2"/> to be encoded as a JSON Web Key in the body of the token.</param>
         internal PolicyCertificateModification(X509Certificate2 bodyCertificate)
-            : this(new JsonWebKey(
+        {
+            InternalPolicyCertificate = new JsonWebKey(
                 alg: "RS256",
                 crv: null,
                 d: null,
@@ -37,13 +38,13 @@ namespace Azure.Security.Attestation
                 x: null,
                 x5c: new List<string> { Convert.ToBase64String(bodyCertificate.Export(X509ContentType.Cert)) },
                 y: null,
-                additionalBinaryDataProperties: null))
-        {
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Represents the policy management certificate to be added or removed.
         /// </summary>
-        internal X509Certificate2 PolicyCertificate { get; }
+        [CodeGenMember("PolicyCertificate")]
+        internal JsonWebKey InternalPolicyCertificate { get; }
     }
 }

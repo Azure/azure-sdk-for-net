@@ -32,6 +32,14 @@ namespace Azure.Security.Attestation
             ValidateToken = true;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AttestationTokenValidationOptions"/> from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+        internal AttestationTokenValidationOptions(Microsoft.Extensions.Configuration.IConfigurationSection section)
+            : this()
+        {
+        }
+
         internal async Task<bool> RaiseValidationCallbackAsync(AttestationToken token, AttestationSigner signer, ClientDiagnostics diagnostics, bool isRunningSynchronously, CancellationToken cancellationToken)
         {
             if (diagnostics != null)

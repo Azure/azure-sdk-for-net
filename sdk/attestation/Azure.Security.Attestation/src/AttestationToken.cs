@@ -388,7 +388,7 @@ namespace Azure.Security.Attestation
                         if (desiredKeyId == Header.JsonWebKey.Kid)
                         {
                             candidateCertificates.Add(new AttestationSigner(
-                                ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5C),
+                                ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5c),
                                 desiredKeyId));
                         }
                     }
@@ -418,7 +418,7 @@ namespace Azure.Security.Attestation
                     }
                     if (Header.JsonWebKey != null)
                     {
-                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5C), null));
+                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5c), null));
                     }
                 }
             }

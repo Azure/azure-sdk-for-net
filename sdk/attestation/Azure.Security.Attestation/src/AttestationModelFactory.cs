@@ -99,43 +99,41 @@ namespace Azure.Security.Attestation
             BinaryData deprecatedPolicyHash = null,
             string deprecatedRpData = null)
         {
-            var policySignerJwk = JwkFromAttestationSigner(policySigner);
-            var deprecatedPolicySignerJwk = JwkFromAttestationSigner(deprecatedPolicySigner);
-
             return new AttestationResult(jti,
                 issuer,
-                issuedAt.ToUnixTimeSeconds(),
-                expiration.ToUnixTimeSeconds(),
-                notBefore.ToUnixTimeSeconds(),
-                cnf,
+                (float?)issuedAt.ToUnixTimeSeconds(),
+                (float?)expiration.ToUnixTimeSeconds(),
+                (float?)notBefore.ToUnixTimeSeconds(),
+                cnf as IDictionary<string, string>,
                 nonce,
                 version,
                 runtimeClaims,
                 inittimeClaims,
                 policyClaims,
                 verifierType,
-                policySignerJwk,
-                policyHash != null ? Base64Url.Encode(policyHash.ToArray()) : null,
+                policySigner,
+                policyHash,
                 isDebuggable,
                 productId,
                 mrEnclave,
                 mrSigner,
                 svn,
-                enclaveHeldData != null ? Base64Url.Encode(enclaveHeldData.ToArray()) : null,
+                enclaveHeldData,
                 sgxCollateral,
                 deprecatedVersion,
                 deprecatedIsDebuggable,
                 deprecatedSgxCollateral,
-                deprecatedEnclaveHeldData != null ? Base64Url.Encode(deprecatedEnclaveHeldData.ToArray()) : null,
-                deprecatedEnclaveHeldData != null ? Base64Url.Encode(deprecatedEnclaveHeldData2.ToArray()) : null,
+                deprecatedEnclaveHeldData,
+                deprecatedEnclaveHeldData2,
                 deprecatedProductId,
                 deprecatedMrEnclave,
                 deprecatedMrSigner,
                 deprecatedSvn,
                 deprecatedTee,
-                deprecatedPolicySignerJwk,
-                deprecatedPolicyHash != null ? Base64Url.Encode(deprecatedPolicyHash.ToArray()) : null,
-                deprecatedRpData);
+                deprecatedPolicySigner,
+                deprecatedPolicyHash,
+                deprecatedRpData,
+                null);
         }
         /// <summary>
         /// Creates a new instance of <see cref="Attestation.PolicyCertificatesModificationResult"/> for mocking purposes.
@@ -144,7 +142,7 @@ namespace Azure.Security.Attestation
         /// <param name="certificateResolution">The modification which was performed.</param>
         /// <returns>A <see cref="Attestation.PolicyCertificatesModificationResult"/> object.</returns>
         public static PolicyCertificatesModificationResult PolicyCertificatesModificationResult(PolicyCertificateResolution certificateResolution, string certificateThumbprint) =>
-            new PolicyCertificatesModificationResult(certificateThumbprint, certificateResolution);
+            new PolicyCertificatesModificationResult(certificateThumbprint, certificateResolution, null);
 
         /// <summary>
         /// Create a PolicyModificationResult type for mocking purposes.
@@ -156,7 +154,7 @@ namespace Azure.Security.Attestation
         public static PolicyModificationResult PolicyModificationResult(PolicyModification policyModification, string policyHash, AttestationSigner signer)
         {
             JsonWebKey jwk = JwkFromAttestationSigner(signer);
-            return new PolicyModificationResult(policyModification, policyHash, jwk, null);
+            return new PolicyModificationResult(policyModification, policyHash != null ? BinaryData.FromBytes(Base64Url.Decode(policyHash)) : null, jwk, null, null);
         }
 
         private static JsonWebKey JwkFromAttestationSigner(AttestationSigner signer)
@@ -164,12 +162,30 @@ namespace Azure.Security.Attestation
             JsonWebKey jwk = null;
             if (signer != null)
             {
-                jwk = new JsonWebKey("RSA");
-                jwk.Kid = signer.CertificateKeyId;
+                List<string> x5c = new List<string>();
                 foreach (var cert in signer.SigningCertificates)
                 {
-                    jwk.X5C.Add(Convert.ToBase64String(cert.Export(X509ContentType.Cert)));
+                    x5c.Add(Convert.ToBase64String(cert.Export(X509ContentType.Cert)));
                 }
+                jwk = new JsonWebKey(
+                    alg: null,
+                    crv: null,
+                    d: null,
+                    dp: null,
+                    dq: null,
+                    e: null,
+                    k: null,
+                    kid: signer.CertificateKeyId,
+                    kty: "RSA",
+                    n: null,
+                    p: null,
+                    q: null,
+                    qi: null,
+                    use: null,
+                    x: null,
+                    x5c: x5c,
+                    y: null,
+                    additionalBinaryDataProperties: null);
             }
             return jwk;
         }
