@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     yield break;
                 }
                 ClusterListResult result = ClusterListResult.FromResponse(response);
-                yield return Page<MongoDBAtlasClusterData>.FromValues((IReadOnlyList<MongoDBAtlasClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MongoDBAtlasClusterData>.FromValues((IReadOnlyList<MongoDBAtlasClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
