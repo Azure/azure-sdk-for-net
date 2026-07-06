@@ -81,3 +81,26 @@ These differences are outside the requested comparison axes but may still be use
 | `Microsoft.Network.UserMetricsModels.delete` | `/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default` | Missing. | Present. |
 | `Microsoft.Network.UserMetricsModels.get` | `/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 7 |
+| Found in Bicep reference | 7 |
+| Found in package API version | 7 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 0 |
+
+**Result:** All seven legacy-only resource types are real ARM resources and are present in the same package API version (`2024-04-01-preview`). This supports the conclusion that `resolveArmResources` missed real resources rather than legacy detecting false resources.
+
+| Resource type | Bicep API versions | Package resource API versions |
+| --- | --- | --- |
+| [Microsoft.Network/trafficManagerGeographicHierarchies](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/trafficmanagergeographichierarchies?pivots=deployment-language-bicep) | `2024-04-01-preview` | `2022-04-01`, `2024-04-01-preview` |
+| [Microsoft.Network/trafficManagerUserMetricsKeys](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/trafficmanagerusermetricskeys?pivots=deployment-language-bicep) | `2024-04-01-preview` | `2022-04-01`, `2024-04-01-preview` |
+| [Microsoft.Network/trafficmanagerprofiles](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/trafficmanagerprofiles?pivots=deployment-language-bicep) | `2018-08-01`, `2020-06-01`, `2024-04-01-preview` | `2022-04-01`, `2024-04-01-preview` |
+| [Microsoft.Network/trafficmanagerprofiles/AzureEndpoints](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/trafficmanagerprofiles/azureendpoints?pivots=deployment-language-bicep) | `2018-08-01`, `2020-06-01`, `2022-07-01`, `2024-04-01-preview` | `2022-04-01`, `2024-04-01-preview` |
+| [Microsoft.Network/trafficmanagerprofiles/ExternalEndpoints](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/trafficmanagerprofiles/externalendpoints?pivots=deployment-language-bicep) | `2018-08-01`, `2020-06-01`, `2024-04-01-preview` | `2022-04-01`, `2024-04-01-preview` |
+| [Microsoft.Network/trafficmanagerprofiles/heatMaps](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/trafficmanagerprofiles/heatmaps?pivots=deployment-language-bicep) | `2024-04-01-preview` | `2022-04-01`, `2024-04-01-preview` |
+| [Microsoft.Network/trafficmanagerprofiles/NestedEndpoints](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/trafficmanagerprofiles/nestedendpoints?pivots=deployment-language-bicep) | `2018-08-01`, `2020-06-01`, `2024-04-01-preview` | `2022-04-01`, `2024-04-01-preview` |
