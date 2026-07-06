@@ -1641,6 +1641,66 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestHostedAgentIdentity()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Active)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpointConfiguration config = new()
+        {
+            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        responsesOptions.AddPolicy(new UserIdentityHeaderPolicy("id1"), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient1 = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        ResponseResult response = await responseClient1.CreateResponseAsync("1 + 1 = ?");
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        // Another identity
+        responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        responsesOptions.AddPolicy(new UserIdentityHeaderPolicy("id2"), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient2 = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        ClientResultException error = Assert.Throws<ClientResultException>(async () => await responseClient2.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id));
+        Assert.That(error.Status, Is.EqualTo(404));
+        response = await responseClient1.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id);
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+    }
+
+    [RecordedTest]
     [TestCase(ToolType.None)]
     [TestCase(ToolType.FileSearch)]
     public async Task StructuredInputsWorkWithTools(ToolType toolType)
