@@ -38,18 +38,13 @@ namespace Azure.Provisioning.DurableTask
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -63,18 +58,13 @@ namespace Azure.Provisioning.DurableTask
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public DurableTaskPrivateLinkResourceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
