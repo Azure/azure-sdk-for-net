@@ -114,7 +114,7 @@ function Get-ResourceInfo
         [string] $PackagePath,
 
         [Parameter(Mandatory)]
-        [System.IO.FileInfo[]] $AllSourceFiles
+        [System.IO.FileInfo[]] $CustomSourceFiles
     )
 
     $source = Get-Content -LiteralPath $File.FullName -Raw
@@ -126,8 +126,10 @@ function Get-ResourceInfo
 
     $className = $classMatch.Groups['name'].Value
     $classSources = [System.Collections.Generic.List[string]]::new()
+    $classSources.Add($source)
     $sourcePaths = [System.Collections.Generic.List[string]]::new()
-    foreach ($sourceFile in $AllSourceFiles)
+    $sourcePaths.Add((Get-RelativePath -BasePath $PackagePath -Path $File.FullName))
+    foreach ($sourceFile in $CustomSourceFiles)
     {
         $candidateSource = Get-Content -LiteralPath $sourceFile.FullName -Raw
         if ($candidateSource -match "(?m)^\s*(?:public|internal|private)?\s*partial\s+class\s+$([regex]::Escape($className))\b")
@@ -169,10 +171,15 @@ if (!(Test-Path -LiteralPath $generatedPath))
 }
 
 $resources = [System.Collections.Generic.List[object]]::new()
-$allSourceFiles = @(Get-ChildItem -LiteralPath (Join-Path $resolvedPackagePath 'src') -Filter '*.cs' -File -Recurse | Sort-Object FullName)
+$sourcePath = Join-Path $resolvedPackagePath 'src'
+$generatedRoot = (Resolve-Path -LiteralPath $generatedPath).Path.TrimEnd([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
+$generatedPrefix = $generatedRoot + [System.IO.Path]::DirectorySeparatorChar
+$customSourceFiles = @(Get-ChildItem -LiteralPath $sourcePath -Filter '*.cs' -File -Recurse |
+    Where-Object { !$_.FullName.StartsWith($generatedPrefix, [System.StringComparison]::OrdinalIgnoreCase) } |
+    Sort-Object FullName)
 foreach ($file in Get-ChildItem -LiteralPath $generatedPath -Filter '*.cs' -File -Recurse | Sort-Object FullName)
 {
-    $resource = Get-ResourceInfo -File $file -PackagePath $resolvedPackagePath -AllSourceFiles $allSourceFiles
+    $resource = Get-ResourceInfo -File $file -PackagePath $resolvedPackagePath -CustomSourceFiles $customSourceFiles
     if ($null -ne $resource)
     {
         $resources.Add($resource)
