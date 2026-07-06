@@ -101,3 +101,27 @@ These differences are outside the requested comparison axes but may still be use
 | `Microsoft.Network.WebApplicationFirewallPolicies.listBySubscription` | `/subscriptions/{subscriptionId}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies` | Missing. | Present. |
 | `Microsoft.Network.WebApplicationFirewallPolicies.update` | `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/{policyName}` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 6 |
+| Found in Bicep reference | 6 |
+| Found in package API version | 6 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 0 |
+
+**Result:** All six legacy-only resource types are real ARM resources and are present in the same package API version (`2025-11-01`). This supports that `resolveArmResources` missed real resources rather than legacy detecting false resources.
+
+The TypeSpec uses converted legacy custom-resource bases marked with `@Azure.ResourceManager.Legacy.customAzureResource(#{ isAzureResource: true })`, e.g. `Resource`, `BasicResource`, and `BasicResourceWithSettableIDName`. `resolveArmResources` returns zero resources and leaves all resource operations as non-resource methods, matching the same root cause as Network and TrafficManager.
+
+| Resource type | Bicep API versions | Package resource API versions |
+| --- | --- | --- |
+| [Microsoft.Network/frontDoors](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/frontdoors?pivots=deployment-language-bicep) | `2025-11-01` | `2025-10-01`, `2025-11-01` |
+| [Microsoft.Network/frontDoors/frontendEndpoints](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/frontdoors/frontendendpoints?pivots=deployment-language-bicep) | `2025-11-01` | `2025-10-01`, `2025-11-01` |
+| [Microsoft.Network/frontDoors/rulesEngines](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/frontdoors/rulesengines?pivots=deployment-language-bicep) | `2020-05-01`, `2020-06-01`, `2025-11-01` | `2025-10-01`, `2025-11-01` |
+| [Microsoft.Network/FrontDoorWebApplicationFirewallPolicies](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/frontdoorwebapplicationfirewallpolicies?pivots=deployment-language-bicep) | `2020-06-01`, `2020-11-01`, `2025-11-01` | `2025-10-01`, `2025-11-01` |
+| [Microsoft.Network/NetworkExperimentProfiles](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/networkexperimentprofiles?pivots=deployment-language-bicep) | `2025-11-01` | `2025-10-01`, `2025-11-01` |
+| [Microsoft.Network/NetworkExperimentProfiles/Experiments](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/networkexperimentprofiles/experiments?pivots=deployment-language-bicep) | `2025-11-01` | `2025-10-01`, `2025-11-01` |
