@@ -278,7 +278,7 @@ namespace Azure.Provisioning.ContainerInstance
     }
     public partial class ContainerGroupProfileRevision : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal ContainerGroupProfileRevision() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ConfidentialComputeCcePolicy { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerInstanceContainer> Containers { get { throw null; } }
         public Azure.Provisioning.ContainerInstance.ContainerGroupLogAnalytics DiagnosticsLogAnalytics { get { throw null; } }

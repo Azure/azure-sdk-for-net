@@ -600,7 +600,7 @@ namespace Azure.Provisioning.CostManagement
     }
     public partial class GenerateDetailedCostReportOperationResult : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public GenerateDetailedCostReportOperationResult(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal GenerateDetailedCostReportOperationResult() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Uri> DownloadUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -616,7 +616,7 @@ namespace Azure.Provisioning.CostManagement
     }
     public partial class GenerateDetailedCostReportOperationStatuses : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public GenerateDetailedCostReportOperationStatuses(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal GenerateDetailedCostReportOperationStatuses() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Uri> DownloadUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> EndTime { get { throw null; } }
         public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } }
