@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     // shadow model + @@alternateType in client.tsp). The generator picks the
     // base up from this partial and strips the inherited ARM base properties
     // (id/name/type/tags/location/identity) from the renamed wrapper.
+    /// <summary> The content used to create or update a Cassandra view. </summary>
     public partial class CassandraViewCreateOrUpdateContent : TrackedResourceData
     {
     }

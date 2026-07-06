@@ -327,5 +327,23 @@ namespace Azure.ResourceManager.EventHubs
                 Properties.GeoDataReplication = value;
             }
         }
+
+        /// <summary> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </summary>
+        [WirePath("properties.ipAddressType")]
+        public IpAddressType? IpAddressType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpAddressType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new EHNamespaceProperties();
+                }
+                Properties.IpAddressType = value;
+            }
+        }
     }
 }
