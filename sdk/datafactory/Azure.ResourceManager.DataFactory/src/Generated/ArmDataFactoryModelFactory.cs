@@ -1650,7 +1650,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schemaColumnType"> Type of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.DatasetSchemaDataElement"/> instance for mocking. </returns>
-        public static DatasetSchemaDataElement DatasetSchemaDataElement(DataFactoryElement<string> schemaColumnName = default, DataFactoryElement<string> schemaColumnType = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        public static DatasetSchemaDataElement DatasetSchemaDataElement(DataFactoryElement<string> schemaColumnName = default, DataFactoryElement<string> schemaColumnType = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
