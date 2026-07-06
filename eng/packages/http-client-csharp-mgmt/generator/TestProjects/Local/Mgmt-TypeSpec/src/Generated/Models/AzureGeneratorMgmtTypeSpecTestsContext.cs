@@ -155,6 +155,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(NetworkSiblingSet))]
     [ModelReaderWriterBuildable(typeof(NetworkSiblingSetProperties))]
     [ModelReaderWriterBuildable(typeof(OfferDetails))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(OptionalFlattenPropertyType))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaData))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]
@@ -271,7 +272,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
     [ModelReaderWriterBuildable(typeof(ZooResource))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     public partial class AzureGeneratorMgmtTypeSpecTestsContext : ModelReaderWriterContext
     {
     }
