@@ -1,5 +1,10 @@
 namespace Azure.Provisioning.CognitiveServices
 {
+    public partial class AadAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public AadAuthTypeConnectionProperties() { }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class AbusePenalty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AbusePenalty() { }
@@ -12,6 +17,18 @@ namespace Azure.Provisioning.CognitiveServices
     {
         Throttle = 0,
         Block = 1,
+    }
+    public partial class AccessKeyAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public AccessKeyAuthTypeConnectionProperties() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionAccessKey Credentials { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AccountKeyAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public AccountKeyAuthTypeConnectionProperties() { }
+        public Azure.Provisioning.BicepValue<string> CredentialsKey { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class AIFoundryNetworkInjection : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -27,6 +44,12 @@ namespace Azure.Provisioning.CognitiveServices
         None = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="agent")]
         Agent = 1,
+    }
+    public partial class ApiKeyAuthConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public ApiKeyAuthConnectionProperties() { }
+        public Azure.Provisioning.BicepValue<string> CredentialsKey { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class ApplicationAuthorizationPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -458,6 +481,13 @@ namespace Azure.Provisioning.CognitiveServices
             public static readonly string V2026_05_01;
         }
     }
+    public partial class CognitiveServicesConnectionAccessKey : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesConnectionAccessKey() { }
+        public Azure.Provisioning.BicepValue<string> AccessKeyId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SecretAccessKey { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum CognitiveServicesConnectionCategory
     {
         PythonFeed = 0,
@@ -602,6 +632,26 @@ namespace Azure.Provisioning.CognitiveServices
         GenericProtocol = 5,
         ServicesAndApps = 6,
     }
+    public partial class CognitiveServicesConnectionManagedIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesConnectionManagedIdentity() { }
+        public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ResourceId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesConnectionOAuth2 : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesConnectionOAuth2() { }
+        public Azure.Provisioning.BicepValue<System.Uri> AuthUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> ClientId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DeveloperToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> RefreshToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class CognitiveServicesConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CognitiveServicesConnectionProperties() { }
@@ -617,6 +667,22 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepList<string> SharedUserList { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseWorkspaceManagedIdentity { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesConnectionServicePrincipal : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesConnectionServicePrincipal() { }
+        public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CognitiveServicesConnectionUsernamePassword : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CognitiveServicesConnectionUsernamePassword() { }
+        public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SecurityToken { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class CognitiveServicesDeletedAccount : Azure.Provisioning.Primitives.ProvisionableResource
@@ -959,9 +1025,18 @@ namespace Azure.Provisioning.CognitiveServices
             public static readonly string V2026_05_01;
         }
     }
-    public partial class CognitiveServicesProjectCapabilityHost
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release. Use CognitiveServicesProjectScopedCapabilityHost instead.")]
+    public partial class CognitiveServicesProjectCapabilityHost : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CognitiveServicesProjectCapabilityHost() { }
+        public CognitiveServicesProjectCapabilityHost(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesProject Parent { get { throw null; } set { } }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesCapabilityHostProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CognitiveServices.CognitiveServicesProjectCapabilityHost FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -1254,6 +1329,12 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.RaiPolicyContentSource> Source { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class CustomKeysConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public CustomKeysConnectionProperties() { }
+        public Azure.Provisioning.BicepDictionary<string> CredentialsKeys { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class DefenderForAISetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DefenderForAISetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1316,6 +1397,12 @@ namespace Azure.Provisioning.CognitiveServices
     {
         Disabled = 0,
         Enabled = 1,
+    }
+    public partial class ManagedIdentityAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public ManagedIdentityAuthTypeConnectionProperties() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionManagedIdentity Credentials { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum ManagedPERequirement
     {
@@ -1414,14 +1501,31 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> SuggestedResourceIds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class NoneAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public NoneAuthTypeConnectionProperties() { }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum NspAccessRuleDirection
     {
         Inbound = 0,
         Outbound = 1,
     }
+    public partial class OAuth2AuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public OAuth2AuthTypeConnectionProperties() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionOAuth2 Credentials { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class OrganizationSharedBuiltInAuthorizationPolicy : Azure.Provisioning.CognitiveServices.ApplicationAuthorizationPolicy
     {
         public OrganizationSharedBuiltInAuthorizationPolicy() { }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class PatAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public PatAuthTypeConnectionProperties() { }
+        public Azure.Provisioning.BicepValue<string> CredentialsPat { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum QuotaTierUpgradeAvailabilityStatus
@@ -1743,6 +1847,12 @@ namespace Azure.Provisioning.CognitiveServices
         public RoleBasedBuiltInAuthorizationPolicy() { }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class SASAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public SASAuthTypeConnectionProperties() { }
+        public Azure.Provisioning.BicepValue<string> CredentialsSas { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ServiceAccountApiKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ServiceAccountApiKeys() { }
@@ -1844,6 +1954,12 @@ namespace Azure.Provisioning.CognitiveServices
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ServicePrincipalAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public ServicePrincipalAuthTypeConnectionProperties() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionServicePrincipal Credentials { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ServiceTagOutboundRule : Azure.Provisioning.CognitiveServices.CognitiveServicesOutboundRuleBasicProperties
     {
         public ServiceTagOutboundRule() { }
@@ -1903,6 +2019,12 @@ namespace Azure.Provisioning.CognitiveServices
     {
         None = 0,
         AzureServices = 1,
+    }
+    public partial class UsernamePasswordAuthTypeConnectionProperties : Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionProperties
+    {
+        public UsernamePasswordAuthTypeConnectionProperties() { }
+        public Azure.Provisioning.CognitiveServices.CognitiveServicesConnectionUsernamePassword Credentials { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class UserOwnedAmlWorkspace : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
