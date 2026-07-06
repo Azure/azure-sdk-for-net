@@ -197,3 +197,29 @@ These differences are outside the requested comparison axes but may still be use
 | `SensitivitySettingsAPI.GetSensitivitySettingsResponses.createOrUpdate` | `/providers/Microsoft.Security/sensitivitySettings/current` | Missing. | Present. |
 | `SensitivitySettingsAPI.GetSensitivitySettingsResponses.get` | `/providers/Microsoft.Security/sensitivitySettings/current` | Missing. | Present. |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 6 |
+| Found in Bicep reference | 6 |
+| Found in package API version | 6 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 0 |
+
+**Result:** All resource types involved in the coverage mismatch are real ARM resources in this package's API versions. The key coverage mismatch is not type validity; it is path identity.
+
+For `advancedThreatProtectionSettings` and `serverVulnerabilityAssessments`, legacy uses singleton paths ending in literal names (`current` / `default`) while `resolveArmResources` uses parameterized paths (`{settingName}` / `{serverVulnerabilityAssessment}`). `client.tsp` has C# alternate-type/default-value customizations to preserve singleton-shaped SDK APIs for these resources, so this appears to be another projection/language-specific singleton representation mismatch.
+
+`sensitivitySettings/current` and `locations/{ascLocation}` are legacy-only real resources in the same package API versions and require separate follow-up; `resolveArmResources` currently places the related operations in non-resource methods rather than resources.
+
+| Side | Resource type | Path shape | Bicep API versions | Resource schema API versions |
+| --- | --- | --- | --- | --- |
+| Legacy only | [Microsoft.Security/advancedThreatProtectionSettings](https://learn.microsoft.com/en-us/azure/templates/microsoft.security/advancedthreatprotectionsettings?pivots=deployment-language-bicep) | `current` singleton | `2019-01-01`, `2020-06-01`, `2021-09-01` | `2019-01-01` |
+| `resolveArmResources` only | [Microsoft.Security/advancedThreatProtectionSettings](https://learn.microsoft.com/en-us/azure/templates/microsoft.security/advancedthreatprotectionsettings?pivots=deployment-language-bicep) | parameterized `{settingName}` | `2019-01-01`, `2020-06-01`, `2021-09-01` | `2019-01-01` |
+| Legacy only | [Microsoft.Security/serverVulnerabilityAssessments](https://learn.microsoft.com/en-us/azure/templates/microsoft.security/servervulnerabilityassessments?pivots=deployment-language-bicep) | `default` singleton | `2020-01-01` | `2020-01-01` |
+| `resolveArmResources` only | [Microsoft.Security/serverVulnerabilityAssessments](https://learn.microsoft.com/en-us/azure/templates/microsoft.security/servervulnerabilityassessments?pivots=deployment-language-bicep) | parameterized `{serverVulnerabilityAssessment}` | `2020-01-01` | `2020-01-01` |
+| Legacy only | [Microsoft.Security/sensitivitySettings](https://learn.microsoft.com/en-us/azure/templates/microsoft.security/sensitivitysettings?pivots=deployment-language-bicep) | `current` singleton | `2023-02-15-preview` | `2023-02-15-preview` |
+| Legacy only | [Microsoft.Security/locations](https://learn.microsoft.com/en-us/azure/templates/microsoft.security/locations?pivots=deployment-language-bicep) | subscription location resource | `2015-06-01-preview` | `2015-06-01-preview` |
