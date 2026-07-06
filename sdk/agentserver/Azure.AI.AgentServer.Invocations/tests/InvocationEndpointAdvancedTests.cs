@@ -284,10 +284,9 @@ public class InvocationEndpointAdvancedTests
     }
 
     [Test]
-    public async Task GetAsyncApi_JsonAndYamlAreIndependent()
+    public async Task GetAsyncApiJson_Returns200_AndYamlStays404_WhenOnlyJsonOverridden()
     {
-        // Overriding only the JSON variant leaves YAML as 404 and vice versa —
-        // no format conversion, users may publish either or both.
+        // Overriding only the JSON variant leaves YAML as 404 — no format conversion.
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddInvocationsServer();
@@ -306,23 +305,27 @@ public class InvocationEndpointAdvancedTests
         Assert.That(yaml.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         await app.StopAsync();
+    }
 
+    [Test]
+    public async Task GetAsyncApiYaml_Returns200_AndJsonStays404_WhenOnlyYamlOverridden()
+    {
         // Symmetric direction: only YAML override → JSON returns 404.
-        builder = WebApplication.CreateBuilder();
+        var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddInvocationsServer();
         builder.Services.AddScoped<InvocationHandler, YamlOnlyAsyncApiHandler>();
 
-        app = builder.Build();
+        var app = builder.Build();
         app.MapInvocationsServer();
         await app.StartAsync();
 
-        client = app.GetTestClient();
+        var client = app.GetTestClient();
 
-        yaml = await client.GetAsync("/invocations/docs/asyncapi.yaml");
+        var yaml = await client.GetAsync("/invocations/docs/asyncapi.yaml");
         Assert.That(yaml.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        json = await client.GetAsync("/invocations/docs/asyncapi.json");
+        var json = await client.GetAsync("/invocations/docs/asyncapi.json");
         Assert.That(json.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
         await app.StopAsync();

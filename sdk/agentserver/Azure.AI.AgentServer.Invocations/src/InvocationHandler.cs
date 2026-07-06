@@ -101,6 +101,12 @@ public abstract class InvocationHandler
     /// <c>Accept</c> negotiation and no format conversion between the JSON and
     /// YAML representations. Override <see cref="GetAsyncApiYamlAsync"/>
     /// independently; publishing both is recommended for tooling compatibility.
+    /// <para>
+    /// When overriding, you MUST set <see cref="HttpResponse.StatusCode"/>
+    /// explicitly. The base implementation sets 404; if you override and forget
+    /// to set a status, the response defaults to 200 with whatever body you wrote
+    /// (or empty).
+    /// </para>
     /// </remarks>
     /// <param name="request">The incoming HTTP request.</param>
     /// <param name="response">The outgoing HTTP response.</param>
@@ -121,6 +127,18 @@ public abstract class InvocationHandler
     /// contract. Companion to <see cref="GetAsyncApiJsonAsync"/>; each format is
     /// served independently at its own path.
     /// </summary>
+    /// <remarks>
+    /// The path extension is authoritative for the returned content type — no
+    /// <c>Accept</c> negotiation and no format conversion between the JSON and
+    /// YAML representations. Override <see cref="GetAsyncApiJsonAsync"/>
+    /// independently; publishing both is recommended for tooling compatibility.
+    /// <para>
+    /// When overriding, you MUST set <see cref="HttpResponse.StatusCode"/>
+    /// explicitly. The base implementation sets 404; if you override and forget
+    /// to set a status, the response defaults to 200 with whatever body you wrote
+    /// (or empty).
+    /// </para>
+    /// </remarks>
     /// <param name="request">The incoming HTTP request.</param>
     /// <param name="response">The outgoing HTTP response.</param>
     /// <param name="cancellationToken">A token to observe for cancellation.</param>
