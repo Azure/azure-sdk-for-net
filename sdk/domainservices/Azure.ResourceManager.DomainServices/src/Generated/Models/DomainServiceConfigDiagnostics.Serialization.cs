@@ -13,52 +13,52 @@ using Azure.ResourceManager.DomainServices;
 
 namespace Azure.ResourceManager.DomainServices.Models
 {
-    /// <summary> Settings for notification. </summary>
-    public partial class NotificationSettings : IJsonModel<NotificationSettings>
+    /// <summary> Configuration Diagnostics. </summary>
+    public partial class DomainServiceConfigDiagnostics : IJsonModel<DomainServiceConfigDiagnostics>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DomainServiceConfigDiagnostics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceConfigDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNotificationSettings(document.RootElement, options);
+                        return DeserializeDomainServiceConfigDiagnostics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceConfigDiagnostics)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceConfigDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDomainServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceConfigDiagnostics)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NotificationSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DomainServiceConfigDiagnostics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationSettings IPersistableModel<NotificationSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DomainServiceConfigDiagnostics IPersistableModel<DomainServiceConfigDiagnostics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NotificationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DomainServiceConfigDiagnostics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NotificationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DomainServiceConfigDiagnostics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,33 +69,23 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceConfigDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceConfigDiagnostics)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NotifyGlobalAdmins))
+            if (Optional.IsDefined(LastExecutedOn))
             {
-                writer.WritePropertyName("notifyGlobalAdmins"u8);
-                writer.WriteStringValue(NotifyGlobalAdmins.Value.ToString());
+                writer.WritePropertyName("lastExecuted"u8);
+                writer.WriteStringValue(LastExecutedOn.Value, "R");
             }
-            if (Optional.IsDefined(NotifyDcAdmins))
+            if (Optional.IsCollectionDefined(ValidatorResults))
             {
-                writer.WritePropertyName("notifyDcAdmins"u8);
-                writer.WriteStringValue(NotifyDcAdmins.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AdditionalRecipients))
-            {
-                writer.WritePropertyName("additionalRecipients"u8);
+                writer.WritePropertyName("validatorResults"u8);
                 writer.WriteStartArray();
-                foreach (string item in AdditionalRecipients)
+                foreach (DomainServiceConfigDiagnosticsValidatorResult item in ValidatorResults)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,72 +108,55 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NotificationSettings IJsonModel<NotificationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DomainServiceConfigDiagnostics IJsonModel<DomainServiceConfigDiagnostics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NotificationSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DomainServiceConfigDiagnostics JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceConfigDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceConfigDiagnostics)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNotificationSettings(document.RootElement, options);
+            return DeserializeDomainServiceConfigDiagnostics(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NotificationSettings DeserializeNotificationSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static DomainServiceConfigDiagnostics DeserializeDomainServiceConfigDiagnostics(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NotifyGlobalAdmins? notifyGlobalAdmins = default;
-            NotifyDcAdmins? notifyDcAdmins = default;
-            IList<string> additionalRecipients = default;
+            DateTimeOffset? lastExecutedOn = default;
+            IList<DomainServiceConfigDiagnosticsValidatorResult> validatorResults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("notifyGlobalAdmins"u8))
+                if (prop.NameEquals("lastExecuted"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notifyGlobalAdmins = new NotifyGlobalAdmins(prop.Value.GetString());
+                    lastExecutedOn = prop.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (prop.NameEquals("notifyDcAdmins"u8))
+                if (prop.NameEquals("validatorResults"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notifyDcAdmins = new NotifyDcAdmins(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("additionalRecipients"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
+                    List<DomainServiceConfigDiagnosticsValidatorResult> array = new List<DomainServiceConfigDiagnosticsValidatorResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(DomainServiceConfigDiagnosticsValidatorResult.DeserializeDomainServiceConfigDiagnosticsValidatorResult(item, options));
                     }
-                    additionalRecipients = array;
+                    validatorResults = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +164,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NotificationSettings(notifyGlobalAdmins, notifyDcAdmins, additionalRecipients ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new DomainServiceConfigDiagnostics(lastExecutedOn, validatorResults ?? new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResult>(), additionalBinaryDataProperties);
         }
     }
 }

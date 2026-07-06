@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             {
                 writer.WritePropertyName("replicaSets"u8);
                 writer.WriteStartArray();
-                foreach (ReplicaSet item in ReplicaSets)
+                foreach (DomainServiceReplicaSet item in ReplicaSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -217,18 +217,18 @@ namespace Azure.ResourceManager.DomainServices.Models
             string deploymentId = default;
             string syncOwner = default;
             string syncApplicationId = default;
-            IList<ReplicaSet> replicaSets = default;
+            IList<DomainServiceReplicaSet> replicaSets = default;
             LdapsSettings ldapsSettings = default;
             ResourceForestSettings resourceForestSettings = default;
             DomainSecuritySettings domainSecuritySettings = default;
             string domainConfigurationType = default;
             string sku = default;
             FilteredSync? filteredSync = default;
-            SyncScope? syncScope = default;
-            NotificationSettings notificationSettings = default;
-            MigrationProperties migrationProperties = default;
+            DomainServiceSyncScope? syncScope = default;
+            DomainServiceNotificationSettings notificationSettings = default;
+            DomainServiceMigrationProperties migrationProperties = default;
             string provisioningState = default;
-            ConfigDiagnostics configDiagnostics = default;
+            DomainServiceConfigDiagnostics configDiagnostics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -272,10 +272,10 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    List<ReplicaSet> array = new List<ReplicaSet>();
+                    List<DomainServiceReplicaSet> array = new List<DomainServiceReplicaSet>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReplicaSet.DeserializeReplicaSet(item, options));
+                        array.Add(DomainServiceReplicaSet.DeserializeDomainServiceReplicaSet(item, options));
                     }
                     replicaSets = array;
                     continue;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    syncScope = new SyncScope(prop.Value.GetString());
+                    syncScope = new DomainServiceSyncScope(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("notificationSettings"u8))
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    notificationSettings = NotificationSettings.DeserializeNotificationSettings(prop.Value, options);
+                    notificationSettings = DomainServiceNotificationSettings.DeserializeDomainServiceNotificationSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("migrationProperties"u8))
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    migrationProperties = MigrationProperties.DeserializeMigrationProperties(prop.Value, options);
+                    migrationProperties = DomainServiceMigrationProperties.DeserializeDomainServiceMigrationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    configDiagnostics = ConfigDiagnostics.DeserializeConfigDiagnostics(prop.Value, options);
+                    configDiagnostics = DomainServiceConfigDiagnostics.DeserializeDomainServiceConfigDiagnostics(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                 deploymentId,
                 syncOwner,
                 syncApplicationId,
-                replicaSets ?? new ChangeTrackingList<ReplicaSet>(),
+                replicaSets ?? new ChangeTrackingList<DomainServiceReplicaSet>(),
                 ldapsSettings,
                 resourceForestSettings,
                 domainSecuritySettings,

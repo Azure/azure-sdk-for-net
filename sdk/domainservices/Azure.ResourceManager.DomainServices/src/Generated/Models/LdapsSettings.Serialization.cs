@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             string publicCertificate = default;
             string certificateThumbprint = default;
             DateTimeOffset? certificateNotAfterOn = default;
-            ExternalAccess? externalAccess = default;
+            DomainServiceExternalAccess? externalAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    externalAccess = new ExternalAccess(prop.Value.GetString());
+                    externalAccess = new DomainServiceExternalAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

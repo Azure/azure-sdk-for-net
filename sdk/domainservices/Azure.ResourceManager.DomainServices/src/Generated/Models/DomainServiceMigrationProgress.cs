@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Migration Progress. </summary>
-    public partial class MigrationProgress
+    public partial class DomainServiceMigrationProgress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationProgress"/>. </summary>
-        internal MigrationProgress()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceMigrationProgress"/>. </summary>
+        internal DomainServiceMigrationProgress()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationProgress"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceMigrationProgress"/>. </summary>
         /// <param name="completionPercentage"> Completion Percentage. </param>
         /// <param name="progressMessage"> Progress Message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationProgress(double? completionPercentage, string progressMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceMigrationProgress(double? completionPercentage, string progressMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompletionPercentage = completionPercentage;
             ProgressMessage = progressMessage;

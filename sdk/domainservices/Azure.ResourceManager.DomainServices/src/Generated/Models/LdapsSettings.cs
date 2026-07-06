@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="certificateNotAfterOn"> NotAfter DateTime of configure ldaps certificate. </param>
         /// <param name="externalAccess"> A flag to determine whether or not Secure LDAP access over the internet is enabled or disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapsSettings(Ldaps? ldaps, string pfxCertificate, string pfxCertificatePassword, string publicCertificate, string certificateThumbprint, DateTimeOffset? certificateNotAfterOn, ExternalAccess? externalAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapsSettings(Ldaps? ldaps, string pfxCertificate, string pfxCertificatePassword, string publicCertificate, string certificateThumbprint, DateTimeOffset? certificateNotAfterOn, DomainServiceExternalAccess? externalAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Ldaps = ldaps;
             PfxCertificate = pfxCertificate;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.DomainServices.Models
         public DateTimeOffset? CertificateNotAfterOn { get; }
 
         /// <summary> A flag to determine whether or not Secure LDAP access over the internet is enabled or disabled. </summary>
-        public ExternalAccess? ExternalAccess { get; set; }
+        public DomainServiceExternalAccess? ExternalAccess { get; set; }
     }
 }

@@ -12,23 +12,23 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Settings for notification. </summary>
-    public partial class NotificationSettings
+    public partial class DomainServiceNotificationSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NotificationSettings"/>. </summary>
-        public NotificationSettings()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceNotificationSettings"/>. </summary>
+        public DomainServiceNotificationSettings()
         {
             AdditionalRecipients = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NotificationSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceNotificationSettings"/>. </summary>
         /// <param name="notifyGlobalAdmins"> Should global admins be notified. </param>
         /// <param name="notifyDcAdmins"> Should domain controller admins be notified. </param>
         /// <param name="additionalRecipients"> The list of additional recipients. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationSettings(NotifyGlobalAdmins? notifyGlobalAdmins, NotifyDcAdmins? notifyDcAdmins, IList<string> additionalRecipients, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceNotificationSettings(NotifyGlobalAdmins? notifyGlobalAdmins, NotifyDcAdmins? notifyDcAdmins, IList<string> additionalRecipients, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NotifyGlobalAdmins = notifyGlobalAdmins;
             NotifyDcAdmins = notifyDcAdmins;

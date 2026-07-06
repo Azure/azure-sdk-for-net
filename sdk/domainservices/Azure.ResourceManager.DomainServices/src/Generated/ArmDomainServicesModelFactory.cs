@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="eTag"> Resource etag. </param>
         /// <returns> A new <see cref="DomainServices.DomainServiceData"/> instance for mocking. </returns>
-        public static DomainServiceData DomainServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string tenantId = default, string domainName = default, string deploymentId = default, string syncOwner = default, string syncApplicationId = default, IEnumerable<ReplicaSet> replicaSets = default, LdapsSettings ldapsSettings = default, ResourceForestSettings resourceForestSettings = default, DomainSecuritySettings domainSecuritySettings = default, string domainConfigurationType = default, string sku = default, FilteredSync? filteredSync = default, SyncScope? syncScope = default, NotificationSettings notificationSettings = default, MigrationProperties migrationProperties = default, string provisioningState = default, ConfigDiagnostics configDiagnostics = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ETag? eTag = default)
+        public static DomainServiceData DomainServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string tenantId = default, string domainName = default, string deploymentId = default, string syncOwner = default, string syncApplicationId = default, IEnumerable<DomainServiceReplicaSet> replicaSets = default, LdapsSettings ldapsSettings = default, ResourceForestSettings resourceForestSettings = default, DomainSecuritySettings domainSecuritySettings = default, string domainConfigurationType = default, string sku = default, FilteredSync? filteredSync = default, DomainServiceSyncScope? syncScope = default, DomainServiceNotificationSettings notificationSettings = default, DomainServiceMigrationProperties migrationProperties = default, string provisioningState = default, DomainServiceConfigDiagnostics configDiagnostics = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     deploymentId,
                     syncOwner,
                     syncApplicationId,
-                    (replicaSets ?? new ChangeTrackingList<ReplicaSet>()).ToList(),
+                    (replicaSets ?? new ChangeTrackingList<DomainServiceReplicaSet>()).ToList(),
                     ldapsSettings,
                     resourceForestSettings,
                     domainSecuritySettings,
@@ -90,14 +90,14 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="healthLastEvaluatedOn"> Last domain evaluation run DateTime. </param>
         /// <param name="healthMonitors"> List of Domain Health Monitors. </param>
         /// <param name="healthAlerts"> List of Domain Health Alerts. </param>
-        /// <returns> A new <see cref="Models.ReplicaSet"/> instance for mocking. </returns>
-        public static ReplicaSet ReplicaSet(string replicaSetId = default, AzureLocation? location = default, string vnetSiteId = default, string subnetId = default, IEnumerable<string> domainControllerIpAddress = default, string externalAccessIpAddress = default, string serviceStatus = default, int? selfUnsuspendCounter = default, DateTimeOffset? healthLastEvaluatedOn = default, IEnumerable<HealthMonitor> healthMonitors = default, IEnumerable<HealthAlert> healthAlerts = default)
+        /// <returns> A new <see cref="Models.DomainServiceReplicaSet"/> instance for mocking. </returns>
+        public static DomainServiceReplicaSet DomainServiceReplicaSet(string replicaSetId = default, AzureLocation? location = default, string vnetSiteId = default, ResourceIdentifier subnetId = default, IEnumerable<string> domainControllerIpAddress = default, string externalAccessIpAddress = default, string serviceStatus = default, int? selfUnsuspendCounter = default, DateTimeOffset? healthLastEvaluatedOn = default, IEnumerable<DomainServiceHealthMonitor> healthMonitors = default, IEnumerable<DomainServiceHealthAlert> healthAlerts = default)
         {
             domainControllerIpAddress ??= new ChangeTrackingList<string>();
-            healthMonitors ??= new ChangeTrackingList<HealthMonitor>();
-            healthAlerts ??= new ChangeTrackingList<HealthAlert>();
+            healthMonitors ??= new ChangeTrackingList<DomainServiceHealthMonitor>();
+            healthAlerts ??= new ChangeTrackingList<DomainServiceHealthAlert>();
 
-            return new ReplicaSet(
+            return new DomainServiceReplicaSet(
                 replicaSetId,
                 location,
                 vnetSiteId,
@@ -107,18 +107,18 @@ namespace Azure.ResourceManager.DomainServices.Models
                 serviceStatus,
                 selfUnsuspendCounter,
                 healthLastEvaluatedOn,
-                (healthMonitors ?? new ChangeTrackingList<HealthMonitor>()).ToList(),
-                (healthAlerts ?? new ChangeTrackingList<HealthAlert>()).ToList(),
+                (healthMonitors ?? new ChangeTrackingList<DomainServiceHealthMonitor>()).ToList(),
+                (healthAlerts ?? new ChangeTrackingList<DomainServiceHealthAlert>()).ToList(),
                 default);
         }
 
         /// <param name="id"> Health Monitor Id. </param>
         /// <param name="name"> Health Monitor Name. </param>
         /// <param name="details"> Health Monitor Details. </param>
-        /// <returns> A new <see cref="Models.HealthMonitor"/> instance for mocking. </returns>
-        public static HealthMonitor HealthMonitor(string id = default, string name = default, string details = default)
+        /// <returns> A new <see cref="Models.DomainServiceHealthMonitor"/> instance for mocking. </returns>
+        public static DomainServiceHealthMonitor DomainServiceHealthMonitor(string id = default, string name = default, string details = default)
         {
-            return new HealthMonitor(id, name, details, default);
+            return new DomainServiceHealthMonitor(id, name, details, default);
         }
 
         /// <param name="id"> Health Alert Id. </param>
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="raisedOn"> Health Alert Raised DateTime. </param>
         /// <param name="lastDetectedOn"> Health Alert Last Detected DateTime. </param>
         /// <param name="resolutionUri"> Health Alert TSG Link. </param>
-        /// <returns> A new <see cref="Models.HealthAlert"/> instance for mocking. </returns>
-        public static HealthAlert HealthAlert(string id = default, string name = default, string issue = default, string severity = default, DateTimeOffset? raisedOn = default, DateTimeOffset? lastDetectedOn = default, string resolutionUri = default)
+        /// <returns> A new <see cref="Models.DomainServiceHealthAlert"/> instance for mocking. </returns>
+        public static DomainServiceHealthAlert DomainServiceHealthAlert(string id = default, string name = default, string issue = default, string severity = default, DateTimeOffset? raisedOn = default, DateTimeOffset? lastDetectedOn = default, string resolutionUri = default)
         {
-            return new HealthAlert(
+            return new DomainServiceHealthAlert(
                 id,
                 name,
                 issue,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="certificateNotAfterOn"> NotAfter DateTime of configure ldaps certificate. </param>
         /// <param name="externalAccess"> A flag to determine whether or not Secure LDAP access over the internet is enabled or disabled. </param>
         /// <returns> A new <see cref="Models.LdapsSettings"/> instance for mocking. </returns>
-        public static LdapsSettings LdapsSettings(Ldaps? ldaps = default, string pfxCertificate = default, string pfxCertificatePassword = default, string publicCertificate = default, string certificateThumbprint = default, DateTimeOffset? certificateNotAfterOn = default, ExternalAccess? externalAccess = default)
+        public static LdapsSettings LdapsSettings(Ldaps? ldaps = default, string pfxCertificate = default, string pfxCertificatePassword = default, string publicCertificate = default, string certificateThumbprint = default, DateTimeOffset? certificateNotAfterOn = default, DomainServiceExternalAccess? externalAccess = default)
         {
             return new LdapsSettings(
                 ldaps,
@@ -220,61 +220,61 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="notifyGlobalAdmins"> Should global admins be notified. </param>
         /// <param name="notifyDcAdmins"> Should domain controller admins be notified. </param>
         /// <param name="additionalRecipients"> The list of additional recipients. </param>
-        /// <returns> A new <see cref="Models.NotificationSettings"/> instance for mocking. </returns>
-        public static NotificationSettings NotificationSettings(NotifyGlobalAdmins? notifyGlobalAdmins = default, NotifyDcAdmins? notifyDcAdmins = default, IEnumerable<string> additionalRecipients = default)
+        /// <returns> A new <see cref="Models.DomainServiceNotificationSettings"/> instance for mocking. </returns>
+        public static DomainServiceNotificationSettings DomainServiceNotificationSettings(NotifyGlobalAdmins? notifyGlobalAdmins = default, NotifyDcAdmins? notifyDcAdmins = default, IEnumerable<string> additionalRecipients = default)
         {
             additionalRecipients ??= new ChangeTrackingList<string>();
 
-            return new NotificationSettings(notifyGlobalAdmins, notifyDcAdmins, (additionalRecipients ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new DomainServiceNotificationSettings(notifyGlobalAdmins, notifyDcAdmins, (additionalRecipients ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="oldSubnetId"> Old Subnet Id. </param>
         /// <param name="oldVnetSiteId"> Old Vnet Site Id. </param>
         /// <param name="migrationProgress"> Migration Progress. </param>
-        /// <returns> A new <see cref="Models.MigrationProperties"/> instance for mocking. </returns>
-        public static MigrationProperties MigrationProperties(string oldSubnetId = default, string oldVnetSiteId = default, MigrationProgress migrationProgress = default)
+        /// <returns> A new <see cref="Models.DomainServiceMigrationProperties"/> instance for mocking. </returns>
+        public static DomainServiceMigrationProperties DomainServiceMigrationProperties(ResourceIdentifier oldSubnetId = default, string oldVnetSiteId = default, DomainServiceMigrationProgress migrationProgress = default)
         {
-            return new MigrationProperties(oldSubnetId, oldVnetSiteId, migrationProgress, default);
+            return new DomainServiceMigrationProperties(oldSubnetId, oldVnetSiteId, migrationProgress, default);
         }
 
         /// <param name="completionPercentage"> Completion Percentage. </param>
         /// <param name="progressMessage"> Progress Message. </param>
-        /// <returns> A new <see cref="Models.MigrationProgress"/> instance for mocking. </returns>
-        public static MigrationProgress MigrationProgress(double? completionPercentage = default, string progressMessage = default)
+        /// <returns> A new <see cref="Models.DomainServiceMigrationProgress"/> instance for mocking. </returns>
+        public static DomainServiceMigrationProgress DomainServiceMigrationProgress(double? completionPercentage = default, string progressMessage = default)
         {
-            return new MigrationProgress(completionPercentage, progressMessage, default);
+            return new DomainServiceMigrationProgress(completionPercentage, progressMessage, default);
         }
 
         /// <param name="lastExecutedOn"> Last domain configuration diagnostics DateTime. </param>
         /// <param name="validatorResults"> List of Configuration Diagnostics validator results. </param>
-        /// <returns> A new <see cref="Models.ConfigDiagnostics"/> instance for mocking. </returns>
-        public static ConfigDiagnostics ConfigDiagnostics(DateTimeOffset? lastExecutedOn = default, IEnumerable<ConfigDiagnosticsValidatorResult> validatorResults = default)
+        /// <returns> A new <see cref="Models.DomainServiceConfigDiagnostics"/> instance for mocking. </returns>
+        public static DomainServiceConfigDiagnostics DomainServiceConfigDiagnostics(DateTimeOffset? lastExecutedOn = default, IEnumerable<DomainServiceConfigDiagnosticsValidatorResult> validatorResults = default)
         {
-            validatorResults ??= new ChangeTrackingList<ConfigDiagnosticsValidatorResult>();
+            validatorResults ??= new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResult>();
 
-            return new ConfigDiagnostics(lastExecutedOn, (validatorResults ?? new ChangeTrackingList<ConfigDiagnosticsValidatorResult>()).ToList(), default);
+            return new DomainServiceConfigDiagnostics(lastExecutedOn, (validatorResults ?? new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResult>()).ToList(), default);
         }
 
         /// <param name="validatorId"> Validator identifier. </param>
         /// <param name="replicaSetSubnetDisplayName"> Replica set location and subnet name. </param>
         /// <param name="status"> Status for individual validator after running diagnostics. </param>
         /// <param name="issues"> List of resource config validation issues. </param>
-        /// <returns> A new <see cref="Models.ConfigDiagnosticsValidatorResult"/> instance for mocking. </returns>
-        public static ConfigDiagnosticsValidatorResult ConfigDiagnosticsValidatorResult(string validatorId = default, string replicaSetSubnetDisplayName = default, DomainServiceValidatorStatus? status = default, IEnumerable<ConfigDiagnosticsValidatorResultIssue> issues = default)
+        /// <returns> A new <see cref="Models.DomainServiceConfigDiagnosticsValidatorResult"/> instance for mocking. </returns>
+        public static DomainServiceConfigDiagnosticsValidatorResult DomainServiceConfigDiagnosticsValidatorResult(string validatorId = default, string replicaSetSubnetDisplayName = default, DomainServiceValidatorStatus? status = default, IEnumerable<DomainServiceConfigDiagnosticsValidatorResultIssue> issues = default)
         {
-            issues ??= new ChangeTrackingList<ConfigDiagnosticsValidatorResultIssue>();
+            issues ??= new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResultIssue>();
 
-            return new ConfigDiagnosticsValidatorResult(validatorId, replicaSetSubnetDisplayName, status, (issues ?? new ChangeTrackingList<ConfigDiagnosticsValidatorResultIssue>()).ToList(), default);
+            return new DomainServiceConfigDiagnosticsValidatorResult(validatorId, replicaSetSubnetDisplayName, status, (issues ?? new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResultIssue>()).ToList(), default);
         }
 
         /// <param name="id"> Validation issue identifier. </param>
         /// <param name="descriptionParams"> List of domain resource property name or values used to compose a rich description. </param>
-        /// <returns> A new <see cref="Models.ConfigDiagnosticsValidatorResultIssue"/> instance for mocking. </returns>
-        public static ConfigDiagnosticsValidatorResultIssue ConfigDiagnosticsValidatorResultIssue(string id = default, IEnumerable<string> descriptionParams = default)
+        /// <returns> A new <see cref="Models.DomainServiceConfigDiagnosticsValidatorResultIssue"/> instance for mocking. </returns>
+        public static DomainServiceConfigDiagnosticsValidatorResultIssue DomainServiceConfigDiagnosticsValidatorResultIssue(string id = default, IEnumerable<string> descriptionParams = default)
         {
             descriptionParams ??= new ChangeTrackingList<string>();
 
-            return new ConfigDiagnosticsValidatorResultIssue(id, (descriptionParams ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new DomainServiceConfigDiagnosticsValidatorResultIssue(id, (descriptionParams ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="message"></param>

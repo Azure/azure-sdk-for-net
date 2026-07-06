@@ -15,51 +15,51 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Replica Set Definition. </summary>
-    public partial class ReplicaSet : IJsonModel<ReplicaSet>
+    public partial class DomainServiceReplicaSet : IJsonModel<DomainServiceReplicaSet>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReplicaSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DomainServiceReplicaSet PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReplicaSet(document.RootElement, options);
+                        return DeserializeDomainServiceReplicaSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicaSet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceReplicaSet)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDomainServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicaSet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceReplicaSet)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReplicaSet>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DomainServiceReplicaSet>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReplicaSet IPersistableModel<ReplicaSet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DomainServiceReplicaSet IPersistableModel<DomainServiceReplicaSet>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReplicaSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DomainServiceReplicaSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReplicaSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DomainServiceReplicaSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicaSet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceReplicaSet)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicaSetId))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             {
                 writer.WritePropertyName("healthMonitors"u8);
                 writer.WriteStartArray();
-                foreach (HealthMonitor item in HealthMonitors)
+                foreach (DomainServiceHealthMonitor item in HealthMonitors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DomainServices.Models
             {
                 writer.WritePropertyName("healthAlerts"u8);
                 writer.WriteStartArray();
-                foreach (HealthAlert item in HealthAlerts)
+                foreach (DomainServiceHealthAlert item in HealthAlerts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -169,24 +169,24 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReplicaSet IJsonModel<ReplicaSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DomainServiceReplicaSet IJsonModel<DomainServiceReplicaSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReplicaSet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DomainServiceReplicaSet JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceReplicaSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicaSet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceReplicaSet)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplicaSet(document.RootElement, options);
+            return DeserializeDomainServiceReplicaSet(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReplicaSet DeserializeReplicaSet(JsonElement element, ModelReaderWriterOptions options)
+        internal static DomainServiceReplicaSet DeserializeDomainServiceReplicaSet(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -195,14 +195,14 @@ namespace Azure.ResourceManager.DomainServices.Models
             string replicaSetId = default;
             AzureLocation? location = default;
             string vnetSiteId = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             IReadOnlyList<string> domainControllerIpAddress = default;
             string externalAccessIpAddress = default;
             string serviceStatus = default;
             int? selfUnsuspendCounter = default;
             DateTimeOffset? healthLastEvaluatedOn = default;
-            IReadOnlyList<HealthMonitor> healthMonitors = default;
-            IReadOnlyList<HealthAlert> healthAlerts = default;
+            IReadOnlyList<DomainServiceHealthMonitor> healthMonitors = default;
+            IReadOnlyList<DomainServiceHealthAlert> healthAlerts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -227,7 +227,11 @@ namespace Azure.ResourceManager.DomainServices.Models
                 }
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("domainControllerIpAddress"u8))
@@ -285,10 +289,10 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    List<HealthMonitor> array = new List<HealthMonitor>();
+                    List<DomainServiceHealthMonitor> array = new List<DomainServiceHealthMonitor>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HealthMonitor.DeserializeHealthMonitor(item, options));
+                        array.Add(DomainServiceHealthMonitor.DeserializeDomainServiceHealthMonitor(item, options));
                     }
                     healthMonitors = array;
                     continue;
@@ -299,10 +303,10 @@ namespace Azure.ResourceManager.DomainServices.Models
                     {
                         continue;
                     }
-                    List<HealthAlert> array = new List<HealthAlert>();
+                    List<DomainServiceHealthAlert> array = new List<DomainServiceHealthAlert>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(HealthAlert.DeserializeHealthAlert(item, options));
+                        array.Add(DomainServiceHealthAlert.DeserializeDomainServiceHealthAlert(item, options));
                     }
                     healthAlerts = array;
                     continue;
@@ -312,7 +316,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReplicaSet(
+            return new DomainServiceReplicaSet(
                 replicaSetId,
                 location,
                 vnetSiteId,
@@ -322,8 +326,8 @@ namespace Azure.ResourceManager.DomainServices.Models
                 serviceStatus,
                 selfUnsuspendCounter,
                 healthLastEvaluatedOn,
-                healthMonitors ?? new ChangeTrackingList<HealthMonitor>(),
-                healthAlerts ?? new ChangeTrackingList<HealthAlert>(),
+                healthMonitors ?? new ChangeTrackingList<DomainServiceHealthMonitor>(),
+                healthAlerts ?? new ChangeTrackingList<DomainServiceHealthAlert>(),
                 additionalBinaryDataProperties);
         }
     }

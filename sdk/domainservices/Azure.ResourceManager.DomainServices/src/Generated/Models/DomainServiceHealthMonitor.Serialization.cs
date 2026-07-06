@@ -14,51 +14,51 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Health Monitor Description. </summary>
-    public partial class HealthMonitor : IJsonModel<HealthMonitor>
+    public partial class DomainServiceHealthMonitor : IJsonModel<DomainServiceHealthMonitor>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HealthMonitor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DomainServiceHealthMonitor PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceHealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHealthMonitor(document.RootElement, options);
+                        return DeserializeDomainServiceHealthMonitor(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthMonitor)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceHealthMonitor)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceHealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDomainServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HealthMonitor)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceHealthMonitor)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthMonitor>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DomainServiceHealthMonitor>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthMonitor IPersistableModel<HealthMonitor>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DomainServiceHealthMonitor IPersistableModel<DomainServiceHealthMonitor>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthMonitor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DomainServiceHealthMonitor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HealthMonitor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DomainServiceHealthMonitor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceHealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthMonitor)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceHealthMonitor)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthMonitor IJsonModel<HealthMonitor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DomainServiceHealthMonitor IJsonModel<DomainServiceHealthMonitor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HealthMonitor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DomainServiceHealthMonitor JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceHealthMonitor>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthMonitor)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceHealthMonitor)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthMonitor(document.RootElement, options);
+            return DeserializeDomainServiceHealthMonitor(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HealthMonitor DeserializeHealthMonitor(JsonElement element, ModelReaderWriterOptions options)
+        internal static DomainServiceHealthMonitor DeserializeDomainServiceHealthMonitor(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HealthMonitor(id, name, details, additionalBinaryDataProperties);
+            return new DomainServiceHealthMonitor(id, name, details, additionalBinaryDataProperties);
         }
     }
 }

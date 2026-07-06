@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Health Alert Description. </summary>
-    public partial class HealthAlert
+    public partial class DomainServiceHealthAlert
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthAlert"/>. </summary>
-        internal HealthAlert()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceHealthAlert"/>. </summary>
+        internal DomainServiceHealthAlert()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthAlert"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceHealthAlert"/>. </summary>
         /// <param name="id"> Health Alert Id. </param>
         /// <param name="name"> Health Alert Name. </param>
         /// <param name="issue"> Health Alert Issue. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="lastDetectedOn"> Health Alert Last Detected DateTime. </param>
         /// <param name="resolutionUri"> Health Alert TSG Link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthAlert(string id, string name, string issue, string severity, DateTimeOffset? raisedOn, DateTimeOffset? lastDetectedOn, string resolutionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceHealthAlert(string id, string name, string issue, string severity, DateTimeOffset? raisedOn, DateTimeOffset? lastDetectedOn, string resolutionUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

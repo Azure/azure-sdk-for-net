@@ -14,51 +14,51 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Migration Progress. </summary>
-    public partial class MigrationProgress : IJsonModel<MigrationProgress>
+    public partial class DomainServiceMigrationProgress : IJsonModel<DomainServiceMigrationProgress>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationProgress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DomainServiceMigrationProgress PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceMigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMigrationProgress(document.RootElement, options);
+                        return DeserializeDomainServiceMigrationProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationProgress)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceMigrationProgress)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceMigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDomainServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationProgress)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainServiceMigrationProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MigrationProgress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DomainServiceMigrationProgress>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationProgress IPersistableModel<MigrationProgress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DomainServiceMigrationProgress IPersistableModel<DomainServiceMigrationProgress>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MigrationProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DomainServiceMigrationProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MigrationProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DomainServiceMigrationProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceMigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationProgress)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceMigrationProgress)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(CompletionPercentage))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.DomainServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationProgress IJsonModel<MigrationProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DomainServiceMigrationProgress IJsonModel<DomainServiceMigrationProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationProgress JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DomainServiceMigrationProgress JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DomainServiceMigrationProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationProgress)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainServiceMigrationProgress)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationProgress(document.RootElement, options);
+            return DeserializeDomainServiceMigrationProgress(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MigrationProgress DeserializeMigrationProgress(JsonElement element, ModelReaderWriterOptions options)
+        internal static DomainServiceMigrationProgress DeserializeDomainServiceMigrationProgress(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DomainServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrationProgress(completionPercentage, progressMessage, additionalBinaryDataProperties);
+            return new DomainServiceMigrationProgress(completionPercentage, progressMessage, additionalBinaryDataProperties);
         }
     }
 }

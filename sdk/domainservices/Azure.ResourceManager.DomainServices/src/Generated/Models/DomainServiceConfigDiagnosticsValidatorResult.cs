@@ -12,24 +12,24 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Config Diagnostics validator result data. </summary>
-    public partial class ConfigDiagnosticsValidatorResult
+    public partial class DomainServiceConfigDiagnosticsValidatorResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigDiagnosticsValidatorResult"/>. </summary>
-        public ConfigDiagnosticsValidatorResult()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceConfigDiagnosticsValidatorResult"/>. </summary>
+        public DomainServiceConfigDiagnosticsValidatorResult()
         {
-            Issues = new ChangeTrackingList<ConfigDiagnosticsValidatorResultIssue>();
+            Issues = new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResultIssue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigDiagnosticsValidatorResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceConfigDiagnosticsValidatorResult"/>. </summary>
         /// <param name="validatorId"> Validator identifier. </param>
         /// <param name="replicaSetSubnetDisplayName"> Replica set location and subnet name. </param>
         /// <param name="status"> Status for individual validator after running diagnostics. </param>
         /// <param name="issues"> List of resource config validation issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigDiagnosticsValidatorResult(string validatorId, string replicaSetSubnetDisplayName, DomainServiceValidatorStatus? status, IList<ConfigDiagnosticsValidatorResultIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceConfigDiagnosticsValidatorResult(string validatorId, string replicaSetSubnetDisplayName, DomainServiceValidatorStatus? status, IList<DomainServiceConfigDiagnosticsValidatorResultIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidatorId = validatorId;
             ReplicaSetSubnetDisplayName = replicaSetSubnetDisplayName;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.DomainServices.Models
         public DomainServiceValidatorStatus? Status { get; set; }
 
         /// <summary> List of resource config validation issues. </summary>
-        public IList<ConfigDiagnosticsValidatorResultIssue> Issues { get; }
+        public IList<DomainServiceConfigDiagnosticsValidatorResultIssue> Issues { get; }
     }
 }

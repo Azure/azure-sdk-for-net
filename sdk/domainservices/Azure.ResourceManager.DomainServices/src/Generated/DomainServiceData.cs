@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DomainServices
         }
 
         /// <summary> List of ReplicaSets. </summary>
-        public IList<ReplicaSet> ReplicaSets
+        public IList<DomainServiceReplicaSet> ReplicaSets
         {
             get
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DomainServices
         }
 
         /// <summary> All or CloudOnly, All users in AAD are synced to AAD DS domain or only users actively syncing in the cloud. </summary>
-        public SyncScope? SyncScope
+        public DomainServiceSyncScope? SyncScope
         {
             get
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DomainServices
         }
 
         /// <summary> Notification Settings. </summary>
-        public NotificationSettings NotificationSettings
+        public DomainServiceNotificationSettings NotificationSettings
         {
             get
             {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DomainServices
         }
 
         /// <summary> Migration Properties. </summary>
-        public MigrationProperties MigrationProperties
+        public DomainServiceMigrationProperties MigrationProperties
         {
             get
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DomainServices
         }
 
         /// <summary> Configuration diagnostics data containing latest execution from client. </summary>
-        public ConfigDiagnostics ConfigDiagnostics
+        public DomainServiceConfigDiagnostics ConfigDiagnostics
         {
             get
             {

@@ -12,22 +12,22 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Configuration Diagnostics. </summary>
-    public partial class ConfigDiagnostics
+    public partial class DomainServiceConfigDiagnostics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigDiagnostics"/>. </summary>
-        public ConfigDiagnostics()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceConfigDiagnostics"/>. </summary>
+        public DomainServiceConfigDiagnostics()
         {
-            ValidatorResults = new ChangeTrackingList<ConfigDiagnosticsValidatorResult>();
+            ValidatorResults = new ChangeTrackingList<DomainServiceConfigDiagnosticsValidatorResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigDiagnostics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceConfigDiagnostics"/>. </summary>
         /// <param name="lastExecutedOn"> Last domain configuration diagnostics DateTime. </param>
         /// <param name="validatorResults"> List of Configuration Diagnostics validator results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigDiagnostics(DateTimeOffset? lastExecutedOn, IList<ConfigDiagnosticsValidatorResult> validatorResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceConfigDiagnostics(DateTimeOffset? lastExecutedOn, IList<DomainServiceConfigDiagnosticsValidatorResult> validatorResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastExecutedOn = lastExecutedOn;
             ValidatorResults = validatorResults;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.DomainServices.Models
         public DateTimeOffset? LastExecutedOn { get; set; }
 
         /// <summary> List of Configuration Diagnostics validator results. </summary>
-        public IList<ConfigDiagnosticsValidatorResult> ValidatorResults { get; }
+        public IList<DomainServiceConfigDiagnosticsValidatorResult> ValidatorResults { get; }
     }
 }

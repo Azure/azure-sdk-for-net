@@ -12,7 +12,7 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> A flag to determine whether or not Secure LDAP access over the internet is enabled or disabled. </summary>
-    public readonly partial struct ExternalAccess : IEquatable<ExternalAccess>
+    public readonly partial struct DomainServiceExternalAccess : IEquatable<DomainServiceExternalAccess>
     {
         private readonly string _value;
         /// <summary> Enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <summary> Disabled. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="ExternalAccess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceExternalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExternalAccess(string value)
+        public DomainServiceExternalAccess(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.DomainServices.Models
         }
 
         /// <summary> Enabled. </summary>
-        public static ExternalAccess Enabled { get; } = new ExternalAccess(EnabledValue);
+        public static DomainServiceExternalAccess Enabled { get; } = new DomainServiceExternalAccess(EnabledValue);
 
         /// <summary> Disabled. </summary>
-        public static ExternalAccess Disabled { get; } = new ExternalAccess(DisabledValue);
+        public static DomainServiceExternalAccess Disabled { get; } = new DomainServiceExternalAccess(DisabledValue);
 
-        /// <summary> Determines if two <see cref="ExternalAccess"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DomainServiceExternalAccess"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ExternalAccess left, ExternalAccess right) => left.Equals(right);
+        public static bool operator ==(DomainServiceExternalAccess left, DomainServiceExternalAccess right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ExternalAccess"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DomainServiceExternalAccess"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ExternalAccess left, ExternalAccess right) => !left.Equals(right);
+        public static bool operator !=(DomainServiceExternalAccess left, DomainServiceExternalAccess right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ExternalAccess"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DomainServiceExternalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExternalAccess(string value) => new ExternalAccess(value);
+        public static implicit operator DomainServiceExternalAccess(string value) => new DomainServiceExternalAccess(value);
 
-        /// <summary> Converts a string to a <see cref="ExternalAccess"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DomainServiceExternalAccess"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExternalAccess?(string value) => value == null ? null : new ExternalAccess(value);
+        public static implicit operator DomainServiceExternalAccess?(string value) => value == null ? null : new DomainServiceExternalAccess(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ExternalAccess other && Equals(other);
+        public override bool Equals(object obj) => obj is DomainServiceExternalAccess other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ExternalAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DomainServiceExternalAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

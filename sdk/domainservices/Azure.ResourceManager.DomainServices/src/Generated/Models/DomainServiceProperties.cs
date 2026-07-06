@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <summary> Initializes a new instance of <see cref="DomainServiceProperties"/>. </summary>
         public DomainServiceProperties()
         {
-            ReplicaSets = new ChangeTrackingList<ReplicaSet>();
+            ReplicaSets = new ChangeTrackingList<DomainServiceReplicaSet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DomainServiceProperties"/>. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="provisioningState"> the current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="configDiagnostics"> Configuration diagnostics data containing latest execution from client. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainServiceProperties(int? version, string tenantId, string domainName, string deploymentId, string syncOwner, string syncApplicationId, IList<ReplicaSet> replicaSets, LdapsSettings ldapsSettings, ResourceForestSettings resourceForestSettings, DomainSecuritySettings domainSecuritySettings, string domainConfigurationType, string sku, FilteredSync? filteredSync, SyncScope? syncScope, NotificationSettings notificationSettings, MigrationProperties migrationProperties, string provisioningState, ConfigDiagnostics configDiagnostics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceProperties(int? version, string tenantId, string domainName, string deploymentId, string syncOwner, string syncApplicationId, IList<DomainServiceReplicaSet> replicaSets, LdapsSettings ldapsSettings, ResourceForestSettings resourceForestSettings, DomainSecuritySettings domainSecuritySettings, string domainConfigurationType, string sku, FilteredSync? filteredSync, DomainServiceSyncScope? syncScope, DomainServiceNotificationSettings notificationSettings, DomainServiceMigrationProperties migrationProperties, string provisioningState, DomainServiceConfigDiagnostics configDiagnostics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             TenantId = tenantId;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         public string SyncApplicationId { get; }
 
         /// <summary> List of ReplicaSets. </summary>
-        public IList<ReplicaSet> ReplicaSets { get; } = new ChangeTrackingList<ReplicaSet>();
+        public IList<DomainServiceReplicaSet> ReplicaSets { get; } = new ChangeTrackingList<DomainServiceReplicaSet>();
 
         /// <summary> Secure LDAP Settings. </summary>
         public LdapsSettings LdapsSettings { get; set; }
@@ -106,18 +106,18 @@ namespace Azure.ResourceManager.DomainServices.Models
         public FilteredSync? FilteredSync { get; set; }
 
         /// <summary> All or CloudOnly, All users in AAD are synced to AAD DS domain or only users actively syncing in the cloud. </summary>
-        public SyncScope? SyncScope { get; set; }
+        public DomainServiceSyncScope? SyncScope { get; set; }
 
         /// <summary> Notification Settings. </summary>
-        public NotificationSettings NotificationSettings { get; set; }
+        public DomainServiceNotificationSettings NotificationSettings { get; set; }
 
         /// <summary> Migration Properties. </summary>
-        public MigrationProperties MigrationProperties { get; }
+        public DomainServiceMigrationProperties MigrationProperties { get; }
 
         /// <summary> the current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
 
         /// <summary> Configuration diagnostics data containing latest execution from client. </summary>
-        public ConfigDiagnostics ConfigDiagnostics { get; set; }
+        public DomainServiceConfigDiagnostics ConfigDiagnostics { get; set; }
     }
 }

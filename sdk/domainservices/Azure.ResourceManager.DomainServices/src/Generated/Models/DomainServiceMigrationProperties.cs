@@ -7,26 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Migration Properties. </summary>
-    public partial class MigrationProperties
+    public partial class DomainServiceMigrationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationProperties"/>. </summary>
-        internal MigrationProperties()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceMigrationProperties"/>. </summary>
+        internal DomainServiceMigrationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceMigrationProperties"/>. </summary>
         /// <param name="oldSubnetId"> Old Subnet Id. </param>
         /// <param name="oldVnetSiteId"> Old Vnet Site Id. </param>
         /// <param name="migrationProgress"> Migration Progress. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationProperties(string oldSubnetId, string oldVnetSiteId, MigrationProgress migrationProgress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceMigrationProperties(ResourceIdentifier oldSubnetId, string oldVnetSiteId, DomainServiceMigrationProgress migrationProgress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OldSubnetId = oldSubnetId;
             OldVnetSiteId = oldVnetSiteId;
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.DomainServices.Models
         }
 
         /// <summary> Old Subnet Id. </summary>
-        public string OldSubnetId { get; }
+        public ResourceIdentifier OldSubnetId { get; }
 
         /// <summary> Old Vnet Site Id. </summary>
         public string OldVnetSiteId { get; }
 
         /// <summary> Migration Progress. </summary>
-        public MigrationProgress MigrationProgress { get; }
+        public DomainServiceMigrationProgress MigrationProgress { get; }
     }
 }

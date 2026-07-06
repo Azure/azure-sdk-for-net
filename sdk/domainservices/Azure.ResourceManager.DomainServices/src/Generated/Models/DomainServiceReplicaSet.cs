@@ -13,20 +13,20 @@ using Azure.ResourceManager.DomainServices;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Replica Set Definition. </summary>
-    public partial class ReplicaSet
+    public partial class DomainServiceReplicaSet
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaSet"/>. </summary>
-        public ReplicaSet()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceReplicaSet"/>. </summary>
+        public DomainServiceReplicaSet()
         {
             DomainControllerIpAddress = new ChangeTrackingList<string>();
-            HealthMonitors = new ChangeTrackingList<HealthMonitor>();
-            HealthAlerts = new ChangeTrackingList<HealthAlert>();
+            HealthMonitors = new ChangeTrackingList<DomainServiceHealthMonitor>();
+            HealthAlerts = new ChangeTrackingList<DomainServiceHealthAlert>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaSet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceReplicaSet"/>. </summary>
         /// <param name="replicaSetId"> ReplicaSet Id. </param>
         /// <param name="location"> Virtual network location. </param>
         /// <param name="vnetSiteId"> Virtual network site id. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="healthMonitors"> List of Domain Health Monitors. </param>
         /// <param name="healthAlerts"> List of Domain Health Alerts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaSet(string replicaSetId, AzureLocation? location, string vnetSiteId, string subnetId, IReadOnlyList<string> domainControllerIpAddress, string externalAccessIpAddress, string serviceStatus, int? selfUnsuspendCounter, DateTimeOffset? healthLastEvaluatedOn, IReadOnlyList<HealthMonitor> healthMonitors, IReadOnlyList<HealthAlert> healthAlerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceReplicaSet(string replicaSetId, AzureLocation? location, string vnetSiteId, ResourceIdentifier subnetId, IReadOnlyList<string> domainControllerIpAddress, string externalAccessIpAddress, string serviceStatus, int? selfUnsuspendCounter, DateTimeOffset? healthLastEvaluatedOn, IReadOnlyList<DomainServiceHealthMonitor> healthMonitors, IReadOnlyList<DomainServiceHealthAlert> healthAlerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReplicaSetId = replicaSetId;
             Location = location;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DomainServices.Models
         public string VnetSiteId { get; }
 
         /// <summary> The name of the virtual network that Domain Services will be deployed on. The id of the subnet that Domain Services will be deployed on. /virtualNetwork/vnetName/subnets/subnetName. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> List of Domain Controller IP Address. </summary>
         public IReadOnlyList<string> DomainControllerIpAddress { get; }
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.DomainServices.Models
         public DateTimeOffset? HealthLastEvaluatedOn { get; }
 
         /// <summary> List of Domain Health Monitors. </summary>
-        public IReadOnlyList<HealthMonitor> HealthMonitors { get; }
+        public IReadOnlyList<DomainServiceHealthMonitor> HealthMonitors { get; }
 
         /// <summary> List of Domain Health Alerts. </summary>
-        public IReadOnlyList<HealthAlert> HealthAlerts { get; }
+        public IReadOnlyList<DomainServiceHealthAlert> HealthAlerts { get; }
     }
 }

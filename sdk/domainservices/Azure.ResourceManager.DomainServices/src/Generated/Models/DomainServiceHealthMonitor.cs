@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DomainServices.Models
 {
     /// <summary> Health Monitor Description. </summary>
-    public partial class HealthMonitor
+    public partial class DomainServiceHealthMonitor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HealthMonitor"/>. </summary>
-        internal HealthMonitor()
+        /// <summary> Initializes a new instance of <see cref="DomainServiceHealthMonitor"/>. </summary>
+        internal DomainServiceHealthMonitor()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="HealthMonitor"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainServiceHealthMonitor"/>. </summary>
         /// <param name="id"> Health Monitor Id. </param>
         /// <param name="name"> Health Monitor Name. </param>
         /// <param name="details"> Health Monitor Details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthMonitor(string id, string name, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainServiceHealthMonitor(string id, string name, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
