@@ -61,6 +61,11 @@ jobs:
             local head_sha="$1"
             local details_url="${GITHUB_SERVER_URL:-https://github.com}/$REPOSITORY/actions/runs/$GITHUB_RUN_ID"
 
+            if has_management_review_check "$head_sha"; then
+              echo "Management review check already exists for $head_sha."
+              return 0
+            fi
+
             gh api --method POST "repos/$REPOSITORY/check-runs" \
               -f name='Azure .NET Management SDK PR Review' \
               -f head_sha="$head_sha" \
