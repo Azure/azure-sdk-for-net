@@ -139,6 +139,34 @@ break). Custom code folder: `Custom/BackwardCompat/`.
    `[Experimental]` public, so keeping is also acceptable.)
 3. 🔜 **NEXT:** work model-shape groups via `client.tsp`/customizations, **batched**, then regen once.
 
+### fix #2 — Group B (CS0618) ✅ DONE (uncommitted, committed in e4fbbccd6a0)
+The 117 CS0618 were **entirely inside generated `AttestationResult(.Serialization).cs`** — the
+generated ctor/serialization reference the type's own `[Obsolete]` `Deprecated*` claim members
+(legitimate generated self-reference). **Fix:** added `CS0618` to `<NoWarn>` in the csproj
+(established pattern: Batch, ContainerRegistry). Build 348 → 231 errors.
+
+### fix #3 — Group C (CS0200) 🔄 IN PROGRESS — **PIVOTAL FINDING**
+93 CS0200 split: 48 in **generated** `AttestationResult.cs`/`TpmAttestationResponse.cs`, 45 in
+**custom** (`AttestationClient.cs` 36, `PolicyCertificateModification.cs` 6, `AttestationModelFactory.cs` 3).
+
+**Root cause:** the **new emitter changes `[CodeGenMember]` rename semantics.** The hand-written
+`Models/AttestationResult.cs` uses the old pattern — `[CodeGenMember("EnclaveHeldData")] private
+string InternalEnclaveHeldData` to rename the generated backing member and expose a richer public
+`BinaryData EnclaveHeldData`. The **old** generator renamed the generated member to `Internal*`; the
+**new** generator **ignores the rename**, still emits its own `public BinaryData EnclaveHeldData {get;}`
++ assigns it in the ctor → collides with the custom read-only override → CS0200. The new generator
+*already* emits `BinaryData` props + `Deprecated*` `[Obsolete]` members itself, so many old
+`[CodeGenMember]` transforms are now **redundant**.
+
+**DECISION (Option C-1 — modernize customizations):** reconcile per model by **deleting now-redundant
+`[CodeGenMember]` transforms** and keeping only genuine value-adds (e.g. `AttestationSigner.FromJsonWebKey`),
+letting the richer generated members stand. Mostly *deletion*, aligns with the new SDK, avoids brittle
+per-member `@@clientName` in the spec (rejected Option C-2). Models to reconcile: `AttestationResult`,
+`JsonWebKey`, `PolicyCertificateModification`, `InitTimeData`, `AttestationSigner`,
+`PolicyCertificatesResult`, `TpmAttestationResponse`, `AttestationModelFactory`, plus custom call sites
+in `AttestationClient.cs`/`AttestationAdministrationClient.cs` (Group D). **START with `AttestationResult`
+as the pattern, rebuild, then replicate.**
+
 ### Live error counts (after fix #1; `dotnet build` in `src/`) — ~348 total
 | Code | Count | Group |
 |------|------:|-------|
