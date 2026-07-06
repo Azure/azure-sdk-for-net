@@ -508,7 +508,7 @@ namespace Azure.Generator.Management.Visitors
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
         private readonly Dictionary<CSharpType, Dictionary<string, List<FlattenPropertyInfo>>> _flattenedModelTypes = new(new CSharpTypeNameComparer());
-        private readonly Dictionary<(string? Namespace, string Name, string PropertyName), bool> _flattenedIntoParentWithLastContractSetterCache = [];
+        private readonly Dictionary<FlattenedSetterCacheKey, bool> _flattenedIntoParentWithLastContractSetterCache = [];
         private readonly HashSet<CSharpType> _visitedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
@@ -758,7 +758,7 @@ namespace Azure.Generator.Management.Visitors
 
         private bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)
         {
-            var cacheKey = (model.Type.Namespace, model.Type.Name, propertyName);
+            var cacheKey = new FlattenedSetterCacheKey(model.Type.Namespace, model.Type.Name, propertyName);
             if (_flattenedIntoParentWithLastContractSetterCache.TryGetValue(cacheKey, out var result))
             {
                 return result;
@@ -782,6 +782,8 @@ namespace Azure.Generator.Management.Visitors
             _flattenedIntoParentWithLastContractSetterCache[cacheKey] = false;
             return false;
         }
+
+        private sealed record FlattenedSetterCacheKey(string? Namespace, string Name, string PropertyName);
 
         private void UpdateFlattenTypeCollectionProperty(PropertyProvider internalProperty, PropertyProvider innerProperty, ModelProvider modelProvider)
         {
