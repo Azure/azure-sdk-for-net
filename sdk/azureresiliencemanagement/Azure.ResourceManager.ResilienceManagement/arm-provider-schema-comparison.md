@@ -99,3 +99,28 @@ These differences are outside the requested comparison axes but may still be use
 | `/providers/microsoft.management/servicegroups/{}/providers/microsoft.azureresiliencemanagement/recoveryplans/{}/recoveryresources/{}` | `RecoveryMembers` | `RecoveryResource` |
 | `/subscriptions/{}/resourcegroups/{}/providers/microsoft.azureresiliencemanagement/usageplans/{}/enrollments/{}` | `UsagePlanEnrollment` | `Enrollment` |
 
+## Bicep reference validation
+
+Resource type validity was checked against the public Bicep reference by opening `https://learn.microsoft.com/en-us/azure/templates/{resourceType}?pivots=deployment-language-bicep`. For resources that exist, the Bicep API versions were compared with this package's generated API versions.
+
+| Metric | Count |
+| --- | ---: |
+| Checked rows | 5 |
+| Found in Bicep reference | 5 |
+| Found in package API version | 5 |
+| Found only outside package API versions | 0 |
+| Not found in Bicep reference | 0 |
+
+**Result:** All five `resolveArmResources`-only job child/resource types are real ARM resources in `2026-03-01-preview`, which is one of this package's API versions. However, the corresponding TypeSpec interfaces are marked `@removed(Versions.v2026_04_01_preview)`, while the package also includes `2026-04-01-preview`. This matches the Monitor Workspaces pattern: `resolveArmResources` sees resources from the full program, while the C#/legacy projection appears to drop resources removed in the latest selected version.
+
+### Found in the same package API version
+
+These are possible misses in the legacy/TCGC-based detector unless intentionally excluded from the SDK surface.
+
+| Side | Resource type | Overlapping API versions | Resource schema API versions |
+| --- | --- | --- | --- |
+| `resolveArmResources` only | [Microsoft.AzureResilienceManagement/drills/drillRuns/chaosJobs](https://learn.microsoft.com/en-us/azure/templates/microsoft.azureresiliencemanagement/drills/drillruns/chaosjobs?pivots=deployment-language-bicep) | `2026-03-01-preview` | None |
+| `resolveArmResources` only | [Microsoft.AzureResilienceManagement/drills/drillRuns/chaosJobs/chaosJobChildJobs](https://learn.microsoft.com/en-us/azure/templates/microsoft.azureresiliencemanagement/drills/drillruns/chaosjobs/chaosjobchildjobs?pivots=deployment-language-bicep) | `2026-03-01-preview` | None |
+| `resolveArmResources` only | [Microsoft.AzureResilienceManagement/drills/drillRuns/chaosJobs/chaosJobResources](https://learn.microsoft.com/en-us/azure/templates/microsoft.azureresiliencemanagement/drills/drillruns/chaosjobs/chaosjobresources?pivots=deployment-language-bicep) | `2026-03-01-preview` | None |
+| `resolveArmResources` only | [Microsoft.AzureResilienceManagement/drills/drillRuns/drillRunChildJobs](https://learn.microsoft.com/en-us/azure/templates/microsoft.azureresiliencemanagement/drills/drillruns/drillrunchildjobs?pivots=deployment-language-bicep) | `2026-03-01-preview` | None |
+| `resolveArmResources` only | [Microsoft.AzureResilienceManagement/recoveryPlans/recoveryJobs/recoveryChildJobs](https://learn.microsoft.com/en-us/azure/templates/microsoft.azureresiliencemanagement/recoveryplans/recoveryjobs/recoverychildjobs?pivots=deployment-language-bicep) | `2026-03-01-preview` | None |
