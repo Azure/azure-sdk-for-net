@@ -179,4 +179,28 @@ describe("build-eval-summary", () => {
     assert.ok("_unit5" in shards);
     assert.ok(!("unknown" in shards));
   });
+
+  it("supersedes an earlier job attempt with the highest attempt on rerun", () => {
+    const rerunRoot = path.join(root, "rerun");
+    // Attempt 1 failed; attempt 2 (the rerun) passed. Only attempt 2 should count, and the
+    // shard name must drop the -<attempt> suffix so it reads as a single shard.
+    const a1 = path.join(rerunRoot, "eval-result-area_flaky-1");
+    const a2 = path.join(rerunRoot, "eval-result-area_flaky-2");
+    fs.mkdirSync(a1, { recursive: true });
+    fs.mkdirSync(a2, { recursive: true });
+    fs.writeFileSync(
+      path.join(a1, "junit.xml"),
+      `<testsuites><testsuite name="flaky"><testcase name="does thing" time="1.0"><failure message="x">nope</failure></testcase></testsuite></testsuites>`
+    );
+    fs.writeFileSync(
+      path.join(a2, "junit.xml"),
+      `<testsuites><testsuite name="flaky"><testcase name="does thing" time="1.0" /></testsuite></testsuites>`
+    );
+    const { shards } = summarize(rerunRoot, outFile);
+    assert.ok("area_flaky" in shards);
+    assert.ok(!("area_flaky-1" in shards));
+    assert.ok(!("area_flaky-2" in shards));
+    assert.equal(shards.area_flaky.total, 1);
+    assert.equal(shards.area_flaky.failed, 0);
+  });
 });

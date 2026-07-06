@@ -1,11 +1,11 @@
 # MCP setup for azure-sdk-tools' eval CI: builds the in-repo .NET MCP server(s) and publishes each
-# under artifacts/mcp/<name> (the path BuildMcp ships as `mcp-servers`). The McpServer param selects
+# under artifacts/mcp/<name> (the path BuildMcp ships as `mcp-servers`). The TestType param selects
 # the mock vs live tier via if/else. The BuildMcp job checks out `self`, so in azure-sdk-tools this
 # template only builds. Other repos override mcpSetupTemplate to point at their own equivalent.
 #
 # Cross-repo use: when this runs OUTSIDE azure-sdk-tools, set `toolsRepo` to a repository-resource
 # alias so the tools sources are side-checked-out before the build. The consuming pipeline declares
-# the resource and passes toolsRepo (via the archetype) alongside mcpServer, e.g.:
+# the resource and passes toolsRepo (via the archetype) alongside TestType, e.g.:
 #   resources:
 #     repositories:
 #       - repository: azure-sdk-tools
@@ -15,7 +15,7 @@
 #   # ... extends archetype-eval.yml with: toolsRepo: azure-sdk-tools
 
 parameters:
-  - name: McpServer
+  - name: TestType
     type: string
     default: mock
     values:
@@ -36,7 +36,7 @@ steps:
 
   # Builds this repo's server(s) under artifacts/mcp/<name>; other repos override mcpSetupTemplate.
   # workingDirectory switches to the side-checkout when toolsRepo is set (cross-repo build).
-  - ${{ if eq(parameters.McpServer, 'live') }}:
+  - ${{ if eq(parameters.TestType, 'live') }}:
     - script: |
         set -e
         dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/cli" --nologo

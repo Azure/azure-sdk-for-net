@@ -9,6 +9,10 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 // Throws on non-zero git exit so a failed clone stops immediately.
+// NOTE: azure-rest-api-specs ships shared exec primitives (.github/shared/src/exec.js), but
+// they aren't importable here — eng/common has no cross-repo dependency on that package and
+// those helpers carry specs-repo-specific assumptions. This intentionally stays a tiny local
+// wrapper; revisit if a shared eng/common exec utility is ever introduced.
 function invokeGit(args) {
   const proc = spawnSync("git", args, { stdio: ["ignore", "ignore", "inherit"] });
   if (proc.status !== 0) {

@@ -7,22 +7,34 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { globFiles } from "./lib/glob.js";
 
-// Maps a JUnit file path back to its shard. Result artifacts download into folders named
-// `eval-result-<shardName>`; everything below that is the shard.
-export function getShardName(filePath) {
+// Maps a JUnit file path back to its shard and job attempt. Result artifacts download into
+// folders named `eval-result-<shardName>-<attempt>` (the attempt suffix keeps "Rerun failed
+// jobs" from colliding on the artifact name); everything below that is the shard's JUnit.
+export function getShardArtifact(filePath) {
   const segments = filePath.split(/[\\/]/).filter(Boolean);
   for (const segment of segments) {
     if (segment.startsWith("eval-result-")) {
-      return segment.replace(/^eval-result-/, "");
+      const raw = segment.replace(/^eval-result-/, "");
+      // Strip a trailing `-<digits>` job-attempt suffix (absent in older single-attempt runs).
+      const match = raw.match(/^(.*)-(\d+)$/);
+      if (match) {
+        return { shardName: match[1], attempt: Number(match[2]) };
+      }
+      return { shardName: raw, attempt: 1 };
     }
   }
   // Fallback: nearest ancestor dir that isn't a Vally timestamp folder.
   for (let i = segments.length - 2; i >= 0; i--) {
     if (!/^\d{4}-\d{2}-\d{2}T/.test(segments[i])) {
-      return segments[i];
+      return { shardName: segments[i], attempt: 1 };
     }
   }
-  return "unknown";
+  return { shardName: "unknown", attempt: 1 };
+}
+
+// Back-compat: return just the shard name (attempt suffix stripped).
+export function getShardName(filePath) {
+  return getShardArtifact(filePath).shardName;
 }
 
 // Strips Vally's ' (trial N)' suffix so every trial of a stimulus collapses to one stimulus.
@@ -102,8 +114,19 @@ export function getEvalSummary(resultsRoot) {
   const xmlFiles = globFiles(root, "**/*.xml");
   const shards = {};
 
-  for (const xmlFile of xmlFiles) {
-    const shardName = getShardName(xmlFile);
+  // A "Rerun failed jobs" retry publishes a higher-attempt artifact for the same shard.
+  // Resolve each file's shard + attempt up front, then only aggregate the highest attempt
+  // per shard so a retry supersedes the earlier one instead of double-counting.
+  const parsedFiles = xmlFiles.map((xmlFile) => ({ xmlFile, ...getShardArtifact(xmlFile) }));
+  const maxAttempt = {};
+  for (const { shardName, attempt } of parsedFiles) {
+    maxAttempt[shardName] = Math.max(maxAttempt[shardName] ?? 0, attempt);
+  }
+
+  for (const { xmlFile, shardName, attempt } of parsedFiles) {
+    if (attempt !== maxAttempt[shardName]) {
+      continue; // superseded by a later rerun attempt of this shard
+    }
     if (!shards[shardName]) {
       shards[shardName] = {
         shardName,

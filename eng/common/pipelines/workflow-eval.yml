@@ -47,7 +47,7 @@ extends:
   parameters:
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
-    mcpServer: mock
+    TestType: mock
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20

@@ -46,14 +46,17 @@ jobs:
       maxParallel: 10
     templateContext:
       outputs:
+        # Artifact names carry $(System.JobAttempt) so "Rerun failed jobs" publishes a fresh
+        # name instead of colliding with the prior attempt's artifact (which fails the rerun).
+        # The Summary job keeps only the highest attempt per shard so retries supersede cleanly.
         - output: pipelineArtifact
           displayName: 'Publish $(shardName) JUnit'
-          artifactName: 'eval-result-$(shardName)'
+          artifactName: 'eval-result-$(shardName)-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/junit
           condition: always()
         - output: pipelineArtifact
           displayName: 'Publish $(shardName) transcripts (on failure)'
-          artifactName: 'eval-debug-$(shardName)'
+          artifactName: 'eval-debug-$(shardName)-$(System.JobAttempt)'
           targetPath: $(Build.ArtifactStagingDirectory)/debug
           condition: failed()
     steps:

@@ -20,12 +20,16 @@ parameters:
   - name: mcpSetupTemplate
     # SWAP POINT: builds/installs the MCP server(s) under artifacts/mcp/<name>. Required (no default):
     # each repo passes its own build template. This repo uses the shared mock/live builder
-    # steps/eval-mcp-setup.yml and selects the tier via mcpServer.
+    # steps/eval-mcp-setup.yml and selects the tier via TestType.
     type: string
-  - name: mcpServer
-    # Optional mock/live selector forwarded to mcpSetupTemplate when it builds both tiers. Blank = none.
+  - name: TestType
+    # Which MCP tier the mcpSetupTemplate builds: mock, live, or none (repo template is param-free).
     type: string
-    default: ''
+    default: none
+    values:
+      - mock
+      - live
+      - none
   - name: toolsRepo
     # Optional azure-sdk-tools repository-resource alias for a cross-repo MCP build (running the eval
     # outside the tools repo). Blank in azure-sdk-tools. The consuming pipeline declares the resource.
@@ -70,7 +74,7 @@ extends:
           - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
             parameters:
               mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
-              mcpServer: ${{ parameters.mcpServer }}
+              TestType: ${{ parameters.TestType }}
               toolsRepo: ${{ parameters.toolsRepo }}
 
           - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml

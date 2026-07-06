@@ -24,7 +24,7 @@ extends:
   parameters:
     # Shared mock/live builder; select the live tier (real Cli MCP).
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
-    mcpServer: live
+    TestType: live
     vallyRoot: tools/azsdk-cli/Azure.Sdk.Tools.Vally
     evalGlobs:
       - 'evals/workflow-scenarios/live/*.eval.yaml'
