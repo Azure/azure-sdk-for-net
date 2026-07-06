@@ -80,19 +80,20 @@ function Get-ResourceProperties
     )
 
     $properties = [System.Collections.Generic.List[object]]::new()
-    $definePattern = '(?ms)^\s*_[A-Za-z0-9_]+\s*=\s*(?<method>Define(?:Model|List|Dictionary)?Property|DefineResource)<(?<generic>[^>]+)>\(\s*"(?<name>[^"]+)"\s*,\s*\[(?<path>[^\]]*)\](?<args>.*?)\);'
+    $definePattern = '(?ms)^\s*_[A-Za-z0-9_]+\s*=\s*(?<method>Define(?:Model|List|Dictionary)?Property|DefineResource)<(?<generic>[^>]+)>\(\s*(?:"(?<literalName>[^"]+)"|nameof\(\s*(?<nameofName>[A-Za-z_][A-Za-z0-9_]*)\s*\))\s*,\s*(?:\[(?<bracketPath>[^\]]*)\]|new\s+string\[\]\s*\{(?<arrayPath>[^}]*)\})(?<args>.*?)\);'
     foreach ($match in [regex]::Matches($Source, $definePattern))
     {
-        $name = $match.Groups['name'].Value
+        $name = if ($match.Groups['literalName'].Success) { $match.Groups['literalName'].Value } else { $match.Groups['nameofName'].Value }
         $method = $match.Groups['method'].Value
         $genericType = ($match.Groups['generic'].Value -replace '\s+', ' ').Trim()
         $type = if ($PropertyTypes.ContainsKey($name)) { $PropertyTypes[$name] } else { $genericType }
         $args = $match.Groups['args'].Value
         $isMetadata = $method -eq 'DefineResource'
+        $pathSource = if ($match.Groups['bracketPath'].Success) { $match.Groups['bracketPath'].Value } else { $match.Groups['arrayPath'].Value }
 
         $properties.Add([ordered]@{
             Name = $name
-            SerializedPath = @(Get-SerializedPath -PathSource $match.Groups['path'].Value)
+            SerializedPath = @(Get-SerializedPath -PathSource $pathSource)
             Kind = if ($isMetadata) { 'Resource' } else { Get-PropertyKind -DefineMethod $method }
             Type = $type
             IsRequired = $args -match '\bisRequired\s*:\s*true\b'
@@ -113,7 +114,7 @@ function Get-ResourceInfo
         [Parameter(Mandatory)]
         [string] $PackagePath,
 
-        [Parameter(Mandatory)]
+        [AllowEmptyCollection()]
         [System.IO.FileInfo[]] $CustomSourceFiles
     )
 
@@ -140,7 +141,7 @@ function Get-ResourceInfo
     }
 
     $combinedSource = $classSources -join [Environment]::NewLine
-    $constructorPattern = '(?ms)public\s+' + [regex]::Escape($className) + '\s*\([^)]*string\s+bicepIdentifier[^)]*\)\s*:\s*base\(\s*bicepIdentifier\s*,\s*"(?<resourceType>[^"]+)"\s*,\s*resourceVersion\s*\?\?\s*"(?<defaultApiVersion>[^"]+)"\s*\)'
+    $constructorPattern = '(?ms)public\s+' + [regex]::Escape($className) + '\s*\(\s*string\s+bicepIdentifier\s*,\s*string\??\s+resourceVersion\s*=\s*(?:default|null)\s*\)\s*:\s*base\(\s*bicepIdentifier\s*,\s*"(?<resourceType>[^"]+)"\s*,\s*resourceVersion\s*\?\?\s*"(?<defaultApiVersion>[^"]+)"\s*\)'
     $constructorMatch = [regex]::Match($source, $constructorPattern)
 
     $apiVersions = [System.Collections.Generic.List[string]]::new()
