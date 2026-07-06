@@ -1,5 +1,5 @@
 directory: specification/education/resource-manager/Microsoft.Education/Education
-commit: <replace with your value>
+commit: 10ccde560bacfbffdf9fe33fbc9cef0bd6de838b
 repo: cxznmhdcxz/azure-rest-api-specs
 additionalDirectories: 
 
