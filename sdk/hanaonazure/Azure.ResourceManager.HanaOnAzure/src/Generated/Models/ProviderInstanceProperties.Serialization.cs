@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             string @type = default;
             string providerProperties = default;
             string metadata = default;
-            HanaProvisioningStatesEnum? provisioningState = default;
+            HanaProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                     {
                         continue;
                     }
-                    provisioningState = new HanaProvisioningStatesEnum(prop.Value.GetString());
+                    provisioningState = new HanaProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
