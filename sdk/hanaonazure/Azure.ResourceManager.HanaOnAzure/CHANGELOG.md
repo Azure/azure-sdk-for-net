@@ -4,8 +4,4 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+This is the first beta release of Azure.ResourceManager.HanaOnAzure client library.
