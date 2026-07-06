@@ -12,7 +12,7 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Factory class for creating Attestation Service Model types, used for Mocking.
     /// </summary>
-    public static class AttestationModelFactory
+    public static partial class AttestationModelFactory
     {
         /// <summary>
         /// Create an instance of an AttestationResponse object for mocking purposes.

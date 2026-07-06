@@ -9,7 +9,10 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Configuration options for the attestation client.
     /// </summary>
-    public class AttestationClientOptions : ClientOptions
+    // The generated single-parameter ctor is suppressed to preserve the shipped public
+    // constructor (ServiceVersion, AttestationTokenValidationOptions) and avoid CS0121 ambiguity.
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationClientOptions", typeof(ServiceVersion))]
+    public partial class AttestationClientOptions : ClientOptions
     {
         internal string Version { get; }
 

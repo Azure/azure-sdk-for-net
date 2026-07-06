@@ -17,7 +17,7 @@ namespace Azure.Security.Attestation
     /// The Attestation client contains the implementation of the "Attest" family of MAA apis.
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable
-    public class AttestationClient
+    public partial class AttestationClient
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly HttpPipeline _pipeline;
