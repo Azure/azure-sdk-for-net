@@ -434,7 +434,7 @@ namespace Azure.Provisioning.FrontDoor
     }
     public partial class FrontendEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontendEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal FrontendEndpoint() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.FrontDoor.CustomHttpsConfiguration CustomHttpsConfiguration { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.FrontDoor.FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate { get { throw null; } }

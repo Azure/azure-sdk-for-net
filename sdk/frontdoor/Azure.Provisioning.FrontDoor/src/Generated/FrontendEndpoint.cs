@@ -23,7 +23,7 @@ namespace Azure.Provisioning.FrontDoor
         /// <summary> Creates a new FrontendEndpoint. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public FrontendEndpoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/frontDoors/frontendEndpoints", resourceVersion ?? "2025-11-01")
+        internal FrontendEndpoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/frontDoors/frontendEndpoints", resourceVersion ?? "2025-11-01")
         {
         }
 
