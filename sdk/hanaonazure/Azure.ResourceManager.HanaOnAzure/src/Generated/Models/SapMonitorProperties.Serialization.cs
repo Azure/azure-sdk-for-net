@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HanaOnAzure;
 
 namespace Azure.ResourceManager.HanaOnAzure.Models
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             }
             HanaProvisioningState? provisioningState = default;
             string managedResourceGroupName = default;
-            string logAnalyticsWorkspaceArmId = default;
+            ResourceIdentifier logAnalyticsWorkspaceArmId = default;
             bool? enableCustomerAnalytics = default;
             string logAnalyticsWorkspaceId = default;
             string logAnalyticsWorkspaceSharedKey = default;
@@ -183,7 +184,11 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                 }
                 if (prop.NameEquals("logAnalyticsWorkspaceArmId"u8))
                 {
-                    logAnalyticsWorkspaceArmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logAnalyticsWorkspaceArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableCustomerAnalytics"u8))

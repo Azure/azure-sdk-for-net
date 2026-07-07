@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HanaOnAzure.Models
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="sapMonitorCollectorVersion"> The version of the payload running in the Collector VM. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapMonitorProperties(HanaProvisioningState? provisioningState, string managedResourceGroupName, string logAnalyticsWorkspaceArmId, bool? enableCustomerAnalytics, string logAnalyticsWorkspaceId, string logAnalyticsWorkspaceSharedKey, string sapMonitorCollectorVersion, string monitorSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapMonitorProperties(HanaProvisioningState? provisioningState, string managedResourceGroupName, ResourceIdentifier logAnalyticsWorkspaceArmId, bool? enableCustomerAnalytics, string logAnalyticsWorkspaceId, string logAnalyticsWorkspaceSharedKey, string sapMonitorCollectorVersion, string monitorSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedResourceGroupName = managedResourceGroupName;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         public string ManagedResourceGroupName { get; }
 
         /// <summary> The ARM ID of the Log Analytics Workspace that is used for monitoring. </summary>
-        public string LogAnalyticsWorkspaceArmId { get; set; }
+        public ResourceIdentifier LogAnalyticsWorkspaceArmId { get; set; }
 
         /// <summary> The value indicating whether to send analytics to Microsoft. </summary>
         public bool? EnableCustomerAnalytics { get; set; }
