@@ -536,13 +536,6 @@
       ]
     },
     {
-      "filename": "**/sdk/domainservices/Azure.ResourceManager.DomainServices/**/*.cs",
-      "words": [
-        "ldaps",
-        "ntlm"
-      ]
-    },
-    {
       "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
         "liftr",
