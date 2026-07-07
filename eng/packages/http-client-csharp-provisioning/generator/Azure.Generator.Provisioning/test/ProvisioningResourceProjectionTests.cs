@@ -449,8 +449,7 @@ namespace Azure.Generator.Provisioning.Tests
         public void DerivedReadOnlyResourcePropertiesAreNotSettable()
         {
             var discriminatorProperty = CreateProperty("Kind", isRequired: true, isDiscriminator: true);
-            var derivedModels = new List<InputModelType>();
-            var baseModel = CreateModel("ReadOnlyWidget", [discriminatorProperty], derivedModels: derivedModels);
+            var baseModel = CreateModel("ReadOnlyWidget", [discriminatorProperty]);
             var derivedProperty = CreateProperty("WritableValue");
             var derivedModel = CreateModel(
                 "DerivedReadOnlyWidget",
@@ -458,7 +457,7 @@ namespace Azure.Generator.Provisioning.Tests
                 baseModel,
                 discriminatorValue: "derived",
                 discriminatorProperty: discriminatorProperty);
-            derivedModels.Add(derivedModel);
+            AddDerivedModel(baseModel, derivedModel);
             var readOnlyResource = CreateMetadata(
                 baseModel,
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -483,8 +482,7 @@ namespace Azure.Generator.Provisioning.Tests
         public void DerivedWritableResourcePropertiesRemainSettable()
         {
             var discriminatorProperty = CreateProperty("Kind", isRequired: true, isDiscriminator: true);
-            var derivedModels = new List<InputModelType>();
-            var baseModel = CreateModel("WritableWidget", [discriminatorProperty], derivedModels: derivedModels);
+            var baseModel = CreateModel("WritableWidget", [discriminatorProperty]);
             var derivedProperty = CreateProperty("WritableValue");
             var derivedModel = CreateModel(
                 "DerivedWritableWidget",
@@ -492,7 +490,7 @@ namespace Azure.Generator.Provisioning.Tests
                 baseModel,
                 discriminatorValue: "derived",
                 discriminatorProperty: discriminatorProperty);
-            derivedModels.Add(derivedModel);
+            AddDerivedModel(baseModel, derivedModel);
             var writableResource = CreateMetadata(
                 baseModel,
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -662,6 +660,17 @@ namespace Azure.Generator.Provisioning.Tests
             typeof(ProvisioningInputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
+        }
+
+        private static void AddDerivedModel(InputModelType baseModel, InputModelType derivedModel)
+        {
+            // InputModelType copies constructor-provided derived models by calling
+            // its non-public AddDerivedModel helper, so mutating the original list
+            // or the public DerivedModels collection after construction does not work.
+            // Source: https://github.com/microsoft/typespec/blob/6b421a5cbc59583cc9c52f3e180196816071bc1a/packages/http-client-csharp/generator/Microsoft.TypeSpec.Generator.Input/src/InputTypes/InputModelType.cs#L31-L34
+            typeof(InputModelType)
+                .GetMethod("AddDerivedModel", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .Invoke(baseModel, [derivedModel]);
         }
 
         private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)

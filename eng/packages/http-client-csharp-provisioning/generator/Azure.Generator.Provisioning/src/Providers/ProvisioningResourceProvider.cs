@@ -81,8 +81,6 @@ namespace Azure.Generator.Provisioning.Providers
         /// </summary>
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
-        internal bool IsSettableResource => _isSettableResource;
-
         /// <summary>
         /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
         /// </summary>
@@ -106,9 +104,6 @@ namespace Azure.Generator.Provisioning.Providers
                 propInfo.DefaultValue,
                 propInfo.TypeOverride);
         }
-
-        internal IEnumerable<(InputModelProperty Property, bool IsOutput)> GetReachableProperties()
-            => _allProperties.Select(p => (p.Property, p.IsOutput));
 
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).

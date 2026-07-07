@@ -10,6 +10,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Azure.Generator.Provisioning.Tests
 {
@@ -303,7 +304,8 @@ namespace Azure.Generator.Provisioning.Tests
                 false);
 
         private static InputModelType CreateRegularModel()
-            => new(
+        {
+            var model = new InputModelType(
                 "TestModel",
                 "Sample.Models",
                 "Sample.Models.TestModel",
@@ -322,6 +324,20 @@ namespace Azure.Generator.Provisioning.Tests
                 false,
                 new InputSerializationOptions(),
                 false);
+            SetModelSettable(model);
+            return model;
+        }
+
+        private static void SetModelSettable(InputModelType model)
+        {
+            var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
+            typeof(ProvisioningInputLibrary)
+                .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(inputLibrary, Array.Empty<Primitives.ProvisioningResourceProjection>());
+            typeof(ProvisioningInputLibrary)
+                .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(inputLibrary, new Dictionary<InputModelType, bool> { [model] = true });
+        }
 
         private static IEnumerable<TestCaseData> PrimitiveTypeCases()
         {
