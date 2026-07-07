@@ -316,7 +316,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            if (_originalBodyType != null && !IsLongRunningOperation)
+            // Use generic response pipeline only when the body type is actually surfaced on the public API.
+            // For delete LRO operations, the final result is suppressed from the public surface, so we must
+            // use non-generic pipeline processing to produce a plain Response that matches the non-generic
+            // ArmOperation constructor.
+            if (_originalBodyType != null && !IsLongRunningOperation && !ShouldIgnoreLroFinalResultTypeForPublicSurface)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
