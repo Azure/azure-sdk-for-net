@@ -1,5 +1,5 @@
 {
-  "_comment": "Starter template for a single-doc-type custom analyzer. Copy to .local_only/schemas/<name>_v1.json, replace placeholders, then run create_and_test.py. See SKILL.md Step 2 for the baseAnalyzerId table and field-description rules. Keys beginning with '_' (_comment, _optional_*) are documentation aids; the local validator strips them before submission.",
+  "_comment": "Starter template for a single-doc-type custom analyzer. Copy to .local_only/schemas/<name>_v1.json, replace placeholders, then run the create-and-test skill script (invokes the cu-skill tool under sdk/contentunderstanding/tools/cu-skill/). See SKILL.md Step 2 for the baseAnalyzerId table and field-description rules. Keys beginning with '_' (_comment, _optional_*) are documentation aids; the local validator strips them before submission.",
   "baseAnalyzerId": "prebuilt-document",
   "description": "REPLACE: one-line description of what this analyzer extracts.",
   "config": {

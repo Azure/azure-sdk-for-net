@@ -358,9 +358,10 @@ validation, batch testing, agent review, and refinement.
 | [**cu-sdk-author-analyzer-classify-route**][cu_sdk_author_analyzer_classify_route_skill] | Iteratively author and test a classify-and-route pipeline for mixed-document packets (e.g. invoice + bank statement + loan application in one PDF). Includes per-category agent review and refinement of both classifier descriptions and inner-schema field descriptions. | Ask: *"Help me author an analyzer for this mixed financial packet"* |
 
 Both skills delegate to a small `cu-skill` .NET tool under
-`.github/skills/_shared/` that exposes three subcommands: `extract-layout`,
-`create-and-test`, and `create-and-test-router`. The tool builds against the
-locally built SDK DLL, so you can iterate on schemas without leaving VS Code.
+`sdk/contentunderstanding/tools/cu-skill/` that exposes three subcommands:
+`extract-layout`, `create-and-test`, and `create-and-test-router`. The tool
+builds against the locally built SDK DLL, so you can iterate on schemas
+without leaving VS Code.
 
 ### Using Skills in VS Code
 
