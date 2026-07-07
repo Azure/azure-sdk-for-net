@@ -31,16 +31,6 @@
       <HintPath>$(MSBuildThisFileDirectory)../../../../artifacts/bin/Azure.AI.ContentUnderstanding/Debug/$(TargetFramework)/Azure.AI.ContentUnderstanding.dll</HintPath>
       <Private>true</Private>
     </Reference>
-    <!--
-      Floating major-version references are intentional here and mirror the
-      sibling `Azure.AI.ContentUnderstanding/.sample_runner/` pattern: this is a
-      tool project, not a shipping package, and it must resolve against
-      whatever `Azure.Core` / `Azure.Identity` the locally-built SDK DLL
-      already depends on. Pinning specific patches would require manual sync
-      every time the SDK bumps its floor. Do not tighten these without also
-      updating the .sample_runner/ csprojs (they must stay in lock-step so
-      restore graphs match).
-    -->
     <PackageReference Include="Azure.Core" Version="1.*" />
     <PackageReference Include="Azure.Identity" Version="1.*" />
   </ItemGroup>
