@@ -27,24 +27,26 @@ namespace Azure.Generator.Provisioning
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
         /// </summary>
-        internal BuiltInRoleProvider? BuiltInRole => GetNullableValue(_builtInRole);
-
-        private T GetValue<T>(T? field) where T : class
+        internal BuiltInRoleProvider? BuiltInRole
         {
-            InitializeResources();
-            return field!;
-        }
-
-        private T? GetNullableValue<T>(T? field) where T : class
-        {
-            InitializeResources();
-            return field;
+            get
+            {
+                InitializeResources();
+                return _builtInRole;
+            }
         }
 
         /// <summary>
         /// Gets all provisioning resource providers.
         /// </summary>
-        internal IReadOnlyList<ProvisioningResourceProvider> Resources => GetValue(_resources);
+        internal IReadOnlyList<ProvisioningResourceProvider> Resources
+        {
+            get
+            {
+                InitializeResources();
+                return _resources!;
+            }
+        }
 
         private void InitializeResources()
         {
@@ -89,7 +91,8 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal bool TryGetResourcesByModel(InputModelType model, out IReadOnlyList<ProvisioningResourceProvider> resources)
         {
-            if (GetValue(_resourcesByModel).TryGetValue(model, out var list))
+            InitializeResources();
+            if (_resourcesByModel!.TryGetValue(model, out var list))
             {
                 resources = list;
                 return true;
@@ -104,16 +107,22 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal ProvisioningResourceProvider? GetResourceByIdPattern(RequestPathPattern resourceIdPattern)
         {
-            GetValue(_resourcesByIdPattern).TryGetValue(resourceIdPattern.SerializedPath, out var resource);
+            InitializeResources();
+            _resourcesByIdPattern!.TryGetValue(resourceIdPattern.SerializedPath, out var resource);
             return resource;
         }
 
         /// <inheritdoc/>
         protected override IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
         {
-            return TryGetResourcesByModel(inputModel, out var resources)
-                ? resources
-                : base.ResolveFlattenTargetModels(inputModel);
+            if (TryGetResourcesByModel(inputModel, out var resources))
+            {
+                return resources;
+            }
+
+            return ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(inputModel)
+                ? base.ResolveFlattenTargetModels(inputModel)
+                : [];
         }
 
         /// <inheritdoc/>

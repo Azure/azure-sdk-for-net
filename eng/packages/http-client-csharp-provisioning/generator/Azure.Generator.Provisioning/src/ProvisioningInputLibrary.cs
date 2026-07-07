@@ -60,7 +60,18 @@ namespace Azure.Generator.Provisioning
         internal bool IsModelSettable(InputModelType model)
         {
             EnsureProvisioningInput();
-            return _modelSettableUsage![model];
+            if (_modelSettableUsage!.TryGetValue(model, out var isSettable))
+            {
+                return isSettable;
+            }
+
+            throw new KeyNotFoundException($"Model '{model.Namespace}.{model.Name}' ('{model.CrossLanguageDefinitionId}') was not present in provisioning settable analysis.");
+        }
+
+        internal bool IsModelReachable(InputModelType model)
+        {
+            EnsureProvisioningInput();
+            return _modelSettableUsage!.ContainsKey(model);
         }
 
         private void EnsureProvisioningInput()
