@@ -84,7 +84,7 @@
 # ServiceOwners: @ankitbko @RaviPidaparthi @vangarp
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
+/sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson @rhurey
 
 # PRLabel: %AI Model Inference
 /sdk/ai/Azure.AI.Inference/    @dargilco @glharper @trangevi
