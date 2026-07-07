@@ -155,7 +155,7 @@ namespace Azure.Provisioning.DurableTask
     }
     public partial class DurableTaskSchedulerPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DurableTaskSchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal DurableTaskSchedulerPrivateLinkResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.DurableTask.DurableTaskScheduler Parent { get { throw null; } set { } }
