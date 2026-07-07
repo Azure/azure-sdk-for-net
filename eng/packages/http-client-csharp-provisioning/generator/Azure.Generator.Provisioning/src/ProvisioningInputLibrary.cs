@@ -114,6 +114,9 @@ namespace Azure.Generator.Provisioning
             Dictionary<InputModelType, List<ProvisioningResourceProjection>> resourceProjectionsByModel)
         {
             var outputVisited = new HashSet<InputType>();
+            // Visit settable and non-settable paths independently. A model may be reached
+            // by a read-only resource first and by a writable resource later; the writable
+            // path must still propagate so the final modelSettableUsage value can be dyed true.
             var traversalVisited = new HashSet<(InputType Type, bool IsSettable)>();
             var models = new List<InputModelType>();
             var enums = new List<InputEnumType>();
