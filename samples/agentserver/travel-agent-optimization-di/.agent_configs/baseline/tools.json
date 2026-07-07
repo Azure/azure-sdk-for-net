@@ -1,0 +1,34 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "search_flights",
+      "description": "Search for flights between two cities on a given date",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "origin": { "type": "string", "description": "Departure city or airport code" },
+          "destination": { "type": "string", "description": "Arrival city or airport code" },
+          "date": { "type": "string", "description": "Travel date in YYYY-MM-DD format" }
+        },
+        "required": ["origin", "destination", "date"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "get_hotel_prices",
+      "description": "Get hotel prices for a destination on given dates",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": { "type": "string", "description": "City name" },
+          "checkin": { "type": "string", "description": "Check-in date YYYY-MM-DD" },
+          "checkout": { "type": "string", "description": "Check-out date YYYY-MM-DD" }
+        },
+        "required": ["city", "checkin", "checkout"]
+      }
+    }
+  }
+]

@@ -10,6 +10,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    /// <summary> The schedule for automatically starting and stopping a compute instance. </summary>
     public partial class MachineLearningComputeStartStopSchedule : IJsonModel<MachineLearningComputeStartStopSchedule>
     {
         // The current spec models compute start/stop schedules through the newer trigger/schedule shapes, while GA exposed this flattened
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return DeserializeMachineLearningComputeStartStopSchedule(document.RootElement, options);
         }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();

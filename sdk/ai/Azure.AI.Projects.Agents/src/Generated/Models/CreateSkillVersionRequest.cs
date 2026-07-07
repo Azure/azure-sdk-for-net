@@ -4,10 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateSkillVersionRequest. </summary>
     internal partial class CreateSkillVersionRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,6 +22,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="inlineContent"> Inline skill content for simple skills without file uploads. Foundry-specific extension. </param>
         /// <param name="isDefault"> Whether to set this version as the default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        [Experimental("AAIP001")]
         internal CreateSkillVersionRequest(SkillInlineContent inlineContent, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InlineContent = inlineContent;
