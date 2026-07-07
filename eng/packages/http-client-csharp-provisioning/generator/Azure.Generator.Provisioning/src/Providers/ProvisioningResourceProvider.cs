@@ -398,7 +398,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// </summary>
         private HashSet<string> BuildCreateBodyWritableProperties()
         {
-            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var result = new HashSet<string>(StringComparer.Ordinal);
             if (_resourceProjection == null) return result;
 
             var createMethod = _resourceProjection.Methods
@@ -442,7 +442,7 @@ namespace Azure.Generator.Provisioning.Providers
                 return CollectOwnProperties();
 
             var result = new List<ResourcePropertyInfo>();
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var seen = new HashSet<string>(StringComparer.Ordinal);
 
             // Collect from the base chain first (top-most ancestor → immediate base),
             // then from the resource model itself. This ensures inherited ARM common
@@ -483,7 +483,7 @@ namespace Azure.Generator.Provisioning.Providers
                 // Skip "type" property and extension-resource language-level scope.
                 if (SkipProperties.Contains(serializedName)
                     || (_resourceProjection?.IsExtensionResource == true
-                        && string.Equals(serializedName, "scope", StringComparison.OrdinalIgnoreCase)))
+                        && serializedName == "scope"))
                 {
                     continue;
                 }
@@ -519,7 +519,7 @@ namespace Azure.Generator.Provisioning.Providers
                 // TODO - this is currently a workaround until we have a more reliable way to detect such violations from the spec level.
                 CSharpType? typeOverride = null;
                 if (basePath is null
-                    && string.Equals(serializedName, "location", StringComparison.OrdinalIgnoreCase))
+                    && serializedName == "location")
                 {
                     typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }

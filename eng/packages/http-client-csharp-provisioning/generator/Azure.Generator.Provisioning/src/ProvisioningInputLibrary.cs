@@ -226,7 +226,7 @@ namespace Azure.Generator.Provisioning
                 baseModel = baseModel.BaseModel;
             }
 
-            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var seen = new HashSet<string>(StringComparer.Ordinal);
             foreach (var model in chain)
             {
                 foreach (var property in model.Properties)
@@ -240,7 +240,7 @@ namespace Azure.Generator.Provisioning
 
                     if (serializedName == "type"
                         || (projection.IsExtensionResource
-                            && string.Equals(serializedName, "scope", StringComparison.OrdinalIgnoreCase)))
+                            && serializedName == "scope"))
                     {
                         continue;
                     }
@@ -256,7 +256,7 @@ namespace Azure.Generator.Provisioning
 
         private static HashSet<string> BuildCreateBodyWritableProperties(ProvisioningResourceProjection projection)
         {
-            var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var result = new HashSet<string>(StringComparer.Ordinal);
             var createMethod = projection.Methods
                 .FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputMethod;
             if (createMethod == null)
