@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Memory update result. </summary>
-    [Experimental("AAIP001")]
     public partial class MemoryUpdateResultDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

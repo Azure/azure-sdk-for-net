@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -87,7 +86,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<RedTeam> Get(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -102,7 +100,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<RedTeam>> GetAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -146,7 +143,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Returns the redteams available in the current project. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<RedTeam> GetAll(CancellationToken cancellationToken = default)
         {
             return new RedTeamsGetAllCollectionResultOfT(this, cancellationToken.ToRequestOptions());
@@ -155,7 +151,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Returns the redteams available in the current project. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<RedTeam> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return new RedTeamsGetAllAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
@@ -208,7 +203,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<RedTeam> Create(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
@@ -222,7 +216,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="redTeam"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<RedTeam>> CreateAsync(RedTeam redTeam, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(redTeam, nameof(redTeam));
