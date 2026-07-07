@@ -499,7 +499,11 @@ namespace Azure.Generator.Provisioning.Providers
                 // ARM resource name metadata is the wire property exactly named "name".
                 // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
                 var isResourceName = serializedName == "name";
+                // Read-only resources are referenced through FromExisting, so Name must remain settable.
+                // Other non-output properties are settable only when the resource has a writable scope.
                 var isSettable = !isOutput && (_hasWritableScopes || isResourceName);
+                // Read-only resources should not require body properties that users cannot set.
+                // Metadata inputs such as resource name remain required even without writable scopes.
                 var isRequired = RequiredInputProperties.Contains(serializedName)
                     || (prop.IsRequired && _hasWritableScopes);
 
