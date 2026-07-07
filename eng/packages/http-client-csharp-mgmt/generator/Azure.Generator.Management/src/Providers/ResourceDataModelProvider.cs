@@ -4,6 +4,7 @@
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Azure.Generator.Management.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -64,12 +65,13 @@ namespace Azure.Generator.Management.Providers
                 return null;
             }
 
-            return TryCreateInheritableSystemObjectModelProvider(baseType, [], requireSerializationCapability: true);
+            return TryCreateSystemObjectModelProvider(baseType, [], requireSerializationCapability: true)?.Provider;
         }
 
         private InputModelType CreateSystemInputModel(
             string name,
-            string crossLanguageDefinitionId)
+            string crossLanguageDefinitionId,
+            InputModelType? baseModel = null)
         {
             return new InputModelType(
                 name,
@@ -81,7 +83,7 @@ namespace Azure.Generator.Management.Providers
                 InputModel.Doc,
                 InputModel.Usage,
                 [],
-                null,
+                baseModel,
                 [],
                 null,
                 null,
@@ -92,7 +94,7 @@ namespace Azure.Generator.Management.Providers
                 InputModel.IsDynamicModel);
         }
 
-        private InheritableSystemObjectModelProvider? TryCreateInheritableSystemObjectModelProvider(
+        private (SystemObjectModelProvider Provider, InputModelType InputModel)? TryCreateSystemObjectModelProvider(
             CSharpType systemType,
             HashSet<string> visited,
             bool requireSerializationCapability)
@@ -110,9 +112,11 @@ namespace Azure.Generator.Management.Providers
 
             var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
             if (typeMap.TryGetValue(systemType, out var existingProvider) &&
-                existingProvider is InheritableSystemObjectModelProvider existingSystemObjectModelProvider)
+                existingProvider is SystemObjectModelProvider existingSystemObjectModelProvider)
             {
-                return existingSystemObjectModelProvider;
+                return (existingSystemObjectModelProvider, CreateSystemInputModel(
+                    systemType.Name,
+                    GetCrossLanguageDefinitionId(systemType)));
             }
 
             var referencedType = TryGetReferencedType(systemType);
@@ -125,25 +129,28 @@ namespace Azure.Generator.Management.Providers
             var referencedBaseType = referencedType?.BaseType ??
                 systemType.BaseType ??
                 (referencedType is not null ? TryGetSerializationRootBaseType(referencedType, systemType) : null);
-            var baseModelProvider = referencedBaseType is not null
-                ? TryCreateInheritableSystemObjectModelProvider(referencedBaseType, new HashSet<string>(visited), requireSerializationCapability: false)
+            var baseModel = referencedBaseType is not null
+                ? TryCreateSystemObjectModelProvider(referencedBaseType, new HashSet<string>(visited), requireSerializationCapability: false)?.InputModel
                 : null;
             var inputModel = CreateSystemInputModel(
                 systemType.Name,
-                string.IsNullOrEmpty(systemType.Namespace) ? systemType.Name : $"{systemType.Namespace}.{systemType.Name}");
-            var systemObjectModelProvider = new InheritableSystemObjectModelProvider(
-                systemType,
-                inputModel,
-                baseModelProvider,
-                referencedType?.Properties);
+                GetCrossLanguageDefinitionId(systemType),
+                baseModel);
+            var systemObjectModelProvider = new SystemObjectModelProvider(systemType, inputModel);
             typeMap[systemType] = systemObjectModelProvider;
             typeMap[systemObjectModelProvider.Type] = systemObjectModelProvider;
             if (systemType.IsFrameworkType)
             {
                 typeMap[new CSharpType(systemType.FrameworkType)] = systemObjectModelProvider;
             }
-            return systemObjectModelProvider;
+
+            return (systemObjectModelProvider, inputModel);
         }
+
+        private static string GetCrossLanguageDefinitionId(CSharpType systemType)
+            => KnownManagementTypes.TryGetInheritableSystemTypeId(systemType, out var id)
+                ? id
+                : string.IsNullOrEmpty(systemType.Namespace) ? systemType.Name : $"{systemType.Namespace}.{systemType.Name}";
 
         private static TypeProvider? TryGetReferencedType(CSharpType systemType)
         {

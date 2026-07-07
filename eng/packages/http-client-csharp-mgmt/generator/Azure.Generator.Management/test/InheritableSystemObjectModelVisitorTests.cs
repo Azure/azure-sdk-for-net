@@ -111,7 +111,7 @@ namespace Azure.Generator.Mgmt.Tests
         [Test]
         public void DiscriminatedModelExtendingResourceDoesNotStackOverflow()
         {
-            // Create the ARM Resource base model (recognized as InheritableSystemObjectModelProvider
+            // Create the ARM Resource base model (recognized as SystemObjectModelProvider
             // via crossLanguageDefinitionId = "Azure.ResourceManager.CommonTypes.Resource")
             var resourceModel = new InputModelType(
                 "Resource",
@@ -204,12 +204,11 @@ namespace Azure.Generator.Mgmt.Tests
 
         /// <summary>
         /// Verifies that when custom code overrides a model's base type to an inheritable
-        /// system type (e.g., TrackedResourceData) that is NOT present as an
-        /// InheritableSystemObjectModelProvider, the visitor uses CLR reflection to enumerate
-        /// base properties and filters them from the model.
+        /// system type (e.g., TrackedResourceData), the visitor uses PropertyProvider metadata
+        /// to enumerate base properties and filters them from the model.
         /// </summary>
         [Test]
-        public void CustomCodeBaseTypeOverride_UsesClrReflectionFallback()
+        public void CustomCodeBaseTypeOverride_UsesPropertyProviderMetadata()
         {
             // Create a TrackedResource input model with all the base properties
             var trackedResourceInputModel = InputFactory.Model(

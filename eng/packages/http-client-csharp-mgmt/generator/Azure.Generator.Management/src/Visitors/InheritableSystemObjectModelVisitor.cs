@@ -139,9 +139,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static void AddInheritedSystemObjectProperties(SystemObjectModelProvider systemObjectModelProvider, HashSet<string> basePropertyNames, HashSet<string> baseWirePaths)
     {
-        var properties = systemObjectModelProvider is InheritableSystemObjectModelProvider inheritableSystemObjectModelProvider
-            ? inheritableSystemObjectModelProvider.InheritedProperties
-            : GetSystemObjectModelProperties(systemObjectModelProvider);
+        var properties = GetSystemObjectModelProperties(systemObjectModelProvider);
 
         foreach (var property in properties)
         {

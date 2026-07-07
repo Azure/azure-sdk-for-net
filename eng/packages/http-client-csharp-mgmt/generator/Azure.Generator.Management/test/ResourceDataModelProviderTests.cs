@@ -132,41 +132,27 @@ namespace Azure.Generator.Mgmt.Tests
         {
             var (client, models) = InputResourceData.ClientWithResource();
             var resourceModel = models.Single();
-            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            const string customization = """
+                using Azure.ResourceManager.Models;
+
+                namespace Samples
+                {
+                    public partial class ResponseTypeData : TrackedResourceData
+                    {
+                    }
+                }
+                """;
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], customizationSources: [customization]);
             var resourceDataType = new CSharpType(typeof(ResourceData));
             var trackedResourceDataType = new CSharpType(typeof(TrackedResourceData));
-            var resourceMetadataInput = InputFactory.Model(
-                "Resource",
-                properties:
-                [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-            var trackedMetadataInput = InputFactory.Model(
-                "TrackedResource",
-                properties:
-                [
-                    InputFactory.Property("location", InputPrimitiveType.String),
-                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String)),
-                ],
-                baseModel: resourceMetadataInput,
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
             var emptyResourceInput = InputFactory.Model("Resource", properties: [], usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
             typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
                 .GetSetMethod(true)!
                 .Invoke(emptyResourceInput, ["Azure.ResourceManager.CommonTypes.Resource"]);
-            var resourceSystemProvider = new InheritableSystemObjectModelProvider(
-                resourceDataType,
-                emptyResourceInput,
-                null,
-                new SystemObjectModelProvider(resourceDataType, resourceMetadataInput).Properties);
-            var trackedSystemProvider = new InheritableSystemObjectModelProvider(
+            var resourceSystemProvider = new SystemObjectModelProvider(resourceDataType, emptyResourceInput);
+            var trackedSystemProvider = new SystemObjectModelProvider(
                 trackedResourceDataType,
-                InputFactory.Model("TrackedResource", properties: [], baseModel: emptyResourceInput, usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json),
-                resourceSystemProvider,
-                new SystemObjectModelProvider(trackedResourceDataType, trackedMetadataInput).Properties);
+                InputFactory.Model("TrackedResource", properties: [], baseModel: emptyResourceInput, usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json));
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataType] = resourceSystemProvider;
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceDataType] = trackedSystemProvider;
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceSystemProvider.Type] = resourceSystemProvider;
@@ -242,7 +228,7 @@ namespace Azure.Generator.Mgmt.Tests
             var modelProvider = new ResourceDataModelProvider(inputModel);
             ManagementMockHelpers.SetCustomCodeView(modelProvider, new ExternalResourceDataCustomCodeView());
 
-            Assert.That(modelProvider.BaseModelProvider, Is.InstanceOf<InheritableSystemObjectModelProvider>());
+            Assert.That(modelProvider.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
 
             var visitor = new TestableInheritableSystemObjectModelVisitor();
             var result = visitor.InvokePreVisitModel(inputModel, modelProvider);
@@ -276,8 +262,8 @@ namespace Azure.Generator.Mgmt.Tests
             var jsonModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelCreateCore");
             var persistableModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "PersistableModelCreateCore");
 
-            Assert.That(resourceDataModel.BaseModelProvider, Is.InstanceOf<InheritableSystemObjectModelProvider>());
-            Assert.That(resourceDataModel.BaseModelProvider!.BaseModelProvider, Is.InstanceOf<InheritableSystemObjectModelProvider>());
+            Assert.That(resourceDataModel.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
+            Assert.That(resourceDataModel.BaseModelProvider!.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
             Assert.That(jsonModelCreateCore.Signature.ReturnType!.AreNamesEqual(new CSharpType(typeof(ResourceData))), Is.True);
             Assert.That(persistableModelCreateCore.Signature.ReturnType!.AreNamesEqual(new CSharpType(typeof(ResourceData))), Is.True);
         }
