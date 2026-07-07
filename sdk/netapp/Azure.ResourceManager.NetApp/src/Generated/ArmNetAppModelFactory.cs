@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordAkvConfig bindPasswordAkvConfig = default)
+        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
 
@@ -1426,10 +1426,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
-        /// <returns> A new <see cref="Models.BindPasswordAkvConfig"/> instance for mocking. </returns>
-        public static BindPasswordAkvConfig BindPasswordAkvConfig(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
+        /// <returns> A new <see cref="Models.BindPasswordKeyVaultConfig"/> instance for mocking. </returns>
+        public static BindPasswordKeyVaultConfig BindPasswordKeyVaultConfig(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
         {
-            return new BindPasswordAkvConfig(azureKeyVaultUri, secretName, userAssignedIdentity, default);
+            return new BindPasswordKeyVaultConfig(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfigurationPatch"/> instance for mocking. </returns>
-        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordAkvConfigPatch bindPasswordAkvConfig = default)
+        public static LdapConfigurationPatch LdapConfigurationPatch(string domain = default, IEnumerable<IPAddress> ldapServers = default, bool? isLdapOverTlsEnabled = default, string serverCACertificate = default, string certificateCNHost = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
 
@@ -1495,10 +1495,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
-        /// <returns> A new <see cref="Models.BindPasswordAkvConfigPatch"/> instance for mocking. </returns>
-        public static BindPasswordAkvConfigPatch BindPasswordAkvConfigPatch(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
+        /// <returns> A new <see cref="Models.BindPasswordKeyVaultConfigPatch"/> instance for mocking. </returns>
+        public static BindPasswordKeyVaultConfigPatch BindPasswordKeyVaultConfigPatch(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
         {
-            return new BindPasswordAkvConfigPatch(azureKeyVaultUri, secretName, userAssignedIdentity, default);
+            return new BindPasswordKeyVaultConfigPatch(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
         /// <param name="virtualNetworkId"> Identifier for the virtual network. </param>

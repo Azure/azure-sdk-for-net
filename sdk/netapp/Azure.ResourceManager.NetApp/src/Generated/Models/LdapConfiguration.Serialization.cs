@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string certificateCNHost = default;
             BindAuthenticationLevel? bindAuthenticationLevel = default;
             string bindDN = default;
-            BindPasswordAkvConfig bindPasswordAkvConfig = default;
+            BindPasswordKeyVaultConfig bindPasswordAkvConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    bindPasswordAkvConfig = BindPasswordAkvConfig.DeserializeBindPasswordAkvConfig(prop.Value, options);
+                    bindPasswordAkvConfig = BindPasswordKeyVaultConfig.DeserializeBindPasswordKeyVaultConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

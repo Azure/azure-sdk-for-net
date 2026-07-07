@@ -15,51 +15,51 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
-    public partial class BindPasswordAkvConfigPatch : IJsonModel<BindPasswordAkvConfigPatch>
+    public partial class BindPasswordKeyVaultConfigPatch : IJsonModel<BindPasswordKeyVaultConfigPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BindPasswordAkvConfigPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BindPasswordKeyVaultConfigPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordKeyVaultConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBindPasswordAkvConfigPatch(document.RootElement, options);
+                        return DeserializeBindPasswordKeyVaultConfigPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BindPasswordAkvConfigPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BindPasswordKeyVaultConfigPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordKeyVaultConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BindPasswordAkvConfigPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BindPasswordKeyVaultConfigPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BindPasswordAkvConfigPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BindPasswordKeyVaultConfigPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BindPasswordAkvConfigPatch IPersistableModel<BindPasswordAkvConfigPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BindPasswordKeyVaultConfigPatch IPersistableModel<BindPasswordKeyVaultConfigPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BindPasswordAkvConfigPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BindPasswordKeyVaultConfigPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BindPasswordAkvConfigPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BindPasswordKeyVaultConfigPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordKeyVaultConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BindPasswordAkvConfigPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BindPasswordKeyVaultConfigPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(AzureKeyVaultUri))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BindPasswordAkvConfigPatch IJsonModel<BindPasswordAkvConfigPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BindPasswordKeyVaultConfigPatch IJsonModel<BindPasswordKeyVaultConfigPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BindPasswordAkvConfigPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BindPasswordKeyVaultConfigPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordAkvConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BindPasswordKeyVaultConfigPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BindPasswordAkvConfigPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BindPasswordKeyVaultConfigPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBindPasswordAkvConfigPatch(document.RootElement, options);
+            return DeserializeBindPasswordKeyVaultConfigPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BindPasswordAkvConfigPatch DeserializeBindPasswordAkvConfigPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static BindPasswordKeyVaultConfigPatch DeserializeBindPasswordKeyVaultConfigPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BindPasswordAkvConfigPatch(azureKeyVaultUri, secretName, userAssignedIdentity, additionalBinaryDataProperties);
+            return new BindPasswordKeyVaultConfigPatch(azureKeyVaultUri, secretName, userAssignedIdentity, additionalBinaryDataProperties);
         }
     }
 }

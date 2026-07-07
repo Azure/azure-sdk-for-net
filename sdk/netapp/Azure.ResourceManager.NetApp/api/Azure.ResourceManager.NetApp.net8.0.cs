@@ -2027,8 +2027,8 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = null, bool? isAvailable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.BackupsMigrationContent BackupsMigrationContent(Azure.Core.ResourceIdentifier backupVaultResourceId = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.BackupsMigrationContent BackupsMigrationContent(string backupVaultId = null) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig BindPasswordAkvConfig(System.Uri azureKeyVaultUri = null, string secretName = null, Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch BindPasswordAkvConfigPatch(System.Uri azureKeyVaultUri = null, string secretName = null, Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig BindPasswordKeyVaultConfig(System.Uri azureKeyVaultUri = null, string secretName = null, Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch BindPasswordKeyVaultConfigPatch(System.Uri azureKeyVaultUri = null, string secretName = null, Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.BreakthroughMode BreakthroughMode(string value) { throw null; }
         public static Azure.ResourceManager.NetApp.CapacityPoolData CapacityPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Guid? poolId, long size, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? encryptionType) { throw null; }
         public static Azure.ResourceManager.NetApp.CapacityPoolData CapacityPoolData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ETag? etag, System.Guid? poolId, long size, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibps, Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? encryptionType) { throw null; }
@@ -2076,8 +2076,8 @@ namespace Azure.ResourceManager.NetApp.Models
         public static Azure.ResourceManager.NetApp.Models.GetGroupIdListForLdapUserResult GetGroupIdListForLdapUserResult(System.Collections.Generic.IEnumerable<string> groupIdsForLdapUser = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.LargeVolumeType LargeVolumeType(string value) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.LdapConfiguration LdapConfiguration(string certificateCNHost, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string domain, string serverCACertificate) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.LdapConfiguration LdapConfiguration(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, bool? isLdapOverTlsEnabled = default(bool?), string serverCACertificate = null, string certificateCNHost = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig bindPasswordAkvConfig = null) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.LdapConfigurationPatch LdapConfigurationPatch(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, bool? isLdapOverTlsEnabled = default(bool?), string serverCACertificate = null, string certificateCNHost = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch bindPasswordAkvConfig = null) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.LdapConfiguration LdapConfiguration(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, bool? isLdapOverTlsEnabled = default(bool?), string serverCACertificate = null, string certificateCNHost = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig bindPasswordAkvConfig = null) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.LdapConfigurationPatch LdapConfigurationPatch(string domain = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ldapServers = null, bool? isLdapOverTlsEnabled = default(bool?), string serverCACertificate = null, string certificateCNHost = null, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? bindAuthenticationLevel = default(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel?), string bindDN = null, Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.ListQuotaReportResult ListQuotaReportResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.Models.NetAppVolumeQuotaReport> quotaReportRecords = null) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.ListReplicationsContent ListReplicationsContent(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter? excludeReplicationsFilter = default(Azure.ResourceManager.NetApp.Models.ExcludeReplicationsFilter?)) { throw null; }
         public static Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory NetAppAccountActiveDirectory(string activeDirectoryId = null, string username = null, string password = null, string domain = null, string dns = null, Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus? status = default(Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectoryStatus?), string statusDetails = null, string smbServerName = null, string organizationalUnit = null, string site = null, System.Collections.Generic.IEnumerable<string> backupOperators = null, System.Collections.Generic.IEnumerable<string> administrators = null, System.Net.IPAddress kdcIP = null, string adName = null, string serverRootCACertificate = null, bool? isAesEncryptionEnabled = default(bool?), bool? isLdapSigningEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> securityOperators = null, bool? isLdapOverTlsEnabled = default(bool?), bool? allowLocalNfsUsersWithLdap = default(bool?), bool? encryptDCConnections = default(bool?), Azure.ResourceManager.NetApp.Models.NetAppLdapSearchScopeConfiguration ldapSearchScope = null, string preferredServersForLdapClient = null) { throw null; }
@@ -2309,37 +2309,41 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel left, Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BindPasswordAkvConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig>
-    {
-        public BindPasswordAkvConfig(System.Uri azureKeyVaultUri, string secretName) { }
-        public System.Uri AzureKeyVaultUri { get { throw null; } set { } }
-        public string SecretName { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BindPasswordAkvConfigPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch>
+    public partial class BindPasswordAkvConfigPatch
     {
         public BindPasswordAkvConfigPatch() { }
+    }
+    public partial class BindPasswordKeyVaultConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>
+    {
+        public BindPasswordKeyVaultConfig(System.Uri azureKeyVaultUri, string secretName) { }
         public System.Uri AzureKeyVaultUri { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BindPasswordKeyVaultConfigPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch>
+    {
+        public BindPasswordKeyVaultConfigPatch() { }
+        public System.Uri AzureKeyVaultUri { get { throw null; } set { } }
+        public string SecretName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BreakthroughMode : System.IEquatable<Azure.ResourceManager.NetApp.Models.BreakthroughMode>
@@ -3444,7 +3448,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public LdapConfiguration() { }
         public Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? BindAuthenticationLevel { get { throw null; } set { } }
         public string BindDN { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfig BindPasswordAkvConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfig BindPasswordAkvConfig { get { throw null; } set { } }
         public string CertificateCNHost { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }
         public bool? IsLdapOverTlsEnabled { get { throw null; } set { } }
@@ -3465,7 +3469,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public LdapConfigurationPatch() { }
         public Azure.ResourceManager.NetApp.Models.BindAuthenticationLevel? BindAuthenticationLevel { get { throw null; } set { } }
         public string BindDN { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.BindPasswordAkvConfigPatch BindPasswordAkvConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.BindPasswordKeyVaultConfigPatch BindPasswordAkvConfig { get { throw null; } set { } }
         public string CertificateCNHost { get { throw null; } set { } }
         public string Domain { get { throw null; } set { } }
         public bool? IsLdapOverTlsEnabled { get { throw null; } set { } }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapConfigurationPatch(string domain, IList<IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string serverCACertificate, string certificateCNHost, BindAuthenticationLevel? bindAuthenticationLevel, string bindDN, BindPasswordAkvConfigPatch bindPasswordAkvConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapConfigurationPatch(string domain, IList<IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string serverCACertificate, string certificateCNHost, BindAuthenticationLevel? bindAuthenticationLevel, string bindDN, BindPasswordKeyVaultConfigPatch bindPasswordAkvConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             LdapServers = ldapServers;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public string BindDN { get; set; }
 
         /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
-        public BindPasswordAkvConfigPatch BindPasswordAkvConfig { get; set; }
+        public BindPasswordKeyVaultConfigPatch BindPasswordAkvConfig { get; set; }
     }
 }
