@@ -787,7 +787,7 @@ namespace Azure.Provisioning.Compute
     }
     public partial class DiskRestorePoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DiskRestorePoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal DiskRestorePoint() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<float> CompletionPercent { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DiskAccessId { get { throw null; } }
         public Azure.Provisioning.Compute.DiskEncryption Encryption { get { throw null; } }
@@ -795,7 +795,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.HyperVGeneration> HyperVGeneration { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> LogicalSectorSize { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.NetworkAccessPolicy> NetworkAccessPolicy { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.SupportedOperatingSystemType> OSType { get { throw null; } }
         public Azure.Provisioning.Compute.RestorePoint Parent { get { throw null; } set { } }
@@ -2725,16 +2725,16 @@ namespace Azure.Provisioning.Compute
     }
     public partial class VirtualMachineExtensionImage : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public VirtualMachineExtensionImage(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal VirtualMachineExtensionImage() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ComputeRole { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> HandlerSchema { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> OperatingSystem { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> SupportsMultipleExtensions { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> VirtualMachineScaleSetEnabled { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Compute.VirtualMachineExtensionImage FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -3293,17 +3293,17 @@ namespace Azure.Provisioning.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgrade : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public VirtualMachineScaleSetRollingUpgrade(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal VirtualMachineScaleSetRollingUpgrade() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Compute.ComputeApiError Error { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Compute.VirtualMachineScaleSet Parent { get { throw null; } set { } }
         public Azure.Provisioning.Compute.RollingUpgradePolicy Policy { get { throw null; } }
         public Azure.Provisioning.Compute.RollingUpgradeProgressInfo Progress { get { throw null; } }
         public Azure.Provisioning.Compute.RollingUpgradeRunningStatus RunningStatus { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Compute.VirtualMachineScaleSetRollingUpgrade FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
