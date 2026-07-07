@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.ImageBuilder;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
 {

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ImageBuilder
     [ModelReaderWriterBuildable(typeof(UnknownImageTemplateInVMValidator))]
     [ModelReaderWriterBuildable(typeof(UnknownImageTemplateSource))]
     [ModelReaderWriterBuildable(typeof(UnknownTriggerProperties))]
-    [ModelReaderWriterBuildable(typeof(Models.UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkConfig))]
     public partial class AzureResourceManagerImageBuilderContext : ModelReaderWriterContext
     {

@@ -536,14 +536,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageTemplateIdentity(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
         }
 
-        /// <param name="principalId"> The principal ID of the assigned identity. </param>
-        /// <param name="clientId"> The client ID of the assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
-        public static UserAssignedIdentity UserAssignedIdentity(string principalId = default, string clientId = default)
-        {
-            return new UserAssignedIdentity(principalId, clientId, default);
-        }
-
         /// <param name="identity"> The identity of the image template, if configured. </param>
         /// <param name="tags"> The user-specified tags associated with the image template. </param>
         /// <param name="properties"> Parameters for updating an image template. </param>
