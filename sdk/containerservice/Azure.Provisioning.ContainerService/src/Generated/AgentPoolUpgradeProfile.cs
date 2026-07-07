@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new AgentPoolUpgradeProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public AgentPoolUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles", resourceVersion ?? "2026-01-01")
+        internal AgentPoolUpgradeProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/upgradeProfiles", resourceVersion ?? "2026-01-01")
         {
         }
 

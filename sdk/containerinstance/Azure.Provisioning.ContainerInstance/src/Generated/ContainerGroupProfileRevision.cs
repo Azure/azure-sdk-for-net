@@ -29,7 +29,7 @@ namespace Azure.Provisioning.ContainerInstance
         /// <summary> Creates a new ContainerGroupProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
+        internal ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerInstance/containerGroupProfiles/revisions", resourceVersion ?? "2025-09-01")
         {
         }
 
