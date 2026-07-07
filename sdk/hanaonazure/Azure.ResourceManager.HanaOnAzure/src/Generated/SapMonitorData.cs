@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         }
 
         /// <summary> The ARM ID of the Log Analytics Workspace that is used for monitoring. </summary>
-        public string LogAnalyticsWorkspaceArmId
+        public ResourceIdentifier LogAnalyticsWorkspaceArmId
         {
             get
             {

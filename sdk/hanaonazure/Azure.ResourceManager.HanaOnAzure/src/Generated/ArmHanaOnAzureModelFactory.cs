@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="sapMonitorCollectorVersion"> The version of the payload running in the Collector VM. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <returns> A new <see cref="HanaOnAzure.SapMonitorData"/> instance for mocking. </returns>
-        public static SapMonitorData SapMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HanaProvisioningState? provisioningState = default, string managedResourceGroupName = default, string logAnalyticsWorkspaceArmId = default, bool? enableCustomerAnalytics = default, string logAnalyticsWorkspaceId = default, string logAnalyticsWorkspaceSharedKey = default, string sapMonitorCollectorVersion = default, string monitorSubnet = default)
+        public static SapMonitorData SapMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HanaProvisioningState? provisioningState = default, string managedResourceGroupName = default, ResourceIdentifier logAnalyticsWorkspaceArmId = default, bool? enableCustomerAnalytics = default, string logAnalyticsWorkspaceId = default, string logAnalyticsWorkspaceSharedKey = default, string sapMonitorCollectorVersion = default, string monitorSubnet = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
