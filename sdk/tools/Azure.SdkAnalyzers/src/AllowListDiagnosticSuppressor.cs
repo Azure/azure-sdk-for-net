@@ -34,6 +34,7 @@ namespace Azure.SdkAnalyzers
             "AZC0034",
             "AZC0035",
             "CS0618",
+            "AAIP001"
         };
 
         private const string SuppressionIdPrefix = "AZSDKSP";

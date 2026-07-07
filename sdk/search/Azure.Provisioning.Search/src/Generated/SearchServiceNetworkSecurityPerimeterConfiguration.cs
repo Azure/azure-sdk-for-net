@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Search
         /// <summary> Creates a new SearchServiceNetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SearchServiceNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-05-01")
+        internal SearchServiceNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-05-01")
         {
         }
 
@@ -38,18 +38,13 @@ namespace Azure.Provisioning.Search
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 

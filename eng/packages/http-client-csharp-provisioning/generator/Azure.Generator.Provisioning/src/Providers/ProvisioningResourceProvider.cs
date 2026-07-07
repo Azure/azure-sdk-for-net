@@ -293,7 +293,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var sig = new ConstructorSignature(
                     Type,
                     $"Creates a new {Name}.",
-                    MethodSignatureModifiers.Public,
+                    _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                     [bicepIdentifierParam, resourceVersionParam],
                     null,
                     initializer);
@@ -317,7 +317,7 @@ namespace Azure.Generator.Provisioning.Providers
             var baseSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
-                MethodSignatureModifiers.Public,
+                _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                 [bicepIdentifierParam, resourceVersionParam],
                 null,
                 baseInitializer);
@@ -502,7 +502,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var propertyName = prop.Name.ToIdentifierName();
                 // For singleton resources, the "name" property is output-only with a default value
                 string? defaultValue = null;
-                if (string.Equals(serializedName, "name", StringComparison.OrdinalIgnoreCase)
+                if (serializedName == "name"
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
                     defaultValue = singletonResourceName;

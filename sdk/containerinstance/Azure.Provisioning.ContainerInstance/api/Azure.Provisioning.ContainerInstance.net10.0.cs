@@ -236,31 +236,31 @@ namespace Azure.Provisioning.ContainerInstance
     public partial class ContainerGroupProfile : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ContainerGroupProfile(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> ConfidentialComputeCcePolicy { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerInstanceContainer> Containers { get { throw null; } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupLogAnalytics DiagnosticsLogAnalytics { get { throw null; } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupEncryptionProperties EncryptionProperties { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.DeploymentExtensionSpec> Extensions { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ConfidentialComputeCcePolicy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerInstanceContainer> Containers { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerInstance.ContainerGroupLogAnalytics DiagnosticsLogAnalytics { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerInstance.ContainerGroupEncryptionProperties EncryptionProperties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.DeploymentExtensionSpec> Extensions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.InitContainerDefinitionContent> InitContainers { get { throw null; } }
-        public Azure.Provisioning.ContainerInstance.ContainerGroupIPAddress IPAddress { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.InitContainerDefinitionContent> InitContainers { get { throw null; } set { } }
+        public Azure.Provisioning.ContainerInstance.ContainerGroupIPAddress IPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerInstanceOperatingSystemType> OSType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupPriority> Priority { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerInstanceOperatingSystemType> OSType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupPriority> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<int> RegisteredRevisions { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupRestartPolicy> RestartPolicy { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupRestartPolicy> RestartPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Revision { get { throw null; } }
-        public Azure.Provisioning.ContainerInstance.ContainerSecurityContextDefinition SecurityContext { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ShutdownGracePeriod { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupSku> Sku { get { throw null; } }
+        public Azure.Provisioning.ContainerInstance.ContainerSecurityContextDefinition SecurityContext { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ShutdownGracePeriod { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupSku> Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeToLive { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> UseKrypton { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerVolume> Volumes { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeToLive { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> UseKrypton { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerVolume> Volumes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.ContainerInstance.ContainerGroupProfile FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -278,7 +278,7 @@ namespace Azure.Provisioning.ContainerInstance
     }
     public partial class ContainerGroupProfileRevision : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ContainerGroupProfileRevision(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal ContainerGroupProfileRevision() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ConfidentialComputeCcePolicy { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerInstanceContainer> Containers { get { throw null; } }
         public Azure.Provisioning.ContainerInstance.ContainerGroupLogAnalytics DiagnosticsLogAnalytics { get { throw null; } }
@@ -288,8 +288,8 @@ namespace Azure.Provisioning.ContainerInstance
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.InitContainerDefinitionContent> InitContainers { get { throw null; } }
         public Azure.Provisioning.ContainerInstance.ContainerGroupIPAddress IPAddress { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerInstanceOperatingSystemType> OSType { get { throw null; } }
         public Azure.Provisioning.ContainerInstance.ContainerGroupProfile Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupPriority> Priority { get { throw null; } }
@@ -300,7 +300,7 @@ namespace Azure.Provisioning.ContainerInstance
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ShutdownGracePeriod { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ContainerInstance.ContainerGroupSku> Sku { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeToLive { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> UseKrypton { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ContainerInstance.ContainerVolume> Volumes { get { throw null; } }

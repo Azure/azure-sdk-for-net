@@ -24,7 +24,7 @@ namespace Azure.Provisioning.MySql
         /// <summary> Creates a new MySqlFlexibleServersCapability. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public MySqlFlexibleServersCapability(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/locations/capabilitySets", resourceVersion ?? "2024-12-30")
+        internal MySqlFlexibleServersCapability(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DBforMySQL/locations/capabilitySets", resourceVersion ?? "2024-12-30")
         {
         }
 
@@ -38,18 +38,13 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 

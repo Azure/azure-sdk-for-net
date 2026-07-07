@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Response for deleting memories from a scope. </summary>
+    [Experimental("AAIP001")]
     public partial class MemoryStoreDeleteScopeResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
