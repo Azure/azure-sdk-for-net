@@ -5,29 +5,17 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace Azure.Generator.Management.Providers
 {
     internal sealed class InheritableSystemObjectModelProvider : SystemObjectModelProvider
     {
-        public InheritableSystemObjectModelProvider(CSharpType systemType, InputModelType inputModel)
+        public InheritableSystemObjectModelProvider(CSharpType systemType, InputModelType inputModel, IReadOnlyList<PropertyProvider> inheritedProperties)
             : base(systemType, inputModel)
         {
-            InheritedProperties = systemType.IsFrameworkType
-                ? [.. systemType.FrameworkType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                    .Select(property => new InheritedSystemObjectProperty(property.Name, GetWirePath(property)))]
-                : [];
+            InheritedProperties = inheritedProperties;
         }
 
-        internal IReadOnlyList<InheritedSystemObjectProperty> InheritedProperties { get; }
-
-        private static string? GetWirePath(PropertyInfo property)
-            => property.GetCustomAttributes(inherit: true)
-                .FirstOrDefault(attribute => attribute.GetType().Name == "WirePathAttribute")
-                ?.ToString();
+        internal IReadOnlyList<PropertyProvider> InheritedProperties { get; }
     }
-
-    internal sealed record InheritedSystemObjectProperty(string Name, string? WirePath);
 }

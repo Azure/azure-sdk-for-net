@@ -83,13 +83,16 @@ namespace Azure.Generator.Management.Providers
         private SystemObjectModelProvider CreateTrackedResourceDataProvider()
         {
             var resourceDataInput = CreateResourceDataInputModel();
-            RegisterSystemObjectModelProvider(_resourceDataType, resourceDataInput);
+            var resourceDataProvider = RegisterSystemObjectModelProvider(_resourceDataType, resourceDataInput);
             var trackedResourceDataInput = CreateSystemInputModel(
                 "TrackedResource",
                 "Azure.ResourceManager.CommonTypes.TrackedResource",
                 resourceDataInput);
 
-            return RegisterSystemObjectModelProvider(_trackedResourceDataType, trackedResourceDataInput);
+            return RegisterSystemObjectModelProvider(
+                _trackedResourceDataType,
+                trackedResourceDataInput,
+                [.. resourceDataProvider.InheritedProperties, .. GetInheritedProperties(_trackedResourceDataType)]);
         }
 
         private SystemObjectModelProvider CreateResourceDataProvider()
@@ -128,7 +131,10 @@ namespace Azure.Generator.Management.Providers
                 InputModel.IsDynamicModel);
         }
 
-        private static InheritableSystemObjectModelProvider RegisterSystemObjectModelProvider(CSharpType systemType, InputModelType inputModel)
+        private static InheritableSystemObjectModelProvider RegisterSystemObjectModelProvider(
+            CSharpType systemType,
+            InputModelType inputModel,
+            IReadOnlyList<PropertyProvider>? inheritedProperties = null)
         {
             var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
             if (typeMap.TryGetValue(systemType, out var existingProvider) &&
@@ -137,13 +143,28 @@ namespace Azure.Generator.Management.Providers
                 return existingSystemObjectModelProvider;
             }
 
-            var systemObjectModelProvider = new InheritableSystemObjectModelProvider(systemType, inputModel);
+            var systemObjectModelProvider = new InheritableSystemObjectModelProvider(systemType, inputModel, inheritedProperties ?? GetInheritedProperties(systemType));
             typeMap[systemType] = systemObjectModelProvider;
             if (systemType.IsFrameworkType)
             {
                 typeMap[new CSharpType(systemType.FrameworkType)] = systemObjectModelProvider;
             }
             return systemObjectModelProvider;
+        }
+
+        private static IReadOnlyList<PropertyProvider> GetInheritedProperties(CSharpType systemType)
+        {
+            var sourceInputModel = ManagementClientGenerator.Instance.SourceInputModel;
+            if (sourceInputModel is null || string.IsNullOrEmpty(systemType.Namespace))
+            {
+                return [];
+            }
+
+            return sourceInputModel.FindForTypeInCustomization(
+                systemType.Namespace,
+                systemType.Name,
+                declaringTypeName: null,
+                includeReferencedAssemblies: true)?.Properties ?? [];
         }
 
         private static bool AreSameFrameworkType(CSharpType type, CSharpType frameworkType)

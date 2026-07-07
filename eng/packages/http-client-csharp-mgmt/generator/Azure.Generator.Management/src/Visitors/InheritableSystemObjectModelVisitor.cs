@@ -13,7 +13,6 @@ using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -142,28 +141,31 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     {
         var properties = systemObjectModelProvider is InheritableSystemObjectModelProvider inheritableSystemObjectModelProvider
             ? inheritableSystemObjectModelProvider.InheritedProperties
-            : GetFrameworkProperties(systemObjectModelProvider.SystemType);
+            : GetSystemObjectModelProperties(systemObjectModelProvider);
 
         foreach (var property in properties)
         {
             basePropertyNames.Add(property.Name);
-            if (property.WirePath is not null)
+            if (TryGetWirePath(property, out var wirePath))
             {
-                baseWirePaths.Add(property.WirePath);
+                baseWirePaths.Add(wirePath);
             }
         }
     }
 
-    private static IReadOnlyList<InheritedSystemObjectProperty> GetFrameworkProperties(CSharpType systemType)
-        => systemType.IsFrameworkType
-            ? [.. systemType.FrameworkType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Select(property => new InheritedSystemObjectProperty(property.Name, GetWirePath(property)))]
-            : [];
+    private static IReadOnlyList<PropertyProvider> GetSystemObjectModelProperties(SystemObjectModelProvider systemObjectModelProvider)
+    {
+        if (ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+                systemObjectModelProvider.SystemType.Namespace,
+                systemObjectModelProvider.SystemType.Name,
+                declaringTypeName: null,
+                includeReferencedAssemblies: true) is { } referencedType)
+        {
+            return [.. systemObjectModelProvider.Properties, .. referencedType.Properties];
+        }
 
-    private static string? GetWirePath(PropertyInfo property)
-        => property.GetCustomAttributes(inherit: true)
-            .FirstOrDefault(attribute => attribute.GetType().Name == "WirePathAttribute")
-            ?.ToString();
+        return systemObjectModelProvider.Properties;
+    }
 
     private static bool IsCanonicalDuplicateWireProperty(PropertyProvider property, HashSet<string> baseWirePaths)
     {
@@ -179,8 +181,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     {
         if (property.WireInfo is null)
         {
-            wirePath = string.Empty;
-            return false;
+            return TryGetWirePathFromAttribute(property, out wirePath);
         }
 
         if (property is not FlattenedPropertyProvider)
@@ -200,6 +201,22 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
         wirePath = string.Join('.', propertyHierarchy.Select(p => p.WireInfo!.SerializedName));
         return true;
+    }
+
+    private static bool TryGetWirePathFromAttribute(PropertyProvider property, out string wirePath)
+    {
+        foreach (var attribute in property.Attributes)
+        {
+            if (attribute.Type.Name is "WirePath" or "WirePathAttribute" &&
+                attribute.Arguments is [Microsoft.TypeSpec.Generator.Expressions.LiteralExpression { Literal: string value }, ..])
+            {
+                wirePath = value;
+                return true;
+            }
+        }
+
+        wirePath = string.Empty;
+        return false;
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
