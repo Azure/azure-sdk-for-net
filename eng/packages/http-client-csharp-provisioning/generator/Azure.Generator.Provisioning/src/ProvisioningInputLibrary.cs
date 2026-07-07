@@ -5,7 +5,6 @@ using Azure.Generator.Management;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -138,9 +137,9 @@ namespace Azure.Generator.Provisioning
 
         private static void EnqueueResourceProperties(ProvisioningResourceProjection resource, Queue<(InputType Type, bool IsSettable)> queue)
         {
-            foreach (var (property, isOutput) in GetResourceProperties(resource))
+            foreach (var property in GetResourceProperties(resource))
             {
-                queue.Enqueue((property.Type, resource.IsSettable && !isOutput));
+                queue.Enqueue((property.Type, resource.IsSettable && !property.IsReadOnly));
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.Generator.Provisioning
                         queue.Enqueue((model.BaseModel, item.IsSettable));
                     foreach (var derived in model.DerivedModels)
                         queue.Enqueue((derived, item.IsSettable));
-                    foreach (var property in model.Properties.Where(p => !p.IsDiscriminator))
+                    foreach (var property in model.Properties)
                         queue.Enqueue((property.Type, item.IsSettable && !property.IsReadOnly));
                     if (model.AdditionalProperties != null)
                         queue.Enqueue((model.AdditionalProperties, item.IsSettable));
@@ -214,9 +213,8 @@ namespace Azure.Generator.Provisioning
             }
         }
 
-        private static IEnumerable<(InputModelProperty Property, bool IsOutput)> GetResourceProperties(ProvisioningResourceProjection projection)
+        private static IEnumerable<InputModelProperty> GetResourceProperties(ProvisioningResourceProjection projection)
         {
-            var createBodyWritableProperties = BuildCreateBodyWritableProperties(projection);
             var chain = new Stack<InputModelType>();
             chain.Push(projection.ResourceModel);
             var baseModel = projection.ResourceModel.BaseModel;
@@ -226,72 +224,13 @@ namespace Azure.Generator.Provisioning
                 baseModel = baseModel.BaseModel;
             }
 
-            var seen = new HashSet<string>(StringComparer.Ordinal);
             foreach (var model in chain)
             {
                 foreach (var property in model.Properties)
                 {
-                    if (property.IsDiscriminator)
-                        continue;
-
-                    var serializedName = property.SerializedName ?? property.Name;
-                    if (!seen.Add(serializedName))
-                        continue;
-
-                    if (serializedName == "type"
-                        || (projection.IsExtensionResource
-                            && serializedName == "scope"))
-                    {
-                        continue;
-                    }
-
-                    var isResourceName = serializedName == "name";
-                    var isOutput = (property.IsReadOnly && !isResourceName && !createBodyWritableProperties.Contains(serializedName))
-                        || OutputOnlyResourceProperties.Contains(serializedName);
-
-                    yield return (property, isOutput);
+                    yield return property;
                 }
             }
         }
-
-        private static HashSet<string> BuildCreateBodyWritableProperties(ProvisioningResourceProjection projection)
-        {
-            var result = new HashSet<string>(StringComparer.Ordinal);
-            var createMethod = projection.Methods
-                .FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputMethod;
-            if (createMethod == null)
-                return result;
-
-            foreach (var parameter in createMethod.Parameters)
-            {
-                if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType bodyModel)
-                {
-                    CollectWritableProperties(bodyModel, result);
-                }
-            }
-
-            return result;
-        }
-
-        private static void CollectWritableProperties(InputModelType model, HashSet<string> result)
-        {
-            var current = model;
-            while (current != null)
-            {
-                foreach (var property in current.Properties)
-                {
-                    if (!property.IsReadOnly)
-                    {
-                        result.Add(property.SerializedName ?? property.Name);
-                    }
-                }
-                current = current.BaseModel;
-            }
-        }
-
-        private static readonly HashSet<string> OutputOnlyResourceProperties = new(StringComparer.Ordinal)
-        {
-            "id", "systemData", "type"
-        };
     }
 }
