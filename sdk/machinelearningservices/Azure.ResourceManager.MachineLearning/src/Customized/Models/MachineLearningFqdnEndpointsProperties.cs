@@ -10,6 +10,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
+    /// <summary> The properties of a set of FQDN endpoints. </summary>
     public partial class MachineLearningFqdnEndpointsProperties : IJsonModel<MachineLearningFqdnEndpointsProperties>
     {
         // The latest TypeSpec surface no longer generates the GA helper model used by the model factory for FQDN endpoint lists.
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningFqdnEndpointsProperties(default, default);
         }
 
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();

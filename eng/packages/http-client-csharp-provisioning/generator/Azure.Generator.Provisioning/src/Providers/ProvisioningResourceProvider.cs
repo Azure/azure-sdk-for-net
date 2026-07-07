@@ -55,6 +55,7 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly InputModelType _inputModel;
         private readonly ProvisioningResourceProjection? _resourceProjection;
         private readonly string? _defaultApiVersion;
+        private readonly bool _hasWritableScopes;
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,
         /// with their resolved isOutput/isRequired/bicepPath metadata.
@@ -99,9 +100,11 @@ namespace Azure.Generator.Provisioning.Providers
         {
             if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
                 return null;
+
             return new ProvisioningPropertyInfo(
                 propInfo.PropertyName,
                 propInfo.IsOutput,
+                propInfo.IsSettable,
                 propInfo.IsRequired,
                 propInfo.BicepPath,
                 propInfo.DefaultValue,
@@ -119,6 +122,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
+            _hasWritableScopes = projection.WritableScopes.Count > 0;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
@@ -133,6 +137,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
             _resourceProjection = null;
             _defaultApiVersion = null;
+            _hasWritableScopes = GetBaseResourceProjection(inputModel)?.WritableScopes.Count > 0;
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
@@ -196,7 +201,7 @@ namespace Azure.Generator.Provisioning.Providers
             var properties = new List<PropertyProvider>();
             foreach (var propInfo in _allProperties)
             {
-                var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(propInfo.Property, this);
+                var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(propInfo.Property, this);
                 if (property != null)
                     properties.Add(property);
             }
@@ -288,7 +293,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var sig = new ConstructorSignature(
                     Type,
                     $"Creates a new {Name}.",
-                    MethodSignatureModifiers.Public,
+                    _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                     [bicepIdentifierParam, resourceVersionParam],
                     null,
                     initializer);
@@ -312,7 +317,7 @@ namespace Azure.Generator.Provisioning.Providers
             var baseSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
-                MethodSignatureModifiers.Public,
+                _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                 [bicepIdentifierParam, resourceVersionParam],
                 null,
                 baseInitializer);
@@ -491,16 +496,18 @@ namespace Azure.Generator.Provisioning.Providers
                 var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
                         && !_createBodyWritableProperties.Contains(serializedName))
                     || OutputOnlyProperties.Contains(serializedName);
+                var isSettable = !isOutput && _hasWritableScopes;
                 var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
                 var propertyName = prop.Name.ToIdentifierName();
                 // For singleton resources, the "name" property is output-only with a default value
                 string? defaultValue = null;
                 if (serializedName == "name"
-                    && _resourceProjection?.SingletonResourceName is not null)
+                    && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
-                    defaultValue = _resourceProjection.SingletonResourceName;
+                    defaultValue = singletonResourceName;
                     isOutput = true;
+                    isSettable = false;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
@@ -512,7 +519,7 @@ namespace Azure.Generator.Provisioning.Providers
                     typeOverride = new CSharpType(typeof(BicepValue<>), typeof(Azure.Core.AzureLocation));
                 }
 
-                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isRequired, defaultValue, typeOverride));
+                result.Add(new ResourcePropertyInfo(prop, propertyName, bicepPath, isOutput, isSettable, isRequired, defaultValue, typeOverride));
             }
         }
 
@@ -913,9 +920,24 @@ namespace Azure.Generator.Provisioning.Providers
                     prop.Name.ToIdentifierName(),
                     bicepPath,
                     prop.IsReadOnly,
+                    !prop.IsReadOnly && _hasWritableScopes,
                     prop.IsRequired));
             }
             return result;
+        }
+
+        private static ProvisioningResourceProjection? GetBaseResourceProjection(InputModelType inputModel)
+        {
+            var baseModel = inputModel.BaseModel;
+            while (baseModel != null)
+            {
+                if (ProvisioningGenerator.Instance.OutputLibrary.TryGetResourcesByModel(baseModel, out var resources))
+                {
+                    return resources.FirstOrDefault()?.ResourceProjection;
+                }
+                baseModel = baseModel.BaseModel;
+            }
+            return null;
         }
 
         /// <summary>
@@ -940,6 +962,7 @@ namespace Azure.Generator.Provisioning.Providers
             string PropertyName,
             string[] BicepPath,
             bool IsOutput,
+            bool IsSettable,
             bool IsRequired,
             string? DefaultValue = null,
             CSharpType? TypeOverride = null);

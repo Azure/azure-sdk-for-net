@@ -19,4 +19,6 @@ nowarn:OPENAI001
 # consumers opt in once via `#pragma warning disable AAIP001` (documented in
 # the README); acknowledging it once at the assembly level matches the same
 # intent for the library's own implementation.
-nowarn:AAIP001
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.ToolboxTool.DeserializeToolboxTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentTool.DeserializeProjectsAgentTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentDefinition.DeserializeProjectsAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)

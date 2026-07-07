@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -61,7 +62,9 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
+    [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
+    [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
@@ -1085,6 +1088,7 @@ public partial class AgentAdministrationClient
     }
 
     /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
+    [Experimental("AAIP001")]
     public virtual ProjectAgentSkills GetAgentSkills()
     {
         return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
@@ -1103,6 +1107,7 @@ public partial class AgentAdministrationClient
     }
 
     /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>
+    [Experimental("AAIP001")]
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
