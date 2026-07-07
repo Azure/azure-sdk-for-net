@@ -35,7 +35,7 @@ namespace Azure.Generator.Provisioning.Providers
     internal class ProvisioningResourceProvider : ModelProvider, IProvisioningPropertyInfo
     {
         // System properties that should always be output-only
-        private static readonly HashSet<string> OutputOnlyProperties = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> OutputOnlyProperties = new(StringComparer.Ordinal)
         {
             "id", "systemData", "type"
         };

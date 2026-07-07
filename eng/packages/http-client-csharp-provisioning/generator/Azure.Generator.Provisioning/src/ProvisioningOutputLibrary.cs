@@ -118,7 +118,7 @@ namespace Azure.Generator.Provisioning
 
         internal bool IsModelSettable(InputModelType model)
         {
-            _modelSettableUsage ??= BuildModelSettableUsage();
+            _modelSettableUsage ??= CollectReachableTypes().ModelSettableUsage;
             return !_modelSettableUsage.TryGetValue(model, out var isSettable) || isSettable;
         }
 
@@ -161,7 +161,8 @@ namespace Azure.Generator.Provisioning
             // Only emit models/enums reachable from resource models' property graphs. This
             // avoids emitting dead types like list-result envelopes, patch/request wrappers,
             // and error models that have no place in a Provisioning library.
-            var (reachableModels, reachableEnums) = CollectReachableTypes();
+            var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes();
+            _modelSettableUsage = modelSettableUsage;
 
             foreach (var inputModel in reachableModels)
             {
@@ -232,43 +233,26 @@ namespace Azure.Generator.Provisioning
         /// traversal/insertion order via parallel lists, so the emitted output is
         /// deterministic across runs without relying on HashSet enumeration order.
         /// </summary>
-        private (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums) CollectReachableTypes()
+        private (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums, Dictionary<InputModelType, bool> ModelSettableUsage) CollectReachableTypes()
         {
-            var visited = new HashSet<InputType>();
+            var outputVisited = new HashSet<InputType>();
+            var traversalVisited = new HashSet<(InputType Type, bool IsSettable)>();
             var models = new List<InputModelType>();
             var enums = new List<InputEnumType>();
-            var queue = new Queue<InputType>();
-
-            foreach (var resource in Resources)
-            {
-                queue.Enqueue(resource.ResourceProjection!.ResourceModel);
-            }
-
-            while (queue.Count > 0)
-            {
-                Visit(queue.Dequeue(), visited, models, enums, queue);
-            }
-
-            return (models, enums);
-        }
-
-        private Dictionary<InputModelType, bool> BuildModelSettableUsage()
-        {
-            var usage = new Dictionary<InputModelType, bool>();
-            var visited = new HashSet<(InputType Type, bool IsSettable)>();
+            var modelSettableUsage = new Dictionary<InputModelType, bool>();
             var queue = new Queue<(InputType Type, bool IsSettable)>();
 
             foreach (var resource in Resources)
             {
-                EnqueueResourceProperties(resource, queue);
+                queue.Enqueue((resource.ResourceProjection!.ResourceModel, false));
             }
 
             while (queue.Count > 0)
             {
-                VisitSettableUsage(queue.Dequeue(), visited, usage, queue);
+                Visit(queue.Dequeue(), outputVisited, traversalVisited, models, enums, modelSettableUsage, queue);
             }
 
-            return usage;
+            return (models, enums, modelSettableUsage);
         }
 
         private static void EnqueueResourceProperties(ProvisioningResourceProvider resource, Queue<(InputType Type, bool IsSettable)> queue)
@@ -279,13 +263,16 @@ namespace Azure.Generator.Provisioning
             }
         }
 
-        private void VisitSettableUsage(
+        private void Visit(
             (InputType Type, bool IsSettable) item,
-            HashSet<(InputType Type, bool IsSettable)> visited,
-            Dictionary<InputModelType, bool> usage,
+            HashSet<InputType> outputVisited,
+            HashSet<(InputType Type, bool IsSettable)> traversalVisited,
+            List<InputModelType> models,
+            List<InputEnumType> enums,
+            Dictionary<InputModelType, bool> modelSettableUsage,
             Queue<(InputType Type, bool IsSettable)> queue)
         {
-            if (!visited.Add(item))
+            if (!traversalVisited.Add(item))
                 return;
 
             switch (item.Type)
@@ -297,10 +284,18 @@ namespace Azure.Generator.Provisioning
                         {
                             EnqueueResourceProperties(resource, queue);
                         }
+                        if (model.BaseModel != null)
+                            queue.Enqueue((model.BaseModel, item.IsSettable));
+                        foreach (var derived in model.DerivedModels)
+                            queue.Enqueue((derived, item.IsSettable));
                         break;
                     }
 
-                    usage[model] = item.IsSettable || (usage.TryGetValue(model, out var existing) && existing);
+                    if (outputVisited.Add(model))
+                    {
+                        models.Add(model);
+                    }
+                    modelSettableUsage[model] = item.IsSettable || (modelSettableUsage.TryGetValue(model, out var existing) && existing);
                     if (model.BaseModel != null)
                         queue.Enqueue((model.BaseModel, item.IsSettable));
                     foreach (var derived in model.DerivedModels)
@@ -327,52 +322,11 @@ namespace Azure.Generator.Provisioning
                     foreach (var variant in unionType.VariantTypes)
                         queue.Enqueue((variant, item.IsSettable));
                     break;
-            }
-        }
-
-        private void Visit(InputType type, HashSet<InputType> visited, List<InputModelType> models, List<InputEnumType> enums, Queue<InputType> queue)
-        {
-            if (!visited.Add(type))
-                return;
-
-            switch (type)
-            {
-                case InputModelType model:
-                    // Resource models are emitted separately as ProvisioningResourceProvider,
-                    // so don't include them in the plain-model output list. We still walk
-                    // their base/derived/property graphs to reach nested types.
-                    if (!TryGetResourcesByModel(model, out _))
-                    {
-                        models.Add(model);
-                    }
-                    if (model.BaseModel != null)
-                        queue.Enqueue(model.BaseModel);
-                    foreach (var derived in model.DerivedModels)
-                        queue.Enqueue(derived);
-                    foreach (var property in model.Properties)
-                        queue.Enqueue(property.Type);
-                    if (model.AdditionalProperties != null)
-                        queue.Enqueue(model.AdditionalProperties);
-                    break;
                 case InputEnumType enumType:
-                    enums.Add(enumType);
-                    break;
-                case InputArrayType arrayType:
-                    queue.Enqueue(arrayType.ValueType);
-                    break;
-                case InputDictionaryType dictType:
-                    queue.Enqueue(dictType.KeyType);
-                    queue.Enqueue(dictType.ValueType);
-                    break;
-                case InputNullableType nullableType:
-                    queue.Enqueue(nullableType.Type);
-                    break;
-                case InputLiteralType literalType:
-                    queue.Enqueue(literalType.ValueType);
-                    break;
-                case InputUnionType unionType:
-                    foreach (var variant in unionType.VariantTypes)
-                        queue.Enqueue(variant);
+                    if (outputVisited.Add(enumType))
+                    {
+                        enums.Add(enumType);
+                    }
                     break;
             }
         }
