@@ -23,7 +23,7 @@ namespace Azure.Provisioning.TrafficManager
         /// <summary> Creates a new TrafficManagerHeatMap. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public TrafficManagerHeatMap(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/trafficmanagerprofiles/heatMaps", resourceVersion ?? "2022-04-01")
+        internal TrafficManagerHeatMap(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/trafficmanagerprofiles/heatMaps", resourceVersion ?? "2022-04-01")
         {
         }
 
@@ -37,18 +37,13 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
