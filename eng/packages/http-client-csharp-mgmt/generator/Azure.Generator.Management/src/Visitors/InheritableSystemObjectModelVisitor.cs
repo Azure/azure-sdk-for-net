@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -17,6 +18,9 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
+    private static readonly CSharpType _resourceDataType = new(typeof(ResourceData));
+    private static readonly CSharpType _trackedResourceDataType = new(typeof(TrackedResourceData));
+
     // TODO: Remove this visitor once MTG fully supports inheritable system model replacements.
     // See https://github.com/microsoft/typespec/issues/10787.
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
@@ -118,6 +122,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         ModelProvider? currentModel = baseModel;
         while (currentModel != null)
         {
+            if (currentModel is SystemObjectModelProvider systemObjectModelProvider)
+            {
+                AddKnownFrameworkBaseProperties(systemObjectModelProvider, basePropertyNames, baseWirePaths);
+            }
+
             foreach (var property in currentModel.Properties.Concat(currentModel.CustomCodeView?.Properties ?? []))
             {
                 basePropertyNames.Add(property.Name);
@@ -130,6 +139,36 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
         return new BaseModelPropertyInfo(basePropertyNames, baseWirePaths);
     }
+
+    private static void AddKnownFrameworkBaseProperties(SystemObjectModelProvider systemObjectModelProvider, HashSet<string> basePropertyNames, HashSet<string> baseWirePaths)
+    {
+        if (AreSameFrameworkType(systemObjectModelProvider.SystemType, _trackedResourceDataType))
+        {
+            basePropertyNames.Add("Location");
+            basePropertyNames.Add("Tags");
+            baseWirePaths.Add("location");
+            baseWirePaths.Add("tags");
+        }
+
+        if (AreSameFrameworkType(systemObjectModelProvider.SystemType, _resourceDataType) ||
+            AreSameFrameworkType(systemObjectModelProvider.SystemType, _trackedResourceDataType))
+        {
+            basePropertyNames.Add("Id");
+            basePropertyNames.Add("Name");
+            basePropertyNames.Add("ResourceType");
+            basePropertyNames.Add("SystemData");
+            baseWirePaths.Add("id");
+            baseWirePaths.Add("name");
+            baseWirePaths.Add("type");
+            baseWirePaths.Add("systemData");
+        }
+    }
+
+    private static bool AreSameFrameworkType(CSharpType type, CSharpType frameworkType)
+        => type.AreNamesEqual(frameworkType) ||
+            (type.IsFrameworkType &&
+             frameworkType.IsFrameworkType &&
+             type.FrameworkType == frameworkType.FrameworkType);
 
     private static bool IsCanonicalDuplicateWireProperty(PropertyProvider property, HashSet<string> baseWirePaths)
     {

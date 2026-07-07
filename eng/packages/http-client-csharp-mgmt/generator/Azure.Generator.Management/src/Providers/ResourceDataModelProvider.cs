@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Azure.ResourceManager.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Azure.Generator.Management.Providers
@@ -25,6 +28,9 @@ namespace Azure.Generator.Management.Providers
     /// </remarks>
     internal class ResourceDataModelProvider : ModelProvider
     {
+        private static readonly CSharpType _resourceDataType = new(typeof(ResourceData));
+        private static readonly CSharpType _trackedResourceDataType = new(typeof(TrackedResourceData));
+
         public ResourceDataModelProvider(InputModelType inputModel)
             : base(inputModel)
         {
@@ -46,5 +52,104 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath()
             => Path.Combine("src", "Generated", $"{Type.Name}.cs");
+
+        protected override ModelProvider? BuildBaseModelProvider()
+        {
+            var baseModelProvider = base.BuildBaseModelProvider();
+            if (baseModelProvider is not null)
+            {
+                return baseModelProvider;
+            }
+
+            var baseType = BaseType;
+            if (baseType is null)
+            {
+                return null;
+            }
+
+            if (AreSameFrameworkType(baseType, _trackedResourceDataType))
+            {
+                return CreateTrackedResourceDataProvider();
+            }
+
+            if (AreSameFrameworkType(baseType, _resourceDataType))
+            {
+                return CreateResourceDataProvider();
+            }
+
+            return null;
+        }
+
+        private SystemObjectModelProvider CreateTrackedResourceDataProvider()
+        {
+            var resourceDataInput = CreateResourceDataInputModel();
+            RegisterSystemObjectModelProvider(_resourceDataType, resourceDataInput);
+            var trackedResourceDataInput = CreateSystemInputModel(
+                "TrackedResource",
+                "Azure.ResourceManager.CommonTypes.TrackedResource",
+                resourceDataInput);
+
+            return RegisterSystemObjectModelProvider(_trackedResourceDataType, trackedResourceDataInput);
+        }
+
+        private SystemObjectModelProvider CreateResourceDataProvider()
+            => RegisterSystemObjectModelProvider(_resourceDataType, CreateResourceDataInputModel());
+
+        private InputModelType CreateResourceDataInputModel()
+        {
+            return CreateSystemInputModel(
+                "Resource",
+                "Azure.ResourceManager.CommonTypes.Resource");
+        }
+
+        private InputModelType CreateSystemInputModel(
+            string name,
+            string crossLanguageDefinitionId,
+            InputModelType? baseModel = null)
+        {
+            return new InputModelType(
+                name,
+                InputModel.Namespace,
+                crossLanguageDefinitionId,
+                InputModel.Access,
+                InputModel.Deprecation,
+                InputModel.Summary,
+                InputModel.Doc,
+                InputModel.Usage,
+                [],
+                baseModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                InputModel.ModelAsStruct,
+                new(),
+                InputModel.IsDynamicModel);
+        }
+
+        private static SystemObjectModelProvider RegisterSystemObjectModelProvider(CSharpType systemType, InputModelType inputModel)
+        {
+            var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
+            if (typeMap.TryGetValue(systemType, out var existingProvider) &&
+                existingProvider is SystemObjectModelProvider existingSystemObjectModelProvider)
+            {
+                return existingSystemObjectModelProvider;
+            }
+
+            var systemObjectModelProvider = new SystemObjectModelProvider(systemType, inputModel);
+            typeMap[systemType] = systemObjectModelProvider;
+            if (systemType.IsFrameworkType)
+            {
+                typeMap[new CSharpType(systemType.FrameworkType)] = systemObjectModelProvider;
+            }
+            return systemObjectModelProvider;
+        }
+
+        private static bool AreSameFrameworkType(CSharpType type, CSharpType frameworkType)
+            => type.AreNamesEqual(frameworkType) ||
+                (type.IsFrameworkType &&
+                 frameworkType.IsFrameworkType &&
+                 type.FrameworkType == frameworkType.FrameworkType);
     }
 }
