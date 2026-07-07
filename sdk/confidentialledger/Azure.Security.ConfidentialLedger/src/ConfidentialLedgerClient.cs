@@ -108,7 +108,6 @@ namespace Azure.Security.ConfidentialLedger
             Uri identityServiceEndpoint = actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint);
             _failoverService = new ConfidentialLedgerFailoverService(
                 discoveryPipeline,
-                ClientDiagnostics,
                 identityServiceEndpoint,
                 trustStore,
                 endpoint => GetIdentityServerTlsCert(endpoint, actualCertificateClientOptions, ledgerOptions: actualOptions).Cert,
@@ -463,7 +462,8 @@ namespace Azure.Security.ConfidentialLedger
         /// Determines whether an exception/response indicates that a collection's current entry is no
         /// longer available in the live store because it has been archived (pruned) by the service.
         /// The service returns <c>404 Not Found</c> for the <c>GetCurrentLedgerEntry</c> endpoint when
-        /// the collection has been pruned.
+        /// the collection has been pruned. A collection that never existed also returns 404; in that
+        /// case the historical-query fallback simply finds no entries and the original 404 is surfaced.
         /// </summary>
         private static bool IsArchivedCollectionNotFound(RequestFailedException ex)
             => ex != null && ex.Status == (int)HttpStatusCode.NotFound;

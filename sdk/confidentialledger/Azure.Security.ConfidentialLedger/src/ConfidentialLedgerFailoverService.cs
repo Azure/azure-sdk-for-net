@@ -22,7 +22,6 @@ namespace Azure.Security.ConfidentialLedger
         // the identity service presents a publicly-trusted certificate (not a ledger identity certificate),
         // and routing discovery through the (failover-enabled) ledger pipeline would also be re-entrant.
         private readonly HttpPipeline _discoveryPipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
 
         // The identity service used to discover failover ledgers. Honors a custom
         // ConfidentialLedgerClientOptions.CertificateEndpoint when one is configured, falling back to
@@ -39,14 +38,12 @@ namespace Azure.Security.ConfidentialLedger
 
         public ConfidentialLedgerFailoverService(
             HttpPipeline discoveryPipeline,
-            ClientDiagnostics clientDiagnostics,
             Uri identityServiceEndpoint,
             ConfidentialLedgerCertificateTrustStore trustStore,
             Func<Uri, X509Certificate2> identityCertResolver,
             ConfidentialLedgerClientOptions.FailoverSelection selection)
         {
             _discoveryPipeline = discoveryPipeline ?? throw new ArgumentNullException(nameof(discoveryPipeline));
-            _clientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _identityServiceEndpoint = identityServiceEndpoint ?? new Uri(ConfidentialLedgerClient.Default_Certificate_Endpoint);
             _trustStore = trustStore ?? throw new ArgumentNullException(nameof(trustStore));
             _identityCertResolver = identityCertResolver ?? throw new ArgumentNullException(nameof(identityCertResolver));
