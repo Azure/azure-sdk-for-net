@@ -227,6 +227,29 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void ReadOnlyResourceRequiredBodyPropertiesAreNotRequired()
+        {
+            var requiredProperty = CreateProperty("RequiredValue", isRequired: true);
+            var model = CreateModel("ReadOnlyWidget", [requiredProperty]);
+            var readOnlyResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(requiredProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+        }
+
+        [Test]
         public void SingletonResourceNameIsNotSettable()
         {
             var nameProperty = CreateProperty("Name", isRequired: true);
