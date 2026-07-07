@@ -40,14 +40,8 @@ namespace Azure.Generator.Provisioning.Providers
             "id", "systemData", "type"
         };
 
-        // System properties that should always be required, even when marked readOnly (path parameters)
-        private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.Ordinal)
-        {
-            "name"
-        };
-
         // Properties to skip entirely (type is implied by the resource type)
-        private static readonly HashSet<string> SkipProperties = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> SkipProperties = new(StringComparer.Ordinal)
         {
             "type"
         };
@@ -493,19 +487,17 @@ namespace Azure.Generator.Provisioning.Providers
                     ? [.. basePath, serializedName]
                     : new[] { serializedName };
 
-                var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
-                        && !_createBodyWritableProperties.Contains(serializedName))
-                    || OutputOnlyProperties.Contains(serializedName);
                 // ARM resource name metadata is the wire property exactly named "name".
                 // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
                 var isResourceName = serializedName == "name";
+                var isOutput = (prop.IsReadOnly && !isResourceName && !_createBodyWritableProperties.Contains(serializedName))
+                    || OutputOnlyProperties.Contains(serializedName);
                 // Read-only resources are referenced through FromExisting, so Name must remain settable.
                 // Other non-output properties are settable only when the resource has a writable scope.
                 var isSettable = !isOutput && (_hasWritableScopes || isResourceName);
                 // Read-only resources should not require body properties that users cannot set.
                 // Metadata inputs such as resource name remain required even without writable scopes.
-                var isRequired = RequiredInputProperties.Contains(serializedName)
-                    || (prop.IsRequired && _hasWritableScopes);
+                var isRequired = isResourceName || (prop.IsRequired && _hasWritableScopes);
 
                 var propertyName = prop.Name.ToIdentifierName();
                 // For singleton resources, the "name" property is output-only with a default value
