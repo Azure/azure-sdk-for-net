@@ -13,117 +13,86 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the NetworkFeature data model.
-    /// Full view of network features for an app (presently VNET integration and Hybrid Connections).
-    /// Serialized Name: NetworkFeatures
-    /// </summary>
+    /// <summary> Full view of network features for an app (presently VNET integration and Hybrid Connections). </summary>
     public partial class NetworkFeatureData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFeatureData"/>. </summary>
         public NetworkFeatureData()
         {
-            HybridConnections = new ChangeTrackingList<RelayServiceConnectionEntityData>();
-            HybridConnectionsV2 = new ChangeTrackingList<HybridConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFeatureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: NetworkFeatures.kind
-        /// </param>
-        /// <param name="virtualNetworkName">
-        /// The Virtual Network name.
-        /// Serialized Name: NetworkFeatures.properties.virtualNetworkName
-        /// </param>
-        /// <param name="virtualNetworkConnection">
-        /// The Virtual Network summary view.
-        /// Serialized Name: NetworkFeatures.properties.virtualNetworkConnection
-        /// </param>
-        /// <param name="hybridConnections">
-        /// The Hybrid Connections summary view.
-        /// Serialized Name: NetworkFeatures.properties.hybridConnections
-        /// </param>
-        /// <param name="hybridConnectionsV2">
-        /// The Hybrid Connection V2 (Service Bus) view.
-        /// Serialized Name: NetworkFeatures.properties.hybridConnectionsV2
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string virtualNetworkName, AppServiceVirtualNetworkProperties virtualNetworkConnection, IReadOnlyList<RelayServiceConnectionEntityData> hybridConnections, IReadOnlyList<HybridConnectionData> hybridConnectionsV2, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> NetworkFeatures resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFeatureProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            VirtualNetworkName = virtualNetworkName;
-            VirtualNetworkConnection = virtualNetworkConnection;
-            HybridConnections = hybridConnections;
-            HybridConnectionsV2 = hybridConnectionsV2;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: NetworkFeatures.kind
-        /// </summary>
+        /// <summary> NetworkFeatures resource specific properties. </summary>
+        [WirePath("properties")]
+        internal NetworkFeatureProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// The Virtual Network name.
-        /// Serialized Name: NetworkFeatures.properties.virtualNetworkName
-        /// </summary>
+
+        /// <summary> The Virtual Network name. </summary>
         [WirePath("properties.virtualNetworkName")]
-        public string VirtualNetworkName { get; }
-        /// <summary>
-        /// The Virtual Network summary view.
-        /// Serialized Name: NetworkFeatures.properties.virtualNetworkConnection
-        /// </summary>
+        public string VirtualNetworkName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkName;
+            }
+        }
+
+        /// <summary> The Virtual Network summary view. </summary>
         [WirePath("properties.virtualNetworkConnection")]
-        public AppServiceVirtualNetworkProperties VirtualNetworkConnection { get; }
-        /// <summary>
-        /// The Hybrid Connections summary view.
-        /// Serialized Name: NetworkFeatures.properties.hybridConnections
-        /// </summary>
+        public AppServiceVirtualNetworkProperties VirtualNetworkConnection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkConnection;
+            }
+        }
+
+        /// <summary> The Hybrid Connections summary view. </summary>
         [WirePath("properties.hybridConnections")]
-        public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; }
-        /// <summary>
-        /// The Hybrid Connection V2 (Service Bus) view.
-        /// Serialized Name: NetworkFeatures.properties.hybridConnectionsV2
-        /// </summary>
+        public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFeatureProperties();
+                }
+                return Properties.HybridConnections;
+            }
+        }
+
+        /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
         [WirePath("properties.hybridConnectionsV2")]
-        public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; }
+        public IReadOnlyList<HybridConnectionData> HybridConnectionsV2
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFeatureProperties();
+                }
+                return Properties.HybridConnectionsV2;
+            }
+        }
     }
 }

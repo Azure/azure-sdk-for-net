@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: reads `x-agent-user-id` and `x-agent-foundry-call-id` from inbound requests and exposes them via `InvocationContext.PlatformContext`.
+
+### Breaking Changes
+- `InvocationContext.Isolation` is now `InvocationContext.PlatformContext` (type `PlatformContext` with `UserIdKey` / `CallId`), replacing the `IsolationContext` user/chat isolation keys.
 
 ## 1.0.0-beta.4 (2026-05-21)
 

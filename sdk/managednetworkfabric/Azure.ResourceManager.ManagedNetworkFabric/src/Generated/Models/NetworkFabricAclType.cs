@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricAclType : IEquatable<NetworkFabricAclType>
     {
         private readonly string _value;
+        /// <summary> AclType Control Plane Traffic Policy. </summary>
+        private const string CpValue = "ControlPlaneTrafficPolicy";
+        /// <summary> AclType Tenant. </summary>
+        private const string TenantValue = "Tenant";
+        /// <summary> AclType Management. </summary>
+        private const string ManagementValue = "Management";
+        /// <summary> Control Plane Access Control List (ACL). </summary>
+        private const string ControlPlaneAclValue = "ControlPlaneAcl";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricAclType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricAclType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CpValue = "ControlPlaneTrafficPolicy";
-        private const string TenantValue = "Tenant";
-        private const string ManagementValue = "Management";
-        private const string ControlPlaneAclValue = "ControlPlaneAcl";
+            _value = value;
+        }
 
         /// <summary> AclType Control Plane Traffic Policy. </summary>
         public static NetworkFabricAclType Cp { get; } = new NetworkFabricAclType(CpValue);
+
         /// <summary> AclType Tenant. </summary>
         public static NetworkFabricAclType Tenant { get; } = new NetworkFabricAclType(TenantValue);
+
         /// <summary> AclType Management. </summary>
         public static NetworkFabricAclType Management { get; } = new NetworkFabricAclType(ManagementValue);
+
         /// <summary> Control Plane Access Control List (ACL). </summary>
         public static NetworkFabricAclType ControlPlaneAcl { get; } = new NetworkFabricAclType(ControlPlaneAclValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricAclType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricAclType left, NetworkFabricAclType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricAclType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricAclType left, NetworkFabricAclType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricAclType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricAclType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricAclType(string value) => new NetworkFabricAclType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricAclType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricAclType?(string value) => value == null ? null : new NetworkFabricAclType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricAclType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricAclType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

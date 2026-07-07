@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Chaos
                     yield break;
                 }
                 ScenarioConfigurationListResult result = ScenarioConfigurationListResult.FromResponse(response);
-                yield return Page<ChaosScenarioConfigurationData>.FromValues((IReadOnlyList<ChaosScenarioConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ChaosScenarioConfigurationData>.FromValues((IReadOnlyList<ChaosScenarioConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

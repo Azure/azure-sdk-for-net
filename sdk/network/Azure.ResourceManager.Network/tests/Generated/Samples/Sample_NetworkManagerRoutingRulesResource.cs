@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkManagerRoutingRulesResource networkManagerRoutingRules = client.GetNetworkManagerRoutingRulesResource(networkManagerRoutingRulesResourceId);
 
             // invoke the operation
-            await networkManagerRoutingRules.DeleteAsync(WaitUntil.Completed);
+            await networkManagerRoutingRules.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A sample policy",
                 AppliesTo = { new NetworkManagerRoutingGroupItem("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/testGroup") },
             };
-            ArmOperation<NetworkManagerRoutingRulesResource> lro = await networkManagerRoutingRules.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerRoutingRulesResource> lro = await networkManagerRoutingRules.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerRoutingRulesResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

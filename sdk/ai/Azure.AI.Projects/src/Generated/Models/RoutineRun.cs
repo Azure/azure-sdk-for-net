@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A single routine run returned from the run history API. </summary>
+    [Experimental("AAIP001")]
     public partial class RoutineRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,14 +19,16 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
         internal RoutineRun()
         {
+            TriggerEventPayload = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
         /// <param name="id"> The unique run identifier for the routine attempt. </param>
-        /// <param name="status"> The run status. </param>
+        /// <param name="statusInternal"> The run status. </param>
         /// <param name="phase"> The AgentExtensions lifecycle phase for the routine attempt. </param>
         /// <param name="triggerType"> The trigger type that produced the routine attempt. </param>
         /// <param name="triggerName"> The configured trigger name that produced the routine attempt. </param>
+        /// <param name="triggerEventPayload"> The event payload captured from the event that triggered the routine attempt, when available. </param>
         /// <param name="attemptSource"> The source path that created the routine attempt. </param>
         /// <param name="actionType"> The action type dispatched for the routine attempt. </param>
         /// <param name="agentId"> The project-scoped agent identifier recorded for the routine attempt. </param>
@@ -43,13 +47,14 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineRun(string id, BinaryData status, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerKind? triggerType, string triggerName, IDictionary<string, BinaryData> triggerEventPayload, RoutineAttemptSource? attemptSource, RoutineActionKind? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Status = status;
+            StatusInternal = statusInternal;
             Phase = phase;
             TriggerType = triggerType;
             TriggerName = triggerName;
+            TriggerEventPayload = triggerEventPayload;
             AttemptSource = attemptSource;
             ActionType = actionType;
             AgentId = agentId;
@@ -73,20 +78,19 @@ namespace Azure.AI.Projects
         /// <summary> The unique run identifier for the routine attempt. </summary>
         public string Id { get; }
 
+        /// <summary> The AgentExtensions lifecycle phase for the routine attempt. </summary>
+        public RoutineRunPhase? Phase { get; }
+
+        /// <summary> The trigger type that produced the routine attempt. </summary>
+        public RoutineTriggerKind? TriggerType { get; }
+
+        /// <summary> The configured trigger name that produced the routine attempt. </summary>
+        public string TriggerName { get; }
+
         /// <summary>
-        /// The run status.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// The event payload captured from the event that triggered the routine attempt, when available.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -109,22 +113,13 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Status { get; }
-
-        /// <summary> The AgentExtensions lifecycle phase for the routine attempt. </summary>
-        public RoutineRunPhase? Phase { get; }
-
-        /// <summary> The trigger type that produced the routine attempt. </summary>
-        public RoutineTriggerType? TriggerType { get; }
-
-        /// <summary> The configured trigger name that produced the routine attempt. </summary>
-        public string TriggerName { get; }
+        public IDictionary<string, BinaryData> TriggerEventPayload { get; }
 
         /// <summary> The source path that created the routine attempt. </summary>
         public RoutineAttemptSource? AttemptSource { get; }
 
         /// <summary> The action type dispatched for the routine attempt. </summary>
-        public RoutineActionType? ActionType { get; }
+        public RoutineActionKind? ActionType { get; }
 
         /// <summary> The project-scoped agent identifier recorded for the routine attempt. </summary>
         public string AgentId { get; }

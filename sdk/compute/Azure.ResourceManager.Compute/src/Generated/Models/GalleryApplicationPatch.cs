@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -15,87 +16,152 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery Application Definition that you want to update. </summary>
     public partial class GalleryApplicationPatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationPatch"/>. </summary>
         public GalleryApplicationPatch()
         {
-            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of this gallery Application Definition resource. This property is updatable. </param>
-        /// <param name="eula"> The Eula agreement for the gallery Application Definition. </param>
-        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
-        /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </param>
-        /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Describes the properties of a gallery Application Definition. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, SupportedOperatingSystemType? supportedOSType, IList<GalleryApplicationCustomAction> customActions, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryApplicationProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            Eula = eula;
-            PrivacyStatementUri = privacyStatementUri;
-            ReleaseNoteUri = releaseNoteUri;
-            EndOfLifeOn = endOfLifeOn;
-            SupportedOSType = supportedOSType;
-            CustomActions = customActions;
+            Properties = properties;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The description of this gallery Application Definition resource. This property is updatable. </summary>
-        public string Description { get; set; }
-        /// <summary> The Eula agreement for the gallery Application Definition. </summary>
-        public string Eula { get; set; }
-        /// <summary> The privacy statement uri. </summary>
-        public Uri PrivacyStatementUri { get; set; }
-        /// <summary> The release note uri. </summary>
-        public Uri ReleaseNoteUri { get; set; }
-        /// <summary> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeOn { get; set; }
-        /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </summary>
-        public SupportedOperatingSystemType? SupportedOSType { get; set; }
-        /// <summary> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </summary>
-        public IList<GalleryApplicationCustomAction> CustomActions { get; }
+        /// <summary> Describes the properties of a gallery Application Definition. </summary>
+        internal GalleryApplicationProperties Properties { get; set; }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The description of this gallery Application Definition resource. This property is updatable. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The Eula agreement for the gallery Application Definition. </summary>
+        public string Eula
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Eula;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.Eula = value;
+            }
+        }
+
+        /// <summary> The privacy statement uri. </summary>
+        public Uri PrivacyStatementUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivacyStatementUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.PrivacyStatementUri = value;
+            }
+        }
+
+        /// <summary> The release note uri. </summary>
+        public Uri ReleaseNoteUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseNoteUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.ReleaseNoteUri = value;
+            }
+        }
+
+        /// <summary> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
+        public DateTimeOffset? EndOfLifeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOfLifeOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.EndOfLifeOn = value;
+            }
+        }
+
+        /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
+        public SupportedOperatingSystemType? SupportedOSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportedOSType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new GalleryApplicationProperties();
+                    }
+                    Properties.SupportedOSType = value.Value;
+                }
+            }
+        }
+
+        /// <summary> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </summary>
+        public IList<GalleryApplicationCustomAction> CustomActions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                return Properties.CustomActions;
+            }
+        }
     }
 }

@@ -85,7 +85,7 @@ public partial class AIProjectModels
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");
         }
-        ModelPendingUploadResponse uploadResponse = StartModelPendingUpload(
+        ModelPendingUploadResult uploadResponse = StartModelPendingUpload(
             name: name,
             version: version,
             pendingUploadRequest: new()
@@ -109,7 +109,7 @@ public partial class AIProjectModels
         {
             throw new ArgumentException("The provided folder is empty.");
         }
-        return uploadResponse.BlobReferenceForConsumption.BlobUri;
+        return uploadResponse.BlobReference.BlobUri;
     }
 
     /// <summary>
@@ -126,7 +126,7 @@ public partial class AIProjectModels
         {
             throw new ArgumentException($"The provided folder does not exist: {path}");
         }
-        ModelPendingUploadResponse uploadResponse = await StartModelPendingUploadAsync(
+        ModelPendingUploadResult uploadResponse = await StartModelPendingUploadAsync(
             name: name,
             version: version,
             pendingUploadRequest: new()
@@ -150,7 +150,7 @@ public partial class AIProjectModels
         {
             throw new ArgumentException("The provided folder is empty.");
         }
-        return uploadResponse.BlobReferenceForConsumption.BlobUri;
+        return uploadResponse.BlobReference.BlobUri;
     }
 
     /// <summary>
@@ -158,19 +158,18 @@ public partial class AIProjectModels
     /// </summary>
     /// <param name="pendingUploadResult">The pending upload request.</param>
     /// <returns></returns>
-    private BlobContainerClient GetContainerClientOrRaise(ModelPendingUploadResponse pendingUploadResult)
+    private BlobContainerClient GetContainerClientOrRaise(ModelPendingUploadResult pendingUploadResult)
     {
-        if (pendingUploadResult.BlobReferenceForConsumption == null)
+        if (pendingUploadResult.BlobReference == null)
         {
             throw new InvalidOperationException("Blob reference is not present.");
         }
-        if (pendingUploadResult.BlobReferenceForConsumption.Credential == null || pendingUploadResult.BlobReferenceForConsumption.Credential.SasUri == null)
+        if (pendingUploadResult.BlobReference.Credential == null || pendingUploadResult.BlobReference.Credential.SasUri == null)
         {
             throw new InvalidOperationException("SAS credential is not present.");
         }
-
         BlobContainerClient containerClient;
-        containerClient = new BlobContainerClient(pendingUploadResult.BlobReferenceForConsumption.Credential.SasUri);
+        containerClient = new BlobContainerClient(pendingUploadResult.BlobReference.Credential.SasUri);
         return containerClient;
     }
 }

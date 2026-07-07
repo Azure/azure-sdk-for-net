@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Batch
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" }, isRequired: true);
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isRequired: true);
             _details = DefineListProperty<BatchResizeError>(nameof(Details), new string[] { "details" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResizeError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

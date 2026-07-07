@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Server farm registry adapter configuration.
-    /// Serialized Name: RegistryAdapter
-    /// </summary>
+    /// <summary> Server farm registry adapter configuration. </summary>
     public partial class RegistryAdapter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegistryAdapter"/>. </summary>
         public RegistryAdapter()
@@ -54,43 +23,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistryAdapter"/>. </summary>
-        /// <param name="registryKey">
-        /// Registry key for the adapter.
-        /// Serialized Name: RegistryAdapter.registryKey
-        /// </param>
-        /// <param name="adapterType">
-        /// Type of the registry adapter.
-        /// Serialized Name: RegistryAdapter.type
-        /// </param>
-        /// <param name="keyVaultSecretReference">
-        /// Key vault reference to the value that will be placed in the registry location
-        /// Serialized Name: RegistryAdapter.keyVaultSecretReference
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryAdapter(string registryKey, RegistryAdapterType? adapterType, KeyVaultReferenceWithStatus keyVaultSecretReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="registryKey"> Registry key for the adapter. </param>
+        /// <param name="adapterType"> Type of the registry adapter. </param>
+        /// <param name="keyVaultSecretReference"> Key vault reference to the value that will be placed in the registry location. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RegistryAdapter(string registryKey, RegistryAdapterType? adapterType, KeyVaultReferenceWithStatus keyVaultSecretReference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RegistryKey = registryKey;
             AdapterType = adapterType;
             KeyVaultSecretReference = keyVaultSecretReference;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Registry key for the adapter.
-        /// Serialized Name: RegistryAdapter.registryKey
-        /// </summary>
+        /// <summary> Registry key for the adapter. </summary>
         [WirePath("registryKey")]
         public string RegistryKey { get; set; }
-        /// <summary>
-        /// Type of the registry adapter.
-        /// Serialized Name: RegistryAdapter.type
-        /// </summary>
+
+        /// <summary> Type of the registry adapter. </summary>
         [WirePath("type")]
         public RegistryAdapterType? AdapterType { get; set; }
-        /// <summary>
-        /// Key vault reference to the value that will be placed in the registry location
-        /// Serialized Name: RegistryAdapter.keyVaultSecretReference
-        /// </summary>
+
+        /// <summary> Key vault reference to the value that will be placed in the registry location. </summary>
         [WirePath("keyVaultSecretReference")]
         public KeyVaultReferenceWithStatus KeyVaultSecretReference { get; set; }
     }

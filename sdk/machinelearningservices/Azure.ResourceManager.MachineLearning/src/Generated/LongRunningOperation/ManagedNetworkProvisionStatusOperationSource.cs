@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal class ManagedNetworkProvisionStatusOperationSource : IOperationSource<ManagedNetworkProvisionStatus>
+    /// <summary></summary>
+    internal partial class ManagedNetworkProvisionStatusOperationSource : IOperationSource<ManagedNetworkProvisionStatus>
     {
-        ManagedNetworkProvisionStatus IOperationSource<ManagedNetworkProvisionStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ManagedNetworkProvisionStatusOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ManagedNetworkProvisionStatus IOperationSource<ManagedNetworkProvisionStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedNetworkProvisionStatus> IOperationSource<ManagedNetworkProvisionStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

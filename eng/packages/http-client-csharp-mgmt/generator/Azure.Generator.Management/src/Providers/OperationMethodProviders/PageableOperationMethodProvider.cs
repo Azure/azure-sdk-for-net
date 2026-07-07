@@ -56,6 +56,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
                 _itemType,
+                _enclosingType,
                 ref _actualItemType!,
                 ref _itemResourceClient,
                 explicitResourceClient
@@ -67,6 +68,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeTypeInfo(
             CSharpType itemType,
+            TypeProvider enclosingType,
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient,
             ResourceClientProvider? explicitResourceClient = null
@@ -74,9 +76,21 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             actualItemType = itemType;
             // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
-            if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
+            if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(itemType))
             {
                 resourceClient = explicitResourceClient;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceCollectionClientProvider collectionProvider &&
+                collectionProvider.Resource.IsResourceDataType(itemType))
+            {
+                resourceClient = collectionProvider.Resource;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceClientProvider resourceProvider &&
+                resourceProvider.IsResourceDataType(itemType))
+            {
+                resourceClient = resourceProvider;
                 actualItemType = resourceClient.Type;
             }
             else if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))

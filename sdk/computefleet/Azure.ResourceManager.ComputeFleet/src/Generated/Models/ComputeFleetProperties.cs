@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <param name="mode"> Mode of the Fleet. </param>
+        /// <param name="vmNamePrefix"> VirtualMachine prefix to be used for the virtual machines launched by Fleet. Can be used only with Launch mode. </param>
         /// <param name="capacityType">
         /// Specifies capacity type for Fleet Regular and Spot priority profiles.
         /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, ComputeFleetCapacityType? capacityType, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, string vmNamePrefix, ComputeFleetCapacityType? capacityType, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             CreatedOn = createdOn;
             UniqueId = uniqueId;
             Mode = mode;
+            VmNamePrefix = vmNamePrefix;
             CapacityType = capacityType;
             ZoneAllocationPolicy = zoneAllocationPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -95,6 +97,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <summary> Mode of the Fleet. </summary>
         public ComputeFleetMode? Mode { get; set; }
+
+        /// <summary> VirtualMachine prefix to be used for the virtual machines launched by Fleet. Can be used only with Launch mode. </summary>
+        public string VmNamePrefix { get; set; }
 
         /// <summary>
         /// Specifies capacity type for Fleet Regular and Spot priority profiles.

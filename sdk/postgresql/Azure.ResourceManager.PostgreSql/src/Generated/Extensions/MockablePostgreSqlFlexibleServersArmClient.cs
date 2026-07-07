@@ -98,6 +98,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
             return new VirtualEndpointResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="MaintenanceEventResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceEventResource"/> object. </returns>
+        public virtual MaintenanceEventResource GetMaintenanceEventResource(ResourceIdentifier id)
+        {
+            MaintenanceEventResource.ValidateResourceId(id);
+            return new MaintenanceEventResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="MajorVersionUpgradePrecheckResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MajorVersionUpgradePrecheckResource"/> object. </returns>
+        public virtual MajorVersionUpgradePrecheckResource GetMajorVersionUpgradePrecheckResource(ResourceIdentifier id)
+        {
+            MajorVersionUpgradePrecheckResource.ValidateResourceId(id);
+            return new MajorVersionUpgradePrecheckResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> object. </returns>

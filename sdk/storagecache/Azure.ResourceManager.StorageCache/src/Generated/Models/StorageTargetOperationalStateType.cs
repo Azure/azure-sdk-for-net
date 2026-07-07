@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct StorageTargetOperationalStateType : IEquatable<StorageTargetOperationalStateType>
     {
         private readonly string _value;
+        /// <summary> Ready. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> Busy. </summary>
+        private const string BusyValue = "Busy";
+        /// <summary> Suspended. </summary>
+        private const string SuspendedValue = "Suspended";
+        /// <summary> Flushing. </summary>
+        private const string FlushingValue = "Flushing";
 
         /// <summary> Initializes a new instance of <see cref="StorageTargetOperationalStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageTargetOperationalStateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadyValue = "Ready";
-        private const string BusyValue = "Busy";
-        private const string SuspendedValue = "Suspended";
-        private const string FlushingValue = "Flushing";
+            _value = value;
+        }
 
         /// <summary> Ready. </summary>
         public static StorageTargetOperationalStateType Ready { get; } = new StorageTargetOperationalStateType(ReadyValue);
+
         /// <summary> Busy. </summary>
         public static StorageTargetOperationalStateType Busy { get; } = new StorageTargetOperationalStateType(BusyValue);
+
         /// <summary> Suspended. </summary>
         public static StorageTargetOperationalStateType Suspended { get; } = new StorageTargetOperationalStateType(SuspendedValue);
+
         /// <summary> Flushing. </summary>
         public static StorageTargetOperationalStateType Flushing { get; } = new StorageTargetOperationalStateType(FlushingValue);
+
         /// <summary> Determines if two <see cref="StorageTargetOperationalStateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageTargetOperationalStateType left, StorageTargetOperationalStateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageTargetOperationalStateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageTargetOperationalStateType left, StorageTargetOperationalStateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTargetOperationalStateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageTargetOperationalStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageTargetOperationalStateType(string value) => new StorageTargetOperationalStateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageTargetOperationalStateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageTargetOperationalStateType?(string value) => value == null ? null : new StorageTargetOperationalStateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageTargetOperationalStateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageTargetOperationalStateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

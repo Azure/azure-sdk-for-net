@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Performance monitor API response.
-    /// Serialized Name: PerfMonResponse
-    /// </summary>
+    /// <summary> Performance monitor API response. </summary>
     public partial class PerfMonResponseInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PerfMonResponseInfo"/>. </summary>
         internal PerfMonResponseInfo()
@@ -54,43 +23,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PerfMonResponseInfo"/>. </summary>
-        /// <param name="code">
-        /// The response code.
-        /// Serialized Name: PerfMonResponse.code
-        /// </param>
-        /// <param name="message">
-        /// The message.
-        /// Serialized Name: PerfMonResponse.message
-        /// </param>
-        /// <param name="data">
-        /// The performance monitor counters.
-        /// Serialized Name: PerfMonResponse.data
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PerfMonResponseInfo(string code, string message, PerfMonSet data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="code"> The response code. </param>
+        /// <param name="message"> The message. </param>
+        /// <param name="data"> The performance monitor counters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PerfMonResponseInfo(string code, string message, PerfMonSet data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
             Data = data;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The response code.
-        /// Serialized Name: PerfMonResponse.code
-        /// </summary>
+        /// <summary> The response code. </summary>
         [WirePath("code")]
         public string Code { get; }
-        /// <summary>
-        /// The message.
-        /// Serialized Name: PerfMonResponse.message
-        /// </summary>
+
+        /// <summary> The message. </summary>
         [WirePath("message")]
         public string Message { get; }
-        /// <summary>
-        /// The performance monitor counters.
-        /// Serialized Name: PerfMonResponse.data
-        /// </summary>
+
+        /// <summary> The performance monitor counters. </summary>
         [WirePath("data")]
         public PerfMonSet Data { get; }
     }

@@ -36,11 +36,21 @@
 # Catch all
 /sdk/                                                              @jsquire
 
+####################
+# End-to-End Samples
+####################
+
+# Samples catch-all
+/samples/                                                          @jsquire
+
+#PRLabel: Voice Live
+/samples/voicelive/                                                @emilyjiji @xitzhang @pankopon @amber-yujueWang
+
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
 /sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
-/sdk/core/Azure.Core/**/Identity/                                  @christothes @JonathanCrd @Azure/azure-sdk-write-identity
+/sdk/core/Azure.Core/**/Identity/                                  @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Core
 # ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
@@ -51,7 +61,7 @@
 # AzureSdkOwners:                                                  @m-nash
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @christothes @JonathanCrd @Azure/azure-sdk-write-identity
+/sdk/identity/                                                     @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Identity
 # AzureSdkOwners:                                                  @JonathanCrd
@@ -89,10 +99,10 @@
 # ServiceOwners: @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/    @avanigupta @linglingye001 @zhiyuanliang-ms
+/sdk/appconfiguration/    @avanigupta @jimmyca15 @linglingye001 @mrm9084 @zhiyuanliang-ms
 
 # ServiceLabel: %App Configuration
-# ServiceOwners: @avanigupta @linglingye001 @zhiyuanliang-ms
+# ServiceOwners: @avanigupta @linglingye001 @mrm9084 @zhiyuanliang-ms
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation/    @anilba06 @Azure/azure-sdk-write-attestation @gkostal
@@ -107,10 +117,7 @@
 # ServiceOwners: @azure/testing-services
 
 # PRLabel: %Azure Projects
-/sdk/cloudmachine/    @christothes @KrzysztofCwalina
-
-# AzureSdkOwners: @christothes @KrzysztofCwalina
-# ServiceLabel: %Azure Projects
+/sdk/cloudmachine/    @KrzysztofCwalina
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/    @bganapa @rakku-ms
@@ -206,7 +213,10 @@
 # ServiceOwners: @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Call Automation
-/sdk/communication/Azure.Communication.CallAutomation/    @fhaghbin-msft @juntuchen-msft @minwoolee-msft @v-dharmarajv
+/sdk/communication/Azure.Communication.CallAutomation/    @juntuchen-msft @minwoolee-msft
+
+# ServiceLabel: %Communication - Call Automation
+# ServiceOwners: @juntuchen-msft @minwoolee-msft
 
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
@@ -236,7 +246,7 @@
 # ServiceOwners: @Drewm3 @hilaryw29 @MsGabsta @nikhilpatel909 @sandeepraichura @TravisCragg-MSFT @ushnaarshadkhan
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/    @andpiccione @Azure/azure-sdk-write-acl @christothes @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
+/sdk/confidentialledger/    @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
 
 # ServiceLabel: %Confidential Ledger
 # ServiceOwners: @andpiccione @Azure/azure-sdk-write-acl @ivarprudnikov @msftsettiy @musabbir @PallabPaul @ryazhang-microsoft @weirenlai
@@ -266,14 +276,14 @@
 # ServiceOwners: @Aashish93-stack @abhinav-ghai @efriesner @johngallardo @Satya-Kolluri @sjiherzig
 
 # PRLabel: %EngSys
-/sdk/template/    @danieljurek @weshaggard
+/sdk/template/    @danieljurek
 
 # PRLabel: %EngSys
 /sdk/template/Azure.Template/    @danieljurek
 
-# AzureSdkOwners: @danieljurek @weshaggard
+# AzureSdkOwners: @danieljurek
 # ServiceLabel: %EngSys
-# ServiceOwners: @danieljurek @weshaggard
+# ServiceOwners: @danieljurek
 
 # PRLabel: %Event Grid
 /sdk/eventgrid/    @Kishp01 @rajeshka @shankarsama
@@ -501,9 +511,9 @@
 # ServiceOwners: @wanyang7 @yanjungao718
 
 # PRLabel: %Tables
-/sdk/tables/    @christothes @jorgerangel-msft
+/sdk/tables/    @jorgerangel-msft
 
-# AzureSdkOwners: @christothes @jorgerangel-msft
+# AzureSdkOwners: @jorgerangel-msft
 # ServiceLabel: %Tables
 # ServiceOwners: @PaulCheng @sakash279 @sivethe @ThomasWeiss
 
@@ -950,10 +960,10 @@
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92
+/sdk/computefleet/Azure.ResourceManager.*/                         @diyellap @sabanermsft
 
 # ServiceLabel: %Compute - Fleet %Mgmt
-# ServiceOwners:                                                   @sahilarora92
+# ServiceOwners:                                                   @diyellap @sabanermsft
 
 # PRLabel: %Confidential Ledger
 /sdk/confidentialledger/Azure.ResourceManager.*/                   @Azure/azure-sdk-write-acl
@@ -1172,7 +1182,7 @@
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @hallipr @weshaggard @benbp
+/eng/                                                              @danieljurek @benbp @raych1
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 /eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
@@ -1180,7 +1190,7 @@
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @weshaggard @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @raych1 @benbp
 
 # Add owners for package dependency changes
 /eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire
@@ -1201,7 +1211,7 @@
 /sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta @jorgerangel-msft @MaiLinhP @JonathanCrd
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @christothes
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
@@ -1210,7 +1220,7 @@
 /eng/packages/http-client-csharp-provisioning/                     @ArcturusZhang @m-nash @live1206 @ArthurMa1978
 
 #PRLabel: %CodeGen %Client
-/eng/packages/plugins/client/                                      @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
+/eng/packages/plugins/client/                                      @JoshLove-msft @m-nash @jorgerangel-msft @jsquire
 
 # ServiceLabel: %CodeGen
 # AzureSdkOwners:                                                  @JoshLove-msft
@@ -1226,13 +1236,10 @@
 ################
 
 # GitHub integration, CODEOWNERS, and bot rules
-/.github/                                                          @jsquire @m-redding @ArthurMa1978
-/.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
-/.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
-
-# PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
+/.github/                                                          @jsquire @m-nash @JoshLove-msft @ArthurMa1978
+/.github/workflows/                                                @jsquire @m-nash @JoshLove-msft
+/.github/CODEOWNERS                                                @jsquire @m-nash @JoshLove-msft
+/.github/copilot-instructions.md                                   @jsquire @m-nash @JoshLove-msft
 
 ###########################
 # Repository configuration
@@ -1240,11 +1247,10 @@
 
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-/.config/1espt/                                                    @benbp @weshaggard
+/.config/1espt/                                                    @benbp
 /.vscode/                                                          @jsquire @m-redding
 /.devcontainer/                                                    @jsquire @m-redding
 /doc/                                                              @jsquire
-/samples/                                                          @jsquire @m-redding
 
 # Repository configuration that should not be overridden
 /sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @jsquire
@@ -1262,5 +1268,5 @@
 /sdk/**/.gitattributes                                             @jsquire @m-redding
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes @ArcturusZhang @ArthurMa1978
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @christothes
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @mikeharder

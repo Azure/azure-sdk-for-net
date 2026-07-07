@@ -22,26 +22,36 @@ namespace Azure.ResourceManager.ContainerService.Models
         public AgentPoolNetworkProfile()
         {
             NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
+            NodePublicIPPrefixIDs = new ChangeTrackingList<ResourceIdentifier>();
             AllowedHostPorts = new ChangeTrackingList<AgentPoolNetworkPortRange>();
             ApplicationSecurityGroups = new ChangeTrackingList<ResourceIdentifier>();
+            SecondaryNetworkInterfaces = new ChangeTrackingList<AgentPoolNetworkInterface>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkProfile"/>. </summary>
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
+        /// <param name="nodePublicIPPrefixIDs"> The resource IDs of public IP prefixes for node public IPs. At most one IPv4 and one IPv6 prefix may be specified. Order does not matter; the RP determines IP version from the referenced resource's publicIPAddressVersion. Requires enableNodePublicIP to be true on the agent pool. Mutually exclusive with the top-level nodePublicIPPrefixID property. Immutable after node pool creation. To change prefixes, delete and recreate the node pool. For more information, see https://aka.ms/aks/ipv6-ilpip. </param>
         /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
         /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
+        /// <param name="secondaryNetworkInterfaces"> Secondary network interface configurations for each VM in the agent pool. Each entry is a template: one physical NIC per entry is provisioned on every VM instance. These interfaces are created at agent pool creation time and are immutable. The length of the list must be less than the NIC capacity minus 1 for the VM size of the agent pool (AKS manages the primary NIC). For example, a Standard_D8a_v4 VM supports up to 4 NICs, so the maximum number of secondary interfaces allowed is 3. For mixed-SKU VM pools the effective capacity is the minimum across all SKUs: count(secondaryNetworkInterfaces) + 1 &lt;= min(maxNICs). For more information, see https://aka.ms/aks/multi-nic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<ResourceIdentifier> nodePublicIPPrefixIDs, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, IList<AgentPoolNetworkInterface> secondaryNetworkInterfaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodePublicIPTags = nodePublicIPTags;
+            NodePublicIPPrefixIDs = nodePublicIPPrefixIDs;
             AllowedHostPorts = allowedHostPorts;
             ApplicationSecurityGroups = applicationSecurityGroups;
+            SecondaryNetworkInterfaces = secondaryNetworkInterfaces;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IPTags of instance-level public IPs. </summary>
         [WirePath("nodePublicIPTags")]
         public IList<ContainerServiceIPTag> NodePublicIPTags { get; }
+
+        /// <summary> The resource IDs of public IP prefixes for node public IPs. At most one IPv4 and one IPv6 prefix may be specified. Order does not matter; the RP determines IP version from the referenced resource's publicIPAddressVersion. Requires enableNodePublicIP to be true on the agent pool. Mutually exclusive with the top-level nodePublicIPPrefixID property. Immutable after node pool creation. To change prefixes, delete and recreate the node pool. For more information, see https://aka.ms/aks/ipv6-ilpip. </summary>
+        [WirePath("nodePublicIPPrefixIDs")]
+        public IList<ResourceIdentifier> NodePublicIPPrefixIDs { get; }
 
         /// <summary> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </summary>
         [WirePath("allowedHostPorts")]
@@ -50,5 +60,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The IDs of the application security groups which agent pool will associate when created. </summary>
         [WirePath("applicationSecurityGroups")]
         public IList<ResourceIdentifier> ApplicationSecurityGroups { get; }
+
+        /// <summary> Secondary network interface configurations for each VM in the agent pool. Each entry is a template: one physical NIC per entry is provisioned on every VM instance. These interfaces are created at agent pool creation time and are immutable. The length of the list must be less than the NIC capacity minus 1 for the VM size of the agent pool (AKS manages the primary NIC). For example, a Standard_D8a_v4 VM supports up to 4 NICs, so the maximum number of secondary interfaces allowed is 3. For mixed-SKU VM pools the effective capacity is the minimum across all SKUs: count(secondaryNetworkInterfaces) + 1 &lt;= min(maxNICs). For more information, see https://aka.ms/aks/multi-nic. </summary>
+        [WirePath("secondaryNetworkInterfaces")]
+        public IList<AgentPoolNetworkInterface> SecondaryNetworkInterfaces { get; }
     }
 }

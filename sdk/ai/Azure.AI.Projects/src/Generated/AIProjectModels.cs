@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -83,6 +84,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual CollectionResult<ModelVersion> GetModelVersions(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -96,6 +98,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<ModelVersion> GetModelVersionsAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -138,6 +141,7 @@ namespace Azure.AI.Projects
         /// <summary> List the latest version of each ModelVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual CollectionResult<ModelVersion> GetLatestModelVersions(CancellationToken cancellationToken = default)
         {
             return new AIProjectModelsGetLatestModelVersionsCollectionResultOfT(this, cancellationToken.ToRequestOptions());
@@ -146,6 +150,7 @@ namespace Azure.AI.Projects
         /// <summary> List the latest version of each ModelVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<ModelVersion> GetLatestModelVersionsAsync(CancellationToken cancellationToken = default)
         {
             return new AIProjectModelsGetLatestModelVersionsAsyncCollectionResultOfT(this, cancellationToken.ToRequestOptions());
@@ -206,6 +211,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual ClientResult<ModelVersion> GetModelVersion(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -222,6 +228,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<ModelVersion>> GetModelVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -421,6 +428,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual ClientResult<CreateAsyncResponse> CreateModelVersionRequest(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -439,6 +447,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="modelVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<CreateAsyncResponse>> CreateModelVersionRequestAsync(string name, string version, ModelVersion modelVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -509,14 +518,15 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ModelPendingUploadResponse> StartModelPendingUpload(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
+        [Experimental("AAIP001")]
+        public virtual ClientResult<ModelPendingUploadResult> StartModelPendingUpload(string name, string version, ModelPendingUploadContent pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
             ClientResult result = StartModelPendingUpload(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((ModelPendingUploadResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((ModelPendingUploadResult)result, result.GetRawResponse());
         }
 
         /// <summary> Initiates a new pending upload or retrieves an existing one for the specified model version. </summary>
@@ -527,14 +537,15 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ModelPendingUploadResponse>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<ModelPendingUploadResult>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadContent pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
             ClientResult result = await StartModelPendingUploadAsync(name, version, pendingUploadRequest, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((ModelPendingUploadResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((ModelPendingUploadResult)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -597,6 +608,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual ClientResult<DatasetCredential> GetModelCredentials(string name, string version, ModelCredentialRequest credentialRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -615,6 +627,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="credentialRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<DatasetCredential>> GetModelCredentialsAsync(string name, string version, ModelCredentialRequest credentialRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));

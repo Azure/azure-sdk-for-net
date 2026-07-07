@@ -349,36 +349,6 @@ function SetDeploymentOutputs(
     return $deploymentEnvironmentVariables, $deploymentOutputs
 }
 
-<#
-   Writes Resource Manager errors which often have nested exceptions.
-   https://learn.microsoft.com/dotnet/api/microsoft.azure.commands.resourcemanager.cmdlets.sdkmodels.psresourcemanagererror
-#>
-function Write-PSResourceManagerError($resourceManagerError, [int]$level, [int]$maxLevel) {
-    if (!$resourceManagerError -or !$resourceManagerError.Message) {
-        return;
-    }
-
-    # Retrieve one or more messages then decode the strings for readability (remove quote escapes, fix link readability, etc.)
-    $parsedMessage = ($resourceManagerError.Message -join "$([System.Environment]::NewLine)$([System.Environment]::NewLine)")
-    $parsedMessage = [System.Net.WebUtility]::UrlDecode($parsedMessage)
-
-    $prefix = " " * ($level * 2) + "-"
-    Write-Host "$prefix $parsedMessage"
-
-    # Limit the level of nested exceptions to prevent overwhelming users with details and infinite recursive calls.
-    if ($level -ge $maxLevel) {
-        if ($resourceManagerError.Details.Count -gt 0) {
-            Write-Host "$prefix ... (additional nested errors not shown)"
-        }
-
-        return;
-    }
-
-    foreach ($detail in $resourceManagerError.Details) {
-        Write-PSResourceManagerError $detail ($level + 1) $maxLevel
-    }
-}
-
 function HandleTemplateDeploymentError($templateValidationResult) {
     Write-Warning "Deployment template validation failed"
 
@@ -387,10 +357,14 @@ function HandleTemplateDeploymentError($templateValidationResult) {
         return
     }
 
+    # Retrieve one or more messages then decode the strings for readability (remove quote escapes, fix link readability, etc.)
+    $parsedMessage = ($templateValidationResult.Details.Message -join "$([System.Environment]::NewLine)$([System.Environment]::NewLine)")
+    $parsedMessage = [System.Net.WebUtility]::UrlDecode($parsedMessage)
+
     Write-Warning "#####################################################"
     Write-Warning "######### TEMPLATE VALIDATION ERROR DETAILS #########"
     Write-Warning "#####################################################"
-    Write-PSResourceManagerError $templateValidationResult 0 5
+    Write-Host $parsedMessage
     Write-Warning "#####################################################"
 }
 

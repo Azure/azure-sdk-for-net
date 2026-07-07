@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _isSecurityMonitoringEnabled = DefineProperty<bool>(nameof(IsSecurityMonitoringEnabled), new string[] { "enabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterSecurityProfileDefenderSecurityMonitoring that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

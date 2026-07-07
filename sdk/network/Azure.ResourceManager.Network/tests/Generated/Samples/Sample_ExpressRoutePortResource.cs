@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRoutePortResource expressRoutePort = client.GetExpressRoutePortResource(expressRoutePortResourceId);
 
             // invoke the operation
-            await expressRoutePort.DeleteAsync(WaitUntil.Completed);
+            await expressRoutePort.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             GenerateExpressRoutePortsLoaContent content = new GenerateExpressRoutePortsLoaContent("customerName");
-            GenerateExpressRoutePortsLoaResult result = await expressRoutePort.GenerateLoaAsync(content);
+            GenerateExpressRoutePortsLoaResult result = await expressRoutePort.GenerateLoaAsync(content, System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }

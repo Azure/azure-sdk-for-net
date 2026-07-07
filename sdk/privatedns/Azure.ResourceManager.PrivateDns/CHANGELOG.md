@@ -1,5 +1,17 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Migrated the library generation from AutoRest to TypeSpec.
+
 ## 1.2.3 (2026-06-09)
 
 ### Features Added

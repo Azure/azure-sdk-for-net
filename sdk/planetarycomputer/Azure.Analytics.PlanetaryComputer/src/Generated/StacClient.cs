@@ -1027,7 +1027,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateCollectionRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.CreateCollectionAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.CreateCollection", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1201,7 +1201,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
                 using HttpMessage message = CreateDeleteCollectionRequest(collectionId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.DeleteCollectionAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.DeleteCollection", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2611,7 +2611,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateItemRequest(collectionId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.CreateItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.CreateItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2717,7 +2717,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateOrReplaceItemRequest(collectionId, itemId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.CreateOrReplaceItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.CreateOrReplaceItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2805,7 +2805,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
                 using HttpMessage message = CreateDeleteItemRequest(collectionId, itemId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.DeleteItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.DeleteItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3245,7 +3245,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUpdateItemRequest(collectionId, itemId, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.UpdateItemAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "StacClient.UpdateItem", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

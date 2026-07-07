@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _mode = DefineProperty<NodeProvisioningMode>(nameof(Mode), new string[] { "mode" });
             _defaultNodePools = DefineProperty<NodeProvisioningDefaultNodePool>(nameof(DefaultNodePools), new string[] { "defaultNodePools" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterNodeProvisioningProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

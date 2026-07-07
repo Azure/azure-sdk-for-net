@@ -813,6 +813,79 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_Path_PreservesIdentityBindingAndRequestPins()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string fileSystemName = GetNewFileSystemName();
+            string fileName = GetNewFileName();
+            Uri pathUri = new Uri("https://" + constants.Sas.Account + ".dfs.core.windows.net/" + fileSystemName + "/" + fileName);
+            DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(pathUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            DataLakeSasBuilder builder = BuildDataLakeSasBuilder(
+                includePath: true,
+                includeDelegatedObjectId: true,        // sduoid
+                includeRequestHeaders: true,           // srh
+                includeRequestQueryParameters: true,   // srq
+                fileSystemName: fileSystemName,
+                path: fileName,
+                constants);
+
+            // Act
+            string viaClient = pathClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, pathClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaDirect);
+
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaClient);
+
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_FileSystem_PreservesIdentityBindingAndRequestPins()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string fileSystemName = GetNewFileSystemName();
+            Uri fileSystemUri = new Uri("https://" + constants.Sas.Account + ".dfs.core.windows.net/" + fileSystemName);
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(fileSystemUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            DataLakeSasBuilder builder = BuildDataLakeSasBuilder(
+                includePath: false,
+                includeDelegatedObjectId: true,        // sduoid
+                includeRequestHeaders: true,           // srh
+                includeRequestQueryParameters: true,   // srq
+                fileSystemName: fileSystemName,
+                path: null,
+                constants);
+
+            // Act
+            string viaClient = fileSystemClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, fileSystemClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaDirect);
+
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestHeaders, viaClient);
+            StringAssert.Contains(Constants.Sas.Parameters.RequestQueryParameters, viaClient);
+
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
         private DataLakeSasBuilder BuildDataLakeSasBuilder(
             bool includePath,
             bool includeDelegatedObjectId,

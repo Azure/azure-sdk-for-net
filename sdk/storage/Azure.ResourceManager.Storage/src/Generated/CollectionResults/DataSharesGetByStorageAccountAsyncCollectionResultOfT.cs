@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 DataShareListResult result = DataShareListResult.FromResponse(response);
-                yield return Page<StorageDataShareData>.FromValues((IReadOnlyList<StorageDataShareData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageDataShareData>.FromValues((IReadOnlyList<StorageDataShareData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

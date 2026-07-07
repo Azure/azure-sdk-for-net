@@ -362,6 +362,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </summary>
+        [WirePath("properties.enableFIPS")]
+        public bool? IsFipsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFipsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsFipsEnabled = value;
+            }
+        }
+
         /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
         [WirePath("properties.enableNamespaceResources")]
         public bool? IsNamespaceResourcesEnabled
@@ -724,6 +742,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </summary>
+        [WirePath("properties.hostedSystemProfile")]
+        public ManagedClusterHostedSystemProfile HostedSystemProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostedSystemProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.HostedSystemProfile = value;
+            }
+        }
+
         /// <summary> Health monitor profile for the managed cluster. </summary>
         [WirePath("properties.healthMonitorProfile")]
         public ManagedClusterHealthMonitorProfile HealthMonitorProfile
@@ -860,13 +896,13 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> Whether to enable hosted system addons for the cluster. </summary>
-        [WirePath("properties.hostedSystemProfile.enabled")]
-        public bool? IsHostedSystemAddonsEnabled
+        /// <summary> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </summary>
+        [WirePath("properties.controlPlaneScalingProfile.scalingSize")]
+        public ManagedClusterControlPlaneScalingSize? ScalingSize
         {
             get
             {
-                return Properties is null ? default : Properties.IsHostedSystemAddonsEnabled;
+                return Properties is null ? default : Properties.ScalingSize;
             }
             set
             {
@@ -874,7 +910,25 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsHostedSystemAddonsEnabled = value;
+                Properties.ScalingSize = value;
+            }
+        }
+
+        /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
+        [WirePath("properties.nodeDisruptionProfile.nodeDisruptionPolicy")]
+        public NodeDisruptionPolicy? NodeDisruptionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeDisruptionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.NodeDisruptionPolicy = value;
             }
         }
 

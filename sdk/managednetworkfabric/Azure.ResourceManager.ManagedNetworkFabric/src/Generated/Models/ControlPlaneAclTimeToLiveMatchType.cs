@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct ControlPlaneAclTimeToLiveMatchType : IEquatable<ControlPlaneAclTimeToLiveMatchType>
     {
         private readonly string _value;
+        /// <summary> TTL-eq. </summary>
+        private const string EqualsValueValue = "eq";
+        /// <summary> TTL-neq. </summary>
+        private const string NotEqualsValue = "neq";
+        /// <summary> TTL-gt. </summary>
+        private const string GreaterThanValue = "gt";
+        /// <summary> TTL-lt. </summary>
+        private const string LesserThanValue = "lt";
 
         /// <summary> Initializes a new instance of <see cref="ControlPlaneAclTimeToLiveMatchType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ControlPlaneAclTimeToLiveMatchType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualsValueValue = "eq";
-        private const string NotEqualsValue = "neq";
-        private const string GreaterThanValue = "gt";
-        private const string LesserThanValue = "lt";
+            _value = value;
+        }
 
         /// <summary> TTL-eq. </summary>
         public static ControlPlaneAclTimeToLiveMatchType EqualsValue { get; } = new ControlPlaneAclTimeToLiveMatchType(EqualsValueValue);
+
         /// <summary> TTL-neq. </summary>
         public static ControlPlaneAclTimeToLiveMatchType NotEquals { get; } = new ControlPlaneAclTimeToLiveMatchType(NotEqualsValue);
+
         /// <summary> TTL-gt. </summary>
         public static ControlPlaneAclTimeToLiveMatchType GreaterThan { get; } = new ControlPlaneAclTimeToLiveMatchType(GreaterThanValue);
+
         /// <summary> TTL-lt. </summary>
         public static ControlPlaneAclTimeToLiveMatchType LesserThan { get; } = new ControlPlaneAclTimeToLiveMatchType(LesserThanValue);
+
         /// <summary> Determines if two <see cref="ControlPlaneAclTimeToLiveMatchType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ControlPlaneAclTimeToLiveMatchType left, ControlPlaneAclTimeToLiveMatchType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ControlPlaneAclTimeToLiveMatchType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ControlPlaneAclTimeToLiveMatchType left, ControlPlaneAclTimeToLiveMatchType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ControlPlaneAclTimeToLiveMatchType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ControlPlaneAclTimeToLiveMatchType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ControlPlaneAclTimeToLiveMatchType(string value) => new ControlPlaneAclTimeToLiveMatchType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ControlPlaneAclTimeToLiveMatchType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ControlPlaneAclTimeToLiveMatchType?(string value) => value == null ? null : new ControlPlaneAclTimeToLiveMatchType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ControlPlaneAclTimeToLiveMatchType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ControlPlaneAclTimeToLiveMatchType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

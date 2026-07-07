@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureDataLakeStoreSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreSource"/>. </summary>
-        public AzureDataLakeStoreSource()
+        public AzureDataLakeStoreSource() : base("AzureDataLakeStoreSource")
         {
-            CopySourceType = "AzureDataLakeStoreSource";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreSource"/>. </summary>
@@ -26,12 +25,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         internal AzureDataLakeStoreSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> recursive) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Recursive = recursive;
-            CopySourceType = copySourceType ?? "AzureDataLakeStoreSource";
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>

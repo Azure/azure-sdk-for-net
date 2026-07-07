@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Rewrite rule of an application gateway. </summary>
     public partial class ApplicationGatewayRewriteRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRule"/>. </summary>
         public ApplicationGatewayRewriteRule()
@@ -56,25 +28,28 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleSequence"> Rule Sequence of the rewrite rule that determines the order of execution of a particular rule in a RewriteRuleSet. </param>
         /// <param name="conditions"> Conditions based on which the action set execution will be evaluated. </param>
         /// <param name="actionSet"> Set of actions to be done as part of the rewrite Rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayRewriteRule(string name, int? ruleSequence, IList<ApplicationGatewayRewriteRuleCondition> conditions, ApplicationGatewayRewriteRuleActionSet actionSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayRewriteRule(string name, int? ruleSequence, IList<ApplicationGatewayRewriteRuleCondition> conditions, ApplicationGatewayRewriteRuleActionSet actionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             RuleSequence = ruleSequence;
             Conditions = conditions;
             ActionSet = actionSet;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the rewrite rule that is unique within an Application Gateway. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Rule Sequence of the rewrite rule that determines the order of execution of a particular rule in a RewriteRuleSet. </summary>
         [WirePath("ruleSequence")]
         public int? RuleSequence { get; set; }
+
         /// <summary> Conditions based on which the action set execution will be evaluated. </summary>
         [WirePath("conditions")]
         public IList<ApplicationGatewayRewriteRuleCondition> Conditions { get; }
+
         /// <summary> Set of actions to be done as part of the rewrite Rule. </summary>
         [WirePath("actionSet")]
         public ApplicationGatewayRewriteRuleActionSet ActionSet { get; set; }

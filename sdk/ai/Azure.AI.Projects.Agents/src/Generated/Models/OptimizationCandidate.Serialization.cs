@@ -82,43 +82,33 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("config"u8);
-            writer.WriteObjectValue(Config, options);
-            writer.WritePropertyName("mutations"u8);
-            writer.WriteStartObject();
-            foreach (var item in Mutations)
+            if (Optional.IsCollectionDefined(Mutations))
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("mutations"u8);
+                writer.WriteStartObject();
+                foreach (var item in Mutations)
                 {
-                    writer.WriteNullValue();
-                    continue;
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("avg_score"u8);
             writer.WriteNumberValue(AvgScore);
             writer.WritePropertyName("avg_tokens"u8);
             writer.WriteNumberValue(AvgTokens);
-            writer.WritePropertyName("pass_rate"u8);
-            writer.WriteNumberValue(PassRate);
-            writer.WritePropertyName("task_scores"u8);
-            writer.WriteStartArray();
-            foreach (OptimizationTaskResult item in TaskScores)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
-            writer.WritePropertyName("is_pareto_optimal"u8);
-            writer.WriteBooleanValue(IsParetoOptimal);
             if (Optional.IsDefined(EvalId))
             {
                 writer.WritePropertyName("eval_id"u8);
@@ -178,13 +168,9 @@ namespace Azure.AI.Projects.Agents
             }
             string candidateId = default;
             string name = default;
-            OptimizationAgentDefinition config = default;
             IDictionary<string, BinaryData> mutations = default;
             double avgScore = default;
             double avgTokens = default;
-            double passRate = default;
-            IList<OptimizationTaskResult> taskScores = default;
-            bool isParetoOptimal = default;
             string evalId = default;
             string evalRunId = default;
             PromotionInfo promotion = default;
@@ -201,13 +187,12 @@ namespace Azure.AI.Projects.Agents
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("config"u8))
-                {
-                    config = OptimizationAgentDefinition.DeserializeOptimizationAgentDefinition(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("mutations"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
@@ -231,26 +216,6 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("avg_tokens"u8))
                 {
                     avgTokens = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("pass_rate"u8))
-                {
-                    passRate = prop.Value.GetDouble();
-                    continue;
-                }
-                if (prop.NameEquals("task_scores"u8))
-                {
-                    List<OptimizationTaskResult> array = new List<OptimizationTaskResult>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(OptimizationTaskResult.DeserializeOptimizationTaskResult(item, options));
-                    }
-                    taskScores = array;
-                    continue;
-                }
-                if (prop.NameEquals("is_pareto_optimal"u8))
-                {
-                    isParetoOptimal = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("eval_id"u8))
@@ -280,13 +245,9 @@ namespace Azure.AI.Projects.Agents
             return new OptimizationCandidate(
                 candidateId,
                 name,
-                config,
-                mutations,
+                mutations ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 avgScore,
                 avgTokens,
-                passRate,
-                taskScores,
-                isParetoOptimal,
                 evalId,
                 evalRunId,
                 promotion,

@@ -1529,7 +1529,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="customBaseTypeResourceDescription"> Gets or sets the Description. </param>
-        /// <returns> A new <see cref="Tests.CustomBaseTypeResourceData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CustomBaseTypeResourceData"/> instance for mocking. </returns>
         public static CustomBaseTypeResourceData CustomBaseTypeResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string customBaseTypeResourceDescription = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();

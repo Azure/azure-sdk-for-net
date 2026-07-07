@@ -1,0 +1,51 @@
+# Azure.AI.DocumentIntelligence approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These public model names intentionally mirror the predecessor
+# Azure.AI.FormRecognizer surface to keep migration source-compatible; the two
+# packages are never referenced together.
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.AddressValue
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.AnalyzedDocument
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.AnalyzeResult
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.BlobContentSource
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.BlobFileListContentSource
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.BoundingRegion
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.BuildDocumentModelOptions
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.CurrencyValue
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentAnalysisFeature
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentBarcode
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentBarcodeKind
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentBuildMode
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentClassifierDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentField
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentFieldSchema
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentFieldType
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentFontStyle
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentFontWeight
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentFormula
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentFormulaKind
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentKeyValueElement
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentKeyValuePair
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentLanguage
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentLine
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentModelDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentPage
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentParagraph
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentSelectionMark
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentSelectionMarkState
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentSignatureType
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentSpan
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentStyle
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentTable
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentTableCell
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentTableCellKind
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentTypeDetails
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.DocumentWord
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.LengthUnit
+nowarn:AZC0034 T:Azure.AI.DocumentIntelligence.ParagraphRole

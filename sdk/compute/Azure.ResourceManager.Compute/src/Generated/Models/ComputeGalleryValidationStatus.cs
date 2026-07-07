@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ComputeGalleryValidationStatus : IEquatable<ComputeGalleryValidationStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ComputeGalleryValidationStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeGalleryValidationStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeGalleryValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ComputeGalleryValidationStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ComputeGalleryValidationStatus Unknown { get; } = new ComputeGalleryValidationStatus(UnknownValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ComputeGalleryValidationStatus Failed { get; } = new ComputeGalleryValidationStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ComputeGalleryValidationStatus Succeeded { get; } = new ComputeGalleryValidationStatus(SucceededValue);
+
         /// <summary> Determines if two <see cref="ComputeGalleryValidationStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeGalleryValidationStatus left, ComputeGalleryValidationStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeGalleryValidationStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeGalleryValidationStatus left, ComputeGalleryValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeGalleryValidationStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeGalleryValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeGalleryValidationStatus(string value) => new ComputeGalleryValidationStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeGalleryValidationStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeGalleryValidationStatus?(string value) => value == null ? null : new ComputeGalleryValidationStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeGalleryValidationStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeGalleryValidationStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

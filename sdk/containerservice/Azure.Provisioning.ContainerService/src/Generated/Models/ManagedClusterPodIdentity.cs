@@ -124,6 +124,10 @@ namespace Azure.Provisioning.ContainerService
             _identity = DefineModelProperty<ContainerServiceUserAssignedIdentity>(nameof(Identity), new string[] { "identity" }, isRequired: true);
             _provisioningState = DefineProperty<ManagedClusterPodIdentityProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _provisioningInfo = DefineModelProperty<ManagedClusterPodIdentityProvisioningInfo>(nameof(ProvisioningInfo), new string[] { "provisioningInfo" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentity that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

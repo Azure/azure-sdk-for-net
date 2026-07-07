@@ -887,10 +887,12 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     ContentHasher.GetHashResult hashResult = null;
+                    // length of the raw stream
                     long contentLength = (content?.Length - content?.Position) ?? 0;
+                    // length of content within a structured message wrapper
                     long? structuredContentLength = default;
                     string structuredBodyType = null;
-                    if (content != null &&
+                    if (contentLength > 0 &&
                         validationOptions != null &&
                         validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
                         ClientSideEncryption == null) // don't allow feature combination
@@ -2843,7 +2845,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Block Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2881,7 +2883,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Block Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2922,7 +2924,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Block Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3405,7 +3407,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                UploadPartitionStreaming = async (stream, offset, blockId, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3418,7 +3420,7 @@ namespace Azure.Storage.Blobs.Specialized
                         };
                     }
                     await client.StageBlockInternal(
-                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            blockId,
                             stream,
                             validationOptions,
                             conditions,
@@ -3426,7 +3428,7 @@ namespace Azure.Storage.Blobs.Specialized
                             async,
                             cancellationToken).ConfigureAwait(false);
                 },
-                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                UploadPartitionBinaryData = async (content, offset, blockId, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3442,7 +3444,7 @@ namespace Azure.Storage.Blobs.Specialized
                     using (var stream = content.ToStream())
                     {
                         await client.StageBlockInternal(
-                                Shared.StorageExtensions.GenerateBlockId(offset),
+                                blockId,
                                 stream,
                                 validationOptions,
                                 conditions,
@@ -3453,7 +3455,7 @@ namespace Azure.Storage.Blobs.Specialized
                 },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
+                        partitions.Select(partition => partition.BlockId),
                         args?.HttpHeaders,
                         args?.Metadata,
                         args?.Tags,
@@ -3464,7 +3466,8 @@ namespace Azure.Storage.Blobs.Specialized
                         async,
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
-                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}")
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}"),
+                GenerateBlockId = BlobHelpers.GenerateBlockId
             };
         }
         #endregion

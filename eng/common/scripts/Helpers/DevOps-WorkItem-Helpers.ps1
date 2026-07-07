@@ -1240,8 +1240,6 @@ function Get-ReleasePlansForCPEXAttestation()
   $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
   $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
   $query += " AND [Custom.ProductServiceTreeID] <> ''"
-  $query += " AND [Custom.ProductLifecycle] <> ''"
-  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
 
   $workItems = Invoke-Query $fields $query
   return $workItems

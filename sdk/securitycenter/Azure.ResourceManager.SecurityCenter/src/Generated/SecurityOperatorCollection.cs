@@ -8,89 +8,101 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityOperatorResource"/> and their operations.
-    /// Each <see cref="SecurityOperatorResource"/> in the collection will belong to the same instance of <see cref="SecurityCenterPricingResource"/>.
-    /// To get a <see cref="SecurityOperatorCollection"/> instance call the GetSecurityOperators method from an instance of <see cref="SecurityCenterPricingResource"/>.
+    /// Each <see cref="SecurityOperatorResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityOperatorCollection"/> instance call the GetSecurityOperators method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityOperatorCollection : ArmCollection, IEnumerable<SecurityOperatorResource>, IAsyncEnumerable<SecurityOperatorResource>
     {
-        private readonly ClientDiagnostics _securityOperatorClientDiagnostics;
-        private readonly SecurityOperatorsRestOperations _securityOperatorRestClient;
+        private readonly ClientDiagnostics _securityOperatorsClientDiagnostics;
+        private readonly SecurityOperators _securityOperatorsRestClient;
+        /// <summary> The pricingName. </summary>
+        private readonly string _pricingName;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityOperatorCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityOperatorCollection for mocking. </summary>
         protected SecurityOperatorCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityOperatorCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityOperatorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityOperatorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="pricingName"> The pricingName for the resource. </param>
+        internal SecurityOperatorCollection(ArmClient client, ResourceIdentifier id, string pricingName) : base(client, id)
         {
-            _securityOperatorClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityOperatorResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityOperatorResource.ResourceType, out string securityOperatorApiVersion);
-            _securityOperatorRestClient = new SecurityOperatorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityOperatorApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _pricingName = pricingName;
+            _securityOperatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityOperatorResource.ResourceType.Namespace, Diagnostics);
+            _securityOperatorsRestClient = new SecurityOperators(_securityOperatorsClientDiagnostics, Pipeline, Endpoint, securityOperatorApiVersion ?? "2023-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SecurityCenterPricingResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityCenterPricingResource.ResourceType), nameof(id));
+            if (id.ResourceType != SubscriptionResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates Microsoft Defender for Cloud security operator on the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SecurityOperatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityOperatorRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken).ConfigureAwait(false);
-                var uri = _securityOperatorRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, securityOperatorName);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityOperatorData> response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityOperatorResource> operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,42 +116,46 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Creates Microsoft Defender for Cloud security operator on the given scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SecurityOperatorResource> CreateOrUpdate(WaitUntil waitUntil, string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityOperatorRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken);
-                var uri = _securityOperatorRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, securityOperatorName);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityOperatorData> response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<SecurityOperatorResource> operation = new SecurityCenterArmOperation<SecurityOperatorResource>(Response.FromValue(new SecurityOperatorResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +169,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a specific security operator for the requested scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityOperatorResource>> GetAsync(string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Get");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityOperatorRestClient.GetAsync(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityOperatorData> response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityOperatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +218,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a specific security operator for the requested scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityOperatorResource> Get(string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Get");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityOperatorRestClient.Get(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityOperatorData> response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityOperatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,49 +267,44 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Lists Microsoft Defender for Cloud securityOperators in the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityOperatorResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityOperatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityOperatorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityOperatorRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityOperatorResource(Client, SecurityOperatorData.DeserializeSecurityOperatorData(e)), _securityOperatorClientDiagnostics, Pipeline, "SecurityOperatorCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityOperatorData, SecurityOperatorResource>(new SecurityOperatorsGetAllAsyncCollectionResultOfT(_securityOperatorsRestClient, Guid.Parse(Id.SubscriptionId), _pricingName, context, "SecurityOperatorCollection.GetAll"), data => new SecurityOperatorResource(Client, data));
         }
 
         /// <summary>
         /// Lists Microsoft Defender for Cloud securityOperators in the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,44 +312,61 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityOperatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityOperatorResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityOperatorRestClient.CreateListRequest(Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityOperatorResource(Client, SecurityOperatorData.DeserializeSecurityOperatorData(e)), _securityOperatorClientDiagnostics, Pipeline, "SecurityOperatorCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityOperatorData, SecurityOperatorResource>(new SecurityOperatorsGetAllCollectionResultOfT(_securityOperatorsRestClient, Guid.Parse(Id.SubscriptionId), _pricingName, context, "SecurityOperatorCollection.GetAll"), data => new SecurityOperatorResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Exists");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityOperatorRestClient.GetAsync(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityOperatorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityOperatorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,36 +380,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.Exists");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityOperatorRestClient.Get(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityOperatorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityOperatorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,38 +437,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityOperatorResource>> GetIfExistsAsync(string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.GetIfExists");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityOperatorRestClient.GetAsync(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityOperatorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityOperatorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityOperatorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityOperatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,38 +498,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/pricings/{pricingName}/securityOperators/{securityOperatorName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityOperators_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityOperators_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityOperatorResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="securityOperatorName"> name of the securityOperator. </param>
+        /// <param name="securityOperatorName"> Name of the security operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityOperatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityOperatorName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityOperatorResource> GetIfExists(string securityOperatorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityOperatorName, nameof(securityOperatorName));
 
-            using var scope = _securityOperatorClientDiagnostics.CreateScope("SecurityOperatorCollection.GetIfExists");
+            using DiagnosticScope scope = _securityOperatorsClientDiagnostics.CreateScope("SecurityOperatorCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityOperatorRestClient.Get(Id.SubscriptionId, Id.Name, securityOperatorName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _securityOperatorsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _pricingName, securityOperatorName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityOperatorData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityOperatorData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityOperatorData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityOperatorResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityOperatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -483,6 +565,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityOperatorResource> IAsyncEnumerable<SecurityOperatorResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

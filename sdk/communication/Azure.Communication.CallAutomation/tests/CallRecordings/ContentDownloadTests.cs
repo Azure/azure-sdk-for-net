@@ -39,8 +39,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             1, 2, 3, 4, 5, 6, 7, 8, 9, 0
         };
 
-        private readonly Uri _dummyMetadataLocation = new("https://localhost/documents/metadata/document_id/acsmetadata");
-        private readonly Uri _dummyRecordingLocation = new("https://localhost/documents/document_id/");
+        private readonly Uri _dummyMetadataLocation = new("https://localhost.asm.skype.com/documents/metadata/document_id/acsmetadata");
+        private readonly Uri _dummyRecordingLocation = new("https://localhost.asm.skype.com/documents/document_id/");
 
         private readonly HttpHeader[] _rangeResponseHeaders = new HttpHeader[]
             {

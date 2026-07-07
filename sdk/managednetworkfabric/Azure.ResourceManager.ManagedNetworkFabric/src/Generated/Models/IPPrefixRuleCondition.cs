@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct IPPrefixRuleCondition : IEquatable<IPPrefixRuleCondition>
     {
         private readonly string _value;
+        /// <summary> Condition-EqualTo. </summary>
+        private const string EqualToValue = "EqualTo";
+        /// <summary> Condition-GreaterThanOrEqualTo. </summary>
+        private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
+        /// <summary> Condition-LesserThanOrEqualTo. </summary>
+        private const string LesserThanOrEqualToValue = "LesserThanOrEqualTo";
+        /// <summary> Condition-Range. </summary>
+        private const string RangeValue = "Range";
 
         /// <summary> Initializes a new instance of <see cref="IPPrefixRuleCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IPPrefixRuleCondition(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualToValue = "EqualTo";
-        private const string GreaterThanOrEqualToValue = "GreaterThanOrEqualTo";
-        private const string LesserThanOrEqualToValue = "LesserThanOrEqualTo";
-        private const string RangeValue = "Range";
+            _value = value;
+        }
 
         /// <summary> Condition-EqualTo. </summary>
         public static IPPrefixRuleCondition EqualTo { get; } = new IPPrefixRuleCondition(EqualToValue);
+
         /// <summary> Condition-GreaterThanOrEqualTo. </summary>
         public static IPPrefixRuleCondition GreaterThanOrEqualTo { get; } = new IPPrefixRuleCondition(GreaterThanOrEqualToValue);
+
         /// <summary> Condition-LesserThanOrEqualTo. </summary>
         public static IPPrefixRuleCondition LesserThanOrEqualTo { get; } = new IPPrefixRuleCondition(LesserThanOrEqualToValue);
+
         /// <summary> Condition-Range. </summary>
         public static IPPrefixRuleCondition Range { get; } = new IPPrefixRuleCondition(RangeValue);
+
         /// <summary> Determines if two <see cref="IPPrefixRuleCondition"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IPPrefixRuleCondition left, IPPrefixRuleCondition right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IPPrefixRuleCondition"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IPPrefixRuleCondition left, IPPrefixRuleCondition right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPPrefixRuleCondition"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IPPrefixRuleCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IPPrefixRuleCondition(string value) => new IPPrefixRuleCondition(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IPPrefixRuleCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IPPrefixRuleCondition?(string value) => value == null ? null : new IPPrefixRuleCondition(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IPPrefixRuleCondition other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IPPrefixRuleCondition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

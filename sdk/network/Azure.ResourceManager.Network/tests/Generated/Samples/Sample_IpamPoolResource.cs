@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             IpamPoolResource ipamPool = client.GetIpamPoolResource(ipamPoolResourceId);
 
             // invoke the operation
-            await ipamPool.DeleteAsync(WaitUntil.Completed);
+            await ipamPool.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

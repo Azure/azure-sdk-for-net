@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Static Route Configuration properties for NNI. </summary>
     public partial class NniStaticRoutePatchConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NniStaticRoutePatchConfiguration"/>. </summary>
         public NniStaticRoutePatchConfiguration()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NniStaticRoutePatchConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> Bidirectional Forwarding Detection (BFD) configuration properties. </param>
-        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NniStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration, IList<StaticRoutePatchProperties> ipv4Routes, IList<StaticRoutePatchProperties> ipv6Routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NniStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration, IList<StaticRoutePatchProperties> iPv4Routes, IList<StaticRoutePatchProperties> iPv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BfdConfiguration = bfdConfiguration;
-            IPv4Routes = ipv4Routes;
-            IPv6Routes = ipv6Routes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IPv4Routes = iPv4Routes;
+            IPv6Routes = iPv6Routes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Bidirectional Forwarding Detection (BFD) configuration properties. </summary>
         public BfdPatchConfiguration BfdConfiguration { get; set; }
+
         /// <summary> List of IPv4 Routes. </summary>
         public IList<StaticRoutePatchProperties> IPv4Routes { get; }
+
         /// <summary> List of IPv6 Routes. </summary>
         public IList<StaticRoutePatchProperties> IPv6Routes { get; }
     }

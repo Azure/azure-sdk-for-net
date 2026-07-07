@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkTapDestinationType : IEquatable<NetworkTapDestinationType>
     {
         private readonly string _value;
+        /// <summary> DestinationType-IsolationDomain. </summary>
+        private const string IsolationDomainValue = "IsolationDomain";
+        /// <summary> DestinationType-Direct. </summary>
+        private const string DirectValue = "Direct";
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkTapDestinationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IsolationDomainValue = "IsolationDomain";
-        private const string DirectValue = "Direct";
+            _value = value;
+        }
 
         /// <summary> DestinationType-IsolationDomain. </summary>
         public static NetworkTapDestinationType IsolationDomain { get; } = new NetworkTapDestinationType(IsolationDomainValue);
+
         /// <summary> DestinationType-Direct. </summary>
         public static NetworkTapDestinationType Direct { get; } = new NetworkTapDestinationType(DirectValue);
+
         /// <summary> Determines if two <see cref="NetworkTapDestinationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkTapDestinationType left, NetworkTapDestinationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkTapDestinationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkTapDestinationType left, NetworkTapDestinationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkTapDestinationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkTapDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkTapDestinationType(string value) => new NetworkTapDestinationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkTapDestinationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkTapDestinationType?(string value) => value == null ? null : new NetworkTapDestinationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkTapDestinationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkTapDestinationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

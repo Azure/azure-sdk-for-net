@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The AgentEndpointAuthorizationScheme.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntraAuthorizationScheme"/>, <see cref="BotServiceAuthorizationScheme"/>, and <see cref="BotServiceRbacAuthorizationScheme"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntraAuthorizationScheme"/>, <see cref="BotServiceAuthorizationScheme"/>, <see cref="BotServiceRbacAuthorizationScheme"/>, and <see cref="BotServiceTenantAuthorizationScheme"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentEndpointAuthorizationScheme))]
     public abstract partial class AgentEndpointAuthorizationScheme : IJsonModel<AgentEndpointAuthorizationScheme>
@@ -132,6 +132,8 @@ namespace Azure.AI.Projects.Agents
                         return BotServiceAuthorizationScheme.DeserializeBotServiceAuthorizationScheme(element, options);
                     case "BotServiceRbac":
                         return BotServiceRbacAuthorizationScheme.DeserializeBotServiceRbacAuthorizationScheme(element, options);
+                    case "BotServiceTenant":
+                        return BotServiceTenantAuthorizationScheme.DeserializeBotServiceTenantAuthorizationScheme(element, options);
                 }
             }
             return UnknownAgentEndpointAuthorizationScheme.DeserializeUnknownAgentEndpointAuthorizationScheme(element, options);

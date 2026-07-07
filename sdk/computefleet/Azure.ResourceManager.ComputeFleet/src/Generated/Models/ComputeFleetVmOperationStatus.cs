@@ -15,12 +15,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public readonly partial struct ComputeFleetVmOperationStatus : IEquatable<ComputeFleetVmOperationStatus>
     {
         private readonly string _value;
+        /// <summary> Indicates that the virtual machine has not been accepted by Compute yet and is still scheduled to be created. </summary>
+        private const string LaunchingValue = "Launching";
         /// <summary> Indicates that the virtual machine is either in the process of being created or is scheduled to be created. </summary>
         private const string CreatingValue = "Creating";
-        /// <summary> Indicates that the cancellation request was successful because the virtual machine had not been created yet. </summary>
-        private const string CanceledValue = "Canceled";
-        /// <summary> Indicates that the cancellation request could not be applied because the virtual machine had already been created. </summary>
-        private const string CancelFailedStatusUnknownValue = "CancelFailedStatusUnknown";
         /// <summary> Indicates that the virtual machine operation failed. </summary>
         private const string FailedValue = "Failed";
         /// <summary> Indicates that the virtual machine operation completed successfully. </summary>
@@ -36,14 +34,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             _value = value;
         }
 
+        /// <summary> Indicates that the virtual machine has not been accepted by Compute yet and is still scheduled to be created. </summary>
+        public static ComputeFleetVmOperationStatus Launching { get; } = new ComputeFleetVmOperationStatus(LaunchingValue);
+
         /// <summary> Indicates that the virtual machine is either in the process of being created or is scheduled to be created. </summary>
         public static ComputeFleetVmOperationStatus Creating { get; } = new ComputeFleetVmOperationStatus(CreatingValue);
-
-        /// <summary> Indicates that the cancellation request was successful because the virtual machine had not been created yet. </summary>
-        public static ComputeFleetVmOperationStatus Canceled { get; } = new ComputeFleetVmOperationStatus(CanceledValue);
-
-        /// <summary> Indicates that the cancellation request could not be applied because the virtual machine had already been created. </summary>
-        public static ComputeFleetVmOperationStatus CancelFailedStatusUnknown { get; } = new ComputeFleetVmOperationStatus(CancelFailedStatusUnknownValue);
 
         /// <summary> Indicates that the virtual machine operation failed. </summary>
         public static ComputeFleetVmOperationStatus Failed { get; } = new ComputeFleetVmOperationStatus(FailedValue);

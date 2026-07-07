@@ -63,12 +63,24 @@ namespace Azure.Generator.Management.Utilities
 
         public static string GetXmlDocTypeName(this CSharpType type)
         {
+            var typeName = GetTypeName(type);
+
             // For nullable value types, we need to append '?' to the type name for XML documentation
             if (type.IsValueType && type.IsNullable)
             {
-                return $"{type.Name}?";
+                return $"{typeName}?";
             }
-            return type.Name;
+            return typeName;
+        }
+
+        private static string GetTypeName(CSharpType type)
+        {
+            if (string.IsNullOrEmpty(type.Namespace))
+            {
+                return type.Name;
+            }
+
+            return $"{type.Namespace}.{type.Name}";
         }
     }
 }
