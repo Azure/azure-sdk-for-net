@@ -2,6 +2,13 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
+### Features Added
+
+- Updated the client library to target the `2025-06-01` Azure Attestation service API version.
+
+### Other Changes
+
+- Migrated the code generation from AutoRest/Swagger to TypeSpec. The public API surface is preserved.
 
 ## 1.0.0 (2021-05-11)
 

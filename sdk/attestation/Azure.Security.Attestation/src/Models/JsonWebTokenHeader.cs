@@ -45,7 +45,7 @@ namespace Azure.Security.Attestation
         ///
         /// </summary>
         [JsonPropertyName("kid")]
-        public string KeyId{ get; set; }
+        public string KeyId { get; set; }
 
         /// <summary>
         ///

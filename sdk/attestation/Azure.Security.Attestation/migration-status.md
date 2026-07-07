@@ -7,11 +7,12 @@
 **Target API version:** `2025-06-01`
 **Last Updated:** 2026-07-03
 
-> **▶ RESUME HERE:** **`src` + `tests` BUILD CLEAN + ApiCompat PASSES** (through commit after "Phase 8 DONE").
-> Phases 6 (build-fix), 8 (test build), 11 (ApiCompat) are **DONE**. **NEXT ACTION:** Phase 9 —
-> run the unit tests (`dotnet test --filter "TestCategory!=Live"`), fix any failures from the
-> reshaped serialization/model behavior. Then Phase 7 (changelog), Phase 10 (Export-API + snippets),
-> Phase 12 (push spec `client.tsp`/`tspconfig.yaml`, re-pin commit).
+> **▶ RESUME HERE:** **src + tests build clean; ApiCompat passes; unit tests 18/20 pass.** The 2
+> failures are `GetCertificates` `[RecordedTest]` **stale-recording** mismatches (playback can't match
+> the new pipeline's request; re-record needs live creds — do during PR validation, NOT a code bug).
+> **NEXT ACTION:** Phase 7 (changelog), Phase 10 (Export-API.ps1 + Update-Snippets.ps1), then Phase 12
+> (push spec `client.tsp`/`tspconfig.yaml` to azure-rest-api-specs, re-pin `tsp-location.yaml` commit,
+> final remote-mode regen). Also run `dotnet format` / pre-commit checks before the PR.
 >
 > **What was done (fix #3 — the 2020→2025 model bump, Path 1 / C-1 modernize):** reintroduced all 25
 > custom `Models/*.cs` modernized to the new emitter — `[CodeGenModel]`→`[CodeGenType]`, deleted
@@ -105,7 +106,7 @@ before the final PR (Phase 12).**
 | 6 — Build-fix cycle | ✅ | **DONE.** Full model-bump reconciled (Path 1 / C-1). `src` builds clean across all TFMs. See fix #3 parts 1–4 below. |
 | 7 — Changelog | ⏭️ | |
 | 8 — Test project build | ✅ | **DONE.** `tests` build clean. Suppressed generated model-factory overloads that clashed with shipped custom signatures; dropped stale `Azure.Security.Attestation.Models` using in samples. |
-| 9 — Test execution | 🔄 | **NEXT.** Run `dotnet test --filter TestCategory!=Live`. |
+| 9 — Test execution | ✅ | **18/20 pass.** Fixed `TestGetAttestationResult` (int64 timestamps + decoupled `object Confirmation`). 2 remaining failures = `GetCertificates` stale-recording (needs live re-record; not a code bug). |
 | 10 — Finalization (Export-API, snippets) | ⏭️ | |
 | 11 — ApiCompat reconciliation | ✅ | **DONE** (with src build). Nested `[JsonConverter]` restored; `PolicyCertificatesModificationResult` ctor/setters restored. GA — no baseline suppression used. |
 | 12 — Commit spec `client.tsp` + PRs | ⏭️ | Spec edits (`client.tsp` @@access/@@usage + `tspconfig.yaml`) must be pushed & pinned in tsp-location.yaml |
