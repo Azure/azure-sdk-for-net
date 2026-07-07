@@ -128,16 +128,16 @@ namespace Azure.Generator.Management.Providers
                 InputModel.IsDynamicModel);
         }
 
-        private static SystemObjectModelProvider RegisterSystemObjectModelProvider(CSharpType systemType, InputModelType inputModel)
+        private static InheritableSystemObjectModelProvider RegisterSystemObjectModelProvider(CSharpType systemType, InputModelType inputModel)
         {
             var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
             if (typeMap.TryGetValue(systemType, out var existingProvider) &&
-                existingProvider is SystemObjectModelProvider existingSystemObjectModelProvider)
+                existingProvider is InheritableSystemObjectModelProvider existingSystemObjectModelProvider)
             {
                 return existingSystemObjectModelProvider;
             }
 
-            var systemObjectModelProvider = new SystemObjectModelProvider(systemType, inputModel);
+            var systemObjectModelProvider = new InheritableSystemObjectModelProvider(systemType, inputModel);
             typeMap[systemType] = systemObjectModelProvider;
             if (systemType.IsFrameworkType)
             {

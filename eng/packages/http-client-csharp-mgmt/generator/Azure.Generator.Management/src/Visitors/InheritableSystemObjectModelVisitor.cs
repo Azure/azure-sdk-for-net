@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
-using Azure.ResourceManager.Models;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -13,14 +13,12 @@ using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Azure.Generator.Management.Visitors;
 
 internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 {
-    private static readonly CSharpType _resourceDataType = new(typeof(ResourceData));
-    private static readonly CSharpType _trackedResourceDataType = new(typeof(TrackedResourceData));
-
     // TODO: Remove this visitor once MTG fully supports inheritable system model replacements.
     // See https://github.com/microsoft/typespec/issues/10787.
     protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
@@ -124,7 +122,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             if (currentModel is SystemObjectModelProvider systemObjectModelProvider)
             {
-                AddKnownFrameworkBaseProperties(systemObjectModelProvider, basePropertyNames, baseWirePaths);
+                AddInheritedSystemObjectProperties(systemObjectModelProvider, basePropertyNames, baseWirePaths);
             }
 
             foreach (var property in currentModel.Properties.Concat(currentModel.CustomCodeView?.Properties ?? []))
@@ -140,35 +138,32 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         return new BaseModelPropertyInfo(basePropertyNames, baseWirePaths);
     }
 
-    private static void AddKnownFrameworkBaseProperties(SystemObjectModelProvider systemObjectModelProvider, HashSet<string> basePropertyNames, HashSet<string> baseWirePaths)
+    private static void AddInheritedSystemObjectProperties(SystemObjectModelProvider systemObjectModelProvider, HashSet<string> basePropertyNames, HashSet<string> baseWirePaths)
     {
-        if (AreSameFrameworkType(systemObjectModelProvider.SystemType, _trackedResourceDataType))
-        {
-            basePropertyNames.Add("Location");
-            basePropertyNames.Add("Tags");
-            baseWirePaths.Add("location");
-            baseWirePaths.Add("tags");
-        }
+        var properties = systemObjectModelProvider is InheritableSystemObjectModelProvider inheritableSystemObjectModelProvider
+            ? inheritableSystemObjectModelProvider.InheritedProperties
+            : GetFrameworkProperties(systemObjectModelProvider.SystemType);
 
-        if (AreSameFrameworkType(systemObjectModelProvider.SystemType, _resourceDataType) ||
-            AreSameFrameworkType(systemObjectModelProvider.SystemType, _trackedResourceDataType))
+        foreach (var property in properties)
         {
-            basePropertyNames.Add("Id");
-            basePropertyNames.Add("Name");
-            basePropertyNames.Add("ResourceType");
-            basePropertyNames.Add("SystemData");
-            baseWirePaths.Add("id");
-            baseWirePaths.Add("name");
-            baseWirePaths.Add("type");
-            baseWirePaths.Add("systemData");
+            basePropertyNames.Add(property.Name);
+            if (property.WirePath is not null)
+            {
+                baseWirePaths.Add(property.WirePath);
+            }
         }
     }
 
-    private static bool AreSameFrameworkType(CSharpType type, CSharpType frameworkType)
-        => type.AreNamesEqual(frameworkType) ||
-            (type.IsFrameworkType &&
-             frameworkType.IsFrameworkType &&
-             type.FrameworkType == frameworkType.FrameworkType);
+    private static IReadOnlyList<InheritedSystemObjectProperty> GetFrameworkProperties(CSharpType systemType)
+        => systemType.IsFrameworkType
+            ? [.. systemType.FrameworkType.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                .Select(property => new InheritedSystemObjectProperty(property.Name, GetWirePath(property)))]
+            : [];
+
+    private static string? GetWirePath(PropertyInfo property)
+        => property.GetCustomAttributes(inherit: true)
+            .FirstOrDefault(attribute => attribute.GetType().Name == "WirePathAttribute")
+            ?.ToString();
 
     private static bool IsCanonicalDuplicateWireProperty(PropertyProvider property, HashSet<string> baseWirePaths)
     {
