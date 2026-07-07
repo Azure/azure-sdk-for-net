@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
         // This method body is copied from the generated PersistableModelCreateCore; the customization changes
         // only the return type from ManagedRuleSetDefinition to ResourceData so it matches TrackedResourceData.
-        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60675 is fixed.
+        // TODO: Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60675 is fixed.
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         // This method body is copied from the generated JsonModelWriteCore; the customization changes
         // the method modifier from "virtual" to "override" and calls the restored TrackedResourceData
         // base writer so inherited resource fields keep their previous wire shape.
-        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60675 is fixed.
+        // TODO: Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60675 is fixed.
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         // This method body is copied from the generated JsonModelCreateCore; the customization changes
         // only the return type from ManagedRuleSetDefinition to ResourceData so it matches TrackedResourceData.
-        // Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60675 is fixed.
+        // TODO: Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/60675 is fixed.
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
