@@ -19,6 +19,17 @@ namespace Azure.Generator.Management.Utilities
         /// Builds the operation method parameters by taking parameters from the convenience method
         /// and filtering out contextual parameters that can be derived from the resource identifier.
         /// </summary>
+        public static ParameterContextRegistry BuildParameterMapping(
+            OperationContext operationContext,
+            TypeProvider enclosingTypeProvider,
+            RequestPathPattern operationPath)
+        {
+            var parameterMapping = operationContext.BuildParameterMapping(operationPath);
+            return enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider
+                ? parameterMapping.WithContextualParameterOverrides(collectionProvider.GetFixedResourcePathParameterMappings(operationPath))
+                : parameterMapping;
+        }
+
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,

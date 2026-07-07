@@ -1425,30 +1425,5 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(registry.TryGetValue("parentName", out var parentNameMapping), Is.True);
             Assert.That(parentNameMapping!.ContextualParameter, Is.Not.Null);
         }
-
-        [Test]
-        public void ValidateParameterMapping_CollectionFixedResourcePathConstant_SubstitutedAndContextual()
-        {
-            var parentPath = new RequestPathPattern(
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}");
-            var resourcePath = new RequestPathPattern(
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/AzureEndpoints/{endpointName}");
-            var operationContext = OperationContext.Create(parentPath, resourcePath);
-
-            var operationPath = new RequestPathPattern(
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}");
-
-            var registry = operationContext.BuildParameterMapping(operationPath);
-
-            Assert.That(registry.TryGetValue("endpointType", out var endpointTypeMapping), Is.True);
-            Assert.That(endpointTypeMapping!.ContextualParameter, Is.Not.Null);
-            Assert.That(endpointTypeMapping.ContextualParameter!.BuildValueExpression(_idVariable).ToDisplayString(), Is.EqualTo("\"AzureEndpoints\""));
-
-            Assert.That(registry.TryGetValue("endpointName", out var endpointNameMapping), Is.True);
-            Assert.That(endpointNameMapping!.ContextualParameter, Is.Null);
-
-            Assert.That(registry.TryGetValue("profileName", out var profileNameMapping), Is.True);
-            Assert.That(profileNameMapping!.ContextualParameter, Is.Not.Null);
-        }
     }
 }

@@ -64,17 +64,17 @@ namespace Azure.Generator.Management.Providers
 
             var contextualPath = GetContextualPath(resourceMetadata);
             (_get, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
-            _operationContext = InitializeContext(this, contextualPath, resourceMetadata.ResourceIdPattern, _getAlls.Count > 0 ? _getAlls[0] : null);
+            _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
 
             // this depends on _getAlls being initialized
             (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
 
-        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, RequestPathPattern resourceIdPattern, ResourceMethod? canonicalGetAll)
+        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, ResourceMethod? canonicalGetAll)
         {
             if (canonicalGetAll is null)
             {
-                return OperationContext.Create(contextualPath, resourceIdPattern);
+                return OperationContext.Create(contextualPath);
             }
 
             var secondaryContextualPath = canonicalGetAll.OperationPath;
@@ -88,7 +88,7 @@ namespace Azure.Generator.Management.Providers
                     targetCrossLanguageDefinitionId: canonicalGetAll.InputMethod.CrossLanguageDefinitionId
                 );
             }
-            return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField, resourceIdPattern);
+            return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField);
         }
 
         private FieldProvider FindField(string variableName)
@@ -203,6 +203,47 @@ namespace Azure.Generator.Management.Providers
 
         public ResourceClientProvider Resource => _resource;
         public IReadOnlyList<ParameterProvider> PathParameters => _extraCtorParameters;
+
+        internal IReadOnlyList<ParameterContextMapping> GetFixedResourcePathParameterMappings(RequestPathPattern operationPath)
+        {
+            var resourcePath = _resource.ResourceIdPattern;
+            var mappings = new List<ParameterContextMapping>();
+
+            for (int i = 0; i < operationPath.Count && i < resourcePath.Count; i++)
+            {
+                var operationSegment = operationPath[i];
+                var resourceSegment = resourcePath[i];
+                if (operationSegment.IsConstant && resourceSegment.IsConstant)
+                {
+                    if (!operationSegment.Equals(resourceSegment))
+                    {
+                        break;
+                    }
+                    continue;
+                }
+
+                if (!operationSegment.IsConstant && !resourceSegment.IsConstant)
+                {
+                    continue;
+                }
+
+                if (!operationSegment.IsConstant && resourceSegment.IsConstant)
+                {
+                    if (i >= _operationContext.ContextualPath.Count)
+                    {
+                        var fixedValue = resourceSegment.Value;
+                        mappings.Add(new ParameterContextMapping(
+                            operationSegment.VariableName,
+                            new ContextualParameter(fixedValue, operationSegment.VariableName, _ => Literal(fixedValue))));
+                    }
+                    continue;
+                }
+
+                break;
+            }
+
+            return mappings;
+        }
 
         // Cached Get method providers for reuse in other places
         public MethodProvider? GetAsyncMethodProvider => _getAsyncMethodProvider ??= BuildGetMethod(isAsync: true);

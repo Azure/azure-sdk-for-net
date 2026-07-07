@@ -59,7 +59,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
-            _parameterMapping = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+            _parameterMapping = OperationMethodParameterHelper.BuildParameterMapping(_operationContext, enclosingType, new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _restClientField = restClientInfo.RestClient;
 
