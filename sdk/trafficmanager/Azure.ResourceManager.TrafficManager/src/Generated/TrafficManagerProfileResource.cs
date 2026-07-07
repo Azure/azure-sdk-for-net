@@ -603,6 +603,32 @@ namespace Azure.ResourceManager.TrafficManager
             return GetCachedClient(client => new AzureEndpointTrafficManagerEndpointCollection(client, Id));
         }
 
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AzureEndpointTrafficManagerEndpointResource>> GetAzureEndpointTrafficManagerEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetAzureEndpointTrafficManagerEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AzureEndpointTrafficManagerEndpointResource> GetAzureEndpointTrafficManagerEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetAzureEndpointTrafficManagerEndpoints().Get(endpointName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ExternalEndpointTrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
         /// <returns> An object representing collection of ExternalEndpointTrafficManagerEndpoints and their operations over a ExternalEndpointTrafficManagerEndpointResource. </returns>
         public virtual ExternalEndpointTrafficManagerEndpointCollection GetExternalEndpointTrafficManagerEndpoints()
@@ -610,11 +636,63 @@ namespace Azure.ResourceManager.TrafficManager
             return GetCachedClient(client => new ExternalEndpointTrafficManagerEndpointCollection(client, Id));
         }
 
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExternalEndpointTrafficManagerEndpointResource>> GetExternalEndpointTrafficManagerEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetExternalEndpointTrafficManagerEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExternalEndpointTrafficManagerEndpointResource> GetExternalEndpointTrafficManagerEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetExternalEndpointTrafficManagerEndpoints().Get(endpointName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of NestedEndpointTrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
         /// <returns> An object representing collection of NestedEndpointTrafficManagerEndpoints and their operations over a NestedEndpointTrafficManagerEndpointResource. </returns>
         public virtual NestedEndpointTrafficManagerEndpointCollection GetNestedEndpointTrafficManagerEndpoints()
         {
             return GetCachedClient(client => new NestedEndpointTrafficManagerEndpointCollection(client, Id));
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NestedEndpointTrafficManagerEndpointResource>> GetNestedEndpointTrafficManagerEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetNestedEndpointTrafficManagerEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NestedEndpointTrafficManagerEndpointResource> GetNestedEndpointTrafficManagerEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetNestedEndpointTrafficManagerEndpoints().Get(endpointName, cancellationToken);
         }
     }
 }

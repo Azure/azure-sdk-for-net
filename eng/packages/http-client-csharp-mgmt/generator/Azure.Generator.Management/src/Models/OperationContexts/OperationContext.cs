@@ -36,17 +36,29 @@ internal class OperationContext
 {
     public static OperationContext Create(RequestPathPattern contextualPath)
     {
-        return new OperationContext(contextualPath, null, null);
+        return new OperationContext(contextualPath, null, null, null);
+    }
+
+    public static OperationContext Create(RequestPathPattern contextualPath, RequestPathPattern fixedResourcePath)
+    {
+        return new OperationContext(contextualPath, null, null, fixedResourcePath);
     }
 
     public static OperationContext Create(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector)
     {
-        return new OperationContext(contextualPath, secondaryContextualPath, fieldSelector);
+        return new OperationContext(contextualPath, secondaryContextualPath, fieldSelector, null);
+    }
+
+    public static OperationContext Create(RequestPathPattern contextualPath, RequestPathPattern secondaryContextualPath, Func<string, FieldProvider> fieldSelector, RequestPathPattern fixedResourcePath)
+    {
+        return new OperationContext(contextualPath, secondaryContextualPath, fieldSelector, fixedResourcePath);
     }
 
     public RequestPathPattern ContextualPath { get; }
 
     public RequestPathPattern? SecondaryContextualPath { get; }
+
+    public RequestPathPattern? FixedResourcePath { get; }
 
     public IReadOnlyList<ContextualParameter> ContextualPathParameters { get; }
 
@@ -60,10 +72,12 @@ internal class OperationContext
     /// <param name="secondaryContextualPath">An optional secondary request path pattern that provides additional context for the operation. Can be null
     /// if no secondary context is required.</param>
     /// <param name="fieldSelector">The function to get the corresponding field for secondary contextual parameters.</param>
-    private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector)
+    /// <param name="fixedResourcePath">An optional fixed resource path used to substitute operation variables with known constant path segments.</param>
+    private OperationContext(RequestPathPattern contextualPath, RequestPathPattern? secondaryContextualPath, Func<string, FieldProvider>? fieldSelector, RequestPathPattern? fixedResourcePath)
     {
         ContextualPath = contextualPath;
         SecondaryContextualPath = secondaryContextualPath;
+        FixedResourcePath = fixedResourcePath;
         ContextualPathParameters = BuildContextualParameters(contextualPath);
         SecondaryContextualPathParameters = secondaryContextualPath != null && fieldSelector != null ?
             BuildSecondaryContextualParameters(contextualPath, secondaryContextualPath, fieldSelector) :
@@ -315,7 +329,7 @@ internal class OperationContext
         // Rewrite operation path variables that the contextual path has already pinned to a
         // constant value. This allows the segment matching below to align operation segments
         // with contextual segments even after dynamic-parent-type expansion.
-        var (effectiveOperationPath, constantMappings) = SubstituteConstantsFromContextualPath(operationPath, ContextualPath);
+        var (effectiveOperationPath, constantMappings) = SubstituteConstantsFromContextualPath(operationPath, FixedResourcePath ?? ContextualPath);
 
         // we need to find the sharing part between contextual path and the incoming path
         var sharedSegmentsCount = RequestPathPattern.GetMaximumSharingSegmentsCount(ContextualPath, effectiveOperationPath);

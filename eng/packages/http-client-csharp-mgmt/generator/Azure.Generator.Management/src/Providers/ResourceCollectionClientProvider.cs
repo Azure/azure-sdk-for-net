@@ -64,17 +64,17 @@ namespace Azure.Generator.Management.Providers
 
             var contextualPath = GetContextualPath(resourceMetadata);
             (_get, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
-            _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
+            _operationContext = InitializeContext(this, contextualPath, resourceMetadata.ResourceIdPattern, _getAlls.Count > 0 ? _getAlls[0] : null);
 
             // this depends on _getAlls being initialized
             (_extraCtorParameters, _extraFields) = BuildExtraConstructorParametersAndFields();
         }
 
-        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, ResourceMethod? canonicalGetAll)
+        private static OperationContext InitializeContext(ResourceCollectionClientProvider enclosingType, RequestPathPattern contextualPath, RequestPathPattern resourceIdPattern, ResourceMethod? canonicalGetAll)
         {
             if (canonicalGetAll is null)
             {
-                return OperationContext.Create(contextualPath);
+                return OperationContext.Create(contextualPath, resourceIdPattern);
             }
 
             var secondaryContextualPath = canonicalGetAll.OperationPath;
@@ -88,7 +88,7 @@ namespace Azure.Generator.Management.Providers
                     targetCrossLanguageDefinitionId: canonicalGetAll.InputMethod.CrossLanguageDefinitionId
                 );
             }
-            return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField);
+            return OperationContext.Create(contextualPath, secondaryContextualPath, enclosingType.FindField, resourceIdPattern);
         }
 
         private FieldProvider FindField(string variableName)
