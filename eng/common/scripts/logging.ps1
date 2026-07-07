@@ -132,7 +132,7 @@ function ConvertTo-DevOpsLoggingValue($value) {
     return ""
   }
 
-  return "$value".Replace('%', '%AZP25').Replace("`r", '%0D').Replace("`n", '%0A')
+  return "$value".Replace('%', '%25').Replace(';', '%3B').Replace(']', '%5D').Replace("`r", '%0D').Replace("`n", '%0A')
 }
 
 function Set-PipelineVariable($Name, $Value = "", [switch]$IsOutput, [switch]$IsSecret) {
