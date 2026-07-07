@@ -28,7 +28,7 @@ namespace Azure.Provisioning.CostManagement
         /// <summary> Creates a new GenerateDetailedCostReportOperationStatuses. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public GenerateDetailedCostReportOperationStatuses(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/operationStatus", resourceVersion ?? "2025-03-01")
+        internal GenerateDetailedCostReportOperationStatuses(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CostManagement/operationStatus", resourceVersion ?? "2025-03-01")
         {
         }
 
