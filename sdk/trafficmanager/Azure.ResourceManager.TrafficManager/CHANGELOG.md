@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed concrete Traffic Manager endpoint collection APIs to use the collection's endpoint type instead of requiring callers to pass it.
+
 ### Other Changes
 
 ## 1.2.0-beta.3 (2026-06-30)
