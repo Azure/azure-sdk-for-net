@@ -33,7 +33,7 @@ namespace Azure.Generator.Provisioning.Providers
         public ProvisioningModelProvider(InputModelType inputModel) : base(inputModel)
         {
             _inputModel = inputModel;
-            _hasSettableUsage = ProvisioningGenerator.Instance.OutputLibrary.IsModelSettable(inputModel);
+            _hasSettableUsage = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
         }
 
         protected override string BuildNamespace()

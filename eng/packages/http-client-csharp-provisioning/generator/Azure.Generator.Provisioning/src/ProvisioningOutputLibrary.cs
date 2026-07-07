@@ -108,12 +108,6 @@ namespace Azure.Generator.Provisioning
             return resource;
         }
 
-        internal bool IsModelSettable(InputModelType model)
-            => ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(model);
-
-        internal bool IsResourceSettable(InputModelType model)
-            => ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(model);
-
         /// <inheritdoc/>
         protected override IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
         {
