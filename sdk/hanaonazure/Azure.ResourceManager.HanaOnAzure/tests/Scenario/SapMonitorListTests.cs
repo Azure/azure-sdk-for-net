@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Tests.Scenario
         [SetUp]
         public async Task ClearAndInitialize()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
-                await CreateCommonClient();
-            }
+            await CreateCommonClient();
         }
 
         [RecordedTest]
