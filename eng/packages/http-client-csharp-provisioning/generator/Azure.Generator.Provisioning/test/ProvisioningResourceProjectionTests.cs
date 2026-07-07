@@ -250,6 +250,29 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void UppercaseSerializedNameIsNotTreatedAsResourceNameMetadata()
+        {
+            var uppercaseNameProperty = CreateProperty("Name", isRequired: true, serializedName: "Name");
+            var model = CreateModel("ReadOnlyWidget", [uppercaseNameProperty]);
+            var readOnlyResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(uppercaseNameProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+        }
+
+        [Test]
         public void SingletonResourceNameIsNotSettable()
         {
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -539,7 +562,7 @@ namespace Azure.Generator.Provisioning.Tests
                 .SetValue(outputLibrary, resourcesByModel);
         }
 
-        private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false)
+        private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, string? serializedName = null)
             => new(
                 name: name,
                 summary: null,
@@ -552,7 +575,7 @@ namespace Azure.Generator.Provisioning.Tests
                 isHttpMetadata: false,
                 access: null,
                 isDiscriminator: isDiscriminator,
-                serializedName: name.ToVariableName(),
-                serializationOptions: new(json: new(name.ToVariableName())));
+                serializedName: serializedName ?? name.ToVariableName(),
+                serializationOptions: new(json: new(serializedName ?? name.ToVariableName())));
     }
 }

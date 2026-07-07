@@ -31,8 +31,7 @@
             "$ref": "1"
           },
           "doc": "Indicates the operation is initiated by a user.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "4",
@@ -46,8 +45,7 @@
             "$ref": "1"
           },
           "doc": "Indicates the operation is initiated by a system.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "5",
@@ -61,8 +59,7 @@
             "$ref": "1"
           },
           "doc": "Indicates the operation is initiated by a user or system.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -70,8 +67,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "6",
@@ -98,8 +94,7 @@
             "$ref": "6"
           },
           "doc": "Actions are for internal-only APIs.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -107,8 +102,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "9",
@@ -135,8 +129,7 @@
             "$ref": "9"
           },
           "doc": "The resource is being created.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "12",
@@ -150,8 +143,7 @@
             "$ref": "9"
           },
           "doc": "The resource has been created.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "13",
@@ -165,8 +157,7 @@
             "$ref": "9"
           },
           "doc": "The resource is being deleted.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "14",
@@ -180,8 +171,7 @@
             "$ref": "9"
           },
           "doc": "The resource creation or deletion has failed.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "15",
@@ -195,8 +185,7 @@
             "$ref": "9"
           },
           "doc": "The resource creation or deletion has been canceled.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -204,8 +193,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "16",
@@ -232,8 +220,7 @@
             "$ref": "16"
           },
           "doc": "Public network access is enabled.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "19",
@@ -247,8 +234,7 @@
             "$ref": "16"
           },
           "doc": "Public network access is disabled.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -256,8 +242,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "20",
@@ -284,8 +269,7 @@
             "$ref": "20"
           },
           "doc": "The free tier.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "23",
@@ -299,8 +283,7 @@
             "$ref": "20"
           },
           "doc": "Standard tier with S1 throughput.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "24",
@@ -314,8 +297,7 @@
             "$ref": "20"
           },
           "doc": "Premium tier with P1 throughput.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -323,8 +305,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "25",
@@ -351,8 +332,7 @@
             "$ref": "25"
           },
           "doc": "Create a new configuration store.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "28",
@@ -366,8 +346,7 @@
             "$ref": "25"
           },
           "doc": "Recover a soft-deleted configuration store.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -375,8 +354,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "29",
@@ -403,8 +381,7 @@
             "$ref": "29"
           },
           "doc": "The entity was created by a user.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "32",
@@ -418,8 +395,7 @@
             "$ref": "29"
           },
           "doc": "The entity was created by an application.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "33",
@@ -433,8 +409,7 @@
             "$ref": "29"
           },
           "doc": "The entity was created by a managed identity.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "34",
@@ -448,8 +423,7 @@
             "$ref": "29"
           },
           "doc": "The entity was created by a key.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -457,8 +431,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "35",
@@ -485,8 +458,7 @@
             "$ref": "35"
           },
           "doc": "Resource has been created.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "38",
@@ -500,8 +472,7 @@
             "$ref": "35"
           },
           "doc": "Resource creation failed.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "39",
@@ -515,8 +486,7 @@
             "$ref": "35"
           },
           "doc": "Resource creation was canceled.",
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -524,8 +494,7 @@
       "isFixed": false,
       "isFlags": false,
       "usage": "LroPolling",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "40",
@@ -551,8 +520,7 @@
           "enumType": {
             "$ref": "40"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         },
         {
           "$id": "43",
@@ -565,8 +533,7 @@
           "enumType": {
             "$ref": "40"
           },
-          "decorators": [],
-          "isExactName": false
+          "decorators": []
         }
       ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
@@ -574,8 +541,7 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "constants": [
@@ -593,8 +559,7 @@
         "decorators": []
       },
       "value": "Periodic",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "46",
@@ -610,13 +575,12 @@
         "decorators": []
       },
       "value": "Continuous",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "48",
       "kind": "constant",
-      "name": "ListAccept",
+      "name": "listContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -627,13 +591,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "50",
       "kind": "constant",
-      "name": "ListAccept1",
+      "name": "createOrUpdateContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -644,13 +607,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "52",
       "kind": "constant",
-      "name": "ListAccept2",
+      "name": "createOrUpdateContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -661,13 +623,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "54",
       "kind": "constant",
-      "name": "ListAccept3",
+      "name": "createOrUpdateContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -678,13 +639,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "56",
       "kind": "constant",
-      "name": "ListAccept4",
+      "name": "createOrUpdateContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -695,13 +655,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "58",
       "kind": "constant",
-      "name": "ListAccept5",
+      "name": "getContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -712,13 +671,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "60",
       "kind": "constant",
-      "name": "ListAccept6",
+      "name": "updateContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -729,13 +687,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "62",
       "kind": "constant",
-      "name": "ListAccept7",
+      "name": "updateContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -746,13 +703,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "64",
       "kind": "constant",
-      "name": "ListAccept8",
+      "name": "updateContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -763,13 +719,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "66",
       "kind": "constant",
-      "name": "ListAccept9",
+      "name": "updateContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -780,13 +735,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "68",
       "kind": "constant",
-      "name": "ListAccept10",
+      "name": "listContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -797,13 +751,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "70",
       "kind": "constant",
-      "name": "ListAccept11",
+      "name": "listBySubscriptionContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -814,13 +767,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "72",
       "kind": "constant",
-      "name": "ListAccept12",
+      "name": "createOrUpdateContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -831,13 +783,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "74",
       "kind": "constant",
-      "name": "ListAccept13",
+      "name": "createOrUpdateContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -848,13 +799,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "76",
       "kind": "constant",
-      "name": "ListAccept14",
+      "name": "getContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -865,13 +815,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "78",
       "kind": "constant",
-      "name": "ListAccept15",
+      "name": "listContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -882,13 +831,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "80",
       "kind": "constant",
-      "name": "ListAccept16",
+      "name": "getContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -899,13 +847,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "82",
       "kind": "constant",
-      "name": "ListAccept17",
+      "name": "createOrUpdateContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -916,13 +863,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "84",
       "kind": "constant",
-      "name": "ListAccept18",
+      "name": "createOrUpdateContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -933,13 +879,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "86",
       "kind": "constant",
-      "name": "ListAccept19",
+      "name": "listContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -950,13 +895,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "88",
       "kind": "constant",
-      "name": "ListAccept20",
+      "name": "getContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -967,13 +911,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "90",
       "kind": "constant",
-      "name": "ListAccept21",
+      "name": "createOrUpdateContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -984,13 +927,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "92",
       "kind": "constant",
-      "name": "ListAccept22",
+      "name": "createOrUpdateContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1001,13 +943,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "94",
       "kind": "constant",
-      "name": "ListAccept23",
+      "name": "createOrUpdateContentType10",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1018,13 +959,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "96",
       "kind": "constant",
-      "name": "ListAccept24",
+      "name": "createOrUpdateContentType11",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1035,13 +975,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "98",
       "kind": "constant",
-      "name": "ListAccept25",
+      "name": "listContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1052,13 +991,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "100",
       "kind": "constant",
-      "name": "ListAccept26",
+      "name": "getByRevisionNumberContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1069,13 +1007,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "102",
       "kind": "constant",
-      "name": "ListAccept27",
+      "name": "getContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1086,13 +1023,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "104",
       "kind": "constant",
-      "name": "ListAccept28",
+      "name": "createOrUpdateContentType12",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1103,13 +1039,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "106",
       "kind": "constant",
-      "name": "ListAccept29",
+      "name": "createOrUpdateContentType13",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1120,13 +1055,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "108",
       "kind": "constant",
-      "name": "ListAccept30",
+      "name": "createOrUpdateContentType14",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1137,13 +1071,12 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     },
     {
       "$id": "110",
       "kind": "constant",
-      "name": "ListAccept31",
+      "name": "createOrUpdateContentType15",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1154,8 +1087,7 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": [],
-      "isExactName": false
+      "decorators": []
     }
   ],
   "models": [
@@ -1178,7 +1110,6 @@
           "name": "OperationListResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "113",
@@ -1210,7 +1141,6 @@
                   "name": "Operation"
                 }
               },
-              "isExactName": false,
               "properties": [
                 {
                   "$id": "116",
@@ -1236,8 +1166,7 @@
                       "name": "name"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "118",
@@ -1263,8 +1192,7 @@
                       "name": "isDataAction"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "120",
@@ -1291,7 +1219,6 @@
                         "name": "OperationDisplay"
                       }
                     },
-                    "isExactName": false,
                     "properties": [
                       {
                         "$id": "122",
@@ -1317,8 +1244,7 @@
                             "name": "provider"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       },
                       {
                         "$id": "124",
@@ -1344,8 +1270,7 @@
                             "name": "resource"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       },
                       {
                         "$id": "126",
@@ -1371,8 +1296,7 @@
                             "name": "operation"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       },
                       {
                         "$id": "128",
@@ -1398,8 +1322,7 @@
                             "name": "description"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       }
                     ]
                   },
@@ -1414,8 +1337,7 @@
                       "name": "display"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "130",
@@ -1437,8 +1359,7 @@
                       "name": "origin"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "131",
@@ -1460,8 +1381,7 @@
                       "name": "actionType"
                     }
                   },
-                  "isHttpMetadata": false,
-                  "isExactName": false
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -1479,8 +1399,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "132",
@@ -1513,8 +1432,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1544,7 +1462,6 @@
           "name": "ErrorResponse"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "136",
@@ -1571,7 +1488,6 @@
                 "name": "ErrorDetail"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "138",
@@ -1597,8 +1513,7 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "140",
@@ -1624,8 +1539,7 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "142",
@@ -1651,8 +1565,7 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "144",
@@ -1681,8 +1594,7 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "146",
@@ -1713,7 +1625,6 @@
                         "name": "ErrorAdditionalInfo"
                       }
                     },
-                    "isExactName": false,
                     "properties": [
                       {
                         "$id": "149",
@@ -1739,8 +1650,7 @@
                             "name": "type"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       },
                       {
                         "$id": "151",
@@ -1766,8 +1676,7 @@
                             "name": "info"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       }
                     ]
                   },
@@ -1785,8 +1694,7 @@
                     "name": "additionalInfo"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -1801,8 +1709,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -1847,7 +1754,6 @@
           "name": "ConfigurationStore"
         }
       },
-      "isExactName": false,
       "baseModel": {
         "$id": "154",
         "kind": "model",
@@ -1868,7 +1774,6 @@
             "name": "TrackedResource"
           }
         },
-        "isExactName": false,
         "baseModel": {
           "$id": "155",
           "kind": "model",
@@ -1889,7 +1794,6 @@
               "name": "Resource"
             }
           },
-          "isExactName": false,
           "properties": [
             {
               "$id": "156",
@@ -1922,8 +1826,7 @@
                   "name": "id"
                 }
               },
-              "isHttpMetadata": false,
-              "isExactName": false
+              "isHttpMetadata": false
             },
             {
               "$id": "159",
@@ -1949,8 +1852,7 @@
                   "name": "name"
                 }
               },
-              "isHttpMetadata": false,
-              "isExactName": false
+              "isHttpMetadata": false
             },
             {
               "$id": "161",
@@ -1983,8 +1885,7 @@
                   "name": "type"
                 }
               },
-              "isHttpMetadata": false,
-              "isExactName": false
+              "isHttpMetadata": false
             },
             {
               "$id": "164",
@@ -2011,7 +1912,6 @@
                     "name": "SystemData"
                   }
                 },
-                "isExactName": false,
                 "properties": [
                   {
                     "$id": "166",
@@ -2037,8 +1937,7 @@
                         "name": "createdBy"
                       }
                     },
-                    "isHttpMetadata": false,
-                    "isExactName": false
+                    "isHttpMetadata": false
                   },
                   {
                     "$id": "168",
@@ -2060,8 +1959,7 @@
                         "name": "createdByType"
                       }
                     },
-                    "isHttpMetadata": false,
-                    "isExactName": false
+                    "isHttpMetadata": false
                   },
                   {
                     "$id": "169",
@@ -2095,8 +1993,7 @@
                         "name": "createdAt"
                       }
                     },
-                    "isHttpMetadata": false,
-                    "isExactName": false
+                    "isHttpMetadata": false
                   },
                   {
                     "$id": "172",
@@ -2122,8 +2019,7 @@
                         "name": "lastModifiedBy"
                       }
                     },
-                    "isHttpMetadata": false,
-                    "isExactName": false
+                    "isHttpMetadata": false
                   },
                   {
                     "$id": "174",
@@ -2145,8 +2041,7 @@
                         "name": "lastModifiedByType"
                       }
                     },
-                    "isHttpMetadata": false,
-                    "isExactName": false
+                    "isHttpMetadata": false
                   },
                   {
                     "$id": "175",
@@ -2180,8 +2075,7 @@
                         "name": "lastModifiedAt"
                       }
                     },
-                    "isHttpMetadata": false,
-                    "isExactName": false
+                    "isHttpMetadata": false
                   }
                 ]
               },
@@ -2196,8 +2090,7 @@
                   "name": "systemData"
                 }
               },
-              "isHttpMetadata": false,
-              "isExactName": false
+              "isHttpMetadata": false
             }
           ]
         },
@@ -2238,8 +2131,7 @@
                 "name": "tags"
               }
             },
-            "isHttpMetadata": false,
-            "isExactName": false
+            "isHttpMetadata": false
           },
           {
             "$id": "182",
@@ -2272,8 +2164,7 @@
                 "name": "location"
               }
             },
-            "isHttpMetadata": false,
-            "isExactName": false
+            "isHttpMetadata": false
           }
         ]
       },
@@ -2303,7 +2194,6 @@
                 "name": "ConfigurationStoreProperties"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "187",
@@ -2325,8 +2215,7 @@
                     "name": "provisioningState"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "188",
@@ -2360,8 +2249,7 @@
                     "name": "creationDate"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "191",
@@ -2387,8 +2275,7 @@
                     "name": "endpoint"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "193",
@@ -2415,7 +2302,6 @@
                       "name": "ConfigurationStoreSku"
                     }
                   },
-                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "195",
@@ -2441,8 +2327,7 @@
                           "name": "name"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -2457,8 +2342,7 @@
                     "name": "sku"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "197",
@@ -2484,8 +2368,7 @@
                     "name": "softDeleteRetentionInDays"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "199",
@@ -2511,8 +2394,7 @@
                     "name": "disableLocalAuth"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "201",
@@ -2539,7 +2421,6 @@
                       "name": "BackupPolicy"
                     }
                   },
-                  "isExactName": false,
                   "discriminatorProperty": {
                     "$id": "203",
                     "kind": "property",
@@ -2564,8 +2445,7 @@
                         "name": "kind"
                       }
                     },
-                    "isHttpMetadata": false,
-                    "isExactName": false
+                    "isHttpMetadata": false
                   },
                   "properties": [
                     {
@@ -2595,8 +2475,7 @@
                           "name": "retentionDays"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "207",
@@ -2622,8 +2501,7 @@
                           "name": "isEnabled"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ],
                   "discriminatedSubtypes": {
@@ -2647,7 +2525,6 @@
                           "name": "PeriodicBackupPolicy"
                         }
                       },
-                      "isExactName": false,
                       "baseModel": {
                         "$ref": "202"
                       },
@@ -2672,8 +2549,7 @@
                               "name": "kind"
                             }
                           },
-                          "isHttpMetadata": false,
-                          "isExactName": false
+                          "isHttpMetadata": false
                         },
                         {
                           "$id": "211",
@@ -2699,8 +2575,7 @@
                               "name": "intervalInHours"
                             }
                           },
-                          "isHttpMetadata": false,
-                          "isExactName": false
+                          "isHttpMetadata": false
                         }
                       ]
                     },
@@ -2724,7 +2599,6 @@
                           "name": "ContinuousBackupPolicy"
                         }
                       },
-                      "isExactName": false,
                       "baseModel": {
                         "$ref": "202"
                       },
@@ -2749,8 +2623,7 @@
                               "name": "kind"
                             }
                           },
-                          "isHttpMetadata": false,
-                          "isExactName": false
+                          "isHttpMetadata": false
                         },
                         {
                           "$id": "215",
@@ -2776,8 +2649,7 @@
                               "name": "tier"
                             }
                           },
-                          "isHttpMetadata": false,
-                          "isExactName": false
+                          "isHttpMetadata": false
                         }
                       ]
                     }
@@ -2794,8 +2666,7 @@
                     "name": "backupPolicy"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "217",
@@ -2817,8 +2688,7 @@
                     "name": "publicNetworkAccess"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "218",
@@ -2840,8 +2710,7 @@
                     "name": "skuTier"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "219",
@@ -2863,8 +2732,7 @@
                     "name": "createMode"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "220",
@@ -2894,7 +2762,6 @@
                         "name": "SubResource"
                       }
                     },
-                    "isExactName": false,
                     "properties": []
                   },
                   "crossLanguageDefinitionId": "TypeSpec.Array",
@@ -2911,8 +2778,7 @@
                     "name": "linkedResources"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -2927,8 +2793,7 @@
               "name": "properties"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "223",
@@ -2961,8 +2826,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         },
         {
           "$id": "225",
@@ -2988,8 +2852,7 @@
               "name": "eTag"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -3039,7 +2902,6 @@
           "name": "ArmOperationStatus"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "228",
@@ -3061,8 +2923,7 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "229",
@@ -3088,8 +2949,7 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "231",
@@ -3115,8 +2975,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "233",
@@ -3150,8 +3009,7 @@
               "name": "startTime"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "236",
@@ -3185,8 +3043,7 @@
               "name": "endTime"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "239",
@@ -3212,8 +3069,7 @@
               "name": "percentComplete"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "241",
@@ -3235,8 +3091,7 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -3259,7 +3114,6 @@
           "name": "ResourceListResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "243",
@@ -3288,8 +3142,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "245",
@@ -3322,8 +3175,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -3354,7 +3206,6 @@
           "name": "KeyValue"
         }
       },
-      "isExactName": false,
       "baseModel": {
         "$id": "249",
         "kind": "model",
@@ -3375,7 +3226,6 @@
             "name": "ProxyResource"
           }
         },
-        "isExactName": false,
         "baseModel": {
           "$ref": "155"
         },
@@ -3407,7 +3257,6 @@
                 "name": "KeyValueProperties"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "252",
@@ -3433,8 +3282,7 @@
                     "name": "value"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "254",
@@ -3460,8 +3308,7 @@
                     "name": "contentType"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -3476,8 +3323,7 @@
               "name": "properties"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "256",
@@ -3510,8 +3356,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     },
@@ -3540,7 +3385,6 @@
           "name": "ResourceListResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "259",
@@ -3569,8 +3413,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "261",
@@ -3603,8 +3446,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -3635,7 +3477,6 @@
           "name": "Item"
         }
       },
-      "isExactName": false,
       "baseModel": {
         "$ref": "249"
       },
@@ -3665,7 +3506,6 @@
                 "name": "ItemProperties"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "267",
@@ -3691,8 +3531,7 @@
                     "name": "value"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "269",
@@ -3718,8 +3557,7 @@
                     "name": "contentType"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "271",
@@ -3750,8 +3588,7 @@
                     "name": "nullableValue"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "274",
@@ -3778,7 +3615,6 @@
                       "name": "ItemAttributes"
                     }
                   },
-                  "isExactName": false,
                   "baseModel": {
                     "$id": "276",
                     "kind": "model",
@@ -3798,7 +3634,6 @@
                         "name": "BaseItemAttributes"
                       }
                     },
-                    "isExactName": false,
                     "properties": [
                       {
                         "$id": "277",
@@ -3824,8 +3659,7 @@
                             "name": "enabled"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       },
                       {
                         "$id": "279",
@@ -3859,8 +3693,7 @@
                             "name": "created"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       },
                       {
                         "$id": "282",
@@ -3894,8 +3727,7 @@
                             "name": "updated"
                           }
                         },
-                        "isHttpMetadata": false,
-                        "isExactName": false
+                        "isHttpMetadata": false
                       }
                     ]
                   },
@@ -3932,8 +3764,7 @@
                           "name": "expires"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -3948,8 +3779,7 @@
                     "name": "attributes"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -3969,8 +3799,7 @@
               "name": "properties"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "288",
@@ -4003,8 +3832,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         },
         {
           "$id": "290",
@@ -4026,8 +3854,7 @@
               "name": "tags"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -4059,7 +3886,6 @@
           "name": "ItemCreateOrUpdateParameters"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "292",
@@ -4081,8 +3907,7 @@
               "name": "tags"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "293",
@@ -4104,8 +3929,7 @@
               "name": "properties"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -4128,7 +3952,6 @@
           "name": "ResourceListResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "295",
@@ -4157,8 +3980,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "297",
@@ -4191,8 +4013,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -4223,7 +4044,6 @@
           "name": "Profile"
         }
       },
-      "isExactName": false,
       "baseModel": {
         "$ref": "249"
       },
@@ -4253,7 +4073,6 @@
                 "name": "ProfileProperties"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "303",
@@ -4279,8 +4098,7 @@
                     "name": "description"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               },
               {
                 "$id": "305",
@@ -4307,7 +4125,6 @@
                       "name": "ProfileSku"
                     }
                   },
-                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "307",
@@ -4333,8 +4150,7 @@
                           "name": "name"
                         }
                       },
-                      "isHttpMetadata": false,
-                      "isExactName": false
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -4349,8 +4165,7 @@
                     "name": "sku"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -4370,8 +4185,7 @@
               "name": "properties"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "309",
@@ -4404,8 +4218,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     },
@@ -4434,7 +4247,6 @@
           "name": "ResourceListResult"
         }
       },
-      "isExactName": false,
       "properties": [
         {
           "$id": "312",
@@ -4463,8 +4275,7 @@
               "name": "value"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "314",
@@ -4497,8 +4308,7 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         }
       ]
     },
@@ -4525,7 +4335,6 @@
           "name": "ExtensionAssignment"
         }
       },
-      "isExactName": false,
       "baseModel": {
         "$id": "318",
         "kind": "model",
@@ -4545,7 +4354,6 @@
             "name": "ExtensionResource"
           }
         },
-        "isExactName": false,
         "baseModel": {
           "$ref": "155"
         },
@@ -4577,7 +4385,6 @@
                 "name": "ExtensionAssignmentProperties"
               }
             },
-            "isExactName": false,
             "properties": [
               {
                 "$id": "321",
@@ -4603,8 +4410,7 @@
                     "name": "displayName"
                   }
                 },
-                "isHttpMetadata": false,
-                "isExactName": false
+                "isHttpMetadata": false
               }
             ]
           },
@@ -4619,8 +4425,7 @@
               "name": "properties"
             }
           },
-          "isHttpMetadata": false,
-          "isExactName": false
+          "isHttpMetadata": false
         },
         {
           "$id": "323",
@@ -4653,8 +4458,7 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": true,
-          "isExactName": false
+          "isHttpMetadata": true
         }
       ]
     },
@@ -4670,7 +4474,6 @@
       "$id": "325",
       "kind": "client",
       "name": "ProvisioningTypeSpecClient",
-      "isExactName": false,
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "methods": [],
       "parameters": [
@@ -4702,8 +4505,7 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "ProvisioningTypeSpec.endpoint",
-          "isExactName": false
+          "crossLanguageDefinitionId": "ProvisioningTypeSpec.endpoint"
         },
         {
           "$id": "329",
@@ -4743,8 +4545,7 @@
                 }
               }
             }
-          ],
-          "isExactName": false
+          ]
         }
       ],
       "initializedBy": 1,
@@ -5174,14 +4975,12 @@
           "$id": "379",
           "kind": "client",
           "name": "Operations",
-          "isExactName": false,
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "380",
               "kind": "paging",
               "name": "list",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -5192,7 +4991,6 @@
               "operation": {
                 "$id": "381",
                 "name": "list",
-                "isExactName": false,
                 "resourceName": "Operations",
                 "doc": "List the operations for the provider",
                 "accessibility": "public",
@@ -5239,8 +5037,7 @@
                       {
                         "$ref": "329"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "385",
@@ -5273,11 +5070,9 @@
                         "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -5292,12 +5087,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -5370,8 +5160,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "ProvisioningTypeSpec.Operations.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "ProvisioningTypeSpec.Operations.endpoint"
             },
             {
               "$ref": "329"
@@ -5394,14 +5183,12 @@
           "$id": "390",
           "kind": "client",
           "name": "ConfigurationStores",
-          "isExactName": false,
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "391",
               "kind": "lro",
               "name": "createOrUpdate",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -5412,7 +5199,6 @@
               "operation": {
                 "$id": "392",
                 "name": "createOrUpdate",
-                "isExactName": false,
                 "resourceName": "ConfigurationStore",
                 "doc": "Create a ConfigurationStore",
                 "accessibility": "public",
@@ -5494,11 +5280,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "399",
@@ -5576,11 +5360,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "405",
@@ -5672,11 +5454,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "409",
@@ -5736,11 +5516,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "413",
@@ -5775,11 +5553,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "415",
@@ -5812,11 +5588,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "417",
@@ -5854,16 +5628,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.createOrUpdate.resource",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "resource"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -5878,12 +5645,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   },
                   {
                     "statusCodes": [
@@ -5921,12 +5683,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -6005,7 +5762,6 @@
               "$id": "422",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -6016,7 +5772,6 @@
               "operation": {
                 "$id": "423",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "ConfigurationStore",
                 "doc": "Get a ConfigurationStore",
                 "accessibility": "public",
@@ -6063,8 +5818,7 @@
                       {
                         "$ref": "396"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "427",
@@ -6109,8 +5863,7 @@
                       {
                         "$ref": "402"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "430",
@@ -6202,11 +5955,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "434",
@@ -6266,11 +6017,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "438",
@@ -6303,11 +6052,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -6322,12 +6069,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -6386,7 +6128,6 @@
               "$id": "441",
               "kind": "lro",
               "name": "update",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -6397,7 +6138,6 @@
               "operation": {
                 "$id": "442",
                 "name": "update",
-                "isExactName": false,
                 "resourceName": "ConfigurationStore",
                 "doc": "Update a ConfigurationStore",
                 "accessibility": "public",
@@ -6444,8 +6184,7 @@
                       {
                         "$ref": "396"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "446",
@@ -6490,8 +6229,7 @@
                       {
                         "$ref": "402"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "449",
@@ -6583,11 +6321,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "453",
@@ -6647,11 +6383,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "457",
@@ -6686,11 +6420,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "459",
@@ -6723,11 +6455,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "461",
@@ -6765,16 +6495,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.update.properties",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "properties"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -6789,12 +6512,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   },
                   {
                     "statusCodes": [
@@ -6826,8 +6544,7 @@
                         }
                       }
                     ],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "PATCH",
@@ -6906,7 +6623,6 @@
               "$id": "466",
               "kind": "lro",
               "name": "delete",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -6917,7 +6633,6 @@
               "operation": {
                 "$id": "467",
                 "name": "delete",
-                "isExactName": false,
                 "resourceName": "ConfigurationStore",
                 "doc": "Delete a ConfigurationStore",
                 "accessibility": "public",
@@ -6964,8 +6679,7 @@
                       {
                         "$ref": "396"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "471",
@@ -7010,8 +6724,7 @@
                       {
                         "$ref": "402"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "474",
@@ -7103,11 +6816,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "478",
@@ -7167,11 +6878,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7205,16 +6914,14 @@
                         }
                       }
                     ],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   },
                   {
                     "statusCodes": [
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "DELETE",
@@ -7274,7 +6981,6 @@
               "$id": "485",
               "kind": "paging",
               "name": "list",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -7285,7 +6991,6 @@
               "operation": {
                 "$id": "486",
                 "name": "list",
-                "isExactName": false,
                 "resourceName": "ConfigurationStore",
                 "doc": "List ConfigurationStore resources by resource group",
                 "accessibility": "public",
@@ -7332,8 +7037,7 @@
                       {
                         "$ref": "396"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "490",
@@ -7378,8 +7082,7 @@
                       {
                         "$ref": "402"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "493",
@@ -7471,11 +7174,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "497",
@@ -7508,11 +7209,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.list.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7527,12 +7226,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7603,7 +7297,6 @@
               "$id": "500",
               "kind": "paging",
               "name": "listBySubscription",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -7614,7 +7307,6 @@
               "operation": {
                 "$id": "501",
                 "name": "listBySubscription",
-                "isExactName": false,
                 "resourceName": "ConfigurationStore",
                 "doc": "List ConfigurationStore resources by subscription ID",
                 "accessibility": "public",
@@ -7661,8 +7353,7 @@
                       {
                         "$ref": "396"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "505",
@@ -7707,8 +7398,7 @@
                       {
                         "$ref": "402"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "508",
@@ -7741,11 +7431,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.listBySubscription.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -7760,12 +7448,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -7859,8 +7542,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStores.endpoint"
             },
             {
               "$ref": "396"
@@ -7888,14 +7570,12 @@
           "$id": "514",
           "kind": "client",
           "name": "KeyValues",
-          "isExactName": false,
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "515",
               "kind": "basic",
               "name": "createOrUpdate",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -7906,7 +7586,6 @@
               "operation": {
                 "$id": "516",
                 "name": "createOrUpdate",
-                "isExactName": false,
                 "resourceName": "KeyValue",
                 "doc": "Create a KeyValue",
                 "accessibility": "public",
@@ -7988,11 +7667,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "523",
@@ -8070,11 +7747,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "529",
@@ -8166,11 +7841,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "533",
@@ -8230,11 +7903,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "537",
@@ -8294,11 +7965,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "541",
@@ -8333,11 +8002,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "543",
@@ -8370,11 +8037,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "545",
@@ -8412,16 +8077,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.createOrUpdate.resource",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "resource"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -8436,12 +8094,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -8512,7 +8165,6 @@
               "$id": "548",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -8523,7 +8175,6 @@
               "operation": {
                 "$id": "549",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "KeyValue",
                 "doc": "Get a KeyValue",
                 "accessibility": "public",
@@ -8570,8 +8221,7 @@
                       {
                         "$ref": "520"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "553",
@@ -8616,8 +8266,7 @@
                       {
                         "$ref": "526"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "556",
@@ -8709,11 +8358,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "560",
@@ -8773,11 +8420,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "564",
@@ -8837,11 +8482,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "568",
@@ -8874,11 +8517,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -8893,12 +8534,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -8960,7 +8596,6 @@
               "$id": "571",
               "kind": "basic",
               "name": "delete",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -8971,7 +8606,6 @@
               "operation": {
                 "$id": "572",
                 "name": "delete",
-                "isExactName": false,
                 "resourceName": "KeyValue",
                 "doc": "Delete a KeyValue",
                 "accessibility": "public",
@@ -9018,8 +8652,7 @@
                       {
                         "$ref": "520"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "576",
@@ -9064,8 +8697,7 @@
                       {
                         "$ref": "526"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "579",
@@ -9157,11 +8789,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "583",
@@ -9221,11 +8851,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "587",
@@ -9285,11 +8913,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9298,16 +8924,14 @@
                       200
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   },
                   {
                     "statusCodes": [
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "DELETE",
@@ -9362,7 +8986,6 @@
               "$id": "592",
               "kind": "paging",
               "name": "list",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -9373,7 +8996,6 @@
               "operation": {
                 "$id": "593",
                 "name": "list",
-                "isExactName": false,
                 "resourceName": "KeyValue",
                 "doc": "List KeyValue resources by ConfigurationStore",
                 "accessibility": "public",
@@ -9420,8 +9042,7 @@
                       {
                         "$ref": "520"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "597",
@@ -9466,8 +9087,7 @@
                       {
                         "$ref": "526"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "600",
@@ -9559,11 +9179,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "604",
@@ -9623,11 +9241,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "608",
@@ -9660,11 +9276,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.list.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -9679,12 +9293,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -9784,8 +9393,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValues.endpoint"
             },
             {
               "$ref": "520"
@@ -9813,14 +9421,12 @@
           "$id": "614",
           "kind": "client",
           "name": "Items",
-          "isExactName": false,
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "615",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -9831,7 +9437,6 @@
               "operation": {
                 "$id": "616",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Item",
                 "doc": "Get a Item",
                 "accessibility": "public",
@@ -9913,11 +9518,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "623",
@@ -9995,11 +9598,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "629",
@@ -10091,11 +9692,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "633",
@@ -10155,11 +9754,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "637",
@@ -10219,11 +9816,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "641",
@@ -10256,11 +9851,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -10275,12 +9868,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -10342,7 +9930,6 @@
               "$id": "644",
               "kind": "basic",
               "name": "createOrUpdate",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -10352,7 +9939,6 @@
               "operation": {
                 "$id": "645",
                 "name": "createOrUpdate",
-                "isExactName": false,
                 "resourceName": "Item",
                 "accessibility": "public",
                 "parameters": [
@@ -10398,8 +9984,7 @@
                       {
                         "$ref": "620"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "649",
@@ -10444,8 +10029,7 @@
                       {
                         "$ref": "626"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "652",
@@ -10537,11 +10121,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "656",
@@ -10601,11 +10183,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "660",
@@ -10665,11 +10245,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "664",
@@ -10704,11 +10282,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "666",
@@ -10741,11 +10317,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "668",
@@ -10783,16 +10357,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.createOrUpdate.resource",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "resource"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -10807,12 +10374,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   },
                   {
                     "statusCodes": [
@@ -10825,12 +10387,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -10901,7 +10458,6 @@
               "$id": "671",
               "kind": "paging",
               "name": "list",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -10912,7 +10468,6 @@
               "operation": {
                 "$id": "672",
                 "name": "list",
-                "isExactName": false,
                 "resourceName": "Item",
                 "doc": "List Item resources by ConfigurationStore",
                 "accessibility": "public",
@@ -10959,8 +10514,7 @@
                       {
                         "$ref": "620"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "676",
@@ -11005,8 +10559,7 @@
                       {
                         "$ref": "626"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "679",
@@ -11098,11 +10651,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "683",
@@ -11162,11 +10713,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "687",
@@ -11199,11 +10748,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.list.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -11218,12 +10765,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -11323,8 +10865,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "ProvisioningTypeSpec.Items.endpoint"
             },
             {
               "$ref": "620"
@@ -11352,14 +10893,12 @@
           "$id": "693",
           "kind": "client",
           "name": "Profiles",
-          "isExactName": false,
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "694",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -11370,7 +10909,6 @@
               "operation": {
                 "$id": "695",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "Profile",
                 "doc": "Get a Profile",
                 "accessibility": "public",
@@ -11452,11 +10990,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "702",
@@ -11534,11 +11070,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "708",
@@ -11630,11 +11164,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "712",
@@ -11694,11 +11226,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "716",
@@ -11758,11 +11288,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "720",
@@ -11795,11 +11323,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profiles.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -11814,12 +11340,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -11881,7 +11402,6 @@
               "$id": "723",
               "kind": "lro",
               "name": "createOrUpdate",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -11892,7 +11412,6 @@
               "operation": {
                 "$id": "724",
                 "name": "createOrUpdate",
-                "isExactName": false,
                 "resourceName": "Profile",
                 "doc": "Create a Profile",
                 "accessibility": "public",
@@ -11939,8 +11458,7 @@
                       {
                         "$ref": "699"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "728",
@@ -11985,8 +11503,7 @@
                       {
                         "$ref": "705"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "731",
@@ -12078,11 +11595,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "735",
@@ -12142,11 +11657,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "739",
@@ -12206,11 +11719,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "743",
@@ -12245,11 +11756,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profiles.createOrUpdate.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "745",
@@ -12282,11 +11791,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profiles.createOrUpdate.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "747",
@@ -12324,16 +11831,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profiles.createOrUpdate.resource",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "resource"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -12348,12 +11848,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   },
                   {
                     "statusCodes": [
@@ -12391,12 +11886,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -12478,7 +11968,6 @@
               "$id": "752",
               "kind": "lro",
               "name": "delete",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -12489,7 +11978,6 @@
               "operation": {
                 "$id": "753",
                 "name": "delete",
-                "isExactName": false,
                 "resourceName": "Profile",
                 "doc": "Delete a Profile",
                 "accessibility": "public",
@@ -12536,8 +12024,7 @@
                       {
                         "$ref": "699"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "757",
@@ -12582,8 +12069,7 @@
                       {
                         "$ref": "705"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "760",
@@ -12675,11 +12161,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "764",
@@ -12739,11 +12223,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "768",
@@ -12803,11 +12285,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -12841,16 +12321,14 @@
                         }
                       }
                     ],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   },
                   {
                     "statusCodes": [
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false,
-                    "serializationOptions": {}
+                    "isErrorResponse": false
                   }
                 ],
                 "httpMethod": "DELETE",
@@ -12913,7 +12391,6 @@
               "$id": "775",
               "kind": "paging",
               "name": "list",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -12924,7 +12401,6 @@
               "operation": {
                 "$id": "776",
                 "name": "list",
-                "isExactName": false,
                 "resourceName": "Profile",
                 "doc": "List Profile resources by ConfigurationStore",
                 "accessibility": "public",
@@ -12971,8 +12447,7 @@
                       {
                         "$ref": "699"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "780",
@@ -13017,8 +12492,7 @@
                       {
                         "$ref": "705"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "783",
@@ -13110,11 +12584,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "787",
@@ -13174,11 +12646,9 @@
                               "pattern": "^[a-zA-Z0-9-]{3,24}$"
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "791",
@@ -13211,11 +12681,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profiles.list.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -13230,12 +12698,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -13335,8 +12798,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profiles.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profiles.endpoint"
             },
             {
               "$ref": "699"
@@ -13364,14 +12826,12 @@
           "$id": "797",
           "kind": "client",
           "name": "ProfileRevisions",
-          "isExactName": false,
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "798",
               "kind": "basic",
               "name": "getByRevisionNumber",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -13382,7 +12842,6 @@
               "operation": {
                 "$id": "799",
                 "name": "getByRevisionNumber",
-                "isExactName": false,
                 "resourceName": "Profile",
                 "doc": "Get a specific revision of a profile.",
                 "accessibility": "public",
@@ -13464,11 +12923,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "806",
@@ -13546,11 +13003,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "812",
@@ -13642,11 +13097,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "816",
@@ -13692,11 +13145,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileRevisions.getByRevisionNumber.configurationStoreName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "820",
@@ -13742,11 +13193,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileRevisions.getByRevisionNumber.profileName",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "824",
@@ -13792,11 +13241,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileRevisions.getByRevisionNumber.revisionNumber",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "828",
@@ -13829,11 +13276,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileRevisions.getByRevisionNumber.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -13848,12 +13293,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -13939,8 +13379,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileRevisions.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileRevisions.endpoint"
             },
             {
               "$ref": "803"
@@ -13972,14 +13411,12 @@
           "$id": "834",
           "kind": "client",
           "name": "ExtensionAssignments",
-          "isExactName": false,
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "methods": [
             {
               "$id": "835",
               "kind": "basic",
               "name": "get",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -13990,7 +13427,6 @@
               "operation": {
                 "$id": "836",
                 "name": "get",
-                "isExactName": false,
                 "resourceName": "ExtensionAssignment",
                 "doc": "Get a ExtensionAssignment",
                 "accessibility": "public",
@@ -14072,11 +13508,9 @@
                               }
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "843",
@@ -14122,11 +13556,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.get.scope",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "847",
@@ -14186,11 +13618,9 @@
                               "pattern": ""
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "851",
@@ -14223,11 +13653,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   }
                 ],
                 "responses": [
@@ -14242,12 +13670,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "GET",
@@ -14285,7 +13708,6 @@
               "$id": "853",
               "kind": "lro",
               "name": "createOrUpdate",
-              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2024-01-01-preview",
@@ -14296,7 +13718,6 @@
               "operation": {
                 "$id": "854",
                 "name": "createOrUpdate",
-                "isExactName": false,
                 "resourceName": "ExtensionAssignment",
                 "doc": "Create a ExtensionAssignment",
                 "accessibility": "public",
@@ -14343,8 +13764,7 @@
                       {
                         "$ref": "840"
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "858",
@@ -14390,11 +13810,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate.scope",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "862",
@@ -14454,11 +13872,9 @@
                               "pattern": ""
                             }
                           }
-                        ],
-                        "isExactName": false
+                        ]
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "866",
@@ -14493,11 +13909,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "868",
@@ -14530,11 +13944,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false
+                    ]
                   },
                   {
                     "$id": "870",
@@ -14572,16 +13984,9 @@
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.createOrUpdate.resource",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": [],
-                        "isExactName": false
+                        "decorators": []
                       }
-                    ],
-                    "isExactName": false,
-                    "serializationOptions": {
-                      "json": {
-                        "name": "resource"
-                      }
-                    }
+                    ]
                   }
                 ],
                 "responses": [
@@ -14596,12 +14001,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   },
                   {
                     "statusCodes": [
@@ -14639,12 +14039,7 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ],
-                    "serializationOptions": {
-                      "json": {
-                        "name": ""
-                      }
-                    }
+                    ]
                   }
                 ],
                 "httpMethod": "PUT",
@@ -14728,8 +14123,7 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.endpoint",
-              "isExactName": false
+              "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignments.endpoint"
             },
             {
               "$ref": "840"
@@ -14762,7 +14156,7 @@
       "flows": [
         {
           "scopes": [
-            "https://management.azure.com/.default"
+            "user_impersonation"
           ],
           "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
         }

@@ -41,7 +41,7 @@ namespace Azure.Generator.Provisioning.Providers
         };
 
         // System properties that should always be required, even when marked readOnly (path parameters)
-        private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> RequiredInputProperties = new(StringComparer.Ordinal)
         {
             "name"
         };
@@ -496,7 +496,9 @@ namespace Azure.Generator.Provisioning.Providers
                 var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
                         && !_createBodyWritableProperties.Contains(serializedName))
                     || OutputOnlyProperties.Contains(serializedName);
-                var isResourceName = string.Equals(serializedName, "name", StringComparison.OrdinalIgnoreCase);
+                // ARM resource name metadata is the wire property exactly named "name".
+                // Keep this comparison case-sensitive so unrelated body properties like "Name" are not treated as metadata.
+                var isResourceName = serializedName == "name";
                 var isSettable = !isOutput && (_hasWritableScopes || isResourceName);
                 var isRequired = RequiredInputProperties.Contains(serializedName)
                     || (prop.IsRequired && _hasWritableScopes);
