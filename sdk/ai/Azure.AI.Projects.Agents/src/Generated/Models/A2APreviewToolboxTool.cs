@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An A2A tool stored in a toolbox. </summary>
-    [Experimental("AAIP001")]
     public partial class A2APreviewToolboxTool : ToolboxTool
     {
         /// <summary> Initializes a new instance of <see cref="A2APreviewToolboxTool"/>. </summary>

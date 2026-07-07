@@ -7,7 +7,6 @@
 
 using System.ClientModel.Primitives;
 using Azure;
-using Azure.Core;
 
 namespace Specs.Azure.Core.Lro.Standard
 {
