@@ -89,7 +89,7 @@ namespace Azure.Provisioning.Batch
         public BatchAccountDetector(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
@@ -595,7 +595,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
         public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
@@ -918,7 +918,7 @@ namespace Azure.Provisioning.Batch
     {
         public NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Batch.BatchAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.Batch.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
