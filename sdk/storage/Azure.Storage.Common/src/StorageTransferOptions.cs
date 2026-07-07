@@ -34,7 +34,7 @@ namespace Azure.Storage
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
-        /// The size of the first range request in bytes. Blobs smaller than this limit will
+        /// The size of the first request in bytes. Blobs smaller than this limit will
         /// be transferred in a single request. Blobs larger than this limit will continue being
         /// transferred in chunks of size <see cref="MaximumTransferSize"/>. This property is a
         /// backwards-compatible facade for <see cref="MaximumTransferSize"/>, which supports
@@ -48,7 +48,7 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// The size of the first range request in bytes. Blobs smaller than this limit will
+        /// The size of the first request in bytes. Blobs smaller than this limit will
         /// be transferred in a single request. Blobs larger than this limit will continue being
         /// transferred in chunks of size <see cref="MaximumTransferSize"/>.
         /// </summary>
