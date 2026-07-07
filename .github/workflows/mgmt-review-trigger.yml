@@ -82,8 +82,9 @@ jobs:
               return 0
             fi
 
-            if ! gh api --paginate "repos/$REPOSITORY/pulls/$pr_number/files" --jq '.[].filename' |
-              grep -Eq '^sdk/[^/]+/Azure\.ResourceManager\.[^/]+/'; then
+            local changed_files
+            changed_files="$(gh api --paginate "repos/$REPOSITORY/pulls/$pr_number/files?per_page=100" --jq '.[].filename')"
+            if ! grep -Eq '^sdk/[^/]+/Azure\.ResourceManager\.[^/]+/' <<< "$changed_files"; then
               echo "Skipping PR #$pr_number; no Azure.ResourceManager.* package files changed."
               return 0
             fi

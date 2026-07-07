@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 using OpenAI.Responses;
 
@@ -20,9 +21,11 @@ public abstract partial class ProjectsAgentTool
     public static BingGroundingTool CreateBingGroundingTool(BingGroundingSearchToolOptions options) => new BingGroundingTool(options);
     /// <summary> Creates a Microsoft Fabric data agent tool with the supplied options. </summary>
     /// <param name="options">Configuration options for the Fabric data agent tool.</param>
+    [Experimental("AAIP001")]
     public static MicrosoftFabricPreviewTool CreateMicrosoftFabricTool(FabricDataAgentToolOptions options) => new MicrosoftFabricPreviewTool(options);
     /// <summary> Creates a SharePoint grounding tool with the supplied options. </summary>
     /// <param name="options">Configuration options for the SharePoint grounding tool.</param>
+    [Experimental("AAIP001")]
     public static SharepointPreviewTool CreateSharepointTool(SharePointGroundingToolOptions options) => new SharepointPreviewTool(options);
     /// <summary> Creates an Azure AI Search tool with the supplied options. </summary>
     /// <param name="options">Optional configuration options for the Azure AI Search tool.</param>
@@ -32,9 +35,11 @@ public abstract partial class ProjectsAgentTool
     public static OpenAPITool CreateOpenApiTool(OpenApiFunctionDefinition definition) => new OpenAPITool(definition);
     /// <summary> Creates a Bing custom search tool with the supplied options. </summary>
     /// <param name="parameters">Configuration options for the Bing custom search tool.</param>
+    [Experimental("AAIP001")]
     public static BingCustomSearchPreviewTool CreateBingCustomSearchTool(BingCustomSearchToolOptions parameters) => new BingCustomSearchPreviewTool(parameters);
     /// <summary> Creates a browser-automation tool with the supplied options. </summary>
     /// <param name="parameters">Configuration options for the browser-automation tool.</param>
+    [Experimental("AAIP001")]
     public static BrowserAutomationPreviewTool CreateBrowserAutomationTool(BrowserAutomationToolOptions parameters) => new BrowserAutomationPreviewTool(parameters);
     /// <summary> Creates a tool that captures structured outputs from the agent. </summary>
     /// <param name="outputs">The structured output definition the agent should produce.</param>
@@ -45,6 +50,7 @@ public abstract partial class ProjectsAgentTool
     /// </summary>
     /// <param name="baseUri">The base URI of the remote agent endpoint.</param>
     /// <param name="agentCardPath">Optional path to the remote agent's agent card.</param>
+    [Experimental("AAIP001")]
     public static ResponseTool CreateA2ATool(Uri baseUri, string agentCardPath = null) => new A2APreviewTool(baseUri)
     {
         AgentCardPath = agentCardPath,
