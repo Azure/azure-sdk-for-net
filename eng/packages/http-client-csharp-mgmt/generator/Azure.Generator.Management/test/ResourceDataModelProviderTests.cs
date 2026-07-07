@@ -149,7 +149,7 @@ namespace Azure.Generator.Mgmt.Tests
             _ = resourceDataModel.Constructors;
             _ = resourceDataModel.SerializationProviders.SelectMany(s => s.Methods).ToArray();
 
-            Assert.That(resourceDataModel.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
+            Assert.That(resourceDataModel.BaseType!.AreNamesEqual(new CSharpType(typeof(TrackedResourceData))), Is.True);
 
             var visitor = new TestableInheritableSystemObjectModelVisitor();
             var result = visitor.InvokePreVisitModel(resourceModel, resourceDataModel);
@@ -213,7 +213,7 @@ namespace Azure.Generator.Mgmt.Tests
             var modelProvider = new ResourceDataModelProvider(inputModel);
             ManagementMockHelpers.SetCustomCodeView(modelProvider, new ExternalResourceDataCustomCodeView());
 
-            Assert.That(modelProvider.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
+            Assert.That(modelProvider.BaseType!.Name, Is.EqualTo("ExternalResourceData"));
 
             var visitor = new TestableInheritableSystemObjectModelVisitor();
             var result = visitor.InvokePreVisitModel(inputModel, modelProvider);
@@ -247,8 +247,7 @@ namespace Azure.Generator.Mgmt.Tests
             var jsonModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelCreateCore");
             var persistableModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "PersistableModelCreateCore");
 
-            Assert.That(resourceDataModel.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
-            Assert.That(resourceDataModel.BaseModelProvider!.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
+            Assert.That(resourceDataModel.BaseType!.AreNamesEqual(new CSharpType(typeof(TrackedResourceData))), Is.True);
             Assert.That(jsonModelCreateCore.Signature.ReturnType!.AreNamesEqual(new CSharpType(typeof(ResourceData))), Is.True);
             Assert.That(persistableModelCreateCore.Signature.ReturnType!.AreNamesEqual(new CSharpType(typeof(ResourceData))), Is.True);
         }
