@@ -49,7 +49,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
 
         private readonly string _methodName;
-        private readonly ResourceOperationKind? _resourceOperationKind;
+        private readonly ResourceOperationKind _resourceOperationKind;
+        private readonly bool _hasTypedLroResultForPublicSurface;
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
@@ -64,25 +65,25 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="operationContext">The contextual path of the enclosing type. </param>
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
+        /// <param name="resourceOperationKind">ARM resource operation kind for CRUD-aware method shaping.</param>
         /// <param name="isAsync">Whether this method is an async method. </param>
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
         /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
-        /// <param name="resourceOperationKind">Optional ARM resource operation kind for CRUD-aware method shaping.</param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             OperationContext operationContext,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
+            ResourceOperationKind resourceOperationKind,
             bool isAsync,
             string? methodName = null,
             FormattableString? description = null,
             bool forceLro = false,
             ResourceClientProvider? explicitResourceClient = null,
-            ParameterProvider? scopeParameter = null,
-            ResourceOperationKind? resourceOperationKind = null)
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
@@ -92,17 +93,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
-            bool isLongRunningOperation = false;
-            bool isFakeLongRunningOperation = false;
-            InitializeLroFlags(
-                _serviceMethod,
-                forceLro: forceLro,
-                ref isLongRunningOperation,
-                ref isFakeLongRunningOperation);
-            IsLongRunningOperation = isLongRunningOperation;
-            IsFakeLongRunningOperation = isFakeLongRunningOperation;
-            _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _resourceOperationKind = resourceOperationKind;
+            _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
                 _serviceMethod,
@@ -111,6 +103,22 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ref _returnBodyType,
                 ref _returnBodyResourceClient,
                 explicitResourceClient);
+
+            bool isLongRunningOperation = false;
+            bool isFakeLongRunningOperation = false;
+            bool hasTypedLroResultForPublicSurface = false;
+            InitializeLroFlags(
+                _serviceMethod,
+                _returnBodyType,
+                _resourceOperationKind,
+                forceLro: forceLro,
+                ref isLongRunningOperation,
+                ref isFakeLongRunningOperation,
+                ref hasTypedLroResultForPublicSurface);
+            IsLongRunningOperation = isLongRunningOperation;
+            IsFakeLongRunningOperation = isFakeLongRunningOperation;
+            _hasTypedLroResultForPublicSurface = hasTypedLroResultForPublicSurface;
+
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
@@ -119,13 +127,22 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeLroFlags(
             in InputServiceMethod serviceMethod,
+            in CSharpType? returnBodyType,
+            in ResourceOperationKind resourceOperationKind,
             in bool forceLro,
             ref bool isLongRunningOperation,
-            ref bool isFakeLongRunningOperation)
+            ref bool isFakeLongRunningOperation,
+            ref bool hasTypedLroResultForPublicSurface)
         {
             isLongRunningOperation = serviceMethod.IsLongRunningOperation();
             // when the method is not a real LRO, but we have to force it to be an LRO, the fake lro flag is true.
             isFakeLongRunningOperation = forceLro && !isLongRunningOperation;
+
+            var shouldIgnoreLroFinalResultTypeForPublicSurface =
+                resourceOperationKind == ResourceOperationKind.Delete &&
+                (isLongRunningOperation || isFakeLongRunningOperation);
+            hasTypedLroResultForPublicSurface =
+                returnBodyType != null && !shouldIgnoreLroFinalResultTypeForPublicSurface;
         }
 
         private static void InitializeTypeInfo(
@@ -188,16 +205,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private CSharpType? _returnType;
         public CSharpType ReturnType => _returnType ??= BuildReturnType();
 
-        private bool ShouldIgnoreLroFinalResultTypeForPublicSurface =>
-            _resourceOperationKind == ResourceOperationKind.Delete &&
-            (IsLongRunningOperation || IsFakeLongRunningOperation);
-
         private bool HasTypedLroResultForPublicSurface =>
-            _returnBodyType != null && !ShouldIgnoreLroFinalResultTypeForPublicSurface;
+            _hasTypedLroResultForPublicSurface;
 
         protected virtual CSharpType BuildReturnType()
         {
-            var effectiveReturnBodyType = ShouldIgnoreLroFinalResultTypeForPublicSurface ? null : _returnBodyType;
+            var effectiveReturnBodyType = HasTypedLroResultForPublicSurface ? _returnBodyType : null;
             return effectiveReturnBodyType.WrapResponse(IsLongRunningOperation || IsFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
@@ -320,7 +333,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // For delete LRO operations, the final result is suppressed from the public surface, so we must
             // use non-generic pipeline processing to produce a plain Response that matches the non-generic
             // ArmOperation constructor.
-            if (_originalBodyType != null && !IsLongRunningOperation && !ShouldIgnoreLroFinalResultTypeForPublicSurface)
+            if (_originalBodyType != null && !IsLongRunningOperation && HasTypedLroResultForPublicSurface)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
@@ -559,7 +572,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 : [nullCheckStatement];
 
             // If the return type has been wrapped by a resource client, we need to return the resource client type.
-            if (_returnBodyResourceClient != null && !ShouldIgnoreLroFinalResultTypeForPublicSurface)
+            if (_returnBodyResourceClient != null && HasTypedLroResultForPublicSurface)
             {
                 var returnValueExpression = New.Instance(
                         _returnBodyResourceClient.Type,

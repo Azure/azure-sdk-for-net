@@ -508,7 +508,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro, resourceOperationKind: methodKind);
+            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
         }
 
         private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()

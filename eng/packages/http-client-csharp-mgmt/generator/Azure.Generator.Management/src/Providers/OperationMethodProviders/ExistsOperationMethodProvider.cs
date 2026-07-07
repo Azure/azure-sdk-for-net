@@ -25,6 +25,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             operationContext,
             restClientInfo,
             method,
+            ResourceOperationKind.CheckExistence,
             isAsync,
             methodName: isAsync ? "ExistsAsync" : "Exists",
             description: $"Checks to see if the resource exists in azure.")
