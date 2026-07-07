@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationJobProgress
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

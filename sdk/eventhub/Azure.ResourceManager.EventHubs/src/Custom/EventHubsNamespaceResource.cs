@@ -8,8 +8,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventHubs.Models;
+using Azure.ResourceManager.EventHubs.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<EventHubsNamespaceResource>> UpdateAsync(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
         {
-            var lro = await UpdateAsync(WaitUntil.Completed, data, cancellationToken).ConfigureAwait(false);
+            ArmOperation<EventHubsNamespaceResource> lro = await UpdateAsync(WaitUntil.Completed, data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(lro.Value, lro.GetRawResponse());
         }
 
@@ -76,8 +79,90 @@ namespace Azure.ResourceManager.EventHubs
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<EventHubsNamespaceResource> Update(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
         {
-            var lro = Update(WaitUntil.Completed, data, cancellationToken);
+            ArmOperation<EventHubsNamespaceResource> lro = Update(WaitUntil.Completed, data, cancellationToken);
             return Response.FromValue(lro.Value, lro.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="data"> Parameters for updating a namespace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<EventHubsNamespaceResource>> UpdateAsync(WaitUntil waitUntil, EventHubsNamespaceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EventHubsArmOperation<EventHubsNamespaceResource> operation = new EventHubsArmOperation<EventHubsNamespaceResource>(
+                    new EventHubsNamespaceResourceOperationSource(Client),
+                    _namespacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates or updates a namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="data"> Parameters for updating a namespace resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<EventHubsNamespaceResource> Update(WaitUntil waitUntil, EventHubsNamespaceData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _namespacesClientDiagnostics.CreateScope("EventHubsNamespaceResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, EventHubsNamespaceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EventHubsArmOperation<EventHubsNamespaceResource> operation = new EventHubsArmOperation<EventHubsNamespaceResource>(
+                    new EventHubsNamespaceResourceOperationSource(Client),
+                    _namespacesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

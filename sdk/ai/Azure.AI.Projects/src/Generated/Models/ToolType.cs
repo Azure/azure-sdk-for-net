@@ -32,7 +32,6 @@ namespace Azure.AI.Projects
         private const string FabricDataagentPreviewValue = "fabric_dataagent_preview";
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string MemorySearchPreviewValue = "memory_search_preview";
-        private const string ReminderPreviewValue = "reminder_preview";
         private const string WorkIqPreviewValue = "work_iq_preview";
         private const string FabricIqPreviewValue = "fabric_iq_preview";
         private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
@@ -114,9 +113,6 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the MemorySearchPreview. </summary>
         public static ToolType MemorySearchPreview { get; } = new ToolType(MemorySearchPreviewValue);
-
-        /// <summary> Gets the ReminderPreview. </summary>
-        public static ToolType ReminderPreview { get; } = new ToolType(ReminderPreviewValue);
 
         /// <summary> Gets the WorkIqPreview. </summary>
         public static ToolType WorkIqPreview { get; } = new ToolType(WorkIqPreviewValue);
