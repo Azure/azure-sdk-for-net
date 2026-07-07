@@ -54,8 +54,14 @@ namespace Azure.Security.Attestation
         /// </summary>
         public object Confirmation
         {
-            get => Cnf;
+            get => _confirmation ?? InternalCnf;
+            internal set => _confirmation = value;
         }
+
+        private object _confirmation;
+
+        [CodeGenMember("Cnf")]
+        internal IDictionary<string, string> InternalCnf { get; }
 
         /// <summary>
         /// Gets the RFC 7519 "jti" claim name (https://tools.ietf.org/html/rfc7519#section-4)

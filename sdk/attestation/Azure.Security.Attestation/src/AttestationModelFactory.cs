@@ -12,7 +12,7 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Factory class for creating Attestation Service Model types, used for Mocking.
     /// </summary>
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationResult", typeof(string), typeof(string), typeof(float?), typeof(float?), typeof(float?), typeof(IDictionary<string, string>), typeof(string), typeof(string), typeof(object), typeof(object), typeof(object), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(bool?), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(BinaryData), typeof(object), typeof(string), typeof(bool?), typeof(object), typeof(BinaryData), typeof(BinaryData), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(string))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationResult", typeof(string), typeof(string), typeof(long?), typeof(long?), typeof(long?), typeof(IDictionary<string, string>), typeof(string), typeof(string), typeof(object), typeof(object), typeof(object), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(bool?), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(BinaryData), typeof(object), typeof(string), typeof(bool?), typeof(object), typeof(BinaryData), typeof(BinaryData), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(string))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("PolicyCertificatesModificationResult", typeof(string), typeof(PolicyCertificateResolution?))]
     public static partial class AttestationModelFactory
     {
@@ -103,9 +103,9 @@ namespace Azure.Security.Attestation
         {
             return new AttestationResult(jti,
                 issuer,
-                (float?)issuedAt.ToUnixTimeSeconds(),
-                (float?)expiration.ToUnixTimeSeconds(),
-                (float?)notBefore.ToUnixTimeSeconds(),
+                issuedAt.ToUnixTimeSeconds(),
+                expiration.ToUnixTimeSeconds(),
+                notBefore.ToUnixTimeSeconds(),
                 cnf as IDictionary<string, string>,
                 nonce,
                 version,
@@ -135,7 +135,10 @@ namespace Azure.Security.Attestation
                 deprecatedPolicySigner,
                 deprecatedPolicyHash,
                 deprecatedRpData,
-                null);
+                null)
+            {
+                Confirmation = cnf,
+            };
         }
         /// <summary>
         /// Creates a new instance of <see cref="Attestation.PolicyCertificatesModificationResult"/> for mocking purposes.

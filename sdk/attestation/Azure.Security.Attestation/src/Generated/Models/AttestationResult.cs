@@ -34,7 +34,7 @@ namespace Azure.Security.Attestation
         /// The not before time before which the token cannot be considered valid, in the
         /// number of seconds since 1970-01-0T00:00:00Z UTC
         /// </param>
-        /// <param name="cnf"> An RFC 7800 Proof of Possession Key. </param>
+        /// <param name="internalCnf"> An RFC 7800 Proof of Possession Key. </param>
         /// <param name="nonce"> The Nonce input to the attestation request, if provided. </param>
         /// <param name="version"> The Schema version of this structure. Current Value: 1.0. </param>
         /// <param name="runtimeClaims"> Runtime Claims. </param>
@@ -64,14 +64,14 @@ namespace Azure.Security.Attestation
         /// <param name="deprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="deprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationResult(string jti, string iss, float? iat, float? exp, float? nbf, IDictionary<string, string> cnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, AttestationSigner policySigner, BinaryData policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, BinaryData enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, BinaryData deprecatedEnclaveHeldData, BinaryData deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, AttestationSigner deprecatedPolicySigner, BinaryData deprecatedPolicyHash, string deprecatedRpData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationResult(string jti, string iss, long? iat, long? exp, long? nbf, IDictionary<string, string> internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, AttestationSigner policySigner, BinaryData policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, BinaryData enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, BinaryData deprecatedEnclaveHeldData, BinaryData deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, AttestationSigner deprecatedPolicySigner, BinaryData deprecatedPolicyHash, string deprecatedRpData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Jti = jti;
             Iss = iss;
             Iat = iat;
             Exp = exp;
             Nbf = nbf;
-            Cnf = cnf;
+            InternalCnf = internalCnf;
             Nonce = nonce;
             Version = version;
             RuntimeClaims = runtimeClaims;
@@ -113,22 +113,19 @@ namespace Azure.Security.Attestation
         /// The time at which the token was issued, in the number of seconds since
         /// 1970-01-0T00:00:00Z UTC
         /// </summary>
-        public float? Iat { get; }
+        public long? Iat { get; }
 
         /// <summary>
         /// The expiration time after which the token is no longer valid, in the number of
         /// seconds since 1970-01-0T00:00:00Z UTC
         /// </summary>
-        public float? Exp { get; }
+        public long? Exp { get; }
 
         /// <summary>
         /// The not before time before which the token cannot be considered valid, in the
         /// number of seconds since 1970-01-0T00:00:00Z UTC
         /// </summary>
-        public float? Nbf { get; }
-
-        /// <summary> An RFC 7800 Proof of Possession Key. </summary>
-        public IDictionary<string, string> Cnf { get; }
+        public long? Nbf { get; }
 
         /// <summary> The Nonce input to the attestation request, if provided. </summary>
         public string Nonce { get; }

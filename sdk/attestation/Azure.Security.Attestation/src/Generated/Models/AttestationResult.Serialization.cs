@@ -101,11 +101,11 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(Nbf.Value);
             }
-            if (Optional.IsCollectionDefined(Cnf))
+            if (Optional.IsCollectionDefined(InternalCnf))
             {
                 writer.WritePropertyName("cnf"u8);
                 writer.WriteStartObject();
-                foreach (var item in Cnf)
+                foreach (var item in InternalCnf)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -301,10 +301,10 @@ namespace Azure.Security.Attestation
             }
             string jti = default;
             string iss = default;
-            float? iat = default;
-            float? exp = default;
-            float? nbf = default;
-            IDictionary<string, string> cnf = default;
+            long? iat = default;
+            long? exp = default;
+            long? nbf = default;
+            IDictionary<string, string> internalCnf = default;
             string nonce = default;
             string version = default;
             object runtimeClaims = default;
@@ -352,7 +352,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    iat = prop.Value.GetSingle();
+                    iat = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("exp"u8))
@@ -361,7 +361,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    exp = prop.Value.GetSingle();
+                    exp = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("nbf"u8))
@@ -370,7 +370,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    nbf = prop.Value.GetSingle();
+                    nbf = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("cnf"u8))
@@ -391,7 +391,7 @@ namespace Azure.Security.Attestation
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    cnf = dictionary;
+                    internalCnf = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("nonce"u8))
@@ -617,7 +617,7 @@ namespace Azure.Security.Attestation
                 iat,
                 exp,
                 nbf,
-                cnf ?? new ChangeTrackingDictionary<string, string>(),
+                internalCnf ?? new ChangeTrackingDictionary<string, string>(),
                 nonce,
                 version,
                 runtimeClaims,
