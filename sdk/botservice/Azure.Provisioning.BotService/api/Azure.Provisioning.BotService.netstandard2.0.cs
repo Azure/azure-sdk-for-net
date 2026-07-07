@@ -183,11 +183,11 @@ namespace Azure.Provisioning.BotService
     }
     public partial class BotServiceNetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public BotServiceNetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal BotServiceNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BotService.BotResource Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BotService.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BotService.NetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.BotService.BotServiceNetworkSecurityPerimeterConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
