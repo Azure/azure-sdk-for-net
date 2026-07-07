@@ -108,7 +108,7 @@ namespace Azure.Provisioning.DurableTask
     {
         public DurableTaskRetentionPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.DurableTask.DurableTaskScheduler Parent { get { throw null; } set { } }
         public Azure.Provisioning.DurableTask.DurableTaskRetentionPolicyProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

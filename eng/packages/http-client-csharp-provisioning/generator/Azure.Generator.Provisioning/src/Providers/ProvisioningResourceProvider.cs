@@ -508,6 +508,7 @@ namespace Azure.Generator.Provisioning.Providers
                     defaultValue = singletonResourceName;
                     isOutput = true;
                     isSettable = false;
+                    isRequired = false;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
                 // even when the TypeSpec defines it as plain string.
@@ -675,6 +676,11 @@ namespace Azure.Generator.Provisioning.Providers
         private static MethodProvider? BuildGetResourceNameRequirementsMethod(ProvisioningResourceProjection? resourceProjection, TypeProvider enclosingType)
         {
             if (resourceProjection is null)
+            {
+                return null;
+            }
+
+            if (resourceProjection.SingletonResourceName is not null)
             {
                 return null;
             }

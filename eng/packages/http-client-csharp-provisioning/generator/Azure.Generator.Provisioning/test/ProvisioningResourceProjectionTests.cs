@@ -169,7 +169,7 @@ namespace Azure.Generator.Provisioning.Tests
                 singletonResourceName: "default");
             var mixedNullResource = CreateMetadata(
                 model,
-                "/providers/Microsoft.Test/widgets/{widgetName}/children/default",
+                "/providers/Microsoft.Test/widgets/{widgetName}/children/{childName}",
                 "Microsoft.Test/widgets/children",
                 ResourceScope.Tenant,
                 ["2024-01-01"]);
@@ -179,6 +179,47 @@ namespace Azure.Generator.Provisioning.Tests
 
             Assert.That(consistentProjection.SingletonResourceName, Is.EqualTo("default"));
             Assert.That(mixedNullProjection.SingletonResourceName, Is.Null);
+        }
+
+        [Test]
+        public void CollapsedProjectionInfersSingletonResourceNameFromFixedPathSegment()
+        {
+            var model = CreateModel("TestResourceData");
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/default",
+                "Microsoft.Test/widgets/children",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"]);
+
+            var projection = ProvisioningResourceProjection.Create([resource])[0];
+
+            Assert.That(projection.SingletonResourceName, Is.EqualTo("default"));
+        }
+
+        [Test]
+        public void SingletonResourceNamePropertyIsOutputDefaultAndNotRequired()
+        {
+            var nameProperty = CreateProperty("Name", isRequired: true);
+            var model = CreateModel("SingletonWidget", [nameProperty]);
+            var resource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/default",
+                "Microsoft.Test/widgets/children",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                nameConstraints: new ArmResourceNameConstraints("[a-z]+", 1, 24));
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([resource])[0]);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(nameProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.True);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.False);
+            Assert.That(propertyInfo.DefaultValue, Is.EqualTo("default"));
+            Assert.That(provider.Methods.Any(method => method.Signature.Name == "GetResourceNameRequirements"), Is.False);
         }
 
         [Test]

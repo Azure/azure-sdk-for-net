@@ -21,7 +21,7 @@ namespace Azure.Generator.Provisioning.Primitives
             ResourceModel = GetSameResourceModel(metadata);
             ResourceType = GetSameResourceType(metadata);
             ResourceName = GetSameValueOrDefault(metadata.Select(resource => resource.ResourceName), ResourceModel.Name, StringComparer.Ordinal);
-            SingletonResourceName = GetSameNullableValueOrDefault(metadata.Select(resource => resource.SingletonResourceName), null, StringComparer.Ordinal);
+            SingletonResourceName = GetSameNullableValueOrDefault(metadata.Select(GetSingletonResourceName), null, StringComparer.Ordinal);
             ParentResourceId = GetSameNullableValueOrDefault(metadata.Select(resource => resource.ParentResourceId), null);
             NameConstraints = GetSameValueOrDefault(
                 metadata.Select(resource => resource.NameConstraints),
@@ -159,6 +159,17 @@ namespace Azure.Generator.Provisioning.Primitives
         {
             var distinctValues = values.Distinct(comparer).Take(2).ToArray();
             return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
+        }
+
+        private static string? GetSingletonResourceName(ArmResourceMetadata resource)
+        {
+            if (resource.SingletonResourceName is not null)
+            {
+                return resource.SingletonResourceName;
+            }
+
+            var lastSegment = resource.ResourceIdPattern.LastOrDefault();
+            return lastSegment?.IsConstant == true ? lastSegment.Value : null;
         }
 
         private static IEnumerable<RequestPathPattern> CollectResourceIdPatterns(IReadOnlyList<ArmResourceMetadata> metadata)
