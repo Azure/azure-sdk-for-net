@@ -14,51 +14,51 @@ using Azure.ResourceManager.Education;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> The amount. </summary>
-    public partial class Amount : IJsonModel<Amount>
+    public partial class EducationAmount : IJsonModel<EducationAmount>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Amount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EducationAmount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Amount>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationAmount>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAmount(document.RootElement, options);
+                        return DeserializeEducationAmount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Amount)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationAmount)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Amount>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationAmount>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEducationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Amount)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EducationAmount)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Amount>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EducationAmount>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Amount IPersistableModel<Amount>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EducationAmount IPersistableModel<EducationAmount>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Amount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EducationAmount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Amount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EducationAmount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Amount>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationAmount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Amount)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationAmount)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Currency))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Education.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Amount IJsonModel<Amount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EducationAmount IJsonModel<EducationAmount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Amount JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EducationAmount JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Amount>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EducationAmount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Amount)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EducationAmount)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAmount(document.RootElement, options);
+            return DeserializeEducationAmount(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Amount DeserializeAmount(JsonElement element, ModelReaderWriterOptions options)
+        internal static EducationAmount DeserializeEducationAmount(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Education.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Amount(currency, value, additionalBinaryDataProperties);
+            return new EducationAmount(currency, value, additionalBinaryDataProperties);
         }
     }
 }

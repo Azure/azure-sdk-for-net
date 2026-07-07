@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="effectiveOn"> User Added Date. </param>
         /// <param name="labScope"> Lab Scope. /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StudentLabProperties(string displayName, string description, DateTimeOffset? expireOn, StudentRole? role, Amount budget, string subscriptionId, StudentLabStatus? status, DateTimeOffset? effectiveOn, string labScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StudentLabProperties(string displayName, string description, DateTimeOffset? expireOn, StudentRole? role, EducationAmount budget, string subscriptionId, StudentLabStatus? status, DateTimeOffset? effectiveOn, string labScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Education.Models
         public StudentRole? Role { get; }
 
         /// <summary> Student Budget. </summary>
-        public Amount Budget { get; }
+        public EducationAmount Budget { get; }
 
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; }

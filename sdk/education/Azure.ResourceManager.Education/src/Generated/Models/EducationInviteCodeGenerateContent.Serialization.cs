@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Education.Models
             {
                 return null;
             }
-            float? maxStudentCount = default;
+            int? maxStudentCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    maxStudentCount = prop.Value.GetSingle();
+                    maxStudentCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")

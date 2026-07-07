@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Education.Models
         /// <summary> Initializes a new instance of <see cref="EducationInviteCodeGenerateContent"/>. </summary>
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EducationInviteCodeGenerateContent(float? maxStudentCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EducationInviteCodeGenerateContent(int? maxStudentCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxStudentCount = maxStudentCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> the total number of students that can be accepted to the lab. </summary>
-        public float? MaxStudentCount { get; set; }
+        public int? MaxStudentCount { get; set; }
     }
 }

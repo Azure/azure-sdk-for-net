@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="budgetPerStudent"> Default monetary cap for each student in this lab. </param>
         /// <param name="description"> Detail description of this lab. </param>
         /// <param name="expireOn"> Default expiration date for each student in this lab. </param>
-        public LabProperties(string displayName, Amount budgetPerStudent, string description, DateTimeOffset expireOn)
+        public LabProperties(string displayName, EducationAmount budgetPerStudent, string description, DateTimeOffset expireOn)
         {
             DisplayName = displayName;
             BudgetPerStudent = budgetPerStudent;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="totalBudget"> Total budget. </param>
         /// <param name="totalAllocatedBudget"> Total allocated budget. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabProperties(string displayName, Amount budgetPerStudent, string description, DateTimeOffset expireOn, DateTimeOffset? effectiveOn, LabStatus? status, float? maxStudentCount, string invitationCode, Amount totalBudget, Amount totalAllocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabProperties(string displayName, EducationAmount budgetPerStudent, string description, DateTimeOffset expireOn, DateTimeOffset? effectiveOn, LabStatus? status, int? maxStudentCount, string invitationCode, EducationAmount totalBudget, EducationAmount totalAllocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             BudgetPerStudent = budgetPerStudent;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Education.Models
         public string DisplayName { get; set; }
 
         /// <summary> Default monetary cap for each student in this lab. </summary>
-        public Amount BudgetPerStudent { get; set; }
+        public EducationAmount BudgetPerStudent { get; set; }
 
         /// <summary> Detail description of this lab. </summary>
         public string Description { get; set; }
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Education.Models
         public LabStatus? Status { get; }
 
         /// <summary> the total number of students that can be accepted to the lab. </summary>
-        public float? MaxStudentCount { get; }
+        public int? MaxStudentCount { get; }
 
         /// <summary> invitation code for redeemable lab. </summary>
         public string InvitationCode { get; }
 
         /// <summary> Total budget. </summary>
-        internal Amount TotalBudget { get; }
+        internal EducationAmount TotalBudget { get; }
 
         /// <summary> Total allocated budget. </summary>
-        internal Amount TotalAllocatedBudget { get; }
+        internal EducationAmount TotalAllocatedBudget { get; }
     }
 }

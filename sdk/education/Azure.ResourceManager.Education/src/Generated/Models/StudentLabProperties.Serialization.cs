@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Education.Models
             string description = default;
             DateTimeOffset? expireOn = default;
             StudentRole? role = default;
-            Amount budget = default;
+            EducationAmount budget = default;
             string subscriptionId = default;
             StudentLabStatus? status = default;
             DateTimeOffset? effectiveOn = default;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    budget = Amount.DeserializeAmount(prop.Value, options);
+                    budget = EducationAmount.DeserializeEducationAmount(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))

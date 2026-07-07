@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.Education.Models
                 return null;
             }
             string displayName = default;
-            Amount budgetPerStudent = default;
+            EducationAmount budgetPerStudent = default;
             string description = default;
             DateTimeOffset expireOn = default;
             DateTimeOffset? effectiveOn = default;
             LabStatus? status = default;
-            float? maxStudentCount = default;
+            int? maxStudentCount = default;
             string invitationCode = default;
-            Amount totalBudget = default;
-            Amount totalAllocatedBudget = default;
+            EducationAmount totalBudget = default;
+            EducationAmount totalAllocatedBudget = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Education.Models
                 }
                 if (prop.NameEquals("budgetPerStudent"u8))
                 {
-                    budgetPerStudent = Amount.DeserializeAmount(prop.Value, options);
+                    budgetPerStudent = EducationAmount.DeserializeEducationAmount(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    maxStudentCount = prop.Value.GetSingle();
+                    maxStudentCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("invitationCode"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    totalBudget = Amount.DeserializeAmount(prop.Value, options);
+                    totalBudget = EducationAmount.DeserializeEducationAmount(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("totalAllocatedBudget"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    totalAllocatedBudget = Amount.DeserializeAmount(prop.Value, options);
+                    totalAllocatedBudget = EducationAmount.DeserializeEducationAmount(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

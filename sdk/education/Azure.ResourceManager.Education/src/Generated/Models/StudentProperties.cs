@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="budget"> Student Budget. </param>
         /// <param name="expireOn"> Date this student is set to expire from the lab. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firstName"/>, <paramref name="lastName"/>, <paramref name="email"/> or <paramref name="budget"/> is null. </exception>
-        public StudentProperties(string firstName, string lastName, string email, StudentRole role, Amount budget, DateTimeOffset expireOn)
+        public StudentProperties(string firstName, string lastName, string email, StudentRole role, EducationAmount budget, DateTimeOffset expireOn)
         {
             Argument.AssertNotNull(firstName, nameof(firstName));
             Argument.AssertNotNull(lastName, nameof(lastName));
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="subscriptionAlias"> Subscription alias. </param>
         /// <param name="subscriptionInviteLastSentOn"> subscription invite last sent date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StudentProperties(string firstName, string lastName, string email, StudentRole role, Amount budget, string subscriptionId, DateTimeOffset expireOn, StudentLabStatus? status, DateTimeOffset? effectiveOn, string subscriptionAlias, DateTimeOffset? subscriptionInviteLastSentOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StudentProperties(string firstName, string lastName, string email, StudentRole role, EducationAmount budget, string subscriptionId, DateTimeOffset expireOn, StudentLabStatus? status, DateTimeOffset? effectiveOn, string subscriptionAlias, DateTimeOffset? subscriptionInviteLastSentOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Education.Models
         public StudentRole Role { get; set; }
 
         /// <summary> Student Budget. </summary>
-        public Amount Budget { get; set; }
+        public EducationAmount Budget { get; set; }
 
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; }

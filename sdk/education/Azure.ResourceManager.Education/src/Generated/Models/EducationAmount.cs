@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Education.Models
 {
     /// <summary> The amount. </summary>
-    public partial class Amount
+    public partial class EducationAmount
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Amount"/>. </summary>
-        public Amount()
+        /// <summary> Initializes a new instance of <see cref="EducationAmount"/>. </summary>
+        public EducationAmount()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Amount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EducationAmount"/>. </summary>
         /// <param name="currency"> The type of currency being used for the value. </param>
         /// <param name="value"> Amount value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Amount(string currency, float? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EducationAmount(string currency, float? value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Currency = currency;
             Value = value;

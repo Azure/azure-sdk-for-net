@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary> Default monetary cap for each student in this lab. </summary>
-        public Amount BudgetPerStudent
+        public EducationAmount BudgetPerStudent
         {
             get
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary> the total number of students that can be accepted to the lab. </summary>
-        public float? MaxStudentCount
+        public int? MaxStudentCount
         {
             get
             {

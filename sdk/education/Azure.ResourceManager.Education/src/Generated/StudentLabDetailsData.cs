@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary> Student Budget. </summary>
-        public Amount Budget
+        public EducationAmount Budget
         {
             get
             {

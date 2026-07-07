@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="status"> Grant status. </param>
         /// <param name="allocatedBudget"> allocated budget. </param>
         /// <returns> A new <see cref="Education.GrantDetailsData"/> instance for mocking. </returns>
-        public static GrantDetailsData GrantDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Amount offerCap = default, DateTimeOffset? effectiveOn = default, GrantType? offerType = default, DateTimeOffset? expireOn = default, GrantStatus? status = default, Amount allocatedBudget = default)
+        public static GrantDetailsData GrantDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EducationAmount offerCap = default, DateTimeOffset? effectiveOn = default, GrantType? offerType = default, DateTimeOffset? expireOn = default, GrantStatus? status = default, EducationAmount allocatedBudget = default)
         {
             return new GrantDetailsData(
                 id,
@@ -57,15 +57,15 @@ namespace Azure.ResourceManager.Education.Models
 
         /// <param name="currency"> The type of currency being used for the value. </param>
         /// <param name="value"> Amount value. </param>
-        /// <returns> A new <see cref="Models.Amount"/> instance for mocking. </returns>
-        public static Amount Amount(string currency = default, float? value = default)
+        /// <returns> A new <see cref="Models.EducationAmount"/> instance for mocking. </returns>
+        public static EducationAmount EducationAmount(string currency = default, float? value = default)
         {
-            return new Amount(currency, value, default);
+            return new EducationAmount(currency, value, default);
         }
 
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
         /// <returns> A new <see cref="Models.EducationInviteCodeGenerateContent"/> instance for mocking. </returns>
-        public static EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(float? maxStudentCount = default)
+        public static EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(int? maxStudentCount = default)
         {
             return new EducationInviteCodeGenerateContent(maxStudentCount, default);
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="subscriptionAlias"> Subscription alias. </param>
         /// <param name="subscriptionInviteLastSentOn"> subscription invite last sent date. </param>
         /// <returns> A new <see cref="Education.StudentDetailsData"/> instance for mocking. </returns>
-        public static StudentDetailsData StudentDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, Amount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
+        public static StudentDetailsData StudentDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
         {
             return new StudentDetailsData(
                 id,
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="effectiveOn"> User Added Date. </param>
         /// <param name="labScope"> Lab Scope. /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default. </param>
         /// <returns> A new <see cref="Education.StudentLabDetailsData"/> instance for mocking. </returns>
-        public static StudentLabDetailsData StudentLabDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, DateTimeOffset? expireOn = default, StudentRole? role = default, Amount budget = default, string subscriptionId = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string labScope = default)
+        public static StudentLabDetailsData StudentLabDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, DateTimeOffset? expireOn = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string labScope = default)
         {
             return new StudentLabDetailsData(
                 id,

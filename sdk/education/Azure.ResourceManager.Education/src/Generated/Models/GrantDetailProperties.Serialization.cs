@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.Education.Models
             {
                 return null;
             }
-            Amount offerCap = default;
+            EducationAmount offerCap = default;
             DateTimeOffset? effectiveOn = default;
             GrantType? offerType = default;
             DateTimeOffset? expireOn = default;
             GrantStatus? status = default;
-            Amount allocatedBudget = default;
+            EducationAmount allocatedBudget = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    offerCap = Amount.DeserializeAmount(prop.Value, options);
+                    offerCap = EducationAmount.DeserializeEducationAmount(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("effectiveDate"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Education.Models
                     {
                         continue;
                     }
-                    allocatedBudget = Amount.DeserializeAmount(prop.Value, options);
+                    allocatedBudget = EducationAmount.DeserializeEducationAmount(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Education
         internal GrantDetailProperties Properties { get; }
 
         /// <summary> Offer Cap. </summary>
-        public Amount OfferCap
+        public EducationAmount OfferCap
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Education
         }
 
         /// <summary> allocated budget. </summary>
-        public Amount AllocatedBudget
+        public EducationAmount AllocatedBudget
         {
             get
             {

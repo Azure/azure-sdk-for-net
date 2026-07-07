@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Education
     public partial class GrantDetailsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.GrantDetailsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.GrantDetailsData>
     {
         internal GrantDetailsData() { }
-        public Azure.ResourceManager.Education.Models.Amount AllocatedBudget { get { throw null; } }
+        public Azure.ResourceManager.Education.Models.EducationAmount AllocatedBudget { get { throw null; } }
         public System.DateTimeOffset? EffectiveOn { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public Azure.ResourceManager.Education.Models.Amount OfferCap { get { throw null; } }
+        public Azure.ResourceManager.Education.Models.EducationAmount OfferCap { get { throw null; } }
         public Azure.ResourceManager.Education.Models.GrantType? OfferType { get { throw null; } }
         public Azure.ResourceManager.Education.Models.GrantStatus? Status { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -117,13 +117,13 @@ namespace Azure.ResourceManager.Education
     public partial class LabDetailsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.LabDetailsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.LabDetailsData>
     {
         public LabDetailsData() { }
-        public Azure.ResourceManager.Education.Models.Amount BudgetPerStudent { get { throw null; } set { } }
+        public Azure.ResourceManager.Education.Models.EducationAmount BudgetPerStudent { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? EffectiveOn { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string InvitationCode { get { throw null; } }
-        public float? MaxStudentCount { get { throw null; } }
+        public int? MaxStudentCount { get { throw null; } }
         public Azure.ResourceManager.Education.Models.LabStatus? Status { get { throw null; } }
         public string TotalAllocatedBudgetCurrency { get { throw null; } }
         public float? TotalAllocatedBudgetValue { get { throw null; } }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Education
     public partial class StudentDetailsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.StudentDetailsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.StudentDetailsData>
     {
         public StudentDetailsData() { }
-        public Azure.ResourceManager.Education.Models.Amount Budget { get { throw null; } set { } }
+        public Azure.ResourceManager.Education.Models.EducationAmount Budget { get { throw null; } set { } }
         public System.DateTimeOffset? EffectiveOn { get { throw null; } }
         public string Email { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Education
     public partial class StudentLabDetailsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.StudentLabDetailsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.StudentLabDetailsData>
     {
         internal StudentLabDetailsData() { }
-        public Azure.ResourceManager.Education.Models.Amount Budget { get { throw null; } }
+        public Azure.ResourceManager.Education.Models.EducationAmount Budget { get { throw null; } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? EffectiveOn { get { throw null; } }
@@ -312,35 +312,35 @@ namespace Azure.ResourceManager.Education.Mocking
 }
 namespace Azure.ResourceManager.Education.Models
 {
-    public partial class Amount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.Amount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.Amount>
-    {
-        public Amount() { }
-        public string Currency { get { throw null; } set { } }
-        public float? Value { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Education.Models.Amount JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Education.Models.Amount PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Education.Models.Amount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.Amount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.Amount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Education.Models.Amount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.Amount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.Amount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.Amount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class ArmEducationModelFactory
     {
-        public static Azure.ResourceManager.Education.Models.Amount Amount(string currency = null, float? value = default(float?)) { throw null; }
-        public static Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(float? maxStudentCount = default(float?)) { throw null; }
+        public static Azure.ResourceManager.Education.Models.EducationAmount EducationAmount(string currency = null, float? value = default(float?)) { throw null; }
+        public static Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(int? maxStudentCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.Education.Models.EducationRedeemContent EducationRedeemContent(string redeemCode = null, string firstName = null, string lastName = null) { throw null; }
-        public static Azure.ResourceManager.Education.GrantDetailsData GrantDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Education.Models.Amount offerCap = null, System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.GrantType? offerType = default(Azure.ResourceManager.Education.Models.GrantType?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.GrantStatus? status = default(Azure.ResourceManager.Education.Models.GrantStatus?), Azure.ResourceManager.Education.Models.Amount allocatedBudget = null) { throw null; }
+        public static Azure.ResourceManager.Education.GrantDetailsData GrantDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Education.Models.EducationAmount offerCap = null, System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.GrantType? offerType = default(Azure.ResourceManager.Education.Models.GrantType?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.GrantStatus? status = default(Azure.ResourceManager.Education.Models.GrantStatus?), Azure.ResourceManager.Education.Models.EducationAmount allocatedBudget = null) { throw null; }
         public static Azure.ResourceManager.Education.JoinRequestDetailsData JoinRequestDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string firstName = null, string lastName = null, string email = null, Azure.ResourceManager.Education.Models.JoinRequestStatus? status = default(Azure.ResourceManager.Education.Models.JoinRequestStatus?)) { throw null; }
-        public static Azure.ResourceManager.Education.StudentDetailsData StudentDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string firstName = null, string lastName = null, string email = null, Azure.ResourceManager.Education.Models.StudentRole? role = default(Azure.ResourceManager.Education.Models.StudentRole?), Azure.ResourceManager.Education.Models.Amount budget = null, string subscriptionId = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.StudentLabStatus? status = default(Azure.ResourceManager.Education.Models.StudentLabStatus?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string subscriptionAlias = null, System.DateTimeOffset? subscriptionInviteLastSentOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.Education.StudentLabDetailsData StudentLabDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.StudentRole? role = default(Azure.ResourceManager.Education.Models.StudentRole?), Azure.ResourceManager.Education.Models.Amount budget = null, string subscriptionId = null, Azure.ResourceManager.Education.Models.StudentLabStatus? status = default(Azure.ResourceManager.Education.Models.StudentLabStatus?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string labScope = null) { throw null; }
+        public static Azure.ResourceManager.Education.StudentDetailsData StudentDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string firstName = null, string lastName = null, string email = null, Azure.ResourceManager.Education.Models.StudentRole? role = default(Azure.ResourceManager.Education.Models.StudentRole?), Azure.ResourceManager.Education.Models.EducationAmount budget = null, string subscriptionId = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.StudentLabStatus? status = default(Azure.ResourceManager.Education.Models.StudentLabStatus?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string subscriptionAlias = null, System.DateTimeOffset? subscriptionInviteLastSentOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Education.StudentLabDetailsData StudentLabDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), Azure.ResourceManager.Education.Models.StudentRole? role = default(Azure.ResourceManager.Education.Models.StudentRole?), Azure.ResourceManager.Education.Models.EducationAmount budget = null, string subscriptionId = null, Azure.ResourceManager.Education.Models.StudentLabStatus? status = default(Azure.ResourceManager.Education.Models.StudentLabStatus?), System.DateTimeOffset? effectiveOn = default(System.DateTimeOffset?), string labScope = null) { throw null; }
+    }
+    public partial class EducationAmount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationAmount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationAmount>
+    {
+        public EducationAmount() { }
+        public string Currency { get { throw null; } set { } }
+        public float? Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Education.Models.EducationAmount JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Education.Models.EducationAmount PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Education.Models.EducationAmount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationAmount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationAmount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Education.Models.EducationAmount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationAmount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationAmount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationAmount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EducationInviteCodeGenerateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent>
     {
         public EducationInviteCodeGenerateContent() { }
-        public float? MaxStudentCount { get { throw null; } set { } }
+        public int? MaxStudentCount { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Education.Models.EducationInviteCodeGenerateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

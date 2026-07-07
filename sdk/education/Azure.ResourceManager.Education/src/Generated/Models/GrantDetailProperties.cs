@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="status"> Grant status. </param>
         /// <param name="allocatedBudget"> allocated budget. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrantDetailProperties(Amount offerCap, DateTimeOffset? effectiveOn, GrantType? offerType, DateTimeOffset? expireOn, GrantStatus? status, Amount allocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GrantDetailProperties(EducationAmount offerCap, DateTimeOffset? effectiveOn, GrantType? offerType, DateTimeOffset? expireOn, GrantStatus? status, EducationAmount allocatedBudget, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OfferCap = offerCap;
             EffectiveOn = effectiveOn;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Education.Models
         }
 
         /// <summary> Offer Cap. </summary>
-        public Amount OfferCap { get; }
+        public EducationAmount OfferCap { get; }
 
         /// <summary> Grant Effective Date. </summary>
         public DateTimeOffset? EffectiveOn { get; }
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.Education.Models
         public GrantStatus? Status { get; }
 
         /// <summary> allocated budget. </summary>
-        public Amount AllocatedBudget { get; }
+        public EducationAmount AllocatedBudget { get; }
     }
 }
