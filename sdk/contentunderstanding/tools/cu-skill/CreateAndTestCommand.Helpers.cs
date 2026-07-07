@@ -18,6 +18,23 @@ using System.Text.Json.Nodes;
 
 namespace AzureSdkContentUnderstanding.Skills;
 
+// KeyValuePair<TKey, TValue>.Deconstruct was added in .NET Standard 2.1 /
+// .NET Core 3.0. The test project multi-targets net462 where this extension
+// is missing; backfill it locally so `foreach (var (k, v) in dict)` compiles
+// on every leg. On net8+ / netstandard2.1+ the built-in wins and this class
+// is dead code (elided by conditional compilation).
+#if NETFRAMEWORK
+internal static class SkillKvpDeconstructExt
+{
+    public static void Deconstruct<TKey, TValue>(
+        this KeyValuePair<TKey, TValue> kv, out TKey key, out TValue value)
+    {
+        key = kv.Key;
+        value = kv.Value;
+    }
+}
+#endif
+
 internal static partial class CreateAndTestCommand
 {
     // -----------------------------------------------------------------------
