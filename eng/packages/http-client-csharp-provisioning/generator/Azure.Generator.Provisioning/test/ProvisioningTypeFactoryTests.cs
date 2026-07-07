@@ -17,11 +17,25 @@ namespace Azure.Generator.Provisioning.Tests
     public class ProvisioningTypeFactoryTests
     {
         private ProvisioningTypeFactory _factory = null!;
+        private InputModelType _regularModel = null!;
 
         [SetUp]
         public void SetUp()
         {
-            _factory = ProvisioningMockHelpers.LoadMockPlugin().Object.TypeFactory;
+            _regularModel = CreateRegularModel();
+            var resourceModel = CreateWritableResourceModel(_regularModel);
+            var metadata = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                [CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)]);
+            _factory = ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, _regularModel],
+                clients: () => metadata.Methods.Select(m => m.InputClient).Distinct().ToArray(),
+                armProviderSchema: () => new ArmProviderSchema([metadata], []))
+                .Object.TypeFactory;
         }
 
         [TestCaseSource(nameof(PrimitiveTypeCases))]
@@ -178,7 +192,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void RegularModelTypeIsNotWrappedInBicepValue()
         {
-            var input = CreateRegularModel();
+            var input = _regularModel;
 
             var type = _factory.CreateCSharpType(input);
 
@@ -217,7 +231,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void ArrayOfRegularModelTypeIsConvertedToBicepListOfModel()
         {
-            var input = new InputArrayType("list", "list", CreateRegularModel());
+            var input = new InputArrayType("list", "list", _regularModel);
 
             var type = _factory.CreateCSharpType(input);
 
@@ -232,7 +246,7 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void DictionaryOfRegularModelTypeIsConvertedToBicepDictionaryOfModel()
         {
-            var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel());
+            var input = new InputDictionaryType("dictionary", InputPrimitiveType.String, _regularModel);
 
             var type = _factory.CreateCSharpType(input);
 
@@ -250,7 +264,7 @@ namespace Azure.Generator.Provisioning.Tests
             var input = new InputArrayType(
                 "list",
                 "list",
-                new InputDictionaryType("dictionary", InputPrimitiveType.String, CreateRegularModel()));
+                new InputDictionaryType("dictionary", InputPrimitiveType.String, _regularModel));
 
             var type = _factory.CreateCSharpType(input);
 
@@ -304,8 +318,7 @@ namespace Azure.Generator.Provisioning.Tests
                 false);
 
         private static InputModelType CreateRegularModel()
-        {
-            var model = new InputModelType(
+            => new(
                 "TestModel",
                 "Sample.Models",
                 "Sample.Models.TestModel",
@@ -324,13 +337,9 @@ namespace Azure.Generator.Provisioning.Tests
                 false,
                 new InputSerializationOptions(),
                 false);
-            LoadModelAsWritableResource(model);
-            return model;
-        }
 
-        private static void LoadModelAsWritableResource(InputModelType model)
-        {
-            var resourceModel = new InputModelType(
+        private static InputModelType CreateWritableResourceModel(InputModelType model)
+            => new(
                 "TestResource",
                 "Sample.Models",
                 "Sample.Models.TestResource",
@@ -349,18 +358,6 @@ namespace Azure.Generator.Provisioning.Tests
                 false,
                 new InputSerializationOptions(),
                 false);
-            var metadata = CreateMetadata(
-                resourceModel,
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
-                "Microsoft.Test/widgets",
-                ResourceScope.ResourceGroup,
-                ["2024-01-01"],
-                [CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)]);
-            ProvisioningMockHelpers.LoadMockPlugin(
-                inputModels: () => [resourceModel, model],
-                clients: () => metadata.Methods.Select(m => m.InputClient).Distinct().ToArray(),
-                armProviderSchema: () => new ArmProviderSchema([metadata], []));
-        }
 
         private static InputModelProperty CreateProperty(string name, InputType type)
             => new(
