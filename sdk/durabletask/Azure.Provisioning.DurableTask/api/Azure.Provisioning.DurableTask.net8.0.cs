@@ -30,7 +30,7 @@ namespace Azure.Provisioning.DurableTask
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.DurableTask.DurableTaskScheduler Parent { get { throw null; } set { } }
-        public Azure.Provisioning.DurableTask.PrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.DurableTask.DurableTaskPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.DurableTask.DurableTaskPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -38,6 +38,15 @@ namespace Azure.Provisioning.DurableTask
         {
             public static readonly string V2026_02_01;
         }
+    }
+    public partial class DurableTaskPrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DurableTaskPrivateEndpointConnectionProperties() { }
+        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.DurableTask.DurableTaskPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DurableTask.DurableTaskPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum DurableTaskPrivateEndpointConnectionProvisioningState
     {
@@ -77,6 +86,11 @@ namespace Azure.Provisioning.DurableTask
         Updating = 4,
         Deleting = 5,
         Accepted = 6,
+    }
+    public enum DurableTaskPublicNetworkAccess
+    {
+        Enabled = 0,
+        Disabled = 1,
     }
     public enum DurableTaskPurgeableOrchestrationState
     {
@@ -139,6 +153,21 @@ namespace Azure.Provisioning.DurableTask
             public static readonly string V2026_02_01;
         }
     }
+    public partial class DurableTaskSchedulerPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DurableTaskSchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.DurableTask.DurableTaskScheduler Parent { get { throw null; } set { } }
+        public Azure.Provisioning.DurableTask.DurableTaskPrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.DurableTask.DurableTaskSchedulerPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2026_02_01;
+        }
+    }
     public partial class DurableTaskSchedulerProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DurableTaskSchedulerProperties() { }
@@ -146,7 +175,7 @@ namespace Azure.Provisioning.DurableTask
         public Azure.Provisioning.BicepList<string> IPAllowlist { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.DurableTask.DurableTaskPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.DurableTask.DurableTaskProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DurableTask.PublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.DurableTask.DurableTaskPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.DurableTask.DurableTaskSchedulerSku Sku { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -162,34 +191,5 @@ namespace Azure.Provisioning.DurableTask
     {
         Dedicated = 0,
         Consumption = 1,
-    }
-    public partial class PrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public PrivateEndpointConnectionProperties() { }
-        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.DurableTask.DurableTaskPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.DurableTask.DurableTaskPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum PublicNetworkAccess
-    {
-        Enabled = 0,
-        Disabled = 1,
-    }
-    public partial class SchedulerPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public SchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.DurableTask.DurableTaskScheduler Parent { get { throw null; } set { } }
-        public Azure.Provisioning.DurableTask.DurableTaskPrivateLinkResourceProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.DurableTask.SchedulerPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2026_02_01;
-        }
     }
 }

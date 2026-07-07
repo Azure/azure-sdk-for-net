@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DurableTask
 {
     /// <summary> A private link resource. </summary>
-    public partial class SchedulerPrivateLinkResource : ProvisionableResource
+    public partial class DurableTaskSchedulerPrivateLinkResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -21,10 +21,10 @@ namespace Azure.Provisioning.DurableTask
         private DurableTaskPrivateLinkResourceProperties _properties;
         private ResourceReference<DurableTaskScheduler> _parent;
 
-        /// <summary> Creates a new SchedulerPrivateLinkResource. </summary>
+        /// <summary> Creates a new DurableTaskSchedulerPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DurableTask/schedulers/privateLinkResources", resourceVersion ?? "2026-02-01")
+        public DurableTaskSchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DurableTask/schedulers/privateLinkResources", resourceVersion ?? "2026-02-01")
         {
         }
 
@@ -93,7 +93,7 @@ namespace Azure.Provisioning.DurableTask
             }
         }
 
-        /// <summary> Define all the provisionable properties for SchedulerPrivateLinkResource. </summary>
+        /// <summary> Define all the provisionable properties for DurableTaskSchedulerPrivateLinkResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -105,17 +105,17 @@ namespace Azure.Provisioning.DurableTask
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SchedulerPrivateLinkResource. </summary>
+        /// <summary> Creates a reference to an existing DurableTaskSchedulerPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SchedulerPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static DurableTaskSchedulerPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SchedulerPrivateLinkResource result = new SchedulerPrivateLinkResource(bicepIdentifier, resourceVersion);
+            DurableTaskSchedulerPrivateLinkResource result = new DurableTaskSchedulerPrivateLinkResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SchedulerPrivateLinkResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DurableTaskSchedulerPrivateLinkResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

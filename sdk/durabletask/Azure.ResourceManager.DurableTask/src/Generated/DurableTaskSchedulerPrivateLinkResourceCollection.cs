@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DurableTask
     /// <summary>
     /// A class representing a collection of <see cref="DurableTaskSchedulerPrivateLinkResource"/> and their operations.
     /// Each <see cref="DurableTaskSchedulerPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="DurableTaskSchedulerResource"/>.
-    /// To get a <see cref="DurableTaskSchedulerPrivateLinkResourceCollection"/> instance call the GetSchedulerPrivateLinkResources method from an instance of <see cref="DurableTaskSchedulerResource"/>.
+    /// To get a <see cref="DurableTaskSchedulerPrivateLinkResourceCollection"/> instance call the GetDurableTaskSchedulerPrivateLinkResources method from an instance of <see cref="DurableTaskSchedulerResource"/>.
     /// </summary>
     public partial class DurableTaskSchedulerPrivateLinkResourceCollection : ArmCollection, IEnumerable<DurableTaskSchedulerPrivateLinkResource>, IAsyncEnumerable<DurableTaskSchedulerPrivateLinkResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.DurableTask
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DurableTaskSchedulerPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DurableTaskSchedulerPrivateLinkResource.ResourceType, out string schedulerPrivateLinkResourceApiVersion);
+            TryGetApiVersion(DurableTaskSchedulerPrivateLinkResource.ResourceType, out string durableTaskSchedulerPrivateLinkResourceApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", DurableTaskSchedulerPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, schedulerPrivateLinkResourceApiVersion ?? "2026-02-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskSchedulerPrivateLinkResourceApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

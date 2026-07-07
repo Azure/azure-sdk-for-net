@@ -12,15 +12,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.DurableTask
 {
     /// <summary> Properties of the private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
+    public partial class DurableTaskPrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private BicepList<string> _groupIds;
         private PrivateEndpoint _privateEndpoint;
         private DurableTaskPrivateLinkServiceConnectionState _privateLinkServiceConnectionState;
         private BicepValue<DurableTaskPrivateEndpointConnectionProvisioningState> _provisioningState;
 
-        /// <summary> Creates a new PrivateEndpointConnectionProperties. </summary>
-        public PrivateEndpointConnectionProperties()
+        /// <summary> Creates a new DurableTaskPrivateEndpointConnectionProperties. </summary>
+        public DurableTaskPrivateEndpointConnectionProperties()
         {
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.DurableTask
             }
         }
 
-        /// <summary> Define all the provisionable properties for PrivateEndpointConnectionProperties. </summary>
+        /// <summary> Define all the provisionable properties for DurableTaskPrivateEndpointConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -98,7 +98,7 @@ namespace Azure.Provisioning.DurableTask
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PrivateEndpointConnectionProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DurableTaskPrivateEndpointConnectionProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

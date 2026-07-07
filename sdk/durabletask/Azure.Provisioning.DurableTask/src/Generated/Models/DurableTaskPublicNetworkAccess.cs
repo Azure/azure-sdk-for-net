@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.DurableTask
 {
     /// <summary> State of the public network access. </summary>
-    public enum PublicNetworkAccess
+    public enum DurableTaskPublicNetworkAccess
     {
         /// <summary> The public network access is enabled. </summary>
         Enabled,

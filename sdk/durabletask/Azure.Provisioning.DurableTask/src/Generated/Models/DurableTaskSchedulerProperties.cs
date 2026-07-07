@@ -17,7 +17,7 @@ namespace Azure.Provisioning.DurableTask
         private BicepValue<string> _endpoint;
         private BicepList<string> _ipAllowlist;
         private DurableTaskSchedulerSku _sku;
-        private BicepValue<PublicNetworkAccess> _publicNetworkAccess;
+        private BicepValue<DurableTaskPublicNetworkAccess> _publicNetworkAccess;
         private BicepList<DurableTaskPrivateEndpointConnection> _privateEndpointConnections;
 
         /// <summary> Creates a new DurableTaskSchedulerProperties. </summary>
@@ -76,7 +76,7 @@ namespace Azure.Provisioning.DurableTask
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<PublicNetworkAccess> PublicNetworkAccess
+        public BicepValue<DurableTaskPublicNetworkAccess> PublicNetworkAccess
         {
             get
             {
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.DurableTask
             _endpoint = DefineProperty<string>(nameof(Endpoint), new string[] { "endpoint" }, isOutput: true);
             _ipAllowlist = DefineListProperty<string>(nameof(IPAllowlist), new string[] { "ipAllowlist" }, isRequired: true);
             _sku = DefineModelProperty<DurableTaskSchedulerSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
-            _publicNetworkAccess = DefineProperty<PublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
+            _publicNetworkAccess = DefineProperty<DurableTaskPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _privateEndpointConnections = DefineListProperty<DurableTaskPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             DefineAdditionalProperties();
         }
