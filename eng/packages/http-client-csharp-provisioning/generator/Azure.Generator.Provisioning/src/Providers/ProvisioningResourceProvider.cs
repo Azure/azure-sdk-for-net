@@ -136,7 +136,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
             _resourceProjection = null;
             _defaultApiVersion = null;
-            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsResourceSettable(inputModel);
+            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);

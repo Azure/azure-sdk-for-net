@@ -449,14 +449,16 @@ namespace Azure.Generator.Provisioning.Tests
         public void DerivedReadOnlyResourcePropertiesAreNotSettable()
         {
             var discriminatorProperty = CreateProperty("Kind", isRequired: true, isDiscriminator: true);
-            var baseModel = CreateModel("ReadOnlyWidget", [discriminatorProperty]);
+            var derivedModels = new List<InputModelType>();
+            var baseModel = CreateModel("ReadOnlyWidget", [discriminatorProperty], derivedModels: derivedModels);
             var derivedProperty = CreateProperty("WritableValue");
             var derivedModel = CreateModel(
                 "DerivedReadOnlyWidget",
                 [derivedProperty],
                 baseModel,
                 discriminatorValue: "derived",
-                discriminatorProperty);
+                discriminatorProperty: discriminatorProperty);
+            derivedModels.Add(derivedModel);
             var readOnlyResource = CreateMetadata(
                 baseModel,
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -481,14 +483,16 @@ namespace Azure.Generator.Provisioning.Tests
         public void DerivedWritableResourcePropertiesRemainSettable()
         {
             var discriminatorProperty = CreateProperty("Kind", isRequired: true, isDiscriminator: true);
-            var baseModel = CreateModel("WritableWidget", [discriminatorProperty]);
+            var derivedModels = new List<InputModelType>();
+            var baseModel = CreateModel("WritableWidget", [discriminatorProperty], derivedModels: derivedModels);
             var derivedProperty = CreateProperty("WritableValue");
             var derivedModel = CreateModel(
                 "DerivedWritableWidget",
                 [derivedProperty],
                 baseModel,
                 discriminatorValue: "derived",
-                discriminatorProperty);
+                discriminatorProperty: discriminatorProperty);
+            derivedModels.Add(derivedModel);
             var writableResource = CreateMetadata(
                 baseModel,
                 "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -546,6 +550,7 @@ namespace Azure.Generator.Provisioning.Tests
             string name,
             IReadOnlyList<InputModelProperty>? properties = null,
             InputModelType? baseModel = null,
+            IReadOnlyList<InputModelType>? derivedModels = null,
             string? discriminatorValue = null,
             InputModelProperty? discriminatorProperty = null)
             => new(
@@ -559,7 +564,7 @@ namespace Azure.Generator.Provisioning.Tests
                 InputModelTypeUsage.Input | InputModelTypeUsage.Output,
                 properties ?? [],
                 baseModel,
-                [],
+                derivedModels ?? [],
                 discriminatorValue,
                 discriminatorProperty,
                 new Dictionary<string, InputModelType>(),

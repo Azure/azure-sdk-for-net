@@ -60,28 +60,7 @@ namespace Azure.Generator.Provisioning
         internal bool IsModelSettable(InputModelType model)
         {
             EnsureProvisioningInput();
-            return !_modelSettableUsage!.TryGetValue(model, out var isSettable) || isSettable;
-        }
-
-        internal bool IsResourceSettable(InputModelType model)
-        {
-            EnsureProvisioningInput();
-            var resourceProjectionsByModel = _resourceProjectionsByModel!;
-            if (resourceProjectionsByModel.TryGetValue(model, out var resources))
-            {
-                return resources.Any(r => r.IsSettable);
-            }
-
-            var baseModel = model.BaseModel;
-            while (baseModel != null)
-            {
-                if (resourceProjectionsByModel.TryGetValue(baseModel, out resources))
-                {
-                    return resources.Any(r => r.IsSettable);
-                }
-                baseModel = baseModel.BaseModel;
-            }
-            return false;
+            return _modelSettableUsage![model];
         }
 
         private void EnsureProvisioningInput()
@@ -161,11 +140,12 @@ namespace Azure.Generator.Provisioning
                 case InputModelType model:
                     if (resourceProjectionInfosByModel.TryGetValue(model, out var resources))
                     {
+                        var isResourceSettable = resources.Any(r => r.IsSettable);
+                        modelSettableUsage[model] = isResourceSettable || (modelSettableUsage.TryGetValue(model, out var existingResourceUsage) && existingResourceUsage);
                         foreach (var resource in resources)
                         {
                             EnqueueResourceProperties(resource, queue);
                         }
-                        var isResourceSettable = resources.Any(r => r.IsSettable);
                         if (model.BaseModel != null)
                             queue.Enqueue((model.BaseModel, isResourceSettable));
                         foreach (var derived in model.DerivedModels)
