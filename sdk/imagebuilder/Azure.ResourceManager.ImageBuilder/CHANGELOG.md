@@ -4,8 +4,4 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Initial release of the Azure.ResourceManager.ImageBuilder library, generated from the TypeSpec specification for the Microsoft.VirtualMachineImages (Azure Image Builder) resource provider.
