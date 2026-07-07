@@ -78,6 +78,36 @@ namespace Azure.Generator.Management.Models
         /// <summary> Gets the serialized string representation of this request path. </summary>
         public string SerializedPath => _path;
 
+        /// <summary> Gets the ARM resource type segments represented by this request path. </summary>
+        public IReadOnlyList<RequestPathSegment> ResourceTypeSegments
+        {
+            get
+            {
+                var providerIndex = -1;
+                for (int i = Count - 1; i >= 0; i--)
+                {
+                    if (_segments[i].IsProvidersSegment)
+                    {
+                        providerIndex = i;
+                        break;
+                    }
+                }
+
+                if (providerIndex < 0)
+                {
+                    return [];
+                }
+
+                var result = new List<RequestPathSegment>();
+                result.Add(_segments[providerIndex + 1]);
+                for (int i = providerIndex + 2; i < Count; i += 2)
+                {
+                    result.Add(_segments[i]);
+                }
+                return result;
+            }
+        }
+
         /// <summary> Gets the <see cref="RequestPathSegment"/> at the specified index. </summary>
         /// <param name="index">The zero-based index of the segment to get.</param>
         /// <returns>The segment at the specified index.</returns>

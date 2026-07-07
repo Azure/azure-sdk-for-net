@@ -204,15 +204,16 @@ namespace Azure.Generator.Management.Providers
         public ResourceClientProvider Resource => _resource;
         public IReadOnlyList<ParameterProvider> PathParameters => _extraCtorParameters;
 
-        internal IReadOnlyList<ParameterContextMapping> GetFixedResourcePathParameterMappings(RequestPathPattern operationPath)
+        internal IReadOnlyList<ParameterContextMapping> GetResourceTypeSegmentParameterMappings(RequestPathPattern operationPath)
         {
-            var resourcePath = _resource.ResourceIdPattern;
+            var resourceTypeSegments = _resource.ResourceTypeValue.Split('/').Select(segment => new RequestPathSegment(segment)).ToArray();
+            var operationTypeSegments = operationPath.ResourceTypeSegments;
             var mappings = new List<ParameterContextMapping>();
 
-            for (int i = 0; i < operationPath.Count && i < resourcePath.Count; i++)
+            for (int i = 0; i < operationTypeSegments.Count && i < resourceTypeSegments.Length; i++)
             {
-                var operationSegment = operationPath[i];
-                var resourceSegment = resourcePath[i];
+                var operationSegment = operationTypeSegments[i];
+                var resourceSegment = resourceTypeSegments[i];
                 if (operationSegment.IsConstant && resourceSegment.IsConstant)
                 {
                     if (!operationSegment.Equals(resourceSegment))
@@ -229,13 +230,10 @@ namespace Azure.Generator.Management.Providers
 
                 if (!operationSegment.IsConstant && resourceSegment.IsConstant)
                 {
-                    if (i >= _operationContext.ContextualPath.Count)
-                    {
-                        var fixedValue = resourceSegment.Value;
-                        mappings.Add(new ParameterContextMapping(
-                            operationSegment.VariableName,
-                            new ContextualParameter(fixedValue, operationSegment.VariableName, _ => Literal(fixedValue))));
-                    }
+                    var fixedValue = resourceSegment.Value;
+                    mappings.Add(new ParameterContextMapping(
+                        operationSegment.VariableName,
+                        new ContextualParameter(fixedValue, operationSegment.VariableName, _ => Literal(fixedValue))));
                     continue;
                 }
 

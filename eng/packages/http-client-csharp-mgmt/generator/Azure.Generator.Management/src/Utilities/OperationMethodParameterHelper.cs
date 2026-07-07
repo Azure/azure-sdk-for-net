@@ -26,7 +26,7 @@ namespace Azure.Generator.Management.Utilities
         {
             var parameterMapping = operationContext.BuildParameterMapping(operationPath);
             return enclosingTypeProvider is ResourceCollectionClientProvider collectionProvider
-                ? parameterMapping.WithContextualParameterOverrides(collectionProvider.GetFixedResourcePathParameterMappings(operationPath))
+                ? parameterMapping.WithContextualParameterOverrides(collectionProvider.GetResourceTypeSegmentParameterMappings(operationPath))
                 : parameterMapping;
         }
 
