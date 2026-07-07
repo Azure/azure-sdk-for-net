@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesBingCustomSearchPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>

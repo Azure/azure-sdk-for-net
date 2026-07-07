@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
+    [Experimental("AAIP001")]
     public partial class BrowserAutomationToolConnectionParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
