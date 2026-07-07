@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderInstanceProperties"/>. </summary>
-        /// <param name="type"> The type of provider instance. </param>
+        /// <param name="providerType"> The type of provider instance. </param>
         /// <param name="providerProperties"> A JSON string containing the properties of the provider instance. </param>
         /// <param name="metadata"> A JSON string containing metadata of the provider instance. </param>
         /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderInstanceProperties(string @type, string providerProperties, string metadata, HanaProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProviderInstanceProperties(string providerType, string providerProperties, string metadata, HanaProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ProviderType = providerType;
             ProviderProperties = providerProperties;
             Metadata = metadata;
             ProvisioningState = provisioningState;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         }
 
         /// <summary> The type of provider instance. </summary>
-        public string Type { get; set; }
+        public string ProviderType { get; set; }
 
         /// <summary> A JSON string containing the properties of the provider instance. </summary>
         public string ProviderProperties { get; set; }

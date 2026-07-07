@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             {
                 throw new FormatException($"The model {nameof(ProviderInstanceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ProviderType);
             }
             if (Optional.IsDefined(ProviderProperties))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             {
                 return null;
             }
-            string @type = default;
+            string providerType = default;
             string providerProperties = default;
             string metadata = default;
             HanaProvisioningState? provisioningState = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    providerType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProviderInstanceProperties(@type, providerProperties, metadata, provisioningState, additionalBinaryDataProperties);
+            return new ProviderInstanceProperties(providerType, providerProperties, metadata, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

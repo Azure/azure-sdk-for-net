@@ -14,7 +14,7 @@ using Azure.ResourceManager.HanaOnAzure;
 namespace Azure.ResourceManager.HanaOnAzure.Models
 {
     /// <summary> Detailed HANA operation information. </summary>
-    public partial class HanaOnAzureOperationDisplay : IJsonModel<HanaOnAzureOperationDisplay>
+    internal partial class HanaOnAzureOperationDisplay : IJsonModel<HanaOnAzureOperationDisplay>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
