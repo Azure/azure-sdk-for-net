@@ -17,8 +17,8 @@ namespace Azure.Generator.Provisioning
     /// </summary>
     public class ProvisioningInputLibrary : ManagementInputLibrary
     {
-        private IReadOnlyList<ResourceProjectionInfo>? _resourceProjectionInfos;
-        private Dictionary<InputModelType, List<ResourceProjectionInfo>>? _resourceProjectionInfosByModel;
+        private IReadOnlyList<ProvisioningResourceProjection>? _resourceProjections;
+        private Dictionary<InputModelType, List<ProvisioningResourceProjection>>? _resourceProjectionsByModel;
         private IReadOnlyList<InputModelType>? _reachableModels;
         private IReadOnlyList<InputEnumType>? _reachableEnums;
         private Dictionary<InputModelType, bool>? _modelSettableUsage;
@@ -31,12 +31,12 @@ namespace Azure.Generator.Provisioning
         {
         }
 
-        internal IReadOnlyList<ResourceProjectionInfo> ResourceProjectionInfos
+        internal IReadOnlyList<ProvisioningResourceProjection> ResourceProjections
         {
             get
             {
                 EnsureProvisioningInput();
-                return _resourceProjectionInfos!;
+                return _resourceProjections!;
             }
         }
 
@@ -67,18 +67,18 @@ namespace Azure.Generator.Provisioning
         internal bool IsResourceSettable(InputModelType model)
         {
             EnsureProvisioningInput();
-            var resourceProjectionInfosByModel = _resourceProjectionInfosByModel!;
-            if (resourceProjectionInfosByModel.TryGetValue(model, out var resources))
+            var resourceProjectionsByModel = _resourceProjectionsByModel!;
+            if (resourceProjectionsByModel.TryGetValue(model, out var resources))
             {
-                return resources.Any(r => r.IsSettableResource);
+                return resources.Any(r => r.IsSettable);
             }
 
             var baseModel = model.BaseModel;
             while (baseModel != null)
             {
-                if (resourceProjectionInfosByModel.TryGetValue(baseModel, out resources))
+                if (resourceProjectionsByModel.TryGetValue(baseModel, out resources))
                 {
-                    return resources.Any(r => r.IsSettableResource);
+                    return resources.Any(r => r.IsSettable);
                 }
                 baseModel = baseModel.BaseModel;
             }
@@ -87,20 +87,18 @@ namespace Azure.Generator.Provisioning
 
         private void EnsureProvisioningInput()
         {
-            if (_resourceProjectionInfos != null && _modelSettableUsage != null)
+            if (_resourceProjections != null && _modelSettableUsage != null)
                 return;
 
-            var resourceProjectionInfos = _resourceProjectionInfos
-                ?? ProvisioningResourceProjection.Create(ArmProviderSchema.Resources)
-                    .Select(projection => new ResourceProjectionInfo(projection, projection.WritableScopes.Count > 0))
-                    .ToList();
-            var resourceProjectionInfosByModel = _resourceProjectionInfosByModel ?? resourceProjectionInfos
-                .GroupBy(info => info.Projection.ResourceModel)
+            var resourceProjections = _resourceProjections
+                ?? ProvisioningResourceProjection.Create(ArmProviderSchema.Resources);
+            var resourceProjectionsByModel = _resourceProjectionsByModel ?? resourceProjections
+                .GroupBy(projection => projection.ResourceModel)
                 .ToDictionary(group => group.Key, group => group.ToList());
-            var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjectionInfos, resourceProjectionInfosByModel);
+            var (reachableModels, reachableEnums, modelSettableUsage) = CollectReachableTypes(resourceProjections, resourceProjectionsByModel);
 
-            _resourceProjectionInfos = resourceProjectionInfos;
-            _resourceProjectionInfosByModel = resourceProjectionInfosByModel;
+            _resourceProjections = resourceProjections;
+            _resourceProjectionsByModel = resourceProjectionsByModel;
             _reachableModels = reachableModels;
             _reachableEnums = reachableEnums;
             _modelSettableUsage = modelSettableUsage;
@@ -112,8 +110,8 @@ namespace Azure.Generator.Provisioning
         /// resources through non-output properties as settable.
         /// </summary>
         private static (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums, Dictionary<InputModelType, bool> ModelSettableUsage) CollectReachableTypes(
-            IReadOnlyList<ResourceProjectionInfo> resourceProjectionInfos,
-            Dictionary<InputModelType, List<ResourceProjectionInfo>> resourceProjectionInfosByModel)
+            IReadOnlyList<ProvisioningResourceProjection> resourceProjections,
+            Dictionary<InputModelType, List<ProvisioningResourceProjection>> resourceProjectionsByModel)
         {
             var outputVisited = new HashSet<InputType>();
             var traversalVisited = new HashSet<(InputType Type, bool IsSettable)>();
@@ -122,30 +120,30 @@ namespace Azure.Generator.Provisioning
             var modelSettableUsage = new Dictionary<InputModelType, bool>();
             var queue = new Queue<(InputType Type, bool IsSettable)>();
 
-            foreach (var resource in resourceProjectionInfos)
+            foreach (var resource in resourceProjections)
             {
-                queue.Enqueue((resource.Projection.ResourceModel, false));
+                queue.Enqueue((resource.ResourceModel, false));
             }
 
             while (queue.Count > 0)
             {
-                Visit(queue.Dequeue(), resourceProjectionInfosByModel, outputVisited, traversalVisited, models, enums, modelSettableUsage, queue);
+                Visit(queue.Dequeue(), resourceProjectionsByModel, outputVisited, traversalVisited, models, enums, modelSettableUsage, queue);
             }
 
             return (models, enums, modelSettableUsage);
         }
 
-        private static void EnqueueResourceProperties(ResourceProjectionInfo resource, Queue<(InputType Type, bool IsSettable)> queue)
+        private static void EnqueueResourceProperties(ProvisioningResourceProjection resource, Queue<(InputType Type, bool IsSettable)> queue)
         {
-            foreach (var (property, isOutput) in GetResourceProperties(resource.Projection))
+            foreach (var (property, isOutput) in GetResourceProperties(resource))
             {
-                queue.Enqueue((property.Type, resource.IsSettableResource && !isOutput));
+                queue.Enqueue((property.Type, resource.IsSettable && !isOutput));
             }
         }
 
         private static void Visit(
             (InputType Type, bool IsSettable) item,
-            Dictionary<InputModelType, List<ResourceProjectionInfo>> resourceProjectionInfosByModel,
+            Dictionary<InputModelType, List<ProvisioningResourceProjection>> resourceProjectionInfosByModel,
             HashSet<InputType> outputVisited,
             HashSet<(InputType Type, bool IsSettable)> traversalVisited,
             List<InputModelType> models,
@@ -165,7 +163,7 @@ namespace Azure.Generator.Provisioning
                         {
                             EnqueueResourceProperties(resource, queue);
                         }
-                        var isResourceSettable = resources.Any(r => r.IsSettableResource);
+                        var isResourceSettable = resources.Any(r => r.IsSettable);
                         if (model.BaseModel != null)
                             queue.Enqueue((model.BaseModel, isResourceSettable));
                         foreach (var derived in model.DerivedModels)
@@ -292,7 +290,5 @@ namespace Azure.Generator.Provisioning
         {
             "id", "systemData", "type"
         };
-
-        internal record ResourceProjectionInfo(ProvisioningResourceProjection Projection, bool IsSettableResource);
     }
 }
