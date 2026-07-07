@@ -10,6 +10,7 @@ using Azure.Generator.Provisioning.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator.Provisioning
 {
@@ -22,6 +23,7 @@ namespace Azure.Generator.Provisioning
         private IReadOnlyList<ProvisioningResourceProvider>? _resources;
         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
+        private Dictionary<InputModelType, bool>? _modelSettableUsage;
         private BuiltInRoleProvider? _builtInRole;
 
         /// <summary>
@@ -112,6 +114,12 @@ namespace Azure.Generator.Provisioning
         {
             GetValue(ref _resourcesByIdPattern).TryGetValue(resourceIdPattern.SerializedPath, out var resource);
             return resource;
+        }
+
+        internal bool IsModelSettable(InputModelType model)
+        {
+            _modelSettableUsage ??= BuildModelSettableUsage();
+            return !_modelSettableUsage.TryGetValue(model, out var isSettable) || isSettable;
         }
 
         /// <inheritdoc/>
@@ -242,6 +250,84 @@ namespace Azure.Generator.Provisioning
             }
 
             return (models, enums);
+        }
+
+        private Dictionary<InputModelType, bool> BuildModelSettableUsage()
+        {
+            var usage = new Dictionary<InputModelType, bool>();
+            var visited = new HashSet<(InputType Type, bool IsSettable)>();
+            var queue = new Queue<(InputType Type, bool IsSettable)>();
+
+            foreach (var resource in Resources)
+            {
+                EnqueueResourceProperties(resource, queue);
+            }
+
+            while (queue.Count > 0)
+            {
+                VisitSettableUsage(queue.Dequeue(), visited, usage, queue);
+            }
+
+            return usage;
+        }
+
+        private static void EnqueueResourceProperties(ProvisioningResourceProvider resource, Queue<(InputType Type, bool IsSettable)> queue)
+        {
+            foreach (var (property, isSettable) in resource.GetReachableProperties())
+            {
+                queue.Enqueue((property.Type, isSettable));
+            }
+        }
+
+        private void VisitSettableUsage(
+            (InputType Type, bool IsSettable) item,
+            HashSet<(InputType Type, bool IsSettable)> visited,
+            Dictionary<InputModelType, bool> usage,
+            Queue<(InputType Type, bool IsSettable)> queue)
+        {
+            if (!visited.Add(item))
+                return;
+
+            switch (item.Type)
+            {
+                case InputModelType model:
+                    if (TryGetResourcesByModel(model, out var resources))
+                    {
+                        foreach (var resource in resources)
+                        {
+                            EnqueueResourceProperties(resource, queue);
+                        }
+                        break;
+                    }
+
+                    usage[model] = item.IsSettable || (usage.TryGetValue(model, out var existing) && existing);
+                    if (model.BaseModel != null)
+                        queue.Enqueue((model.BaseModel, item.IsSettable));
+                    foreach (var derived in model.DerivedModels)
+                        queue.Enqueue((derived, item.IsSettable));
+                    foreach (var property in model.Properties.Where(p => !p.IsDiscriminator))
+                        queue.Enqueue((property.Type, item.IsSettable && !property.IsReadOnly));
+                    if (model.AdditionalProperties != null)
+                        queue.Enqueue((model.AdditionalProperties, item.IsSettable));
+                    break;
+                case InputArrayType arrayType:
+                    queue.Enqueue((arrayType.ValueType, item.IsSettable));
+                    break;
+                case InputDictionaryType dictType:
+                    queue.Enqueue((dictType.KeyType, item.IsSettable));
+                    queue.Enqueue((dictType.ValueType, item.IsSettable));
+                    break;
+                case InputNullableType nullableType:
+                    queue.Enqueue((nullableType.Type, item.IsSettable));
+                    break;
+                case InputLiteralType literalType:
+                    queue.Enqueue((literalType.ValueType, item.IsSettable));
+                    break;
+                case InputUnionType unionType:
+                    foreach (var variant in unionType.VariantTypes)
+                        queue.Enqueue((variant, item.IsSettable));
+                    break;
+            }
         }
 
         private void Visit(InputType type, HashSet<InputType> visited, List<InputModelType> models, List<InputEnumType> enums, Queue<InputType> queue)

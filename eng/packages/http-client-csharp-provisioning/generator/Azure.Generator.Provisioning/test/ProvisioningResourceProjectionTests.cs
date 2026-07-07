@@ -294,6 +294,64 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void ModelOnlyReferencedByReadOnlyResourceIsNotSettable()
+        {
+            var detailsValueProperty = CreateProperty("RequiredValue", isRequired: true);
+            var detailsModel = CreateModel("ReadOnlyWidgetDetails", [detailsValueProperty]);
+            var detailsProperty = CreateProperty("Details", type: detailsModel);
+            var resourceModel = CreateModel("ReadOnlyWidget", [detailsProperty]);
+            var readOnlyResource = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, detailsModel]);
+            var resourceProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            RegisterResourceProviders(resourceProvider);
+            var modelProvider = new ProvisioningModelProvider(detailsModel);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)modelProvider).GetProvisioningPropertyInfo(detailsValueProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.False);
+        }
+
+        [Test]
+        public void ModelReferencedByWritableResourceRemainsSettable()
+        {
+            var detailsValueProperty = CreateProperty("RequiredValue", isRequired: true);
+            var detailsModel = CreateModel("WritableWidgetDetails", [detailsValueProperty]);
+            var detailsProperty = CreateProperty("Details", type: detailsModel);
+            var resourceModel = CreateModel("WritableWidget", [detailsProperty]);
+            var writableResource = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, detailsModel]);
+            var resourceProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([writableResource])[0]);
+            RegisterResourceProviders(resourceProvider);
+            var modelProvider = new ProvisioningModelProvider(detailsModel);
+
+            var propertyInfo = ((IProvisioningPropertyInfo)modelProvider).GetProvisioningPropertyInfo(detailsValueProperty);
+
+            Assert.That(propertyInfo, Is.Not.Null);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
+            Assert.That(propertyInfo.IsRequired, Is.True);
+            Assert.That(propertyInfo.IsSettable, Is.True);
+        }
+
+        [Test]
         public void SingletonResourceNameIsNotSettable()
         {
             var nameProperty = CreateProperty("Name", isRequired: true);
@@ -581,14 +639,17 @@ namespace Azure.Generator.Provisioning.Tests
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, resourcesByModel);
+            typeof(ProvisioningOutputLibrary)
+                .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(outputLibrary, null);
         }
 
-        private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, string? serializedName = null)
+        private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)
             => new(
                 name: name,
                 summary: null,
                 doc: $"Description for {name}",
-                type: InputPrimitiveType.String,
+                type: type ?? InputPrimitiveType.String,
                 isRequired: isRequired,
                 isReadOnly: isReadOnly,
                 isApiVersion: false,

@@ -105,6 +105,9 @@ namespace Azure.Generator.Provisioning.Providers
                 propInfo.TypeOverride);
         }
 
+        internal IEnumerable<(InputModelProperty Property, bool IsSettable)> GetReachableProperties()
+            => _allProperties.Select(p => (p.Property, p.IsSettable));
+
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
