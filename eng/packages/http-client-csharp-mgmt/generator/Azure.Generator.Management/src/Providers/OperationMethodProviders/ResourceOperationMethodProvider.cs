@@ -69,6 +69,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
         /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
+        /// <param name="parameterMappings">Optional precomputed parameter mappings to use for the operation. </param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             OperationContext operationContext,
@@ -79,14 +80,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             FormattableString? description = null,
             bool forceLro = false,
             ResourceClientProvider? explicitResourceClient = null,
-            ParameterProvider? scopeParameter = null)
+            ParameterProvider? scopeParameter = null,
+            ParameterContextRegistry? parameterMappings = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _parameterMappings = OperationMethodParameterHelper.BuildParameterMapping(operationContext, enclosingType, new RequestPathPattern(method.Operation.Path));
+            _parameterMappings = parameterMappings ?? operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;

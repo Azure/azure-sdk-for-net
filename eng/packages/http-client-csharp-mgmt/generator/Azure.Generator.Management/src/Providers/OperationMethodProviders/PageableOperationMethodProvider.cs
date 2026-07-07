@@ -43,14 +43,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             string? methodName = null,
             ResourceClientProvider? explicitResourceClient = null,
-            ParameterProvider? scopeParameter = null)
+            ParameterProvider? scopeParameter = null,
+            ParameterContextRegistry? parameterMappings = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClientInfo = restClientInfo;
             _method = method;
-            _parameterMappings = OperationMethodParameterHelper.BuildParameterMapping(operationContext, enclosingType, new RequestPathPattern(method.Operation.Path));
+            _parameterMappings = parameterMappings ?? operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.

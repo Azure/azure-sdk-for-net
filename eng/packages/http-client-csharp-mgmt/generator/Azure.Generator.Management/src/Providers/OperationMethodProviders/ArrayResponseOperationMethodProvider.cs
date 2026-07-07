@@ -51,7 +51,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             bool isAsync,
             string? methodName = null,
             ResourceClientProvider? explicitResourceClient = null,
-            ParameterProvider? scopeParameter = null)
+            ParameterProvider? scopeParameter = null,
+            ParameterContextRegistry? parameterMapping = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
@@ -59,7 +60,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
-            _parameterMapping = OperationMethodParameterHelper.BuildParameterMapping(_operationContext, enclosingType, new RequestPathPattern(method.Operation.Path));
+            _parameterMapping = parameterMapping ?? _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
             _isAsync = isAsync;
             _restClientField = restClientInfo.RestClient;
 
