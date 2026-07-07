@@ -89,7 +89,7 @@ namespace Azure.Generator.Provisioning.Providers
                     if (prop.IsDiscriminator) continue;
                     if (!seen.Add(prop.Name)) continue;
 
-                    var property = CodeModelGenerator.Instance.TypeFactory.CreateProperty(prop, this);
+                    var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(prop, this);
                     if (property != null)
                         properties.Add(property);
                 }

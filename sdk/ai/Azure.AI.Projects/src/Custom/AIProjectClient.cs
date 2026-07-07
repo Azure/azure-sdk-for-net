@@ -7,6 +7,7 @@ global using System.ComponentModel;
 global using Microsoft.TypeSpec.Generator.Customizations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
@@ -150,6 +151,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of RedTeams. </summary>
+        [Experimental("AAIP001")]
         internal virtual RedTeams GetRedTeamsClient()
         {
             return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(Pipeline, _endpoint, _apiVersion), null) ?? _cachedRedTeams;
@@ -168,48 +170,56 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
+        [Experimental("AAIP001")]
         internal virtual ProjectEvaluators GetProjectEvaluatorsClient()
         {
             return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
         }
 
         /// <summary> Initializes a new instance of ProjectInsights. </summary>
+        [Experimental("AAIP001")]
         internal virtual ProjectInsights GetProjectInsightsClient()
         {
             return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
         }
 
         /// <summary> Initializes a new instance of ProjectSchedules. </summary>
+        [Experimental("AAIP001")]
         internal virtual ProjectSchedules GetProjectSchedulesClient()
         {
             return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
+        [Experimental("AAIP001")]
         internal virtual AIProjectMemoryStores GetAIProjectMemoryStoresOperationsClient()
         {
             return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
 
         /// <summary> Initializes a new instance of AIProjectModels. </summary>
+        [Experimental("AAIP001")]
         internal virtual AIProjectModels GetAIProjectModelsClient()
         {
             return Volatile.Read(ref _cachedAIProjectModels) ?? Interlocked.CompareExchange(ref _cachedAIProjectModels, new AIProjectModels(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectModels;
         }
 
         /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
+        [Experimental("AAIP001")]
         internal virtual DataGenerationJobs GetDataGenerationJobsClient()
         {
             return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
         }
 
         /// <summary> Initializes a new instance of EvaluatorGenerationJobs. </summary>
+        [Experimental("AAIP001")]
         internal virtual EvaluatorGenerationJobs GetEvaluatorGenerationJobsClient()
         {
             return Volatile.Read(ref _cachedEvaluatorGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedEvaluatorGenerationJobs, new EvaluatorGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluatorGenerationJobs;
         }
 
         /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
+        [Experimental("AAIP001")]
         internal virtual AIProjectRoutines GetAIProjectRoutinesClient()
         {
             return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
@@ -227,26 +237,35 @@ namespace Azure.AI.Projects
         /// <summary> Gets the client for administering agents in this project. </summary>
         public virtual AgentAdministrationClient AgentAdministrationClient => GetCachedAgentsClient();
         /// <summary> Gets the client for managing memory stores. </summary>
+        [Experimental("AAIP001")]
         public virtual AIProjectMemoryStores MemoryStores => GetAIProjectMemoryStoresClient();
         /// <summary> Gets the client for managing red team scans. </summary>
+        [Experimental("AAIP001")]
         public virtual RedTeams RedTeams => GetRedTeamsClient();
         /// <summary> Gets the client for managing evaluation rules. </summary>
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
         /// <summary> Gets the client for managing evaluation taxonomies. </summary>
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
         /// <summary> Gets the client for managing project evaluators. </summary>
+        [Experimental("AAIP001")]
         public virtual ProjectEvaluators Evaluators => GetProjectEvaluatorsClient();
         /// <summary> Gets the client for retrieving project insights. </summary>
+        [Experimental("AAIP001")]
         public virtual ProjectInsights Insights => GetProjectInsightsClient();
         /// <summary> Gets the client for managing project schedules. </summary>
+        [Experimental("AAIP001")]
         public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
         /// <summary> Gets the client for managing model deployments and capabilities. </summary>
+        [Experimental("AAIP001")]
         public virtual AIProjectModels Models => GetAIProjectModelsClient();
         /// <summary> Gets the client for managing evaluator generation jobs. </summary>
+        [Experimental("AAIP001")]
         public virtual EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
         /// <summary> Gets the client for managing data generation jobs. </summary>
+        [Experimental("AAIP001")]
         public virtual DataGenerationJobs DataGenerationJobs => GetDataGenerationJobsClient();
         /// <summary> Gets the client for routines operations. </summary>
+        [Experimental("AAIP001")]
         public virtual AIProjectRoutines Routines => GetAIProjectRoutinesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
