@@ -13,22 +13,22 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Represents a validation error that prevents migration. </summary>
-    public partial class MigrationValidationError
+    public partial class RedisEnterpriseMigrationValidationError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationValidationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationError"/>. </summary>
         /// <param name="disparities"> List of specific disparities that cause this error. </param>
-        internal MigrationValidationError(IEnumerable<MigrationValidationDisparity> disparities)
+        internal RedisEnterpriseMigrationValidationError(IEnumerable<RedisEnterpriseMigrationValidationDisparity> disparities)
         {
             Disparities = disparities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationValidationError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationError"/>. </summary>
         /// <param name="disparities"> List of specific disparities that cause this error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationError(IList<MigrationValidationDisparity> disparities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationValidationError(IList<RedisEnterpriseMigrationValidationDisparity> disparities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Disparities = disparities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> List of specific disparities that cause this error. </summary>
         [WirePath("disparities")]
-        public IList<MigrationValidationDisparity> Disparities { get; }
+        public IList<RedisEnterpriseMigrationValidationDisparity> Disparities { get; }
     }
 }

@@ -14,56 +14,56 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Represents a validation warning that may impact migration. </summary>
-    public partial class MigrationValidationWarning : IJsonModel<MigrationValidationWarning>
+    public partial class RedisEnterpriseMigrationValidationWarning : IJsonModel<RedisEnterpriseMigrationValidationWarning>
     {
-        /// <summary> Initializes a new instance of <see cref="MigrationValidationWarning"/> for deserialization. </summary>
-        internal MigrationValidationWarning()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationWarning"/> for deserialization. </summary>
+        internal RedisEnterpriseMigrationValidationWarning()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationValidationWarning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RedisEnterpriseMigrationValidationWarning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMigrationValidationWarning(document.RootElement, options);
+                        return DeserializeRedisEnterpriseMigrationValidationWarning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationValidationWarning)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseMigrationValidationWarning)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationValidationWarning)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseMigrationValidationWarning)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MigrationValidationWarning>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RedisEnterpriseMigrationValidationWarning>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationValidationWarning IPersistableModel<MigrationValidationWarning>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RedisEnterpriseMigrationValidationWarning IPersistableModel<RedisEnterpriseMigrationValidationWarning>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MigrationValidationWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisEnterpriseMigrationValidationWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MigrationValidationWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisEnterpriseMigrationValidationWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationValidationWarning)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseMigrationValidationWarning)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("disparities"u8);
             writer.WriteStartArray();
-            foreach (MigrationValidationDisparity item in Disparities)
+            foreach (RedisEnterpriseMigrationValidationDisparity item in Disparities)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -105,39 +105,39 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationValidationWarning IJsonModel<MigrationValidationWarning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RedisEnterpriseMigrationValidationWarning IJsonModel<RedisEnterpriseMigrationValidationWarning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationValidationWarning JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RedisEnterpriseMigrationValidationWarning JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationValidationWarning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationValidationWarning)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseMigrationValidationWarning)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationValidationWarning(document.RootElement, options);
+            return DeserializeRedisEnterpriseMigrationValidationWarning(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MigrationValidationWarning DeserializeMigrationValidationWarning(JsonElement element, ModelReaderWriterOptions options)
+        internal static RedisEnterpriseMigrationValidationWarning DeserializeRedisEnterpriseMigrationValidationWarning(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<MigrationValidationDisparity> disparities = default;
+            IList<RedisEnterpriseMigrationValidationDisparity> disparities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("disparities"u8))
                 {
-                    List<MigrationValidationDisparity> array = new List<MigrationValidationDisparity>();
+                    List<RedisEnterpriseMigrationValidationDisparity> array = new List<RedisEnterpriseMigrationValidationDisparity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MigrationValidationDisparity.DeserializeMigrationValidationDisparity(item, options));
+                        array.Add(RedisEnterpriseMigrationValidationDisparity.DeserializeRedisEnterpriseMigrationValidationDisparity(item, options));
                     }
                     disparities = array;
                     continue;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrationValidationWarning(disparities, additionalBinaryDataProperties);
+            return new RedisEnterpriseMigrationValidationWarning(disparities, additionalBinaryDataProperties);
         }
     }
 }

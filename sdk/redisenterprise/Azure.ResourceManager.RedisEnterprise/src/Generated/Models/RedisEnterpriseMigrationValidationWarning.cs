@@ -13,22 +13,22 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Represents a validation warning that may impact migration. </summary>
-    public partial class MigrationValidationWarning
+    public partial class RedisEnterpriseMigrationValidationWarning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationValidationWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationWarning"/>. </summary>
         /// <param name="disparities"> List of specific disparities that cause this warning. </param>
-        internal MigrationValidationWarning(IEnumerable<MigrationValidationDisparity> disparities)
+        internal RedisEnterpriseMigrationValidationWarning(IEnumerable<RedisEnterpriseMigrationValidationDisparity> disparities)
         {
             Disparities = disparities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationValidationWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationWarning"/>. </summary>
         /// <param name="disparities"> List of specific disparities that cause this warning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationWarning(IList<MigrationValidationDisparity> disparities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationValidationWarning(IList<RedisEnterpriseMigrationValidationDisparity> disparities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Disparities = disparities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> List of specific disparities that cause this warning. </summary>
         [WirePath("disparities")]
-        public IList<MigrationValidationDisparity> Disparities { get; }
+        public IList<RedisEnterpriseMigrationValidationDisparity> Disparities { get; }
     }
 }

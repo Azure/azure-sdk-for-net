@@ -12,25 +12,25 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Represents a specific validation issue found during migration validation. </summary>
-    public partial class MigrationValidationDisparity
+    public partial class RedisEnterpriseMigrationValidationDisparity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationValidationDisparity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationDisparity"/>. </summary>
         /// <param name="category"> A localized string denoting the category of the validation issue. Examples are "Region", "Data", "Identity", "Clustering Mode", and "TLS". </param>
         /// <param name="message"> Detailed message describing the validation issue. </param>
-        internal MigrationValidationDisparity(string category, string message)
+        internal RedisEnterpriseMigrationValidationDisparity(string category, string message)
         {
             Category = category;
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationValidationDisparity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationValidationDisparity"/>. </summary>
         /// <param name="category"> A localized string denoting the category of the validation issue. Examples are "Region", "Data", "Identity", "Clustering Mode", and "TLS". </param>
         /// <param name="message"> Detailed message describing the validation issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationDisparity(string category, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseMigrationValidationDisparity(string category, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Message = message;
