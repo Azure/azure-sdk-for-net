@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Provisioning.Tests.TestHelpers;
+using Azure.Generator.Management.Models;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
@@ -10,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Azure.Generator.Provisioning.Tests
 {
@@ -324,19 +324,134 @@ namespace Azure.Generator.Provisioning.Tests
                 false,
                 new InputSerializationOptions(),
                 false);
-            SetModelSettable(model);
+            LoadModelAsWritableResource(model);
             return model;
         }
 
-        private static void SetModelSettable(InputModelType model)
+        private static void LoadModelAsWritableResource(InputModelType model)
         {
-            var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
-            typeof(ProvisioningInputLibrary)
-                .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(inputLibrary, Array.Empty<Primitives.ProvisioningResourceProjection>());
-            typeof(ProvisioningInputLibrary)
-                .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(inputLibrary, new Dictionary<InputModelType, bool> { [model] = true });
+            var resourceModel = new InputModelType(
+                "TestResource",
+                "Sample.Models",
+                "Sample.Models.TestResource",
+                "public",
+                null,
+                string.Empty,
+                "Test resource.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [CreateProperty("Details", model)],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+            var metadata = CreateMetadata(
+                resourceModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+                "Microsoft.Test/widgets",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                [CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceModel, model],
+                clients: () => metadata.Methods.Select(m => m.InputClient).Distinct().ToArray(),
+                armProviderSchema: () => new ArmProviderSchema([metadata], []));
+        }
+
+        private static InputModelProperty CreateProperty(string name, InputType type)
+            => new(
+                name: name,
+                summary: null,
+                doc: $"Description for {name}",
+                type: type,
+                isRequired: false,
+                isReadOnly: false,
+                isApiVersion: false,
+                defaultValue: null,
+                isHttpMetadata: false,
+                access: null,
+                isDiscriminator: false,
+                serializedName: name,
+                serializationOptions: new(json: new(name)));
+
+        private static ArmResourceMetadata CreateMetadata(
+            InputModelType model,
+            string resourceIdPattern,
+            string resourceType,
+            ResourceScope scope,
+            IReadOnlyList<string> apiVersions,
+            IReadOnlyList<ResourceMethod> methods)
+        {
+            var path = new RequestPathPattern(resourceIdPattern);
+            return new ArmResourceMetadata(
+                path,
+                model.Name,
+                resourceType,
+                model,
+                new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
+                methods,
+                null,
+                null,
+                [],
+                new ArmResourceNameConstraints(null, null, null),
+                apiVersions,
+                []);
+        }
+
+        private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
+        {
+            var path = RequestPathPattern.GetFromScope(scope, new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}"));
+            var methodName = $"{kind}Widget";
+            var operation = new InputOperation(
+                methodName,
+                null,
+                string.Empty,
+                $"{methodName} description",
+                null,
+                "public",
+                [],
+                [new InputOperationResponse([200], null, [], false, ["application/json"])],
+                kind == ResourceOperationKind.Read ? "GET" : "PUT",
+                string.Empty,
+                path.SerializedPath,
+                null,
+                null,
+                false,
+                true,
+                true,
+                $"Sample.{methodName}",
+                "Sample");
+            var method = new InputBasicServiceMethod(
+                methodName,
+                "public",
+                [],
+                null,
+                null,
+                operation,
+                [],
+                new InputServiceMethodResponse(null, null),
+                null,
+                false,
+                true,
+                true,
+                operation.CrossLanguageDefinitionId);
+            var client = new InputClient(
+                "Widgets",
+                "Sample",
+                "Sample.Widgets",
+                string.Empty,
+                "Widgets description",
+                isMultiServiceClient: false,
+                [method],
+                [],
+                null,
+                [],
+                ["2024-01-01"]);
+            return new ResourceMethod(kind, method, path, new ArmScopeInfo(scope, path, null), client);
         }
 
         private static IEnumerable<TestCaseData> PrimitiveTypeCases()
