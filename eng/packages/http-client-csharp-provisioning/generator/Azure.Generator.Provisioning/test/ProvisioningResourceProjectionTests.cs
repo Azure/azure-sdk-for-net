@@ -625,7 +625,7 @@ namespace Azure.Generator.Provisioning.Tests
             var outputLibrary = ProvisioningGenerator.Instance.OutputLibrary;
             var resourceProjectionInfos = providers
                 .Where(provider => provider.ResourceProjection is not null)
-                .Select(provider => new ProvisioningOutputLibrary.ResourceProjectionInfo(provider.ResourceProjection!, provider.IsSettableResource))
+                .Select(provider => new ProvisioningInputLibrary.ResourceProjectionInfo(provider.ResourceProjection!, provider.IsSettableResource))
                 .ToList();
             var resourceProjectionInfosByModel = resourceProjectionInfos
                 .GroupBy(info => info.Projection.ResourceModel)
@@ -648,15 +648,15 @@ namespace Azure.Generator.Provisioning.Tests
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, resourcesByModel);
-            typeof(ProvisioningOutputLibrary)
+            typeof(ProvisioningInputLibrary)
                 .GetField("_resourceProjectionInfos", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(outputLibrary, resourceProjectionInfos);
-            typeof(ProvisioningOutputLibrary)
+                .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjectionInfos);
+            typeof(ProvisioningInputLibrary)
                 .GetField("_resourceProjectionInfosByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(outputLibrary, resourceProjectionInfosByModel);
-            typeof(ProvisioningOutputLibrary)
+                .SetValue(ProvisioningGenerator.Instance.InputLibrary, resourceProjectionInfosByModel);
+            typeof(ProvisioningInputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
-                .SetValue(outputLibrary, null);
+                .SetValue(ProvisioningGenerator.Instance.InputLibrary, null);
         }
 
         private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)

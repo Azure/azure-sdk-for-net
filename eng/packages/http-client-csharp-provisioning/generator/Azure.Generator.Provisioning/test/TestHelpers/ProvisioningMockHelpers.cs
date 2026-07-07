@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.SourceInput;
@@ -39,9 +38,7 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 inputNsModels,
                 inputNsClients,
                 new InputAuth(null, null));
-            // ProvisioningGenerator inherits ManagementClientGenerator and does not define a
-            // provisioning-specific input library type, so tests mock ManagementInputLibrary.
-            var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
+            var mockInputLibrary = new Mock<ProvisioningInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
