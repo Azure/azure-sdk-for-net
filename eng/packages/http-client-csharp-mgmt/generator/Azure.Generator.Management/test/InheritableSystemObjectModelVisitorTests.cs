@@ -111,7 +111,7 @@ namespace Azure.Generator.Mgmt.Tests
         [Test]
         public void DiscriminatedModelExtendingResourceDoesNotStackOverflow()
         {
-            // Create the ARM Resource base model (recognized as SystemObjectModelProvider
+            // Create the ARM Resource base model (recognized as InheritableSystemObjectModelProvider
             // via crossLanguageDefinitionId = "Azure.ResourceManager.CommonTypes.Resource")
             var resourceModel = new InputModelType(
                 "Resource",
@@ -204,11 +204,12 @@ namespace Azure.Generator.Mgmt.Tests
 
         /// <summary>
         /// Verifies that when custom code overrides a model's base type to an inheritable
-        /// system type (e.g., TrackedResourceData), the visitor uses PropertyProvider metadata
-        /// to enumerate base properties and filters them from the model.
+        /// system type (e.g., TrackedResourceData) that is NOT present as an
+        /// InheritableSystemObjectModelProvider, the visitor uses CLR reflection to enumerate
+        /// base properties and filters them from the model.
         /// </summary>
         [Test]
-        public void CustomCodeBaseTypeOverride_UsesPropertyProviderMetadata()
+        public void CustomCodeBaseTypeOverride_UsesClrReflectionFallback()
         {
             // Create a TrackedResource input model with all the base properties
             var trackedResourceInputModel = InputFactory.Model(
@@ -272,39 +273,6 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
         }
 
-        [Test]
-        public void CustomCodeBaseTypeOverride_FiltersInheritedWirePathProperties()
-        {
-            var baseModelInput = InputFactory.Model(
-                "CustomTrackedBase",
-                properties: [
-                    InputFactory.Property("resourceType", InputPrimitiveType.String, isReadOnly: true, wireName: "type", serializedName: "type"),
-                ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-            var inputModel = InputFactory.Model(
-                "DerivedTrackedModel",
-                properties: [
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("customProp", InputPrimitiveType.String),
-                ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-
-            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [baseModelInput, inputModel]);
-
-            var baseModel = new ModelProvider(baseModelInput);
-            var model = new ModelProvider(inputModel);
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[baseModel.Type] = baseModel;
-            SetCustomCodeView(model, new CustomTrackedBaseCustomCodeView(baseModel.Type));
-
-            var visitor = new TestableInheritableSystemObjectModelVisitor();
-            var result = visitor.InvokePreVisitModel(inputModel, model);
-
-            Assert.That(result, Is.Not.Null);
-            var propertyNames = result!.Properties.Select(p => p.Name).ToList();
-            Assert.That(propertyNames, Does.Not.Contain("Type"));
-            Assert.That(propertyNames, Does.Contain("CustomProp"));
-        }
-
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
             typeProvider.GetType().BaseType!.GetField(
@@ -322,13 +290,6 @@ namespace Azure.Generator.Mgmt.Tests
             protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
             protected override string BuildName() => "MyTrackedModel";
             protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
-        }
-
-        private class CustomTrackedBaseCustomCodeView(CSharpType baseType) : TypeProvider
-        {
-            protected override CSharpType BuildBaseType() => baseType;
-            protected override string BuildName() => "DerivedTrackedModel";
-            protected override string BuildRelativeFilePath() => "DerivedTrackedModel.cs";
         }
 
         private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor

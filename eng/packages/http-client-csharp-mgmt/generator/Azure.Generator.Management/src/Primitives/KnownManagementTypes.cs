@@ -124,6 +124,7 @@ namespace Azure.Generator.Management.Primitives
         public static bool IsKnownManagementType(CSharpType type) => _knownTypes.Contains(type);
 
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
+
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
         public static bool TryGetFrameworkType(string fullyQualifiedTypeName, [MaybeNullWhen(false)] out Type frameworkType)
