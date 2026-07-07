@@ -24,7 +24,7 @@ namespace Azure.Provisioning.DurableTask
         /// <summary> Creates a new DurableTaskSchedulerPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public DurableTaskSchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DurableTask/schedulers/privateLinkResources", resourceVersion ?? "2026-02-01")
+        internal DurableTaskSchedulerPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.DurableTask/schedulers/privateLinkResources", resourceVersion ?? "2026-02-01")
         {
         }
 
