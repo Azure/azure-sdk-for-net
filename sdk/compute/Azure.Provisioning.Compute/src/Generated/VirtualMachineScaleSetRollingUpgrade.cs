@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new VirtualMachineScaleSetRollingUpgrade. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualMachineScaleSetRollingUpgrade(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades", resourceVersion ?? "2026-03-01")
+        internal VirtualMachineScaleSetRollingUpgrade(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/rollingUpgrades", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -40,18 +40,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -65,7 +60,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -73,25 +68,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _tags;
             }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 
@@ -161,7 +146,7 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true, isRequired: true, defaultValue: "latest");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);

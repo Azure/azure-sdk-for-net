@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Compute
         /// <summary> Creates a new VirtualMachineExtensionImage. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualMachineExtensionImage(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/locations/publishers/artifacttypes/types/versions", resourceVersion ?? "2026-03-01")
+        internal VirtualMachineExtensionImage(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/locations/publishers/artifacttypes/types/versions", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -39,18 +39,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -64,7 +59,7 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Tags. </summary>
+        /// <summary> Gets the Tags. </summary>
         public BicepDictionary<string> Tags
         {
             get
@@ -72,25 +67,15 @@ namespace Azure.Provisioning.Compute
                 Initialize();
                 return _tags;
             }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 
