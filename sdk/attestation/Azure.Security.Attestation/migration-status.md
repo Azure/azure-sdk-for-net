@@ -7,12 +7,14 @@
 **Target API version:** `2025-06-01`
 **Last Updated:** 2026-07-03
 
-> **▶ RESUME HERE:** **src + tests build clean; ApiCompat passes; unit tests 18/20 pass.** The 2
-> failures are `GetCertificates` `[RecordedTest]` **stale-recording** mismatches (playback can't match
-> the new pipeline's request; re-record needs live creds — do during PR validation, NOT a code bug).
-> **NEXT ACTION:** Phase 7 (changelog), Phase 10 (Export-API.ps1 + Update-Snippets.ps1), then Phase 12
-> (push spec `client.tsp`/`tspconfig.yaml` to azure-rest-api-specs, re-pin `tsp-location.yaml` commit,
-> final remote-mode regen). Also run `dotnet format` / pre-commit checks before the PR.
+> **▶ RESUME HERE:** **Migration is code-complete.** src + tests build clean (all TFMs), ApiCompat
+> passes, unit tests 18/20 (2 = stale-recording `GetCertificates`, need live re-record). Changelog,
+> Export-API, snippets, and `dotnet format` are done. **ONLY REMAINING = Phase 12:** (1) commit &
+> push the spec edits in `C:\src\azure-rest-api-specs` (`client.tsp` @@access/@@usage/@@alternateType
+> + `tspconfig.yaml` emitter block) to a branch/PR on Azure/azure-rest-api-specs; (2) re-pin
+> `tsp-location.yaml` `commit` to the merged SHA; (3) one final **remote-mode** `dotnet build
+> /t:GenerateCode` (no LocalSpecRepo) to prove CI reproducibility; (4) open the SDK PR; (5) delete
+> this migration-status.md before merge. Optionally re-record `GetCertificates` live.
 >
 > **What was done (fix #3 — the 2020→2025 model bump, Path 1 / C-1 modernize):** reintroduced all 25
 > custom `Models/*.cs` modernized to the new emitter — `[CodeGenModel]`→`[CodeGenType]`, deleted
@@ -104,10 +106,10 @@ before the final PR (Phase 12).**
 | 4 — client.tsp customizations | ✅ | **Fixed**: `@access` on interfaces is invalid in this TCGC version; rewrote to per-operation `@access(...op, Access.internal)`. Regen now compiles the spec cleanly. Local, uncommitted. |
 | 5 — Regenerate (local mode) | ✅ | **FIXED**: added `@azure-typespec/http-client-csharp` block (`emitter-output-dir` + `namespace` + `model-namespace:false`) to the spec's `tspconfig.yaml`. Output now lands in `src/Generated`; project files intact; renames + internal access applied. Committed as `e1793b110ce`. |
 | 6 — Build-fix cycle | ✅ | **DONE.** Full model-bump reconciled (Path 1 / C-1). `src` builds clean across all TFMs. See fix #3 parts 1–4 below. |
-| 7 — Changelog | ⏭️ | |
+| 7 — Changelog | ✅ | `1.1.0-beta.1` entry added (2025-06-01 API version; TypeSpec migration; API preserved). |
 | 8 — Test project build | ✅ | **DONE.** `tests` build clean. Suppressed generated model-factory overloads that clashed with shipped custom signatures; dropped stale `Azure.Security.Attestation.Models` using in samples. |
 | 9 — Test execution | ✅ | **18/20 pass.** Fixed `TestGetAttestationResult` (int64 timestamps + decoupled `object Confirmation`). 2 remaining failures = `GetCertificates` stale-recording (needs live re-record; not a code bug). |
-| 10 — Finalization (Export-API, snippets) | ⏭️ | |
+| 10 — Finalization (Export-API, snippets) | ✅ | Export-API regenerated `api/*.cs` (new `IJsonModel` surface + additive members); snippets verified; `dotnet format` applied. |
 | 11 — ApiCompat reconciliation | ✅ | **DONE** (with src build). Nested `[JsonConverter]` restored; `PolicyCertificatesModificationResult` ctor/setters restored. GA — no baseline suppression used. |
 | 12 — Commit spec `client.tsp` + PRs | ⏭️ | Spec edits (`client.tsp` @@access/@@usage + `tspconfig.yaml`) must be pushed & pinned in tsp-location.yaml |
 
@@ -291,3 +293,50 @@ then regenerated. **Result:** `dotnet build` in `src/` = **252 errors, ALL missi
   state, which **builds cleanly (0 errors, incl. tests)**.
 - **Jump back to the checkpoint:** `git reset --hard checkpoint-raw-typespec`
   (or `git revert --no-edit HEAD` to re-apply the checkpoint on top).
+
+## Phase 12 — EXACT spec edits to push (azure-rest-api-specs)
+
+These live **uncommitted** in `C:\src\azure-rest-api-specs\specification\attestation\data-plane\Attestation`
+and MUST be committed/pushed there, then `tsp-location.yaml.commit` re-pinned to the merged SHA.
+
+### `tspconfig.yaml` — add emitter block (before the legacy `@azure-tools/typespec-csharp` block)
+```yaml
+  "@azure-typespec/http-client-csharp":
+    emitter-output-dir: "{output-dir}/{service-dir}/{namespace}"
+    namespace: "Azure.Security.Attestation"
+    model-namespace: false
+```
+
+### `client.tsp` — full set of migration decorators (appended after `import`s)
+- Root client rename: `@@clientName(AttestationService, "AttestationClient", "!autorest");`
+- Per-operation `@@access(<op>, Access.internal)` + `@@clientName(<client>, "<Legacy>RestClient")`
+  for all six operation clients: `Policy`, `PolicyCertificates`, `Attestation`, `TcbBaselines`,
+  `SigningCertificates`, `MetadataConfiguration` (keeps generated REST clients internal so the
+  hand-written `AttestationClient`/`AttestationAdministrationClient` stay the public surface).
+- Deprecated-svn rename: `@@clientName(AttestationResult.\`x-ms-sgx-svn\`, "svn", "!autorest");`
+  and `@@clientName(AttestationResult.svn, "deprecatedSvn", "!autorest");`
+- `@@usage(..., Usage.output)` for: `CertificateModification`, `PolicyModification`,
+  `AttestOpenEnclaveRequest`, `AttestSgxEnclaveRequest`, `JsonWebKeySet`, `PolicyCertificatesResult`,
+  `PolicyCertificatesModificationResult`, `StoredAttestationPolicy`, `PolicyResult`, `AttestationResult`,
+  `AttestationCertificateManagementBody`.
+- **Force emission of JWT-token-body models** (only reachable via string token bodies — the new
+  emitter's reachability analysis skips them):
+  ```
+  @@access(PolicyResult, Access.public);
+  @@access(AttestationCertificateManagementBody, Access.public);
+  @@access(TpmAttestationRequest, Access.public);
+  @@access(CertificateModification, Access.public);
+  @@usage(TpmAttestationRequest, Usage.input);
+  ```
+- **Timestamp precision** (float32 loses precision for Unix seconds; DateTimeOffset.Max overflows):
+  ```
+  @@alternateType(AttestationResult.iat, int64, "csharp");
+  @@alternateType(AttestationResult.exp, int64, "csharp");
+  @@alternateType(AttestationResult.nbf, int64, "csharp");
+  ```
+
+### After pushing spec
+1. `tsp-location.yaml`: set `commit:` to the merged azure-rest-api-specs SHA (remove local-only state).
+2. Final CI-repro check: `cd src; dotnet build /t:GenerateCode` (REMOTE mode, **no** `LocalSpecRepo`),
+   then `dotnet build` (src) + `dotnet build` (tests) + `pwsh eng/scripts/Export-API.ps1 attestation`.
+3. Delete this `migration-status.md` before the final SDK PR merge.
