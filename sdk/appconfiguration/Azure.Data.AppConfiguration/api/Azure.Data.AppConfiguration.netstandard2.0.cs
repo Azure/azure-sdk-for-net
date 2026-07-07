@@ -9,6 +9,7 @@ namespace Azure.Data.AppConfiguration
         public static Azure.Data.AppConfiguration.AppConfigurationAudience AzureChina { get { throw null; } }
         public static Azure.Data.AppConfiguration.AppConfigurationAudience AzureGovernment { get { throw null; } }
         public static Azure.Data.AppConfiguration.AppConfigurationAudience AzurePublicCloud { get { throw null; } }
+        public static Azure.Data.AppConfiguration.AppConfigurationAudience AzurePublicCloudAz { get { throw null; } }
         public bool Equals(Azure.Data.AppConfiguration.AppConfigurationAudience other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
