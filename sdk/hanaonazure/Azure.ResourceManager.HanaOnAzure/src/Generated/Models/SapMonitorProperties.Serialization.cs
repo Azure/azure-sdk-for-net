@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             if (Optional.IsDefined(LogAnalyticsWorkspaceId))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceId"u8);
-                writer.WriteStringValue(LogAnalyticsWorkspaceId);
+                writer.WriteStringValue(LogAnalyticsWorkspaceId.Value);
             }
             if (Optional.IsDefined(LogAnalyticsWorkspaceSharedKey))
             {
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
             string managedResourceGroupName = default;
             ResourceIdentifier logAnalyticsWorkspaceArmId = default;
             bool? enableCustomerAnalytics = default;
-            string logAnalyticsWorkspaceId = default;
+            Guid? logAnalyticsWorkspaceId = default;
             string logAnalyticsWorkspaceSharedKey = default;
             string sapMonitorCollectorVersion = default;
-            string monitorSubnet = default;
+            ResourceIdentifier monitorSubnet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,7 +202,11 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                 }
                 if (prop.NameEquals("logAnalyticsWorkspaceId"u8))
                 {
-                    logAnalyticsWorkspaceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logAnalyticsWorkspaceId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("logAnalyticsWorkspaceSharedKey"u8))
@@ -217,7 +221,11 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                 }
                 if (prop.NameEquals("monitorSubnet"u8))
                 {
-                    monitorSubnet = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitorSubnet = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

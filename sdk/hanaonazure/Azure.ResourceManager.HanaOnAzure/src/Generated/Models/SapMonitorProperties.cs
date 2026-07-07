@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         /// <param name="sapMonitorCollectorVersion"> The version of the payload running in the Collector VM. </param>
         /// <param name="monitorSubnet"> The subnet which the SAP monitor will be deployed in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapMonitorProperties(HanaProvisioningState? provisioningState, string managedResourceGroupName, ResourceIdentifier logAnalyticsWorkspaceArmId, bool? enableCustomerAnalytics, string logAnalyticsWorkspaceId, string logAnalyticsWorkspaceSharedKey, string sapMonitorCollectorVersion, string monitorSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapMonitorProperties(HanaProvisioningState? provisioningState, string managedResourceGroupName, ResourceIdentifier logAnalyticsWorkspaceArmId, bool? enableCustomerAnalytics, Guid? logAnalyticsWorkspaceId, string logAnalyticsWorkspaceSharedKey, string sapMonitorCollectorVersion, ResourceIdentifier monitorSubnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedResourceGroupName = managedResourceGroupName;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         public bool? EnableCustomerAnalytics { get; set; }
 
         /// <summary> The workspace ID of the log analytics workspace to be used for monitoring. </summary>
-        public string LogAnalyticsWorkspaceId { get; set; }
+        public Guid? LogAnalyticsWorkspaceId { get; set; }
 
         /// <summary> The shared key of the log analytics workspace that is used for monitoring. </summary>
         public string LogAnalyticsWorkspaceSharedKey { get; set; }
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
         public string SapMonitorCollectorVersion { get; }
 
         /// <summary> The subnet which the SAP monitor will be deployed in. </summary>
-        public string MonitorSubnet { get; set; }
+        public ResourceIdentifier MonitorSubnet { get; set; }
     }
 }

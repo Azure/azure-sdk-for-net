@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         }
 
         /// <summary> The workspace ID of the log analytics workspace to be used for monitoring. </summary>
-        public string LogAnalyticsWorkspaceId
+        public Guid? LogAnalyticsWorkspaceId
         {
             get
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HanaOnAzure
         }
 
         /// <summary> The subnet which the SAP monitor will be deployed in. </summary>
-        public string MonitorSubnet
+        public ResourceIdentifier MonitorSubnet
         {
             get
             {

@@ -180,12 +180,9 @@ namespace Azure.ResourceManager.HanaOnAzure
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="HanaOnAzureOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<HanaOnAzureOperationInfo> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static AsyncPageable<HanaOnAzureOperationInfo> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableHanaOnAzureTenantResource(tenantResource).GetAllAsync(cancellationToken);
         }
 
@@ -198,12 +195,9 @@ namespace Azure.ResourceManager.HanaOnAzure
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="HanaOnAzureOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<HanaOnAzureOperationInfo> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        internal static Pageable<HanaOnAzureOperationInfo> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
             return GetMockableHanaOnAzureTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }
