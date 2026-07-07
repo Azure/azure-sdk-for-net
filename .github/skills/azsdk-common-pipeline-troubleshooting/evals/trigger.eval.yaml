@@ -20,25 +20,25 @@ scoring:
 stimuli:
   # Should trigger
   - name: trigger-my-ci-pipeline-is-failing
-    prompt: "my Azure SDK CI pipeline is failing, can you help troubleshoot?"
+    prompt: "my Azure SDK CI pipeline build 6447834 is failing, can you help troubleshoot what went wrong?"
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-troubleshooting"]
   - name: trigger-debug-pipeline-build-error
-    prompt: "debug my SDK generation pipeline build error"
+    prompt: "debug the build error in my SDK generation pipeline, build 6447834"
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-troubleshooting"]
   - name: trigger-pipeline-troubleshooting-help
-    prompt: "pipeline troubleshooting help"
+    prompt: "I'm stuck on a failing Azure SDK pipeline — can you help me troubleshoot it?"
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-troubleshooting"]
-  - name: trigger-fix-failing-sdk-pipeline
-    prompt: "fix my failing Azure SDK generation pipeline"
+  - name: trigger-analyze-failing-sdk-pipeline
+    prompt: "analyze my failing Azure SDK generation pipeline https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834 and tell me what went wrong"
     graders:
       - type: skill-invocation
         config:
@@ -51,6 +51,14 @@ stimuli:
           required: ["azsdk-common-pipeline-troubleshooting"]
 
   # Should NOT trigger
+  # "apply the fix / auto-fix" prompts belong to azsdk-common-pipeline-fixer, not
+  # this analysis-only skill (see each skill's DO NOT USE FOR boundary).
+  - name: anti-trigger-auto-fix-and-commit
+    prompt: "auto-fix the failing tests in my pipeline and commit the changes to my PR"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-pipeline-troubleshooting"]
   - name: anti-trigger-write-a-typespec-definition
     prompt: "write a TypeSpec definition"
     graders:
