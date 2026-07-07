@@ -25,7 +25,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new NetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2026-05-01")
+        internal NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2026-05-01")
         {
         }
 
@@ -39,18 +39,13 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -64,18 +59,13 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public NetworkSecurityPerimeterConfigurationProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 

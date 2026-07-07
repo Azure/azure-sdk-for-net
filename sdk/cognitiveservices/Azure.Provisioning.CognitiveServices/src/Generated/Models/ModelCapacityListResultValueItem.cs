@@ -67,18 +67,13 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -109,7 +104,7 @@ namespace Azure.Provisioning.CognitiveServices
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<ModelSkuCapacityProperties>(nameof(Properties), new string[] { "properties" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             DefineAdditionalProperties();

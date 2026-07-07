@@ -24,7 +24,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new RaiContentFilter. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public RaiContentFilter(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/locations/raiContentFilters", resourceVersion ?? "2026-05-01")
+        internal RaiContentFilter(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/locations/raiContentFilters", resourceVersion ?? "2026-05-01")
         {
         }
 
@@ -38,18 +38,13 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -63,18 +58,13 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         public RaiContentFilterProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
