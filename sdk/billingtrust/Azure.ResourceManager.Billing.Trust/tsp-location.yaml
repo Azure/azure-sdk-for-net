@@ -1,5 +1,5 @@
 directory: specification/billingtrust/resource-manager/Microsoft.BillingTrust/BillingTrust
-commit: 21af6741d32db34e86ed9d6bdbb8c90ffe54c3aa
+commit: 0e76f4ea85317e88128c3efffcac23cec872d6af
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

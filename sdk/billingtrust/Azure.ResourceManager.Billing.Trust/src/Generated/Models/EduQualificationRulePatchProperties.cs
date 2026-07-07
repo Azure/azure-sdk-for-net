@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Patch body for an eduQualification rule. Only `supplementalDocuments` is settable, and only when evaluationState == actionRequired. </summary>
-    public partial class EduQualificationRulePatchProperties : RulePatch
+    public partial class EduQualificationRulePatchProperties : BillingTrustRulePatch
     {
         /// <summary> Initializes a new instance of <see cref="EduQualificationRulePatchProperties"/>. </summary>
         public EduQualificationRulePatchProperties() : base(RuleKind.EduQualification)

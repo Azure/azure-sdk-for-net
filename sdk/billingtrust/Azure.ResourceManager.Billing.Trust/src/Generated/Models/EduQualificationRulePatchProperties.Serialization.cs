@@ -14,11 +14,11 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Patch body for an eduQualification rule. Only `supplementalDocuments` is settable, and only when evaluationState == actionRequired. </summary>
-    public partial class EduQualificationRulePatchProperties : RulePatch, IJsonModel<EduQualificationRulePatchProperties>
+    public partial class EduQualificationRulePatchProperties : BillingTrustRulePatch, IJsonModel<EduQualificationRulePatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RulePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BillingTrustRulePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EduQualificationRulePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RulePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BillingTrustRulePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EduQualificationRulePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

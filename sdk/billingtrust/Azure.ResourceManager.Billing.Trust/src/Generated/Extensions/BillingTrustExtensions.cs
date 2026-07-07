@@ -25,82 +25,82 @@ namespace Azure.ResourceManager.Billing.Trust
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BillingTrustAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetAssessmentResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetBillingTrustAssessmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssessmentResource"/> object. </returns>
-        public static AssessmentResource GetAssessmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingTrustAssessmentResource"/> object. </returns>
+        public static BillingTrustAssessmentResource GetBillingTrustAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingTrustArmClient(client).GetAssessmentResource(id);
+            return GetMockableBillingTrustArmClient(client).GetBillingTrustAssessmentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient
+        /// Gets an object representing a <see cref="BillingTrustAssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetAssessment(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetBillingTrustAssessment(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AssessmentResource"/> object. </returns>
-        public static AssessmentResource GetAssessment(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="BillingTrustAssessmentResource"/> object. </returns>
+        public static BillingTrustAssessmentResource GetBillingTrustAssessment(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingTrustArmClient(client).GetAssessment(scope);
+            return GetMockableBillingTrustArmClient(client).GetBillingTrustAssessment(scope);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BillingTrustRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetBillingTrustRuleResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RuleResource"/> object. </returns>
-        public static RuleResource GetRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingTrustRuleResource"/> object. </returns>
+        public static BillingTrustRuleResource GetBillingTrustRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingTrustArmClient(client).GetRuleResource(id);
+            return GetMockableBillingTrustArmClient(client).GetBillingTrustRuleResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="RuleCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="BillingTrustRuleCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetRules(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetBillingTrustRules(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="RuleResource"/> objects. </returns>
-        public static RuleCollection GetRules(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="BillingTrustRuleResource"/> objects. </returns>
+        public static BillingTrustRuleCollection GetBillingTrustRules(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingTrustArmClient(client).GetRules(scope);
+            return GetMockableBillingTrustArmClient(client).GetBillingTrustRules(scope);
         }
 
         /// <summary>
         /// Get a Rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetRule(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetBillingTrustRule(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -109,18 +109,18 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RuleResource> GetRule(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        public static Response<BillingTrustRuleResource> GetBillingTrustRule(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingTrustArmClient(client).GetRule(scope, ruleName, cancellationToken);
+            return GetMockableBillingTrustArmClient(client).GetBillingTrustRule(scope, ruleName, cancellationToken);
         }
 
         /// <summary>
         /// Get a Rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetRuleAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingTrustArmClient.GetBillingTrustRuleAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RuleResource>> GetRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BillingTrustRuleResource>> GetBillingTrustRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableBillingTrustArmClient(client).GetRuleAsync(scope, ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTrustArmClient(client).GetBillingTrustRuleAsync(scope, ruleName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

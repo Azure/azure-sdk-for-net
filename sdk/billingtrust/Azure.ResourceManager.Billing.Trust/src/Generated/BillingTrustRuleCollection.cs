@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Billing.Trust
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RuleResource"/> and their operations.
-    /// Each <see cref="RuleResource"/> in the collection will belong to the same instance of <see cref="AssessmentResource"/>.
-    /// To get a <see cref="RuleCollection"/> instance call the GetRules method from an instance of <see cref="AssessmentResource"/>.
+    /// A class representing a collection of <see cref="BillingTrustRuleResource"/> and their operations.
+    /// Each <see cref="BillingTrustRuleResource"/> in the collection will belong to the same instance of <see cref="BillingTrustAssessmentResource"/>.
+    /// To get a <see cref="BillingTrustRuleCollection"/> instance call the GetBillingTrustRules method from an instance of <see cref="BillingTrustAssessmentResource"/>.
     /// </summary>
-    public partial class RuleCollection : ArmCollection, IEnumerable<RuleResource>, IAsyncEnumerable<RuleResource>
+    public partial class BillingTrustRuleCollection : ArmCollection, IEnumerable<BillingTrustRuleResource>, IAsyncEnumerable<BillingTrustRuleResource>
     {
         private readonly ClientDiagnostics _rulesClientDiagnostics;
         private readonly Rules _rulesRestClient;
 
-        /// <summary> Initializes a new instance of RuleCollection for mocking. </summary>
-        protected RuleCollection()
+        /// <summary> Initializes a new instance of BillingTrustRuleCollection for mocking. </summary>
+        protected BillingTrustRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BillingTrustRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RuleResource.ResourceType, out string ruleApiVersion);
-            _rulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing.Trust", RuleResource.ResourceType.Namespace, Diagnostics);
-            _rulesRestClient = new Rules(_rulesClientDiagnostics, Pipeline, Endpoint, ruleApiVersion ?? "2026-03-17-preview");
+            TryGetApiVersion(BillingTrustRuleResource.ResourceType, out string billingTrustRuleApiVersion);
+            _rulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing.Trust", BillingTrustRuleResource.ResourceType.Namespace, Diagnostics);
+            _rulesRestClient = new Rules(_rulesClientDiagnostics, Pipeline, Endpoint, billingTrustRuleApiVersion ?? "2026-03-17-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Billing.Trust
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AssessmentResource.ResourceType)
+            if (id.ResourceType != BillingTrustAssessmentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AssessmentResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingTrustAssessmentResource.ResourceType), nameof(id));
             }
         }
 
@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<RuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, RuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingTrustRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, BillingTrustRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, RuleData.ToRequestContent(data), context);
+                HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, BillingTrustRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RuleData> response = Response.FromValue(RuleData.FromResponse(result), result);
+                Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrustArmOperation<RuleResource> operation = new TrustArmOperation<RuleResource>(Response.FromValue(new RuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TrustArmOperation<BillingTrustRuleResource> operation = new TrustArmOperation<BillingTrustRuleResource>(Response.FromValue(new BillingTrustRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<RuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, RuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingTrustRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, BillingTrustRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, RuleData.ToRequestContent(data), context);
+                HttpMessage message = _rulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ruleName, BillingTrustRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RuleData> response = Response.FromValue(RuleData.FromResponse(result), result);
+                Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                TrustArmOperation<RuleResource> operation = new TrustArmOperation<RuleResource>(Response.FromValue(new RuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                TrustArmOperation<BillingTrustRuleResource> operation = new TrustArmOperation<BillingTrustRuleResource>(Response.FromValue(new BillingTrustRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<RuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingTrustRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.Get");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.Get");
             scope.Start();
             try
             {
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RuleData> response = Response.FromValue(RuleData.FromResponse(result), result);
+                Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingTrustRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -252,11 +252,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<RuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingTrustRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.Get");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.Get");
             scope.Start();
             try
             {
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RuleData> response = Response.FromValue(RuleData.FromResponse(result), result);
+                Response<BillingTrustRuleData> response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingTrustRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RuleResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTrustRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTrustRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RuleData, RuleResource>(new RulesGetAllAsyncCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "RuleCollection.GetAll"), data => new RuleResource(Client, data));
+            return new AsyncPageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new RulesGetAllAsyncCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
         }
 
         /// <summary>
@@ -326,14 +326,14 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RuleResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTrustRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingTrustRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RuleData, RuleResource>(new RulesGetAllCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "RuleCollection.GetAll"), data => new RuleResource(Client, data));
+            return new PageableWrapper<BillingTrustRuleData, BillingTrustRuleResource>(new RulesGetAllCollectionResultOfT(_rulesRestClient, Id.Parent.ToString(), context, "BillingTrustRuleCollection.GetAll"), data => new BillingTrustRuleResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Billing.Trust
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.Exists");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.Billing.Trust
                 HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RuleData> response = default;
+                Response<BillingTrustRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuleData.FromResponse(result), result);
+                        response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuleData)null, result);
+                        response = Response.FromValue((BillingTrustRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Billing.Trust
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.Exists");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.Billing.Trust
                 HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RuleData> response = default;
+                Response<BillingTrustRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuleData.FromResponse(result), result);
+                        response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuleData)null, result);
+                        response = Response.FromValue((BillingTrustRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<RuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BillingTrustRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.GetIfExists");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +486,23 @@ namespace Azure.ResourceManager.Billing.Trust
                 HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<RuleData> response = default;
+                Response<BillingTrustRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuleData.FromResponse(result), result);
+                        response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuleData)null, result);
+                        response = Response.FromValue((BillingTrustRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<BillingTrustRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingTrustRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<RuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BillingTrustRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("RuleCollection.GetIfExists");
+            using DiagnosticScope scope = _rulesClientDiagnostics.CreateScope("BillingTrustRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +547,23 @@ namespace Azure.ResourceManager.Billing.Trust
                 HttpMessage message = _rulesRestClient.CreateGetRequest(Id.Parent.ToString(), ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<RuleData> response = default;
+                Response<BillingTrustRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(RuleData.FromResponse(result), result);
+                        response = Response.FromValue(BillingTrustRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((RuleData)null, result);
+                        response = Response.FromValue((BillingTrustRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<RuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<BillingTrustRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new RuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingTrustRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Billing.Trust
             }
         }
 
-        IEnumerator<RuleResource> IEnumerable<RuleResource>.GetEnumerator()
+        IEnumerator<BillingTrustRuleResource> IEnumerable<BillingTrustRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Billing.Trust
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<RuleResource> IAsyncEnumerable<RuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BillingTrustRuleResource> IAsyncEnumerable<BillingTrustRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

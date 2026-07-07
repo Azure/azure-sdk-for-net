@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Trust.AssessmentData"/> instance for mocking. </returns>
-        public static AssessmentData AssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AssessmentProperties properties = default)
+        /// <returns> A new <see cref="Trust.BillingTrustAssessmentData"/> instance for mocking. </returns>
+        public static BillingTrustAssessmentData BillingTrustAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AssessmentProperties properties = default)
         {
-            return new AssessmentData(
+            return new BillingTrustAssessmentData(
                 id,
                 name,
                 resourceType,
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Trust.RuleData"/> instance for mocking. </returns>
-        public static RuleData RuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RuleProperties properties = default)
+        /// <returns> A new <see cref="Trust.BillingTrustRuleData"/> instance for mocking. </returns>
+        public static BillingTrustRuleData BillingTrustRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RuleProperties properties = default)
         {
-            return new RuleData(
+            return new BillingTrustRuleData(
                 id,
                 name,
                 resourceType,
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         }
 
         /// <param name="kind"> The kind of rule. Acts as a discriminator for per-kind patchable fields. Must match the existing rule's kind; PATCH cannot mutate kind. </param>
-        /// <returns> A new <see cref="Models.RulePatch"/> instance for mocking. </returns>
-        public static RulePatch RulePatch(string kind = default)
+        /// <returns> A new <see cref="Models.BillingTrustRulePatch"/> instance for mocking. </returns>
+        public static BillingTrustRulePatch BillingTrustRulePatch(string kind = default)
         {
             return new UnknownRulePatchProperties(default, default);
         }

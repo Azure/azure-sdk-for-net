@@ -18,40 +18,40 @@ using Azure.ResourceManager.Billing.Trust.Models;
 namespace Azure.ResourceManager.Billing.Trust
 {
     /// <summary>
-    /// A class representing a Assessment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AssessmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAssessment method.
+    /// A class representing a BillingTrustAssessment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingTrustAssessmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetBillingTrustAssessment method.
     /// </summary>
-    public partial class AssessmentResource : ArmResource
+    public partial class BillingTrustAssessmentResource : ArmResource
     {
         private readonly ClientDiagnostics _assessmentsClientDiagnostics;
         private readonly Assessments _assessmentsRestClient;
-        private readonly AssessmentData _data;
+        private readonly BillingTrustAssessmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.BillingTrust/assessments";
 
-        /// <summary> Initializes a new instance of AssessmentResource for mocking. </summary>
-        protected AssessmentResource()
+        /// <summary> Initializes a new instance of BillingTrustAssessmentResource for mocking. </summary>
+        protected BillingTrustAssessmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssessmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustAssessmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AssessmentResource(ArmClient client, AssessmentData data) : this(client, data.Id)
+        internal BillingTrustAssessmentResource(ArmClient client, BillingTrustAssessmentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssessmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustAssessmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AssessmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BillingTrustAssessmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string assessmentApiVersion);
+            TryGetApiVersion(ResourceType, out string billingTrustAssessmentApiVersion);
             _assessmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing.Trust", ResourceType.Namespace, Diagnostics);
-            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Endpoint, assessmentApiVersion ?? "2026-03-17-preview");
+            _assessmentsRestClient = new Assessments(_assessmentsClientDiagnostics, Pipeline, Endpoint, billingTrustAssessmentApiVersion ?? "2026-03-17-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Trust
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AssessmentData Data
+        public virtual BillingTrustAssessmentData Data
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, AssessmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, BillingTrustAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.CreateOrUpdate");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), AssessmentData.ToRequestContent(data), context);
+                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TrustArmOperation operation = new TrustArmOperation(_assessmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, AssessmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, BillingTrustAssessmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.CreateOrUpdate");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Billing.Trust
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), AssessmentData.ToRequestContent(data), context);
+                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), BillingTrustAssessmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TrustArmOperation operation = new TrustArmOperation(_assessmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -212,14 +212,14 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AssessmentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingTrustAssessmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.Get");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.Get");
             scope.Start();
             try
             {
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AssessmentData> response = Response.FromValue(AssessmentData.FromResponse(result), result);
+                Response<BillingTrustAssessmentData> response = Response.FromValue(BillingTrustAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingTrustAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AssessmentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<BillingTrustAssessmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.Get");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.Get");
             scope.Start();
             try
             {
@@ -277,12 +277,12 @@ namespace Azure.ResourceManager.Billing.Trust
                 };
                 HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AssessmentData> response = Response.FromValue(AssessmentData.FromResponse(result), result);
+                Response<BillingTrustAssessmentData> response = Response.FromValue(BillingTrustAssessmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AssessmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingTrustAssessmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.Delete");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.Delete");
             scope.Start();
             try
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.Delete");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.Delete");
             scope.Start();
             try
             {
@@ -406,14 +406,14 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GenerateUploadTokenResult>> GetUploadTokenAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.GetUploadToken");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.GetUploadToken");
             scope.Start();
             try
             {
@@ -454,14 +454,14 @@ namespace Azure.ResourceManager.Billing.Trust
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AssessmentResource"/>. </description>
+        /// <description> <see cref="BillingTrustAssessmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GenerateUploadTokenResult> GetUploadToken(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("AssessmentResource.GetUploadToken");
+            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("BillingTrustAssessmentResource.GetUploadToken");
             scope.Start();
             try
             {
@@ -485,11 +485,11 @@ namespace Azure.ResourceManager.Billing.Trust
             }
         }
 
-        /// <summary> Gets a collection of Rules in the <see cref="AssessmentResource"/>. </summary>
-        /// <returns> An object representing collection of Rules and their operations over a RuleResource. </returns>
-        public virtual RuleCollection GetRules()
+        /// <summary> Gets a collection of BillingTrustRules in the <see cref="BillingTrustAssessmentResource"/>. </summary>
+        /// <returns> An object representing collection of BillingTrustRules and their operations over a BillingTrustRuleResource. </returns>
+        public virtual BillingTrustRuleCollection GetBillingTrustRules()
         {
-            return GetCachedClient(client => new RuleCollection(client, Id));
+            return GetCachedClient(client => new BillingTrustRuleCollection(client, Id));
         }
 
         /// <summary> Get a Rule. </summary>
@@ -498,11 +498,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RuleResource>> GetRuleAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingTrustRuleResource>> GetBillingTrustRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            return await GetRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingTrustRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a Rule. </summary>
@@ -511,11 +511,11 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RuleResource> GetRule(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingTrustRuleResource> GetBillingTrustRule(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            return GetRules().Get(ruleName, cancellationToken);
+            return GetBillingTrustRules().Get(ruleName, cancellationToken);
         }
     }
 }

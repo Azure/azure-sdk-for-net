@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
-    internal partial class UnknownRulePatchProperties : RulePatch
+    internal partial class UnknownRulePatchProperties : BillingTrustRulePatch
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRulePatchProperties"/>. </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for per-kind patchable fields. Must match the existing rule's kind; PATCH cannot mutate kind. </param>

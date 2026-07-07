@@ -16,9 +16,12 @@ namespace Azure.ResourceManager.Billing.Trust
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AssessmentData))]
     [ModelReaderWriterBuildable(typeof(AssessmentProperties))]
-    [ModelReaderWriterBuildable(typeof(AssessmentResource))]
+    [ModelReaderWriterBuildable(typeof(BillingTrustAssessmentData))]
+    [ModelReaderWriterBuildable(typeof(BillingTrustAssessmentResource))]
+    [ModelReaderWriterBuildable(typeof(BillingTrustRuleData))]
+    [ModelReaderWriterBuildable(typeof(BillingTrustRulePatch))]
+    [ModelReaderWriterBuildable(typeof(BillingTrustRuleResource))]
     [ModelReaderWriterBuildable(typeof(BusinessVerificationRulePatchProperties))]
     [ModelReaderWriterBuildable(typeof(BusinessVerificationRuleProperties))]
     [ModelReaderWriterBuildable(typeof(DomainEntry))]
@@ -30,11 +33,8 @@ namespace Azure.ResourceManager.Billing.Trust
     [ModelReaderWriterBuildable(typeof(InitialRuleValueBase))]
     [ModelReaderWriterBuildable(typeof(RegistrationNumber))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(RuleData))]
     [ModelReaderWriterBuildable(typeof(RuleListResult))]
-    [ModelReaderWriterBuildable(typeof(RulePatch))]
     [ModelReaderWriterBuildable(typeof(RuleProperties))]
-    [ModelReaderWriterBuildable(typeof(RuleResource))]
     [ModelReaderWriterBuildable(typeof(SoldTo))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TaxId))]

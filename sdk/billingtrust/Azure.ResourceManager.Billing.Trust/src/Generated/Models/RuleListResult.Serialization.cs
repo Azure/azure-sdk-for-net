@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (RuleData item in Value)
+            foreach (BillingTrustRuleData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             {
                 return null;
             }
-            IList<RuleData> value = default;
+            IList<BillingTrustRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<RuleData> array = new List<RuleData>();
+                    List<BillingTrustRuleData> array = new List<BillingTrustRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RuleData.DeserializeRuleData(item, options));
+                        array.Add(BillingTrustRuleData.DeserializeBillingTrustRuleData(item, options));
                     }
                     value = array;
                     continue;

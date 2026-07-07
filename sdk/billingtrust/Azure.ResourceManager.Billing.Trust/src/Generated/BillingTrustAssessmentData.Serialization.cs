@@ -17,69 +17,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing.Trust
 {
-    /// <summary> A rule within an assessment. </summary>
-    public partial class RuleData : ResourceData, IJsonModel<RuleData>
+    /// <summary> A billing trust assessment. An assessment runs a set of rules to evaluate trust attributes of a billing account. The assessment is a singleton per parent resource and is always named 'default'. Re-issuing PUT with the same `assessmentType` is idempotent; changing `assessmentType` after the assessment exists is not supported. </summary>
+    public partial class BillingTrustAssessmentData : ResourceData, IJsonModel<BillingTrustAssessmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRuleData(document.RootElement, options);
+                        return DeserializeBillingTrustAssessmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustAssessmentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingTrustContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RuleData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingTrustAssessmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingTrustAssessmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleData IPersistableModel<RuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RuleData)PersistableModelCreateCore(data, options);
+        BillingTrustAssessmentData IPersistableModel<BillingTrustAssessmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BillingTrustAssessmentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingTrustAssessmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="ruleData"> The <see cref="RuleData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(RuleData ruleData)
+        /// <param name="billingTrustAssessmentData"> The <see cref="BillingTrustAssessmentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingTrustAssessmentData billingTrustAssessmentData)
         {
-            if (ruleData == null)
+            if (billingTrustAssessmentData == null)
             {
                 return null;
             }
-            return RequestContent.Create(ruleData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(billingTrustAssessmentData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RuleData"/> from. </param>
-        internal static RuleData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BillingTrustAssessmentData"/> from. </param>
+        internal static BillingTrustAssessmentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeBillingTrustAssessmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingTrustAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Billing.Trust
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustAssessmentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.Billing.Trust
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuleData IJsonModel<RuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RuleData)JsonModelCreateCore(ref reader, options);
+        BillingTrustAssessmentData IJsonModel<BillingTrustAssessmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BillingTrustAssessmentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingTrustAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingTrustAssessmentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRuleData(document.RootElement, options);
+            return DeserializeBillingTrustAssessmentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RuleData DeserializeRuleData(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingTrustAssessmentData DeserializeBillingTrustAssessmentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Billing.Trust
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            RuleProperties properties = default;
+            AssessmentProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Billing.Trust
                     {
                         continue;
                     }
-                    properties = RuleProperties.DeserializeRuleProperties(prop.Value, options);
+                    properties = AssessmentProperties.DeserializeAssessmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Billing.Trust
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuleData(
+            return new BillingTrustAssessmentData(
                 id,
                 name,
                 resourceType,

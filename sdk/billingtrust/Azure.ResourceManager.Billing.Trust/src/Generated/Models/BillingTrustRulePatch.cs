@@ -14,22 +14,22 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     /// Patch body for updating a rule. Polymorphic by `kind` — kind-specific patchable fields live on per-kind subtypes. PATCH cannot change a rule's kind; the discriminator carries the rule's existing kind for routing only.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EduQualificationRulePatchProperties"/> and <see cref="BusinessVerificationRulePatchProperties"/>.
     /// </summary>
-    public abstract partial class RulePatch
+    public abstract partial class BillingTrustRulePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RulePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustRulePatch"/>. </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for per-kind patchable fields. Must match the existing rule's kind; PATCH cannot mutate kind. </param>
-        private protected RulePatch(RuleKind kind)
+        private protected BillingTrustRulePatch(RuleKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RulePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTrustRulePatch"/>. </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for per-kind patchable fields. Must match the existing rule's kind; PATCH cannot mutate kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RulePatch(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTrustRulePatch(RuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

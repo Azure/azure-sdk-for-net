@@ -1,105 +1,105 @@
 namespace Azure.ResourceManager.Billing.Trust
 {
-    public partial class AssessmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.AssessmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>
-    {
-        public AssessmentData() { }
-        public Azure.ResourceManager.Billing.Trust.Models.AssessmentProperties Properties { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Billing.Trust.AssessmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.Trust.AssessmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AssessmentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.AssessmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AssessmentResource() { }
-        public virtual Azure.ResourceManager.Billing.Trust.AssessmentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Trust.AssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Trust.AssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.AssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.AssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource> GetRule(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource>> GetRuleAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Billing.Trust.RuleCollection GetRules() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.Models.GenerateUploadTokenResult> GetUploadToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.Models.GenerateUploadTokenResult>> GetUploadTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Billing.Trust.AssessmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.Trust.AssessmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.AssessmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AzureResourceManagerBillingTrustContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerBillingTrustContext() { }
         public static Azure.ResourceManager.Billing.Trust.AzureResourceManagerBillingTrustContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    public partial class BillingTrustAssessmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>
+    {
+        public BillingTrustAssessmentData() { }
+        public Azure.ResourceManager.Billing.Trust.Models.AssessmentProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BillingTrustAssessmentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected BillingTrustAssessmentResource() { }
+        public virtual Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> GetBillingTrustRule(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> GetBillingTrustRuleAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Billing.Trust.BillingTrustRuleCollection GetBillingTrustRules() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.Models.GenerateUploadTokenResult> GetUploadToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.Models.GenerateUploadTokenResult>> GetUploadTokenAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class BillingTrustExtensions
     {
-        public static Azure.ResourceManager.Billing.Trust.AssessmentResource GetAssessment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
-        public static Azure.ResourceManager.Billing.Trust.AssessmentResource GetAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource> GetRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource>> GetRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Billing.Trust.RuleResource GetRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Billing.Trust.RuleCollection GetRules(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentResource GetBillingTrustAssessment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentResource GetBillingTrustAssessmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> GetBillingTrustRule(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> GetBillingTrustRuleAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource GetBillingTrustRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Billing.Trust.BillingTrustRuleCollection GetBillingTrustRules(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
     }
-    public partial class RuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.Trust.RuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Trust.RuleResource>, System.Collections.IEnumerable
+    public partial class BillingTrustRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>, System.Collections.IEnumerable
     {
-        protected RuleCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.Trust.RuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Billing.Trust.RuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.Trust.RuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Billing.Trust.RuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected BillingTrustRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Billing.Trust.BillingTrustRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string ruleName, Azure.ResourceManager.Billing.Trust.BillingTrustRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource> Get(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Billing.Trust.RuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Billing.Trust.RuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource>> GetAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Billing.Trust.RuleResource> GetIfExists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Billing.Trust.RuleResource>> GetIfExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Billing.Trust.RuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.Trust.RuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Billing.Trust.RuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Trust.RuleResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> Get(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> GetAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> GetIfExists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> GetIfExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class RuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.RuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>
+    public partial class BillingTrustRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>
     {
-        public RuleData() { }
+        public BillingTrustRuleData() { }
         public Azure.ResourceManager.Billing.Trust.Models.RuleProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Billing.Trust.RuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.RuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.RuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.Trust.RuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Billing.Trust.BillingTrustRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Billing.Trust.BillingTrustRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.RuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>
+    public partial class BillingTrustRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected RuleResource() { }
-        public virtual Azure.ResourceManager.Billing.Trust.RuleData Data { get { throw null; } }
+        protected BillingTrustRuleResource() { }
+        public virtual Azure.ResourceManager.Billing.Trust.BillingTrustRuleData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri, string ruleName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Billing.Trust.RuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.RuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.RuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.Trust.RuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.RuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource> Update(Azure.ResourceManager.Billing.Trust.Models.RulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource>> UpdateAsync(Azure.ResourceManager.Billing.Trust.Models.RulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Billing.Trust.BillingTrustRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Billing.Trust.BillingTrustRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.BillingTrustRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> Update(Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> UpdateAsync(Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Billing.Trust.Mocking
@@ -107,20 +107,22 @@ namespace Azure.ResourceManager.Billing.Trust.Mocking
     public partial class MockableBillingTrustArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableBillingTrustArmClient() { }
-        public virtual Azure.ResourceManager.Billing.Trust.AssessmentResource GetAssessment(Azure.Core.ResourceIdentifier scope) { throw null; }
-        public virtual Azure.ResourceManager.Billing.Trust.AssessmentResource GetAssessmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource> GetRule(Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.RuleResource>> GetRuleAsync(Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Billing.Trust.RuleResource GetRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Billing.Trust.RuleCollection GetRules(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentResource GetBillingTrustAssessment(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentResource GetBillingTrustAssessmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource> GetBillingTrustRule(Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource>> GetBillingTrustRuleAsync(Azure.Core.ResourceIdentifier scope, string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Billing.Trust.BillingTrustRuleResource GetBillingTrustRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Billing.Trust.BillingTrustRuleCollection GetBillingTrustRules(Azure.Core.ResourceIdentifier scope) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     public static partial class ArmBillingTrustModelFactory
     {
-        public static Azure.ResourceManager.Billing.Trust.AssessmentData AssessmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Trust.Models.AssessmentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.AssessmentProperties AssessmentProperties(Azure.ResourceManager.Billing.Trust.Models.AssessmentType assessmentType = default(Azure.ResourceManager.Billing.Trust.Models.AssessmentType), Azure.ResourceManager.Billing.Trust.Models.AssessmentState? evaluationState = default(Azure.ResourceManager.Billing.Trust.Models.AssessmentState?), System.DateTimeOffset? nextEvaluation = default(System.DateTimeOffset?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Trust.Models.InitialRuleValueBase> initialValues = null, Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Billing.Trust.BillingTrustAssessmentData BillingTrustAssessmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Trust.Models.AssessmentProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Billing.Trust.BillingTrustRuleData BillingTrustRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Trust.Models.RuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch BillingTrustRulePatch(string kind = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties BusinessVerificationRulePatchProperties(Azure.ResourceManager.Billing.Trust.Models.ExternalId externalId = null, System.Collections.Generic.IEnumerable<System.Uri> supplementalDocuments = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRuleProperties BusinessVerificationRuleProperties(Azure.ResourceManager.Billing.Trust.Models.RuleState? evaluationState = default(Azure.ResourceManager.Billing.Trust.Models.RuleState?), Azure.ResponseError error = null, Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState?), Azure.ResourceManager.Billing.Trust.Models.SoldTo soldTo = null, Azure.ResourceManager.Billing.Trust.Models.RegistrationNumber registrationNumber = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Billing.Trust.Models.TaxId> taxIds = null, Azure.ResourceManager.Billing.Trust.Models.ExternalId externalId = null, System.Collections.Generic.IEnumerable<System.Uri> supplementalDocuments = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.DomainEntry DomainEntry(System.Collections.Generic.IEnumerable<string> domainNames = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Billing.Trust.Models.DomainEntryState? state = default(Azure.ResourceManager.Billing.Trust.Models.DomainEntryState?), Azure.ResponseError error = null) { throw null; }
@@ -131,8 +133,6 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public static Azure.ResourceManager.Billing.Trust.Models.GenerateUploadTokenResult GenerateUploadTokenResult(string token = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.InitialRuleValueBase InitialRuleValueBase(string kind = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.RegistrationNumber RegistrationNumber(System.Collections.Generic.IEnumerable<string> type = null, string value = null, Azure.ResourceManager.Billing.Trust.Models.RegistrationRequirement? registrationRequirement = default(Azure.ResourceManager.Billing.Trust.Models.RegistrationRequirement?)) { throw null; }
-        public static Azure.ResourceManager.Billing.Trust.RuleData RuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Billing.Trust.Models.RuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Billing.Trust.Models.RulePatch RulePatch(string kind = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.RuleProperties RuleProperties(string kind = null, Azure.ResourceManager.Billing.Trust.Models.RuleState? evaluationState = default(Azure.ResourceManager.Billing.Trust.Models.RuleState?), Azure.ResponseError error = null, Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState? provisioningState = default(Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.SoldTo SoldTo(string addressLine1 = null, string addressLine2 = null, string addressLine3 = null, string city = null, string country = null, string companyName = null, string district = null, string email = null, string firstName = null, string lastName = null, string middleName = null, string phoneNumber = null, string postalCode = null, string region = null) { throw null; }
         public static Azure.ResourceManager.Billing.Trust.Models.TaxId TaxId(string value = null, string country = null, string scope = null, Azure.ResourceManager.Billing.Trust.Models.TaxIdStatus? status = default(Azure.ResourceManager.Billing.Trust.Models.TaxIdStatus?), string type = null) { throw null; }
@@ -220,14 +220,27 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public static bool operator !=(Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState left, Azure.ResourceManager.Billing.Trust.Models.BillingTrustProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BusinessVerificationRulePatchProperties : Azure.ResourceManager.Billing.Trust.Models.RulePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties>
+    public abstract partial class BillingTrustRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch>
+    {
+        internal BillingTrustRulePatch() { }
+        protected virtual Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class BusinessVerificationRulePatchProperties : Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties>
     {
         public BusinessVerificationRulePatchProperties() { }
         public Azure.ResourceManager.Billing.Trust.Models.ExternalId ExternalId { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Uri> SupplementalDocuments { get { throw null; } }
-        protected override Azure.ResourceManager.Billing.Trust.Models.RulePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Billing.Trust.Models.RulePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.BusinessVerificationRulePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -303,13 +316,13 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.EduInitialValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.EduInitialValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EduQualificationRulePatchProperties : Azure.ResourceManager.Billing.Trust.Models.RulePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.EduQualificationRulePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.EduQualificationRulePatchProperties>
+    public partial class EduQualificationRulePatchProperties : Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.EduQualificationRulePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.EduQualificationRulePatchProperties>
     {
         public EduQualificationRulePatchProperties() { }
         public System.Collections.Generic.IList<System.Uri> SupplementalDocuments { get { throw null; } }
-        protected override Azure.ResourceManager.Billing.Trust.Models.RulePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.Billing.Trust.Models.RulePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.Billing.Trust.Models.BillingTrustRulePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Billing.Trust.Models.EduQualificationRulePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.EduQualificationRulePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.EduQualificationRulePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -407,19 +420,6 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public static implicit operator Azure.ResourceManager.Billing.Trust.Models.RegistrationRequirement? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Billing.Trust.Models.RegistrationRequirement left, Azure.ResourceManager.Billing.Trust.Models.RegistrationRequirement right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public abstract partial class RulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.RulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.RulePatch>
-    {
-        internal RulePatch() { }
-        protected virtual Azure.ResourceManager.Billing.Trust.Models.RulePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Billing.Trust.Models.RulePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Billing.Trust.Models.RulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.RulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.RulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Billing.Trust.Models.RulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.RulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.RulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.RulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class RuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Billing.Trust.Models.RuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Billing.Trust.Models.RuleProperties>
     {

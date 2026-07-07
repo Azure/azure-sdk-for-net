@@ -30,52 +30,38 @@ namespace Azure.ResourceManager.Billing.Trust.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="AssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingTrustAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssessmentResource"/> object. </returns>
-        public virtual AssessmentResource GetAssessmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingTrustAssessmentResource"/> object. </returns>
+        public virtual BillingTrustAssessmentResource GetBillingTrustAssessmentResource(ResourceIdentifier id)
         {
-            AssessmentResource.ValidateResourceId(id);
-            return new AssessmentResource(Client, id);
+            BillingTrustAssessmentResource.ValidateResourceId(id);
+            return new BillingTrustAssessmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingTrustAssessmentResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="AssessmentResource"/> object. </returns>
-        public virtual AssessmentResource GetAssessment(ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="BillingTrustAssessmentResource"/> object. </returns>
+        public virtual BillingTrustAssessmentResource GetBillingTrustAssessment(ResourceIdentifier scope)
         {
-            return new AssessmentResource(Client, scope.AppendProviderResource("Microsoft.BillingTrust", "assessments", "default"));
+            return new BillingTrustAssessmentResource(Client, scope.AppendProviderResource("Microsoft.BillingTrust", "assessments", "default"));
         }
 
-        /// <summary> Gets an object representing a <see cref="RuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingTrustRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RuleResource"/> object. </returns>
-        public virtual RuleResource GetRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingTrustRuleResource"/> object. </returns>
+        public virtual BillingTrustRuleResource GetBillingTrustRuleResource(ResourceIdentifier id)
         {
-            RuleResource.ValidateResourceId(id);
-            return new RuleResource(Client, id);
+            BillingTrustRuleResource.ValidateResourceId(id);
+            return new BillingTrustRuleResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="RuleCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="BillingTrustRuleCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="RuleResource"/> objects. </returns>
-        public virtual RuleCollection GetRules(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="BillingTrustRuleResource"/> objects. </returns>
+        public virtual BillingTrustRuleCollection GetBillingTrustRules(ResourceIdentifier scope)
         {
-            return new RuleCollection(Client, scope);
-        }
-
-        /// <summary> Get a Rule. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="ruleName"> The name of the rule. Rules are created by the service when the parent assessment is created — the available rule names are determined by the assessment template. Names start with an alphanumeric character and may contain letters, digits, underscores, and hyphens. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RuleResource> GetRule(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-
-            return GetRules(scope).Get(ruleName, cancellationToken);
+            return new BillingTrustRuleCollection(Client, scope);
         }
 
         /// <summary> Get a Rule. </summary>
@@ -85,11 +71,25 @@ namespace Azure.ResourceManager.Billing.Trust.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RuleResource>> GetRuleAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<BillingTrustRuleResource> GetBillingTrustRule(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            return await GetRules(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return GetBillingTrustRules(scope).Get(ruleName, cancellationToken);
+        }
+
+        /// <summary> Get a Rule. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> The name of the rule. Rules are created by the service when the parent assessment is created — the available rule names are determined by the assessment template. Names start with an alphanumeric character and may contain letters, digits, underscores, and hyphens. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingTrustRuleResource>> GetBillingTrustRuleAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return await GetBillingTrustRules(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Patch body for a businessVerification rule. Settable while evaluationState is `pending` or `actionRequired`. `externalId` lets the customer disambiguate an ambiguous verification match (e.g. via DUNS); `supplementalDocuments` carries references to documents uploaded via the assessment-scoped upload-token action. </summary>
-    public partial class BusinessVerificationRulePatchProperties : RulePatch
+    public partial class BusinessVerificationRulePatchProperties : BillingTrustRulePatch
     {
         /// <summary> Initializes a new instance of <see cref="BusinessVerificationRulePatchProperties"/>. </summary>
         public BusinessVerificationRulePatchProperties() : base(RuleKind.BusinessVerification)

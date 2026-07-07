@@ -14,11 +14,11 @@ using Azure.ResourceManager.Billing.Trust;
 namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary> Patch body for a businessVerification rule. Settable while evaluationState is `pending` or `actionRequired`. `externalId` lets the customer disambiguate an ambiguous verification match (e.g. via DUNS); `supplementalDocuments` carries references to documents uploaded via the assessment-scoped upload-token action. </summary>
-    public partial class BusinessVerificationRulePatchProperties : RulePatch, IJsonModel<BusinessVerificationRulePatchProperties>
+    public partial class BusinessVerificationRulePatchProperties : BillingTrustRulePatch, IJsonModel<BusinessVerificationRulePatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RulePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BillingTrustRulePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BusinessVerificationRulePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RulePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BillingTrustRulePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BusinessVerificationRulePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
