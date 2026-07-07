@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Any of the properties applicable in PUT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<StorageSyncServerEndpointResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncServerEndpointPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageSyncServerEndpointResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncServerEndpointPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serverEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _serverEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StorageSyncServerEndpointPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncServerEndpointResource> operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(
-                    new StorageSyncServerEndpointOperationSource(Client),
+                    new StorageSyncServerEndpointResourceOperationSource(Client),
                     _serverEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Any of the properties applicable in PUT request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<StorageSyncServerEndpointResource> Update(WaitUntil waitUntil, StorageSyncServerEndpointPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageSyncServerEndpointResource> Update(WaitUntil waitUntil, StorageSyncServerEndpointPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serverEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointResource.Update");
             scope.Start();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _serverEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, StorageSyncServerEndpointPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncServerEndpointResource> operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(
-                    new StorageSyncServerEndpointOperationSource(Client),
+                    new StorageSyncServerEndpointResourceOperationSource(Client),
                     _serverEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

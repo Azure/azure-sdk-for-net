@@ -32,6 +32,29 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResizeError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResizeError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResizeError IPersistableModel<ResizeError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResizeError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResizeError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -64,7 +87,7 @@ namespace Azure.Compute.Batch
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
-                foreach (NameValuePair item in Values)
+                foreach (BatchNameValuePair item in Values)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -114,7 +137,7 @@ namespace Azure.Compute.Batch
             }
             string code = default;
             string message = default;
-            IList<NameValuePair> values = default;
+            IList<BatchNameValuePair> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,10 +157,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<NameValuePair> array = new List<NameValuePair>();
+                    List<BatchNameValuePair> array = new List<BatchNameValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item, options));
+                        array.Add(BatchNameValuePair.DeserializeBatchNameValuePair(item, options));
                     }
                     values = array;
                     continue;
@@ -147,30 +170,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResizeError(code, message, values ?? new ChangeTrackingList<NameValuePair>(), additionalBinaryDataProperties);
+            return new ResizeError(code, message, values ?? new ChangeTrackingList<BatchNameValuePair>(), additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResizeError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ResizeError>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResizeError)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResizeError IPersistableModel<ResizeError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResizeError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

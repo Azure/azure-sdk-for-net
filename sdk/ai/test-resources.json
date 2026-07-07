@@ -143,10 +143,48 @@
         "cryptoUserRoleAssignmentName": {
             "type": "string",
             "defaultValue": "[guid(concat(parameters('cmk_keyvault'), 'KeyVaultCryptoUser'))]"
+        },
+        "modelName": {
+            "type": "string",
+            "defaultValue": "gpt-4.1",
+            "metadata": {
+                "description": "The name of the OpenAI model you want to deploy"
+            }
+        },
+        "modelFormat": {
+            "type": "string",
+            "defaultValue": "OpenAI",
+            "metadata": {
+                "description": "The model format of the model you want to deploy. Example: OpenAI"
+            }
+        },
+        "modelVersion": {
+            "type": "string",
+            "defaultValue": "2025-04-14",
+            "metadata": {
+                "description": "The version of the model you want to deploy. Example: 2024-11-20"
+            }
+        },
+        "modelSkuName": {
+            "type": "string",
+            "defaultValue": "GlobalStandard",
+            "metadata": {
+                "description": "The SKU name for the model deployment. Example: GlobalStandard"
+            }
+        },
+        "modelCapacity": {
+            "type": "int",
+            "defaultValue": 40,
+            "metadata": {
+                "description": "The capacity of the model deployment in TPM."
+            }
         }
     },
     "variables": {
-        "aiServicesName": "[concat(parameters('baseName'), '-ai')]"
+        "aiServicesName": "[concat(parameters('baseName'), '-ai')]",
+        "defaultVNetName": "[concat(parameters('baseName'), '-vnet')]",
+        "defaultSubnetName": "default",
+        "defaultAddressPrefix": "10.0.0.0/16"
     },
     "resources": [
         {
@@ -168,7 +206,7 @@
                             "location": "[parameters('location')]",
                             "properties": {
                                 "addressSpace": {
-                                    "addressPrefixes": "[if(equals(parameters('virtualNetworkType'), 'External'), parameters('vnet').addressPrefixes, json(concat('[{\"', variables('defaultAddressPrefix'),'\"}]')))]"
+                                    "addressPrefixes": "[if(equals(parameters('virtualNetworkType'), 'External'), parameters('vnet').addressPrefixes, json(concat('[\"', variables('defaultAddressPrefix'),'\"]')))]"
                                 },
                                 "subnets": [
                                     {
@@ -249,6 +287,25 @@
             ],
             "dependsOn": [
                 "[concat('Microsoft.Resources/deployments/', 'deployVnet')]"
+            ]
+        },
+        {
+            "type": "Microsoft.CognitiveServices/accounts/deployments",
+            "apiVersion": "2024-10-01",
+            "name": "[concat(variables('aiServicesName'), '/', parameters('modelName'))]",
+            "sku": {
+                "capacity": "[parameters('modelCapacity')]",
+                "name": "[parameters('modelSkuName')]"
+            },
+            "properties": {
+                "model": {
+                    "name": "[parameters('modelName')]",
+                    "format": "[parameters('modelFormat')]",
+                    "version": "[parameters('modelVersion')]"
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName'))]"
             ]
         },
         {
@@ -561,6 +618,10 @@
         "AI_SERVICES_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('aiServicesName')), '2025-04-01-preview').key1]"
+        },
+        "MODEL_DEPLOYMENT_NAME": {
+            "type": "string",
+            "value": "[parameters('modelName')]"
         }
     }
 }

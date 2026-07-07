@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
             StaticCidrResource staticCidr = client.GetStaticCidrResource(staticCidrResourceId);
 
             // invoke the operation
-            await staticCidr.DeleteAsync(WaitUntil.Completed);
+            await staticCidr.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             StaticCidrData data = new StaticCidrData();
-            ArmOperation<StaticCidrResource> lro = await staticCidr.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<StaticCidrResource> lro = await staticCidr.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             StaticCidrResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

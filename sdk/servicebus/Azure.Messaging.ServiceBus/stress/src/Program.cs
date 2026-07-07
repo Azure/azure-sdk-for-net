@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using CommandLine;
+using System.Diagnostics.Tracing;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
+using CommandLine;
 
 namespace Azure.Messaging.ServiceBus.Stress;
 

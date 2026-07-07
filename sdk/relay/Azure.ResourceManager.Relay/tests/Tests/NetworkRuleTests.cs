@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Relay.Tests
             Assert.AreEqual(0, _relayNetworkRuleSetResource.Data.IPRules.Count);
 
             _relayNetworkRuleSetResource = (await _relayNetworkRuleSetResource.CreateOrUpdateAsync(WaitUntil.Completed, new RelayNetworkRuleSetData()
-                {
-                    IPRules = { new Models.RelayNetworkRuleSetIPRule() { IPMask = "1.1.1.1", Action = "Allow" },
+            {
+                IPRules = { new Models.RelayNetworkRuleSetIPRule() { IPMask = "1.1.1.1", Action = "Allow" },
                                 new Models.RelayNetworkRuleSetIPRule() { IPMask = "2.1.1.1", Action = "Allow" }},
-                    PublicNetworkAccess = "Disabled",
-                    DefaultAction = "Deny"
-                })).Value;
+                PublicNetworkAccess = "Disabled",
+                DefaultAction = "Deny"
+            })).Value;
 
             Assert.AreEqual(Models.RelayNetworkRuleSetDefaultAction.Deny, _relayNetworkRuleSetResource.Data.DefaultAction);
             Assert.AreEqual(Models.RelayPublicNetworkAccess.Disabled, _relayNetworkRuleSetResource.Data.PublicNetworkAccess);

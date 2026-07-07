@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -56,8 +57,8 @@ internal static class BicepTypeMapping
             bool b => b.ToString(),
             int i => i.ToString(),
             long i => i.ToString(),
-            float f => f.ToString(),
-            double d => d.ToString(),
+            float f => f.ToString(CultureInfo.InvariantCulture),
+            double d => d.ToString(CultureInfo.InvariantCulture),
             string s => s,
             Uri u => u.AbsoluteUri,
             DateTimeOffset d => d.ToString("o"),

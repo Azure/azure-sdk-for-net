@@ -5,8 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.IotOperations;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <returns> A new <see cref="T:Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowEndpointProperties" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IotOperationsDataflowEndpointProperties IotOperationsDataflowEndpointProperties(DataflowEndpointType endpointType, DataflowEndpointDataExplorer dataExplorerSettings, DataflowEndpointDataLakeStorage dataLakeStorageSettings, DataflowEndpointFabricOneLake fabricOneLakeSettings, DataflowEndpointKafka kafkaSettings, string localStoragePersistentVolumeClaimRef, DataflowEndpointMqtt mqttSettings, IotOperationsProvisioningState? provisioningState)
-            => IotOperationsDataflowEndpointProperties(endpointType, null, dataExplorerSettings, dataLakeStorageSettings, fabricOneLakeSettings, kafkaSettings , localStoragePersistentVolumeClaimRef, mqttSettings, null, provisioningState, null);
+            => IotOperationsDataflowEndpointProperties(endpointType, null, dataExplorerSettings, dataLakeStorageSettings, fabricOneLakeSettings, kafkaSettings, localStoragePersistentVolumeClaimRef, mqttSettings, null, provisioningState, null);
 
         /// <summary> Initializes a new instance of <see cref="Models.IotOperationsDataflowProfileProperties"/>. </summary>
         /// <param name="diagnostics"> Spec defines the desired identities of NBC diagnostics settings. </param>

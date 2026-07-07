@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The IdpsSignatureResult. </summary>
     public partial class IdpsSignatureResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IdpsSignatureResult"/>. </summary>
         internal IdpsSignatureResult()
@@ -64,53 +36,63 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPorts"> Describes the list of destination ports related to this signature. </param>
         /// <param name="lastUpdated"> Describes the last updated time of the signature (provided from 3rd party vendor). </param>
         /// <param name="inheritedFromParentPolicy"> Describes if this override is inherited from base policy or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdpsSignatureResult(int? signatureId, FirewallPolicyIdpsSignatureMode? mode, FirewallPolicyIdpsSignatureSeverity? severity, FirewallPolicyIdpsSignatureDirection? direction, string group, string description, string protocol, IReadOnlyList<string> sourcePorts, IReadOnlyList<string> destinationPorts, string lastUpdated, bool? inheritedFromParentPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IdpsSignatureResult(int? signatureId, FirewallPolicyIdpsSignatureMode? mode, FirewallPolicyIdpsSignatureSeverity? severity, FirewallPolicyIdpsSignatureDirection? direction, string @group, string description, string protocol, IReadOnlyList<string> sourcePorts, IReadOnlyList<string> destinationPorts, string lastUpdated, bool? inheritedFromParentPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignatureId = signatureId;
             Mode = mode;
             Severity = severity;
             Direction = direction;
-            Group = group;
+            Group = @group;
             Description = description;
             Protocol = protocol;
             SourcePorts = sourcePorts;
             DestinationPorts = destinationPorts;
             LastUpdated = lastUpdated;
             InheritedFromParentPolicy = inheritedFromParentPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the signature. </summary>
         [WirePath("signatureId")]
         public int? SignatureId { get; }
+
         /// <summary> The current mode enforced, 0 - Disabled, 1 - Alert, 2 -Deny. </summary>
         [WirePath("mode")]
         public FirewallPolicyIdpsSignatureMode? Mode { get; }
+
         /// <summary> Describes the severity of signature: 1 - High, 2 - Medium, 3 - Low. </summary>
         [WirePath("severity")]
         public FirewallPolicyIdpsSignatureSeverity? Severity { get; }
+
         /// <summary> Describes in which direction signature is being enforced: 0 - OutBound, 1 - InBound, 2 - Any, 3 - Internal, 4 - InternalOutbound, 5 - InternalInbound. </summary>
         [WirePath("direction")]
         public FirewallPolicyIdpsSignatureDirection? Direction { get; }
+
         /// <summary> Describes the groups the signature belongs to. </summary>
         [WirePath("group")]
         public string Group { get; }
+
         /// <summary> Describes what is the signature enforces. </summary>
         [WirePath("description")]
         public string Description { get; }
+
         /// <summary> Describes the protocol the signatures is being enforced in. </summary>
         [WirePath("protocol")]
         public string Protocol { get; }
+
         /// <summary> Describes the list of source ports related to this signature. </summary>
         [WirePath("sourcePorts")]
         public IReadOnlyList<string> SourcePorts { get; }
+
         /// <summary> Describes the list of destination ports related to this signature. </summary>
         [WirePath("destinationPorts")]
         public IReadOnlyList<string> DestinationPorts { get; }
+
         /// <summary> Describes the last updated time of the signature (provided from 3rd party vendor). </summary>
         [WirePath("lastUpdated")]
         public string LastUpdated { get; }
+
         /// <summary> Describes if this override is inherited from base policy or not. </summary>
         [WirePath("inheritedFromParentPolicy")]
         public bool? InheritedFromParentPolicy { get; }

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.RedisEnterprise.csproj" />
+  <Project Path="tests/Azure.Provisioning.RedisEnterprise.Tests.csproj" />
+</Solution>

@@ -7,56 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Credentials of administrator users for source and target servers.
-    /// Serialized Name: AdminCredentials
-    /// </summary>
+    /// <summary> Credentials of administrator users for source and target servers. </summary>
     public partial class PostgreSqlMigrationAdminCredentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/>. </summary>
-        /// <param name="sourceServerPassword">
-        /// Password for the user of the source server.
-        /// Serialized Name: AdminCredentials.sourceServerPassword
-        /// </param>
-        /// <param name="targetServerPassword">
-        /// Password for the user of the target server.
-        /// Serialized Name: AdminCredentials.targetServerPassword
-        /// </param>
+        /// <param name="sourceServerPassword"> Password for the user of the source server. </param>
+        /// <param name="targetServerPassword"> Password for the user of the target server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerPassword"/> or <paramref name="targetServerPassword"/> is null. </exception>
         public PostgreSqlMigrationAdminCredentials(string sourceServerPassword, string targetServerPassword)
         {
@@ -68,37 +31,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/>. </summary>
-        /// <param name="sourceServerPassword">
-        /// Password for the user of the source server.
-        /// Serialized Name: AdminCredentials.sourceServerPassword
-        /// </param>
-        /// <param name="targetServerPassword">
-        /// Password for the user of the target server.
-        /// Serialized Name: AdminCredentials.targetServerPassword
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationAdminCredentials(string sourceServerPassword, string targetServerPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sourceServerPassword"> Password for the user of the source server. </param>
+        /// <param name="targetServerPassword"> Password for the user of the target server. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationAdminCredentials(string sourceServerPassword, string targetServerPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceServerPassword = sourceServerPassword;
             TargetServerPassword = targetServerPassword;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationAdminCredentials"/> for deserialization. </summary>
-        internal PostgreSqlMigrationAdminCredentials()
-        {
-        }
-
-        /// <summary>
-        /// Password for the user of the source server.
-        /// Serialized Name: AdminCredentials.sourceServerPassword
-        /// </summary>
+        /// <summary> Password for the user of the source server. </summary>
         [WirePath("sourceServerPassword")]
         public string SourceServerPassword { get; set; }
-        /// <summary>
-        /// Password for the user of the target server.
-        /// Serialized Name: AdminCredentials.targetServerPassword
-        /// </summary>
+
+        /// <summary> Password for the user of the target server. </summary>
         [WirePath("targetServerPassword")]
         public string TargetServerPassword { get; set; }
     }

@@ -1,0 +1,4 @@
+directory: specification/domainregistration/resource-manager/Microsoft.DomainRegistration/DomainRegistration
+commit: 17842bc766fcf93b9e18c7c0294761173d7a8b17
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

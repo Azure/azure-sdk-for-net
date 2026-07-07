@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != WorkloadNetworkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkDnsZoneResource> operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(
-                    new WorkloadNetworkDnsZoneOperationSource(Client),
+                    new WorkloadNetworkDnsZoneResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreateDnsZoneRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsZoneId, WorkloadNetworkDnsZoneData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkDnsZoneResource> operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(
-                    new WorkloadNetworkDnsZoneOperationSource(Client),
+                    new WorkloadNetworkDnsZoneResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsZoneResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesAsyncCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkDnsZoneCollection.GetAll"), data => new WorkloadNetworkDnsZoneResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkDnsZoneResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkDnsZoneData, WorkloadNetworkDnsZoneResource>(new WorkloadNetworksGetDnsZonesCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkDnsZoneCollection.GetAll"), data => new WorkloadNetworkDnsZoneResource(Client, data));
         }
 
         /// <summary>

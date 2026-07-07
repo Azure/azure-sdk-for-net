@@ -200,7 +200,8 @@ namespace Azure.Generator.Tests.Common
            string? collectionFormat = null,
            string? serializedName = null,
            InputConstant? defaultValue = null,
-           InputParameterScope scope = InputParameterScope.Method)
+           InputParameterScope scope = InputParameterScope.Method,
+           string? collectionHeaderPrefix = null)
         {
             return new InputHeaderParameter(
                 name: name,
@@ -216,7 +217,8 @@ namespace Azure.Generator.Tests.Common
                 collectionFormat: collectionFormat,
                 scope: scope,
                 arraySerializationDelimiter: null,
-                serializedName: serializedName ?? name);
+                serializedName: serializedName ?? name,
+                collectionHeaderPrefix: collectionHeaderPrefix);
         }
 
         public static InputQueryParameter QueryParameter(
@@ -391,6 +393,8 @@ namespace Azure.Generator.Tests.Common
         /// <param name="derivedModels"></param>
         /// <param name="decorators"></param>
         /// <param name="isDynamicModel"></param>
+        /// <param name="serializationOptions"></param>
+        /// <param name="externalTypeMetadata"></param>
         /// <returns></returns>
         public static InputModelType Model(
             string name,
@@ -405,7 +409,9 @@ namespace Azure.Generator.Tests.Common
             IDictionary<string, InputModelType>? discriminatedModels = null,
             IEnumerable<InputModelType>? derivedModels = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null,
-            bool isDynamicModel = false)
+            bool isDynamicModel = false,
+            InputSerializationOptions? serializationOptions = null,
+            InputExternalTypeMetadata? externalTypeMetadata = null)
         {
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             var model = new InputModelType(
@@ -425,13 +431,19 @@ namespace Azure.Generator.Tests.Common
                 discriminatedModels is null ? new Dictionary<string, InputModelType>() : discriminatedModels.AsReadOnly(),
                 additionalProperties,
                 modelAsStruct,
-                new(),
+                serializationOptions ?? new(),
                 isDynamicModel);
             if (decorators is not null)
             {
                 var decoratorProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.Decorators));
                 var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
                 setDecoratorMethod!.Invoke(model, [decorators]);
+            }
+            if (externalTypeMetadata is not null)
+            {
+                var externalTypeMetadataProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.External));
+                var setExternalTypeMetadataMethod = externalTypeMetadataProperty?.GetSetMethod(true);
+                setExternalTypeMetadataMethod!.Invoke(model, [externalTypeMetadata]);
             }
             return model;
         }
@@ -679,6 +691,13 @@ namespace Azure.Generator.Tests.Common
                 clientChildren,
                 []);
             _childClientsCache[client] = clientChildren;
+            // Top-level clients (no parent) should be individually initializable by default
+            if (parent == null)
+            {
+                var initializedByProperty = typeof(InputClient).GetProperty(nameof(InputClient.InitializedBy));
+                var setMethod = initializedByProperty?.GetSetMethod(true);
+                setMethod!.Invoke(client, [InputClientInitializedBy.Individually]);
+            }
             // when we have a parent, we need to find the children list of this parent client and update accordingly.
             if (parent != null && _childClientsCache.TryGetValue(parent, out var children))
             {

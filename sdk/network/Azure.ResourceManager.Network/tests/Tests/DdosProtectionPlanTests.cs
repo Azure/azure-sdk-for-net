@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Azure.Test;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
-            DdosProtectionPlanResource ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new DdosProtectionPlanData(TestEnvironment.Location))).WaitForCompletionAsync();
+            DdosProtectionPlanResource ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new DdosProtectionPlanData(TestEnvironment.Location), System.Threading.CancellationToken.None)).WaitForCompletionAsync();
 
             Assert.True(await container.ExistsAsync(name));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Tests
             var data = new DdosProtectionPlanData(TestEnvironment.Location);
             data.Tags.Add("tag1", "value1");
             data.Tags.Add("tag2", "value2");
-            ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).WaitForCompletionAsync();
+            ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, data, System.Threading.CancellationToken.None)).WaitForCompletionAsync();
             ddosProtectionPlanData = ddosProtectionPlan.Data;
 
             ValidateCommon(ddosProtectionPlanData, name);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.That(ddosProtectionPlanData.Tags, Does.ContainKey("tag2").WithValue("value2"));
 
             // delete
-            await ddosProtectionPlan.DeleteAsync(WaitUntil.Completed);
+            await ddosProtectionPlan.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
 
             Assert.False(await container.ExistsAsync(name));
 

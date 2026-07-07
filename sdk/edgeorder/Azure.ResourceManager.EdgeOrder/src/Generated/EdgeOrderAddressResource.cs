@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _addressResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderAddressPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
-                    new EdgeOrderAddressOperationSource(Client),
+                    new EdgeOrderAddressResourceOperationSource(Client),
                     _addressResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _addressResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderAddressPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeOrderArmOperation<EdgeOrderAddressResource> operation = new EdgeOrderArmOperation<EdgeOrderAddressResource>(
-                    new EdgeOrderAddressOperationSource(Client),
+                    new EdgeOrderAddressResourceOperationSource(Client),
                     _addressResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

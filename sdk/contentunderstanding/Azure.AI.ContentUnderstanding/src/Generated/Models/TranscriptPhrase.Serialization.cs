@@ -37,6 +37,29 @@ namespace Azure.AI.ContentUnderstanding
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranscriptPhrase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TranscriptPhrase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TranscriptPhrase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TranscriptPhrase IPersistableModel<TranscriptPhrase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TranscriptPhrase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranscriptPhrase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -61,9 +84,9 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WriteStringValue(Speaker);
             }
             writer.WritePropertyName("startTimeMs"u8);
-            writer.WriteNumberValue(StartTimeMs);
+            writer.WriteNumberValue(StartTimeMsValue);
             writer.WritePropertyName("endTimeMs"u8);
-            writer.WriteNumberValue(EndTimeMs);
+            writer.WriteNumberValue(EndTimeMsValue);
             if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
@@ -131,8 +154,8 @@ namespace Azure.AI.ContentUnderstanding
                 return null;
             }
             string speaker = default;
-            long startTimeMs = default;
-            long endTimeMs = default;
+            long startTimeMsValue = default;
+            long endTimeMsValue = default;
             string locale = default;
             string text = default;
             float? confidence = default;
@@ -148,12 +171,12 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("startTimeMs"u8))
                 {
-                    startTimeMs = prop.Value.GetInt64();
+                    startTimeMsValue = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("endTimeMs"u8))
                 {
-                    endTimeMs = prop.Value.GetInt64();
+                    endTimeMsValue = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("locale"u8))
@@ -201,8 +224,8 @@ namespace Azure.AI.ContentUnderstanding
             }
             return new TranscriptPhrase(
                 speaker,
-                startTimeMs,
-                endTimeMs,
+                startTimeMsValue,
+                endTimeMsValue,
                 locale,
                 text,
                 confidence,
@@ -210,28 +233,5 @@ namespace Azure.AI.ContentUnderstanding
                 words,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranscriptPhrase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranscriptPhrase>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TranscriptPhrase)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TranscriptPhrase IPersistableModel<TranscriptPhrase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranscriptPhrase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

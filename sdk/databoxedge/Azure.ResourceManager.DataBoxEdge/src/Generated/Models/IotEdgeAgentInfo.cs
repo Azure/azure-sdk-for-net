@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> IoT edge agent details is optional, this will be used for download system Agent module while bootstrapping IoT Role if specified. </summary>
     public partial class IotEdgeAgentInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotEdgeAgentInfo"/>. </summary>
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
@@ -62,24 +34,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
         /// <param name="tag"> Image Tag. </param>
         /// <param name="imageRepository"> Image repository details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotEdgeAgentInfo(string imageName, string tag, ImageRepositoryCredential imageRepository, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotEdgeAgentInfo(string imageName, string tag, ImageRepositoryCredential imageRepository, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageName = imageName;
             Tag = tag;
             ImageRepository = imageRepository;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotEdgeAgentInfo"/> for deserialization. </summary>
-        internal IotEdgeAgentInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the IoT edge agent image. </summary>
         public string ImageName { get; set; }
+
         /// <summary> Image Tag. </summary>
         public string Tag { get; set; }
+
         /// <summary> Image repository details. </summary>
         public ImageRepositoryCredential ImageRepository { get; set; }
     }

@@ -1,8 +1,21 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0 (2026-04-30)
+
+### Features Added
+
+* Add ability to specify EnableStandardMetrics and EnablePerformanceCounters
+  ([#56438](https://github.com/Azure/azure-sdk-for-net/pull/56438))
 
 ### Breaking Changes
 
@@ -15,7 +28,7 @@
   traces exported by default.
   **Migration**: To maintain the previous behavior (100% sampling), explicitly
   configure the sampler:
-  
+
   ```csharp
   // Option 1: Set SamplingRatio and clear TracesPerSecond
   builder.Services.AddOpenTelemetry()
@@ -33,8 +46,6 @@
 * Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
   instead of replica names in the Role Instance field.
   ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
-
-### Other Changes
 
 ## 1.4.0 (2025-11-14)
 
@@ -78,7 +89,7 @@
   - `preview.item.dropped.count`
   - `preview.item.retry.count`
   ([#53010](https://github.com/Azure/azure-sdk-for-net/pull/53010))
-* Add `enduser.pseudo.id` as ai.user.id 
+* Add `enduser.pseudo.id` as ai.user.id
 ([#52722](https://github.com/Azure/azure-sdk-for-net/pull/52722))
 * Add `ai.location.ip` mapping for all telemetry types ([#52211](https://github.com/Azure/azure-sdk-for-net/pull/52211))
 

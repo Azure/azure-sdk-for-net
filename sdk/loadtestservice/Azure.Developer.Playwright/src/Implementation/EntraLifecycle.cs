@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Azure.Developer.Playwright.Implementation;
 
-internal class EntraLifecycle: IEntraLifecycle
+internal class EntraLifecycle : IEntraLifecycle
 {
     internal string? _entraIdAccessToken;
     internal long? _entraIdAccessTokenExpiry;

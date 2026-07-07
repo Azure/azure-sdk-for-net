@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct ActualRansomwareProtectionState : IEquatable<ActualRansomwareProtectionState>
     {
         private readonly string _value;
+        /// <summary> Advanced Ransomware Protection is disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Advanced Ransomware Protection is enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Advanced Ransomware Protection is in learning mode. </summary>
+        private const string LearningValue = "Learning";
+        /// <summary> Advanced Ransomware Protection is in paused state. </summary>
+        private const string PausedValue = "Paused";
 
         /// <summary> Initializes a new instance of <see cref="ActualRansomwareProtectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ActualRansomwareProtectionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
-        private const string LearningValue = "Learning";
-        private const string PausedValue = "Paused";
+            _value = value;
+        }
 
         /// <summary> Advanced Ransomware Protection is disabled. </summary>
         public static ActualRansomwareProtectionState Disabled { get; } = new ActualRansomwareProtectionState(DisabledValue);
+
         /// <summary> Advanced Ransomware Protection is enabled. </summary>
         public static ActualRansomwareProtectionState Enabled { get; } = new ActualRansomwareProtectionState(EnabledValue);
+
         /// <summary> Advanced Ransomware Protection is in learning mode. </summary>
         public static ActualRansomwareProtectionState Learning { get; } = new ActualRansomwareProtectionState(LearningValue);
+
         /// <summary> Advanced Ransomware Protection is in paused state. </summary>
         public static ActualRansomwareProtectionState Paused { get; } = new ActualRansomwareProtectionState(PausedValue);
+
         /// <summary> Determines if two <see cref="ActualRansomwareProtectionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ActualRansomwareProtectionState left, ActualRansomwareProtectionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ActualRansomwareProtectionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ActualRansomwareProtectionState left, ActualRansomwareProtectionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ActualRansomwareProtectionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ActualRansomwareProtectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ActualRansomwareProtectionState(string value) => new ActualRansomwareProtectionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ActualRansomwareProtectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ActualRansomwareProtectionState?(string value) => value == null ? null : new ActualRansomwareProtectionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ActualRansomwareProtectionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ActualRansomwareProtectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

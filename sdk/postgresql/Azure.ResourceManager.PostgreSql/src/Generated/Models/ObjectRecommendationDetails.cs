@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Recommendation details for the recommended action.
-    /// Serialized Name: ObjectRecommendationDetails
-    /// </summary>
+    /// <summary> Recommendation details for the recommended action. </summary>
     public partial class ObjectRecommendationDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationDetails"/>. </summary>
         internal ObjectRecommendationDetails()
@@ -56,36 +25,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationDetails"/>. </summary>
-        /// <param name="databaseName">
-        /// Database name.
-        /// Serialized Name: ObjectRecommendationDetails.databaseName
-        /// </param>
-        /// <param name="schema">
-        /// Schema name.
-        /// Serialized Name: ObjectRecommendationDetails.schema
-        /// </param>
-        /// <param name="table">
-        /// Table name.
-        /// Serialized Name: ObjectRecommendationDetails.table
-        /// </param>
-        /// <param name="indexType">
-        /// Index type.
-        /// Serialized Name: ObjectRecommendationDetails.indexType
-        /// </param>
-        /// <param name="indexName">
-        /// Index name.
-        /// Serialized Name: ObjectRecommendationDetails.indexName
-        /// </param>
-        /// <param name="indexColumns">
-        /// Index columns.
-        /// Serialized Name: ObjectRecommendationDetails.indexColumns
-        /// </param>
-        /// <param name="includedColumns">
-        /// Index included columns.
-        /// Serialized Name: ObjectRecommendationDetails.includedColumns
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IReadOnlyList<string> indexColumns, IReadOnlyList<string> includedColumns, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="databaseName"> Database name. </param>
+        /// <param name="schema"> Schema name. </param>
+        /// <param name="table"> Table name. </param>
+        /// <param name="indexType"> Index type. </param>
+        /// <param name="indexName"> Index name. </param>
+        /// <param name="indexColumns"> Index columns. </param>
+        /// <param name="includedColumns"> Index included columns. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IReadOnlyList<string> indexColumns, IReadOnlyList<string> includedColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             Schema = schema;
@@ -94,50 +42,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IndexName = indexName;
             IndexColumns = indexColumns;
             IncludedColumns = includedColumns;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Database name.
-        /// Serialized Name: ObjectRecommendationDetails.databaseName
-        /// </summary>
+        /// <summary> Database name. </summary>
         [WirePath("databaseName")]
         public string DatabaseName { get; }
-        /// <summary>
-        /// Schema name.
-        /// Serialized Name: ObjectRecommendationDetails.schema
-        /// </summary>
+
+        /// <summary> Schema name. </summary>
         [WirePath("schema")]
         public string Schema { get; }
-        /// <summary>
-        /// Table name.
-        /// Serialized Name: ObjectRecommendationDetails.table
-        /// </summary>
+
+        /// <summary> Table name. </summary>
         [WirePath("table")]
         public string Table { get; }
-        /// <summary>
-        /// Index type.
-        /// Serialized Name: ObjectRecommendationDetails.indexType
-        /// </summary>
+
+        /// <summary> Index type. </summary>
         [WirePath("indexType")]
         public string IndexType { get; }
-        /// <summary>
-        /// Index name.
-        /// Serialized Name: ObjectRecommendationDetails.indexName
-        /// </summary>
+
+        /// <summary> Index name. </summary>
         [WirePath("indexName")]
         public string IndexName { get; }
-        /// <summary>
-        /// Index columns.
-        /// Serialized Name: ObjectRecommendationDetails.indexColumns
-        /// </summary>
-        [WirePath("indexColumns")]
-        public IReadOnlyList<string> IndexColumns { get; }
-        /// <summary>
-        /// Index included columns.
-        /// Serialized Name: ObjectRecommendationDetails.includedColumns
-        /// </summary>
-        [WirePath("includedColumns")]
-        public IReadOnlyList<string> IncludedColumns { get; }
     }
 }

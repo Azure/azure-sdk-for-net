@@ -48,6 +48,6 @@ namespace Azure.Template.Perf
             _server.Dispose();
         }
 
-        public class TestClientOptions: ClientOptions {}
+        public class TestClientOptions : ClientOptions { }
     }
 }

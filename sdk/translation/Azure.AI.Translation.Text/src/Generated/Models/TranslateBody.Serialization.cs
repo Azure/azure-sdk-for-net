@@ -38,6 +38,39 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranslateBody>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TranslateBody)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TranslateBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TranslateBody IPersistableModel<TranslateBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TranslateBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="translateBody"> The <see cref="TranslateBody"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TranslateBody translateBody)
+        {
+            if (translateBody == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(translateBody, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranslateBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -125,41 +158,6 @@ namespace Azure.AI.Translation.Text
                 }
             }
             return new TranslateBody(inputs, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranslateBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranslateBody>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TranslateBody)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TranslateBody IPersistableModel<TranslateBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranslateBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="translateBody"> The <see cref="TranslateBody"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(TranslateBody translateBody)
-        {
-            if (translateBody == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(translateBody, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

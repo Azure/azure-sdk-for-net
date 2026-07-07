@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     internal static partial class DesktopVirtualizationDayOfWeekExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DesktopVirtualizationDayOfWeek value) => value switch
         {
             DesktopVirtualizationDayOfWeek.Monday => "Monday",
@@ -23,15 +24,37 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DesktopVirtualizationDayOfWeek value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DesktopVirtualizationDayOfWeek ToDesktopVirtualizationDayOfWeek(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return DesktopVirtualizationDayOfWeek.Monday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return DesktopVirtualizationDayOfWeek.Tuesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return DesktopVirtualizationDayOfWeek.Wednesday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return DesktopVirtualizationDayOfWeek.Thursday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return DesktopVirtualizationDayOfWeek.Friday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return DesktopVirtualizationDayOfWeek.Saturday;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return DesktopVirtualizationDayOfWeek.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday"))
+            {
+                return DesktopVirtualizationDayOfWeek.Monday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday"))
+            {
+                return DesktopVirtualizationDayOfWeek.Tuesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday"))
+            {
+                return DesktopVirtualizationDayOfWeek.Wednesday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday"))
+            {
+                return DesktopVirtualizationDayOfWeek.Thursday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday"))
+            {
+                return DesktopVirtualizationDayOfWeek.Friday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday"))
+            {
+                return DesktopVirtualizationDayOfWeek.Saturday;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday"))
+            {
+                return DesktopVirtualizationDayOfWeek.Sunday;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DesktopVirtualizationDayOfWeek value.");
         }
     }

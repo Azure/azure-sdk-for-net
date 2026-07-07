@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != GlobalRulestackResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, priority, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllAsyncCollectionResultOfT(_postRulesRestClient, Id.Name, context), data => new PostRulestackRuleResource(Client, data));
+            return new AsyncPageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllAsyncCollectionResultOfT(_postRulesRestClient, Id.Name, context, "PostRulestackRuleCollection.GetAll"), data => new PostRulestackRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllCollectionResultOfT(_postRulesRestClient, Id.Name, context), data => new PostRulestackRuleResource(Client, data));
+            return new PageableWrapper<PostRulestackRuleData, PostRulestackRuleResource>(new PostRulesGetAllCollectionResultOfT(_postRulesRestClient, Id.Name, context, "PostRulestackRuleCollection.GetAll"), data => new PostRulestackRuleResource(Client, data));
         }
 
         /// <summary>

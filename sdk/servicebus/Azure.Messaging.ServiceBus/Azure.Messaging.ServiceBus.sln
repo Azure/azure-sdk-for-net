@@ -44,7 +44,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp", "..\..\co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp.Tests", "..\..\core\Azure.Core.Amqp\tests\Azure.Core.Amqp.Tests.csproj", "{0C1C6691-FC09-4507-92B8-1406251A1273}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginSample", "samples\PluginSample\PluginSample.csproj", "{8FA70CB7-4230-4913-8BF0-61FC39707A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginSnippets", "tests\PluginSnippets\PluginSnippets.csproj", "{8FA70CB7-4230-4913-8BF0-61FC39707A3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

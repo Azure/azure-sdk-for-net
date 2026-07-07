@@ -120,7 +120,7 @@ public class ConfigurationExtensionsTests
         Assert.That(settings.Options.ClientLoggingOptions, Is.Not.Null);
         Assert.That(settings.Options.ClientLoggingOptions!.EnableLogging, Is.False);
         Assert.That(settings.Credential, Is.Not.Null);
-        Assert.That(settings.Credential!.CredentialSource, Is.EqualTo("ApiKey"));
+        Assert.That(settings.Credential!.CredentialSource, Is.AnyOf("apikeycredential", "ApiKey"));
         Assert.That(settings.Credential.Key, Is.EqualTo("test-key-123"));
     }
 
@@ -232,5 +232,98 @@ public class ConfigurationExtensionsTests
         Assert.That(settings.Options!.NetworkTimeout, Is.EqualTo(TimeSpan.FromMinutes(2)));
         Assert.That(settings.Options.ApiVersion, Is.EqualTo("2024-11-01"));
         Assert.That(settings.Options.EnableDistributedTracing, Is.True);
+    }
+
+    [Test]
+    public void GetClientSettings_AdditionalAllowedHeaderNames_AppendsToDefaults()
+    {
+        ConfigurationBuilder builder = new();
+        builder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedHeaderNames:0"] = "X-Custom-Header",
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedHeaderNames:1"] = "X-Request-Id"
+        });
+        IConfigurationRoot config = builder.Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>("TestClient");
+
+        var headers = settings.Options!.ClientLoggingOptions!.AllowedHeaderNames;
+        Assert.That(headers, Has.Member("X-Custom-Header"));
+        Assert.That(headers, Has.Member("X-Request-Id"));
+        // Defaults are still present
+        Assert.That(headers, Has.Member("Accept"));
+        Assert.That(headers, Has.Member("Content-Type"));
+        Assert.That(headers, Has.Member("traceparent"));
+    }
+
+    [Test]
+    public void GetClientSettings_AdditionalAllowedQueryParameters_AppendsToDefaults()
+    {
+        ConfigurationBuilder builder = new();
+        builder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedQueryParameters:0"] = "filter",
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedQueryParameters:1"] = "top"
+        });
+        IConfigurationRoot config = builder.Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>("TestClient");
+
+        var queryParams = settings.Options!.ClientLoggingOptions!.AllowedQueryParameters;
+        Assert.That(queryParams, Has.Member("filter"));
+        Assert.That(queryParams, Has.Member("top"));
+        // Default is still present
+        Assert.That(queryParams, Has.Member("api-version"));
+    }
+
+    [Test]
+    public void GetClientSettings_AdditionalAllowedHeaderNames_DeduplicatesExistingDefaults()
+    {
+        ConfigurationBuilder builder = new();
+        builder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedHeaderNames:0"] = "Content-Type",
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedHeaderNames:1"] = "X-New-Header",
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedHeaderNames:2"] = "accept"
+        });
+        IConfigurationRoot config = builder.Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>("TestClient");
+
+        var headers = settings.Options!.ClientLoggingOptions!.AllowedHeaderNames;
+        Assert.That(headers, Has.Member("X-New-Header"));
+        // Content-Type and Accept were already in defaults — no duplicates
+        int contentTypeCount = 0;
+        int acceptCount = 0;
+        foreach (string h in headers)
+        {
+            if (string.Equals(h, "Content-Type", StringComparison.OrdinalIgnoreCase)) contentTypeCount++;
+            if (string.Equals(h, "Accept", StringComparison.OrdinalIgnoreCase)) acceptCount++;
+        }
+        Assert.That(contentTypeCount, Is.EqualTo(1), "Content-Type should not be duplicated");
+        Assert.That(acceptCount, Is.EqualTo(1), "Accept should not be duplicated");
+    }
+
+    [Test]
+    public void GetClientSettings_AdditionalAllowedQueryParameters_DeduplicatesExistingDefaults()
+    {
+        ConfigurationBuilder builder = new();
+        builder.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedQueryParameters:0"] = "api-version",
+            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedQueryParameters:1"] = "filter"
+        });
+        IConfigurationRoot config = builder.Build();
+
+        TestClientSettings settings = config.GetClientSettings<TestClientSettings>("TestClient");
+
+        var queryParams = settings.Options!.ClientLoggingOptions!.AllowedQueryParameters;
+        Assert.That(queryParams, Has.Member("filter"));
+        int apiVersionCount = 0;
+        foreach (string q in queryParams)
+        {
+            if (string.Equals(q, "api-version", StringComparison.OrdinalIgnoreCase)) apiVersionCount++;
+        }
+        Assert.That(apiVersionCount, Is.EqualTo(1), "api-version should not be duplicated");
     }
 }

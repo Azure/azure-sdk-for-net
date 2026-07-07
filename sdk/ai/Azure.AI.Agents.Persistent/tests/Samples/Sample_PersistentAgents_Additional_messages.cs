@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests;
+
 public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIAgentsTestEnvironment>
 {
     [Test]
@@ -66,7 +67,7 @@ public partial class Sample_PersistentAgents_Multiple_Messages : SamplesBase<AIA
             || agentRun.Status == RunStatus.InProgress);
         #endregion
         #region Snippet:Sample_PersistentAgent_Multiple_Messages_PrintAsync
-        AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order:ListSortOrder.Ascending);
+        AsyncPageable<PersistentThreadMessage> messages = agentClient.Messages.GetMessagesAsync(thread.Id, order: ListSortOrder.Ascending);
 
         await foreach (PersistentThreadMessage threadMessage in messages)
         {

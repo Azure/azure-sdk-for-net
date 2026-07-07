@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-03-31"
+  "apiVersions": {
+    "Microsoft.HardwareSecurityModules": "2025-03-31"
+  }
 }

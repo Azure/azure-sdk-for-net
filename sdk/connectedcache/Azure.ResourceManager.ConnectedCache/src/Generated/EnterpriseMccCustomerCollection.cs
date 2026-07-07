@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _enterpriseMccCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, EnterpriseMccCustomerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConnectedCacheArmOperation<EnterpriseMccCustomerResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCustomerResource>(
-                    new EnterpriseMccCustomerOperationSource(Client),
+                    new EnterpriseMccCustomerResourceOperationSource(Client),
                     _enterpriseMccCustomersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _enterpriseMccCustomersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customerResourceName, EnterpriseMccCustomerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConnectedCacheArmOperation<EnterpriseMccCustomerResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCustomerResource>(
-                    new EnterpriseMccCustomerOperationSource(Client),
+                    new EnterpriseMccCustomerResourceOperationSource(Client),
                     _enterpriseMccCustomersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupAsyncCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EnterpriseMccCustomerResource(Client, data));
+            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupAsyncCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ConnectedCache
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EnterpriseMccCustomerResource(Client, data));
+            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetByResourceGroupCollectionResultOfT(_enterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EnterpriseMccCustomerCollection.GetAll"), data => new EnterpriseMccCustomerResource(Client, data));
         }
 
         /// <summary>

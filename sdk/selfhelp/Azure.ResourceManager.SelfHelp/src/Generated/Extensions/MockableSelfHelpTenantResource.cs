@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPOperationGroupRestClient, DiscoveryNlpContent.ToRequestContent(content), context);
+            return new DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpAsyncCollectionResultOfT(DiscoverySolutionNLPOperationGroupRestClient, DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpTenantResource.DiscoverSolutionsNlp");
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpCollectionResultOfT(DiscoverySolutionNLPOperationGroupRestClient, DiscoveryNlpContent.ToRequestContent(content), context);
+            return new DiscoverySolutionNLPOperationGroupDiscoverSolutionsNlpCollectionResultOfT(DiscoverySolutionNLPOperationGroupRestClient, DiscoveryNlpContent.ToRequestContent(content), context, "MockableSelfHelpTenantResource.DiscoverSolutionsNlp");
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
+            return new DiscoverySolutionDiscoverSolutionsAsyncCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context, "MockableSelfHelpTenantResource.DiscoverSolutions");
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new DiscoverySolutionDiscoverSolutionsCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context);
+            return new DiscoverySolutionDiscoverSolutionsCollectionResultOfT(DiscoverySolutionRestClient, filter, skiptoken, context, "MockableSelfHelpTenantResource.DiscoverSolutions");
         }
     }
 }

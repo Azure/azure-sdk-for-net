@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using Azure.Core.Amqp;
-using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Administration;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
-using System.Globalization;
-using Azure.Core.Shared;
 
 namespace Azure.Messaging.ServiceBus
 {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs.Tests
         {
         }
 
-        protected async  Task<AvsPrivateCloudCollection> GetPrivateCloudCollectionAsync()
+        protected async Task<AvsPrivateCloudCollection> GetPrivateCloudCollectionAsync()
         {
             _resourceGroup = await DefaultSubscription.GetResourceGroupAsync(RESOURCE_GROUP_NAME);
             return _resourceGroup.GetAvsPrivateClouds();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs.Tests
         [AsyncOnly]
         public async Task CreateOrUpdate()
         {
-            var collection = await  GetPrivateCloudCollectionAsync();
+            var collection = await GetPrivateCloudCollectionAsync();
             string privateCloudName = Recording.GenerateAssetName("avs-dotnet-test-");
             AvsPrivateCloudData data = new AvsPrivateCloudData(DefaultLocation, new AvsSku("AV36"))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Tests
                         },
             };
 
-            ArmOperation<AvsPrivateCloudResource> lro = await  collection.CreateOrUpdateAsync(WaitUntil.Started, privateCloudName, data);
+            ArmOperation<AvsPrivateCloudResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Started, privateCloudName, data);
         }
 
         //[TestCase]

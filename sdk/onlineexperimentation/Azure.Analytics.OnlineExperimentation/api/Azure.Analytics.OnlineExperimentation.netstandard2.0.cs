@@ -213,6 +213,7 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class OnlineExperimentationClient
     {
         protected OnlineExperimentationClient() { }
+        public OnlineExperimentationClient(Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings settings) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public OnlineExperimentationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -245,6 +246,13 @@ namespace Azure.Analytics.OnlineExperimentation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.OnlineExperimentation.ExperimentMetricValidationResult>> ValidateMetricAsync(Azure.Analytics.OnlineExperimentation.ExperimentMetric body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateMetricAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    public static partial class OnlineExperimentationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddOnlineExperimentationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientSettings> configureSettings) { throw null; }
+    }
     public partial class OnlineExperimentationClientOptions : Azure.Core.ClientOptions
     {
         public OnlineExperimentationClientOptions(Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion version = Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions.ServiceVersion.V2025_05_31_Preview) { }
@@ -252,6 +260,13 @@ namespace Azure.Analytics.OnlineExperimentation
         {
             V2025_05_31_Preview = 1,
         }
+    }
+    public partial class OnlineExperimentationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public OnlineExperimentationClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class OnlineExperimentationModelFactory
     {
@@ -330,13 +345,5 @@ namespace Azure.Analytics.OnlineExperimentation
         Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class OnlineExperimentationClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClient, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions> AddOnlineExperimentationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.OnlineExperimentation.OnlineExperimentationClient, Azure.Analytics.OnlineExperimentation.OnlineExperimentationClientOptions> AddOnlineExperimentationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The required parameters for update maintenance on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerMaintenanceResource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerMaintenancePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MySqlFlexibleServerMaintenanceResource>> UpdateAsync(WaitUntil waitUntil, MySqlFlexibleServerMaintenancePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _maintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceResource.Update");
             scope.Start();
@@ -225,12 +225,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _maintenancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerMaintenancePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(
-                    new MySqlFlexibleServerMaintenanceOperationSource(Client),
+                    new MySqlFlexibleServerMaintenanceResourceOperationSource(Client),
                     _maintenancesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The required parameters for update maintenance on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<MySqlFlexibleServerMaintenanceResource> Update(WaitUntil waitUntil, MySqlFlexibleServerMaintenancePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MySqlFlexibleServerMaintenanceResource> Update(WaitUntil waitUntil, MySqlFlexibleServerMaintenancePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _maintenancesClientDiagnostics.CreateScope("MySqlFlexibleServerMaintenanceResource.Update");
             scope.Start();
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _maintenancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerMaintenancePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerMaintenanceResource>(
-                    new MySqlFlexibleServerMaintenanceOperationSource(Client),
+                    new MySqlFlexibleServerMaintenanceResourceOperationSource(Client),
                     _maintenancesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

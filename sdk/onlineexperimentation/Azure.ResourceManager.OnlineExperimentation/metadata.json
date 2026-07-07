@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-08-01-preview"
+  "apiVersions": {
+    "Microsoft.OnlineExperimentation": "2025-08-01-preview"
+  }
 }

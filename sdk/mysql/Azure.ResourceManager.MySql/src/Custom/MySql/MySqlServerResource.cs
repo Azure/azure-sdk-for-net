@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql
             _mySqlServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _mySqlServersRestClient = new MySqlServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

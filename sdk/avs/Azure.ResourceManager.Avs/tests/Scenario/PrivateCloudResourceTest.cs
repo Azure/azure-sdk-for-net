@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Tests.Scenario
 {
-    public class PrivateCloudResourceTest: AvsManagementTestBase
+    public class PrivateCloudResourceTest : AvsManagementTestBase
     {
         public PrivateCloudResourceTest(bool isAsync) : base(isAsync)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            var privateCloudResource = await  getAvsPrivateCloudResource();
+            var privateCloudResource = await getAvsPrivateCloudResource();
             Assert.AreEqual(privateCloudResource.Data.Name, PRIVATE_CLOUD_NAME);
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch();
             patch.Tags.Add("sdk-test", "sdk-test");
             ArmOperation<AvsPrivateCloudResource> lro = await privateCloudResource.UpdateAsync(WaitUntil.Completed, patch);
-            Assert.IsTrue( lro.Value.Data.Tags.ContainsKey("sdk-test"));
+            Assert.IsTrue(lro.Value.Data.Tags.ContainsKey("sdk-test"));
         }
 
         [TestCase, Order(3)]
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Avs.Tests.Scenario
             ArmOperation lro = await privateCloudResource.RotateNsxtPasswordAsync(WaitUntil.Started);
         }
 
-         [TestCase]
-         [RecordedTest]
+        [TestCase]
+        [RecordedTest]
         public async Task Delete()
         {
             var privateCloudResource = await getAvsPrivateCloudResource();

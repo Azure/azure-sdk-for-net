@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -63,7 +64,7 @@ namespace Azure.Search.Documents.Tests.Models
 }";
 
             using JsonDocument doc = JsonDocument.Parse(json);
-            IndexingParametersConfiguration configuration = IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(doc.RootElement);
+            IndexingParametersConfiguration configuration = IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(doc.RootElement, ModelReaderWriterOptions.Json);
 
             Assert.AreEqual(BlobIndexerParsingMode.Json, configuration.ParsingMode);
             Assert.AreEqual(".png", configuration.ExcludedFileNameExtensions);

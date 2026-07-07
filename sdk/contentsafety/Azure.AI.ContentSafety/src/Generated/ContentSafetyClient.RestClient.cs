@@ -23,7 +23,10 @@ namespace Azure.AI.ContentSafety
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/image:analyze", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -40,7 +43,10 @@ namespace Azure.AI.ContentSafety
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/text:analyze", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -57,7 +63,10 @@ namespace Azure.AI.ContentSafety
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/text:detectProtectedMaterial", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +83,10 @@ namespace Azure.AI.ContentSafety
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/text:shieldPrompt", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

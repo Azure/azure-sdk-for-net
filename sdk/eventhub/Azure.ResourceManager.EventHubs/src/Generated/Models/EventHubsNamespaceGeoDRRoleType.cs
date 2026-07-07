@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsNamespaceGeoDRRoleType : IEquatable<EventHubsNamespaceGeoDRRoleType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceGeoDRRoleType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsNamespaceGeoDRRoleType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PrimaryValue = "Primary";
         private const string SecondaryValue = "Secondary";
 
-        /// <summary> Primary. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceGeoDRRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsNamespaceGeoDRRoleType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Primary. </summary>
         public static EventHubsNamespaceGeoDRRoleType Primary { get; } = new EventHubsNamespaceGeoDRRoleType(PrimaryValue);
-        /// <summary> Secondary. </summary>
+
+        /// <summary> Gets the Secondary. </summary>
         public static EventHubsNamespaceGeoDRRoleType Secondary { get; } = new EventHubsNamespaceGeoDRRoleType(SecondaryValue);
+
         /// <summary> Determines if two <see cref="EventHubsNamespaceGeoDRRoleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsNamespaceGeoDRRoleType left, EventHubsNamespaceGeoDRRoleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsNamespaceGeoDRRoleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsNamespaceGeoDRRoleType left, EventHubsNamespaceGeoDRRoleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsNamespaceGeoDRRoleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsNamespaceGeoDRRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsNamespaceGeoDRRoleType(string value) => new EventHubsNamespaceGeoDRRoleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsNamespaceGeoDRRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsNamespaceGeoDRRoleType?(string value) => value == null ? null : new EventHubsNamespaceGeoDRRoleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsNamespaceGeoDRRoleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsNamespaceGeoDRRoleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

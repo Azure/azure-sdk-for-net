@@ -13,327 +13,397 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the PostgreSqlFlexibleServer data model.
-    /// Properties of a server.
-    /// Serialized Name: Server
-    /// </summary>
+    /// <summary> Properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public PostgreSqlFlexibleServerData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// Compute tier and size of a server.
-        /// Serialized Name: Server.sku
-        /// </param>
-        /// <param name="identity">
-        /// User assigned managed identities assigned to the server.
-        /// Serialized Name: Server.identity
-        /// </param>
-        /// <param name="administratorLogin">
-        /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
-        /// Serialized Name: Server.properties.administratorLogin
-        /// </param>
-        /// <param name="administratorLoginPassword">
-        /// Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time.
-        /// Serialized Name: Server.properties.administratorLoginPassword
-        /// </param>
-        /// <param name="version">
-        /// Major version of PostgreSQL database engine.
-        /// Serialized Name: Server.properties.version
-        /// </param>
-        /// <param name="minorVersion">
-        /// Minor version of PostgreSQL database engine.
-        /// Serialized Name: Server.properties.minorVersion
-        /// </param>
-        /// <param name="state">
-        /// Possible states of a server.
-        /// Serialized Name: Server.properties.state
-        /// </param>
-        /// <param name="fullyQualifiedDomainName">
-        /// Fully qualified domain name of a server.
-        /// Serialized Name: Server.properties.fullyQualifiedDomainName
-        /// </param>
-        /// <param name="storage">
-        /// Storage properties of a server.
-        /// Serialized Name: Server.properties.storage
-        /// </param>
-        /// <param name="authConfig">
-        /// Authentication configuration properties of a server.
-        /// Serialized Name: Server.properties.authConfig
-        /// </param>
-        /// <param name="dataEncryption">
-        /// Data encryption properties of a server.
-        /// Serialized Name: Server.properties.dataEncryption
-        /// </param>
-        /// <param name="backup">
-        /// Backup properties of a server.
-        /// Serialized Name: Server.properties.backup
-        /// </param>
-        /// <param name="network">
-        /// Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer.
-        /// Serialized Name: Server.properties.network
-        /// </param>
-        /// <param name="highAvailability">
-        /// High availability properties of a server.
-        /// Serialized Name: Server.properties.highAvailability
-        /// </param>
-        /// <param name="maintenanceWindow">
-        /// Maintenance window properties of a server.
-        /// Serialized Name: Server.properties.maintenanceWindow
-        /// </param>
-        /// <param name="sourceServerResourceId">
-        /// Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica.
-        /// Serialized Name: Server.properties.sourceServerResourceId
-        /// </param>
-        /// <param name="pointInTimeUtc">
-        /// Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'.
-        /// Serialized Name: Server.properties.pointInTimeUTC
-        /// </param>
-        /// <param name="availabilityZone">
-        /// Availability zone of a server.
-        /// Serialized Name: Server.properties.availabilityZone
-        /// </param>
-        /// <param name="replicationRole">
-        /// Role of the server in a replication set.
-        /// Serialized Name: Server.properties.replicationRole
-        /// </param>
-        /// <param name="replicaCapacity">
-        /// Maximum number of read replicas allowed for a server.
-        /// Serialized Name: Server.properties.replicaCapacity
-        /// </param>
-        /// <param name="replica">
-        /// Read replica properties of a server. Required only in case that you want to promote a server.
-        /// Serialized Name: Server.properties.replica
-        /// </param>
-        /// <param name="createMode">
-        /// Creation mode of a new server.
-        /// Serialized Name: Server.properties.createMode
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// List of private endpoint connections associated with the specified server.
-        /// Serialized Name: Server.properties.privateEndpointConnections
-        /// </param>
-        /// <param name="cluster">
-        /// Cluster properties of a server.
-        /// Serialized Name: Server.properties.cluster
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, PostgreSqlFlexibleServerClusterProperties cluster, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of a server. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerProperties properties, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Sku = sku;
             Identity = identity;
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
-            Version = version;
-            MinorVersion = minorVersion;
-            State = state;
-            FullyQualifiedDomainName = fullyQualifiedDomainName;
-            Storage = storage;
-            AuthConfig = authConfig;
-            DataEncryption = dataEncryption;
-            Backup = backup;
-            Network = network;
-            HighAvailability = highAvailability;
-            MaintenanceWindow = maintenanceWindow;
-            SourceServerResourceId = sourceServerResourceId;
-            PointInTimeUtc = pointInTimeUtc;
-            AvailabilityZone = availabilityZone;
-            ReplicationRole = replicationRole;
-            ReplicaCapacity = replicaCapacity;
-            Replica = replica;
-            CreateMode = createMode;
-            PrivateEndpointConnections = privateEndpointConnections;
-            Cluster = cluster;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerData"/> for deserialization. </summary>
-        internal PostgreSqlFlexibleServerData()
-        {
-        }
+        /// <summary> Properties of a server. </summary>
+        [WirePath("properties")]
+        internal ServerProperties Properties { get; set; }
 
-        /// <summary>
-        /// Compute tier and size of a server.
-        /// Serialized Name: Server.sku
-        /// </summary>
+        /// <summary> Compute tier and size of a server. </summary>
         [WirePath("sku")]
         public PostgreSqlFlexibleServerSku Sku { get; set; }
-        /// <summary>
-        /// User assigned managed identities assigned to the server.
-        /// Serialized Name: Server.identity
-        /// </summary>
+
+        /// <summary> User assigned managed identities assigned to the server. </summary>
         [WirePath("identity")]
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
-        /// <summary>
-        /// Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted.
-        /// Serialized Name: Server.properties.administratorLogin
-        /// </summary>
+
+        /// <summary> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </summary>
         [WirePath("properties.administratorLogin")]
-        public string AdministratorLogin { get; set; }
-        /// <summary>
-        /// Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time.
-        /// Serialized Name: Server.properties.administratorLoginPassword
-        /// </summary>
+        public string AdministratorLogin
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLogin;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.AdministratorLogin = value;
+            }
+        }
+
+        /// <summary> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </summary>
         [WirePath("properties.administratorLoginPassword")]
-        public string AdministratorLoginPassword { get; set; }
-        /// <summary>
-        /// Major version of PostgreSQL database engine.
-        /// Serialized Name: Server.properties.version
-        /// </summary>
+        public string AdministratorLoginPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLoginPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.AdministratorLoginPassword = value;
+            }
+        }
+
+        /// <summary> Major version of PostgreSQL database engine. </summary>
         [WirePath("properties.version")]
-        public PostgreSqlFlexibleServerVersion? Version { get; set; }
-        /// <summary>
-        /// Minor version of PostgreSQL database engine.
-        /// Serialized Name: Server.properties.minorVersion
-        /// </summary>
+        public PostgreSqlFlexibleServerVersion? Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
+        /// <summary> Minor version of PostgreSQL database engine. </summary>
         [WirePath("properties.minorVersion")]
-        public string MinorVersion { get; }
-        /// <summary>
-        /// Possible states of a server.
-        /// Serialized Name: Server.properties.state
-        /// </summary>
+        public string MinorVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinorVersion;
+            }
+        }
+
+        /// <summary> Possible states of a server. </summary>
         [WirePath("properties.state")]
-        public PostgreSqlFlexibleServerState? State { get; }
-        /// <summary>
-        /// Fully qualified domain name of a server.
-        /// Serialized Name: Server.properties.fullyQualifiedDomainName
-        /// </summary>
+        public PostgreSqlFlexibleServerState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
+        /// <summary> Fully qualified domain name of a server. </summary>
         [WirePath("properties.fullyQualifiedDomainName")]
-        public string FullyQualifiedDomainName { get; }
-        /// <summary>
-        /// Storage properties of a server.
-        /// Serialized Name: Server.properties.storage
-        /// </summary>
+        public string FullyQualifiedDomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FullyQualifiedDomainName;
+            }
+        }
+
+        /// <summary> Storage properties of a server. </summary>
         [WirePath("properties.storage")]
-        public PostgreSqlFlexibleServerStorage Storage { get; set; }
-        /// <summary>
-        /// Authentication configuration properties of a server.
-        /// Serialized Name: Server.properties.authConfig
-        /// </summary>
+        public PostgreSqlFlexibleServerStorage Storage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Storage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Storage = value;
+            }
+        }
+
+        /// <summary> Authentication configuration properties of a server. </summary>
         [WirePath("properties.authConfig")]
-        public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
-        /// <summary>
-        /// Data encryption properties of a server.
-        /// Serialized Name: Server.properties.dataEncryption
-        /// </summary>
+        public PostgreSqlFlexibleServerAuthConfig AuthConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.AuthConfig = value;
+            }
+        }
+
+        /// <summary> Data encryption properties of a server. </summary>
         [WirePath("properties.dataEncryption")]
-        public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
-        /// <summary>
-        /// Backup properties of a server.
-        /// Serialized Name: Server.properties.backup
-        /// </summary>
+        public PostgreSqlFlexibleServerDataEncryption DataEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataEncryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.DataEncryption = value;
+            }
+        }
+
+        /// <summary> Backup properties of a server. </summary>
         [WirePath("properties.backup")]
-        public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
-        /// <summary>
-        /// Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer.
-        /// Serialized Name: Server.properties.network
-        /// </summary>
+        public PostgreSqlFlexibleServerBackupProperties Backup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Backup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Backup = value;
+            }
+        }
+
+        /// <summary> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </summary>
         [WirePath("properties.network")]
-        public PostgreSqlFlexibleServerNetwork Network { get; set; }
-        /// <summary>
-        /// High availability properties of a server.
-        /// Serialized Name: Server.properties.highAvailability
-        /// </summary>
+        public PostgreSqlFlexibleServerNetwork Network
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Network;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Network = value;
+            }
+        }
+
+        /// <summary> High availability properties of a server. </summary>
         [WirePath("properties.highAvailability")]
-        public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
-        /// <summary>
-        /// Maintenance window properties of a server.
-        /// Serialized Name: Server.properties.maintenanceWindow
-        /// </summary>
+        public PostgreSqlFlexibleServerHighAvailability HighAvailability
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HighAvailability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.HighAvailability = value;
+            }
+        }
+
+        /// <summary> Maintenance window properties of a server. </summary>
         [WirePath("properties.maintenanceWindow")]
-        public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
-        /// <summary>
-        /// Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica.
-        /// Serialized Name: Server.properties.sourceServerResourceId
-        /// </summary>
+        public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceWindow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.MaintenanceWindow = value;
+            }
+        }
+
+        /// <summary> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </summary>
         [WirePath("properties.sourceServerResourceId")]
-        public ResourceIdentifier SourceServerResourceId { get; set; }
-        /// <summary>
-        /// Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'.
-        /// Serialized Name: Server.properties.pointInTimeUTC
-        /// </summary>
+        public ResourceIdentifier SourceServerResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceServerResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.SourceServerResourceId = value;
+            }
+        }
+
+        /// <summary> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </summary>
         [WirePath("properties.pointInTimeUTC")]
-        public DateTimeOffset? PointInTimeUtc { get; set; }
-        /// <summary>
-        /// Availability zone of a server.
-        /// Serialized Name: Server.properties.availabilityZone
-        /// </summary>
+        public DateTimeOffset? PointInTimeUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PointInTimeUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.PointInTimeUtc = value;
+            }
+        }
+
+        /// <summary> Availability zone of a server. </summary>
         [WirePath("properties.availabilityZone")]
-        public string AvailabilityZone { get; set; }
-        /// <summary>
-        /// Role of the server in a replication set.
-        /// Serialized Name: Server.properties.replicationRole
-        /// </summary>
+        public string AvailabilityZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilityZone;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.AvailabilityZone = value;
+            }
+        }
+
+        /// <summary> Role of the server in a replication set. </summary>
         [WirePath("properties.replicationRole")]
-        public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
-        /// <summary>
-        /// Read replica properties of a server. Required only in case that you want to promote a server.
-        /// Serialized Name: Server.properties.replica
-        /// </summary>
+        public PostgreSqlFlexibleServerReplicationRole? ReplicationRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationRole;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.ReplicationRole = value;
+            }
+        }
+
+        /// <summary> Read replica properties of a server. Required only in case that you want to promote a server. </summary>
         [WirePath("properties.replica")]
-        public PostgreSqlFlexibleServersReplica Replica { get; set; }
-        /// <summary>
-        /// Creation mode of a new server.
-        /// Serialized Name: Server.properties.createMode
-        /// </summary>
+        public PostgreSqlFlexibleServersReplica Replica
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Replica;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Replica = value;
+            }
+        }
+
+        /// <summary> Creation mode of a new server. </summary>
         [WirePath("properties.createMode")]
-        public PostgreSqlFlexibleServerCreateMode? CreateMode { get; set; }
-        /// <summary>
-        /// List of private endpoint connections associated with the specified server.
-        /// Serialized Name: Server.properties.privateEndpointConnections
-        /// </summary>
+        public PostgreSqlFlexibleServerCreateMode? CreateMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.CreateMode = value;
+            }
+        }
+
+        /// <summary> List of private endpoint connections associated with the specified server. </summary>
         [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary>
-        /// Cluster properties of a server.
-        /// Serialized Name: Server.properties.cluster
-        /// </summary>
+        public IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Cluster properties of a server. </summary>
         [WirePath("properties.cluster")]
-        public PostgreSqlFlexibleServerClusterProperties Cluster { get; set; }
+        public PostgreSqlFlexibleServerClusterProperties Cluster
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Cluster;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.Cluster = value;
+            }
+        }
     }
 }

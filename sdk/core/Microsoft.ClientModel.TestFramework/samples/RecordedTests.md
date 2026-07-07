@@ -71,7 +71,7 @@ public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
 
 ## Test modes
 
-By default tests are run in playback mode. To change the mode, use the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
+By default tests are run in playback mode. To change the mode, use the `CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
 In development scenarios where it's required to change mode quickly without restarting Visual Studio, use the two-parameter constructor of `RecordedTestBase` to change the mode, or use the `.runsettings` file as described [here](#test-settings).
 

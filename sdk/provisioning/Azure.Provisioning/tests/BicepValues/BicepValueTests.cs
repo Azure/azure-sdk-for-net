@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
@@ -43,6 +45,74 @@ public class BicepValueTests
         TestHelpers.AssertExpression("-2147483647", new BicepValue<double>(-2147483647d));
         TestHelpers.AssertExpression("-2147483648", new BicepValue<double>(-2147483648d));
         TestHelpers.AssertExpression("json('-2147483649')", new BicepValue<double>(-2147483649d));
+    }
+
+    [Test]
+    public void ValidateFloatingPointUsesInvariantCulture()
+    {
+        CultureInfo originalCulture = Thread.CurrentThread.CurrentCulture;
+        try
+        {
+            // Use Danish culture where decimal separator is comma (e.g. "0,5" instead of "0.5")
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
+
+            // BicepValue<double> should produce dot-separated decimals regardless of locale
+            TestHelpers.AssertExpression("json('0.5')", new BicepValue<double>(0.5));
+            TestHelpers.AssertExpression("json('3.14')", new BicepValue<double>(3.14));
+            TestHelpers.AssertExpression("json('-1.23')", new BicepValue<double>(-1.23));
+
+            // BicepValue<float> should also produce dot-separated decimals
+            TestHelpers.AssertExpression("json('0.5')", new BicepValue<float>(0.5f));
+            TestHelpers.AssertExpression("json('0.25')", new BicepValue<float>(0.25f));
+            TestHelpers.AssertExpression("json('-0.125')", new BicepValue<float>(-0.125f));
+
+            // Very small fractional values
+            TestHelpers.AssertExpression("json('0.001')", new BicepValue<double>(0.001));
+
+            // Large values with fractional parts
+            TestHelpers.AssertExpression("json('123456.789')", new BicepValue<double>(123456.789));
+
+            // Values that are whole numbers should still render as int, even under non-invariant culture
+            TestHelpers.AssertExpression("0", new BicepValue<double>(0.0));
+            TestHelpers.AssertExpression("1", new BicepValue<double>(1.0));
+            TestHelpers.AssertExpression("-1", new BicepValue<double>(-1.0));
+            TestHelpers.AssertExpression("0", new BicepValue<float>(0.0f));
+        }
+        finally
+        {
+            Thread.CurrentThread.CurrentCulture = originalCulture;
+        }
+    }
+
+    [Test]
+    public void ValidateFloatingPointEdgeCases()
+    {
+        // Zero
+        TestHelpers.AssertExpression("0", new BicepValue<double>(0.0));
+        TestHelpers.AssertExpression("0", new BicepValue<float>(0.0f));
+
+        // Negative zero should still be 0
+        TestHelpers.AssertExpression("0", new BicepValue<double>(-0.0));
+        TestHelpers.AssertExpression("0", new BicepValue<float>(-0.0f));
+
+        // Very small decimals (the original bug scenario: minCapacity = 0.5)
+        TestHelpers.AssertExpression("json('0.5')", new BicepValue<double>(0.5));
+        TestHelpers.AssertExpression("json('0.25')", new BicepValue<double>(0.25));
+
+        // Boundary: double whole number at int max/min
+        TestHelpers.AssertExpression("2147483647", new BicepValue<double>((double)int.MaxValue));
+        TestHelpers.AssertExpression("-2147483648", new BicepValue<double>((double)int.MinValue));
+
+        // Just beyond int range with fractional part
+        TestHelpers.AssertExpression("json('2147483647.5')", new BicepValue<double>(2147483647.5));
+        TestHelpers.AssertExpression("json('-2147483648.5')", new BicepValue<double>(-2147483648.5));
+
+        // float value
+        TestHelpers.AssertExpression("json('0.5')", new BicepValue<float>(0.5f));
+        TestHelpers.AssertExpression("json('-0.25')", new BicepValue<float>(-0.25f));
+        // float value with whole numbers
+        TestHelpers.AssertExpression("314", new BicepValue<float>(314f));
+        TestHelpers.AssertExpression("0", new BicepValue<float>(0f));
     }
 
     [Test]

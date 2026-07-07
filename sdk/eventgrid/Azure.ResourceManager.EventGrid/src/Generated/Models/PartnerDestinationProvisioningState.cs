@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PartnerDestinationProvisioningState : IEquatable<PartnerDestinationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> IdleDueToMirroredChannelResourceDeletion. </summary>
+        private const string IdleDueToMirroredChannelResourceDeletionValue = "IdleDueToMirroredChannelResourceDeletion";
 
         /// <summary> Initializes a new instance of <see cref="PartnerDestinationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartnerDestinationProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string IdleDueToMirroredChannelResourceDeletionValue = "IdleDueToMirroredChannelResourceDeletion";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static PartnerDestinationProvisioningState Creating { get; } = new PartnerDestinationProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static PartnerDestinationProvisioningState Updating { get; } = new PartnerDestinationProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static PartnerDestinationProvisioningState Deleting { get; } = new PartnerDestinationProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static PartnerDestinationProvisioningState Succeeded { get; } = new PartnerDestinationProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static PartnerDestinationProvisioningState Canceled { get; } = new PartnerDestinationProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static PartnerDestinationProvisioningState Failed { get; } = new PartnerDestinationProvisioningState(FailedValue);
+
         /// <summary> IdleDueToMirroredChannelResourceDeletion. </summary>
         public static PartnerDestinationProvisioningState IdleDueToMirroredChannelResourceDeletion { get; } = new PartnerDestinationProvisioningState(IdleDueToMirroredChannelResourceDeletionValue);
+
         /// <summary> Determines if two <see cref="PartnerDestinationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartnerDestinationProvisioningState left, PartnerDestinationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartnerDestinationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartnerDestinationProvisioningState left, PartnerDestinationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerDestinationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartnerDestinationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartnerDestinationProvisioningState(string value) => new PartnerDestinationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartnerDestinationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartnerDestinationProvisioningState?(string value) => value == null ? null : new PartnerDestinationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartnerDestinationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartnerDestinationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

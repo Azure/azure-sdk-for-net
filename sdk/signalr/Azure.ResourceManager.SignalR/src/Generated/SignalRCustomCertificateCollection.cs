@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SignalR
         {
             if (id.ResourceType != SignalRResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SignalRResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRCustomCertificateResource> operation = new SignalRArmOperation<SignalRCustomCertificateResource>(
-                    new SignalRCustomCertificateOperationSource(Client),
+                    new SignalRCustomCertificateResourceOperationSource(Client),
                     _customCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, SignalRCustomCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRCustomCertificateResource> operation = new SignalRArmOperation<SignalRCustomCertificateResource>(
-                    new SignalRCustomCertificateOperationSource(Client),
+                    new SignalRCustomCertificateResourceOperationSource(Client),
                     _customCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(_customCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRCustomCertificateResource(Client, data));
+            return new AsyncPageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllAsyncCollectionResultOfT(
+                _customCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRCustomCertificateCollection.GetAll"), data => new SignalRCustomCertificateResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.SignalR
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(_customCertificatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new SignalRCustomCertificateResource(Client, data));
+            return new PageableWrapper<SignalRCustomCertificateData, SignalRCustomCertificateResource>(new CustomCertificatesGetAllCollectionResultOfT(
+                _customCertificatesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SignalRCustomCertificateCollection.GetAll"), data => new SignalRCustomCertificateResource(Client, data));
         }
 
         /// <summary>

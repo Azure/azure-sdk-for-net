@@ -38,6 +38,29 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AddOrUpdateTextBlocklistItemsResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AddOrUpdateTextBlocklistItemsResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AddOrUpdateTextBlocklistItemsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AddOrUpdateTextBlocklistItemsResult IPersistableModel<AddOrUpdateTextBlocklistItemsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AddOrUpdateTextBlocklistItemsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AddOrUpdateTextBlocklistItemsResult"/> from. </param>
         public static explicit operator AddOrUpdateTextBlocklistItemsResult(Response response)
         {
@@ -133,28 +156,5 @@ namespace Azure.AI.ContentSafety
             }
             return new AddOrUpdateTextBlocklistItemsResult(blocklistItems, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AddOrUpdateTextBlocklistItemsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AddOrUpdateTextBlocklistItemsResult>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentSafetyContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AddOrUpdateTextBlocklistItemsResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AddOrUpdateTextBlocklistItemsResult IPersistableModel<AddOrUpdateTextBlocklistItemsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AddOrUpdateTextBlocklistItemsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

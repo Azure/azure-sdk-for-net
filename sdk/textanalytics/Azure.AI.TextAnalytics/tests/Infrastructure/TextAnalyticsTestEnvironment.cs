@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    public class TextAnalyticsTestEnvironment: TestEnvironment
+    public class TextAnalyticsTestEnvironment : TestEnvironment
     {
         public string Endpoint => GetRecordedVariable("TEXTANALYTICS_ENDPOINT");
         public string ApiKey => GetRecordedVariable("TEXTANALYTICS_API_KEY", options => options.IsSecret());

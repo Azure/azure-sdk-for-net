@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Unknown version of ProtectionContainer. </summary>
     internal partial class UnknownProtectionContainer : BackupGenericProtectionContainer
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProtectionContainer"/>. </summary>
@@ -25,14 +24,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
-        {
-            ContainerType = containerType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownProtectionContainer"/> for deserialization. </summary>
-        internal UnknownProtectionContainer()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType != default ? containerType : "unknown", protectableObjectType, additionalBinaryDataProperties)
         {
         }
     }

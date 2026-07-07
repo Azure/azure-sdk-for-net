@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Grafana
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _integrationFabricsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GrafanaIntegrationFabricPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
+                    new GrafanaIntegrationFabricResourceOperationSource(Client),
                     _integrationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _integrationFabricsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GrafanaIntegrationFabricPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
+                    new GrafanaIntegrationFabricResourceOperationSource(Client),
                     _integrationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,

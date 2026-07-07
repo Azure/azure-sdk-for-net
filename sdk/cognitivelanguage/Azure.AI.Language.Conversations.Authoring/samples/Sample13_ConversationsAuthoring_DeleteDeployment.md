@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 Or you can also create a `ConversationAnalysisAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
@@ -21,13 +21,11 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To delete a deployment, call DeleteDeployment on the `ConversationAuthoringDeployment` client. Deleting a deployment removes it from the specified project and ensures that resources associated with the deployment are released.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeployment
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
-ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-Operation operation = deploymentClient.DeleteDeployment(
-    waitUntil: WaitUntil.Completed
-);
+Operation operation = deploymentClient.DeleteDeployment(WaitUntil.Completed, projectName, deploymentName);
 
 // Extract operation-location from response headers
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";
@@ -40,13 +38,11 @@ Console.WriteLine($"Delete operation completed with status: {operation.GetRawRes
 To delete a deployment, call DeleteDeploymentAsync on the `ConversationAuthoringDeployment` client. Deleting a deployment asynchronously allows for non-blocking operations and ensures resources associated with the deployment are released efficiently.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
-ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-Operation operation = await deploymentClient.DeleteDeploymentAsync(
-    waitUntil: WaitUntil.Completed
-);
+Operation operation = await deploymentClient.DeleteDeploymentAsync(WaitUntil.Completed, projectName, deploymentName);
 
 // Extract operation-location from response headers
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location) ? location : "Not found";

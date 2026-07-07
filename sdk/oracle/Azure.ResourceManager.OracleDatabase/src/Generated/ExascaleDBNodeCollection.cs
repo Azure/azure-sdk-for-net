@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ExadbVmClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ExadbVmClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ExadbVmClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentAsyncCollectionResultOfT(_exascaleDbNodesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ExascaleDBNodeResource(Client, data));
+            return new AsyncPageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentAsyncCollectionResultOfT(
+                _exascaleDbNodesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExascaleDBNodeCollection.GetAll"), data => new ExascaleDBNodeResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentCollectionResultOfT(_exascaleDbNodesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ExascaleDBNodeResource(Client, data));
+            return new PageableWrapper<ExascaleDBNodeData, ExascaleDBNodeResource>(new ExascaleDbNodesGetByParentCollectionResultOfT(
+                _exascaleDbNodesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExascaleDBNodeCollection.GetAll"), data => new ExascaleDBNodeResource(Client, data));
         }
 
         /// <summary>

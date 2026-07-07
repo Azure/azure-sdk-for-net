@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     internal partial class FirmwaresRestOperations
     {
-          internal RequestUriBuilder CreateGenerateDownloadUriRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
+        internal RequestUriBuilder CreateGenerateDownloadUriRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

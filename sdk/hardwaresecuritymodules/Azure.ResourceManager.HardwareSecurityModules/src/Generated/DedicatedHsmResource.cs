@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -434,7 +434,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+                _dedicatedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary>
@@ -466,7 +472,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+                _dedicatedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     public readonly partial struct TrafficRegionCategory : IEquatable<TrafficRegionCategory>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="TrafficRegionCategory"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TrafficRegionCategory(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string CanaryValue = "Canary";
         private const string LowTrafficValue = "LowTraffic";
@@ -31,39 +24,70 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string RestOfTheWorldGroupOneValue = "RestOfTheWorldGroupOne";
         private const string RestOfTheWorldGroupTwoValue = "RestOfTheWorldGroupTwo";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficRegionCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public TrafficRegionCategory(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static TrafficRegionCategory NotSpecified { get; } = new TrafficRegionCategory(NotSpecifiedValue);
-        /// <summary> Canary. </summary>
+
+        /// <summary> Gets the Canary. </summary>
         public static TrafficRegionCategory Canary { get; } = new TrafficRegionCategory(CanaryValue);
-        /// <summary> LowTraffic. </summary>
+
+        /// <summary> Gets the LowTraffic. </summary>
         public static TrafficRegionCategory LowTraffic { get; } = new TrafficRegionCategory(LowTrafficValue);
-        /// <summary> MediumTraffic. </summary>
+
+        /// <summary> Gets the MediumTraffic. </summary>
         public static TrafficRegionCategory MediumTraffic { get; } = new TrafficRegionCategory(MediumTrafficValue);
-        /// <summary> HighTraffic. </summary>
+
+        /// <summary> Gets the HighTraffic. </summary>
         public static TrafficRegionCategory HighTraffic { get; } = new TrafficRegionCategory(HighTrafficValue);
-        /// <summary> None. </summary>
+
+        /// <summary> Gets the None. </summary>
         public static TrafficRegionCategory None { get; } = new TrafficRegionCategory(NoneValue);
-        /// <summary> RestOfTheWorldGroupOne. </summary>
+
+        /// <summary> Gets the RestOfTheWorldGroupOne. </summary>
         public static TrafficRegionCategory RestOfTheWorldGroupOne { get; } = new TrafficRegionCategory(RestOfTheWorldGroupOneValue);
-        /// <summary> RestOfTheWorldGroupTwo. </summary>
+
+        /// <summary> Gets the RestOfTheWorldGroupTwo. </summary>
         public static TrafficRegionCategory RestOfTheWorldGroupTwo { get; } = new TrafficRegionCategory(RestOfTheWorldGroupTwoValue);
+
         /// <summary> Determines if two <see cref="TrafficRegionCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrafficRegionCategory left, TrafficRegionCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrafficRegionCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrafficRegionCategory left, TrafficRegionCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrafficRegionCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrafficRegionCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrafficRegionCategory(string value) => new TrafficRegionCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrafficRegionCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrafficRegionCategory?(string value) => value == null ? null : new TrafficRegionCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrafficRegionCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrafficRegionCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

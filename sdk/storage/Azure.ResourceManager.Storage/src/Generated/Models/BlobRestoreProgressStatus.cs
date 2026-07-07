@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct BlobRestoreProgressStatus : IEquatable<BlobRestoreProgressStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BlobRestoreProgressStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BlobRestoreProgressStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InProgressValue = "InProgress";
         private const string CompleteValue = "Complete";
         private const string FailedValue = "Failed";
 
-        /// <summary> InProgress. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobRestoreProgressStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BlobRestoreProgressStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the InProgress. </summary>
         public static BlobRestoreProgressStatus InProgress { get; } = new BlobRestoreProgressStatus(InProgressValue);
-        /// <summary> Complete. </summary>
+
+        /// <summary> Gets the Complete. </summary>
         public static BlobRestoreProgressStatus Complete { get; } = new BlobRestoreProgressStatus(CompleteValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static BlobRestoreProgressStatus Failed { get; } = new BlobRestoreProgressStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="BlobRestoreProgressStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobRestoreProgressStatus left, BlobRestoreProgressStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobRestoreProgressStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobRestoreProgressStatus left, BlobRestoreProgressStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobRestoreProgressStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobRestoreProgressStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobRestoreProgressStatus(string value) => new BlobRestoreProgressStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobRestoreProgressStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobRestoreProgressStatus?(string value) => value == null ? null : new BlobRestoreProgressStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobRestoreProgressStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobRestoreProgressStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

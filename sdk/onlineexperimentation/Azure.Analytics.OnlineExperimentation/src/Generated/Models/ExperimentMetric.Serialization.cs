@@ -39,6 +39,39 @@ namespace Azure.Analytics.OnlineExperimentation
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsOnlineExperimentationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExperimentMetric)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExperimentMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExperimentMetric IPersistableModel<ExperimentMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExperimentMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="experimentMetric"> The <see cref="ExperimentMetric"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ExperimentMetric experimentMetric)
+        {
+            if (experimentMetric == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(experimentMetric, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExperimentMetric"/> from. </param>
         public static explicit operator ExperimentMetric(Response response)
         {
@@ -228,41 +261,6 @@ namespace Azure.Analytics.OnlineExperimentation
                 eTag,
                 lastModifiedAt,
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExperimentMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ExperimentMetric>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsOnlineExperimentationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExperimentMetric)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ExperimentMetric IPersistableModel<ExperimentMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExperimentMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="experimentMetric"> The <see cref="ExperimentMetric"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ExperimentMetric experimentMetric)
-        {
-            if (experimentMetric == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(experimentMetric, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

@@ -1,0 +1,31 @@
+id: owners-add-001
+name: Add Package Owner
+description: |
+  Test that the skill adds a new owner to a package with correct arguments.
+  Mock mode: validates output text. Live mode (--model): validates tool calls.
+tags:
+  - basic
+inputs:
+  prompt: "Add @myuser as owner to azure-core in azure-sdk-for-python"
+expected:
+  output_contains:
+    - "myuser"
+    - "azure-core"
+    - "azure-sdk-for-python"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_engsys_codeowner_add_package_owner
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000
+graders:
+  - type: text
+    name: correct_entities
+    config:
+      contains:
+        - "myuser"
+        - "azure-core"
+        - "azure-sdk-for-python"
+      not_contains:
+        - "cannot help"
+        - "not supported"

@@ -7,71 +7,68 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary> Desktop properties that can be patched. </summary>
     public partial class VirtualDesktopPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualDesktopPatch"/>. </summary>
         public VirtualDesktopPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualDesktopPatch"/>. </summary>
-        /// <param name="tags"> tags to be updated. </param>
-        /// <param name="description"> Description of Desktop. </param>
-        /// <param name="friendlyName"> Friendly name of Desktop. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualDesktopPatch(IDictionary<string, string> tags, string description, string friendlyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Detailed properties for Desktop. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualDesktopPatch(DesktopPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tags = tags;
-            Description = description;
-            FriendlyName = friendlyName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> tags to be updated. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        /// <summary> Detailed properties for Desktop. </summary>
+        [WirePath("properties")]
+        internal DesktopPatchProperties Properties { get; set; }
+
         /// <summary> Description of Desktop. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DesktopPatchProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Friendly name of Desktop. </summary>
         [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; set; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DesktopPatchProperties();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
     }
 }

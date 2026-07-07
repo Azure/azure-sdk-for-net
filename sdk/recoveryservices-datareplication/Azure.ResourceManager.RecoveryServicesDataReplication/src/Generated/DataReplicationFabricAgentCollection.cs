@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationFabricResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationFabricResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationFabricResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricAgentRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fabricAgentName, DataReplicationFabricAgentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(
-                    new DataReplicationFabricAgentOperationSource(Client),
+                    new DataReplicationFabricAgentResourceOperationSource(Client),
                     _fabricAgentClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _fabricAgentRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fabricAgentName, DataReplicationFabricAgentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationFabricAgentResource>(
-                    new DataReplicationFabricAgentOperationSource(Client),
+                    new DataReplicationFabricAgentResourceOperationSource(Client),
                     _fabricAgentClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllAsyncCollectionResultOfT(_fabricAgentRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationFabricAgentResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllAsyncCollectionResultOfT(
+                _fabricAgentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationFabricAgentCollection.GetAll"), data => new DataReplicationFabricAgentResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllCollectionResultOfT(_fabricAgentRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationFabricAgentResource(Client, data));
+            return new PageableWrapper<DataReplicationFabricAgentData, DataReplicationFabricAgentResource>(new FabricAgentGetAllCollectionResultOfT(
+                _fabricAgentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationFabricAgentCollection.GetAll"), data => new DataReplicationFabricAgentResource(Client, data));
         }
 
         /// <summary>

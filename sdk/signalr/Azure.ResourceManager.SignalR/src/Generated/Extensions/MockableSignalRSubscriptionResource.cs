@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionAsyncCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SignalRResource(Client, data));
+            return new AsyncPageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionAsyncCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSignalRSubscriptionResource.GetSignalRs"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new SignalRResource(Client, data));
+            return new PageableWrapper<SignalRData, SignalRResource>(new SignalRResourcesGetBySubscriptionCollectionResultOfT(SignalRResourcesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSignalRSubscriptionResource.GetSignalRs"), data => new SignalRResource(Client, data));
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesOperationGroupGetUsagesAsyncCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableSignalRSubscriptionResource.GetUsages");
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SignalR.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesOperationGroupGetUsagesCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+            return new UsagesOperationGroupGetUsagesCollectionResultOfT(UsagesOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableSignalRSubscriptionResource.GetUsages");
         }
     }
 }

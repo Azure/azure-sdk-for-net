@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-02-01"
+  "apiVersions": {
+    "MonitorQueryMetrics": "2024-02-01"
+  }
 }

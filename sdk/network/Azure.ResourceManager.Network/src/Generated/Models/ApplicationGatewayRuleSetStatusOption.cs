@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayRuleSetStatusOption : IEquatable<ApplicationGatewayRuleSetStatusOption>
     {
         private readonly string _value;
+        /// <summary> Preview. </summary>
+        private const string PreviewValue = "Preview";
+        /// <summary> GA. </summary>
+        private const string GAValue = "GA";
+        /// <summary> Supported. </summary>
+        private const string SupportedValue = "Supported";
+        /// <summary> Deprecated. </summary>
+        private const string DeprecatedValue = "Deprecated";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRuleSetStatusOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayRuleSetStatusOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PreviewValue = "Preview";
-        private const string GAValue = "GA";
-        private const string SupportedValue = "Supported";
-        private const string DeprecatedValue = "Deprecated";
+            _value = value;
+        }
 
         /// <summary> Preview. </summary>
         public static ApplicationGatewayRuleSetStatusOption Preview { get; } = new ApplicationGatewayRuleSetStatusOption(PreviewValue);
+
         /// <summary> GA. </summary>
         public static ApplicationGatewayRuleSetStatusOption GA { get; } = new ApplicationGatewayRuleSetStatusOption(GAValue);
+
         /// <summary> Supported. </summary>
         public static ApplicationGatewayRuleSetStatusOption Supported { get; } = new ApplicationGatewayRuleSetStatusOption(SupportedValue);
+
         /// <summary> Deprecated. </summary>
         public static ApplicationGatewayRuleSetStatusOption Deprecated { get; } = new ApplicationGatewayRuleSetStatusOption(DeprecatedValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRuleSetStatusOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayRuleSetStatusOption left, ApplicationGatewayRuleSetStatusOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayRuleSetStatusOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayRuleSetStatusOption left, ApplicationGatewayRuleSetStatusOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayRuleSetStatusOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayRuleSetStatusOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayRuleSetStatusOption(string value) => new ApplicationGatewayRuleSetStatusOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayRuleSetStatusOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayRuleSetStatusOption?(string value) => value == null ? null : new ApplicationGatewayRuleSetStatusOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayRuleSetStatusOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayRuleSetStatusOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

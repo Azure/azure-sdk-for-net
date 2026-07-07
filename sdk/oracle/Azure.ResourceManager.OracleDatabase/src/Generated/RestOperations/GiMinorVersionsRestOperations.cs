@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/giVersions/", false);
             uri.AppendPath(giversionname, true);
             uri.AppendPath("/giMinorVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (shapeFamily != null)
             {
                 uri.AppendQuery("shapeFamily", shapeFamily, true);
@@ -72,8 +75,18 @@ namespace Azure.ResourceManager.OracleDatabase
         internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -94,7 +107,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(giversionname, true);
             uri.AppendPath("/giMinorVersions/", false);
             uri.AppendPath(giMinorVersionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

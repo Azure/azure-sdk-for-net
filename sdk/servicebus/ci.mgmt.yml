@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ServiceBus
       safeName: AzureResourceManagerServiceBus
+    - name: Azure.Provisioning.ServiceBus
+      safeName: AzureProvisioningServiceBus

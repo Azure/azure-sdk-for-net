@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
+            return new ImageVersionsGetImageVersionsByImageAsyncCollectionResultOfT(
+                ImageVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                imageName,
+                context,
+                "MockableDevOpsInfrastructureResourceGroupResource.GetImageVersionsByImage");
         }
 
         /// <summary>
@@ -168,7 +174,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ImageVersionsGetImageVersionsByImageCollectionResultOfT(ImageVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, imageName, context);
+            return new ImageVersionsGetImageVersionsByImageCollectionResultOfT(
+                ImageVersionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                imageName,
+                context,
+                "MockableDevOpsInfrastructureResourceGroupResource.GetImageVersionsByImage");
         }
     }
 }

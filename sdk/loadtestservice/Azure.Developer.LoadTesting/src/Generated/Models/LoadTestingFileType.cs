@@ -26,6 +26,10 @@ namespace Azure.Developer.LoadTesting
         private const string UrlTestConfigValue = "URL_TEST_CONFIG";
         /// <summary> If the file is a test script. </summary>
         private const string TestScriptValue = "TEST_SCRIPT";
+        /// <summary> If the file is a browser recording of interactions with web applications. </summary>
+        private const string BrowserRecordingValue = "BROWSER_RECORDING";
+        /// <summary> If the file is an AI Recommendations file created by the system containing recommendations to create a load test plan from browser recording. </summary>
+        private const string TestPlanRecommendationsValue = "TEST_PLAN_RECOMMENDATIONS";
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingFileType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -54,6 +58,12 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> If the file is a test script. </summary>
         public static LoadTestingFileType TestScript { get; } = new LoadTestingFileType(TestScriptValue);
+
+        /// <summary> If the file is a browser recording of interactions with web applications. </summary>
+        public static LoadTestingFileType BrowserRecording { get; } = new LoadTestingFileType(BrowserRecordingValue);
+
+        /// <summary> If the file is an AI Recommendations file created by the system containing recommendations to create a load test plan from browser recording. </summary>
+        public static LoadTestingFileType TestPlanRecommendations { get; } = new LoadTestingFileType(TestPlanRecommendationsValue);
 
         /// <summary> Determines if two <see cref="LoadTestingFileType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

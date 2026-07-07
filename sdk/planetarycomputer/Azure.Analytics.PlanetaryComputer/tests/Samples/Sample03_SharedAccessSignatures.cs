@@ -22,17 +22,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_GetTokenDefaultDuration
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
 
             // Get a SAS token with default duration (24 hours)
@@ -51,17 +51,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_GetTokenCustomDuration
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
 
             // Get a SAS token with custom duration (60 minutes)
@@ -83,17 +83,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_SignAssetHref
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             StacClient stacClient = client.GetStacClient();
 
@@ -125,17 +125,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_DownloadWithSignedHref
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             StacClient stacClient = client.GetStacClient();
 
@@ -167,17 +167,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_RevokeToken
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
 
             // Generate a SAS token
@@ -199,17 +199,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_SecureAccessWorkflow
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             StacClient stacClient = client.GetStacClient();
 
@@ -255,17 +255,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_MultipleCollections
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
 
             // Get SAS tokens for multiple collections
@@ -292,17 +292,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
         {
             #region Snippet:Sample03_SignItemAsset
             // Create a Planetary Computer client
-            #if SNIPPET
+#if SNIPPET
 
             Uri endpoint = new Uri("https://contoso-catalog.gwhqfdeddydpareu.uksouth.geocatalog.spatio.azure.com");
 
             PlanetaryComputerProClient client = new PlanetaryComputerProClient(endpoint, new DefaultAzureCredential());
 
-            #else
+#else
 
             var client = GetTestClient();
 
-            #endif
+#endif
             ManagedStorageSharedAccessSignatureClient sasClient = client.GetManagedStorageSharedAccessSignatureClient();
             StacClient stacClient = client.GetStacClient();
 

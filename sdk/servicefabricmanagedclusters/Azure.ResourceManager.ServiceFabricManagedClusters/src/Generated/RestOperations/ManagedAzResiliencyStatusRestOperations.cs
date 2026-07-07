@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/providers/Microsoft.ServiceFabric/managedClusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/getazresiliencystatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -69,7 +69,7 @@ namespace Azure.Core.Tests
             using (asyncLock = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false))
             {
                 Assert.IsTrue(asyncLock.HasValue);
-                Assert.Throws<InvalidOperationException>(() => asyncLock.SetValue(6*9));
+                Assert.Throws<InvalidOperationException>(() => asyncLock.SetValue(6 * 9));
             }
         }
 
@@ -99,7 +99,8 @@ namespace Azure.Core.Tests
             var tcs = new TaskCompletionSource<int>();
             var tcsWait = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            var task1 = Task.Run(async () => {
+            var task1 = Task.Run(async () =>
+            {
                 using var lock1 = await alwv.GetLockOrValueAsync(async);
                 tcsWait.SetResult(0);
                 return async ? await tcs.Task : tcs.Task.GetAwaiter().GetResult();
@@ -107,7 +108,8 @@ namespace Azure.Core.Tests
 
             await tcsWait.Task;
 
-            var task2 = Task.Run(async () => {
+            var task2 = Task.Run(async () =>
+            {
                 using var lock2 = await alwv.GetLockOrValueAsync(async);
                 lock2.SetValue(42);
             });
@@ -176,7 +178,8 @@ namespace Azure.Core.Tests
 
             Assert.IsFalse(alwv.HasValue);
             Assert.IsFalse(alwv.TryGetValue(out _));
-            using (lockOrValue = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false)) { }
+            using (lockOrValue = await alwv.GetLockOrValueAsync(async).ConfigureAwait(false))
+            { }
 
             Assert.Throws<InvalidOperationException>(() => lockOrValue.SetValue(42));
         }
@@ -193,7 +196,8 @@ namespace Azure.Core.Tests
             lockOrValue.Dispose();
             lockOrValue.Dispose();
 
-            using (await alwv.GetLockOrValueAsync(async).ConfigureAwait(false)) { }
+            using (await alwv.GetLockOrValueAsync(async).ConfigureAwait(false))
+            { }
 
             lockOrValue.Dispose();
         }

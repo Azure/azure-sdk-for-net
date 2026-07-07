@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus
             AmqpMessage = message;
         }
 
-        internal ServiceBusReceivedMessage(): this(body: default)
+        internal ServiceBusReceivedMessage() : this(body: default)
         { }
 
         /// <summary>

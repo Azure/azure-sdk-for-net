@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceBusNetworkSecurityPerimeterConfiguration item in serviceBusNamespace.GetNetworkSecurityPerimeterConfigurationsAsync())
+            await foreach (ServiceBusNetworkSecurityPerimeterConfigurationResource item in serviceBusNamespace.GetServiceBusNetworkSecurityPerimeterConfigurations().GetAllAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            ServiceBusNetworkSecurityPerimeterConfiguration result = await serviceBusNamespace.GetNetworkSecurityPerimeterAssociationNameAsync(resourceAssociationName);
+            ServiceBusNetworkSecurityPerimeterConfigurationResource result = await serviceBusNamespace.GetServiceBusNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -248,7 +248,8 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            await serviceBusNamespace.ReconcileNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
+            ServiceBusNetworkSecurityPerimeterConfigurationResource nspResource = await serviceBusNamespace.GetServiceBusNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
+            await nspResource.ReconcileAsync();
 
             Console.WriteLine("Succeeded");
         }

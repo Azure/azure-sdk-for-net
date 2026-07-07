@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.IndividualResponseDetails;
+                return Properties is null ? default : Properties.IndividualResponseDetails;
             }
         }
     }

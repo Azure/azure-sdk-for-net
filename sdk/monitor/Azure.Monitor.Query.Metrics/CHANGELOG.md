@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `MetricsClientSettings` to support creating a `MetricsClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

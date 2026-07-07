@@ -28,6 +28,7 @@ namespace Azure.Monitor.Query.Logs
         protected LogsQueryClient() { }
         public LogsQueryClient(Azure.Core.TokenCredential credential) { }
         public LogsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitor.Query.Logs.LogsQueryClientOptions options) { }
+        public LogsQueryClient(Azure.Monitor.Query.Logs.LogsQueryClientSettings settings) { }
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.Logs.LogsQueryClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
@@ -44,6 +45,13 @@ namespace Azure.Monitor.Query.Logs
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<T>>> QueryWorkspaceAsync<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class LogsQueryClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
+    }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
         public LogsQueryClientOptions(Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion.V1) { }
@@ -52,6 +60,13 @@ namespace Azure.Monitor.Query.Logs
         {
             V1 = 1,
         }
+    }
+    public partial class LogsQueryClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public LogsQueryClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Monitor.Query.Logs.LogsQueryClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class LogsQueryOptions
     {

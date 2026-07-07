@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class NoneAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="NoneAuthModel"/>. </summary>
-        public NoneAuthModel()
+        public NoneAuthModel() : base(CcpAuthType.None)
         {
-            AuthType = CcpAuthType.None;
         }
 
         /// <summary> Initializes a new instance of <see cref="NoneAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NoneAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NoneAuthModel(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
-            AuthType = authType;
         }
     }
 }

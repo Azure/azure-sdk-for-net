@@ -8,238 +8,279 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Migration.
-    /// Serialized Name: MigrationResourceForPatch
-    /// </summary>
+    /// <summary> Migration. </summary>
     public partial class PostgreSqlMigrationPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
         public PostgreSqlMigrationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            DbsToMigrate = new ChangeTrackingList<string>();
-            DbsToTriggerCutoverOn = new ChangeTrackingList<string>();
-            DbsToCancelMigrationOn = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
-        /// <param name="tags">
-        /// Application-specific metadata in the form of key-value pairs.
-        /// Serialized Name: MigrationResourceForPatch.tags
-        /// </param>
-        /// <param name="sourceDbServerResourceId">
-        /// Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username.
-        /// Serialized Name: MigrationResourceForPatch.properties.sourceDbServerResourceId
-        /// </param>
-        /// <param name="sourceDbServerFullyQualifiedDomainName">
-        /// Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server.
-        /// Serialized Name: MigrationResourceForPatch.properties.sourceDbServerFullyQualifiedDomainName
-        /// </param>
-        /// <param name="targetDbServerFullyQualifiedDomainName">
-        /// Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server.
-        /// Serialized Name: MigrationResourceForPatch.properties.targetDbServerFullyQualifiedDomainName
-        /// </param>
-        /// <param name="secretParameters">
-        /// Migration secret parameters.
-        /// Serialized Name: MigrationResourceForPatch.properties.secretParameters
-        /// </param>
-        /// <param name="dbsToMigrate">
-        /// Names of databases to migrate.
-        /// Serialized Name: MigrationResourceForPatch.properties.dbsToMigrate
-        /// </param>
-        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded">
-        /// Indicates whether to setup logical replication on source server, if needed.
-        /// Serialized Name: MigrationResourceForPatch.properties.setupLogicalReplicationOnSourceDbIfNeeded
-        /// </param>
-        /// <param name="overwriteDbsInTarget">
-        /// Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation.
-        /// Serialized Name: MigrationResourceForPatch.properties.overwriteDbsInTarget
-        /// </param>
-        /// <param name="migrationWindowStartTimeInUtc">
-        /// Start time (UTC) for migration window.
-        /// Serialized Name: MigrationResourceForPatch.properties.migrationWindowStartTimeInUtc
-        /// </param>
-        /// <param name="migrateRoles">
-        /// Indicates if roles and permissions must be migrated.
-        /// Serialized Name: MigrationResourceForPatch.properties.migrateRoles
-        /// </param>
-        /// <param name="startDataMigration">
-        /// Indicates if data migration must start right away.
-        /// Serialized Name: MigrationResourceForPatch.properties.startDataMigration
-        /// </param>
-        /// <param name="triggerCutover">
-        /// Indicates if cutover must be triggered for the entire migration.
-        /// Serialized Name: MigrationResourceForPatch.properties.triggerCutover
-        /// </param>
-        /// <param name="dbsToTriggerCutoverOn">
-        /// When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array.
-        /// Serialized Name: MigrationResourceForPatch.properties.dbsToTriggerCutoverOn
-        /// </param>
-        /// <param name="cancel">
-        /// Indicates if cancel must be triggered for the entire migration.
-        /// Serialized Name: MigrationResourceForPatch.properties.cancel
-        /// </param>
-        /// <param name="dbsToCancelMigrationOn">
-        /// When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array.
-        /// Serialized Name: MigrationResourceForPatch.properties.dbsToCancelMigrationOn
-        /// </param>
-        /// <param name="migrationMode">
-        /// Mode used to perform the migration: Online or Offline.
-        /// Serialized Name: MigrationResourceForPatch.properties.migrationMode
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, MigrateRolesEnum? migrateRoles, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Migration properties. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationPatch(MigrationPropertiesForPatch properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
-            SourceDbServerResourceId = sourceDbServerResourceId;
-            SourceDbServerFullyQualifiedDomainName = sourceDbServerFullyQualifiedDomainName;
-            TargetDbServerFullyQualifiedDomainName = targetDbServerFullyQualifiedDomainName;
-            SecretParameters = secretParameters;
-            DbsToMigrate = dbsToMigrate;
-            SetupLogicalReplicationOnSourceDbIfNeeded = setupLogicalReplicationOnSourceDbIfNeeded;
-            OverwriteDbsInTarget = overwriteDbsInTarget;
-            MigrationWindowStartTimeInUtc = migrationWindowStartTimeInUtc;
-            MigrateRoles = migrateRoles;
-            StartDataMigration = startDataMigration;
-            TriggerCutover = triggerCutover;
-            DbsToTriggerCutoverOn = dbsToTriggerCutoverOn;
-            Cancel = cancel;
-            DbsToCancelMigrationOn = dbsToCancelMigrationOn;
-            MigrationMode = migrationMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Application-specific metadata in the form of key-value pairs.
-        /// Serialized Name: MigrationResourceForPatch.tags
-        /// </summary>
+        /// <summary> Migration properties. </summary>
+        [WirePath("properties")]
+        internal MigrationPropertiesForPatch Properties { get; set; }
+
+        /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username.
-        /// Serialized Name: MigrationResourceForPatch.properties.sourceDbServerResourceId
-        /// </summary>
+
+        /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
         [WirePath("properties.sourceDbServerResourceId")]
-        public ResourceIdentifier SourceDbServerResourceId { get; set; }
-        /// <summary>
-        /// Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server.
-        /// Serialized Name: MigrationResourceForPatch.properties.sourceDbServerFullyQualifiedDomainName
-        /// </summary>
+        public ResourceIdentifier SourceDbServerResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceDbServerResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.SourceDbServerResourceId = value;
+            }
+        }
+
+        /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
         [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
-        public string SourceDbServerFullyQualifiedDomainName { get; set; }
-        /// <summary>
-        /// Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server.
-        /// Serialized Name: MigrationResourceForPatch.properties.targetDbServerFullyQualifiedDomainName
-        /// </summary>
+        public string SourceDbServerFullyQualifiedDomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceDbServerFullyQualifiedDomainName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.SourceDbServerFullyQualifiedDomainName = value;
+            }
+        }
+
+        /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
         [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
-        public string TargetDbServerFullyQualifiedDomainName { get; set; }
-        /// <summary>
-        /// Migration secret parameters.
-        /// Serialized Name: MigrationResourceForPatch.properties.secretParameters
-        /// </summary>
-        [WirePath("properties.secretParameters")]
-        public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
-        /// <summary>
-        /// Names of databases to migrate.
-        /// Serialized Name: MigrationResourceForPatch.properties.dbsToMigrate
-        /// </summary>
+        public string TargetDbServerFullyQualifiedDomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetDbServerFullyQualifiedDomainName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.TargetDbServerFullyQualifiedDomainName = value;
+            }
+        }
+
+        /// <summary> Names of databases to migrate. </summary>
         [WirePath("properties.dbsToMigrate")]
-        public IList<string> DbsToMigrate { get; }
-        /// <summary>
-        /// Indicates whether to setup logical replication on source server, if needed.
-        /// Serialized Name: MigrationResourceForPatch.properties.setupLogicalReplicationOnSourceDbIfNeeded
-        /// </summary>
+        public IList<string> DbsToMigrate
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                return Properties.DbsToMigrate;
+            }
+        }
+
+        /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
         [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
-        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
-        /// <summary>
-        /// Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation.
-        /// Serialized Name: MigrationResourceForPatch.properties.overwriteDbsInTarget
-        /// </summary>
+        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SetupLogicalReplicationOnSourceDbIfNeeded;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.SetupLogicalReplicationOnSourceDbIfNeeded = value;
+            }
+        }
+
+        /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         [WirePath("properties.overwriteDbsInTarget")]
-        public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget { get; set; }
-        /// <summary>
-        /// Start time (UTC) for migration window.
-        /// Serialized Name: MigrationResourceForPatch.properties.migrationWindowStartTimeInUtc
-        /// </summary>
+        public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OverwriteDbsInTarget;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.OverwriteDbsInTarget = value;
+            }
+        }
+
+        /// <summary> Start time (UTC) for migration window. </summary>
         [WirePath("properties.migrationWindowStartTimeInUtc")]
-        public DateTimeOffset? MigrationWindowStartTimeInUtc { get; set; }
-        /// <summary>
-        /// Indicates if roles and permissions must be migrated.
-        /// Serialized Name: MigrationResourceForPatch.properties.migrateRoles
-        /// </summary>
+        public DateTimeOffset? MigrationWindowStartTimeInUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrationWindowStartTimeInUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.MigrationWindowStartTimeInUtc = value;
+            }
+        }
+
+        /// <summary> Indicates if roles and permissions must be migrated. </summary>
         [WirePath("properties.migrateRoles")]
-        public MigrateRolesEnum? MigrateRoles { get; set; }
-        /// <summary>
-        /// Indicates if data migration must start right away.
-        /// Serialized Name: MigrationResourceForPatch.properties.startDataMigration
-        /// </summary>
+        public MigrateRolesEnum? MigrateRoles
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrateRoles;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.MigrateRoles = value;
+            }
+        }
+
+        /// <summary> Indicates if data migration must start right away. </summary>
         [WirePath("properties.startDataMigration")]
-        public PostgreSqlMigrationStartDataMigration? StartDataMigration { get; set; }
-        /// <summary>
-        /// Indicates if cutover must be triggered for the entire migration.
-        /// Serialized Name: MigrationResourceForPatch.properties.triggerCutover
-        /// </summary>
+        public PostgreSqlMigrationStartDataMigration? StartDataMigration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartDataMigration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.StartDataMigration = value;
+            }
+        }
+
+        /// <summary> Indicates if cutover must be triggered for the entire migration. </summary>
         [WirePath("properties.triggerCutover")]
-        public PostgreSqlMigrationTriggerCutover? TriggerCutover { get; set; }
-        /// <summary>
-        /// When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array.
-        /// Serialized Name: MigrationResourceForPatch.properties.dbsToTriggerCutoverOn
-        /// </summary>
+        public PostgreSqlMigrationTriggerCutover? TriggerCutover
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TriggerCutover;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.TriggerCutover = value;
+            }
+        }
+
+        /// <summary> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
         [WirePath("properties.dbsToTriggerCutoverOn")]
-        public IList<string> DbsToTriggerCutoverOn { get; }
-        /// <summary>
-        /// Indicates if cancel must be triggered for the entire migration.
-        /// Serialized Name: MigrationResourceForPatch.properties.cancel
-        /// </summary>
+        public IList<string> DbsToTriggerCutoverOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                return Properties.DbsToTriggerCutoverOn;
+            }
+        }
+
+        /// <summary> Indicates if cancel must be triggered for the entire migration. </summary>
         [WirePath("properties.cancel")]
-        public PostgreSqlMigrationCancel? Cancel { get; set; }
-        /// <summary>
-        /// When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array.
-        /// Serialized Name: MigrationResourceForPatch.properties.dbsToCancelMigrationOn
-        /// </summary>
+        public PostgreSqlMigrationCancel? Cancel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Cancel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.Cancel = value;
+            }
+        }
+
+        /// <summary> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </summary>
         [WirePath("properties.dbsToCancelMigrationOn")]
-        public IList<string> DbsToCancelMigrationOn { get; }
-        /// <summary>
-        /// Mode used to perform the migration: Online or Offline.
-        /// Serialized Name: MigrationResourceForPatch.properties.migrationMode
-        /// </summary>
+        public IList<string> DbsToCancelMigrationOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                return Properties.DbsToCancelMigrationOn;
+            }
+        }
+
+        /// <summary> Mode used to perform the migration: Online or Offline. </summary>
         [WirePath("properties.migrationMode")]
-        public PostgreSqlMigrationMode? MigrationMode { get; set; }
+        public PostgreSqlMigrationMode? MigrationMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrationMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.MigrationMode = value;
+            }
+        }
     }
 }

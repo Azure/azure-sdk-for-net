@@ -38,10 +38,9 @@ namespace Azure.Monitor.Ingestion
             options ??= new LogsIngestionClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
             var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? LogsIngestionAudience.AzurePublicCloud : options.Audience)}";
             var scopes = new List<string> { authorizationScope };
-            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, scopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, scopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -586,7 +585,7 @@ namespace Azure.Monitor.Ingestion
 
         private async Task<Response> UploadBatchListSyncOrAsync(BatchedLogs batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
-            using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, Compression, null);
+            using HttpMessage message = CreateUploadRequest(ruleId, streamName, batch.LogsData, Compression, new RequestContext { CancellationToken = cancellationToken });
 
             if (async)
             {

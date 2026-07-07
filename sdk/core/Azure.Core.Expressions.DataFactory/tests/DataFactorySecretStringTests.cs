@@ -11,8 +11,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void CanCreateFromString()
         {
-           var maskedString = new DataFactorySecretString("foo");
-           Assert.AreEqual("foo", maskedString.Value);
+            var maskedString = new DataFactorySecretString("foo");
+            Assert.AreEqual("foo", maskedString.Value);
         }
 
         [Test]

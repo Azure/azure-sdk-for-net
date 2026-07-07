@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
 using Azure.ResourceManager.Models;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> A class representing the ContainerServiceManagedCluster data model. </summary>
@@ -68,9 +69,8 @@ namespace Azure.ResourceManager.ContainerService
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ManagedServiceIdentity Identity
         {
-            //get; set;
             // Update get once Azure.ResourceManager provide model factory method for ManagedServiceIdentity
-            get => ClusterIdentity is null ? default : new ManagedServiceIdentity(ClusterIdentity.ResourceIdentityType);
+            get => ClusterIdentity is null ? default : new ManagedServiceIdentity(ClusterIdentity.IdentityType is null ? Azure.ResourceManager.Models.ManagedServiceIdentityType.None : ClusterIdentity.IdentityType.Value);
             set
             {
                 if (value is null)
@@ -78,11 +78,53 @@ namespace Azure.ResourceManager.ContainerService
                 else
                 {
                     IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = new ChangeTrackingDictionary<ResourceIdentifier, UserAssignedIdentity>();
-                    if (value.ManagedServiceIdentityType == ManagedServiceIdentityType.UserAssigned || value.ManagedServiceIdentityType == ManagedServiceIdentityType.SystemAssignedUserAssigned)
+                    if (value.ManagedServiceIdentityType == Azure.ResourceManager.Models.ManagedServiceIdentityType.UserAssigned || value.ManagedServiceIdentityType == Azure.ResourceManager.Models.ManagedServiceIdentityType.SystemAssignedUserAssigned)
                         userAssignedIdentities = value.UserAssignedIdentities;
                     ClusterIdentity = new ManagedClusterIdentity(value.PrincipalId, value.TenantId, value.ManagedServiceIdentityType, new ChangeTrackingDictionary<string, ManagedClusterDelegatedIdentity>(), userAssignedIdentities, null);
                 }
             }
         }
+
+        /// <summary> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </summary>
+        [WirePath("properties.azureMonitorProfile.metrics")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedClusterMonitorProfileMetrics AzureMonitorMetrics
+        {
+            get => Properties?.AzureMonitorProfile is null ? default : Properties.AzureMonitorProfile.Metrics;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ManagedClusterProperties();
+                if (Properties.AzureMonitorProfile is null)
+                    Properties.AzureMonitorProfile = new ManagedClusterAzureMonitorProfile();
+                Properties.AzureMonitorProfile.Metrics = value;
+            }
+        }
+
+        /// <summary> App Routing settings for the ingress profile. You can find an overview and onboarding guide for this feature at https://learn.microsoft.com/en-us/azure/aks/app-routing?tabs=default%2Cdeploy-app-default. </summary>
+        [WirePath("properties.ingressProfile.webAppRouting")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ManagedClusterIngressProfileWebAppRouting IngressWebAppRouting
+        {
+            get => Properties?.IngressProfile is null ? default : Properties.IngressProfile.WebAppRouting;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ManagedClusterProperties();
+                if (Properties.IngressProfile is null)
+                    Properties.IngressProfile = new ManagedClusterIngressProfile();
+                Properties.IngressProfile.WebAppRouting = value;
+            }
+        }
+
+        /// <summary> Whether to enable Kubernetes Role-Based Access Control. </summary>
+        [WirePath("properties.enableRBAC")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? EnableRbac { get => IsRbacEnabled; set => IsRbacEnabled = value; }
+
+        /// <summary> If local accounts should be disabled on the Managed Cluster. </summary>
+        [WirePath("properties.disableLocalAccounts")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? DisableLocalAccounts { get => IsLocalAccountsDisabled; set => IsLocalAccountsDisabled = value; }
     }
 }

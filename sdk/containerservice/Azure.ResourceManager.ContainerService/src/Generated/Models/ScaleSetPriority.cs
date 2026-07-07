@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The Virtual Machine Scale Set priority.
-    /// Serialized Name: ScaleSetPriority
-    /// </summary>
+    /// <summary> The Virtual Machine Scale Set priority. </summary>
     public readonly partial struct ScaleSetPriority : IEquatable<ScaleSetPriority>
     {
         private readonly string _value;
+        /// <summary> Spot priority VMs will be used. There is no SLA for spot nodes. See [spot on AKS](https://docs.microsoft.com/azure/aks/spot-node-pool) for more information. </summary>
+        private const string SpotValue = "Spot";
+        /// <summary> Regular VMs will be used. </summary>
+        private const string RegularValue = "Regular";
 
         /// <summary> Initializes a new instance of <see cref="ScaleSetPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScaleSetPriority(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SpotValue = "Spot";
-        private const string RegularValue = "Regular";
-
-        /// <summary>
-        /// Spot priority VMs will be used. There is no SLA for spot nodes. See [spot on AKS](https://docs.microsoft.com/azure/aks/spot-node-pool) for more information.
-        /// Serialized Name: ScaleSetPriority.Spot
-        /// </summary>
+        /// <summary> Spot priority VMs will be used. There is no SLA for spot nodes. See [spot on AKS](https://docs.microsoft.com/azure/aks/spot-node-pool) for more information. </summary>
         public static ScaleSetPriority Spot { get; } = new ScaleSetPriority(SpotValue);
-        /// <summary>
-        /// Regular VMs will be used.
-        /// Serialized Name: ScaleSetPriority.Regular
-        /// </summary>
+
+        /// <summary> Regular VMs will be used. </summary>
         public static ScaleSetPriority Regular { get; } = new ScaleSetPriority(RegularValue);
+
         /// <summary> Determines if two <see cref="ScaleSetPriority"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScaleSetPriority left, ScaleSetPriority right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScaleSetPriority"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScaleSetPriority left, ScaleSetPriority right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScaleSetPriority"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScaleSetPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScaleSetPriority(string value) => new ScaleSetPriority(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScaleSetPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScaleSetPriority?(string value) => value == null ? null : new ScaleSetPriority(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScaleSetPriority other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScaleSetPriority other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

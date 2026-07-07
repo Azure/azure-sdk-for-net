@@ -132,6 +132,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             Assert.IsTrue(transfer._state.SetTransferState(TransferState.Paused));
+            transfer._state.CompleteIfFinalState();  // Simulate what OnJobStateChangedAsync does
 
             await pauseTask;
 

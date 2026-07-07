@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdAsyncCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new RecoveryServicesVaultResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdAsyncCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults"), data => new RecoveryServicesVaultResource(Client, data));
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context), data => new RecoveryServicesVaultResource(Client, data));
+            return new PageableWrapper<RecoveryServicesVaultData, RecoveryServicesVaultResource>(new VaultsGetBySubscriptionIdCollectionResultOfT(VaultsRestClient, Id.SubscriptionId, context, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults"), data => new RecoveryServicesVaultResource(Client, data));
         }
 
         /// <summary>

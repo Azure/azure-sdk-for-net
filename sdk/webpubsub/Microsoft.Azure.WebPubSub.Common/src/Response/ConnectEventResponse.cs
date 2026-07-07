@@ -1,9 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
@@ -109,6 +110,8 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// <param name="key">State key.</param>
         /// <param name="value">State value.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [RequiresUnreferencedCode("This method uses reflection-based JSON serialization for arbitrary object state values.")]
+        [RequiresDynamicCode("This method uses reflection-based JSON serialization for arbitrary object state values.")]
         public void SetState(string key, object value) =>
             SetState(key, BinaryData.FromObjectAsJson(value));
 

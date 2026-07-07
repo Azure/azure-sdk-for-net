@@ -17,6 +17,8 @@ namespace System.ClientModel.Tests.Internal.Perf
         private AvailabilitySetData _modelWithPatches;
         private BinaryData _data;
         private BinaryData _dataWithPatches;
+        private JsonPatch _seededPatchWithRemove;
+        private JsonPatch _unseededPatchWithSets;
 
         public JsonPatchUsageBenchmarks()
         {
@@ -29,6 +31,16 @@ namespace System.ClientModel.Tests.Internal.Perf
             _modelWithPatches.Patch.Set("$.foobar"u8, 5);
             _data = ModelReaderWriter.Write(_model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
             _dataWithPatches = ModelReaderWriter.Write(_modelWithPatches, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+
+            // Seeded patch with a remove operation (mirrors the openai-dotnet workaround scenario)
+            _seededPatchWithRemove = new JsonPatch(data);
+            _seededPatchWithRemove.Remove("$.sku"u8);
+
+            // Unseeded patch with multiple sets
+            _unseededPatchWithSets = new JsonPatch();
+            _unseededPatchWithSets.Set("$.name"u8, "test");
+            _unseededPatchWithSets.Set("$.count"u8, 42);
+            _unseededPatchWithSets.Set("$.nested.value"u8, true);
         }
 
         [Benchmark]
@@ -53,6 +65,30 @@ namespace System.ClientModel.Tests.Internal.Perf
         public AvailabilitySetData ModelWithPatches_Read()
         {
             return ModelReaderWriter.Read<AvailabilitySetData>(_dataWithPatches, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+        }
+
+        [Benchmark]
+        public BinaryData Seeded_ToString_ThenFromString()
+        {
+            return BinaryData.FromString(_seededPatchWithRemove.ToString("J"));
+        }
+
+        [Benchmark]
+        public BinaryData Seeded_ToBinaryData()
+        {
+            return _seededPatchWithRemove.ToBinaryData("J");
+        }
+
+        [Benchmark]
+        public BinaryData Unseeded_ToString_ThenFromString()
+        {
+            return BinaryData.FromString(_unseededPatchWithSets.ToString("J"));
+        }
+
+        [Benchmark]
+        public BinaryData Unseeded_ToBinaryData()
+        {
+            return _unseededPatchWithSets.ToBinaryData("J");
         }
     }
 #pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupAsyncCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAdvisorResourceGroupResource.GetAdvisorConfigurationsByResourceGroup");
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new ConfigurationsGetAdvisorConfigurationsByResourceGroupCollectionResultOfT(ConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAdvisorResourceGroupResource.GetAdvisorConfigurationsByResourceGroup");
         }
 
         /// <summary>

@@ -436,20 +436,20 @@ For applications that prefer using a shared `Azure.Identity` credential for thei
 
 ```C# Snippet:DependencyInjectionRegisterClientWithIdentity
 public void ConfigureServices(IServiceCollection services)
- {
-     services.AddAzureClients(builder =>
-     {
-         // This will register the ServiceBusClient using an Azure Identity credential.
-         builder.AddServiceBusClientWithNamespace("<< YOUR NAMESPACE >>.servicebus.windows.net");
+{
+    services.AddAzureClients(builder =>
+    {
+        // This will register the ServiceBusClient using an Azure Identity credential.
+        builder.AddServiceBusClientWithNamespace("<< YOUR NAMESPACE >>.servicebus.windows.net");
 
-         // By default, DefaultAzureCredential is used, which is likely desired for most
-         // scenarios. If you need to restrict to a specific credential instance, you could
-         // register that instance as the default credential instead.
-         builder.UseCredential(new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned));
-     });
+        // By default, DefaultAzureCredential is used, which is likely desired for most
+        // scenarios. If you need to restrict to a specific credential instance, you could
+        // register that instance as the default credential instead.
+        builder.UseCredential(new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned));
+    });
 
-     // Register other services, controllers, and other infrastructure.
- }
+    // Register other services, controllers, and other infrastructure.
+}
 ```
 
 It is also possible to register sub-clients, such as `ServiceBusSender` and `ServiceBusReceiver` with DI using the registered `ServiceBusClient` instance.  For example, to register a sender for each queue that belongs to the namespace:

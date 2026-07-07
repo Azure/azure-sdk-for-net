@@ -20,7 +20,7 @@ namespace Azure.AI.Translation.Document.Tests
 
         public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync)
-            //: base(isAsync, RecordedTestMode.Record)
+        //: base(isAsync, RecordedTestMode.Record)
         {
             JsonPathSanitizers.Add("$..sourceUrl");
             JsonPathSanitizers.Add("$..targetUrl");
@@ -47,7 +47,7 @@ namespace Azure.AI.Translation.Document.Tests
             {
                 var fileName = $"File_{i}.txt";
                 var text = "some random text";
-                result.Add( new TestDocument(fileName, text) );
+                result.Add(new TestDocument(fileName, text));
             }
             return result;
         }

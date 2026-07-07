@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent;
 internal class EventContent
 {
     public string content { get; set; }
-    public EventContent(string content) {  this.content = content; }
+    public EventContent(string content) { this.content = content; }
 }
 
 internal class EventRole
@@ -66,7 +66,7 @@ internal class FunctionCall
     }
 }
 
-internal class FunctionToolCallEvent: BasicToolCallAttributes
+internal class FunctionToolCallEvent : BasicToolCallAttributes
 {
     public FunctionCall function { get; set; }
     public FunctionToolCallEvent(string id, string type, FunctionCall function) : base(id, type)

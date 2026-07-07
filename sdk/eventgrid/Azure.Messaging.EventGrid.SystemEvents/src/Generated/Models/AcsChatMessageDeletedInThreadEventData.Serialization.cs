@@ -39,6 +39,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageDeletedInThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AcsChatMessageDeletedInThreadEventData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsChatMessageDeletedInThreadEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsChatMessageDeletedInThreadEventData IPersistableModel<AcsChatMessageDeletedInThreadEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatMessageDeletedInThreadEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsChatMessageDeletedInThreadEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsChatMessageDeletedInThreadEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -96,6 +119,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
+            long? sequenceId = default;
             DateTimeOffset? composeTime = default;
             string @type = default;
             long? version = default;
@@ -125,6 +149,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 if (prop.NameEquals("senderDisplayName"u8))
                 {
                     senderDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sequenceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sequenceId = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("composeTime"u8))
@@ -171,34 +204,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 messageId,
                 senderCommunicationIdentifier,
                 senderDisplayName,
+                sequenceId,
                 composeTime,
                 @type,
                 version,
                 deleteTime);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsChatMessageDeletedInThreadEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsChatMessageDeletedInThreadEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AcsChatMessageDeletedInThreadEventData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsChatMessageDeletedInThreadEventData IPersistableModel<AcsChatMessageDeletedInThreadEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsChatMessageDeletedInThreadEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsChatMessageDeletedInThreadEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsChatMessageDeletedInThreadEventDataConverter : JsonConverter<AcsChatMessageDeletedInThreadEventData>
         {

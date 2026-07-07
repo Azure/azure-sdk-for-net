@@ -72,10 +72,10 @@ namespace Azure.Messaging.ServiceBus.Administration
                         nsInfo.MessagingUnits = units;
                         break;
                     case "NamespaceType":
-                            nsInfo.NamespaceType = element.Value;
+                        nsInfo.NamespaceType = element.Value;
                         break;
                     case "MessagingSKU":
-                            nsInfo.MessagingSku = element.Value;
+                        nsInfo.MessagingSku = element.Value;
                         break;
                 }
             }

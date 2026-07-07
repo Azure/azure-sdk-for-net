@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             if (id.ResourceType != RecoveryServicesVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryServicesVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RecoveryServicesVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllAsyncCollectionResultOfT(_privateLinkResourceOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RecoveryServicesPrivateLinkResource(Client, data));
+            return new AsyncPageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllAsyncCollectionResultOfT(
+                _privateLinkResourceOperationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesPrivateLinkResourceCollection.GetAll"), data => new RecoveryServicesPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllCollectionResultOfT(_privateLinkResourceOperationGroupRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new RecoveryServicesPrivateLinkResource(Client, data));
+            return new PageableWrapper<RecoveryServicesPrivateLinkResourceData, RecoveryServicesPrivateLinkResource>(new PrivateLinkResourceOperationGroupGetAllCollectionResultOfT(
+                _privateLinkResourceOperationGroupRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "RecoveryServicesPrivateLinkResourceCollection.GetAll"), data => new RecoveryServicesPrivateLinkResource(Client, data));
         }
 
         /// <summary>

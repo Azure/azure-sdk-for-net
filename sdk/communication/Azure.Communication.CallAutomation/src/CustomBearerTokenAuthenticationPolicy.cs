@@ -9,10 +9,10 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Core.Diagnostics;
 using Azure.Communication.CallAutomation;
+using Azure.Core;
+using Azure.Core.Diagnostics;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.Pipeline
 {
@@ -380,7 +380,7 @@ namespace Azure.Communication.Pipeline
                 catch (Exception)
                 {
                     backgroundUpdateTcs.SetResult(new HeaderValueInfo(info.HeaderValue, info.ExpiresOn, DateTimeOffset.UtcNow + _tokenRefreshRetryDelay));
-                   //AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
+                    //AzureCoreEventSource.Singleton.BackgroundRefreshFailed(context.ParentRequestId ?? string.Empty, e.ToString());
                 }
                 finally
                 {

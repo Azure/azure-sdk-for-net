@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct DocumentIntelligenceLayoutSkillMarkdownHeaderDepth : IEquatable<DocumentIntelligenceLayoutSkillMarkdownHeaderDepth>
     {
         private readonly string _value;
+        /// <summary> Header level 1. </summary>
+        private const string H1Value = "h1";
+        /// <summary> Header level 2. </summary>
+        private const string H2Value = "h2";
+        /// <summary> Header level 3. </summary>
+        private const string H3Value = "h3";
+        /// <summary> Header level 4. </summary>
+        private const string H4Value = "h4";
+        /// <summary> Header level 5. </summary>
+        private const string H5Value = "h5";
+        /// <summary> Header level 6. </summary>
+        private const string H6Value = "h6";
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceLayoutSkillMarkdownHeaderDepth"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string H1Value = "h1";
-        private const string H2Value = "h2";
-        private const string H3Value = "h3";
-        private const string H4Value = "h4";
-        private const string H5Value = "h5";
-        private const string H6Value = "h6";
+            _value = value;
+        }
 
         /// <summary> Header level 1. </summary>
         public static DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H1 { get; } = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(H1Value);
+
         /// <summary> Header level 2. </summary>
         public static DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H2 { get; } = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(H2Value);
+
         /// <summary> Header level 3. </summary>
         public static DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H3 { get; } = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(H3Value);
+
         /// <summary> Header level 4. </summary>
         public static DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H4 { get; } = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(H4Value);
+
         /// <summary> Header level 5. </summary>
         public static DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H5 { get; } = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(H5Value);
+
         /// <summary> Header level 6. </summary>
         public static DocumentIntelligenceLayoutSkillMarkdownHeaderDepth H6 { get; } = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(H6Value);
+
         /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillMarkdownHeaderDepth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DocumentIntelligenceLayoutSkillMarkdownHeaderDepth left, DocumentIntelligenceLayoutSkillMarkdownHeaderDepth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DocumentIntelligenceLayoutSkillMarkdownHeaderDepth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DocumentIntelligenceLayoutSkillMarkdownHeaderDepth left, DocumentIntelligenceLayoutSkillMarkdownHeaderDepth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentIntelligenceLayoutSkillMarkdownHeaderDepth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillMarkdownHeaderDepth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(string value) => new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DocumentIntelligenceLayoutSkillMarkdownHeaderDepth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DocumentIntelligenceLayoutSkillMarkdownHeaderDepth?(string value) => value == null ? null : new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DocumentIntelligenceLayoutSkillMarkdownHeaderDepth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DocumentIntelligenceLayoutSkillMarkdownHeaderDepth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

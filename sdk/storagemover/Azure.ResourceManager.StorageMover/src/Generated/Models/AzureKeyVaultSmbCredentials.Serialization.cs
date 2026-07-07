@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Azure Key Vault secret URIs which store the credentials. </summary>
     public partial class AzureKeyVaultSmbCredentials : StorageMoverCredentials, IJsonModel<AzureKeyVaultSmbCredentials>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override StorageMoverCredentials PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureKeyVaultSmbCredentials(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureKeyVaultSmbCredentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureKeyVaultSmbCredentials IPersistableModel<AzureKeyVaultSmbCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureKeyVaultSmbCredentials)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureKeyVaultSmbCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureKeyVaultSmbCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -100,45 +140,5 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
             return new AzureKeyVaultSmbCredentials(@type, additionalBinaryDataProperties, usernameUriString, passwordUriString);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureKeyVaultSmbCredentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AzureKeyVaultSmbCredentials IPersistableModel<AzureKeyVaultSmbCredentials>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureKeyVaultSmbCredentials)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override StorageMoverCredentials PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureKeyVaultSmbCredentials>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureKeyVaultSmbCredentials(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureKeyVaultSmbCredentials)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureKeyVaultSmbCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

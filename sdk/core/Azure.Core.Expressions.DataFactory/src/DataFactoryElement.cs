@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
-using System.Collections.Generic;
 
 namespace Azure.Core.Expressions.DataFactory
 {

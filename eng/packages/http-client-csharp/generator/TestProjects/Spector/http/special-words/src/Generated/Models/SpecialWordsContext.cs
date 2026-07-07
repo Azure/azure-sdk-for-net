@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using SpecialWords._ModelProperties;
 using SpecialWords._Models;
+using SpecialWords._ReservedOperationBodyParams;
 
 namespace SpecialWords
 {
@@ -36,6 +37,7 @@ namespace SpecialWords
     [ModelReaderWriterBuildable(typeof(In))]
     [ModelReaderWriterBuildable(typeof(Is))]
     [ModelReaderWriterBuildable(typeof(Lambda))]
+    [ModelReaderWriterBuildable(typeof(ModelWithList))]
     [ModelReaderWriterBuildable(typeof(Not))]
     [ModelReaderWriterBuildable(typeof(Or))]
     [ModelReaderWriterBuildable(typeof(Pass))]

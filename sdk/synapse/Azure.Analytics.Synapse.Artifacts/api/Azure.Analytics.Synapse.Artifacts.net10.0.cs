@@ -1549,12 +1549,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     }
     public partial class AzureDatabricksDeltaLakeLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {
-        public AzureDatabricksDeltaLakeLinkedService(object domain, Azure.Analytics.Synapse.Artifacts.Models.SecretBase accessToken) { }
+        public AzureDatabricksDeltaLakeLinkedService(object domain) { }
         public Azure.Analytics.Synapse.Artifacts.Models.SecretBase AccessToken { get { throw null; } set { } }
         public object ClusterId { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.CredentialReference Credential { get { throw null; } set { } }
         public object Domain { get { throw null; } set { } }
         public object EncryptedCredential { get { throw null; } set { } }
+        public object WorkspaceResourceId { get { throw null; } set { } }
     }
     public partial class AzureDatabricksDeltaLakeSink : Azure.Analytics.Synapse.Artifacts.Models.CopySink
     {
@@ -4104,6 +4105,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference JarLinkedService { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference> StorageLinkedServices { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct HDInsightOndemandClusterResourceGroupAuthenticationType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public HDInsightOndemandClusterResourceGroupAuthenticationType(string value) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType ServicePrincipalKey { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType SystemAssignedManagedIdentity { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType UserAssignedManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType left, Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType right) { throw null; }
+        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType left, Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class HDInsightOnDemandLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {
         public HDInsightOnDemandLinkedService(object clusterSize, object timeToLive, object versionTypePropertiesVersion, Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference linkedServiceName, object hostSubscriptionId, object tenant, object clusterResourceGroup) { }
@@ -4111,6 +4129,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ClusterNamePrefix { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.SecretBase ClusterPassword { get { throw null; } set { } }
         public object ClusterResourceGroup { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.HDInsightOndemandClusterResourceGroupAuthenticationType? ClusterResourceGroupAuthType { get { throw null; } set { } }
         public object ClusterSize { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.SecretBase ClusterSshPassword { get { throw null; } set { } }
         public object ClusterSshUserName { get { throw null; } set { } }
@@ -4679,6 +4698,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class JiraObjectDataset : Azure.Analytics.Synapse.Artifacts.Models.Dataset
     {
         public JiraObjectDataset(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference linkedServiceName) : base (default(Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceReference)) { }
+        public object SchemaTypePropertiesSchema { get { throw null; } set { } }
+        public object Table { get { throw null; } set { } }
         public object TableName { get { throw null; } set { } }
     }
     public partial class JiraSource : Azure.Analytics.Synapse.Artifacts.Models.TabularSource
@@ -5114,6 +5135,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.DatasetReference Dataset { get { throw null; } set { } }
         public object FirstRowOnly { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.CopySource Source { get { throw null; } set { } }
+        public object TreatDecimalAsString { get { throw null; } set { } }
     }
     public partial class MagentoLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {
@@ -5420,8 +5442,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public NetezzaLinkedService() { }
         public object ConnectionString { get { throw null; } set { } }
+        public object Database { get { throw null; } set { } }
         public object EncryptedCredential { get { throw null; } set { } }
+        public object Port { get { throw null; } set { } }
         public Azure.Analytics.Synapse.Artifacts.Models.AzureKeyVaultSecretReference Pwd { get { throw null; } set { } }
+        public Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType? SecurityLevel { get { throw null; } set { } }
+        public object Server { get { throw null; } set { } }
+        public object Uid { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetezzaPartitionOption : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.NetezzaPartitionOption>
@@ -5446,6 +5473,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object PartitionColumnName { get { throw null; } set { } }
         public object PartitionLowerBound { get { throw null; } set { } }
         public object PartitionUpperBound { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetezzaSecurityLevelType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetezzaSecurityLevelType(string value) { throw null; }
+        public static Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType OnlyUnSecured { get { throw null; } }
+        public static Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType PreferredUnSecured { get { throw null; } }
+        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType left, Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType right) { throw null; }
+        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType (string value) { throw null; }
+        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType left, Azure.Analytics.Synapse.Artifacts.Models.NetezzaSecurityLevelType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetezzaSource : Azure.Analytics.Synapse.Artifacts.Models.TabularSource
     {
@@ -6882,6 +6925,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SalesforceV2Source() { }
         public object IncludeDeletedObjects { get { throw null; } set { } }
         public object PageSize { get { throw null; } set { } }
+        public object PartitionOption { get { throw null; } set { } }
         public object Query { get { throw null; } set { } }
         public object SoqlQuery { get { throw null; } set { } }
     }
@@ -7169,6 +7213,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ReturnMultistatementResult { get { throw null; } set { } }
         public object ScriptBlockExecutionTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.ScriptActivityScriptBlock> Scripts { get { throw null; } }
+        public object TreatDecimalAsString { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScriptActivityLogDestination : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.ScriptActivityLogDestination>
@@ -7560,6 +7605,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Scope { get { throw null; } set { } }
         public object TenantId { get { throw null; } set { } }
         public object User { get { throw null; } set { } }
+        public object UseUtcTimestamps { get { throw null; } set { } }
         public object Warehouse { get { throw null; } set { } }
     }
     public partial class SnowflakeV2Sink : Azure.Analytics.Synapse.Artifacts.Models.CopySink

@@ -19,16 +19,19 @@ namespace BasicTypeSpec
         private readonly BasicTypeSpecClient _client;
         private readonly string _token;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(BasicTypeSpecClient client, string token, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _token = token;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult as an enumerable collection. </summary>
@@ -46,17 +49,21 @@ namespace BasicTypeSpec
                     yield break;
                 }
                 ListWithContinuationTokenHeaderResponseResponse result = (ListWithContinuationTokenHeaderResponseResponse)response;
+                if (response.Headers.TryGetValue("next-token", out string value) && !string.IsNullOrEmpty(value))
+                {
+                    nextPage = value;
+                }
+                else
+                {
+                    nextPage = null;
+                }
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
-                if (response.Headers.TryGetValue("next-token", out string value) && !string.IsNullOrEmpty(value))
-                {
-                    nextPage = value;
-                }
-                else
+                if (string.IsNullOrEmpty(nextPage))
                 {
                     yield break;
                 }
@@ -69,7 +76,7 @@ namespace BasicTypeSpec
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetWithContinuationTokenHeaderResponseRequest(continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

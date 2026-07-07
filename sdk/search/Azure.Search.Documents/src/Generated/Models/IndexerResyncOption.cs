@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.Search.Documents.Indexes.Models
     public readonly partial struct IndexerResyncOption : IEquatable<IndexerResyncOption>
     {
         private readonly string _value;
+        /// <summary> Indexer to re-ingest pre-selected permissions data from data source to index. </summary>
+        private const string PermissionsValue = "permissions";
 
         /// <summary> Initializes a new instance of <see cref="IndexerResyncOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexerResyncOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PermissionsValue = "permissions";
+            _value = value;
+        }
 
         /// <summary> Indexer to re-ingest pre-selected permissions data from data source to index. </summary>
         public static IndexerResyncOption Permissions { get; } = new IndexerResyncOption(PermissionsValue);
+
         /// <summary> Determines if two <see cref="IndexerResyncOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexerResyncOption left, IndexerResyncOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IndexerResyncOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexerResyncOption left, IndexerResyncOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IndexerResyncOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IndexerResyncOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IndexerResyncOption(string value) => new IndexerResyncOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IndexerResyncOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexerResyncOption?(string value) => value == null ? null : new IndexerResyncOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IndexerResyncOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IndexerResyncOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

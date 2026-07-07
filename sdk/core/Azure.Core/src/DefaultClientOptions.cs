@@ -6,7 +6,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class DefaultClientOptions: ClientOptions
+    internal class DefaultClientOptions : ClientOptions
     {
         public DefaultClientOptions()
             : base((ClientOptions?)null, null)

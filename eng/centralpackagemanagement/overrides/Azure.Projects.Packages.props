@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="Azure.Provisioning.Deployment" Version="1.0.0-beta.2" />
+  </ItemGroup>
+</Project>

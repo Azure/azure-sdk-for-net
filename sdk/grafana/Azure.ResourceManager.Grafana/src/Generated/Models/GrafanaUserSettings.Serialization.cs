@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.Grafana.Models
     /// <summary> Grafana users settings. </summary>
     public partial class GrafanaUserSettings : IJsonModel<GrafanaUserSettings>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GrafanaUserSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaUserSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGrafanaUserSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GrafanaUserSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GrafanaUserSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GrafanaUserSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GrafanaUserSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GrafanaUserSettings IPersistableModel<GrafanaUserSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GrafanaUserSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GrafanaUserSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -34,15 +74,15 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 throw new FormatException($"The model {nameof(GrafanaUserSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ViewersCanEdit))
+            if (Optional.IsDefined(CanViewersEdit))
             {
                 writer.WritePropertyName("viewersCanEdit"u8);
-                writer.WriteBooleanValue(ViewersCanEdit.Value);
+                writer.WriteBooleanValue(CanViewersEdit.Value);
             }
-            if (Optional.IsDefined(EditorsCanAdmin))
+            if (Optional.IsDefined(CanEditorsAdmin))
             {
                 writer.WritePropertyName("editorsCanAdmin"u8);
-                writer.WriteBooleanValue(EditorsCanAdmin.Value);
+                writer.WriteBooleanValue(CanEditorsAdmin.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -86,8 +126,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            bool? viewersCanEdit = default;
-            bool? editorsCanAdmin = default;
+            bool? canViewersEdit = default;
+            bool? canEditorsAdmin = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -97,7 +137,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    viewersCanEdit = prop.Value.GetBoolean();
+                    canViewersEdit = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("editorsCanAdmin"u8))
@@ -106,7 +146,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    editorsCanAdmin = prop.Value.GetBoolean();
+                    canEditorsAdmin = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,47 +154,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GrafanaUserSettings(viewersCanEdit, editorsCanAdmin, additionalBinaryDataProperties);
+            return new GrafanaUserSettings(canViewersEdit, canEditorsAdmin, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GrafanaUserSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaUserSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerGrafanaContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GrafanaUserSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        GrafanaUserSettings IPersistableModel<GrafanaUserSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GrafanaUserSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<GrafanaUserSettings>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeGrafanaUserSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GrafanaUserSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GrafanaUserSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

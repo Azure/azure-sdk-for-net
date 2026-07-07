@@ -7,64 +7,41 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> The list data source by workspace operation response. </summary>
+    /// <summary> The response of a DataSource list operation. </summary>
     internal partial class DataSourceListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataSourceListResult"/>. </summary>
-        internal DataSourceListResult()
+        /// <param name="value"> The DataSource items on this page. </param>
+        internal DataSourceListResult(IEnumerable<OperationalInsightsDataSourceData> value)
         {
-            Value = new ChangeTrackingList<OperationalInsightsDataSourceData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataSourceListResult"/>. </summary>
-        /// <param name="value"> A list of datasources. </param>
-        /// <param name="nextLink"> The link (url) to the next page of datasources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataSourceListResult(IReadOnlyList<OperationalInsightsDataSourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The DataSource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourceListResult(IList<OperationalInsightsDataSourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A list of datasources. </summary>
-        public IReadOnlyList<OperationalInsightsDataSourceData> Value { get; }
-        /// <summary> The link (url) to the next page of datasources. </summary>
-        public string NextLink { get; }
+        /// <summary> The DataSource items on this page. </summary>
+        [WirePath("value")]
+        public IList<OperationalInsightsDataSourceData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
+        public Uri NextLink { get; }
     }
 }

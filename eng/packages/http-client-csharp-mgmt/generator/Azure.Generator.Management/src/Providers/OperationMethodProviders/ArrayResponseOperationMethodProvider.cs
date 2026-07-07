@@ -41,6 +41,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
         private readonly ParameterContextRegistry _parameterMapping;
+        private readonly ParameterProvider? _scopeParameter;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
@@ -49,10 +50,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             InputServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null)
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
+            _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
@@ -69,6 +72,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // Check if the item type can be wrapped in a resource client
             InitializeTypeInfo(
                 _itemType,
+                _enclosingType,
                 ref _actualItemType!,
                 ref _itemResourceClient,
                 explicitResourceClient
@@ -83,6 +87,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeTypeInfo(
             CSharpType itemType,
+            TypeProvider enclosingType,
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient,
             ResourceClientProvider? explicitResourceClient = null
@@ -90,9 +95,21 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             actualItemType = itemType;
             // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
-            if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
+            if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(itemType))
             {
                 resourceClient = explicitResourceClient;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceCollectionClientProvider collectionProvider &&
+                collectionProvider.Resource.IsResourceDataType(itemType))
+            {
+                resourceClient = collectionProvider.Resource;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceClientProvider resourceProvider &&
+                resourceProvider.IsResourceDataType(itemType))
+            {
+                resourceClient = resourceProvider;
                 actualItemType = resourceClient.Type;
             }
             else if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
@@ -141,7 +158,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType, shouldApplyLroHandling: _serviceMethod.IsLongRunningOperation(), scopeParameter: _scopeParameter),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -157,9 +174,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
             var collectionResult = CreateCollectionResultDefinition(scopeName);
 
-            // Register the collection result with the output library
-            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, scopeName);
-
             statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
 
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
@@ -169,7 +183,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClientField,
             };
 
-            arguments.AddRange(_parameterMapping.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            arguments.AddRange(_parameterMapping.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            arguments.Add(Literal(scopeName));
 
             // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)
@@ -199,9 +217,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClient,
                 _serviceMethod,
                 _itemType,
-                _listType,
                 _isAsync,
-                scopeName,
                 constructorParams,
                 _methodName,  // Pass the actual method name for proper class naming
                 _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")

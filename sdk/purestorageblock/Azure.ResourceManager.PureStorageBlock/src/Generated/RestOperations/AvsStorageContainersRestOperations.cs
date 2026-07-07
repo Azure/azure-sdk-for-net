@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/avsStorageContainers/", false);
             uri.AppendPath(storageContainerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/avsStorageContainers/", false);
             uri.AppendPath(storageContainerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -93,7 +99,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/avsStorageContainers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -105,8 +114,18 @@ namespace Azure.ResourceManager.PureStorageBlock
         internal HttpMessage CreateNextGetByStoragePoolRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storagePoolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

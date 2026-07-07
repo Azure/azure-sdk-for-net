@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
-using System;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             Response operation = await receivedSharesClient.GetReceivedShareAsync("11726395-c265-4d91-acc8-7bb2cc650f5c", new());
 #endif
 
-#endregion
+            #endregion
         }
     }
 }

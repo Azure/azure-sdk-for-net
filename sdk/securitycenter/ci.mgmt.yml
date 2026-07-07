@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.SecurityCenter
       safeName: AzureResourceManagerSecurityCenter
+    - name: Azure.Provisioning.SecurityCenter
+      safeName: AzureProvisioningSecurityCenter

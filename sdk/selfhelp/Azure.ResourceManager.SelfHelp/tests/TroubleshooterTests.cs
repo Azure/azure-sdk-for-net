@@ -3,13 +3,13 @@
 
 namespace Azure.ResourceManager.SelfHelp.Tests
 {
-    using Azure.Core.TestFramework;
-    using Azure.Core;
-    using System.Threading.Tasks;
-    using NUnit.Framework;
     using System;
-    using Azure.ResourceManager.SelfHelp.Models;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Azure.Core;
+    using Azure.Core.TestFramework;
+    using Azure.ResourceManager.SelfHelp.Models;
+    using NUnit.Framework;
 
     public class TroubleshooterTests : SelfHelpManagementTestBase
     {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
             TroubleshooterInstanceProperties properties = new TroubleshooterInstanceProperties("e104dbdf-9e14-4c9f-bc78-21ac90382231", parameters, null, null, null);
-            var data = new SelfHelpTroubleshooterData(scope, null, resourceType, null, null, properties);
+            var data = new SelfHelpTroubleshooterData(scope, null, resourceType, null, properties, null);
 
             return data;
         }

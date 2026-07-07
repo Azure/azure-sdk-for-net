@@ -142,10 +142,10 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Flush any remaining work and clean up resources.
         /// </summary>
-        #pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
+#pragma warning disable CA1816 // Dispose methods should call SuppressFinalize
         void IDisposable.Dispose() =>
             DisposeInternalAsync(async: false).EnsureCompleted();
-        #pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
+#pragma warning restore CA1816 // Dispose methods should call SuppressFinalize
 
         /// <summary>
         /// Flush any remaining work and clean up resources.
@@ -184,10 +184,10 @@ namespace Azure.Search.Documents
                 {
                     AzureSearchDocumentsEventSource.Instance.SearchIndexingBufferedSenderDisposedWithPendingActions($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, _publisher.IndexingActionsCount);
 
-                    #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
+#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new ObjectNotDisposedException(
                         $"{nameof(SearchIndexingBufferedSender<T>)} has {_publisher.IndexingActionsCount} unsent indexing actions.");
-                    #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
                 catch (ObjectNotDisposedException)
                 {
@@ -218,7 +218,8 @@ namespace Azure.Search.Documents
         private async Task EnsureKeyFieldAccessorAsync(bool async, CancellationToken cancellationToken)
         {
             // Skip initialization if we already have one
-            if (KeyFieldAccessor != null) { return; }
+            if (KeyFieldAccessor != null)
+            { return; }
 
             // If we have multiple threads attempting to verify we have a key
             // field we want to minimize possible requests to the service for
@@ -231,12 +232,12 @@ namespace Azure.Search.Documents
             }
             else
             {
-                #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 // We're potentially doing sync-over-async if somebody enters
                 // on an async code path first and follows up from a sync code
                 // path.
                 _getKeyFieldAccessorTask.GetAwaiter().GetResult();
-                #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
         }
 
@@ -249,7 +250,8 @@ namespace Azure.Search.Documents
         private async Task GetKeyFieldAccessorAsync(bool async, CancellationToken cancellationToken)
         {
             // Case 1: The user provided an explicit accessor and we're done
-            if (KeyFieldAccessor != null) { return; }
+            if (KeyFieldAccessor != null)
+            { return; }
 
             // Case 2: Infer the accessor from FieldBuilder
             try

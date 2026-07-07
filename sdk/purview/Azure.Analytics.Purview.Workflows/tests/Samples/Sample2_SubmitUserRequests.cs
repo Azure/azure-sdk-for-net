@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:File name should match first type name", Justification = "For documentation purposes")]
-    public class UserRequestsSamples: SamplesBase<WorkflowsClientTestEnvironment>
+    public class UserRequestsSamples : SamplesBase<WorkflowsClientTestEnvironment>
     {
         [Test]
         public async Task SubmitUserRequest()
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Purview.Workflows.Tests.Samples
 
             #endregion
 
-            Assert.AreEqual(200, submitResult.Status);
+            Assert.That(submitResult.Status, Is.EqualTo(200));
         }
     }
 }

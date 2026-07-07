@@ -37,8 +37,10 @@ public class ModuleImport : NamedProvisionableConstruct
     {
         List<BicepStatement> statements = [];
         Dictionary<string, BicepExpression> properties = new() { { "name", _name.Compile() } };
-        if (((IBicepValue)_scope).Kind != BicepValueKind.Unset) { properties.Add("scope", _scope.Compile()); }
-        if (Parameters.Count > 0) { properties.Add("params", Parameters.Compile()); }
+        if (((IBicepValue)_scope).Kind != BicepValueKind.Unset)
+        { properties.Add("scope", _scope.Compile()); }
+        if (Parameters.Count > 0)
+        { properties.Add("params", Parameters.Compile()); }
         ModuleStatement module = BicepSyntax.Declare.Module(BicepIdentifier, _path.Compile(), BicepSyntax.Object(properties));
         statements.Add(module);
         return statements;

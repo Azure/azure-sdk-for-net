@@ -31,8 +31,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="releaseOn"> The release date. </param>
         /// <param name="releaseType"> The release type. </param>
         /// <param name="compatibleVersions"> The versions that are compatible for this update package. </param>
+        /// <param name="updateProperties"> Image update properties for update release type image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationsImageProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string releaseVersion, string releaseDisplayName, string releaseNotes, DateTimeOffset releaseOn, DisconnectedOperationsReleaseType releaseType, IReadOnlyList<string> compatibleVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DisconnectedOperationsImageProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string releaseVersion, string releaseDisplayName, string releaseNotes, DateTimeOffset releaseOn, DisconnectedOperationsReleaseType releaseType, IReadOnlyList<string> compatibleVersions, DisconnectedOperationsImageUpdateProperties updateProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ReleaseVersion = releaseVersion;
@@ -41,6 +42,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             ReleaseOn = releaseOn;
             ReleaseType = releaseType;
             CompatibleVersions = compatibleVersions;
+            UpdateProperties = updateProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +66,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> The versions that are compatible for this update package. </summary>
         public IReadOnlyList<string> CompatibleVersions { get; }
+
+        /// <summary> Image update properties for update release type image. </summary>
+        public DisconnectedOperationsImageUpdateProperties UpdateProperties { get; }
     }
 }

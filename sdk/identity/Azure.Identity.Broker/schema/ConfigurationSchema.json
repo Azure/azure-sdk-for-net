@@ -1,0 +1,314 @@
+{
+  "definitions": {
+    "credential": {
+      "type": "object",
+      "description": "Credential configuration. Available properties depend on the selected CredentialSource.",
+      "properties": {
+        "CredentialSource": {
+          "type": "string",
+          "description": "The credential type to use for authentication.",
+          "enum": [
+            "BrokerCredential",
+            "VisualStudioCodeCredential"
+          ]
+        }
+      },
+      "required": [
+        "CredentialSource"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "ClientSecret"
+            ]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "ClientSecret": {
+                "not": {},
+                "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "ClientCertificatePassword"
+            ]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "ClientCertificatePassword": {
+                "not": {},
+                "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "BrokerCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "DisableAutomaticAuthentication": {
+                "type": "boolean",
+                "description": "Prevent automatic interactive authentication prompts."
+              },
+              "LoginHint": {
+                "type": "string",
+                "description": "Pre-populate the username/email in the login prompt."
+              },
+              "RedirectUri": {
+                "type": "string",
+                "description": "The redirect URI for the OAuth callback.",
+                "format": "uri"
+              },
+              "UseDefaultBrokerAccount": {
+                "type": "boolean",
+                "description": "Authenticate with the default broker account instead of prompting the user with a login dialog."
+              },
+              "IsLegacyMsaPassthroughEnabled": {
+                "type": "boolean",
+                "description": "Enable Microsoft Account (MSA) passthrough."
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AuthenticationRecord": {
+                "$ref": "#/definitions/authenticationRecord"
+              },
+              "BrowserCustomization": {
+                "$ref": "#/definitions/browserCustomizationOptions"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "VisualStudioCodeCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "Retry": {
+                "$ref": "#/definitions/retry"
+              },
+              "Diagnostics": {
+                "$ref": "#/definitions/diagnostics"
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+    "chainableCredential": {
+      "type": "object",
+      "description": "A credential source in a chain. ApiKeyCredential and ChainedTokenCredential cannot be used.",
+      "properties": {
+        "CredentialSource": {
+          "type": "string",
+          "description": "The token credential type. ApiKeyCredential and ChainedTokenCredential are not allowed in a chain.",
+          "enum": [
+            "BrokerCredential",
+            "VisualStudioCodeCredential"
+          ]
+        },
+        "Retry": {
+          "$ref": "#/definitions/retry"
+        },
+        "Diagnostics": {
+          "$ref": "#/definitions/diagnostics"
+        }
+      },
+      "required": [
+        "CredentialSource"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "ClientSecret"
+            ]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "ClientSecret": {
+                "not": {},
+                "description": "⚠️ Do NOT put client secrets in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "ClientCertificatePassword"
+            ]
+          },
+          "then": {
+            "title": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets",
+            "properties": {
+              "ClientCertificatePassword": {
+                "not": {},
+                "description": "⚠️ Do NOT put certificate passwords in appsettings.json. Use environment variables or Key Vault secrets instead. See https://aka.ms/azsdk/config/secrets"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "BrokerCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "ClientId": {
+                "type": "string",
+                "description": "The client (application) ID."
+              },
+              "DisableInstanceDiscovery": {
+                "type": "boolean",
+                "description": "Skip Microsoft Entra instance discovery and validation."
+              },
+              "DisableAutomaticAuthentication": {
+                "type": "boolean",
+                "description": "Prevent automatic interactive authentication prompts."
+              },
+              "LoginHint": {
+                "type": "string",
+                "description": "Pre-populate the username/email in the login prompt."
+              },
+              "RedirectUri": {
+                "type": "string",
+                "description": "The redirect URI for the OAuth callback.",
+                "format": "uri"
+              },
+              "UseDefaultBrokerAccount": {
+                "type": "boolean",
+                "description": "Authenticate with the default broker account instead of prompting the user with a login dialog."
+              },
+              "IsLegacyMsaPassthroughEnabled": {
+                "type": "boolean",
+                "description": "Enable Microsoft Account (MSA) passthrough."
+              },
+              "TokenCachePersistenceOptions": {
+                "$ref": "#/definitions/tokenCachePersistenceOptions"
+              },
+              "AuthenticationRecord": {
+                "$ref": "#/definitions/authenticationRecord"
+              },
+              "BrowserCustomization": {
+                "$ref": "#/definitions/browserCustomizationOptions"
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "CredentialSource": {
+                "const": "VisualStudioCodeCredential"
+              }
+            },
+            "required": [
+              "CredentialSource"
+            ]
+          },
+          "then": {
+            "properties": {
+              "TenantId": {
+                "type": "string",
+                "description": "The Microsoft Entra tenant (directory) ID."
+              },
+              "AdditionallyAllowedTenants": {
+                "type": "array",
+                "description": "Additional tenant IDs allowed for token acquisition. Use '*' for any tenant.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    }
+  }
+}

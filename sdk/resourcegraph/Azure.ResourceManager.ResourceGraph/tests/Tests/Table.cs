@@ -11,6 +11,6 @@ namespace Azure.ResourceManager.ResourceGraph.Tests
         [JsonPropertyName("columns")]
         public IList<Column> Columns { get; set; }
         [JsonPropertyName("rows")]
-        public IList<IList<object>> Rows { get;  set; }
+        public IList<IList<object>> Rows { get; set; }
     }
 }

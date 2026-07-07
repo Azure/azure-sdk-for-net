@@ -19,6 +19,17 @@ namespace _Type.Property.AdditionalProperties
 
         protected virtual IsStringAdditionalProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<IsStringAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
+
+        IsStringAdditionalProperties IPersistableModel<IsStringAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<IsStringAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="isStringAdditionalProperties"> The <see cref="IsStringAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(IsStringAdditionalProperties isStringAdditionalProperties) => throw null;
+
         public static explicit operator IsStringAdditionalProperties(Response response) => throw null;
 
         void IJsonModel<IsStringAdditionalProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace _Type.Property.AdditionalProperties
         IsStringAdditionalProperties IJsonModel<IsStringAdditionalProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual IsStringAdditionalProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<IsStringAdditionalProperties>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        IsStringAdditionalProperties IPersistableModel<IsStringAdditionalProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<IsStringAdditionalProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="isStringAdditionalProperties"> The <see cref="IsStringAdditionalProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(IsStringAdditionalProperties isStringAdditionalProperties) => throw null;
     }
 }

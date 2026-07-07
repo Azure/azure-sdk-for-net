@@ -45,7 +45,11 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RuleCollection;
+                if (Properties is null)
+                {
+                    Properties = new EnclaveEndpointPatchProperties();
+                }
+                return Properties.RuleCollection;
             }
         }
     }

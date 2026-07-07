@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
         Malayalam,
         /// <summary> Selects the Microsoft tokenizer for Marathi. </summary>
         Marathi,
-        /// <summary> Selects the Microsoft tokenizer for Norwegian (Bokmål). </summary>
+        /// <summary> Selects the Microsoft tokenizer for Norwegian (BokmÃ¥l). </summary>
         NorwegianBokmaal,
         /// <summary> Selects the Microsoft tokenizer for Polish. </summary>
         Polish,

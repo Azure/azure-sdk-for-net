@@ -49,7 +49,7 @@ namespace Azure.Projects.AIFoundry
         /// </summary>
         public List<ClientConnection> Connections { get; set; } = new List<ClientConnection>();
 
-        private  void EmitConnections(ICollection<ClientConnection> connections, string cmId)
+        private void EmitConnections(ICollection<ClientConnection> connections, string cmId)
         {
             if (_endpoint != null)
             {

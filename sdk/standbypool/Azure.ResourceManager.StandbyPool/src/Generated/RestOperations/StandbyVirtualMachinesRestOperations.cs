@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.StandbyPool
             uri.AppendPath(standbyVirtualMachinePoolName, true);
             uri.AppendPath("/standbyVirtualMachines/", false);
             uri.AppendPath(standbyVirtualMachineName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -73,7 +76,10 @@ namespace Azure.ResourceManager.StandbyPool
             uri.AppendPath("/providers/Microsoft.StandbyPool/standbyVirtualMachinePools/", false);
             uri.AppendPath(standbyVirtualMachinePoolName, true);
             uri.AppendPath("/standbyVirtualMachines", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -85,8 +91,18 @@ namespace Azure.ResourceManager.StandbyPool
         internal HttpMessage CreateNextGetByStandbyVirtualMachinePoolResourceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string standbyVirtualMachinePoolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

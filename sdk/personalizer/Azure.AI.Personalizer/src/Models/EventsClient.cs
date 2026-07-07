@@ -3,5 +3,5 @@
 
 namespace Azure.AI.Personalizer
 {
-    internal partial class EventsClient {}
+    internal partial class EventsClient { }
 }

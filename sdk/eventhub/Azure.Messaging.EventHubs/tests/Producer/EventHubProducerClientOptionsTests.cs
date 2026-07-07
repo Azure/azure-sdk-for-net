@@ -54,11 +54,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             foreach (var key in options.PartitionOptions.Keys)
             {
-                Assert.That(clone.PartitionOptions[key], Is.Not.SameAs(options.PartitionOptions[key]), $"The partition options of the clone for partition: `{ key }` should be a copy, not the same instance.");
+                Assert.That(clone.PartitionOptions[key], Is.Not.SameAs(options.PartitionOptions[key]), $"The partition options of the clone for partition: `{key}` should be a copy, not the same instance.");
 
                 foreach (var property in typeof(PartitionPublishingOptions).GetProperties(BindingFlags.GetProperty | BindingFlags.Public | BindingFlags.Instance))
                 {
-                    Assert.That(property.GetValue(clone.PartitionOptions[key], null), Is.EqualTo(property.GetValue(options.PartitionOptions[key], null)), $"The partition options of the clone for partition: `{ key }` should have the same value for { property.Name }.");
+                    Assert.That(property.GetValue(clone.PartitionOptions[key], null), Is.EqualTo(property.GetValue(options.PartitionOptions[key], null)), $"The partition options of the clone for partition: `{key}` should have the same value for {property.Name}.");
                 }
             }
         }

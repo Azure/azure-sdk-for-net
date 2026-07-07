@@ -13,7 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
 
-[assembly:CodeGenSuppressType("ResourceGroupUpdateOperation")]
+[assembly: CodeGenSuppressType("ResourceGroupUpdateOperation")]
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a ResourceGroupResource along with the instance operations that can be performed on it. </summary>

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.DataLocationToServiceLocationMap;
+                return Properties is null ? default : Properties.DataLocationToServiceLocationMap;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.Capacity;
+                return Properties is null ? default : Properties.Capacity;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.Costs;
+                return Properties is null ? default : Properties.Costs;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.ApiVersions;
+                return Properties is null ? default : Properties.ApiVersions;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.DisabledReason;
+                return Properties is null ? default : Properties.DisabledReason;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.DisabledReasonMessage;
+                return Properties is null ? default : Properties.DisabledReasonMessage;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.RequiredFeature;
+                return Properties is null ? default : Properties.RequiredFeature;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             get
             {
-                return Properties.CountriesWithinCommerceBoundary;
+                return Properties is null ? default : Properties.CountriesWithinCommerceBoundary;
             }
         }
     }

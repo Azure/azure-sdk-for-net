@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary>
-    /// A class representing the ContainerAppAuthConfig data model.
-    /// Configuration settings for the Azure ContainerApp Service Authentication / Authorization feature.
-    /// </summary>
+    /// <summary> Configuration settings for the Azure ContainerApp Service Authentication / Authorization feature. </summary>
     public partial class ContainerAppAuthConfigData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAuthConfigData"/>. </summary>
         public ContainerAppAuthConfigData()
@@ -57,45 +25,128 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAuthConfigData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="platform"> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="globalValidation"> The configuration settings that determines the validation flow of users using  Service Authentication/Authorization. </param>
-        /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="login"> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="encryptionSettings"> The configuration settings of the secrets references of encryption key and signing key for ContainerApp Service Authentication/Authorization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppAuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAuthPlatform platform, ContainerAppGlobalValidation globalValidation, ContainerAppIdentityProvidersConfiguration identityProviders, ContainerAppLogin login, ContainerAppHttpSettings httpSettings, EncryptionSettings encryptionSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> AuthConfig resource specific properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppAuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthConfigProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Platform = platform;
-            GlobalValidation = globalValidation;
-            IdentityProviders = identityProviders;
-            Login = login;
-            HttpSettings = httpSettings;
-            EncryptionSettings = encryptionSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> AuthConfig resource specific properties. </summary>
+        [WirePath("properties")]
+        internal AuthConfigProperties Properties { get; set; }
 
         /// <summary> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </summary>
         [WirePath("properties.platform")]
-        public ContainerAppAuthPlatform Platform { get; set; }
+        public ContainerAppAuthPlatform Platform
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Platform;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthConfigProperties();
+                }
+                Properties.Platform = value;
+            }
+        }
+
         /// <summary> The configuration settings that determines the validation flow of users using  Service Authentication/Authorization. </summary>
         [WirePath("properties.globalValidation")]
-        public ContainerAppGlobalValidation GlobalValidation { get; set; }
+        public ContainerAppGlobalValidation GlobalValidation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GlobalValidation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthConfigProperties();
+                }
+                Properties.GlobalValidation = value;
+            }
+        }
+
         /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
         [WirePath("properties.identityProviders")]
-        public ContainerAppIdentityProvidersConfiguration IdentityProviders { get; set; }
+        public ContainerAppIdentityProvidersConfiguration IdentityProviders
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentityProviders;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthConfigProperties();
+                }
+                Properties.IdentityProviders = value;
+            }
+        }
+
         /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
         [WirePath("properties.login")]
-        public ContainerAppLogin Login { get; set; }
+        public ContainerAppLogin Login
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Login;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthConfigProperties();
+                }
+                Properties.Login = value;
+            }
+        }
+
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </summary>
         [WirePath("properties.httpSettings")]
-        public ContainerAppHttpSettings HttpSettings { get; set; }
+        public ContainerAppHttpSettings HttpSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthConfigProperties();
+                }
+                Properties.HttpSettings = value;
+            }
+        }
+
         /// <summary> The configuration settings of the secrets references of encryption key and signing key for ContainerApp Service Authentication/Authorization. </summary>
         [WirePath("properties.encryptionSettings")]
-        public EncryptionSettings EncryptionSettings { get; set; }
+        public EncryptionSettings EncryptionSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthConfigProperties();
+                }
+                Properties.EncryptionSettings = value;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -136,13 +137,13 @@ namespace Azure.ResourceManager.HDInsight.Tests
             //Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, cluster.Data.Identity.ManagedServiceIdentityType);
             //Assert.AreEqual(resourceIdentifier, cluster.Data.Identity.UserAssignedIdentities.First().Key);
 
-            patch.Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned");
-            patch.Identity.UserAssignedIdentities.Add(new ResourceIdentifier(resourceIdentifier), new UserAssignedIdentity());
-            patch.Identity.UserAssignedIdentities.Add(new ResourceIdentifier(resourceIdentifier2), new UserAssignedIdentity());
+            patch.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
+            patch.Identity.UserAssignedIdentities.Add(resourceIdentifier, new Azure.ResourceManager.Models.UserAssignedIdentity());
+            patch.Identity.UserAssignedIdentities.Add(resourceIdentifier2, new Azure.ResourceManager.Models.UserAssignedIdentity());
             await cluster.UpdateAsync(patch);
 
             cluster = await _clusterCollection.GetAsync(_clusterName);
-            Assert.AreEqual("SystemAssigned,UserAssigned", cluster.Data.Identity.ManagedServiceIdentityType.ToString());
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssignedUserAssigned, cluster.Data.Identity.ManagedServiceIdentityType);
             Assert.AreEqual(2, cluster.Data.Identity.UserAssignedIdentities.Count);
         }
         private void ValidateCluster(HDInsightClusterResource cluster)

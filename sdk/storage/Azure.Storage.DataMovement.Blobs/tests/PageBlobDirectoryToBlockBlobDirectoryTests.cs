@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias DMBlobs;
 extern alias BaseBlobs;
-
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,17 +10,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Shared;
+using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Models;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Tests;
-using Azure.Storage.Test;
-using Azure.Storage.Test.Shared;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Storage.Shared;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {

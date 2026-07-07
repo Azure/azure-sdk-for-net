@@ -348,3 +348,35 @@ function SetDeploymentOutputs(
 
     return $deploymentEnvironmentVariables, $deploymentOutputs
 }
+
+function HandleTemplateDeploymentError($templateValidationResult) {
+    Write-Warning "Deployment template validation failed"
+
+    if (!$templateValidationResult.Details.Message) {
+        Write-Warning "Could not parse template validation error"
+        return
+    }
+
+    # Retrieve one or more messages then decode the strings for readability (remove quote escapes, fix link readability, etc.)
+    $parsedMessage = ($templateValidationResult.Details.Message -join "$([System.Environment]::NewLine)$([System.Environment]::NewLine)")
+    $parsedMessage = [System.Net.WebUtility]::UrlDecode($parsedMessage)
+
+    Write-Warning "#####################################################"
+    Write-Warning "######### TEMPLATE VALIDATION ERROR DETAILS #########"
+    Write-Warning "#####################################################"
+    Write-Host $parsedMessage
+    Write-Warning "#####################################################"
+}
+
+function HandleDeploymentFailure($deployment) {
+    Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
+    Write-Host @'
+#####################################################
+# For help debugging live test provisioning issues, #
+# see http://aka.ms/azsdk/engsys/live-test-help     #
+#####################################################
+'@
+    $queryTime = (Get-Date).AddMinutes(-10).ToString("o")
+    Write-Host "To check the activity log with the below command after waiting 2 minutes for propagation:"
+    Write-Host "(Get-AzActivityLog -CorrelationId '$($deployment.CorrelationId)' -StartTime '$queryTime').Properties.Content.statusMessage"
+}

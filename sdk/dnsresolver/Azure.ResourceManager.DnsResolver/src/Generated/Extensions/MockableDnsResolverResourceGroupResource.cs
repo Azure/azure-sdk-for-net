@@ -8,240 +8,53 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DnsResolver;
+using Azure.ResourceManager.DnsResolver.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDnsResolverResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDnsResolverResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _dnsResolversClientDiagnostics;
+        private DnsResolvers _dnsResolversRestClient;
+        private ClientDiagnostics _dnsForwardingRulesetsClientDiagnostics;
+        private DnsForwardingRulesets _dnsForwardingRulesetsRestClient;
+        private ClientDiagnostics _dnsResolverPoliciesClientDiagnostics;
+        private DnsResolverPolicies _dnsResolverPoliciesRestClient;
+
+        /// <summary> Initializes a new instance of MockableDnsResolverResourceGroupResource for mocking. </summary>
         protected MockableDnsResolverResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDnsResolverResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDnsResolverResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDnsResolverResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics DnsResolversClientDiagnostics => _dnsResolversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of DnsForwardingRulesetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DnsForwardingRulesetResources and their operations over a DnsForwardingRulesetResource. </returns>
-        public virtual DnsForwardingRulesetCollection GetDnsForwardingRulesets()
-        {
-            return GetCachedClient(client => new DnsForwardingRulesetCollection(client, Id));
-        }
+        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
-        /// <summary>
-        /// Gets a DNS forwarding ruleset properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsForwardingRulesetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(string rulesetName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsForwardingRulesets().GetAsync(rulesetName, cancellationToken).ConfigureAwait(false);
-        }
+        private ClientDiagnostics DnsForwardingRulesetsClientDiagnostics => _dnsForwardingRulesetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets a DNS forwarding ruleset properties.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsForwardingRulesetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsForwardingRulesetResource> GetDnsForwardingRuleset(string rulesetName, CancellationToken cancellationToken = default)
-        {
-            return GetDnsForwardingRulesets().Get(rulesetName, cancellationToken);
-        }
+        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
-        /// <summary> Gets a collection of DnsResolverDomainListResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DnsResolverDomainListResources and their operations over a DnsResolverDomainListResource. </returns>
-        public virtual DnsResolverDomainListCollection GetDnsResolverDomainLists()
-        {
-            return GetCachedClient(client => new DnsResolverDomainListCollection(client, Id));
-        }
+        private ClientDiagnostics DnsResolverPoliciesClientDiagnostics => _dnsResolverPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets properties of a DNS resolver domain list.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverDomainLists/{dnsResolverDomainListName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverDomainListResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dnsResolverDomainListName"> The name of the DNS resolver domain list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverDomainListName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dnsResolverDomainListName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsResolverDomainListResource>> GetDnsResolverDomainListAsync(string dnsResolverDomainListName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsResolverDomainLists().GetAsync(dnsResolverDomainListName, cancellationToken).ConfigureAwait(false);
-        }
+        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
-        /// <summary>
-        /// Gets properties of a DNS resolver domain list.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverDomainLists/{dnsResolverDomainListName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverDomainListResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dnsResolverDomainListName"> The name of the DNS resolver domain list. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverDomainListName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dnsResolverDomainListName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsResolverDomainListResource> GetDnsResolverDomainList(string dnsResolverDomainListName, CancellationToken cancellationToken = default)
-        {
-            return GetDnsResolverDomainLists().Get(dnsResolverDomainListName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DnsResolverPolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DnsResolverPolicyResources and their operations over a DnsResolverPolicyResource. </returns>
-        public virtual DnsResolverPolicyCollection GetDnsResolverPolicies()
-        {
-            return GetCachedClient(client => new DnsResolverPolicyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets properties of a DNS resolver policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DnsResolverPolicyResource>> GetDnsResolverPolicyAsync(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetDnsResolverPolicies().GetAsync(dnsResolverPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets properties of a DNS resolver policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DnsResolverPolicyResource> GetDnsResolverPolicy(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetDnsResolverPolicies().Get(dnsResolverPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DnsResolverResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DnsResolverResources and their operations over a DnsResolverResource. </returns>
+        /// <summary> Gets a collection of DnsResolvers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DnsResolvers and their operations over a DnsResolverResource. </returns>
         public virtual DnsResolverCollection GetDnsResolvers()
         {
             return GetCachedClient(client => new DnsResolverCollection(client, Id));
@@ -251,20 +64,16 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// Gets properties of a DNS resolver.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolvers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolvers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +84,8 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<DnsResolverResource>> GetDnsResolverAsync(string dnsResolverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+
             return await GetDnsResolvers().GetAsync(dnsResolverName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -282,20 +93,16 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// Gets properties of a DNS resolver.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DnsResolvers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolvers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsResolverResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,7 +113,446 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         [ForwardsClientCalls]
         public virtual Response<DnsResolverResource> GetDnsResolver(string dnsResolverName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(dnsResolverName, nameof(dnsResolverName));
+
             return GetDnsResolvers().Get(dnsResolverName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DnsForwardingRulesets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DnsForwardingRulesets and their operations over a DnsForwardingRulesetResource. </returns>
+        public virtual DnsForwardingRulesetCollection GetDnsForwardingRulesets()
+        {
+            return GetCachedClient(client => new DnsForwardingRulesetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a DNS forwarding ruleset properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsForwardingRulesets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(string rulesetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+
+            return await GetDnsForwardingRulesets().GetAsync(rulesetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a DNS forwarding ruleset properties.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{dnsForwardingRulesetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsForwardingRulesets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DnsForwardingRulesetResource> GetDnsForwardingRuleset(string rulesetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
+
+            return GetDnsForwardingRulesets().Get(rulesetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DnsResolverPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DnsResolverPolicies and their operations over a DnsResolverPolicyResource. </returns>
+        public virtual DnsResolverPolicyCollection GetDnsResolverPolicies()
+        {
+            return GetCachedClient(client => new DnsResolverPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets properties of a DNS resolver policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DnsResolverPolicyResource>> GetDnsResolverPolicyAsync(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
+
+            return await GetDnsResolverPolicies().GetAsync(dnsResolverPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of a DNS resolver policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverPolicies/{dnsResolverPolicyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPolicies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsResolverPolicyName"> The name of the DNS resolver policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DnsResolverPolicyResource> GetDnsResolverPolicy(string dnsResolverPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsResolverPolicyName, nameof(dnsResolverPolicyName));
+
+            return GetDnsResolverPolicies().Get(dnsResolverPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DnsResolverDomainLists in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DnsResolverDomainLists and their operations over a DnsResolverDomainListResource. </returns>
+        public virtual DnsResolverDomainListCollection GetDnsResolverDomainLists()
+        {
+            return GetCachedClient(client => new DnsResolverDomainListCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets properties of a DNS resolver domain list.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverDomainLists/{dnsResolverDomainListName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverDomainLists_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsResolverDomainListName"> The name of the DNS resolver domain list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverDomainListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverDomainListName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DnsResolverDomainListResource>> GetDnsResolverDomainListAsync(string dnsResolverDomainListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsResolverDomainListName, nameof(dnsResolverDomainListName));
+
+            return await GetDnsResolverDomainLists().GetAsync(dnsResolverDomainListName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets properties of a DNS resolver domain list.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolverDomainLists/{dnsResolverDomainListName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverDomainLists_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dnsResolverDomainListName"> The name of the DNS resolver domain list. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverDomainListName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsResolverDomainListName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DnsResolverDomainListResource> GetDnsResolverDomainList(string dnsResolverDomainListName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dnsResolverDomainListName, nameof(dnsResolverDomainListName));
+
+            return GetDnsResolverDomainLists().Get(dnsResolverDomainListName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists DNS resolver resource IDs linked to a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolversOperationGroup_ListByVirtualNetwork. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WritableSubResource> GetDnsResolversByVirtualNetworkAsync(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DnsResolversGetDnsResolversByVirtualNetworkAsyncCollectionResultOfT(
+                DnsResolversRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                top,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolversByVirtualNetwork");
+        }
+
+        /// <summary>
+        /// Lists DNS resolver resource IDs linked to a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolvers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolversOperationGroup_ListByVirtualNetwork. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WritableSubResource> GetDnsResolversByVirtualNetwork(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DnsResolversGetDnsResolversByVirtualNetworkCollectionResultOfT(
+                DnsResolversRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                top,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolversByVirtualNetwork");
+        }
+
+        /// <summary>
+        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsForwardingRulesetsOperationGroup_ListByVirtualNetwork. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="VirtualNetworkDnsForwardingRuleset"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetworkAsync(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DnsForwardingRulesetsGetDnsForwardingRulesetsByVirtualNetworkAsyncCollectionResultOfT(
+                DnsForwardingRulesetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                top,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesetsByVirtualNetwork");
+        }
+
+        /// <summary>
+        /// Lists DNS forwarding ruleset resource IDs attached to a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsForwardingRulesets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsForwardingRulesetsOperationGroup_ListByVirtualNetwork. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
+        /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="VirtualNetworkDnsForwardingRuleset"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkDnsForwardingRuleset> GetDnsForwardingRulesetsByVirtualNetwork(string virtualNetworkName, int? top = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DnsForwardingRulesetsGetDnsForwardingRulesetsByVirtualNetworkCollectionResultOfT(
+                DnsForwardingRulesetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                top,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesetsByVirtualNetwork");
+        }
+
+        /// <summary>
+        /// Lists DNS resolver policy resource IDs linked to a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolverPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPoliciesOperationGroup_ListByVirtualNetwork. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetworkAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkAsyncCollectionResultOfT(
+                DnsResolverPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolverPoliciesByVirtualNetwork");
+        }
+
+        /// <summary>
+        /// Lists DNS resolver policy resource IDs linked to a virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/listDnsResolverPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DnsResolverPoliciesOperationGroup_ListByVirtualNetwork. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualNetworkName"> The name of the VirtualNetwork. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WritableSubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WritableSubResource> GetDnsResolverPoliciesByVirtualNetwork(string virtualNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DnsResolverPoliciesGetDnsResolverPoliciesByVirtualNetworkCollectionResultOfT(
+                DnsResolverPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualNetworkName,
+                context,
+                "MockableDnsResolverResourceGroupResource.GetDnsResolverPoliciesByVirtualNetwork");
         }
     }
 }

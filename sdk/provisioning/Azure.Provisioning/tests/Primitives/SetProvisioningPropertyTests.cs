@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Tests.Primitives
                 {
                     ProvisioningParameter parameter1 = new("parameter1", typeof(string));
 
-                    StorageAccount acct = new("storage")
+                    StorageAccount acct = new("storage", StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Kind = StorageKind.StorageV2,
                         Sku = new StorageSku
@@ -91,7 +91,7 @@ namespace Azure.Provisioning.Tests.Primitives
                     ProvisioningParameter parameter1 = new("parameter1", typeof(string));
                     ProvisioningParameter parameter2 = new("parameter2", typeof(string));
 
-                    StorageAccount acct = new("storage")
+                    StorageAccount acct = new("storage", StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Kind = StorageKind.StorageV2,
                         Sku = new StorageSku

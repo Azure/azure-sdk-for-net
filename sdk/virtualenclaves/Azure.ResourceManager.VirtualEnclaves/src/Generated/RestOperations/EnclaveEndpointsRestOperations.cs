@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath(virtualEnclaveName, true);
             uri.AppendPath("/enclaveEndpoints/", false);
             uri.AppendPath(enclaveEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath(virtualEnclaveName, true);
             uri.AppendPath("/enclaveEndpoints/", false);
             uri.AppendPath(enclaveEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath(virtualEnclaveName, true);
             uri.AppendPath("/enclaveEndpoints/", false);
             uri.AppendPath(enclaveEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -120,7 +129,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath(virtualEnclaveName, true);
             uri.AppendPath("/enclaveEndpoints/", false);
             uri.AppendPath(enclaveEndpointName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -139,7 +151,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath("/providers/Microsoft.Mission/virtualEnclaves/", false);
             uri.AppendPath(virtualEnclaveName, true);
             uri.AppendPath("/enclaveEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -151,8 +166,18 @@ namespace Azure.ResourceManager.VirtualEnclaves
         internal HttpMessage CreateNextGetByEnclaveResourceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string virtualEnclaveName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -170,7 +195,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath("/providers/Microsoft.Mission/virtualEnclaves/", false);
             uri.AppendPath(virtualEnclaveName, true);
             uri.AppendPath("/enclaveEndpoints", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -182,8 +210,18 @@ namespace Azure.ResourceManager.VirtualEnclaves
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, string virtualEnclaveName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -205,7 +243,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath("/enclaveEndpoints/", false);
             uri.AppendPath(enclaveEndpointName, true);
             uri.AppendPath("/handleApprovalCreation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -229,7 +270,10 @@ namespace Azure.ResourceManager.VirtualEnclaves
             uri.AppendPath("/enclaveEndpoints/", false);
             uri.AppendPath(enclaveEndpointName, true);
             uri.AppendPath("/handleApprovalDeletion", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/deletedManagedHSMs/", false);
             uri.AppendPath(name, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -71,7 +74,10 @@ namespace Azure.ResourceManager.KeyVault
             uri.AppendPath("/deletedManagedHSMs/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/purge", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

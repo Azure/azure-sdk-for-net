@@ -17,8 +17,11 @@ namespace BasicTypeSpec
         /// <param name="id"> The unique identifier of the plant. </param>
         /// <param name="height"> The height of the plant in centimeters. </param>
         /// <param name="age"> The age of the tree in years. </param>
-        internal Tree(string id, int height, int age) : base("tree", id, height)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Tree(string id, int height, int age) : base("tree", id, height)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             Age = age;
         }
 
@@ -34,6 +37,6 @@ namespace BasicTypeSpec
         }
 
         /// <summary> The age of the tree in years. </summary>
-        public int Age { get; }
+        public int Age { get; set; }
     }
 }

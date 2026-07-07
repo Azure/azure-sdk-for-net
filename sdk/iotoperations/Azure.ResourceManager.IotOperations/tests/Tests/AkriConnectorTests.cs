@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                 connectorResource = await connectorCollection.GetAsync(connectorName);
             }
             catch (RequestFailedException)
-            {}
+            { }
 
             // Create AkriConnectorResource
             IotOperationsAkriConnectorData connectorData = CreateAkriConnectorResourceData(connectorResource);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             else
             {
                 return new IotOperationsAkriConnectorData
-                {};
+                { };
             }
         }
     }

@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         private const string DeallocateValue = "Deallocate";
         /// <summary> Hibernate operations on the resources. </summary>
         private const string HibernateValue = "Hibernate";
+        /// <summary> Create operations on the resources. </summary>
+        private const string CreateValue = "Create";
+        /// <summary> Delete operations on the resources. </summary>
+        private const string DeleteValue = "Delete";
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +49,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Hibernate operations on the resources. </summary>
         public static ResourceOperationType Hibernate { get; } = new ResourceOperationType(HibernateValue);
+
+        /// <summary> Create operations on the resources. </summary>
+        public static ResourceOperationType Create { get; } = new ResourceOperationType(CreateValue);
+
+        /// <summary> Delete operations on the resources. </summary>
+        public static ResourceOperationType Delete { get; } = new ResourceOperationType(DeleteValue);
 
         /// <summary> Determines if two <see cref="ResourceOperationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

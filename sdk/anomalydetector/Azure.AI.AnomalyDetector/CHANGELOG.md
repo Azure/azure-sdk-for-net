@@ -6,6 +6,7 @@
 
 - Introduced model factory `Azure.AI.AnomalyDetector.AnomalyDetectorModelFactory` for mocking.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Added `AnomalyDetectorClientSettings` to support creating a `AnomalyDetectorClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 

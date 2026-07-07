@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new InformaticaOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context), data => new InformaticaOrganizationResource(Client, data));
+            return new PageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Id.SubscriptionId, context, "MockableInformaticaDataManagementSubscriptionResource.GetInformaticaOrganizations"), data => new InformaticaOrganizationResource(Client, data));
         }
     }
 }

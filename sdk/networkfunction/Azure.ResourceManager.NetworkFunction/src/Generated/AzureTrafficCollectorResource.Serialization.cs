@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetworkFunction
 {
+    /// <summary></summary>
     public partial class AzureTrafficCollectorResource : IJsonModel<AzureTrafficCollectorData>
     {
-        private static AzureTrafficCollectorData s_dataDeserializationInstance;
-        private static AzureTrafficCollectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AzureTrafficCollectorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AzureTrafficCollectorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AzureTrafficCollectorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureTrafficCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AzureTrafficCollectorData>)Data).Write(writer, options);
 
-        AzureTrafficCollectorData IJsonModel<AzureTrafficCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AzureTrafficCollectorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureTrafficCollectorData IJsonModel<AzureTrafficCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzureTrafficCollectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AzureTrafficCollectorData>(Data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AzureTrafficCollectorData IPersistableModel<AzureTrafficCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AzureTrafficCollectorData>(data, options, AzureResourceManagerNetworkFunctionContext.Default);
 
-        string IPersistableModel<AzureTrafficCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AzureTrafficCollectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureTrafficCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

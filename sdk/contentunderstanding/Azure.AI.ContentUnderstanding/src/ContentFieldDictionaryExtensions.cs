@@ -26,7 +26,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <example>
         /// <code>
         /// var customerName = documentContent.Fields?.GetFieldOrDefault("CustomerName")?.Value?.ToString();
-        /// var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value?.ToString();
+        /// var currency = totalAmountObj.Value?.GetFieldOrDefault("CurrencyCode")?.Value?.ToString();
         /// </code>
         /// </example>
         public static ContentField GetFieldOrDefault(this IDictionary<string, ContentField> fields, string fieldName)

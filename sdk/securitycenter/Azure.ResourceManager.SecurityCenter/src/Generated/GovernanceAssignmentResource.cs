@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A Class representing a GovernanceAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GovernanceAssignmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetGovernanceAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource"/> using the GetGovernanceAssignment method.
+    /// A class representing a GovernanceAssignment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GovernanceAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource"/> using the GetGovernanceAssignments method.
     /// </summary>
     public partial class GovernanceAssignmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GovernanceAssignmentResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="assessmentName"> The assessmentName. </param>
-        /// <param name="assignmentKey"> The assignmentKey. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string assessmentName, string assignmentKey)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _governanceAssignmentClientDiagnostics;
-        private readonly GovernanceAssignmentsRestOperations _governanceAssignmentRestClient;
+        private readonly ClientDiagnostics _governanceAssignmentsClientDiagnostics;
+        private readonly GovernanceAssignments _governanceAssignmentsRestClient;
         private readonly GovernanceAssignmentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/governanceAssignments";
 
-        /// <summary> Initializes a new instance of the <see cref="GovernanceAssignmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GovernanceAssignmentResource for mocking. </summary>
         protected GovernanceAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GovernanceAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GovernanceAssignmentResource(ArmClient client, GovernanceAssignmentData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.SecurityCenter
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GovernanceAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GovernanceAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _governanceAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string governanceAssignmentApiVersion);
-            _governanceAssignmentRestClient = new GovernanceAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, governanceAssignmentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _governanceAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _governanceAssignmentsRestClient = new GovernanceAssignments(_governanceAssignmentsClientDiagnostics, Pipeline, Endpoint, governanceAssignmentApiVersion ?? "2022-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual GovernanceAssignmentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="assessmentName"> The assessmentName. </param>
+        /// <param name="assignmentKey"> The assignmentKey. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string assessmentName, string assignmentKey)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a specific governanceAssignment for the requested scope by AssignmentKey
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GovernanceAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GovernanceAssignmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentResource.Get");
+            using DiagnosticScope scope = _governanceAssignmentsClientDiagnostics.CreateScope("GovernanceAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _governanceAssignmentRestClient.GetAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceAssignmentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get a specific governanceAssignment for the requested scope by AssignmentKey
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GovernanceAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GovernanceAssignmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentResource.Get");
+            using DiagnosticScope scope = _governanceAssignmentsClientDiagnostics.CreateScope("GovernanceAssignmentResource.Get");
             scope.Start();
             try
             {
-                var response = _governanceAssignmentRestClient.Get(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceAssignmentsRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Delete a GovernanceAssignment over a given scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceAssignments_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceAssignments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GovernanceAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,16 +211,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentResource.Delete");
+            using DiagnosticScope scope = _governanceAssignmentsClientDiagnostics.CreateScope("GovernanceAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _governanceAssignmentRestClient.DeleteAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _governanceAssignmentRestClient.CreateDeleteRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Delete a GovernanceAssignment over a given scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceAssignments_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceAssignments_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GovernanceAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,16 +262,23 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentResource.Delete");
+            using DiagnosticScope scope = _governanceAssignmentsClientDiagnostics.CreateScope("GovernanceAssignmentResource.Delete");
             scope.Start();
             try
             {
-                var response = _governanceAssignmentRestClient.Delete(Id.Parent.Parent, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _governanceAssignmentRestClient.CreateDeleteRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceAssignmentsRestClient.CreateDeleteRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation operation = new SecurityCenterArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -256,23 +289,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Creates or updates a governance assignment on the given subscription.
+        /// Update a GovernanceAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceAssignments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceAssignments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GovernanceAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,16 +317,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentResource.Update");
+            using DiagnosticScope scope = _governanceAssignmentsClientDiagnostics.CreateScope("GovernanceAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _governanceAssignmentRestClient.CreateOrUpdateAsync(Id.Parent.Parent, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _governanceAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, GovernanceAssignmentData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<GovernanceAssignmentResource> operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -304,23 +345,23 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Creates or updates a governance assignment on the given subscription.
+        /// Update a GovernanceAssignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GovernanceAssignments_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GovernanceAssignments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GovernanceAssignmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GovernanceAssignmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,16 +373,24 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _governanceAssignmentClientDiagnostics.CreateScope("GovernanceAssignmentResource.Update");
+            using DiagnosticScope scope = _governanceAssignmentsClientDiagnostics.CreateScope("GovernanceAssignmentResource.Update");
             scope.Start();
             try
             {
-                var response = _governanceAssignmentRestClient.CreateOrUpdate(Id.Parent.Parent, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _governanceAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id.Parent.Parent, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _governanceAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.ToString(), Id.Parent.Name, Id.Name, GovernanceAssignmentData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GovernanceAssignmentData> response = Response.FromValue(GovernanceAssignmentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityCenterArmOperation<GovernanceAssignmentResource> operation = new SecurityCenterArmOperation<GovernanceAssignmentResource>(Response.FromValue(new GovernanceAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

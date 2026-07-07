@@ -19,7 +19,7 @@ namespace Azure.Compute.Batch
         /// <summary> Initializes a new instance of <see cref="BatchNodeError"/>. </summary>
         internal BatchNodeError()
         {
-            ErrorDetails = new ChangeTrackingList<NameValuePair>();
+            ErrorDetails = new ChangeTrackingList<BatchNameValuePair>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeError"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Compute.Batch
         /// <param name="message"> A message describing the Compute Node error, intended to be suitable for display in a user interface. </param>
         /// <param name="errorDetails"> The list of additional error details related to the Compute Node error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeError(string code, string message, IList<NameValuePair> errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeError(string code, string message, IList<BatchNameValuePair> errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -42,6 +42,6 @@ namespace Azure.Compute.Batch
         public string Message { get; }
 
         /// <summary> The list of additional error details related to the Compute Node error. </summary>
-        public IList<NameValuePair> ErrorDetails { get; }
+        public IList<BatchNameValuePair> ErrorDetails { get; }
     }
 }

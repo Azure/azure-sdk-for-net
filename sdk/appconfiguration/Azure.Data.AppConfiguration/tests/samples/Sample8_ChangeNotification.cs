@@ -11,12 +11,12 @@ namespace Azure.Data.AppConfiguration.Samples
 #pragma warning disable SA1400 // Declare the access modifier
     public partial class ConfigurationSamples
     {
-#region Snippet:AzConfigSample8_ChangeNotification_SharedClient
+        #region Snippet:AzConfigSample8_ChangeNotification_SharedClient
         // The shared ConfigurationClient used by application
         ConfigurationClient SharedConfigurationClient;
-#endregion
+        #endregion
 
-#region Snippet:AzConfigSample8_ChangeNotification
+        #region Snippet:AzConfigSample8_ChangeNotification
         public void HandleEventGridNotification(string data)
         {
             var events = EventGridEvent.ParseMany(new BinaryData(data));
@@ -33,6 +33,6 @@ namespace Azure.Data.AppConfiguration.Samples
                 }
             }
         }
-#endregion
+        #endregion
     }
 }

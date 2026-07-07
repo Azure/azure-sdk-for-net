@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.DevCenter.Tests
             var project = Client.GetDevCenterProjectResource(projectId);
 
             List<ProjectAttachedNetworkConnectionResource> attachedNetworks = await project.GetProjectAttachedNetworkConnections().GetAllAsync().ToEnumerableAsync();
-            Assert.IsTrue(attachedNetworks.Count > 0);
+            Assert.That(attachedNetworks.Count > 0, Is.True);
 
             // Get one of the networks
             var network = (await project.GetProjectAttachedNetworkConnectionAsync(attachedNetworks.First().Data.Name)).Value;
-            Assert.IsNotNull(network);
+            Assert.That(network, Is.Not.Null);
         }
     }
 }

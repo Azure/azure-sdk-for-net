@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("CreatedByType")]
-[assembly:CodeGenSuppressType("PolicyAssignmentIdentityType")]
-[assembly:CodeGenSuppressType("PolicyAssignmentIdentityTypeExtensions")]
-[assembly:CodeGenSuppressType("CloudError")]
+[assembly: CodeGenSuppressType("CreatedByType")]
+[assembly: CodeGenSuppressType("PolicyAssignmentIdentityType")]
+[assembly: CodeGenSuppressType("PolicyAssignmentIdentityTypeExtensions")]
+[assembly: CodeGenSuppressType("CloudError")]
 namespace Azure.ResourceManager.Resources.Models
 {
     public partial class LocationExpanded

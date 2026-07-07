@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -17,11 +18,7 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentIntelligenceClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -47,20 +44,24 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of DocumentIntelligenceClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options)
+        internal DocumentIntelligenceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentIntelligenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new DocumentIntelligenceClientOptions();
 
             _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -70,18 +71,24 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options)
+        public DocumentIntelligenceClient(Uri endpoint, AzureKeyCredential credential, DocumentIntelligenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            options ??= new DocumentIntelligenceClientOptions();
+        /// <summary> Initializes a new instance of DocumentIntelligenceClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DocumentIntelligenceClient(Uri endpoint, TokenCredential credential, DocumentIntelligenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        {
+        }
 
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
+        /// <summary> Initializes a new instance of DocumentIntelligenceClient from a <see cref="DocumentIntelligenceClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DocumentIntelligenceClient. </param>
+        [Experimental("SCME0002")]
+        public DocumentIntelligenceClient(DocumentIntelligenceClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -108,7 +115,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(this, modelId, context);
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(this, modelId, context, "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }
 
         /// <summary>
@@ -129,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(this, modelId, context);
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(this, modelId, context, "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }
 
         /// <summary> List batch document analysis results. </summary>
@@ -142,7 +149,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext(), "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }
 
         /// <summary> List batch document analysis results. </summary>
@@ -155,7 +162,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext());
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext(), "DocumentIntelligenceClient.GetAnalyzeBatchResults");
         }
     }
 }

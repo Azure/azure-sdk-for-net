@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Azure.Provisioning/src/Azure.Provisioning.csproj" />
+  <Project Path="Azure.Provisioning/tests/Azure.Provisioning.Tests.csproj" />
+  <Project Path="Azure.Provisioning.Deployment/src/Azure.Provisioning.Deployment.csproj" />
+  <Project Path="Azure.Provisioning.Deployment/tests/Azure.Provisioning.Deployment.Tests.csproj" />
+</Solution>

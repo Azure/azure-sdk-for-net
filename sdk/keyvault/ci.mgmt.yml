@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.KeyVault
       safeName: AzureResourceManagerKeyVault
+    - name: Azure.Provisioning.KeyVault
+      safeName: AzureProvisioningKeyVault

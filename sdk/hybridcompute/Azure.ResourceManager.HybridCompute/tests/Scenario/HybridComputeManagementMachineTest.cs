@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HybridCompute;
-using NUnit.Framework;
-using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
-using System.Diagnostics;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 {
@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanInstallPatch(){
+        public async Task CanInstallPatch()
+        {
             MachineInstallPatchesResult resourceData = await installPatch();
 
             Assert.NotNull(resourceData.Status.ToString());
@@ -58,7 +59,8 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanAssessPatch(){
+        public async Task CanAssessPatch()
+        {
             MachineAssessPatchesResult resourceData = await assessPatch();
 
             Assert.AreEqual("Succeeded", resourceData.Status.ToString());
@@ -77,7 +79,8 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeleteMachine(){
+        public async Task CanDeleteMachine()
+        {
             await deleteMachine();
         }
     }

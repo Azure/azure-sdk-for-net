@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != BestPracticeResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BestPracticeResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BestPracticeResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllAsyncCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context), data => new BestPracticeVersionResource(Client, data));
+            return new AsyncPageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllAsyncCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context, "BestPracticeVersionCollection.GetAll"), data => new BestPracticeVersionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context), data => new BestPracticeVersionResource(Client, data));
+            return new PageableWrapper<BestPracticeData, BestPracticeVersionResource>(new BestPracticeVersionsGetAllCollectionResultOfT(_bestPracticeVersionsRestClient, Id.Name, context, "BestPracticeVersionCollection.GetAll"), data => new BestPracticeVersionResource(Client, data));
         }
 
         /// <summary>

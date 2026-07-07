@@ -11,13 +11,20 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal sealed class AzureMonitorMetricExporter : BaseExporter<Metric>
+    /// <summary>
+    /// An exporter that sends metrics to Application Insights.
+    /// </summary>
+    public sealed class AzureMonitorMetricExporter : BaseExporter<Metric>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureMonitorMetricExporter"/> class.
+        /// </summary>
+        /// <param name="options">Configuration options for the metric exporter.</param>
         public AzureMonitorMetricExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
         }
@@ -63,6 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return exportResult;
         }
 
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)

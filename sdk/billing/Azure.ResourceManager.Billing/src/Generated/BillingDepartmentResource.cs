@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingDepartment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingDepartmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingDepartmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingDepartment method.
+    /// A class representing a BillingDepartment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingDepartmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingDepartments method.
     /// </summary>
     public partial class BillingDepartmentResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingDepartmentResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="departmentName"> The departmentName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string departmentName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingDepartmentDepartmentsClientDiagnostics;
-        private readonly DepartmentsRestOperations _billingDepartmentDepartmentsRestClient;
-        private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
-        private readonly BillingPermissionsRestOperations _billingPermissionsRestClient;
+        private readonly ClientDiagnostics _departmentsClientDiagnostics;
+        private readonly Departments _departmentsRestClient;
         private readonly BillingDepartmentData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/departments";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingDepartmentResource for mocking. </summary>
         protected BillingDepartmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingDepartmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingDepartmentResource(ArmClient client, BillingDepartmentData data) : this(client, data.Id)
@@ -56,280 +44,91 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingDepartmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingDepartmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingDepartmentDepartmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingDepartmentDepartmentsApiVersion);
-            _billingDepartmentDepartmentsRestClient = new DepartmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingDepartmentDepartmentsApiVersion);
-            _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _billingPermissionsRestClient = new BillingPermissionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingDepartmentApiVersion);
+            _departmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _departmentsRestClient = new Departments(_departmentsClientDiagnostics, Pipeline, Endpoint, billingDepartmentApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingDepartmentData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="departmentName"> The departmentName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string departmentName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of BillingDepartmentRoleAssignmentResources in the BillingDepartment. </summary>
-        /// <returns> An object representing collection of BillingDepartmentRoleAssignmentResources and their operations over a BillingDepartmentRoleAssignmentResource. </returns>
-        public virtual BillingDepartmentRoleAssignmentCollection GetBillingDepartmentRoleAssignments()
-        {
-            return GetCachedClient(client => new BillingDepartmentRoleAssignmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingDepartmentRoleAssignmentResource>> GetBillingDepartmentRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingDepartmentRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleAssignments/{billingRoleAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleAssignments_GetByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingDepartmentRoleAssignmentResource> GetBillingDepartmentRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return GetBillingDepartmentRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BillingDepartmentRoleDefinitionResources in the BillingDepartment. </summary>
-        /// <returns> An object representing collection of BillingDepartmentRoleDefinitionResources and their operations over a BillingDepartmentRoleDefinitionResource. </returns>
-        public virtual BillingDepartmentRoleDefinitionCollection GetBillingDepartmentRoleDefinitions()
-        {
-            return GetCachedClient(client => new BillingDepartmentRoleDefinitionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the definition for a role on a department. The operation is supported for billing accounts with agreement type Enterprise Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleDefinitions/{roleDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingDepartmentRoleDefinitionResource>> GetBillingDepartmentRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingDepartmentRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the definition for a role on a department. The operation is supported for billing accounts with agreement type Enterprise Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingRoleDefinitions/{roleDefinitionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingRoleDefinition_GetByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingDepartmentRoleDefinitionResource> GetBillingDepartmentRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            return GetBillingDepartmentRoleDefinitions().Get(roleDefinitionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of BillingDepartmentEnrollmentAccountResources in the BillingDepartment. </summary>
-        /// <returns> An object representing collection of BillingDepartmentEnrollmentAccountResources and their operations over a BillingDepartmentEnrollmentAccountResource. </returns>
-        public virtual BillingDepartmentEnrollmentAccountCollection GetBillingDepartmentEnrollmentAccounts()
-        {
-            return GetCachedClient(client => new BillingDepartmentEnrollmentAccountCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnrollmentAccounts_GetByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentEnrollmentAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BillingDepartmentEnrollmentAccountResource>> GetBillingDepartmentEnrollmentAccountAsync(string enrollmentAccountName, CancellationToken cancellationToken = default)
-        {
-            return await GetBillingDepartmentEnrollmentAccounts().GetAsync(enrollmentAccountName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnrollmentAccounts_GetByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentEnrollmentAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<BillingDepartmentEnrollmentAccountResource> GetBillingDepartmentEnrollmentAccount(string enrollmentAccountName, CancellationToken cancellationToken = default)
-        {
-            return GetBillingDepartmentEnrollmentAccounts().Get(enrollmentAccountName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a department by ID. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingDepartmentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentResource.Get");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentDepartmentsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingDepartmentData> response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,33 +142,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets a department by ID. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Departments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingDepartmentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingDepartmentDepartmentsClientDiagnostics.CreateScope("BillingDepartmentResource.Get");
+            using DiagnosticScope scope = _departmentsClientDiagnostics.CreateScope("BillingDepartmentResource.Get");
             scope.Start();
             try
             {
-                var response = _billingDepartmentDepartmentsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _departmentsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingDepartmentData> response = Response.FromValue(BillingDepartmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -380,100 +187,65 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Lists the billing permissions the caller has for a department.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingPermissions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_ListByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateListByDepartmentRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPermissionsRestClient.CreateListByDepartmentNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingPermission.DeserializeBillingPermission(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.GetBillingPermissions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the billing permissions the caller has for a department.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingPermissions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_ListByDepartment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingPermission> GetBillingPermissions(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateListByDepartmentRequest(Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingPermissionsRestClient.CreateListByDepartmentNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingPermission.DeserializeBillingPermission(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.GetBillingPermissions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Provides a list of check access response objects for a department.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/checkAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/checkAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_CheckAccessByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_CheckAccessByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request object against which access of the caller will be checked. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByDepartmentRequest(Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT(
+                _departmentsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                BillingCheckAccessContent.ToRequestContent(content),
+                context,
+                "BillingDepartmentResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
         /// Provides a list of check access response objects for a department.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/checkAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/checkAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingPermissions_CheckAccessByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_CheckAccessByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -485,8 +257,180 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingPermissionsRestClient.CreateCheckAccessByDepartmentRequest(Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BillingCheckAccessResult.DeserializeBillingCheckAccessResult(e), _billingPermissionsClientDiagnostics, Pipeline, "BillingDepartmentResource.CheckAccessBillingPermissions", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftBillingDepartmentsCheckAccessByDepartmentCollectionResultOfT(
+                _departmentsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                BillingCheckAccessContent.ToRequestContent(content),
+                context,
+                "BillingDepartmentResource.CheckAccessBillingPermissions");
+        }
+
+        /// <summary>
+        /// Lists the billing permissions the caller has for a department.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingPermissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_ListByDepartment. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DepartmentsGetBillingPermissionsAsyncCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
+        }
+
+        /// <summary>
+        /// Lists the billing permissions the caller has for a department.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/billingPermissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Departments_ListByDepartment. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingPermission> GetBillingPermissions(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new DepartmentsGetBillingPermissionsCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
+        }
+
+        /// <summary> Gets a collection of BillingDepartmentRoleAssignments in the <see cref="BillingDepartmentResource"/>. </summary>
+        /// <returns> An object representing collection of BillingDepartmentRoleAssignments and their operations over a BillingDepartmentRoleAssignmentResource. </returns>
+        public virtual BillingDepartmentRoleAssignmentCollection GetBillingDepartmentRoleAssignments()
+        {
+            return GetCachedClient(client => new BillingDepartmentRoleAssignmentCollection(client, Id));
+        }
+
+        /// <summary> Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingDepartmentRoleAssignmentResource>> GetBillingDepartmentRoleAssignmentAsync(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
+
+            return await GetBillingDepartmentRoleAssignments().GetAsync(billingRoleAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a role assignment for the caller on a department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        /// <param name="billingRoleAssignmentName"> The ID that uniquely identifies a role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingRoleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingDepartmentRoleAssignmentResource> GetBillingDepartmentRoleAssignment(string billingRoleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingRoleAssignmentName, nameof(billingRoleAssignmentName));
+
+            return GetBillingDepartmentRoleAssignments().Get(billingRoleAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingDepartmentEnrollmentAccounts in the <see cref="BillingDepartmentResource"/>. </summary>
+        /// <returns> An object representing collection of BillingDepartmentEnrollmentAccounts and their operations over a BillingDepartmentEnrollmentAccountResource. </returns>
+        public virtual BillingDepartmentEnrollmentAccountCollection GetBillingDepartmentEnrollmentAccounts()
+        {
+            return GetCachedClient(client => new BillingDepartmentEnrollmentAccountCollection(client, Id));
+        }
+
+        /// <summary> Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingDepartmentEnrollmentAccountResource>> GetBillingDepartmentEnrollmentAccountAsync(string enrollmentAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
+
+            return await GetBillingDepartmentEnrollmentAccounts().GetAsync(enrollmentAccountName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement. </summary>
+        /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="enrollmentAccountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="enrollmentAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingDepartmentEnrollmentAccountResource> GetBillingDepartmentEnrollmentAccount(string enrollmentAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(enrollmentAccountName, nameof(enrollmentAccountName));
+
+            return GetBillingDepartmentEnrollmentAccounts().Get(enrollmentAccountName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingDepartmentRoleDefinitions in the <see cref="BillingDepartmentResource"/>. </summary>
+        /// <returns> An object representing collection of BillingDepartmentRoleDefinitions and their operations over a BillingDepartmentRoleDefinitionResource. </returns>
+        public virtual BillingDepartmentRoleDefinitionCollection GetBillingDepartmentRoleDefinitions()
+        {
+            return GetCachedClient(client => new BillingDepartmentRoleDefinitionCollection(client, Id));
+        }
+
+        /// <summary> Gets the definition for a role on a department. The operation is supported for billing accounts with agreement type Enterprise Agreement. </summary>
+        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BillingDepartmentRoleDefinitionResource>> GetBillingDepartmentRoleDefinitionAsync(string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            return await GetBillingDepartmentRoleDefinitions().GetAsync(roleDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the definition for a role on a department. The operation is supported for billing accounts with agreement type Enterprise Agreement. </summary>
+        /// <param name="roleDefinitionName"> The ID that uniquely identifies a role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BillingDepartmentRoleDefinitionResource> GetBillingDepartmentRoleDefinition(string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            return GetBillingDepartmentRoleDefinitions().Get(roleDefinitionName, cancellationToken);
         }
     }
 }

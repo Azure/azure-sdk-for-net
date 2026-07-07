@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core
 {
-    internal class Utf8JsonRequestContent: RequestContent
+    internal class Utf8JsonRequestContent : RequestContent
     {
         private readonly MemoryStream _stream;
         private readonly RequestContent _content;

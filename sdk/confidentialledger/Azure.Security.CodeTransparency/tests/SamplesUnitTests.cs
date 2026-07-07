@@ -200,13 +200,13 @@ namespace Azure.Security.CodeTransparency.Tests
             try
             {
 #endif
-                var verificationOptions = new CodeTransparencyVerificationOptions
-                {
-                    UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
-                    OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
-                    OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
-                };
-                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
+                OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
+                OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+            };
+            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
 #if SNIPPET
 
                 Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
@@ -280,7 +280,11 @@ namespace Azure.Security.CodeTransparency.Tests
                     AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
                     UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
                 };
+#if SNIPPET
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
+#else
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+#endif
                 Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
             }
             catch (Exception e)

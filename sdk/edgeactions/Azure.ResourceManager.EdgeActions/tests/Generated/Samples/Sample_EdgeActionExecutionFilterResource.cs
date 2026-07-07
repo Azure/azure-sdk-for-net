@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionExecutionFilterResource edgeActionExecutionFilter = client.GetEdgeActionExecutionFilterResource(edgeActionExecutionFilterResourceId);
 
             // invoke the operation
-            EdgeActionExecutionFilterData data = new EdgeActionExecutionFilterData
+            EdgeActionExecutionFilterPatch data = new EdgeActionExecutionFilterPatch
             {
-               Properties = new EdgeActionExecutionFilterProperties
+               Properties = new EdgeActionExecutionFilterUpdateProperties
                {
                    ExecutionFilterIdentifierHeaderValue = "header-value2",
                }

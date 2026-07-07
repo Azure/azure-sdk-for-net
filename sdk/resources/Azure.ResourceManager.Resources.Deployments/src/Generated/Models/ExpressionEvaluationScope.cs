@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Resources.Models
     public readonly partial struct ExpressionEvaluationScope : IEquatable<ExpressionEvaluationScope>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> Outer. </summary>
+        private const string OuterValue = "Outer";
+        /// <summary> Inner. </summary>
+        private const string InnerValue = "Inner";
 
         /// <summary> Initializes a new instance of <see cref="ExpressionEvaluationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExpressionEvaluationScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string OuterValue = "Outer";
-        private const string InnerValue = "Inner";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static ExpressionEvaluationScope NotSpecified { get; } = new ExpressionEvaluationScope(NotSpecifiedValue);
+
         /// <summary> Outer. </summary>
         public static ExpressionEvaluationScope Outer { get; } = new ExpressionEvaluationScope(OuterValue);
+
         /// <summary> Inner. </summary>
         public static ExpressionEvaluationScope Inner { get; } = new ExpressionEvaluationScope(InnerValue);
+
         /// <summary> Determines if two <see cref="ExpressionEvaluationScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExpressionEvaluationScope left, ExpressionEvaluationScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExpressionEvaluationScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExpressionEvaluationScope left, ExpressionEvaluationScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExpressionEvaluationScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExpressionEvaluationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExpressionEvaluationScope(string value) => new ExpressionEvaluationScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExpressionEvaluationScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExpressionEvaluationScope?(string value) => value == null ? null : new ExpressionEvaluationScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExpressionEvaluationScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExpressionEvaluationScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

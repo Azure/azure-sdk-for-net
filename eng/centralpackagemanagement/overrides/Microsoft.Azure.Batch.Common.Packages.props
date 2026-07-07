@@ -1,0 +1,12 @@
+<Project>
+  <!--
+    Legacy Batch test common project requires ADAL and specific MSAL versions
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
+    <PackageVersion Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="$(MicrosoftIdentityModelClientsActiveDirectoryVersion)" />
+    <PackageVersion Update="Microsoft.Identity.Client" Version="$(MicrosoftIdentityClientPinnedVersion)" />
+    <PackageVersion Include="Portable.BouncyCastle" Version="$(PortableBouncyCastleVersion)" />
+    <PackageVersion Include="xunit" Version="$(XunitVersion)" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVersion)" />
+  </ItemGroup>
+</Project>

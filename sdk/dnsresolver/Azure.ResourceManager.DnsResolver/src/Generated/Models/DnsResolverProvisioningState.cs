@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public readonly partial struct DnsResolverProvisioningState : IEquatable<DnsResolverProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DnsResolverProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DnsResolverProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DnsResolverProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static DnsResolverProvisioningState Creating { get; } = new DnsResolverProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static DnsResolverProvisioningState Updating { get; } = new DnsResolverProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static DnsResolverProvisioningState Deleting { get; } = new DnsResolverProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static DnsResolverProvisioningState Succeeded { get; } = new DnsResolverProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static DnsResolverProvisioningState Failed { get; } = new DnsResolverProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static DnsResolverProvisioningState Canceled { get; } = new DnsResolverProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="DnsResolverProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsResolverProvisioningState left, DnsResolverProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DnsResolverProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsResolverProvisioningState left, DnsResolverProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsResolverProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DnsResolverProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DnsResolverProvisioningState(string value) => new DnsResolverProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DnsResolverProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DnsResolverProvisioningState?(string value) => value == null ? null : new DnsResolverProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsResolverProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DnsResolverProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

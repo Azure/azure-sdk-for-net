@@ -100,11 +100,12 @@ namespace Azure.Core.Tests
             };
 
             for (int i = 0; i < hcs.Length; i++)
-            for (int j = 0; j < hcs.Length; j++)
-            {
-                if (i == j) continue;
-                Assert.AreNotEqual(hcs[i], hcs[j]);
-            }
+                for (int j = 0; j < hcs.Length; j++)
+                {
+                    if (i == j)
+                        continue;
+                    Assert.AreNotEqual(hcs[i], hcs[j]);
+                }
         }
 
         [Test]
@@ -219,7 +220,7 @@ namespace Azure.Core.Tests
         public static void HashCode_GetHashCode_Boxed()
         {
             var hc = new HashCodeBuilder();
-            var obj = (object) hc;
+            var obj = (object)hc;
 
             Assert.Throws<NotSupportedException>(() => obj.GetHashCode());
         }
@@ -228,7 +229,7 @@ namespace Azure.Core.Tests
         public static void HashCode_Equals_Boxed()
         {
             var hc = new HashCodeBuilder();
-            var obj = (object) hc;
+            var obj = (object)hc;
 
             Assert.Throws<NotSupportedException>(() => obj.Equals(obj));
         }

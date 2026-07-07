@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -15,22 +16,20 @@ namespace Azure.ResourceManager.BotService.Models
     public partial class DirectLineChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="DirectLineChannel"/>. </summary>
-        public DirectLineChannel()
+        public DirectLineChannel() : base("DirectLineChannel")
         {
-            ChannelName = "DirectLineChannel";
         }
 
         /// <summary> Initializes a new instance of <see cref="DirectLineChannel"/>. </summary>
         /// <param name="channelName"> The channel name. </param>
-        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The set of properties specific to Direct Line channel resource. </param>
-        internal DirectLineChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, DirectLineChannelProperties properties) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
+        internal DirectLineChannel(string channelName, ETag? eTag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, DirectLineChannelProperties properties) : base(channelName, eTag, provisioningState, location, additionalBinaryDataProperties)
         {
             Properties = properties;
-            ChannelName = channelName ?? "DirectLineChannel";
         }
 
         /// <summary> The set of properties specific to Direct Line channel resource. </summary>

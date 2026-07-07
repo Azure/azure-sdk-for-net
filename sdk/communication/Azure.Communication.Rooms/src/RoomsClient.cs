@@ -24,7 +24,7 @@ namespace Azure.Communication.Rooms
         internal ParticipantsRestClient ParticipantsServiceClient { get; }
 
         #region public constructors - all arguments need null check
-        #pragma warning disable AZC0007
+#pragma warning disable AZC0007
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoomsClient"/> class.
@@ -74,7 +74,7 @@ namespace Azure.Communication.Rooms
                 options ?? new RoomsClientOptions())
         { }
 
-        #pragma warning restore AZC0007
+#pragma warning restore AZC0007
         #endregion
 
         #region private constructors
@@ -186,7 +186,7 @@ namespace Azure.Communication.Rooms
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<Response<CommunicationRoom>> UpdateRoomAsync(string roomId, DateTimeOffset? validFrom = default, DateTimeOffset? validUntil = default, CancellationToken cancellationToken = default)
         {
-           return await UpdateRoomAsync(roomId, new UpdateRoomOptions { ValidFrom = validFrom, ValidUntil = validUntil }, cancellationToken).ConfigureAwait(false);
+            return await UpdateRoomAsync(roomId, new UpdateRoomOptions { ValidFrom = validFrom, ValidUntil = validUntil }, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

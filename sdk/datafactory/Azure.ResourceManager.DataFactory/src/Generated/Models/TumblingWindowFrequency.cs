@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct TumblingWindowFrequency : IEquatable<TumblingWindowFrequency>
     {
         private readonly string _value;
+        /// <summary> Minute. </summary>
+        private const string MinuteValue = "Minute";
+        /// <summary> Hour. </summary>
+        private const string HourValue = "Hour";
+        /// <summary> Month. </summary>
+        private const string MonthValue = "Month";
 
         /// <summary> Initializes a new instance of <see cref="TumblingWindowFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TumblingWindowFrequency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MinuteValue = "Minute";
-        private const string HourValue = "Hour";
-        private const string MonthValue = "Month";
+            _value = value;
+        }
 
         /// <summary> Minute. </summary>
         public static TumblingWindowFrequency Minute { get; } = new TumblingWindowFrequency(MinuteValue);
+
         /// <summary> Hour. </summary>
         public static TumblingWindowFrequency Hour { get; } = new TumblingWindowFrequency(HourValue);
+
         /// <summary> Month. </summary>
         public static TumblingWindowFrequency Month { get; } = new TumblingWindowFrequency(MonthValue);
+
         /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TumblingWindowFrequency left, TumblingWindowFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TumblingWindowFrequency left, TumblingWindowFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TumblingWindowFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TumblingWindowFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TumblingWindowFrequency(string value) => new TumblingWindowFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TumblingWindowFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TumblingWindowFrequency?(string value) => value == null ? null : new TumblingWindowFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TumblingWindowFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TumblingWindowFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

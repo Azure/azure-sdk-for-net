@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeUpdateType : IEquatable<DataBoxEdgeUpdateType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeUpdateType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SoftwareValue = "Software";
         private const string KubernetesValue = "Kubernetes";
         private const string FirmwareValue = "Firmware";
 
-        /// <summary> Software. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeUpdateType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Software. </summary>
         public static DataBoxEdgeUpdateType Software { get; } = new DataBoxEdgeUpdateType(SoftwareValue);
-        /// <summary> Kubernetes. </summary>
+
+        /// <summary> Gets the Kubernetes. </summary>
         public static DataBoxEdgeUpdateType Kubernetes { get; } = new DataBoxEdgeUpdateType(KubernetesValue);
-        /// <summary> Firmware. </summary>
+
+        /// <summary> Gets the Firmware. </summary>
         public static DataBoxEdgeUpdateType Firmware { get; } = new DataBoxEdgeUpdateType(FirmwareValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeUpdateType left, DataBoxEdgeUpdateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeUpdateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeUpdateType left, DataBoxEdgeUpdateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeUpdateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeUpdateType(string value) => new DataBoxEdgeUpdateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeUpdateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeUpdateType?(string value) => value == null ? null : new DataBoxEdgeUpdateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeUpdateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeUpdateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

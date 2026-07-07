@@ -33,6 +33,29 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LoadTest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LoadTest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LoadTest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LoadTest IPersistableModel<LoadTest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LoadTest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LoadTest"/> from. </param>
         public static explicit operator LoadTest(Response response)
         {
@@ -190,6 +213,11 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("estimatedVirtualUserHours"u8);
                 writer.WriteNumberValue(EstimatedVirtualUserHours.Value);
             }
+            if (Optional.IsDefined(Preferences))
+            {
+                writer.WritePropertyName("preferences"u8);
+                writer.WriteObjectValue(Preferences, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
@@ -273,6 +301,7 @@ namespace Azure.Developer.LoadTesting
             LoadTestingManagedIdentityType? engineBuiltInIdentityType = default;
             IList<string> engineBuiltInIdentityIds = default;
             double? estimatedVirtualUserHours = default;
+            TestPreferences preferences = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
@@ -466,6 +495,15 @@ namespace Azure.Developer.LoadTesting
                     estimatedVirtualUserHours = prop.Value.GetDouble();
                     continue;
                 }
+                if (prop.NameEquals("preferences"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preferences = TestPreferences.DeserializeTestPreferences(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -521,34 +559,12 @@ namespace Azure.Developer.LoadTesting
                 engineBuiltInIdentityType,
                 engineBuiltInIdentityIds ?? new ChangeTrackingList<string>(),
                 estimatedVirtualUserHours,
+                preferences,
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
                 lastModifiedBy,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LoadTest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<LoadTest>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LoadTest)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        LoadTest IPersistableModel<LoadTest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LoadTest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

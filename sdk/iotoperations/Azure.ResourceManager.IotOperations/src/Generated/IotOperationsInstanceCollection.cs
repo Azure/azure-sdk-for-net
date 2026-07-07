@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _instanceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, IotOperationsInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsInstanceResource> operation = new IotOperationsArmOperation<IotOperationsInstanceResource>(
-                    new IotOperationsInstanceOperationSource(Client),
+                    new IotOperationsInstanceResourceOperationSource(Client),
                     _instanceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _instanceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, instanceName, IotOperationsInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsInstanceResource> operation = new IotOperationsArmOperation<IotOperationsInstanceResource>(
-                    new IotOperationsInstanceOperationSource(Client),
+                    new IotOperationsInstanceResourceOperationSource(Client),
                     _instanceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupAsyncCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IotOperationsInstanceResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupAsyncCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotOperationsInstanceCollection.GetAll"), data => new IotOperationsInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new IotOperationsInstanceResource(Client, data));
+            return new PageableWrapper<IotOperationsInstanceData, IotOperationsInstanceResource>(new InstanceGetByResourceGroupCollectionResultOfT(_instanceRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IotOperationsInstanceCollection.GetAll"), data => new IotOperationsInstanceResource(Client, data));
         }
 
         /// <summary>

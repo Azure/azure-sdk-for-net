@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Document content.  Ex. text/plain, application/pdf, image/jpeg. </summary>
-    public partial class DocumentContent : MediaContent
+    public partial class DocumentContent : AnalysisContent
     {
         /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the content. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the content. </param>
-        internal DocumentContent(string mimeType, int startPageNumber, int endPageNumber) : base(MediaContentKind.Document, mimeType)
+        internal DocumentContent(string mimeType, int startPageNumber, int endPageNumber) : base(AnalysisContentKind.Document, mimeType)
         {
             StartPageNumber = startPageNumber;
             EndPageNumber = endPageNumber;
@@ -54,7 +54,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="annotations"> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </param>
         /// <param name="hyperlinks"> List of hyperlinks in the document.  Only if returnDetails are true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
-        internal DocumentContent(MediaContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties, int startPageNumber, int endPageNumber, LengthUnit? unit, IList<DocumentPage> pages, IList<DocumentParagraph> paragraphs, IList<DocumentSection> sections, IList<DocumentTable> tables, IList<DocumentFigure> figures, IList<DocumentAnnotation> annotations, IList<DocumentHyperlink> hyperlinks, IList<DocumentContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
+        internal DocumentContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties, int startPageNumber, int endPageNumber, LengthUnit? unit, IList<DocumentPage> pages, IList<DocumentParagraph> paragraphs, IList<DocumentSection> sections, IList<DocumentTable> tables, IList<DocumentFigure> figures, IList<DocumentAnnotation> annotations, IList<DocumentHyperlink> hyperlinks, IList<DocumentContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
         {
             StartPageNumber = startPageNumber;
             EndPageNumber = endPageNumber;

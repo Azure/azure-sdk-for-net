@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchPrivateLinkServiceConnectionStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchPrivateLinkServiceConnectionStatus value) => value switch
         {
             BatchPrivateLinkServiceConnectionStatus.Approved => "Approved",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPrivateLinkServiceConnectionStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchPrivateLinkServiceConnectionStatus ToBatchPrivateLinkServiceConnectionStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved")) return BatchPrivateLinkServiceConnectionStatus.Approved;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending")) return BatchPrivateLinkServiceConnectionStatus.Pending;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected")) return BatchPrivateLinkServiceConnectionStatus.Rejected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected")) return BatchPrivateLinkServiceConnectionStatus.Disconnected;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Approved"))
+            {
+                return BatchPrivateLinkServiceConnectionStatus.Approved;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Pending"))
+            {
+                return BatchPrivateLinkServiceConnectionStatus.Pending;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rejected"))
+            {
+                return BatchPrivateLinkServiceConnectionStatus.Rejected;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disconnected"))
+            {
+                return BatchPrivateLinkServiceConnectionStatus.Disconnected;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchPrivateLinkServiceConnectionStatus value.");
         }
     }

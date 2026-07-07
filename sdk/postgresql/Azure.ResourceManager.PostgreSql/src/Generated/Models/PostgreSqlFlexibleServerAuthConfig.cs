@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Authentication configuration properties of a server.
-    /// Serialized Name: AuthConfig
-    /// </summary>
+    /// <summary> Authentication configuration properties of a server. </summary>
     public partial class PostgreSqlFlexibleServerAuthConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAuthConfig"/>. </summary>
         public PostgreSqlFlexibleServerAuthConfig()
@@ -54,43 +23,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAuthConfig"/>. </summary>
-        /// <param name="activeDirectoryAuth">
-        /// Indicates if the server supports Microsoft Entra authentication.
-        /// Serialized Name: AuthConfig.activeDirectoryAuth
-        /// </param>
-        /// <param name="passwordAuth">
-        /// Indicates if the server supports password based authentication.
-        /// Serialized Name: AuthConfig.passwordAuth
-        /// </param>
-        /// <param name="tenantId">
-        /// Identifier of the tenant of the delegated resource.
-        /// Serialized Name: AuthConfig.tenantId
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerAuthConfig(PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="activeDirectoryAuth"> Indicates if the server supports Microsoft Entra authentication. </param>
+        /// <param name="passwordAuth"> Indicates if the server supports password based authentication. </param>
+        /// <param name="tenantId"> Identifier of the tenant of the delegated resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerAuthConfig(PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveDirectoryAuth = activeDirectoryAuth;
             PasswordAuth = passwordAuth;
             TenantId = tenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Indicates if the server supports Microsoft Entra authentication.
-        /// Serialized Name: AuthConfig.activeDirectoryAuth
-        /// </summary>
+        /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
         [WirePath("activeDirectoryAuth")]
         public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
-        /// <summary>
-        /// Indicates if the server supports password based authentication.
-        /// Serialized Name: AuthConfig.passwordAuth
-        /// </summary>
+
+        /// <summary> Indicates if the server supports password based authentication. </summary>
         [WirePath("passwordAuth")]
         public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
-        /// <summary>
-        /// Identifier of the tenant of the delegated resource.
-        /// Serialized Name: AuthConfig.tenantId
-        /// </summary>
+
+        /// <summary> Identifier of the tenant of the delegated resource. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }

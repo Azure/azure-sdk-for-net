@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql
             TryGetApiVersion(ResourceType, out string mySqlWaitStatisticWaitStatisticsApiVersion);
             _mySqlWaitStatisticWaitStatisticsRestClient = new WaitStatisticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlWaitStatisticWaitStatisticsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

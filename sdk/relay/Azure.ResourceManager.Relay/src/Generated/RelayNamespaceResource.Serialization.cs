@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Relay
 {
+    /// <summary></summary>
     public partial class RelayNamespaceResource : IJsonModel<RelayNamespaceData>
     {
-        private static RelayNamespaceData s_dataDeserializationInstance;
-        private static RelayNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RelayNamespaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RelayNamespaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RelayNamespaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RelayNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayNamespaceData>)Data).Write(writer, options);
 
-        RelayNamespaceData IJsonModel<RelayNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RelayNamespaceData IJsonModel<RelayNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RelayNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayNamespaceData>(Data, options, AzureResourceManagerRelayContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RelayNamespaceData IPersistableModel<RelayNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayNamespaceData>(data, options, AzureResourceManagerRelayContext.Default);
 
-        string IPersistableModel<RelayNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RelayNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

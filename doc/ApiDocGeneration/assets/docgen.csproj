@@ -9,6 +9,7 @@
     <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
     <Description>This is a dummy project used to restore nuget packages used for doc generation</Description>
     <AssemblyTitle>Doc generation Packages</AssemblyTitle>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <PropertyGroup>
     <ECMA2YmlVersion>1.0.644-alpha</ECMA2YmlVersion>

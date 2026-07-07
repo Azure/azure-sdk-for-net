@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.Communication.Pipeline;
-using Azure.Communication.ShortCodes.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Communication.Pipeline;
+using Azure.Communication.ShortCodes.Models;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Communication.ShortCodes
 {

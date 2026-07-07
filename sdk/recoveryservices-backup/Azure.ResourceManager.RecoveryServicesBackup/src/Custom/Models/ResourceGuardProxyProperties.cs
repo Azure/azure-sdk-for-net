@@ -6,9 +6,9 @@
 using System.ComponentModel;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> The ResourceGuardProxyProperties. </summary>
     public partial class ResourceGuardProxyProperties
     {
         /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyProperties"/>. </summary>

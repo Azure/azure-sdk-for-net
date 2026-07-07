@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Overall connectivity status for the cluster resource. </summary>
+    /// <summary> Overall connectivity status for the cluster resource. Indicates whether the cluster is connected to Azure, partially connected, or has not recently communicated. </summary>
     public readonly partial struct HciClusterConnectivityStatus : IEquatable<HciClusterConnectivityStatus>
     {
         private readonly string _value;
+        /// <summary> The cluster has not yet registered with Azure. </summary>
+        private const string NotYetRegisteredValue = "NotYetRegistered";
+        /// <summary> The cluster is fully connected to Azure. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> The cluster has not connected to Azure recently. </summary>
+        private const string NotConnectedRecentlyValue = "NotConnectedRecently";
+        /// <summary> Some components of the cluster are connected, while others are not. </summary>
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        /// <summary> The cluster is not connected to Azure. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> The connectivity status is not specified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
 
         /// <summary> Initializes a new instance of <see cref="HciClusterConnectivityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciClusterConnectivityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NotYetRegisteredValue = "NotYetRegistered";
-        private const string ConnectedValue = "Connected";
-        private const string NotConnectedRecentlyValue = "NotConnectedRecently";
-        private const string PartiallyConnectedValue = "PartiallyConnected";
-        private const string DisconnectedValue = "Disconnected";
-        private const string NotSpecifiedValue = "NotSpecified";
-
-        /// <summary> NotYetRegistered. </summary>
+        /// <summary> The cluster has not yet registered with Azure. </summary>
         public static HciClusterConnectivityStatus NotYetRegistered { get; } = new HciClusterConnectivityStatus(NotYetRegisteredValue);
-        /// <summary> Connected. </summary>
+
+        /// <summary> The cluster is fully connected to Azure. </summary>
         public static HciClusterConnectivityStatus Connected { get; } = new HciClusterConnectivityStatus(ConnectedValue);
-        /// <summary> NotConnectedRecently. </summary>
+
+        /// <summary> The cluster has not connected to Azure recently. </summary>
         public static HciClusterConnectivityStatus NotConnectedRecently { get; } = new HciClusterConnectivityStatus(NotConnectedRecentlyValue);
-        /// <summary> PartiallyConnected. </summary>
+
+        /// <summary> Some components of the cluster are connected, while others are not. </summary>
         public static HciClusterConnectivityStatus PartiallyConnected { get; } = new HciClusterConnectivityStatus(PartiallyConnectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> The cluster is not connected to Azure. </summary>
         public static HciClusterConnectivityStatus Disconnected { get; } = new HciClusterConnectivityStatus(DisconnectedValue);
-        /// <summary> NotSpecified. </summary>
+
+        /// <summary> The connectivity status is not specified. </summary>
         public static HciClusterConnectivityStatus NotSpecified { get; } = new HciClusterConnectivityStatus(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="HciClusterConnectivityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciClusterConnectivityStatus left, HciClusterConnectivityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciClusterConnectivityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciClusterConnectivityStatus left, HciClusterConnectivityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciClusterConnectivityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciClusterConnectivityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciClusterConnectivityStatus(string value) => new HciClusterConnectivityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciClusterConnectivityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciClusterConnectivityStatus?(string value) => value == null ? null : new HciClusterConnectivityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciClusterConnectivityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciClusterConnectivityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

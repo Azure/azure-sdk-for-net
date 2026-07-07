@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using System.Threading.Tasks;
-using System.Threading;
 using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Chaos
 {

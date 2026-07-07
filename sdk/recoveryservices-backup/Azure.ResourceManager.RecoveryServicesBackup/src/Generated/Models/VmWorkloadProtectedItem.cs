@@ -8,22 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary>
-    /// Azure VM workload-specific protected item.
-    /// Please note <see cref="VmWorkloadProtectedItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/> and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
-    /// </summary>
+    /// <summary> Azure VM workload-specific protected item. </summary>
     public partial class VmWorkloadProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItem"/>. </summary>
-        public VmWorkloadProtectedItem()
+        public VmWorkloadProtectedItem() : base("AzureVmWorkloadProtectedItem")
         {
             KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
             NodesList = new ChangeTrackingList<DistributedNodesInfo>();
-            ProtectedItemType = "AzureVmWorkloadProtectedItem";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItem"/>. </summary>
@@ -46,7 +42,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <param name="vaultId"> ID of the vault which protects this item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourceSideScanInfo"> Source side threat information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"> Friendly name of the DB represented by this backup item. </param>
         /// <param name="serverName"> Host/Cluster Name for instance or AG. </param>
         /// <param name="parentName"> Parent name of the DB such as Instance or Availability Group. </param>
@@ -61,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this backup item. </param>
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
-        internal VmWorkloadProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths, IList<DistributedNodesInfo> nodesList) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData)
+        internal VmWorkloadProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, BackupSourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, string serverName, string parentName, string parentType, string protectionStatus, BackupProtectionState? protectionState, LastBackupStatus? lastBackupStatus, DateTimeOffset? lastBackupOn, BackupErrorDetail lastBackupErrorDetail, string protectedItemDataSourceId, VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus, VmWorkloadProtectedItemExtendedInfo extendedInfo, IDictionary<string, KpiResourceHealthDetails> kpisHealths, IList<DistributedNodesInfo> nodesList) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, sourceSideScanInfo, additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             ServerName = serverName;
@@ -77,35 +74,55 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExtendedInfo = extendedInfo;
             KpisHealths = kpisHealths;
             NodesList = nodesList;
-            ProtectedItemType = protectedItemType ?? "AzureVmWorkloadProtectedItem";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItem"/>. </summary>
+        /// <param name="protectedItemType"> backup item type. </param>
+        private protected VmWorkloadProtectedItem(string protectedItemType) : base(protectedItemType)
+        {
+            KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
+            NodesList = new ChangeTrackingList<DistributedNodesInfo>();
         }
 
         /// <summary> Friendly name of the DB represented by this backup item. </summary>
         public string FriendlyName { get; }
+
         /// <summary> Host/Cluster Name for instance or AG. </summary>
         public string ServerName { get; set; }
+
         /// <summary> Parent name of the DB such as Instance or Availability Group. </summary>
         public string ParentName { get; set; }
+
         /// <summary> Parent type of protected item, example: for a DB, standalone server or distributed. </summary>
         public string ParentType { get; set; }
+
         /// <summary> Backup status of this backup item. </summary>
         public string ProtectionStatus { get; }
+
         /// <summary> Backup state of this backup item. </summary>
         public BackupProtectionState? ProtectionState { get; set; }
+
         /// <summary> Last backup operation status. Possible values: Healthy, Unhealthy. </summary>
         public LastBackupStatus? LastBackupStatus { get; set; }
+
         /// <summary> Timestamp of the last backup operation on this backup item. </summary>
         public DateTimeOffset? LastBackupOn { get; set; }
+
         /// <summary> Error details in last backup. </summary>
         public BackupErrorDetail LastBackupErrorDetail { get; set; }
+
         /// <summary> Data ID of the protected item. </summary>
         public string ProtectedItemDataSourceId { get; set; }
+
         /// <summary> Health status of the backup item, evaluated based on last heartbeat received. </summary>
         public VmWorkloadProtectedItemHealthStatus? ProtectedItemHealthStatus { get; set; }
+
         /// <summary> Additional information for this backup item. </summary>
         public VmWorkloadProtectedItemExtendedInfo ExtendedInfo { get; set; }
+
         /// <summary> Health details of different KPIs. </summary>
         public IDictionary<string, KpiResourceHealthDetails> KpisHealths { get; }
+
         /// <summary> List of the nodes in case of distributed container. </summary>
         public IList<DistributedNodesInfo> NodesList { get; }
     }

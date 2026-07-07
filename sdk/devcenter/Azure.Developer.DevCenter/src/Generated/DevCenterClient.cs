@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,6 @@ namespace Azure.Developer.DevCenter
     public partial class DevCenterClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
         private readonly string _apiVersion;
 
@@ -34,6 +33,36 @@ namespace Azure.Developer.DevCenter
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public DevCenterClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of DevCenterClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal DevCenterClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DevCenterClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new DevCenterClientOptions();
+
+            _endpoint = endpoint;
+            if (authenticationPolicy != null)
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+            }
+            else
+            {
+                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+            }
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+        }
+
+        /// <summary> Initializes a new instance of DevCenterClient from a <see cref="DevCenterClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for DevCenterClient. </param>
+        [Experimental("SCME0002")]
+        public DevCenterClient(DevCenterClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -56,7 +85,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetProjects(RequestContext context)
         {
-            return new DevCenterClientGetProjectsCollectionResult(this, context);
+            return new DevCenterClientGetProjectsCollectionResult(this, context, "DevCenterClient.GetProjects");
         }
 
         /// <summary>
@@ -72,7 +101,7 @@ namespace Azure.Developer.DevCenter
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context)
         {
-            return new DevCenterClientGetProjectsAsyncCollectionResult(this, context);
+            return new DevCenterClientGetProjectsAsyncCollectionResult(this, context, "DevCenterClient.GetProjects");
         }
 
         /// <summary> Lists all projects. </summary>
@@ -80,7 +109,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<DevCenterProject> GetProjects(CancellationToken cancellationToken = default)
         {
-            return new DevCenterClientGetProjectsCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DevCenterClientGetProjectsCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevCenterClient.GetProjects");
         }
 
         /// <summary> Lists all projects. </summary>
@@ -88,7 +117,7 @@ namespace Azure.Developer.DevCenter
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<DevCenterProject> GetProjectsAsync(CancellationToken cancellationToken = default)
         {
-            return new DevCenterClientGetProjectsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
+            return new DevCenterClientGetProjectsAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "DevCenterClient.GetProjects");
         }
 
         /// <summary>

@@ -9,15 +9,61 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebBasicAuthentication : IUtf8JsonSerializable, IJsonModel<WebBasicAuthentication>
+    /// <summary> A WebLinkedService that uses basic authentication to communicate with an HTTP endpoint. </summary>
+    public partial class WebBasicAuthentication : WebLinkedServiceTypeProperties, IJsonModel<WebBasicAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebBasicAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/> for deserialization. </summary>
+        internal WebBasicAuthentication()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override WebLinkedServiceTypeProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebBasicAuthentication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebBasicAuthentication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WebBasicAuthentication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebBasicAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebBasicAuthentication IPersistableModel<WebBasicAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => (WebBasicAuthentication)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebBasicAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebBasicAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,105 +75,76 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebBasicAuthentication)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("username"u8);
-            JsonSerializer.Serialize(writer, Username);
+            writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password);
+            writer.WriteObjectValue<DataFactorySecret>(Password, options);
         }
 
-        WebBasicAuthentication IJsonModel<WebBasicAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebBasicAuthentication IJsonModel<WebBasicAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WebBasicAuthentication)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override WebLinkedServiceTypeProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebBasicAuthentication)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebBasicAuthentication(document.RootElement, options);
         }
 
-        internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            DataFactoryElement<string> uri = default;
+            WebAuthenticationType authenticationType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DataFactoryElement<string> username = default;
             DataFactorySecret password = default;
-            DataFactoryElement<string> url = default;
-            WebAuthenticationType authenticationType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("username"u8))
+                if (prop.NameEquals("url"u8))
                 {
-                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    ReadUri(prop, ref uri);
                     continue;
                 }
-                if (property.NameEquals("password"u8))
+                if (prop.NameEquals("authenticationType"u8))
                 {
-                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
+                    authenticationType = new WebAuthenticationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("url"u8))
+                if (prop.NameEquals("username"u8))
                 {
-                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    ReadUsername(prop, ref username);
                     continue;
                 }
-                if (property.NameEquals("authenticationType"u8))
+                if (prop.NameEquals("password"u8))
                 {
-                    authenticationType = new WebAuthenticationType(property.Value.GetString());
+                    ReadPassword(prop, ref password);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new WebBasicAuthentication(url, authenticationType, serializedAdditionalRawData, username, password);
+            return new WebBasicAuthentication(uri, authenticationType, additionalBinaryDataProperties, username, password);
         }
-
-        BinaryData IPersistableModel<WebBasicAuthentication>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WebBasicAuthentication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WebBasicAuthentication IPersistableModel<WebBasicAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebBasicAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWebBasicAuthentication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebBasicAuthentication)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WebBasicAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

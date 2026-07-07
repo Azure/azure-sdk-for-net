@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeDynamicSchemaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeDynamicSchemaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeDynamicSchemaResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _dynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, EdgeDynamicSchemaVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(
-                    new EdgeDynamicSchemaVersionOperationSource(Client),
+                    new EdgeDynamicSchemaVersionResourceOperationSource(Client),
                     _dynamicSchemaVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _dynamicSchemaVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dynamicSchemaVersionName, EdgeDynamicSchemaVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaVersionResource>(
-                    new EdgeDynamicSchemaVersionOperationSource(Client),
+                    new EdgeDynamicSchemaVersionResourceOperationSource(Client),
                     _dynamicSchemaVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDynamicSchemaVersionResource(Client, data));
+                context,
+                "EdgeDynamicSchemaVersionCollection.GetAll"), data => new EdgeDynamicSchemaVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeDynamicSchemaVersionResource(Client, data));
+                context,
+                "EdgeDynamicSchemaVersionCollection.GetAll"), data => new EdgeDynamicSchemaVersionResource(Client, data));
         }
 
         /// <summary>

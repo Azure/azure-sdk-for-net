@@ -84,6 +84,13 @@ namespace Azure.Core
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
 
         /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryContent"/>.
+        /// </summary>
+        /// <param name="content">The <see cref="BinaryContent"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryContent"/>.</returns>
+        public static RequestContent Create(BinaryContent content) => new BinaryContentAdapter(content);
+
+        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
@@ -139,19 +146,43 @@ namespace Azure.Core
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
         /// </summary>
         /// <param name="content">The <see cref="string"/> to use.</param>
-        public static implicit operator RequestContent(string content) => Create(content);
+        public static implicit operator RequestContent?(string? content)
+        {
+            if (content is null)
+            {
+                return null;
+            }
+
+            return Create(content);
+        }
 
         /// <summary>
         /// Creates a RequestContent that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
-        public static implicit operator RequestContent(BinaryData content) => Create(content);
+        public static implicit operator RequestContent?(BinaryData? content)
+        {
+            if (content is null)
+            {
+                return null;
+            }
+
+            return Create(content);
+        }
 
         /// <summary>
         /// Creates a RequestContent that wraps a <see cref="DynamicData"/>.
         /// </summary>
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
-        public static implicit operator RequestContent(DynamicData content) => Create(content);
+        public static implicit operator RequestContent?(DynamicData? content)
+        {
+            if (content is null)
+            {
+                return null;
+            }
+
+            return Create(content);
+        }
 
         /// <summary>
         /// Writes contents of this object to an instance of <see cref="Stream"/>.
@@ -485,6 +516,35 @@ namespace Azure.Core
             {
                 return _binaryContent.TryComputeLength(out length);
             }
+        }
+
+        private sealed class BinaryContentAdapter : RequestContent
+        {
+            private readonly BinaryContent _binaryContent;
+            private bool _disposed;
+
+            public BinaryContentAdapter(BinaryContent content)
+            {
+                _binaryContent = content;
+            }
+
+            public override void Dispose()
+            {
+                if (!_disposed)
+                {
+                    _binaryContent.Dispose();
+                    _disposed = true;
+                }
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
+                => _binaryContent.WriteTo(stream, cancellationToken);
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+                => await _binaryContent.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+
+            public override bool TryComputeLength(out long length)
+                => _binaryContent.TryComputeLength(out length);
         }
     }
 }

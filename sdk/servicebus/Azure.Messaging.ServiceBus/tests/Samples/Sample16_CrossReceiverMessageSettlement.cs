@@ -35,7 +35,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceivedMessage receivedMessage = await receiver1.ReceiveMessageAsync();
                 ReadOnlyMemory<byte> amqpMessageBytes = receivedMessage.GetRawAmqpMessage().ToBytes().ToMemory();
                 ReadOnlyMemory<byte> lockTokenBytes = Guid.Parse(receivedMessage.LockToken).ToByteArray();
-#endregion
+                #endregion
 
                 #region Snippet:ServiceBusReadReceivedMessage
                 AmqpAnnotatedMessage amqpMessage = AmqpAnnotatedMessage.FromBytes(new BinaryData(amqpMessageBytes));
@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client2 = new ServiceBusClient(fullyQualifiedNamespace, credential);
                 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
                 await receiver2.CompleteMessageAsync(rehydratedMessage);
-#endregion
+                #endregion
 
                 Assert.AreEqual("some message", rehydratedMessage.Body.ToString());
             }
@@ -76,7 +76,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceiver receiver1 = client1.CreateReceiver(queueName);
                 ServiceBusReceivedMessage receivedMessage = await receiver1.ReceiveMessageAsync();
                 ReadOnlyMemory<byte> lockTokenBytes = Guid.Parse(receivedMessage.LockToken).ToByteArray();
-#endregion
+                #endregion
 
                 #region Snippet:ServiceBusReadReceivedMessageLockToken
 

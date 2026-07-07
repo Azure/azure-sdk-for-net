@@ -15,6 +15,7 @@ namespace Azure.Generator.Visitors
     /// </summary>
     internal class NamespaceVisitor : ScmLibraryVisitor
     {
+        private const string ModelsNamespacePiece = "Models";
         protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
         {
             if (type is not null)
@@ -66,9 +67,13 @@ namespace Azure.Generator.Visitors
                 // If the type is customized, then we don't want to override the namespace.
                 if (type.CustomCodeView == null)
                 {
+                    var ns = type.Type.Namespace;
+                    if (ns.Split('.')[^1] != ModelsNamespacePiece)
+                    {
+                        ns = $"{ns}.{ModelsNamespacePiece}";
+                    }
                     type.Update(
-                        @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(
-                            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+                        @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(ns));
                 }
             }
         }

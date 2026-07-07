@@ -10,30 +10,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Agents.Persistent
 {
-    // Data plane generated sub-client.
-    /// <summary>
-    /// A collection of file-batch operations under
-    /// `/vector_stores/{vectorStoreId}/file_batches`.
-    /// </summary>
     internal partial class VectorStoreFileBatches
     {
-        private static readonly string[] AuthorizationScopes = new string[] { "https://ai.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of VectorStoreFileBatches for mocking. </summary>
         protected VectorStoreFileBatches()
@@ -41,130 +27,45 @@ namespace Azure.AI.Agents.Persistent
         }
 
         /// <summary> Initializes a new instance of VectorStoreFileBatches. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint"> Project endpoint in the form of: https://&lt;aiservices-id&gt;.services.ai.azure.com/api/projects/&lt;project-name&gt;. </param>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal VectorStoreFileBatches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal VectorStoreFileBatches(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
-            _pipeline = pipeline;
-            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            Pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Create a vector store file batch. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileIds"> List of file identifiers. </param>
-        /// <param name="dataSources"> List of Azure assets. </param>
-        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            CreateVectorStoreFileBatchRequest createVectorStoreFileBatchRequest = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateVectorStoreFileBatchAsync(vectorStoreId, createVectorStoreFileBatchRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
-        }
-
-        /// <summary> Create a vector store file batch. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="fileIds"> List of file identifiers. </param>
-        /// <param name="dataSources"> List of Azure assets. </param>
-        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategy chunkingStrategy = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-
-            CreateVectorStoreFileBatchRequest createVectorStoreFileBatchRequest = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IReadOnlyList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateVectorStoreFileBatch(vectorStoreId, createVectorStoreFileBatchRequest.ToRequestContent(), context);
-            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Create a vector store file batch.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileBatchAsync(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategy,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CreateVectorStoreFileBatch");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a vector store file batch.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileBatch(string,IEnumerable{string},IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategy,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateVectorStoreFileBatch(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CreateVectorStoreFileBatch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CreateVectorStoreFileBatch");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -173,71 +74,27 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Retrieve a vector store file batch. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetVectorStoreFileBatchAsync(vectorStoreId, batchId, context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
-        }
-
-        /// <summary> Retrieve a vector store file batch. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetVectorStoreFileBatch(vectorStoreId, batchId, context);
-            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Retrieve a vector store file batch.
+        /// [Protocol Method] Create a vector store file batch.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetVectorStoreFileBatchAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
+        public virtual async Task<Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.GetVectorStoreFileBatch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CreateVectorStoreFileBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -246,39 +103,55 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Create a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="fileIds"> List of file identifiers. </param>
+        /// <param name="dataSources"> List of Azure assets. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
+        {
+            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
+            Response result = CreateVectorStoreFileBatch(vectorStoreId, spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((VectorStoreFileBatch)result, result);
+        }
+
+        /// <summary> Create a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="fileIds"> List of file identifiers. </param>
+        /// <param name="dataSources"> List of Azure assets. </param>
+        /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<VectorStoreFileBatch>> CreateVectorStoreFileBatchAsync(string vectorStoreId, IEnumerable<string> fileIds = default, IEnumerable<VectorStoreDataSource> dataSources = default, VectorStoreChunkingStrategy chunkingStrategy = default, CancellationToken cancellationToken = default)
+        {
+            CreateVectorStoreFileBatchRequest spreadModel = new CreateVectorStoreFileBatchRequest(fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), dataSources?.ToList() as IList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, default);
+            Response result = await CreateVectorStoreFileBatchAsync(vectorStoreId, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((VectorStoreFileBatch)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Retrieve a vector store file batch.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetVectorStoreFileBatch(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.GetVectorStoreFileBatch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.GetVectorStoreFileBatch");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -287,71 +160,27 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        /// <summary> Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CancelVectorStoreFileBatchAsync(vectorStoreId, batchId, context).ConfigureAwait(false);
-            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
-        }
-
-        /// <summary> Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible. </summary>
-        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
-        /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CancelVectorStoreFileBatch(vectorStoreId, batchId, context);
-            return Response.FromValue(VectorStoreFileBatch.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
+        /// [Protocol Method] Retrieve a vector store file batch.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CancelVectorStoreFileBatchAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
+        public virtual async Task<Response> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CancelVectorStoreFileBatch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.GetVectorStoreFileBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -360,39 +189,49 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
+        /// <summary> Retrieve a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="batchId"> Identifier of the file batch. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<VectorStoreFileBatch> GetVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        {
+            Response result = GetVectorStoreFileBatch(vectorStoreId, batchId, cancellationToken.ToRequestContext());
+            return Response.FromValue((VectorStoreFileBatch)result, result);
+        }
+
+        /// <summary> Retrieve a vector store file batch. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="batchId"> Identifier of the file batch. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<VectorStoreFileBatch>> GetVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetVectorStoreFileBatchAsync(vectorStoreId, batchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((VectorStoreFileBatch)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CancelVectorStoreFileBatch(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="batchId"> Identifier of the file batch. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> or <paramref name="batchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CancelVectorStoreFileBatch(string vectorStoreId, string batchId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
-            Argument.AssertNotNullOrEmpty(batchId, nameof(batchId));
-
-            using var scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CancelVectorStoreFileBatch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CancelVectorStoreFileBatch");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -401,109 +240,55 @@ namespace Azure.AI.Agents.Persistent
             }
         }
 
-        internal HttpMessage CreateCreateVectorStoreFileBatchRequest(string vectorStoreId, RequestContent content, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="batchId"> Identifier of the file batch. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/vector_stores/", false);
-            uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/file_batches", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VectorStoreFileBatches.CancelVectorStoreFileBatch");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCancelVectorStoreFileBatchRequest(vectorStoreId, batchId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateGetVectorStoreFileBatchRequest(string vectorStoreId, string batchId, RequestContext context)
+        /// <summary> Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="batchId"> Identifier of the file batch. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<VectorStoreFileBatch> CancelVectorStoreFileBatch(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/vector_stores/", false);
-            uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/file_batches/", false);
-            uri.AppendPath(batchId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Response result = CancelVectorStoreFileBatch(vectorStoreId, batchId, cancellationToken.ToRequestContext());
+            return Response.FromValue((VectorStoreFileBatch)result, result);
         }
 
-        internal HttpMessage CreateCancelVectorStoreFileBatchRequest(string vectorStoreId, string batchId, RequestContext context)
+        /// <summary> Cancel a vector store file batch. This attempts to cancel the processing of files in this batch as soon as possible. </summary>
+        /// <param name="vectorStoreId"> Identifier of the vector store. </param>
+        /// <param name="batchId"> Identifier of the file batch. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<VectorStoreFileBatch>> CancelVectorStoreFileBatchAsync(string vectorStoreId, string batchId, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/vector_stores/", false);
-            uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/file_batches/", false);
-            uri.AppendPath(batchId, true);
-            uri.AppendPath("/cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
+            Response result = await CancelVectorStoreFileBatchAsync(vectorStoreId, batchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((VectorStoreFileBatch)result, result);
         }
-
-        internal HttpMessage CreateGetVectorStoreFileBatchFilesRequest(string vectorStoreId, string batchId, string filter, int? limit, string order, string after, string before, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/vector_stores/", false);
-            uri.AppendPath(vectorStoreId, true);
-            uri.AppendPath("/file_batches/", false);
-            uri.AppendPath(batchId, true);
-            uri.AppendPath("/files", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (limit != null)
-            {
-                uri.AppendQuery("limit", limit.Value, true);
-            }
-            if (order != null)
-            {
-                uri.AppendQuery("order", order, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("after", after, true);
-            }
-            if (before != null)
-            {
-                uri.AppendQuery("before", before, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
-            {
-                return DefaultRequestContext;
-            }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

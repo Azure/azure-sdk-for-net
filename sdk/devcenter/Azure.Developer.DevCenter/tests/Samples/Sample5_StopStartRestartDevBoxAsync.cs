@@ -8,7 +8,7 @@ using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter.Tests.Samples
 {
-    public partial class DevCenterSamples: SamplesBase<DevCenterClientTestEnvironment>
+    public partial class DevCenterSamples : SamplesBase<DevCenterClientTestEnvironment>
     {
         public async Task StopStartRestartDevBoxAsync()
         {

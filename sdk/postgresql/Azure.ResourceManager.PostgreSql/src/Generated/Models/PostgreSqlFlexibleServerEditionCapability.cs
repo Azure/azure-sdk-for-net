@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Capabilities in terms of compute tier.
-    /// Serialized Name: ServerEditionCapability
-    /// </summary>
+    /// <summary> Capabilities in terms of compute tier. </summary>
     public partial class PostgreSqlFlexibleServerEditionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerEditionCapability"/>. </summary>
@@ -24,32 +22,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerEditionCapability"/>. </summary>
-        /// <param name="capabilityStatus">
-        /// The status of the capability.
-        /// Serialized Name: CapabilityBase.status
-        /// </param>
-        /// <param name="reason">
-        /// The reason for the capability not being available.
-        /// Serialized Name: CapabilityBase.reason
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name">
-        /// Name of compute tier.
-        /// Serialized Name: ServerEditionCapability.name
-        /// </param>
-        /// <param name="defaultSkuName">
-        /// Default compute name (SKU) for this computer tier.
-        /// Serialized Name: ServerEditionCapability.defaultSkuName
-        /// </param>
-        /// <param name="supportedStorageEditions">
-        /// List of storage editions supported by this compute tier and compute name.
-        /// Serialized Name: ServerEditionCapability.supportedStorageEditions
-        /// </param>
-        /// <param name="supportedServerSkus">
-        /// List of supported compute names (SKUs).
-        /// Serialized Name: ServerEditionCapability.supportedServerSkus
-        /// </param>
-        internal PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string defaultSkuName, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of compute tier. </param>
+        /// <param name="defaultSkuName"> Default compute name (SKU) for this computer tier. </param>
+        /// <param name="supportedStorageEditions"> List of storage editions supported by this compute tier and compute name. </param>
+        /// <param name="supportedServerSkus"> List of supported compute names (SKUs). </param>
+        internal PostgreSqlFlexibleServerEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string defaultSkuName, IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions, IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> supportedServerSkus) : base(capabilityStatus, reason, additionalBinaryDataProperties)
         {
             Name = name;
             DefaultSkuName = defaultSkuName;
@@ -57,28 +37,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedServerSkus = supportedServerSkus;
         }
 
-        /// <summary>
-        /// Name of compute tier.
-        /// Serialized Name: ServerEditionCapability.name
-        /// </summary>
+        /// <summary> Name of compute tier. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Default compute name (SKU) for this computer tier.
-        /// Serialized Name: ServerEditionCapability.defaultSkuName
-        /// </summary>
+
+        /// <summary> Default compute name (SKU) for this computer tier. </summary>
         [WirePath("defaultSkuName")]
         public string DefaultSkuName { get; }
-        /// <summary>
-        /// List of storage editions supported by this compute tier and compute name.
-        /// Serialized Name: ServerEditionCapability.supportedStorageEditions
-        /// </summary>
+
+        /// <summary> List of storage editions supported by this compute tier and compute name. </summary>
         [WirePath("supportedStorageEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
-        /// <summary>
-        /// List of supported compute names (SKUs).
-        /// Serialized Name: ServerEditionCapability.supportedServerSkus
-        /// </summary>
+
+        /// <summary> List of supported compute names (SKUs). </summary>
         [WirePath("supportedServerSkus")]
         public IReadOnlyList<PostgreSqlFlexibleServerSkuCapability> SupportedServerSkus { get; }
     }

@@ -17,36 +17,30 @@ namespace Azure.AI.ContentUnderstanding
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TranscriptWord"/>. </summary>
-        /// <param name="startTimeMs"> Start time of the word in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the word in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the word in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the word in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
-        internal TranscriptWord(long startTimeMs, long endTimeMs, string text)
+        internal TranscriptWord(long startTimeMsValue, long endTimeMsValue, string text)
         {
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
             Text = text;
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptWord"/>. </summary>
-        /// <param name="startTimeMs"> Start time of the word in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the word in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the word in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the word in milliseconds. </param>
         /// <param name="text"> Transcript text. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TranscriptWord(long startTimeMs, long endTimeMs, string text, ContentSpan span, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TranscriptWord(long startTimeMsValue, long endTimeMsValue, string text, ContentSpan span, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
             Text = text;
             Span = span;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Start time of the word in milliseconds. </summary>
-        public long StartTimeMs { get; }
-
-        /// <summary> End time of the word in milliseconds. </summary>
-        public long EndTimeMs { get; }
 
         /// <summary> Transcript text. </summary>
         public string Text { get; }

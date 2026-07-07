@@ -12,7 +12,7 @@ using Azure.ResourceManager.PowerBIDedicated;
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     /// <summary> An array of administrator user identities. </summary>
-    public partial class DedicatedCapacityAdministrators
+    internal partial class DedicatedCapacityAdministrators
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

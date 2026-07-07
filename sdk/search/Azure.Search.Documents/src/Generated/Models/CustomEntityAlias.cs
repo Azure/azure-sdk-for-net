@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A complex object that can be used to specify alternative spellings or synonyms to the root entity name. </summary>
     public partial class CustomEntityAlias
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/>. </summary>
         /// <param name="text"> The text of the alias. </param>
@@ -60,27 +32,25 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="caseSensitive"> Determine if the alias is case sensitive. </param>
         /// <param name="accentSensitive"> Determine if the alias is accent sensitive. </param>
         /// <param name="fuzzyEditDistance"> Determine the fuzzy edit distance of the alias. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomEntityAlias(string text, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomEntityAlias(string text, bool? caseSensitive, bool? accentSensitive, int? fuzzyEditDistance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             CaseSensitive = caseSensitive;
             AccentSensitive = accentSensitive;
             FuzzyEditDistance = fuzzyEditDistance;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomEntityAlias"/> for deserialization. </summary>
-        internal CustomEntityAlias()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The text of the alias. </summary>
         public string Text { get; set; }
+
         /// <summary> Determine if the alias is case sensitive. </summary>
         public bool? CaseSensitive { get; set; }
+
         /// <summary> Determine if the alias is accent sensitive. </summary>
         public bool? AccentSensitive { get; set; }
+
         /// <summary> Determine the fuzzy edit distance of the alias. </summary>
         public int? FuzzyEditDistance { get; set; }
     }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations"), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
+            return new PageableWrapper<LambdaTestHyperExecuteOrganizationData, LambdaTestHyperExecuteOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableLambdaTestHyperExecuteSubscriptionResource.GetLambdaTestHyperExecuteOrganizations"), data => new LambdaTestHyperExecuteOrganizationResource(Client, data));
         }
     }
 }

@@ -1,0 +1,13 @@
+<Project>
+  <!--
+    Some modern Azure.* test/sample projects depend on legacy Track 1 packages
+    for integration scenarios.
+    FluentAssertions is approved only for legacy use. Azure SDK test projects should
+    use NUnit assertions.
+  -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageVersion Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime" Version="$(MicrosoftRestClientRuntimeVersion)" />
+    <PackageVersion Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" Version="$(MicrosoftRestClientRuntimeAzureAuthenticationVersion)" />
+  </ItemGroup>
+</Project>

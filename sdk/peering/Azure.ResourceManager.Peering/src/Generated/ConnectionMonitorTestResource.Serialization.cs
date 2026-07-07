@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Peering
 {
+    /// <summary></summary>
     public partial class ConnectionMonitorTestResource : IJsonModel<ConnectionMonitorTestData>
     {
-        private static ConnectionMonitorTestData s_dataDeserializationInstance;
-        private static ConnectionMonitorTestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ConnectionMonitorTestData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ConnectionMonitorTestData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ConnectionMonitorTestData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConnectionMonitorTestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorTestData>)Data).Write(writer, options);
 
-        ConnectionMonitorTestData IJsonModel<ConnectionMonitorTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorTestData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConnectionMonitorTestData IJsonModel<ConnectionMonitorTestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ConnectionMonitorTestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectionMonitorTestData>(Data, options, AzureResourceManagerPeeringContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ConnectionMonitorTestData IPersistableModel<ConnectionMonitorTestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectionMonitorTestData>(data, options, AzureResourceManagerPeeringContext.Default);
 
-        string IPersistableModel<ConnectionMonitorTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectionMonitorTestData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConnectionMonitorTestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

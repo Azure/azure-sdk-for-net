@@ -14,33 +14,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMageRcmPolicyCreationContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="InMageRcmPolicyCreationContent"/>. </summary>
-        public InMageRcmPolicyCreationContent()
+        public InMageRcmPolicyCreationContent() : base("InMageRcm")
         {
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmPolicyCreationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointHistoryInMinutes"> The duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
         /// <param name="enableMultiVmSync"> A value indicating whether multi-VM sync has to be enabled. </param>
-        internal InMageRcmPolicyCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPointHistoryInMinutes, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, string enableMultiVmSync) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmPolicyCreationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? recoveryPointHistoryInMinutes, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes, string enableMultiVmSync) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
             EnableMultiVmSync = enableMultiVmSync;
-            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The duration in minutes until which the recovery points need to be stored. </summary>
         public int? RecoveryPointHistoryInMinutes { get; set; }
+
         /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
+
         /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
+
         /// <summary> A value indicating whether multi-VM sync has to be enabled. </summary>
         public string EnableMultiVmSync { get; set; }
     }

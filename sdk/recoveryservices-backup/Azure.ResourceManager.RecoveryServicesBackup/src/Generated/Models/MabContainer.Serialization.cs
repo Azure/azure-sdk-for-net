@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MabContainer : IUtf8JsonSerializable, IJsonModel<MabContainer>
+    /// <summary> Container with items backed up using MAB backup engine. </summary>
+    public partial class MabContainer : BackupGenericProtectionContainer, IJsonModel<MabContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MabContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMabContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MabContainer)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MabContainer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MabContainer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MabContainer IPersistableModel<MabContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => (MabContainer)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MabContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MabContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MabContainer)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(CanReRegister))
             {
@@ -64,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("mabContainerHealthDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in MabContainerHealthDetails)
+                foreach (MabContainerHealthDetails item in MabContainerHealthDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -77,26 +117,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        MabContainer IJsonModel<MabContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MabContainer IJsonModel<MabContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MabContainer)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MabContainer)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMabContainer(document.RootElement, options);
         }
 
-        internal static MabContainer DeserializeMabContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MabContainer DeserializeMabContainer(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string friendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string registrationStatus = default;
+            string healthStatus = default;
+            ProtectableContainerType containerType = default;
+            string protectableObjectType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? canReRegister = default;
             long? containerId = default;
             long? protectedItemCount = default;
@@ -104,116 +156,107 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             MabContainerExtendedInfo extendedInfo = default;
             IList<MabContainerHealthDetails> mabContainerHealthDetails = default;
             string containerHealthState = default;
-            string friendlyName = default;
-            BackupManagementType? backupManagementType = default;
-            string registrationStatus = default;
-            string healthStatus = default;
-            ProtectableContainerType containerType = default;
-            string protectableObjectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("canReRegister"u8))
+                if (prop.NameEquals("friendlyName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    friendlyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("backupManagementType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    canReRegister = property.Value.GetBoolean();
+                    backupManagementType = new BackupManagementType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("containerId"u8))
+                if (prop.NameEquals("registrationStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    registrationStatus = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("healthStatus"u8))
+                {
+                    healthStatus = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("containerType"u8))
+                {
+                    containerType = new ProtectableContainerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("protectableObjectType"u8))
+                {
+                    protectableObjectType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("canReRegister"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerId = property.Value.GetInt64();
+                    canReRegister = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"u8))
+                if (prop.NameEquals("containerId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectedItemCount = property.Value.GetInt64();
+                    containerId = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"u8))
+                if (prop.NameEquals("protectedItemCount"u8))
                 {
-                    agentVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("extendedInfo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extendedInfo = MabContainerExtendedInfo.DeserializeMabContainerExtendedInfo(property.Value, options);
+                    protectedItemCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("mabContainerHealthDetails"u8))
+                if (prop.NameEquals("agentVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    agentVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("extendedInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedInfo = MabContainerExtendedInfo.DeserializeMabContainerExtendedInfo(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("mabContainerHealthDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MabContainerHealthDetails> array = new List<MabContainerHealthDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.MabContainerHealthDetails.DeserializeMabContainerHealthDetails(item, options));
                     }
                     mabContainerHealthDetails = array;
                     continue;
                 }
-                if (property.NameEquals("containerHealthState"u8))
+                if (prop.NameEquals("containerHealthState"u8))
                 {
-                    containerHealthState = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("friendlyName"u8))
-                {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("registrationStatus"u8))
-                {
-                    registrationStatus = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("healthStatus"u8))
-                {
-                    healthStatus = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("containerType"u8))
-                {
-                    containerType = property.Value.GetString().ToProtectableContainerType();
-                    continue;
-                }
-                if (property.NameEquals("protectableObjectType"u8))
-                {
-                    protectableObjectType = property.Value.GetString();
+                    containerHealthState = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MabContainer(
                 friendlyName,
                 backupManagementType,
@@ -221,7 +264,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 canReRegister,
                 containerId,
                 protectedItemCount,
@@ -230,36 +273,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>(),
                 containerHealthState);
         }
-
-        BinaryData IPersistableModel<MabContainer>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MabContainer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MabContainer IPersistableModel<MabContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MabContainer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMabContainer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MabContainer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MabContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

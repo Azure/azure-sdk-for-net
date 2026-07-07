@@ -11,8 +11,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerServiceFleet
 {
-    internal static class Argument
+    internal static partial class Argument
     {
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T value, string name)
         {
             if (value is null)
@@ -21,8 +23,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T? value, string name)
-        where T : struct
+            where T : struct
         {
             if (!value.HasValue)
             {
@@ -30,6 +34,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty<T>(IEnumerable<T> value, string name)
         {
             if (value is null)
@@ -51,6 +57,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty(string value, string name)
         {
             if (value is null)
@@ -63,6 +71,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrWhiteSpace(string value, string name)
         {
             if (value is null)
@@ -75,17 +85,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        public static void AssertNotDefault<T>(ref T value, string name)
-        where T : struct, IEquatable<T>
-        {
-            if (value.Equals(default))
-            {
-                throw new ArgumentException("Value cannot be empty.", name);
-            }
-        }
-
+        /// <param name="value"> The value. </param>
+        /// <param name="minimum"> The minimum value. </param>
+        /// <param name="maximum"> The maximum value. </param>
+        /// <param name="name"> The name. </param>
         public static void AssertInRange<T>(T value, T minimum, T maximum, string name)
-        where T : notnull, IComparable<T>
+            where T : notnull, IComparable<T>
         {
             if (minimum.CompareTo(value) > 0)
             {
@@ -97,33 +102,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
-        public static void AssertEnumDefined(Type enumType, object value, string name)
-        {
-            if (!Enum.IsDefined(enumType, value))
-            {
-                throw new ArgumentException($"Value not defined for {enumType.FullName}.", name);
-            }
-        }
-
-        public static T CheckNotNull<T>(T value, string name)
-        where T : class
-        {
-            AssertNotNull(value, name);
-            return value;
-        }
-
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
         public static string CheckNotNullOrEmpty(string value, string name)
         {
             AssertNotNullOrEmpty(value, name);
             return value;
-        }
-
-        public static void AssertNull<T>(T value, string name, string message = null)
-        {
-            if (value != null)
-            {
-                throw new ArgumentException(message ?? "Value must be null.", name);
-            }
         }
     }
 }

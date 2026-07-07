@@ -16,13 +16,56 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Standard Azure Resource Manager operation status response. </summary>
+    /// <summary>
+    /// Standard Azure Resource Manager operation status response, used as the response
+    /// body for `GetResourceOperationStatus`.
+    /// </summary>
     internal partial class ArmOperationStatusResourceProvisioningState : IJsonModel<ArmOperationStatusResourceProvisioningState>
     {
         /// <summary> Initializes a new instance of <see cref="ArmOperationStatusResourceProvisioningState"/> for deserialization. </summary>
         internal ArmOperationStatusResourceProvisioningState()
         {
         }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmOperationStatusResourceProvisioningState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmOperationStatusResourceProvisioningState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeArmOperationStatusResourceProvisioningState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmOperationStatusResourceProvisioningState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmOperationStatusResourceProvisioningState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArmOperationStatusResourceProvisioningState)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ArmOperationStatusResourceProvisioningState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArmOperationStatusResourceProvisioningState IPersistableModel<ArmOperationStatusResourceProvisioningState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArmOperationStatusResourceProvisioningState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -44,6 +87,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -126,6 +171,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     status = new ResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -182,45 +232,5 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 error,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArmOperationStatusResourceProvisioningState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmOperationStatusResourceProvisioningState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ArmOperationStatusResourceProvisioningState)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ArmOperationStatusResourceProvisioningState IPersistableModel<ArmOperationStatusResourceProvisioningState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ArmOperationStatusResourceProvisioningState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ArmOperationStatusResourceProvisioningState>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeArmOperationStatusResourceProvisioningState(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArmOperationStatusResourceProvisioningState)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ArmOperationStatusResourceProvisioningState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public readonly partial struct DevTestLabLinuxOSState : IEquatable<DevTestLabLinuxOSState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabLinuxOSState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabLinuxOSState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NonDeprovisionedValue = "NonDeprovisioned";
         private const string DeprovisionRequestedValue = "DeprovisionRequested";
         private const string DeprovisionAppliedValue = "DeprovisionApplied";
 
-        /// <summary> NonDeprovisioned. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabLinuxOSState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabLinuxOSState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NonDeprovisioned. </summary>
         public static DevTestLabLinuxOSState NonDeprovisioned { get; } = new DevTestLabLinuxOSState(NonDeprovisionedValue);
-        /// <summary> DeprovisionRequested. </summary>
+
+        /// <summary> Gets the DeprovisionRequested. </summary>
         public static DevTestLabLinuxOSState DeprovisionRequested { get; } = new DevTestLabLinuxOSState(DeprovisionRequestedValue);
-        /// <summary> DeprovisionApplied. </summary>
+
+        /// <summary> Gets the DeprovisionApplied. </summary>
         public static DevTestLabLinuxOSState DeprovisionApplied { get; } = new DevTestLabLinuxOSState(DeprovisionAppliedValue);
+
         /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabLinuxOSState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevTestLabLinuxOSState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevTestLabLinuxOSState(string value) => new DevTestLabLinuxOSState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevTestLabLinuxOSState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabLinuxOSState?(string value) => value == null ? null : new DevTestLabLinuxOSState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevTestLabLinuxOSState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevTestLabLinuxOSState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

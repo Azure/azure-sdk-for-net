@@ -3,8 +3,8 @@
 
 using System;
 using System.Linq;
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Models;
 using Azure.Core;
@@ -29,9 +29,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             projectName = TestEnvironment.OrchestrationProjectName;
             deploymentName = TestEnvironment.OrchestrationDeploymentName;
 #endif
-             Console.WriteLine("=== Request Info ===");
-             Console.WriteLine($"Project Name: {projectName}");
-             Console.WriteLine($"Deployment Name: {deploymentName}");
+            Console.WriteLine("=== Request Info ===");
+            Console.WriteLine($"Project Name: {projectName}");
+            Console.WriteLine($"Deployment Name: {deploymentName}");
 
             AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
@@ -93,10 +93,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         participantId: "1",
                         text: "How are you?")),
                 new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
-            {
-                // Use Utf16CodeUnit for strings in .NET.
-                StringIndexType = StringIndexType.Utf16CodeUnit,
-            });
+                {
+                    // Use Utf16CodeUnit for strings in .NET.
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
+                });
 
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
             ConversationActionResult conversationActionResult = response.Value as ConversationActionResult;

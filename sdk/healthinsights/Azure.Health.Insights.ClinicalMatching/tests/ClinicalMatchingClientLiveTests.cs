@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
-using NUnit.Framework;
 using System.IO;
-using System.Reflection;
-using Azure.Core;
 using System.Net;
-using Azure.Core.TestFramework;
-using Azure.Health.Insights.ClinicalMatching.Tests.Infrastructure;
-using Azure.Health.Insights.ClinicalMatching;
+using System.Reflection;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Health.Insights.ClinicalMatching;
+using Azure.Health.Insights.ClinicalMatching.Tests.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Health.Insights.ClinicalMatching.Tests
 {

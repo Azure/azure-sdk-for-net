@@ -6,8 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Parameters.Spread._Alias;
+using Parameters.Spread._Model;
 
-namespace Parameters.Spread.Models
+namespace Parameters.Spread
 {
     public static partial class ParametersSpreadModelFactory
     {

@@ -29,7 +29,7 @@ namespace Azure.Core
         internal
 #endif
 
-       protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+        protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal

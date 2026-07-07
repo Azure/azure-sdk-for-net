@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -40,6 +41,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(ServiceGroupSiteResource.ResourceType, out string serviceGroupSiteApiVersion);
             _serviceGroupSitesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ServiceGroupSiteResource.ResourceType.Namespace, Diagnostics);
             _serviceGroupSitesRestClient = new ServiceGroupSites(_serviceGroupSitesClientDiagnostics, Pipeline, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != "Microsoft.Management/serviceGroups")
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Management/serviceGroups"), nameof(id));
+            }
         }
 
         /// <summary>
@@ -81,12 +93,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, ServiceGroupSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ServiceGroupSiteResource> operation = new TestsArmOperation<ServiceGroupSiteResource>(
-                    new ServiceGroupSiteOperationSource(Client),
+                    new ServiceGroupSiteResourceOperationSource(Client),
                     _serviceGroupSitesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -139,12 +152,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Name, siteName, ServiceGroupSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ServiceGroupSiteResource> operation = new TestsArmOperation<ServiceGroupSiteResource>(
-                    new ServiceGroupSiteOperationSource(Client),
+                    new ServiceGroupSiteResourceOperationSource(Client),
                     _serviceGroupSitesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -281,7 +295,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context), data => new ServiceGroupSiteResource(Client, data));
+            return new AsyncPageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +323,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context), data => new ServiceGroupSiteResource(Client, data));
+            return new PageableWrapper<ServiceGroupSiteData, ServiceGroupSiteResource>(new ServiceGroupSitesGetByServiceGroupCollectionResultOfT(_serviceGroupSitesRestClient, Id.Name, context, "ServiceGroupSiteCollection.GetAll"), data => new ServiceGroupSiteResource(Client, data));
         }
 
         /// <summary>

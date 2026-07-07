@@ -8,5 +8,5 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.EdgeOrder.Custom.Models
 {
     [CodeGenType("UnknownEdgeOrderProductMeterDetails")]
-    internal partial class UnknownMeterDetails {}
+    internal partial class UnknownMeterDetails { }
 }

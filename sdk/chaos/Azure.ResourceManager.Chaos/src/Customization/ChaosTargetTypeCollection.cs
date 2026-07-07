@@ -4,15 +4,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using Autorest.CSharp.Core;
-using Azure.Core.Pipeline;
-using Azure.Core;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 using System.Threading;
-using System.ComponentModel;
+using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Chaos
 {

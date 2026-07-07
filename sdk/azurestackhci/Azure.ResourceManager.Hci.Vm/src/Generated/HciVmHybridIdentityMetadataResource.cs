@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Hci.Vm
     /// <summary>
     /// A class representing a HciVmHybridIdentityMetadata along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HciVmHybridIdentityMetadataResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetHciVmHybridIdentityMetadata method.
+    /// Otherwise you can get one from its parent resource <see cref="HciVmInstanceResource"/> using the GetHciVmHybridIdentityMetadata method.
     /// </summary>
     public partial class HciVmHybridIdentityMetadataResource : ArmResource
     {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HciVmHybridIdentityMetadataData> response = Response.FromValue(HciVmHybridIdentityMetadataData.FromResponse(result), result);
                 if (response.Value == null)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent, context);
+                HttpMessage message = _hybridIdentityMetadataRestClient.CreateGetRequest(Id.Parent.Parent.ToString(), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HciVmHybridIdentityMetadataData> response = Response.FromValue(HciVmHybridIdentityMetadataData.FromResponse(result), result);
                 if (response.Value == null)

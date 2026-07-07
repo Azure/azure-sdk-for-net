@@ -1,13 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -182,7 +184,7 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(false, response.HasCompleted);
             Assert.AreEqual("12.345", response.Id);
         }
@@ -217,7 +219,7 @@ namespace Azure.Security.CodeTransparency.Tests
             BinaryData content = BinaryData.FromString("Hello World!");
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(1, mockTransport.Requests.Count);
             Assert.AreEqual(false, response.HasCompleted);
             Assert.AreEqual("12.345", response.Id);
@@ -251,7 +253,7 @@ namespace Azure.Security.CodeTransparency.Tests
             Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual("12.345", response.Id);
         }
 
@@ -385,7 +387,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
 
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual(expected: 200, response.GetRawResponse().Status);
         }
 
@@ -403,7 +405,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             Response<BinaryData> response = await client.GetEntryAsync("4.44");
-            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
         }
@@ -425,7 +427,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Assert.NotNull(result);
             Assert.AreEqual("test-content", result.Value.ToString());
-            Assert.AreEqual("https://foo.bar.com/.well-known/transparency-configuration?api-version=2025-01-31-preview", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/.well-known/transparency-configuration?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
         }
 
         [Test]
@@ -444,7 +446,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Assert.NotNull(result);
             Assert.AreEqual(2, mockTransport.Requests.Count);
-            Assert.AreEqual("https://foo.bar.com/jwks?api-version=2025-01-31-preview", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/jwks?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
         }
 
         [Test]
@@ -726,6 +728,61 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.DoesNotThrow(() =>
                 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
             Assert.AreEqual(1, mockTransport.Requests.Count);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_ThreadSafety_ParallelCallsShouldNotFail()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+            int threadCount = 8;
+            int iterationsPerThread = 3;
+
+            var timeout = TimeSpan.FromMilliseconds(25_000);
+
+            var barrier = new Barrier(threadCount);
+            var exceptions = new ConcurrentBag<Exception>();
+
+            var tasks = Enumerable.Range(0, threadCount).Select(_ => Task.Run(() =>
+            {
+                barrier.SignalAndWait(); // ensure all threads start at the same time
+                for (int i = 0; i < iterationsPerThread; i++)
+                {
+                    try
+                    {
+                        var content = createValidSignedStatementPublicKeyResponse();
+                        var mockTransport = new MockTransport(content);
+                        var options = new CodeTransparencyClientOptions
+                        {
+                            Transport = mockTransport,
+                            IdentityClientEndpoint = "https://foo.bar.com"
+                        };
+                        var verificationOptions = new CodeTransparencyVerificationOptions
+                        {
+                            AuthorizedDomains = new string[] { "foo.bar.com" },
+                        };
+
+                        CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+                    }
+                    catch (Exception ex)
+                    {
+                        exceptions.Add(ex);
+                    }
+                }
+            })).ToArray();
+
+            if (!Task.WaitAll(tasks, timeout))
+            {
+                Assert.Inconclusive($"Thread-safety test could not complete within the CI timeout budget ({timeout.TotalSeconds} seconds).");
+            }
+
+            int totalCalls = threadCount * iterationsPerThread;
+            Assert.IsEmpty(exceptions,
+                $"Thread safety violation: {exceptions.Count} out of {totalCalls} parallel calls failed. " +
+                $"First error: {exceptions.FirstOrDefault()?.Message}");
 #endif
         }
     }

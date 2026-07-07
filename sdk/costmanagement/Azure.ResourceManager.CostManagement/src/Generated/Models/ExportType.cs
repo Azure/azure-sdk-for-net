@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,41 +15,79 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ExportType : IEquatable<ExportType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExportType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExportType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UsageValue = "Usage";
         private const string ActualCostValue = "ActualCost";
         private const string AmortizedCostValue = "AmortizedCost";
+        private const string FocusCostValue = "FocusCost";
+        private const string PriceSheetValue = "PriceSheet";
+        private const string ReservationTransactionsValue = "ReservationTransactions";
+        private const string ReservationRecommendationsValue = "ReservationRecommendations";
+        private const string ReservationDetailsValue = "ReservationDetails";
 
-        /// <summary> Usage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExportType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Usage. </summary>
         public static ExportType Usage { get; } = new ExportType(UsageValue);
-        /// <summary> ActualCost. </summary>
+
+        /// <summary> Gets the ActualCost. </summary>
         public static ExportType ActualCost { get; } = new ExportType(ActualCostValue);
-        /// <summary> AmortizedCost. </summary>
+
+        /// <summary> Gets the AmortizedCost. </summary>
         public static ExportType AmortizedCost { get; } = new ExportType(AmortizedCostValue);
+
+        /// <summary> Gets the FocusCost. </summary>
+        public static ExportType FocusCost { get; } = new ExportType(FocusCostValue);
+
+        /// <summary> Gets the PriceSheet. </summary>
+        public static ExportType PriceSheet { get; } = new ExportType(PriceSheetValue);
+
+        /// <summary> Gets the ReservationTransactions. </summary>
+        public static ExportType ReservationTransactions { get; } = new ExportType(ReservationTransactionsValue);
+
+        /// <summary> Gets the ReservationRecommendations. </summary>
+        public static ExportType ReservationRecommendations { get; } = new ExportType(ReservationRecommendationsValue);
+
+        /// <summary> Gets the ReservationDetails. </summary>
+        public static ExportType ReservationDetails { get; } = new ExportType(ReservationDetailsValue);
+
         /// <summary> Determines if two <see cref="ExportType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportType left, ExportType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExportType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportType left, ExportType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExportType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExportType(string value) => new ExportType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExportType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExportType?(string value) => value == null ? null : new ExportType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -47,12 +47,12 @@ namespace Azure.AI.Translation.Document.Tests
         /// Verifies functionality of the <see cref="DocumentTranslationClient"/> constructors.
         /// </summary>
         [Test]
-        public void ConstructorRequiresTheOptions()
+        public void ConstructorAllowsNullOptions()
         {
             var endpoint = new Uri("http://localhost");
             var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(endpoint, keyCredential, null));
+            Assert.DoesNotThrow(() => new DocumentTranslationClient(endpoint, keyCredential, null));
         }
 
         #endregion

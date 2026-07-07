@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryPointType : IEquatable<SiteRecoveryPointType>
     {
         private readonly string _value;
+        /// <summary> LatestTime. </summary>
+        private const string LatestTimeValue = "LatestTime";
+        /// <summary> LatestTag. </summary>
+        private const string LatestTagValue = "LatestTag";
+        /// <summary> Custom. </summary>
+        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryPointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LatestTimeValue = "LatestTime";
-        private const string LatestTagValue = "LatestTag";
-        private const string CustomValue = "Custom";
+            _value = value;
+        }
 
         /// <summary> LatestTime. </summary>
         public static SiteRecoveryPointType LatestTime { get; } = new SiteRecoveryPointType(LatestTimeValue);
+
         /// <summary> LatestTag. </summary>
         public static SiteRecoveryPointType LatestTag { get; } = new SiteRecoveryPointType(LatestTagValue);
+
         /// <summary> Custom. </summary>
         public static SiteRecoveryPointType Custom { get; } = new SiteRecoveryPointType(CustomValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryPointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryPointType left, SiteRecoveryPointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryPointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryPointType left, SiteRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryPointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryPointType(string value) => new SiteRecoveryPointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryPointType?(string value) => value == null ? null : new SiteRecoveryPointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryPointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryPointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

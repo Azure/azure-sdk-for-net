@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -128,7 +129,20 @@ namespace Azure.IoT.TimeSeriesInsights.Samples
                 double currentHumidity = minHumidity + rand.NextDouble() * 20;
                 messageBase["Temperature"] = currentTemperature;
                 messageBase["Humidity"] = currentHumidity;
-                string messageBody = JsonSerializer.Serialize(messageBase);
+                using var stream = new MemoryStream();
+                using var writer = new Utf8JsonWriter(stream);
+                writer.WriteStartObject();
+                foreach (KeyValuePair<string, object> kvp in messageBase)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    if (kvp.Value is double d)
+                        writer.WriteNumberValue(d);
+                    else
+                        writer.WriteStringValue(kvp.Value?.ToString());
+                }
+                writer.WriteEndObject();
+                writer.Flush();
+                string messageBody = Encoding.UTF8.GetString(stream.ToArray());
                 var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageBody))
                 {
                     ContentType = "application/json",

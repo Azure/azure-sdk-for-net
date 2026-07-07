@@ -26,7 +26,10 @@ namespace Azure.Monitor.Query.Metrics
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/metrics:getBatch", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (startTime != null)
             {
                 uri.AppendQuery("starttime", startTime, true);

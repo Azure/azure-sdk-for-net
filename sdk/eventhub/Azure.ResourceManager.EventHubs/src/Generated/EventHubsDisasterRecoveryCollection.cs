@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A class representing a collection of <see cref="EventHubsDisasterRecoveryResource"/> and their operations.
     /// Each <see cref="EventHubsDisasterRecoveryResource"/> in the collection will belong to the same instance of <see cref="EventHubsNamespaceResource"/>.
-    /// To get an <see cref="EventHubsDisasterRecoveryCollection"/> instance call the GetEventHubsDisasterRecoveries method from an instance of <see cref="EventHubsNamespaceResource"/>.
+    /// To get a <see cref="EventHubsDisasterRecoveryCollection"/> instance call the GetEventHubsDisasterRecoveries method from an instance of <see cref="EventHubsNamespaceResource"/>.
     /// </summary>
     public partial class EventHubsDisasterRecoveryCollection : ArmCollection, IEnumerable<EventHubsDisasterRecoveryResource>, IAsyncEnumerable<EventHubsDisasterRecoveryResource>
     {
-        private readonly ClientDiagnostics _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics;
-        private readonly DisasterRecoveryConfigsRestOperations _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient;
+        private readonly ClientDiagnostics _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics;
+        private readonly EventHubsDisasterRecoveryAuthorizationRule _eventHubsDisasterRecoveryAuthorizationRuleRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EventHubsDisasterRecoveryCollection for mocking. </summary>
         protected EventHubsDisasterRecoveryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsDisasterRecoveryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EventHubsDisasterRecoveryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsDisasterRecoveryResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(EventHubsDisasterRecoveryResource.ResourceType, out string eventHubsDisasterRecoveryDisasterRecoveryConfigsApiVersion);
-            _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsDisasterRecoveryDisasterRecoveryConfigsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(EventHubsDisasterRecoveryResource.ResourceType, out string eventHubsDisasterRecoveryApiVersion);
+            _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", EventHubsDisasterRecoveryResource.ResourceType.Namespace, Diagnostics);
+            _eventHubsDisasterRecoveryAuthorizationRuleRestClient = new EventHubsDisasterRecoveryAuthorizationRule(_eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics, Pipeline, Endpoint, eventHubsDisasterRecoveryApiVersion ?? "2025-05-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EventHubsNamespaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventHubsNamespaceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a new Alias(Disaster Recovery configuration)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="data"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EventHubsDisasterRecoveryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string @alias, EventHubsDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data, cancellationToken).ConfigureAwait(false);
-                var uri = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, EventHubsDisasterRecoveryData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                EventHubsArmOperation<EventHubsDisasterRecoveryResource> operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.EventHubs
         /// Creates or updates a new Alias(Disaster Recovery configuration)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="data"> Parameters required to create an Alias(Disaster Recovery configuration). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EventHubsDisasterRecoveryResource> CreateOrUpdate(WaitUntil waitUntil, string @alias, EventHubsDisasterRecoveryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data, cancellationToken);
-                var uri = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, EventHubsDisasterRecoveryData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                EventHubsArmOperation<EventHubsDisasterRecoveryResource> operation = new EventHubsArmOperation<EventHubsDisasterRecoveryResource>(Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.EventHubs
         /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EventHubsDisasterRecoveryResource>> GetAsync(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Get");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.EventHubs
         /// Retrieves Alias(Disaster Recovery configuration) for primary or secondary namespace
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EventHubsDisasterRecoveryResource> Get(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Get");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Get");
             scope.Start();
             try
             {
-                var response = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EventHubsDisasterRecoveryData> response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,50 @@ namespace Azure.ResourceManager.EventHubs
         /// Gets all Alias(Disaster Recovery configurations)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsDisasterRecoveryResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubsDisasterRecoveryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubsDisasterRecoveryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsDisasterRecoveryResource(Client, EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(e)), _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "EventHubsDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllAsyncCollectionResultOfT(
+                _eventHubsDisasterRecoveryAuthorizationRuleRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsDisasterRecoveryCollection.GetAll"), data => new EventHubsDisasterRecoveryResource(Client, data));
         }
 
         /// <summary>
         /// Gets all Alias(Disaster Recovery configurations)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +317,67 @@ namespace Azure.ResourceManager.EventHubs
         /// <returns> A collection of <see cref="EventHubsDisasterRecoveryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubsDisasterRecoveryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsDisasterRecoveryResource(Client, EventHubsDisasterRecoveryData.DeserializeEventHubsDisasterRecoveryData(e)), _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics, Pipeline, "EventHubsDisasterRecoveryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EventHubsDisasterRecoveryData, EventHubsDisasterRecoveryResource>(new EventHubsDisasterRecoveryAuthorizationRuleGetAllCollectionResultOfT(
+                _eventHubsDisasterRecoveryAuthorizationRuleRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EventHubsDisasterRecoveryCollection.GetAll"), data => new EventHubsDisasterRecoveryResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Exists");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EventHubsDisasterRecoveryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EventHubsDisasterRecoveryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +391,50 @@ namespace Azure.ResourceManager.EventHubs
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Exists");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EventHubsDisasterRecoveryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EventHubsDisasterRecoveryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +448,54 @@ namespace Azure.ResourceManager.EventHubs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EventHubsDisasterRecoveryResource>> GetIfExistsAsync(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.GetIfExists");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EventHubsDisasterRecoveryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EventHubsDisasterRecoveryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EventHubsDisasterRecoveryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +509,54 @@ namespace Azure.ResourceManager.EventHubs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DisasterRecoveryConfigs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArmDisasterRecoveries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EventHubsDisasterRecoveryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alias"> The Disaster Recovery configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alias"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EventHubsDisasterRecoveryResource> GetIfExists(string @alias, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@alias, nameof(@alias));
 
-            using var scope = _eventHubsDisasterRecoveryDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.GetIfExists");
+            using DiagnosticScope scope = _eventHubsDisasterRecoveryAuthorizationRuleClientDiagnostics.CreateScope("EventHubsDisasterRecoveryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _eventHubsDisasterRecoveryDisasterRecoveryConfigsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alias, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _eventHubsDisasterRecoveryAuthorizationRuleRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, @alias, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EventHubsDisasterRecoveryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EventHubsDisasterRecoveryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EventHubsDisasterRecoveryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EventHubsDisasterRecoveryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EventHubsDisasterRecoveryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +576,7 @@ namespace Azure.ResourceManager.EventHubs
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EventHubsDisasterRecoveryResource> IAsyncEnumerable<EventHubsDisasterRecoveryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

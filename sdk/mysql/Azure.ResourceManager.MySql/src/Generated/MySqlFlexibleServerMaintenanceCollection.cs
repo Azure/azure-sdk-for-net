@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerMaintenanceData, MySqlFlexibleServerMaintenanceResource>(new MaintenancesGetAllAsyncCollectionResultOfT(_maintenancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerMaintenanceResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerMaintenanceData, MySqlFlexibleServerMaintenanceResource>(new MaintenancesGetAllAsyncCollectionResultOfT(
+                _maintenancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerMaintenanceCollection.GetAll"), data => new MySqlFlexibleServerMaintenanceResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerMaintenanceData, MySqlFlexibleServerMaintenanceResource>(new MaintenancesGetAllCollectionResultOfT(_maintenancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerMaintenanceResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerMaintenanceData, MySqlFlexibleServerMaintenanceResource>(new MaintenancesGetAllCollectionResultOfT(
+                _maintenancesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerMaintenanceCollection.GetAll"), data => new MySqlFlexibleServerMaintenanceResource(Client, data));
         }
 
         /// <summary>

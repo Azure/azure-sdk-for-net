@@ -143,7 +143,8 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 Id.ResourceGroupName,
                 location,
                 AvailableSkusContent.ToRequestContent(content),
-                context);
+                context,
+                "MockableDataBoxResourceGroupResource.GetAvailableSkus");
         }
 
         /// <summary>
@@ -182,7 +183,8 @@ namespace Azure.ResourceManager.DataBox.Mocking
                 Id.ResourceGroupName,
                 location,
                 AvailableSkusContent.ToRequestContent(content),
-                context);
+                context,
+                "MockableDataBoxResourceGroupResource.GetAvailableSkus");
         }
 
         /// <summary>

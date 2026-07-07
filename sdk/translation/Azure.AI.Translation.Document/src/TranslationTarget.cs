@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
-    [CodeGenModel("TargetInput")]
+    [CodeGenType("TargetInput")]
     public partial class TranslationTarget
     {
         [CodeGenMember("TranslationStorageSource")]

@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
+    /// <summary>
+    /// Azure Operator Distributed Services network function application definition.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownAzureOperatorNexusNetworkFunctionApplication))]
-    public partial class AzureOperatorNexusNetworkFunctionApplication : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusNetworkFunctionApplication>
+    public abstract partial class AzureOperatorNexusNetworkFunctionApplication : NetworkFunctionApplication, IJsonModel<AzureOperatorNexusNetworkFunctionApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusNetworkFunctionApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionApplication"/> for deserialization. </summary>
+        internal AzureOperatorNexusNetworkFunctionApplication()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkFunctionApplication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureOperatorNexusNetworkFunctionApplication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureOperatorNexusNetworkFunctionApplication IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureOperatorNexusNetworkFunctionApplication)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureOperatorNexusNetworkFunctionApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,77 +77,52 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
         }
 
-        AzureOperatorNexusNetworkFunctionApplication IJsonModel<AzureOperatorNexusNetworkFunctionApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureOperatorNexusNetworkFunctionApplication IJsonModel<AzureOperatorNexusNetworkFunctionApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureOperatorNexusNetworkFunctionApplication)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkFunctionApplication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureOperatorNexusNetworkFunctionApplication(document.RootElement, options);
         }
 
-        internal static AzureOperatorNexusNetworkFunctionApplication DeserializeAzureOperatorNexusNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureOperatorNexusNetworkFunctionApplication DeserializeAzureOperatorNexusNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("artifactType", out JsonElement discriminator))
+            if (element.TryGetProperty("artifactType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "ArmTemplate": return AzureOperatorNexusNetworkFunctionArmTemplateApplication.DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(element, options);
-                    case "ImageFile": return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element, options);
+                    case "ImageFile":
+                        return AzureOperatorNexusNetworkFunctionImageApplication.DeserializeAzureOperatorNexusNetworkFunctionImageApplication(element, options);
+                    case "ArmTemplate":
+                        return AzureOperatorNexusNetworkFunctionArmTemplateApplication.DeserializeAzureOperatorNexusNetworkFunctionArmTemplateApplication(element, options);
                 }
             }
             return UnknownAzureOperatorNexusNetworkFunctionApplication.DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(element, options);
         }
-
-        BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureOperatorNexusNetworkFunctionApplication IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureOperatorNexusNetworkFunctionApplication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusNetworkFunctionApplication)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureOperatorNexusNetworkFunctionApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -15,9 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class PatAuthTypeConnectionProperties : CognitiveServicesConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="PatAuthTypeConnectionProperties"/>. </summary>
-        public PatAuthTypeConnectionProperties()
+        public PatAuthTypeConnectionProperties() : base(ConnectionAuthType.PAT)
         {
-            AuthType = ConnectionAuthType.PAT;
         }
 
         /// <summary> Initializes a new instance of <see cref="PatAuthTypeConnectionProperties"/>. </summary>
@@ -34,25 +34,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sharedUserList"></param>
         /// <param name="target"> The connection URL to be used. </param>
         /// <param name="useWorkspaceManagedIdentity"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"></param>
-        internal PatAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, ConnectionPersonalAccessToken credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
+        internal PatAuthTypeConnectionProperties(ConnectionAuthType authType, CognitiveServicesConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, CognitiveServicesConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectionPersonalAccessToken credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, @group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, additionalBinaryDataProperties)
         {
             Credentials = credentials;
-            AuthType = authType;
         }
 
-        /// <summary> Gets or sets the credentials. </summary>
+        /// <summary> Gets or sets the Credentials. </summary>
+        [WirePath("credentials")]
         internal ConnectionPersonalAccessToken Credentials { get; set; }
-        /// <summary> Gets or sets the credentials pat. </summary>
+
+        /// <summary> Gets or sets the Pat. </summary>
         [WirePath("credentials.pat")]
         public string CredentialsPat
         {
-            get => Credentials is null ? default : Credentials.Pat;
+            get
+            {
+                return Credentials is null ? default : Credentials.Pat;
+            }
             set
             {
                 if (Credentials is null)
+                {
                     Credentials = new ConnectionPersonalAccessToken();
+                }
                 Credentials.Pat = value;
             }
         }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _configurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(
-                    new MySqlFlexibleServerConfigurationOperationSource(Client),
+                    new MySqlFlexibleServerConfigurationResourceOperationSource(Client),
                     _configurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -286,12 +286,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _configurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MySqlFlexibleServerConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerConfigurationResource>(
-                    new MySqlFlexibleServerConfigurationOperationSource(Client),
+                    new MySqlFlexibleServerConfigurationResourceOperationSource(Client),
                     _configurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

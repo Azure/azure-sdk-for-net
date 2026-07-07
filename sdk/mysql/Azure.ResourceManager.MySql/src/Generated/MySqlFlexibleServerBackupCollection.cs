@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
             }
         }
 
@@ -283,7 +283,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new BackupsGetByServerAsyncCollectionResultOfT(_backupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerBackupResource(Client, data));
+            return new AsyncPageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new BackupsGetByServerAsyncCollectionResultOfT(
+                _backupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerBackupCollection.GetAll"), data => new MySqlFlexibleServerBackupResource(Client, data));
         }
 
         /// <summary>
@@ -311,7 +317,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new BackupsGetByServerCollectionResultOfT(_backupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MySqlFlexibleServerBackupResource(Client, data));
+            return new PageableWrapper<MySqlFlexibleServerBackupData, MySqlFlexibleServerBackupResource>(new BackupsGetByServerCollectionResultOfT(
+                _backupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MySqlFlexibleServerBackupCollection.GetAll"), data => new MySqlFlexibleServerBackupResource(Client, data));
         }
 
         /// <summary>

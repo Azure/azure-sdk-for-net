@@ -22,7 +22,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobServiceProperties instance.
         /// </summary>
-        public BlobServiceProperties() : this(false) {}
+        public BlobServiceProperties() : this(false) { }
 
         /// <summary>
         /// Creates a new BlobServiceProperties instance.

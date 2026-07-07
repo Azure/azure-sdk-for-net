@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionAsyncCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
+            return new AsyncPageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionAsyncCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context, "MockableKubernetesSubscriptionResource.GetConnectedClusters"), data => new ConnectedClusterResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Kubernetes.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context), data => new ConnectedClusterResource(Client, data));
+            return new PageableWrapper<ConnectedClusterData, ConnectedClusterResource>(new ConnectedClusterGetBySubscriptionCollectionResultOfT(ConnectedClusterRestClient, Id.SubscriptionId, context, "MockableKubernetesSubscriptionResource.GetConnectedClusters"), data => new ConnectedClusterResource(Client, data));
         }
     }
 }

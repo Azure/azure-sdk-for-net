@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmProtectableItem"/>. </summary>
         public IaasClassicComputeVmProtectableItem()
         {
-            ProtectableItemType = "Microsoft.ClassicCompute/virtualMachines";
         }
 
         /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmProtectableItem"/>. </summary>
@@ -26,13 +25,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal IaasClassicComputeVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData, virtualMachineId, virtualMachineVersion, resourceGroup)
+        internal IaasClassicComputeVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, additionalBinaryDataProperties, virtualMachineId, virtualMachineVersion, resourceGroup)
         {
-            ProtectableItemType = protectableItemType ?? "Microsoft.ClassicCompute/virtualMachines";
         }
     }
 }

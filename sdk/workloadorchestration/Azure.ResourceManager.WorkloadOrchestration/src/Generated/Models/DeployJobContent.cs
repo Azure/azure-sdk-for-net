@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
             get
             {
-                return Parameter.SolutionVersionId;
+                return Parameter is null ? default : Parameter.SolutionVersionId;
             }
         }
     }

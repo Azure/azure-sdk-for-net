@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetBySubscriptionAsyncCollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context), data => new ElasticSanResource(Client, data));
+            return new AsyncPageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetBySubscriptionAsyncCollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context, "MockableElasticSanSubscriptionResource.GetElasticSans"), data => new ElasticSanResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetBySubscriptionCollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context), data => new ElasticSanResource(Client, data));
+            return new PageableWrapper<ElasticSanData, ElasticSanResource>(new ElasticSansGetBySubscriptionCollectionResultOfT(ElasticSansRestClient, Id.SubscriptionId, context, "MockableElasticSanSubscriptionResource.GetElasticSans"), data => new ElasticSanResource(Client, data));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetSkusAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context);
+            return new SkusGetSkusAsyncCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context, "MockableElasticSanSubscriptionResource.GetSkus");
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new SkusGetSkusCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context);
+            return new SkusGetSkusCollectionResultOfT(SkusRestClient, Id.SubscriptionId, filter, context, "MockableElasticSanSubscriptionResource.GetSkus");
         }
     }
 }

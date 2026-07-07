@@ -4,14 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
-using NUnit.Framework;
 using Azure.Identity;
-using System.Net;
-using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {

@@ -4,6 +4,11 @@
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec -g MgmtClientGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
+    },
+    "Mgmt-TypeSpec-MultiService": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Local/Mgmt-TypeSpec-MultiService -g MgmtClientGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
     }
   }
 }

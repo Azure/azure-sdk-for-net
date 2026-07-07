@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace Azure.AI.ContentUnderstanding.Tests
 {
     /// <summary>
-    /// Unit tests for <see cref="ObjectField"/> indexer.
+    /// Unit tests for <see cref="ContentObjectField"/> indexer.
     /// </summary>
     [TestFixture]
     public class ObjectFieldExtensionsTest
@@ -20,12 +20,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void Indexer_FieldExists_ReturnsField()
         {
             // Arrange
-            var field = ContentUnderstandingModelFactory.StringField(valueString: "TestValue");
+            var field = ContentUnderstandingModelFactory.ContentStringField(value: "TestValue");
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["TestField"] = field
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act
             var result = objectField["TestField"];
@@ -33,7 +33,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Assert
             Assert.IsNotNull(result);
             Assert.AreSame(field, result);
-            Assert.IsInstanceOf<StringField>(result);
+            Assert.IsInstanceOf<ContentStringField>(result);
         }
 
         [Test]
@@ -42,9 +42,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             var valueObject = new Dictionary<string, ContentField>
             {
-                ["ExistingField"] = ContentUnderstandingModelFactory.StringField(valueString: "Value")
+                ["ExistingField"] = ContentUnderstandingModelFactory.ContentStringField(value: "Value")
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             var exception = Assert.Throws<KeyNotFoundException>(() => _ = objectField["NonExistentField"]);
@@ -58,9 +58,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             var valueObject = new Dictionary<string, ContentField>
             {
-                ["TestField"] = ContentUnderstandingModelFactory.StringField()
+                ["TestField"] = ContentUnderstandingModelFactory.ContentStringField(value: null)
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => _ = objectField[null!]);
@@ -72,9 +72,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             var valueObject = new Dictionary<string, ContentField>
             {
-                ["TestField"] = ContentUnderstandingModelFactory.StringField()
+                ["TestField"] = ContentUnderstandingModelFactory.ContentStringField(value: null)
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             var exception = Assert.Throws<ArgumentException>(() => _ = objectField[""]);
@@ -85,7 +85,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void Indexer_ValueObjectIsNull_ThrowsKeyNotFoundException()
         {
             // Arrange
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: null);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: null);
 
             // Act & Assert
             var exception = Assert.Throws<KeyNotFoundException>(() => _ = objectField["AnyField"]);
@@ -98,7 +98,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             // Arrange
             var valueObject = new Dictionary<string, ContentField>();
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             var exception = Assert.Throws<KeyNotFoundException>(() => _ = objectField["TestField"]);
@@ -110,16 +110,16 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void Indexer_MultipleFields_ReturnsCorrectField()
         {
             // Arrange
-            var field1 = ContentUnderstandingModelFactory.StringField(valueString: "Value1");
-            var field2 = ContentUnderstandingModelFactory.NumberField(valueNumber: 42.0);
-            var field3 = ContentUnderstandingModelFactory.BooleanField(valueBoolean: true);
+            var field1 = ContentUnderstandingModelFactory.ContentStringField(value: "Value1");
+            var field2 = ContentUnderstandingModelFactory.ContentNumberField(value: 42.0);
+            var field3 = ContentUnderstandingModelFactory.ContentBooleanField(value: true);
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["Field1"] = field1,
                 ["Field2"] = field2,
                 ["Field3"] = field3
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             Assert.AreSame(field1, objectField["Field1"]);
@@ -131,12 +131,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void Indexer_FieldNameIsCaseSensitive()
         {
             // Arrange
-            var field = ContentUnderstandingModelFactory.StringField(valueString: "Value");
+            var field = ContentUnderstandingModelFactory.ContentStringField(value: "Value");
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["TestField"] = field
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             Assert.AreSame(field, objectField["TestField"]);
@@ -148,25 +148,25 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void Indexer_WorksWithNestedObjectFields()
         {
             // Arrange
-            var nestedField = ContentUnderstandingModelFactory.StringField(valueString: "NestedValue");
+            var nestedField = ContentUnderstandingModelFactory.ContentStringField(value: "NestedValue");
             var nestedValueObject = new Dictionary<string, ContentField>
             {
                 ["NestedField"] = nestedField
             };
-            var nestedObjectField = ContentUnderstandingModelFactory.ObjectField(valueObject: nestedValueObject);
+            var nestedObjectField = ContentUnderstandingModelFactory.ContentObjectField(value: nestedValueObject);
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["NestedObject"] = nestedObjectField
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act
             var retrievedNestedObject = objectField["NestedObject"];
 
             // Assert
             Assert.IsNotNull(retrievedNestedObject);
-            Assert.IsInstanceOf<ObjectField>(retrievedNestedObject);
-            var nestedObj = (ObjectField)retrievedNestedObject;
+            Assert.IsInstanceOf<ContentObjectField>(retrievedNestedObject);
+            var nestedObj = (ContentObjectField)retrievedNestedObject;
             Assert.AreSame(nestedField, nestedObj["NestedField"]);
         }
 
@@ -174,27 +174,27 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void Indexer_WorksWithDifferentFieldTypes()
         {
             // Arrange
-            var stringField = ContentUnderstandingModelFactory.StringField(valueString: "StringValue");
-            var numberField = ContentUnderstandingModelFactory.NumberField(valueNumber: 123.45);
-            var booleanField = ContentUnderstandingModelFactory.BooleanField(valueBoolean: true);
-            var dateField = ContentUnderstandingModelFactory.DateField(valueDate: DateTimeOffset.Now);
-            var timeField = ContentUnderstandingModelFactory.TimeField(valueTime: TimeSpan.FromHours(14));
+            var stringField = ContentUnderstandingModelFactory.ContentStringField(value: "StringValue");
+            var numberField = ContentUnderstandingModelFactory.ContentNumberField(value: 123.45);
+            var booleanField = ContentUnderstandingModelFactory.ContentBooleanField(value: true);
+            var dateField = ContentUnderstandingModelFactory.ContentDateTimeOffsetField(value: DateTimeOffset.Now);
+            var timeField = ContentUnderstandingModelFactory.ContentTimeField(value: TimeSpan.FromHours(14));
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["StringField"] = stringField,
                 ["NumberField"] = numberField,
                 ["BooleanField"] = booleanField,
-                ["DateField"] = dateField,
+                ["DateTimeOffsetField"] = dateField,
                 ["TimeField"] = timeField
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
-            Assert.IsInstanceOf<StringField>(objectField["StringField"]);
-            Assert.IsInstanceOf<NumberField>(objectField["NumberField"]);
-            Assert.IsInstanceOf<BooleanField>(objectField["BooleanField"]);
-            Assert.IsInstanceOf<DateField>(objectField["DateField"]);
-            Assert.IsInstanceOf<TimeField>(objectField["TimeField"]);
+            Assert.IsInstanceOf<ContentStringField>(objectField["StringField"]);
+            Assert.IsInstanceOf<ContentNumberField>(objectField["NumberField"]);
+            Assert.IsInstanceOf<ContentBooleanField>(objectField["BooleanField"]);
+            Assert.IsInstanceOf<ContentDateTimeOffsetField>(objectField["DateTimeOffsetField"]);
+            Assert.IsInstanceOf<ContentTimeField>(objectField["TimeField"]);
         }
 
         [Test]
@@ -204,14 +204,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Note: Field names in the API typically follow PascalCase/camelCase conventions (e.g., "CustomerName", "TotalAmount").
             // The TypeSpec defines fields as Record<ContentField> (string keys) without explicit pattern validation.
             // However, since field names are JSON property names, they should follow JSON naming conventions.
-            var field = ContentUnderstandingModelFactory.StringField(valueString: "Value");
+            var field = ContentUnderstandingModelFactory.ContentStringField(value: "Value");
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["CustomerName"] = field,           // PascalCase (typical pattern)
                 ["totalAmount"] = field,            // camelCase (also valid)
                 ["Field_With_Underscores"] = field  // Underscores are valid in JSON property names
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             Assert.IsNotNull(objectField["CustomerName"]);
@@ -223,12 +223,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public void Indexer_CanBeUsedInTryCatchPattern()
         {
             // Arrange
-            var field = ContentUnderstandingModelFactory.StringField(valueString: "Value");
+            var field = ContentUnderstandingModelFactory.ContentStringField(value: "Value");
             var valueObject = new Dictionary<string, ContentField>
             {
                 ["Amount"] = field
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act
             string? amount = null;
@@ -254,9 +254,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Arrange
             var valueObject = new Dictionary<string, ContentField>
             {
-                ["ExistingField"] = ContentUnderstandingModelFactory.StringField(valueString: "Value")
+                ["ExistingField"] = ContentUnderstandingModelFactory.ContentStringField(value: "Value")
             };
-            var objectField = ContentUnderstandingModelFactory.ObjectField(valueObject: valueObject);
+            var objectField = ContentUnderstandingModelFactory.ContentObjectField(value: valueObject);
 
             // Act & Assert
             try

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ResolveStatus. </summary>
+    /// <summary></summary>
     public enum ResolveStatus
     {
         /// <summary> Initialized. </summary>

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties to configure retention settings for the  eventhub. </summary>
     public partial class RetentionDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RetentionDescription"/>. </summary>
         public RetentionDescription()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="retentionTimeInHours"> Number of hours to retain the events for this Event Hub. This should be positive value upto namespace SKU max. -1 is a special case where retention time is infinite, but the size of an entity is restricted and its size depends on namespace SKU type. </param>
         /// <param name="minCompactionLagTimeInMinutes"> The minimum time a message will remain ineligible for compaction in the log. This value is used when cleanupPolicy is Compact or DeleteOrCompact. </param>
         /// <param name="tombstoneRetentionTimeInHours"> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is used when cleanupPolicy is Compact or DeleteOrCompact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RetentionDescription(CleanupPolicyRetentionDescription? cleanupPolicy, long? retentionTimeInHours, long? minCompactionLagTimeInMinutes, int? tombstoneRetentionTimeInHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RetentionDescription(CleanupPolicyRetentionDescription? cleanupPolicy, long? retentionTimeInHours, long? minCompactionLagTimeInMinutes, int? tombstoneRetentionTimeInHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CleanupPolicy = cleanupPolicy;
             RetentionTimeInHours = retentionTimeInHours;
             MinCompactionLagTimeInMinutes = minCompactionLagTimeInMinutes;
             TombstoneRetentionTimeInHours = tombstoneRetentionTimeInHours;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enumerates the possible values for cleanup policy. </summary>
         [WirePath("cleanupPolicy")]
         public CleanupPolicyRetentionDescription? CleanupPolicy { get; set; }
+
         /// <summary> Number of hours to retain the events for this Event Hub. This should be positive value upto namespace SKU max. -1 is a special case where retention time is infinite, but the size of an entity is restricted and its size depends on namespace SKU type. </summary>
         [WirePath("retentionTimeInHours")]
         public long? RetentionTimeInHours { get; set; }
+
         /// <summary> The minimum time a message will remain ineligible for compaction in the log. This value is used when cleanupPolicy is Compact or DeleteOrCompact. </summary>
         [WirePath("minCompactionLagTimeInMinutes")]
         public long? MinCompactionLagTimeInMinutes { get; set; }
+
         /// <summary> Number of hours to retain the tombstone markers of a compacted Event Hub. This value is used when cleanupPolicy is Compact or DeleteOrCompact. Consumer must complete reading the tombstone marker within this specified amount of time if consumer begins from starting offset to ensure they get a valid snapshot for the specific key described by the tombstone marker within the compacted Event Hub. </summary>
         [WirePath("tombstoneRetentionTimeInHours")]
         public int? TombstoneRetentionTimeInHours { get; set; }

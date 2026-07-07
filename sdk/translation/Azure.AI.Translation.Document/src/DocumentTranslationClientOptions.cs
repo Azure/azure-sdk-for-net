@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Document
 {
@@ -11,7 +12,7 @@ namespace Azure.AI.Translation.Document
     /// Options that allow to configure the management of the request sent to the service.
     /// </summary>
     [CodeGenSuppress("AzureAITranslationDocumentClientOptions", typeof(ServiceVersion))]
-    [CodeGenModel("AzureAITranslationDocumentClientOptions")]
+    [CodeGenType("TranslationDocumentClientOptions")]
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
         /// <summary>
@@ -26,6 +27,7 @@ namespace Azure.AI.Translation.Document
             {
                 ServiceVersion.V2024_05_01 => "2024-05-01",
                 ServiceVersion.V2024_11_01_Preview => "2024-11-01-preview",
+                ServiceVersion.V2025_12_01_Preview => "2025-12-01-preview",
                 _ => throw new NotSupportedException()
             };
             AddLoggedHeadersAndQueryParameters();

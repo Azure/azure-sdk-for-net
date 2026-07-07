@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.1-beta.6 (Unreleased)
 
 ### Features Added
 - Added support to route to failover ledgers for the `GetLedgerEntry`, `GetLedgerEntryAsync`, `GetCurrentLedgerEntry`, and `GetCurrentLedgerEntryAsync` methods. Failover is now implemented as a pipeline policy (`FailoverPolicy`), so each failover endpoint is attempted underneath the normal retry pipeline and only idempotent reads (HTTP GET) are failed over.
@@ -9,19 +9,32 @@
 - The client now treats a `GetLedgerEntry`/`GetLedgerEntryAsync` response that is still in the `Loading` state as transient and automatically polls until the entry is committed, bounded by the client's configured retry settings (`ClientOptions.Retry.MaxRetries` attempts with `ClientOptions.Retry.Delay` between attempts). Callers no longer need to write a manual polling loop.
 - Added `ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback`. When enabled, `GetCurrentLedgerEntry` and `GetCurrentLedgerEntryAsync` transparently fall back to a historical query for a collection whose latest entry has been archived (pruned) by the service, returning the most recent committed entry instead of failing with `404 Not Found`. Defaults to `false` so callers must explicitly opt in.
 
+### Breaking Changes
+
 ### Bugs Fixed
 - Failover requests are now validated against the failover ledger's own identity TLS certificate. The transport previously pinned only the primary ledger's certificate, so a failover request would fail TLS validation (unless certificate verification was disabled). The client now trusts the identity certificate of each ledger it talks to, fetched from the (independently validated) identity service. Failover endpoint discovery likewise uses a pipeline with normal TLS validation rather than the primary-pinned ledger pipeline.
 - `PostLedgerEntryOperation` now treats transient `406 NotAcceptable` responses from the status endpoint as `Pending` (instead of failing) and tolerates up to 3 consecutive `404 NotFound` responses while a transaction is being replicated across nodes, preventing spurious `RequestFailedException`s during normal commit propagation.
 
-## 1.4.1-beta.3 (Unreleased)
+### Other Changes
 
-### Features Added
-
-### Breaking Changes
+## 1.4.1-beta.5 (2026-05-26)
 
 ### Bugs Fixed
 
-### Other Changes
+- Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
+- Hardened redirect handling so credential-preserving redirects are only followed when the target remains within the configured ledger endpoint's trust boundary.
+
+## 1.4.1-beta.4 (2026-02-27)
+
+### Bugs Fixed
+
+- Fixed `VerifyConnection` in `ConfidentialLedgerClientOptions` defaulting to `false`, which caused TLS certificate verification to be skipped unless explicitly enabled. It now defaults to `true`.
+
+## 1.4.1-beta.3 (2026-02-17)
+
+### Features Added
+
+- Added `ConfidentialLedgerRedirectPolicy` to automatically follow HTTP 307/308 redirects while preserving the Authorization header. Previously, the SDK did not follow redirects by default, and even when redirects were enabled, the Authorization header was stripped on cross-domain redirects between ACL nodes, causing write operations to fail when routed to non-primary nodes.
 
 ## 1.4.1-beta.2 (2025-04-23)
 

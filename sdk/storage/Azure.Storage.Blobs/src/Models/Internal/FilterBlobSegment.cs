@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class FilterBlobSegment {}
+    internal partial class FilterBlobSegment { }
 }

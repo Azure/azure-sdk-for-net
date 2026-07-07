@@ -45,7 +45,10 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/lineage/", false);
             uri.AppendPath(guid, true);
             uri.AppendPath("/next", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             uri.AppendQuery("direction", direction, true);
             if (offset != null)
             {

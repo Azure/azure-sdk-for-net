@@ -110,7 +110,7 @@ namespace Azure.Storage.Tests
         [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 123, 123)] // partway through segment content
         [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 512, 512)] // start of segment footer
         [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 515, 512)] // partway through segment footer
-        [TestCase(V1_0.StreamHeaderLength + 3*V1_0.SegmentHeaderLength + 2*Crc64Length + 1500, 1500)] // partway through not first segment content
+        [TestCase(V1_0.StreamHeaderLength + 3 * V1_0.SegmentHeaderLength + 2 * Crc64Length + 1500, 1500)] // partway through not first segment content
         public async Task Seek(int targetRewindOffset, int expectedInnerStreamPosition)
         {
             const int segmentLength = 512;
@@ -257,7 +257,7 @@ namespace Azure.Storage.Tests
 
         private static void AssertExpectedSegmentHeader(ReadOnlySpan<byte> actual, int segmentNum, long contentLength)
         {
-            Assert.That(BinaryPrimitives.ReadInt16LittleEndian(actual.Slice(0, 2)), Is.EqualTo((short) segmentNum));
+            Assert.That(BinaryPrimitives.ReadInt16LittleEndian(actual.Slice(0, 2)), Is.EqualTo((short)segmentNum));
             Assert.That(BinaryPrimitives.ReadInt64LittleEndian(actual.Slice(2, 8)), Is.EqualTo(contentLength));
         }
 

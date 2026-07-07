@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsAccessKeyType : IEquatable<EventHubsAccessKeyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsAccessKeyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsAccessKeyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string PrimaryKeyValue = "PrimaryKey";
         private const string SecondaryKeyValue = "SecondaryKey";
 
-        /// <summary> PrimaryKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsAccessKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsAccessKeyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the PrimaryKey. </summary>
         public static EventHubsAccessKeyType PrimaryKey { get; } = new EventHubsAccessKeyType(PrimaryKeyValue);
-        /// <summary> SecondaryKey. </summary>
+
+        /// <summary> Gets the SecondaryKey. </summary>
         public static EventHubsAccessKeyType SecondaryKey { get; } = new EventHubsAccessKeyType(SecondaryKeyValue);
+
         /// <summary> Determines if two <see cref="EventHubsAccessKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsAccessKeyType left, EventHubsAccessKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsAccessKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsAccessKeyType left, EventHubsAccessKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsAccessKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsAccessKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsAccessKeyType(string value) => new EventHubsAccessKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsAccessKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsAccessKeyType?(string value) => value == null ? null : new EventHubsAccessKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsAccessKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsAccessKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

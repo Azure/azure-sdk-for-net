@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Audio visual content.  Ex. audio/wav, video/mp4. </summary>
-    public partial class AudioVisualContent : MediaContent
+    public partial class AudioVisualContent : AnalysisContent
     {
         /// <summary> Initializes a new instance of <see cref="AudioVisualContent"/>. </summary>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
-        /// <param name="startTimeMs"> Start time of the content in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the content in milliseconds. </param>
-        internal AudioVisualContent(string mimeType, long startTimeMs, long endTimeMs) : base(MediaContentKind.AudioVisual, mimeType)
+        /// <param name="startTimeMsValue"> Start time of the content in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the content in milliseconds. </param>
+        internal AudioVisualContent(string mimeType, long startTimeMsValue, long endTimeMsValue) : base(AnalysisContentKind.AudioVisual, mimeType)
         {
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
-            CameraShotTimesMs = new ChangeTrackingList<long>();
-            KeyFrameTimesMs = new ChangeTrackingList<long>();
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
+            CameraShotTimesMsValues = new ChangeTrackingList<long>();
+            KeyFrameTimesMsValues = new ChangeTrackingList<long>();
             TranscriptPhrases = new ChangeTrackingList<TranscriptPhrase>();
             Segments = new ChangeTrackingList<AudioVisualContentSegment>();
         }
@@ -36,43 +36,31 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="startTimeMs"> Start time of the content in milliseconds. </param>
-        /// <param name="endTimeMs"> End time of the content in milliseconds. </param>
+        /// <param name="startTimeMsValue"> Start time of the content in milliseconds. </param>
+        /// <param name="endTimeMsValue"> End time of the content in milliseconds. </param>
         /// <param name="width"> Width of each video frame in pixels, if applicable. </param>
         /// <param name="height"> Height of each video frame in pixels, if applicable. </param>
-        /// <param name="cameraShotTimesMs"> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
-        /// <param name="keyFrameTimesMs"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="cameraShotTimesMsValues"> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
+        /// <param name="keyFrameTimesMsValues"> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </param>
         /// <param name="transcriptPhrases"> List of transcript phrases.  Only if returnDetails is true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
-        internal AudioVisualContent(MediaContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties, long startTimeMs, long endTimeMs, int? width, int? height, IList<long> cameraShotTimesMs, IList<long> keyFrameTimesMs, IList<TranscriptPhrase> transcriptPhrases, IList<AudioVisualContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
+        internal AudioVisualContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties, long startTimeMsValue, long endTimeMsValue, int? width, int? height, IList<long> cameraShotTimesMsValues, IList<long> keyFrameTimesMsValues, IList<TranscriptPhrase> transcriptPhrases, IList<AudioVisualContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
         {
-            StartTimeMs = startTimeMs;
-            EndTimeMs = endTimeMs;
+            StartTimeMsValue = startTimeMsValue;
+            EndTimeMsValue = endTimeMsValue;
             Width = width;
             Height = height;
-            CameraShotTimesMs = cameraShotTimesMs;
-            KeyFrameTimesMs = keyFrameTimesMs;
+            CameraShotTimesMsValues = cameraShotTimesMsValues;
+            KeyFrameTimesMsValues = keyFrameTimesMsValues;
             TranscriptPhrases = transcriptPhrases;
             Segments = segments;
         }
-
-        /// <summary> Start time of the content in milliseconds. </summary>
-        public long StartTimeMs { get; }
-
-        /// <summary> End time of the content in milliseconds. </summary>
-        public long EndTimeMs { get; }
 
         /// <summary> Width of each video frame in pixels, if applicable. </summary>
         public int? Width { get; }
 
         /// <summary> Height of each video frame in pixels, if applicable. </summary>
         public int? Height { get; }
-
-        /// <summary> List of camera shot changes in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </summary>
-        public IList<long> CameraShotTimesMs { get; }
-
-        /// <summary> List of key frames in the video, represented by its timestamp in milliseconds.  Only if returnDetails is true. </summary>
-        public IList<long> KeyFrameTimesMs { get; }
 
         /// <summary> List of transcript phrases.  Only if returnDetails is true. </summary>
         public IList<TranscriptPhrase> TranscriptPhrases { get; }

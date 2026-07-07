@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-05-01-preview"
+  "apiVersions": {
+    "Microsoft.Impact": "2024-05-01-preview"
+  }
 }

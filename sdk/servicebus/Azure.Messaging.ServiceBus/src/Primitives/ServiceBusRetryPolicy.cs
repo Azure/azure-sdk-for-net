@@ -131,7 +131,7 @@ namespace Azure.Messaging.ServiceBus
             TransportConnectionScope scope,
             CancellationToken cancellationToken,
             bool logTimeoutRetriesAsVerbose = false)
-      {
+        {
             var failedAttemptCount = 0;
             var tryTimeout = CalculateTryTimeout(0);
 

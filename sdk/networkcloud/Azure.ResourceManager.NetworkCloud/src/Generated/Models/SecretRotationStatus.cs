@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> SecretRotationStatus represents the status of a secret rotation. </summary>
     public partial class SecretRotationStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecretRotationStatus"/>. </summary>
         internal SecretRotationStatus()
@@ -56,25 +27,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="rotationPeriodDays"> The number of days a secret exists before rotations will be attempted. </param>
         /// <param name="secretArchiveReference"> The reference to the secret in a key vault. </param>
         /// <param name="secretType"> The type name used to identify the purpose of the secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretRotationStatus(long? expirePeriodDays, DateTimeOffset? lastRotationOn, long? rotationPeriodDays, SecretArchiveReference secretArchiveReference, string secretType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecretRotationStatus(long? expirePeriodDays, DateTimeOffset? lastRotationOn, long? rotationPeriodDays, SecretArchiveReference secretArchiveReference, string secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpirePeriodDays = expirePeriodDays;
             LastRotationOn = lastRotationOn;
             RotationPeriodDays = rotationPeriodDays;
             SecretArchiveReference = secretArchiveReference;
             SecretType = secretType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum number of days the secret may be used before it must be changed. </summary>
         public long? ExpirePeriodDays { get; }
+
         /// <summary> The date and time when the secret was last changed. </summary>
         public DateTimeOffset? LastRotationOn { get; }
+
         /// <summary> The number of days a secret exists before rotations will be attempted. </summary>
         public long? RotationPeriodDays { get; }
+
         /// <summary> The reference to the secret in a key vault. </summary>
         public SecretArchiveReference SecretArchiveReference { get; }
+
         /// <summary> The type name used to identify the purpose of the secret. </summary>
         public string SecretType { get; }
     }

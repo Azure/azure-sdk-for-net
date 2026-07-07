@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationAdvancedScheduleMonthlyOccurrence : IUtf8JsonSerializable, IJsonModel<AutomationAdvancedScheduleMonthlyOccurrence>
+    /// <summary> The properties of the create advanced schedule monthly occurrence. </summary>
+    public partial class AutomationAdvancedScheduleMonthlyOccurrence : IJsonModel<AutomationAdvancedScheduleMonthlyOccurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutomationAdvancedScheduleMonthlyOccurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutomationAdvancedScheduleMonthlyOccurrence(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationAdvancedScheduleMonthlyOccurrence)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationAdvancedScheduleMonthlyOccurrence)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationAdvancedScheduleMonthlyOccurrence IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutomationAdvancedScheduleMonthlyOccurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutomationAdvancedScheduleMonthlyOccurrence)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Occurrence))
             {
                 writer.WritePropertyName("occurrence"u8);
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,88 +101,60 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        AutomationAdvancedScheduleMonthlyOccurrence IJsonModel<AutomationAdvancedScheduleMonthlyOccurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationAdvancedScheduleMonthlyOccurrence IJsonModel<AutomationAdvancedScheduleMonthlyOccurrence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutomationAdvancedScheduleMonthlyOccurrence JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutomationAdvancedScheduleMonthlyOccurrence)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutomationAdvancedScheduleMonthlyOccurrence(document.RootElement, options);
         }
 
-        internal static AutomationAdvancedScheduleMonthlyOccurrence DeserializeAutomationAdvancedScheduleMonthlyOccurrence(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutomationAdvancedScheduleMonthlyOccurrence DeserializeAutomationAdvancedScheduleMonthlyOccurrence(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? occurrence = default;
             AutomationDayOfWeek? day = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("occurrence"u8))
+                if (prop.NameEquals("occurrence"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    occurrence = property.Value.GetInt32();
+                    occurrence = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("day"u8))
+                if (prop.NameEquals("day"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    day = new AutomationDayOfWeek(property.Value.GetString());
+                    day = new AutomationDayOfWeek(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AutomationAdvancedScheduleMonthlyOccurrence(occurrence, day, serializedAdditionalRawData);
+            return new AutomationAdvancedScheduleMonthlyOccurrence(occurrence, day, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutomationAdvancedScheduleMonthlyOccurrence)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutomationAdvancedScheduleMonthlyOccurrence IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutomationAdvancedScheduleMonthlyOccurrence(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutomationAdvancedScheduleMonthlyOccurrence)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutomationAdvancedScheduleMonthlyOccurrence>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1318,7 +1318,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     if (count == 1)
                     {
                         await args.DeferMessageAsync(args.Message);
-                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] {args.Message.SequenceNumber})).Single();
+                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] { args.Message.SequenceNumber })).Single();
                     }
                     else if (manualRenew)
                     {
@@ -1365,7 +1365,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.IsNull(msg);
 
                 Assert.That(
-                    async () => await receiver.ReceiveDeferredMessagesAsync(new[] {receivedDeferredMessage.SequenceNumber}),
+                    async () => await receiver.ReceiveDeferredMessagesAsync(new[] { receivedDeferredMessage.SequenceNumber }),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
                         .EqualTo(ServiceBusFailureReason.MessageNotFound));
             }
@@ -1433,7 +1433,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await tcs.Task;
                 await processor.CloseAsync();
 
-                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions {ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete});
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
                 int remaining = messageCount;
 
                 // all messages should have been abandoned, so we should be able to receive them right away

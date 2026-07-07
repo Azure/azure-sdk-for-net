@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Migration state of a database.
-    /// Serialized Name: DatabaseMigrationState
-    /// </summary>
+    /// <summary> Migration state of a database. </summary>
     public partial class DbMigrationStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DbMigrationStatus"/>. </summary>
         internal DbMigrationStatus()
@@ -54,72 +23,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbMigrationStatus"/>. </summary>
-        /// <param name="databaseName">
-        /// Name of database.
-        /// Serialized Name: DatabaseMigrationState.databaseName
-        /// </param>
-        /// <param name="migrationState">
-        /// Migration state of a database.
-        /// Serialized Name: DatabaseMigrationState.migrationState
-        /// </param>
-        /// <param name="migrationOperation">
-        /// Migration operation of a database.
-        /// Serialized Name: DatabaseMigrationState.migrationOperation
-        /// </param>
-        /// <param name="startedOn">
-        /// Start time of a migration state.
-        /// Serialized Name: DatabaseMigrationState.startedOn
-        /// </param>
-        /// <param name="endedOn">
-        /// End time of a migration state.
-        /// Serialized Name: DatabaseMigrationState.endedOn
-        /// </param>
-        /// <param name="fullLoadQueuedTables">
-        /// Number of tables queued for the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadQueuedTables
-        /// </param>
-        /// <param name="fullLoadErroredTables">
-        /// Number of tables encountering errors during the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadErroredTables
-        /// </param>
-        /// <param name="fullLoadLoadingTables">
-        /// Number of tables loading during the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadLoadingTables
-        /// </param>
-        /// <param name="fullLoadCompletedTables">
-        /// Number of tables loaded during the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadCompletedTables
-        /// </param>
-        /// <param name="cdcUpdateCounter">
-        /// Change Data Capture update counter.
-        /// Serialized Name: DatabaseMigrationState.cdcUpdateCounter
-        /// </param>
-        /// <param name="cdcDeleteCounter">
-        /// Change Data Capture delete counter.
-        /// Serialized Name: DatabaseMigrationState.cdcDeleteCounter
-        /// </param>
-        /// <param name="cdcInsertCounter">
-        /// Change Data Capture insert counter.
-        /// Serialized Name: DatabaseMigrationState.cdcInsertCounter
-        /// </param>
-        /// <param name="appliedChanges">
-        /// Change Data Capture applied changes counter.
-        /// Serialized Name: DatabaseMigrationState.appliedChanges
-        /// </param>
-        /// <param name="incomingChanges">
-        /// Change Data Capture incoming changes counter.
-        /// Serialized Name: DatabaseMigrationState.incomingChanges
-        /// </param>
-        /// <param name="latency">
-        /// Lag in seconds between source and target during online phase.
-        /// Serialized Name: DatabaseMigrationState.latency
-        /// </param>
-        /// <param name="message">
-        /// Error message, if any, for the migration state.
-        /// Serialized Name: DatabaseMigrationState.message
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DbMigrationStatus(string databaseName, MigrationDbState? migrationState, string migrationOperation, DateTimeOffset? startedOn, DateTimeOffset? endedOn, int? fullLoadQueuedTables, int? fullLoadErroredTables, int? fullLoadLoadingTables, int? fullLoadCompletedTables, int? cdcUpdateCounter, int? cdcDeleteCounter, int? cdcInsertCounter, int? appliedChanges, int? incomingChanges, int? latency, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="databaseName"> Name of database. </param>
+        /// <param name="migrationState"> Migration state of a database. </param>
+        /// <param name="migrationOperation"> Migration operation of a database. </param>
+        /// <param name="startedOn"> Start time of a migration state. </param>
+        /// <param name="endedOn"> End time of a migration state. </param>
+        /// <param name="fullLoadQueuedTables"> Number of tables queued for the migration of a database. </param>
+        /// <param name="fullLoadErroredTables"> Number of tables encountering errors during the migration of a database. </param>
+        /// <param name="fullLoadLoadingTables"> Number of tables loading during the migration of a database. </param>
+        /// <param name="fullLoadCompletedTables"> Number of tables loaded during the migration of a database. </param>
+        /// <param name="cdcUpdateCounter"> Change Data Capture update counter. </param>
+        /// <param name="cdcDeleteCounter"> Change Data Capture delete counter. </param>
+        /// <param name="cdcInsertCounter"> Change Data Capture insert counter. </param>
+        /// <param name="appliedChanges"> Change Data Capture applied changes counter. </param>
+        /// <param name="incomingChanges"> Change Data Capture incoming changes counter. </param>
+        /// <param name="latency"> Lag in seconds between source and target during online phase. </param>
+        /// <param name="message"> Error message, if any, for the migration state. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DbMigrationStatus(string databaseName, MigrationDbState? migrationState, string migrationOperation, DateTimeOffset? startedOn, DateTimeOffset? endedOn, int? fullLoadQueuedTables, int? fullLoadErroredTables, int? fullLoadLoadingTables, int? fullLoadCompletedTables, int? cdcUpdateCounter, int? cdcDeleteCounter, int? cdcInsertCounter, int? appliedChanges, int? incomingChanges, int? latency, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             MigrationState = migrationState;
@@ -137,103 +58,70 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IncomingChanges = incomingChanges;
             Latency = latency;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Name of database.
-        /// Serialized Name: DatabaseMigrationState.databaseName
-        /// </summary>
+        /// <summary> Name of database. </summary>
         [WirePath("databaseName")]
         public string DatabaseName { get; }
-        /// <summary>
-        /// Migration state of a database.
-        /// Serialized Name: DatabaseMigrationState.migrationState
-        /// </summary>
+
+        /// <summary> Migration state of a database. </summary>
         [WirePath("migrationState")]
         public MigrationDbState? MigrationState { get; }
-        /// <summary>
-        /// Migration operation of a database.
-        /// Serialized Name: DatabaseMigrationState.migrationOperation
-        /// </summary>
+
+        /// <summary> Migration operation of a database. </summary>
         [WirePath("migrationOperation")]
         public string MigrationOperation { get; }
-        /// <summary>
-        /// Start time of a migration state.
-        /// Serialized Name: DatabaseMigrationState.startedOn
-        /// </summary>
+
+        /// <summary> Start time of a migration state. </summary>
         [WirePath("startedOn")]
         public DateTimeOffset? StartedOn { get; }
-        /// <summary>
-        /// End time of a migration state.
-        /// Serialized Name: DatabaseMigrationState.endedOn
-        /// </summary>
+
+        /// <summary> End time of a migration state. </summary>
         [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
-        /// <summary>
-        /// Number of tables queued for the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadQueuedTables
-        /// </summary>
+
+        /// <summary> Number of tables queued for the migration of a database. </summary>
         [WirePath("fullLoadQueuedTables")]
         public int? FullLoadQueuedTables { get; }
-        /// <summary>
-        /// Number of tables encountering errors during the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadErroredTables
-        /// </summary>
+
+        /// <summary> Number of tables encountering errors during the migration of a database. </summary>
         [WirePath("fullLoadErroredTables")]
         public int? FullLoadErroredTables { get; }
-        /// <summary>
-        /// Number of tables loading during the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadLoadingTables
-        /// </summary>
+
+        /// <summary> Number of tables loading during the migration of a database. </summary>
         [WirePath("fullLoadLoadingTables")]
         public int? FullLoadLoadingTables { get; }
-        /// <summary>
-        /// Number of tables loaded during the migration of a database.
-        /// Serialized Name: DatabaseMigrationState.fullLoadCompletedTables
-        /// </summary>
+
+        /// <summary> Number of tables loaded during the migration of a database. </summary>
         [WirePath("fullLoadCompletedTables")]
         public int? FullLoadCompletedTables { get; }
-        /// <summary>
-        /// Change Data Capture update counter.
-        /// Serialized Name: DatabaseMigrationState.cdcUpdateCounter
-        /// </summary>
+
+        /// <summary> Change Data Capture update counter. </summary>
         [WirePath("cdcUpdateCounter")]
         public int? CdcUpdateCounter { get; }
-        /// <summary>
-        /// Change Data Capture delete counter.
-        /// Serialized Name: DatabaseMigrationState.cdcDeleteCounter
-        /// </summary>
+
+        /// <summary> Change Data Capture delete counter. </summary>
         [WirePath("cdcDeleteCounter")]
         public int? CdcDeleteCounter { get; }
-        /// <summary>
-        /// Change Data Capture insert counter.
-        /// Serialized Name: DatabaseMigrationState.cdcInsertCounter
-        /// </summary>
+
+        /// <summary> Change Data Capture insert counter. </summary>
         [WirePath("cdcInsertCounter")]
         public int? CdcInsertCounter { get; }
-        /// <summary>
-        /// Change Data Capture applied changes counter.
-        /// Serialized Name: DatabaseMigrationState.appliedChanges
-        /// </summary>
+
+        /// <summary> Change Data Capture applied changes counter. </summary>
         [WirePath("appliedChanges")]
         public int? AppliedChanges { get; }
-        /// <summary>
-        /// Change Data Capture incoming changes counter.
-        /// Serialized Name: DatabaseMigrationState.incomingChanges
-        /// </summary>
+
+        /// <summary> Change Data Capture incoming changes counter. </summary>
         [WirePath("incomingChanges")]
         public int? IncomingChanges { get; }
-        /// <summary>
-        /// Lag in seconds between source and target during online phase.
-        /// Serialized Name: DatabaseMigrationState.latency
-        /// </summary>
+
+        /// <summary> Lag in seconds between source and target during online phase. </summary>
         [WirePath("latency")]
         public int? Latency { get; }
-        /// <summary>
-        /// Error message, if any, for the migration state.
-        /// Serialized Name: DatabaseMigrationState.message
-        /// </summary>
+
+        /// <summary> Error message, if any, for the migration state. </summary>
         [WirePath("message")]
         public string Message { get; }
     }

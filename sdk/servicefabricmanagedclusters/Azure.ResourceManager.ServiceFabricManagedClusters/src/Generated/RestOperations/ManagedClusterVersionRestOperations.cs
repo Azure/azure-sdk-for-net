@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedClusterVersions/", false);
             uri.AppendPath(clusterVersion, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -69,7 +72,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/managedClusterVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -90,7 +96,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath(environment, true);
             uri.AppendPath("/managedClusterVersions/", false);
             uri.AppendPath(clusterVersion, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -110,7 +119,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             uri.AppendPath("/environments/", false);
             uri.AppendPath(environment, true);
             uri.AppendPath("/managedClusterVersions", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

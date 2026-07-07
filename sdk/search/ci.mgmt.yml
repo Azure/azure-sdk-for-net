@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Search
       safeName: AzureResourceManagerSearch
+    - name: Azure.Provisioning.Search
+      safeName: AzureProvisioningSearch

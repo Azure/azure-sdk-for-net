@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService.Mocking
 {
     /// <summary> A class to add extension methods to ArmClient. </summary>

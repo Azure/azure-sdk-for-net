@@ -19,6 +19,17 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
 
         protected virtual ModelWithDefaultValues PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<ModelWithDefaultValues>.Write(ModelReaderWriterOptions options) => throw null;
+
+        ModelWithDefaultValues IPersistableModel<ModelWithDefaultValues>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<ModelWithDefaultValues>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="modelWithDefaultValues"> The <see cref="ModelWithDefaultValues"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ModelWithDefaultValues modelWithDefaultValues) => throw null;
+
         public static explicit operator ModelWithDefaultValues(Response response) => throw null;
 
         void IJsonModel<ModelWithDefaultValues>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDefaultValue
         ModelWithDefaultValues IJsonModel<ModelWithDefaultValues>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual ModelWithDefaultValues JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<ModelWithDefaultValues>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        ModelWithDefaultValues IPersistableModel<ModelWithDefaultValues>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<ModelWithDefaultValues>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="modelWithDefaultValues"> The <see cref="ModelWithDefaultValues"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ModelWithDefaultValues modelWithDefaultValues) => throw null;
     }
 }

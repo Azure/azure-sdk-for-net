@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmDeploymentProperties : IUtf8JsonSerializable, IJsonModel<ArmDeploymentProperties>
+    /// <summary> Deployment properties. </summary>
+    public partial class ArmDeploymentProperties : IJsonModel<ArmDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentProperties"/> for deserialization. </summary>
+        internal ArmDeploymentProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmDeploymentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeArmDeploymentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ArmDeploymentProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArmDeploymentProperties IPersistableModel<ArmDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ArmDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ArmDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,19 +74,18 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Template);
+                writer.WriteRawValue(Template);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Template, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Template))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -51,17 +96,16 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink, options);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Optional.IsCollectionDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("parameters"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Parameters);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Parameters, ModelSerializationExtensions.JsonDocumentOptions))
+                writer.WriteStartObject();
+                foreach (var item in DeploymentParameters)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
                 }
-#endif
+                writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(ExternalInputs))
             {
@@ -124,25 +168,25 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("onErrorDeployment"u8);
                 writer.WriteObjectValue(ErrorDeployment, options);
             }
-            if (Optional.IsDefined(ExpressionEvaluation))
+            if (Optional.IsDefined(ExpressionEvaluationOptions))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
-                writer.WriteObjectValue(ExpressionEvaluation, options);
+                writer.WriteObjectValue(ExpressionEvaluationOptions, options);
             }
             if (Optional.IsDefined(ValidationLevel))
             {
                 writer.WritePropertyName("validationLevel"u8);
                 writer.WriteStringValue(ValidationLevel.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -151,224 +195,201 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        ArmDeploymentProperties IJsonModel<ArmDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ArmDeploymentProperties IJsonModel<ArmDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ArmDeploymentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeArmDeploymentProperties(document.RootElement, options);
         }
 
-        internal static ArmDeploymentProperties DeserializeArmDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ArmDeploymentProperties DeserializeArmDeploymentProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             BinaryData template = default;
             ArmDeploymentTemplateLink templateLink = default;
-            BinaryData parameters = default;
+            IDictionary<string, ArmDeploymentParameterValue> deploymentParameters = default;
             IDictionary<string, ArmDeploymentExternalInput> externalInputs = default;
             IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions = default;
             ArmDeploymentParametersLink parametersLink = default;
             IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs = default;
             ArmDeploymentMode mode = default;
             DebugSetting debugSetting = default;
-            ErrorDeployment onErrorDeployment = default;
+            ErrorDeployment errorDeployment = default;
             ExpressionEvaluationOptions expressionEvaluationOptions = default;
             ValidationLevel? validationLevel = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("template"u8))
+                if (prop.NameEquals("template"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    template = BinaryData.FromString(property.Value.GetRawText());
+                    template = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("templateLink"u8))
+                if (prop.NameEquals("templateLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("parameters"u8))
+                if (prop.NameEquals("parameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parameters = BinaryData.FromString(property.Value.GetRawText());
+                    Dictionary<string, ArmDeploymentParameterValue> dictionary = new Dictionary<string, ArmDeploymentParameterValue>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ArmDeploymentParameterValue.DeserializeArmDeploymentParameterValue(prop0.Value, options));
+                    }
+                    deploymentParameters = dictionary;
                     continue;
                 }
-                if (property.NameEquals("externalInputs"u8))
+                if (prop.NameEquals("externalInputs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ArmDeploymentExternalInput> dictionary = new Dictionary<string, ArmDeploymentExternalInput>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ArmDeploymentExternalInput.DeserializeArmDeploymentExternalInput(property0.Value, options));
+                        dictionary.Add(prop0.Name, ArmDeploymentExternalInput.DeserializeArmDeploymentExternalInput(prop0.Value, options));
                     }
                     externalInputs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("externalInputDefinitions"u8))
+                if (prop.NameEquals("externalInputDefinitions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ArmDeploymentExternalInputDefinition> dictionary = new Dictionary<string, ArmDeploymentExternalInputDefinition>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ArmDeploymentExternalInputDefinition.DeserializeArmDeploymentExternalInputDefinition(property0.Value, options));
+                        dictionary.Add(prop0.Name, ArmDeploymentExternalInputDefinition.DeserializeArmDeploymentExternalInputDefinition(prop0.Value, options));
                     }
                     externalInputDefinitions = dictionary;
                     continue;
                 }
-                if (property.NameEquals("parametersLink"u8))
+                if (prop.NameEquals("parametersLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("extensionConfigs"u8))
+                if (prop.NameEquals("extensionConfigs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> dictionary = new Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
                             Dictionary<string, ArmDeploymentExtensionConfigItem> dictionary0 = new Dictionary<string, ArmDeploymentExtensionConfigItem>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
+                            foreach (var prop1 in prop0.Value.EnumerateObject())
                             {
-                                dictionary0.Add(property1.Name, ArmDeploymentExtensionConfigItem.DeserializeArmDeploymentExtensionConfigItem(property1.Value, options));
+                                dictionary0.Add(prop1.Name, ArmDeploymentExtensionConfigItem.DeserializeArmDeploymentExtensionConfigItem(prop1.Value, options));
                             }
-                            dictionary.Add(property0.Name, dictionary0);
+                            dictionary.Add(prop0.Name, dictionary0);
                         }
                     }
                     extensionConfigs = dictionary;
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    mode = property.Value.GetString().ToArmDeploymentMode();
+                    mode = prop.Value.GetString().ToArmDeploymentMode();
                     continue;
                 }
-                if (property.NameEquals("debugSetting"u8))
+                if (prop.NameEquals("debugSetting"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("onErrorDeployment"u8))
+                if (prop.NameEquals("onErrorDeployment"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeployment.DeserializeErrorDeployment(property.Value, options);
+                    errorDeployment = ErrorDeployment.DeserializeErrorDeployment(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("expressionEvaluationOptions"u8))
+                if (prop.NameEquals("expressionEvaluationOptions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(property.Value, options);
+                    expressionEvaluationOptions = ExpressionEvaluationOptions.DeserializeExpressionEvaluationOptions(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("validationLevel"u8))
+                if (prop.NameEquals("validationLevel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    validationLevel = new ValidationLevel(property.Value.GetString());
+                    validationLevel = new ValidationLevel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ArmDeploymentProperties(
                 template,
                 templateLink,
-                parameters,
+                deploymentParameters ?? new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>(),
                 externalInputs ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>(),
                 externalInputDefinitions ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>(),
                 parametersLink,
                 extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>(),
                 mode,
                 debugSetting,
-                onErrorDeployment,
+                errorDeployment,
                 expressionEvaluationOptions,
                 validationLevel,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ArmDeploymentProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ArmDeploymentProperties IPersistableModel<ArmDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeArmDeploymentProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ArmDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

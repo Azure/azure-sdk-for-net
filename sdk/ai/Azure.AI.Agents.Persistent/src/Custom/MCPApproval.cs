@@ -61,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>
         /// Return true if we do not trust all tools and always need to ask for approval before sending data to server.
         /// </summary>
-        public bool AlwaysRequireApproval{get => string.Equals(_forAllToolsApproval, ALWAYS);}
+        public bool AlwaysRequireApproval { get => string.Equals(_forAllToolsApproval, ALWAYS); }
         /// <summary>
         /// Return true if we trust all tools and do not need to ask for approval before sending data to server.
         /// </summary>
@@ -100,6 +100,22 @@ namespace Azure.AI.Agents.Persistent
             return new MCPApproval(
                 ((IPersistableModel<MCPApprovalPerTool>)new MCPApprovalPerTool()).Create(data, s_options)
             );
+        }
+
+        internal static MCPApproval DeserializeMCPApproval(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.ValueKind == JsonValueKind.String)
+            {
+                string value = element.GetString();
+                return new MCPApproval(value);
+            }
+            // It's an object representing MCPApprovalPerTool
+            var perTool = MCPApprovalPerTool.DeserializeMCPApprovalPerTool(element, options);
+            return new MCPApproval(perTool);
         }
     }
 }

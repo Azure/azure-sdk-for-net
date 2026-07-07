@@ -33,6 +33,39 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MoveEntitiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MoveEntitiesConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MoveEntitiesConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MoveEntitiesConfig IPersistableModel<MoveEntitiesConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MoveEntitiesConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="moveEntitiesConfig"> The <see cref="MoveEntitiesConfig"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(MoveEntitiesConfig moveEntitiesConfig)
+        {
+            if (moveEntitiesConfig == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(moveEntitiesConfig, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MoveEntitiesConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -139,41 +172,6 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             return new MoveEntitiesConfig(entityGuids ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MoveEntitiesConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MoveEntitiesConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MoveEntitiesConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MoveEntitiesConfig IPersistableModel<MoveEntitiesConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MoveEntitiesConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="moveEntitiesConfig"> The <see cref="MoveEntitiesConfig"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MoveEntitiesConfig moveEntitiesConfig)
-        {
-            if (moveEntitiesConfig == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(moveEntitiesConfig, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

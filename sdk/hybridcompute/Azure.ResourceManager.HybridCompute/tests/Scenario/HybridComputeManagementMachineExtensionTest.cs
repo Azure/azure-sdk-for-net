@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HybridCompute;
-using NUnit.Framework;
-using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
-using System.Diagnostics;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 {
@@ -137,19 +137,22 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeletePrivateEndpointConnection(){
+        public async Task CanDeletePrivateEndpointConnection()
+        {
             await deletePrivateEndpointConnection();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeletePrivateLinkScope(){
+        public async Task CanDeletePrivateLinkScope()
+        {
             await deletePrivateLinkScope();
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task CanDeleteMachineExtension(){
+        public async Task CanDeleteMachineExtension()
+        {
             await deleteMachineExtension();
         }
     }

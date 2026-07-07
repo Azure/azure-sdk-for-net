@@ -33,12 +33,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var analyzeOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-videoSearch",
-                inputs: new[] { new AnalyzeInput { Url = videoUrl } });
+                inputs: new[] { new AnalysisInput { Uri = videoUrl } });
 
             // Get the operation ID - this is needed to retrieve result files later
             string operationId = analyzeOperation.Id;
             Console.WriteLine($"Operation ID: {operationId}");
-            AnalyzeResult result = analyzeOperation.Value;
+            AnalysisResult result = analyzeOperation.Value;
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeVideoForResultFiles
@@ -100,13 +100,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // 2. Use those timestamps to construct paths like "keyframes/1000" for the frame at 1000ms
             // 3. Call GetResultFileAsync with the operation ID and path
 
-            // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimesMs
-            // Cast MediaContent to AudioVisualContent to access video-specific properties
+            // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimes
+            // Cast AnalysisContent to AudioVisualContent to access video-specific properties
             AudioVisualContent videoContent = (AudioVisualContent)result.Contents!.First();
 #if SNIPPET
             // Print keyframe information
-            int totalKeyframes = videoContent.KeyFrameTimesMs!.Count;
-            long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
+            int totalKeyframes = videoContent.KeyFrameTimes!.Count;
+            long firstFrameTimeMs = (long)videoContent.KeyFrameTimes[0].TotalMilliseconds;
             Console.WriteLine($"Total keyframes: {totalKeyframes}");
             Console.WriteLine($"First keyframe time: {firstFrameTimeMs} ms");
 
@@ -134,9 +134,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #else
             // Test assertions (excluded from snippet)
             Assert.IsNotNull(videoContent, "Test requires AudioVisualContent (video content) for GetResultFile");
-            Assert.IsNotNull(videoContent!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null");
-            Assert.IsTrue(videoContent.KeyFrameTimesMs!.Count > 0,
-                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimesMs.Count}");
+            Assert.IsNotNull(videoContent!.KeyFrameTimes, "KeyFrameTimes should not be null");
+            Assert.IsTrue(videoContent.KeyFrameTimes!.Count > 0,
+                $"Video content should have at least one keyframe, but found {videoContent.KeyFrameTimes.Count}");
 #endif
             #endregion
 
@@ -150,24 +150,24 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsInstanceOf<AudioVisualContent>(videoContentVerify, "Content should be AudioVisualContent type");
 
             // Verify that keyframes are available
-            Assert.IsNotNull(videoContentVerify!.KeyFrameTimesMs, "KeyFrameTimesMs should not be null for video content");
-            Assert.IsTrue(videoContentVerify.KeyFrameTimesMs!.Count > 0,
-                $"Video content should have at least one keyframe, but found {videoContentVerify.KeyFrameTimesMs.Count}");
+            Assert.IsNotNull(videoContentVerify!.KeyFrameTimes, "KeyFrameTimes should not be null for video content");
+            Assert.IsTrue(videoContentVerify.KeyFrameTimes!.Count > 0,
+                $"Video content should have at least one keyframe, but found {videoContentVerify.KeyFrameTimes.Count}");
             Console.WriteLine("Video content with keyframes detected");
 
             // ========== Verify Keyframe Information ==========
-            Console.WriteLine($"Total keyframes: {videoContentVerify.KeyFrameTimesMs.Count}");
+            Console.WriteLine($"Total keyframes: {videoContentVerify.KeyFrameTimes.Count}");
 
             // Verify keyframe times are valid
-            var invalidKeyframes = videoContentVerify.KeyFrameTimesMs.Where(t => t < 0).ToList();
+            var invalidKeyframes = videoContentVerify.KeyFrameTimes.Where(t => t < TimeSpan.Zero).ToList();
             Assert.AreEqual(0, invalidKeyframes.Count,
                 $"All keyframe times should be non-negative, but found {invalidKeyframes.Count} negative values");
 
             // Get keyframe statistics
-            long firstFrameTimeMsVerify = videoContentVerify.KeyFrameTimesMs[0];
-            long lastFrameTimeMs = videoContentVerify.KeyFrameTimesMs[videoContentVerify.KeyFrameTimesMs.Count - 1];
-            double avgFrameInterval = videoContentVerify.KeyFrameTimesMs.Count > 1
-                ? (double)(lastFrameTimeMs - firstFrameTimeMsVerify) / (videoContentVerify.KeyFrameTimesMs.Count - 1)
+            long firstFrameTimeMsVerify = (long)videoContentVerify.KeyFrameTimes[0].TotalMilliseconds;
+            long lastFrameTimeMs = (long)videoContentVerify.KeyFrameTimes[videoContentVerify.KeyFrameTimes.Count - 1].TotalMilliseconds;
+            double avgFrameInterval = videoContentVerify.KeyFrameTimes.Count > 1
+                ? (double)(lastFrameTimeMs - firstFrameTimeMsVerify) / (videoContentVerify.KeyFrameTimes.Count - 1)
                 : 0;
 
             Assert.IsTrue(firstFrameTimeMsVerify >= 0, $"First keyframe time should be >= 0, but was {firstFrameTimeMsVerify}");
@@ -176,7 +176,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             Console.WriteLine($"  First keyframe: {firstFrameTimeMsVerify} ms ({firstFrameTimeMsVerify / 1000.0:F2} seconds)");
             Console.WriteLine($"  Last keyframe: {lastFrameTimeMs} ms ({lastFrameTimeMs / 1000.0:F2} seconds)");
-            if (videoContentVerify.KeyFrameTimesMs.Count > 1)
+            if (videoContentVerify.KeyFrameTimes.Count > 1)
             {
                 Console.WriteLine($"  Average interval: {avgFrameInterval:F2} ms");
             }
@@ -288,13 +288,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("File content verified (read back matches original)");
 
             // ========== Test Additional Keyframes (if available) ==========
-            if (videoContentVerify.KeyFrameTimesMs.Count > 1)
+            if (videoContentVerify.KeyFrameTimes.Count > 1)
             {
-                Console.WriteLine($"\nTesting additional keyframes ({videoContentVerify.KeyFrameTimesMs.Count - 1} more available)...");
+                Console.WriteLine($"\nTesting additional keyframes ({videoContentVerify.KeyFrameTimes.Count - 1} more available)...");
 
                 // Test retrieving a middle keyframe
-                int middleIndex = videoContentVerify.KeyFrameTimesMs.Count / 2;
-                long middleFrameTimeMs = videoContentVerify.KeyFrameTimesMs[middleIndex];
+                int middleIndex = videoContentVerify.KeyFrameTimes.Count / 2;
+                long middleFrameTimeMs = (long)videoContentVerify.KeyFrameTimes[middleIndex].TotalMilliseconds;
                 string middleFramePath = $"keyframes/{middleFrameTimeMs}";
 
                 var middleFileResponse = await client.GetResultFileAsync(operationId, middleFramePath);
@@ -308,7 +308,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // ========== Summary ==========
             Console.WriteLine($"\nKeyframe retrieval verification completed successfully:");
             Console.WriteLine($"  Operation ID: {operationId}");
-            Console.WriteLine($"  Total keyframes: {videoContentVerify.KeyFrameTimesMs.Count}");
+            Console.WriteLine($"  Total keyframes: {videoContentVerify.KeyFrameTimes.Count}");
             Console.WriteLine($"  First keyframe time: {firstFrameTimeMsVerify} ms");
             Console.WriteLine($"  Image format: {imageFormat}");
             Console.WriteLine($"  Image size: {imageBytesVerify.Length:N0} bytes");

@@ -6,14 +6,16 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.CodeTransparency
 {
     /// <summary> Client options for <see cref="CodeTransparencyClient"/>. </summary>
     public partial class CodeTransparencyClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_01_31_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_03_26;
 
         /// <summary> Initializes a new instance of CodeTransparencyClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -21,19 +23,49 @@ namespace Azure.Security.CodeTransparency
         {
             Version = version switch
             {
-                ServiceVersion.V2025_01_31_Preview => "2025-01-31-preview",
+                ServiceVersion.V2026_03_26 => "2026-03-26",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of CodeTransparencyClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal CodeTransparencyClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2026-03-26";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            if (double.TryParse(section["CacheTTLSeconds"], out double cacheTTLSeconds))
+            {
+                CacheTTLSeconds = cacheTTLSeconds;
+            }
+            string identityClientEndpoint = section["IdentityClientEndpoint"];
+            if (!string.IsNullOrEmpty(identityClientEndpoint))
+            {
+                IdentityClientEndpoint = identityClientEndpoint;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> The 2025-01-31-preview version of the Microsoft.CodeTransparency service. </summary>
-            V2025_01_31_Preview = 1
+            /// <summary> The 2026-03-26 version of the Microsoft.CodeTransparency service. </summary>
+            V2026_03_26 = 1
         }
     }
 }

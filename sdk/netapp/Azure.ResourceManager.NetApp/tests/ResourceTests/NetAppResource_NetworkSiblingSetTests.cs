@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
-    public class NetAppResource_NetworkSiblingSetTests: NetAppTestBase
+    public class NetAppResource_NetworkSiblingSetTests : NetAppTestBase
     {
         private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
         private readonly string _pool1Name = "pool1";

@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Unknown version of DatastoreCredentials. </summary>
     internal partial class UnknownDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(credentialsType, serializedAdditionalRawData)
-        {
-            CredentialsType = credentialsType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDatastoreCredentials"/> for deserialization. </summary>
-        internal UnknownDatastoreCredentials()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(credentialsType != default ? credentialsType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

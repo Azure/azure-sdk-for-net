@@ -156,7 +156,7 @@ namespace Azure.Storage.Files.Shares.Tests
             await service.SetPropertiesAsync(properties: properties.Value);
 
             // Assert
-           await service.GetPropertiesAsync();
+            await service.GetPropertiesAsync();
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]

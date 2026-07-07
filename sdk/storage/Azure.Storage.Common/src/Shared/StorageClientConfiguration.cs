@@ -41,7 +41,7 @@ namespace Azure.Storage.Shared
             HttpPipeline pipeline,
             AzureSasCredential sasCredential,
             ClientDiagnostics clientDiagnostics)
-            : this (pipeline, clientDiagnostics)
+            : this(pipeline, clientDiagnostics)
         {
             SasCredential = sasCredential;
         }

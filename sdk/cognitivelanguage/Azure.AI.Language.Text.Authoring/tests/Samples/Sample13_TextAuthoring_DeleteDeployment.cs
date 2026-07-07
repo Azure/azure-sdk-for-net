@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.Text.Authoring.Tests.Samples

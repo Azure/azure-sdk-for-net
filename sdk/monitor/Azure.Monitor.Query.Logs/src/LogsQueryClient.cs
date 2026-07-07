@@ -79,10 +79,9 @@ namespace Azure.Monitor.Query.Logs
             }
 
             _endpoint = endpoint;
-            _tokenCredential = credential;
             _apiVersion = options.Version;
 
-            Pipeline = HttpPipelineBuilder.Build(options, [new BearerTokenAuthenticationPolicy(_tokenCredential, scopes)]);
+            Pipeline = HttpPipelineBuilder.Build(options, [new BearerTokenAuthenticationPolicy(credential, scopes)]);
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 

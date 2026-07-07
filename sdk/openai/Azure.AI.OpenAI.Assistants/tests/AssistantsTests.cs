@@ -290,7 +290,7 @@ public class AssistantsTests : AssistantsTestBase
 
         // Delete the assistant we created
         Response<bool> deletionResponse = await client.DeleteAssistantAsync(assistant.Id);
-            AssertSuccessfulResponse(deletionResponse);
+        AssertSuccessfulResponse(deletionResponse);
 
         // Delete the thread we created
         deletionResponse = await client.DeleteThreadAsync(thread.Id);

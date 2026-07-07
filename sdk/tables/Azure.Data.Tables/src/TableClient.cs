@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -792,12 +793,22 @@ namespace Azure.Data.Tables
                 {
                     return new NoValueResponse<T>(response);
                 }
-                else
+
+                Dictionary<string, object> dictionary;
+                try
                 {
-                    var dictionary = SerializationHelpers.ResponseToDictionary(response);
-                    var result = dictionary.ToTableEntity<T>();
-                    return Response.FromValue(result, response);
+                    dictionary = SerializationHelpers.ResponseToDictionary(response);
                 }
+                catch (Exception ex) when (ex is ArgumentNullException or JsonException)
+                {
+                    throw new RequestFailedException(
+                        response.Status,
+                        $"The response body was unexpectedly missing or malformed, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).",
+                        ex);
+                }
+
+                var result = dictionary.ToTableEntity<T>();
+                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {

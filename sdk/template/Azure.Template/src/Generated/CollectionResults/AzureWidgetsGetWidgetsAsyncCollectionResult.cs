@@ -19,14 +19,17 @@ namespace Azure.Template
     {
         private readonly AzureWidgets _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of AzureWidgetsGetWidgetsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AzureWidgets client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AzureWidgetsGetWidgetsAsyncCollectionResult(AzureWidgets client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public AzureWidgetsGetWidgetsAsyncCollectionResult(AzureWidgets client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of AzureWidgetsGetWidgetsAsyncCollectionResult as an enumerable collection. </summary>
@@ -44,13 +47,13 @@ namespace Azure.Template
                     yield break;
                 }
                 PagedWidgetSuite result = (PagedWidgetSuite)response;
+                nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureTemplateContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                nextPage = result.NextLink;
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -64,7 +67,7 @@ namespace Azure.Template
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetWidgetsRequest(nextLink, _context) : _client.CreateGetWidgetsRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AzureWidgets.GetWidgets");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

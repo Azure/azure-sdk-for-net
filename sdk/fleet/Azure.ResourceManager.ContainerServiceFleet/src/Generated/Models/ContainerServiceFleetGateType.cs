@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct ContainerServiceFleetGateType : IEquatable<ContainerServiceFleetGateType>
     {
         private readonly string _value;
+        /// <summary> An approval gate is completed by setting its state to be Completed. </summary>
+        private const string ApprovalValue = "Approval";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetGateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceFleetGateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApprovalValue = "Approval";
+            _value = value;
+        }
 
         /// <summary> An approval gate is completed by setting its state to be Completed. </summary>
         public static ContainerServiceFleetGateType Approval { get; } = new ContainerServiceFleetGateType(ApprovalValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetGateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceFleetGateType left, ContainerServiceFleetGateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetGateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceFleetGateType left, ContainerServiceFleetGateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetGateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceFleetGateType(string value) => new ContainerServiceFleetGateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetGateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceFleetGateType?(string value) => value == null ? null : new ContainerServiceFleetGateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceFleetGateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceFleetGateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

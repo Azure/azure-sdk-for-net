@@ -22,6 +22,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Collections = new ChangeTrackingList<string>();
             Ids = new ChangeTrackingList<string>();
+            BoundingBox = new ChangeTrackingList<float>();
             Query = new ChangeTrackingDictionary<string, BinaryData>();
             Filter = new ChangeTrackingDictionary<string, BinaryData>();
             SortBy = new ChangeTrackingList<StacSortExtension>();
@@ -39,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
         /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegisterMosaicsSearchRequest(IList<string> collections, IList<string> ids, float? boundingBox, GeoJsonGeometry intersects, IDictionary<string, BinaryData> query, IDictionary<string, BinaryData> filter, string datetime, IList<StacSortExtension> sortBy, FilterLanguage? filterLanguage, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegisterMosaicsSearchRequest(IList<string> collections, IList<string> ids, IList<float> boundingBox, GeoJsonGeometry intersects, IDictionary<string, BinaryData> query, IDictionary<string, BinaryData> filter, string datetime, IList<StacSortExtension> sortBy, FilterLanguage? filterLanguage, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collections = collections;
             Ids = ids;
@@ -61,7 +62,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<string> Ids { get; }
 
         /// <summary> Geographic bounding box to filter items [west, south, east, north]. </summary>
-        public float? BoundingBox { get; }
+        public IList<float> BoundingBox { get; }
 
         /// <summary> GeoJSON geometry to spatially filter items by intersection. </summary>
         public GeoJsonGeometry Intersects { get; }

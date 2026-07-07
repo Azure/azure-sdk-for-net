@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Capability of a storage tier.
-    /// Serialized Name: StorageTierCapability
-    /// </summary>
+    /// <summary> Capability of a storage tier. </summary>
     public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
@@ -22,34 +20,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
-        /// <param name="capabilityStatus">
-        /// The status of the capability.
-        /// Serialized Name: CapabilityBase.status
-        /// </param>
-        /// <param name="reason">
-        /// The reason for the capability not being available.
-        /// Serialized Name: CapabilityBase.reason
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name">
-        /// Name of the storage tier.
-        /// Serialized Name: StorageTierCapability.name
-        /// </param>
-        /// <param name="iops">
-        /// Supported IOPS for the storage tier.
-        /// Serialized Name: StorageTierCapability.iops
-        /// </param>
-        internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? iops) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="capabilityStatus"> Status of the capability. </param>
+        /// <param name="reason"> Reason for the capability not being available. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the storage tier. </param>
+        /// <param name="iops"> Supported IOPS for the storage tier. </param>
+        internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, long? iops) : base(capabilityStatus, reason, additionalBinaryDataProperties)
         {
             Name = name;
             Iops = iops;
         }
 
-        /// <summary>
-        /// Name of the storage tier.
-        /// Serialized Name: StorageTierCapability.name
-        /// </summary>
+        /// <summary> Name of the storage tier. </summary>
         [WirePath("name")]
         public string Name { get; }
+
+        /// <summary> Supported IOPS for the storage tier. </summary>
+        [WirePath("iops")]
+        public long? Iops { get; }
     }
 }

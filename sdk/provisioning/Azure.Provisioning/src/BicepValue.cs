@@ -126,7 +126,8 @@ public abstract class BicepValue : IBicepValue
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
+        if (_isOutput)
+        { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
 
         // Track the source so we can correctly link references across modules
         _source = source?.Self;

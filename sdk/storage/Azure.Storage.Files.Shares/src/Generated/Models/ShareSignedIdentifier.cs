@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Signed identifier. </summary>
@@ -24,6 +21,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> A unique id. </summary>
         public string Id { get; set; }
+
         /// <summary> The access policy. </summary>
         public ShareAccessPolicy AccessPolicy { get; set; }
     }

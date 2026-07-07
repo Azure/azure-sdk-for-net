@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowEndpointName, IotOperationsDataflowEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowEndpointResource> operation = new IotOperationsArmOperation<IotOperationsDataflowEndpointResource>(
-                    new IotOperationsDataflowEndpointOperationSource(Client),
+                    new IotOperationsDataflowEndpointResourceOperationSource(Client),
                     _dataflowEndpointClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowEndpointName, IotOperationsDataflowEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowEndpointResource> operation = new IotOperationsArmOperation<IotOperationsDataflowEndpointResource>(
-                    new IotOperationsDataflowEndpointOperationSource(Client),
+                    new IotOperationsDataflowEndpointResourceOperationSource(Client),
                     _dataflowEndpointClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupAsyncCollectionResultOfT(_dataflowEndpointRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowEndpointResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupAsyncCollectionResultOfT(
+                _dataflowEndpointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowEndpointCollection.GetAll"), data => new IotOperationsDataflowEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupCollectionResultOfT(_dataflowEndpointRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowEndpointResource(Client, data));
+            return new PageableWrapper<IotOperationsDataflowEndpointData, IotOperationsDataflowEndpointResource>(new DataflowEndpointGetByResourceGroupCollectionResultOfT(
+                _dataflowEndpointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowEndpointCollection.GetAll"), data => new IotOperationsDataflowEndpointResource(Client, data));
         }
 
         /// <summary>

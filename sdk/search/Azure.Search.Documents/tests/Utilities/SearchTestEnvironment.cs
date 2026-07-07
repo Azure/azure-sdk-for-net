@@ -8,7 +8,7 @@ namespace Azure.Search.Documents.Tests
     /// <summary>
     /// Gets variables created from test-resources.json.
     /// </summary>
-    public class SearchTestEnvironment: TestEnvironment
+    public class SearchTestEnvironment : TestEnvironment
     {
         /// <summary>
         /// The name of the variable for <see cref="RecordedClientSecret"/>.
@@ -81,6 +81,11 @@ namespace Azure.Search.Documents.Tests
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName, options => options.IsSecret());
 
         /// <summary>
+        /// Gets the Cognitive Services endpoint.
+        /// </summary>
+        public string SearchCognitiveEndpoint => GetRecordedOptionalVariable("SEARCH_COGNITIVE_ENDPOINT");
+
+        /// <summary>
         /// Gets the search service suffix.
         /// </summary>
         public string SearchEndpointSuffix => GetRecordedOptionalVariable("SEARCH_ENDPOINT_SUFFIX") ?? "search.windows.net";
@@ -104,6 +109,27 @@ namespace Azure.Search.Documents.Tests
         /// Gets the optional OpenAI URL used used for Vector Search.
         /// </summary>
         public string OpenAIEndpoint => GetRecordedOptionalVariable("OPENAI_ENDPOINT");
+
+        /// <summary>
+        /// Gets the optional query source authorization token for external knowledge sources
+        /// (e.g. Work IQ, Fabric Ontology, Fabric Data Agent).
+        /// </summary>
+        public string QuerySourceAuthorization => GetRecordedOptionalVariable("SEARCH_QUERY_SOURCE_AUTH", options => options.IsSecret());
+
+        /// <summary>
+        /// Gets the optional Microsoft Fabric workspace ID.
+        /// </summary>
+        public string FabricWorkspaceId => GetRecordedOptionalVariable("SEARCH_FABRIC_WORKSPACE_ID");
+
+        /// <summary>
+        /// Gets the optional Fabric Ontology ID.
+        /// </summary>
+        public string FabricOntologyId => GetRecordedOptionalVariable("SEARCH_FABRIC_ONTOLOGY_ID");
+
+        /// <summary>
+        /// Gets the optional Fabric Data Agent ID.
+        /// </summary>
+        public string FabricDataAgentId => GetRecordedOptionalVariable("SEARCH_FABRIC_DATA_AGENT_ID");
 
         /// <summary>
         /// Gets the environment of the Azure resource group to be used for Live tests (e.g. AzureCloud).

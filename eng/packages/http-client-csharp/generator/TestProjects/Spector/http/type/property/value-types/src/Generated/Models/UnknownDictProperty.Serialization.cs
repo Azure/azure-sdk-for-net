@@ -19,6 +19,17 @@ namespace _Type.Property.ValueTypes
 
         protected virtual UnknownDictProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<UnknownDictProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        UnknownDictProperty IPersistableModel<UnknownDictProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<UnknownDictProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="unknownDictProperty"> The <see cref="UnknownDictProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(UnknownDictProperty unknownDictProperty) => throw null;
+
         public static explicit operator UnknownDictProperty(Response response) => throw null;
 
         void IJsonModel<UnknownDictProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace _Type.Property.ValueTypes
         UnknownDictProperty IJsonModel<UnknownDictProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual UnknownDictProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<UnknownDictProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        UnknownDictProperty IPersistableModel<UnknownDictProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<UnknownDictProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="unknownDictProperty"> The <see cref="UnknownDictProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(UnknownDictProperty unknownDictProperty) => throw null;
     }
 }

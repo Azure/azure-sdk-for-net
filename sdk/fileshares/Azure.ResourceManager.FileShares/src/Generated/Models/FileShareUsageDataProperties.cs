@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FileShares.Models
         internal LiveSharesUsageData LiveShares { get; }
 
         /// <summary> The number of active file shares. </summary>
-        public int? LiveSharesFileShareCount
+        public int LiveSharesFileShareCount
         {
             get
             {

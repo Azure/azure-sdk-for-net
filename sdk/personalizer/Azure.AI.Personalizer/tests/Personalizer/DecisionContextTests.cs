@@ -46,7 +46,7 @@ namespace Azure.AI.Personalizer.Tests
                         "]" +
                     "}]" +
                 "}";
-            #pragma warning disable SYSLIB0020
+#pragma warning disable SYSLIB0020
             var jsonSerializerOptions = new JsonSerializerOptions
             {
                 Converters =
@@ -56,7 +56,7 @@ namespace Azure.AI.Personalizer.Tests
                 IgnoreNullValues = true
             };
             var contextJson = JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
-            #pragma warning restore SYSLIB0020
+#pragma warning restore SYSLIB0020
             Assert.IsTrue(contextJson.Equals(expectedJson));
         }
     }

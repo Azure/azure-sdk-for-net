@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The RestoreDetailsName. </summary>
+    /// <summary></summary>
     public readonly partial struct RestoreDetailsName : IEquatable<RestoreDetailsName>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="RestoreDetailsName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RestoreDetailsName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static RestoreDetailsName Default { get; } = new RestoreDetailsName(DefaultValue);
+
         /// <summary> Determines if two <see cref="RestoreDetailsName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RestoreDetailsName left, RestoreDetailsName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RestoreDetailsName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RestoreDetailsName left, RestoreDetailsName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RestoreDetailsName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RestoreDetailsName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RestoreDetailsName(string value) => new RestoreDetailsName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RestoreDetailsName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RestoreDetailsName?(string value) => value == null ? null : new RestoreDetailsName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RestoreDetailsName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RestoreDetailsName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

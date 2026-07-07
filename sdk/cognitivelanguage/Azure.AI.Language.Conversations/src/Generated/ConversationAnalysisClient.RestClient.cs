@@ -27,7 +27,10 @@ namespace Azure.AI.Language.Conversations
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/:analyze-conversations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -45,7 +48,10 @@ namespace Azure.AI.Language.Conversations
             uri.AppendPath("/language", false);
             uri.AppendPath("/analyze-conversations/jobs/", false);
             uri.AppendPath(jobId.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (showStatistics != null)
             {
                 uri.AppendQuery("showStats", TypeFormatters.ConvertToString(showStatistics), true);
@@ -64,7 +70,10 @@ namespace Azure.AI.Language.Conversations
             uri.Reset(_endpoint);
             uri.AppendPath("/language", false);
             uri.AppendPath("/analyze-conversations/jobs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -82,7 +91,10 @@ namespace Azure.AI.Language.Conversations
             uri.AppendPath("/analyze-conversations/jobs/", false);
             uri.AppendPath(jobId.ToString(), true);
             uri.AppendPath(":cancel", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;

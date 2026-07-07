@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             if (id.ResourceType != OnlineExperimentationWorkspaceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OnlineExperimentationWorkspaceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, OnlineExperimentationWorkspaceResource.ResourceType), nameof(id));
             }
         }
 
@@ -287,7 +287,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OnlineExperimentationPrivateEndpointConnectionCollection.GetAll"), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -315,7 +321,13 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<OnlineExperimentationPrivateEndpointConnectionData, OnlineExperimentationPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetAllCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "OnlineExperimentationPrivateEndpointConnectionCollection.GetAll"), data => new OnlineExperimentationPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

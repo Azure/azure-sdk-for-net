@@ -37,6 +37,29 @@ namespace Azure.Compute.Batch
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMExtension>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VMExtension)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VMExtension>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMExtension IPersistableModel<VMExtension>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VMExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -66,15 +89,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(IsMinorVersionAutoUpgradeEnabled))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(IsMinorVersionAutoUpgradeEnabled.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+                writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
@@ -169,8 +192,8 @@ namespace Azure.Compute.Batch
             string publisher = default;
             string @type = default;
             string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
-            bool? enableAutomaticUpgrade = default;
+            bool? isMinorVersionAutoUpgradeEnabled = default;
+            bool? isAutomaticUpgradeEnabled = default;
             IDictionary<string, string> settings = default;
             IDictionary<string, string> protectedSettings = default;
             IList<string> provisionAfterExtensions = default;
@@ -203,7 +226,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    isMinorVersionAutoUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -212,7 +235,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    enableAutomaticUpgrade = prop.Value.GetBoolean();
+                    isAutomaticUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))
@@ -288,35 +311,12 @@ namespace Azure.Compute.Batch
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
+                isMinorVersionAutoUpgradeEnabled,
+                isAutomaticUpgradeEnabled,
                 settings ?? new ChangeTrackingDictionary<string, string>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VMExtension>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<VMExtension>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VMExtension)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        VMExtension IPersistableModel<VMExtension>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VMExtension>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

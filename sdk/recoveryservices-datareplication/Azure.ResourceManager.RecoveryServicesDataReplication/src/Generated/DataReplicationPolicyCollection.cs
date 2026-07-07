@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyName, DataReplicationPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
+                    new DataReplicationPolicyResourceOperationSource(Client),
                     _policyClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _policyRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, policyName, DataReplicationPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationPolicyResource>(
-                    new DataReplicationPolicyOperationSource(Client),
+                    new DataReplicationPolicyResourceOperationSource(Client),
                     _policyClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllAsyncCollectionResultOfT(_policyRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllAsyncCollectionResultOfT(
+                _policyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPolicyCollection.GetAll"), data => new DataReplicationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllCollectionResultOfT(_policyRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationPolicyResource(Client, data));
+            return new PageableWrapper<DataReplicationPolicyData, DataReplicationPolicyResource>(new PolicyGetAllCollectionResultOfT(
+                _policyRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationPolicyCollection.GetAll"), data => new DataReplicationPolicyResource(Client, data));
         }
 
         /// <summary>

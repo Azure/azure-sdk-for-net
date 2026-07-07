@@ -294,7 +294,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 CredentialType.None => new ShareDirectoryClient(directoryUri, clientOptions),
                 CredentialType.SharedKey => new ShareDirectoryClient(directoryUri, await _getStorageSharedKeyCredential(directoryUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 CredentialType.Token => CreateTokenClient(),
-            CredentialType.Sas => new ShareDirectoryClient(directoryUri, await _getAzureSasCredential(directoryUri, cancellationToken).ConfigureAwait(false), clientOptions),
+                CredentialType.Sas => new ShareDirectoryClient(directoryUri, await _getAzureSasCredential(directoryUri, cancellationToken).ConfigureAwait(false), clientOptions),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new ShareDirectoryStorageResourceContainer(client, options);

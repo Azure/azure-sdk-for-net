@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Job run properties. </param>
-        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobRunProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JobRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobRunProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Job run properties. </summary>
@@ -91,6 +91,24 @@ namespace Azure.ResourceManager.StorageMover
             get
             {
                 return Properties is null ? default : Properties.ExecutionEndOn;
+            }
+        }
+
+        /// <summary> Trigger type for the job run. Default is manual. </summary>
+        public StorageMoverJobTriggerType? TriggerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TriggerType;
+            }
+        }
+
+        /// <summary> Scheduled execution time. Null if Trigger type is manual. </summary>
+        public DateTimeOffset? ScheduledExecutionOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledExecutionOn;
             }
         }
 

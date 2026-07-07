@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Grafana
         {
             if (id.ResourceType != ManagedGrafanaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ManagedGrafanaResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _integrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, GrafanaIntegrationFabricData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
+                    new GrafanaIntegrationFabricResourceOperationSource(Client),
                     _integrationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _integrationFabricsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, integrationFabricName, GrafanaIntegrationFabricData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<GrafanaIntegrationFabricResource> operation = new GrafanaArmOperation<GrafanaIntegrationFabricResource>(
-                    new GrafanaIntegrationFabricOperationSource(Client),
+                    new GrafanaIntegrationFabricResourceOperationSource(Client),
                     _integrationFabricsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllAsyncCollectionResultOfT(_integrationFabricsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GrafanaIntegrationFabricResource(Client, data));
+            return new AsyncPageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllAsyncCollectionResultOfT(
+                _integrationFabricsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GrafanaIntegrationFabricCollection.GetAll"), data => new GrafanaIntegrationFabricResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Grafana
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllCollectionResultOfT(_integrationFabricsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GrafanaIntegrationFabricResource(Client, data));
+            return new PageableWrapper<GrafanaIntegrationFabricData, GrafanaIntegrationFabricResource>(new IntegrationFabricsGetAllCollectionResultOfT(
+                _integrationFabricsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "GrafanaIntegrationFabricCollection.GetAll"), data => new GrafanaIntegrationFabricResource(Client, data));
         }
 
         /// <summary>

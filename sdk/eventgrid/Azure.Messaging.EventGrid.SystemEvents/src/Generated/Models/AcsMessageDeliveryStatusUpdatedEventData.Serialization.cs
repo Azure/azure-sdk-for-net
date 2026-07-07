@@ -39,6 +39,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AcsMessageDeliveryStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsMessageDeliveryStatusUpdatedEventData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsMessageDeliveryStatusUpdatedEventData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -62,6 +85,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(ToBsuid))
+            {
+                writer.WritePropertyName("toBSUID"u8);
+                writer.WriteStringValue(ToBsuid);
             }
             if (Optional.IsDefined(Status))
             {
@@ -106,6 +134,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             AcsMessageChannelEventError errorInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string messageId = default;
+            string toBsuid = default;
             AcsMessageDeliveryStatus? status = default;
             AcsMessageChannelKind? channelKind = default;
             foreach (var prop in element.EnumerateObject())
@@ -143,6 +172,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     messageId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("toBSUID"u8))
+                {
+                    toBsuid = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -173,32 +207,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 errorInternal,
                 additionalBinaryDataProperties,
                 messageId,
+                toBsuid,
                 status,
                 channelKind);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AcsMessageDeliveryStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsMessageDeliveryStatusUpdatedEventData IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsMessageDeliveryStatusUpdatedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcsMessageDeliveryStatusUpdatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class AcsMessageDeliveryStatusUpdatedEventDataConverter : JsonConverter<AcsMessageDeliveryStatusUpdatedEventData>
         {

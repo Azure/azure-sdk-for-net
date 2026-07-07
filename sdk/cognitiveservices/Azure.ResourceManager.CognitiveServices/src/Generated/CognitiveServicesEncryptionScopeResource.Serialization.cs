@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
+    /// <summary></summary>
     public partial class CognitiveServicesEncryptionScopeResource : IJsonModel<CognitiveServicesEncryptionScopeData>
     {
-        private static CognitiveServicesEncryptionScopeData s_dataDeserializationInstance;
-        private static CognitiveServicesEncryptionScopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CognitiveServicesEncryptionScopeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CognitiveServicesEncryptionScopeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CognitiveServicesEncryptionScopeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CognitiveServicesEncryptionScopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesEncryptionScopeData>)Data).Write(writer, options);
 
-        CognitiveServicesEncryptionScopeData IJsonModel<CognitiveServicesEncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesEncryptionScopeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CognitiveServicesEncryptionScopeData IJsonModel<CognitiveServicesEncryptionScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CognitiveServicesEncryptionScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CognitiveServicesEncryptionScopeData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CognitiveServicesEncryptionScopeData IPersistableModel<CognitiveServicesEncryptionScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesEncryptionScopeData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<CognitiveServicesEncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesEncryptionScopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CognitiveServicesEncryptionScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

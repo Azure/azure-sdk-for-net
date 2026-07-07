@@ -32,7 +32,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         public class ClientRegistrationIdentity
         {
             #region Snippet:DependencyInjectionRegisterClientWithIdentity
-           public void ConfigureServices(IServiceCollection services)
+            public void ConfigureServices(IServiceCollection services)
             {
                 services.AddAzureClients(builder =>
                 {

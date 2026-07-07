@@ -10,32 +10,6 @@ namespace Azure.AI.Projects
 {
     internal static partial class ClientPipelineExtensions
     {
-        public static async ValueTask<PipelineResponse> ProcessMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
-        {
-            await pipeline.SendAsync(message).ConfigureAwait(false);
-
-            if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
-            {
-                throw await ClientResultException.CreateAsync(message.Response).ConfigureAwait(false);
-            }
-
-            PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
-            return response;
-        }
-
-        public static PipelineResponse ProcessMessage(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
-        {
-            pipeline.Send(message);
-
-            if (message.Response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
-            {
-                throw new ClientResultException(message.Response);
-            }
-
-            PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse();
-            return response;
-        }
-
         public static async ValueTask<ClientResult<bool>> ProcessHeadAsBoolMessageAsync(this ClientPipeline pipeline, PipelineMessage message, RequestOptions options)
         {
             PipelineResponse response = await pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);

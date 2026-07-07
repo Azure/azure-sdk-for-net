@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             TryGetApiVersion(ResourceType, out string frontendFrontendsInterfaceApiVersion);
             _frontendFrontendsInterfaceRestClient = new FrontendsInterface(_frontendFrontendsInterfaceClientDiagnostics, Pipeline, Endpoint, frontendFrontendsInterfaceApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

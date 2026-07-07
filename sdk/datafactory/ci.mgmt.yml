@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DataFactory
       safeName: AzureResourceManagerDataFactory
+    - name: Azure.Provisioning.DataFactory
+      safeName: AzureProvisioningDataFactory

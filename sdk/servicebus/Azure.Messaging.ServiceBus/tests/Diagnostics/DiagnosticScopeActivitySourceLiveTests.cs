@@ -258,7 +258,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await receiver.PurgeMessagesAsync();
                 var purgeActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.PurgeActivityName);
                 AssertCommonTags(purgeActivity, receiver.EntityPath, receiver.FullyQualifiedNamespace, default, 1);
-            };
+            }
+            ;
         }
 
         [Test]
@@ -329,7 +330,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 }
                 Assert.IsTrue(callbackExecuted);
                 Assert.IsFalse(callbackAssertFailure);
-            };
+            }
+            ;
         }
 
         [Test]

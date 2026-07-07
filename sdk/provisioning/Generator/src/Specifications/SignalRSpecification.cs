@@ -8,7 +8,7 @@ using Azure.ResourceManager.SignalR.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class SignalRSpecification() :
-    Specification("SignalR", typeof(SignalRExtensions))
+    Specification("SignalR", typeof(SignalRExtensions), serviceDirectory: "signalr")
 {
     protected override void Customize()
     {

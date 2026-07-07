@@ -13,249 +13,658 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the ProcessInfo data model.
-    /// Process Information.
-    /// </summary>
+    /// <summary> Process Information. </summary>
     public partial class ProcessInfoData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProcessInfoData"/>. </summary>
         public ProcessInfoData()
         {
-            Children = new ChangeTrackingList<string>();
-            ProcessThreads = new ChangeTrackingList<WebAppProcessThreadProperties>();
-            OpenFileHandles = new ChangeTrackingList<string>();
-            Modules = new ChangeTrackingList<ProcessModuleInfoData>();
-            EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProcessInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identifier"> ARM Identifier for deployment. </param>
-        /// <param name="deploymentName"> Deployment name. </param>
-        /// <param name="href"> HRef URI. </param>
-        /// <param name="minidump"> Minidump URI. </param>
-        /// <param name="isProfileRunning"> Is profile running?. </param>
-        /// <param name="isIisProfileRunning"> Is the IIS Profile running?. </param>
-        /// <param name="iisProfileTimeoutInSeconds"> IIS Profile timeout (seconds). </param>
-        /// <param name="parent"> Parent process. </param>
-        /// <param name="children"> Child process list. </param>
-        /// <param name="processThreads"> Thread list. </param>
-        /// <param name="openFileHandles"> List of open files. </param>
-        /// <param name="modules"> List of modules. </param>
-        /// <param name="fileName"> File name of this process. </param>
-        /// <param name="commandLine"> Command line. </param>
-        /// <param name="userName"> User name. </param>
-        /// <param name="handleCount"> Handle count. </param>
-        /// <param name="moduleCount"> Module count. </param>
-        /// <param name="threadCount"> Thread count. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="totalCpuTime"> Total CPU time. </param>
-        /// <param name="userCpuTime"> User CPU time. </param>
-        /// <param name="privilegedCpuTime"> Privileged CPU time. </param>
-        /// <param name="workingSet"> Working set. </param>
-        /// <param name="peakWorkingSet"> Peak working set. </param>
-        /// <param name="privateMemory"> Private memory size. </param>
-        /// <param name="virtualMemory"> Virtual memory size. </param>
-        /// <param name="peakVirtualMemory"> Peak virtual memory usage. </param>
-        /// <param name="pagedSystemMemory"> Paged system memory. </param>
-        /// <param name="nonPagedSystemMemory"> Non-paged system memory. </param>
-        /// <param name="pagedMemory"> Paged memory. </param>
-        /// <param name="peakPagedMemory"> Peak paged memory. </param>
-        /// <param name="timeStamp"> Time stamp. </param>
-        /// <param name="environmentVariables"> List of environment variables. </param>
-        /// <param name="isScmSite"> Is this the SCM site?. </param>
-        /// <param name="isWebjob"> Is this a Web Job?. </param>
-        /// <param name="description"> Description of process. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> ProcessInfo resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProcessInfoProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Identifier = identifier;
-            DeploymentName = deploymentName;
-            Href = href;
-            Minidump = minidump;
-            IsProfileRunning = isProfileRunning;
-            IsIisProfileRunning = isIisProfileRunning;
-            IisProfileTimeoutInSeconds = iisProfileTimeoutInSeconds;
-            Parent = parent;
-            Children = children;
-            ProcessThreads = processThreads;
-            OpenFileHandles = openFileHandles;
-            Modules = modules;
-            FileName = fileName;
-            CommandLine = commandLine;
-            UserName = userName;
-            HandleCount = handleCount;
-            ModuleCount = moduleCount;
-            ThreadCount = threadCount;
-            StartOn = startOn;
-            TotalCpuTime = totalCpuTime;
-            UserCpuTime = userCpuTime;
-            PrivilegedCpuTime = privilegedCpuTime;
-            WorkingSet = workingSet;
-            PeakWorkingSet = peakWorkingSet;
-            PrivateMemory = privateMemory;
-            VirtualMemory = virtualMemory;
-            PeakVirtualMemory = peakVirtualMemory;
-            PagedSystemMemory = pagedSystemMemory;
-            NonPagedSystemMemory = nonPagedSystemMemory;
-            PagedMemory = pagedMemory;
-            PeakPagedMemory = peakPagedMemory;
-            TimeStamp = timeStamp;
-            EnvironmentVariables = environmentVariables;
-            IsScmSite = isScmSite;
-            IsWebjob = isWebjob;
-            Description = description;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> ARM Identifier for deployment. </summary>
-        [WirePath("properties.identifier")]
-        public int? Identifier { get; }
-        /// <summary> Deployment name. </summary>
-        [WirePath("properties.deployment_name")]
-        public string DeploymentName { get; set; }
-        /// <summary> HRef URI. </summary>
-        [WirePath("properties.href")]
-        public string Href { get; set; }
-        /// <summary> Minidump URI. </summary>
-        [WirePath("properties.minidump")]
-        public string Minidump { get; set; }
-        /// <summary> Is profile running?. </summary>
-        [WirePath("properties.is_profile_running")]
-        public bool? IsProfileRunning { get; set; }
-        /// <summary> Is the IIS Profile running?. </summary>
-        [WirePath("properties.is_iis_profile_running")]
-        public bool? IsIisProfileRunning { get; set; }
-        /// <summary> IIS Profile timeout (seconds). </summary>
-        [WirePath("properties.iis_profile_timeout_in_seconds")]
-        public double? IisProfileTimeoutInSeconds { get; set; }
-        /// <summary> Parent process. </summary>
-        [WirePath("properties.parent")]
-        public string Parent { get; set; }
-        /// <summary> Child process list. </summary>
-        [WirePath("properties.children")]
-        public IList<string> Children { get; }
-        /// <summary> Thread list. </summary>
-        [WirePath("properties.threads")]
-        public IList<WebAppProcessThreadProperties> ProcessThreads { get; }
-        /// <summary> List of open files. </summary>
-        [WirePath("properties.open_file_handles")]
-        public IList<string> OpenFileHandles { get; }
-        /// <summary> List of modules. </summary>
-        [WirePath("properties.modules")]
-        public IList<ProcessModuleInfoData> Modules { get; }
-        /// <summary> File name of this process. </summary>
-        [WirePath("properties.file_name")]
-        public string FileName { get; set; }
-        /// <summary> Command line. </summary>
-        [WirePath("properties.command_line")]
-        public string CommandLine { get; set; }
-        /// <summary> User name. </summary>
-        [WirePath("properties.user_name")]
-        public string UserName { get; set; }
-        /// <summary> Handle count. </summary>
-        [WirePath("properties.handle_count")]
-        public int? HandleCount { get; set; }
-        /// <summary> Module count. </summary>
-        [WirePath("properties.module_count")]
-        public int? ModuleCount { get; set; }
-        /// <summary> Thread count. </summary>
-        [WirePath("properties.thread_count")]
-        public int? ThreadCount { get; set; }
-        /// <summary> Start time. </summary>
-        [WirePath("properties.start_time")]
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary> Total CPU time. </summary>
-        [WirePath("properties.total_cpu_time")]
-        public string TotalCpuTime { get; set; }
-        /// <summary> User CPU time. </summary>
-        [WirePath("properties.user_cpu_time")]
-        public string UserCpuTime { get; set; }
-        /// <summary> Privileged CPU time. </summary>
-        [WirePath("properties.privileged_cpu_time")]
-        public string PrivilegedCpuTime { get; set; }
-        /// <summary> Working set. </summary>
-        [WirePath("properties.working_set")]
-        public long? WorkingSet { get; set; }
-        /// <summary> Peak working set. </summary>
-        [WirePath("properties.peak_working_set")]
-        public long? PeakWorkingSet { get; set; }
-        /// <summary> Private memory size. </summary>
-        [WirePath("properties.private_memory")]
-        public long? PrivateMemory { get; set; }
-        /// <summary> Virtual memory size. </summary>
-        [WirePath("properties.virtual_memory")]
-        public long? VirtualMemory { get; set; }
-        /// <summary> Peak virtual memory usage. </summary>
-        [WirePath("properties.peak_virtual_memory")]
-        public long? PeakVirtualMemory { get; set; }
-        /// <summary> Paged system memory. </summary>
-        [WirePath("properties.paged_system_memory")]
-        public long? PagedSystemMemory { get; set; }
-        /// <summary> Non-paged system memory. </summary>
-        [WirePath("properties.non_paged_system_memory")]
-        public long? NonPagedSystemMemory { get; set; }
-        /// <summary> Paged memory. </summary>
-        [WirePath("properties.paged_memory")]
-        public long? PagedMemory { get; set; }
-        /// <summary> Peak paged memory. </summary>
-        [WirePath("properties.peak_paged_memory")]
-        public long? PeakPagedMemory { get; set; }
-        /// <summary> Time stamp. </summary>
-        [WirePath("properties.time_stamp")]
-        public DateTimeOffset? TimeStamp { get; set; }
-        /// <summary> List of environment variables. </summary>
-        [WirePath("properties.environment_variables")]
-        public IDictionary<string, string> EnvironmentVariables { get; }
-        /// <summary> Is this the SCM site?. </summary>
-        [WirePath("properties.is_scm_site")]
-        public bool? IsScmSite { get; set; }
-        /// <summary> Is this a Web Job?. </summary>
-        [WirePath("properties.is_webjob")]
-        public bool? IsWebjob { get; set; }
-        /// <summary> Description of process. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        /// <summary> ProcessInfo resource specific properties. </summary>
+        [WirePath("properties")]
+        internal ProcessInfoProperties Properties { get; set; }
+
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> ARM Identifier for deployment. </summary>
+        [WirePath("properties.identifier")]
+        public int? Identifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Identifier;
+            }
+        }
+
+        /// <summary> Deployment name. </summary>
+        [WirePath("properties.deployment_name")]
+        public string DeploymentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.DeploymentName = value;
+            }
+        }
+
+        /// <summary> HRef URI. </summary>
+        [WirePath("properties.href")]
+        public string Href
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Href;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Href = value;
+            }
+        }
+
+        /// <summary> Minidump URI. </summary>
+        [WirePath("properties.minidump")]
+        public string Minidump
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Minidump;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Minidump = value;
+            }
+        }
+
+        /// <summary> Is profile running?. </summary>
+        [WirePath("properties.is_profile_running")]
+        public bool? IsProfileRunning
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsProfileRunning;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsProfileRunning = value;
+            }
+        }
+
+        /// <summary> Is the IIS Profile running?. </summary>
+        [WirePath("properties.is_iis_profile_running")]
+        public bool? IsIisProfileRunning
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsIisProfileRunning;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsIisProfileRunning = value;
+            }
+        }
+
+        /// <summary> IIS Profile timeout (seconds). </summary>
+        [WirePath("properties.iis_profile_timeout_in_seconds")]
+        public double? IisProfileTimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IisProfileTimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IisProfileTimeoutInSeconds = value;
+            }
+        }
+
+        /// <summary> Parent process. </summary>
+        [WirePath("properties.parent")]
+        public string Parent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Parent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Parent = value;
+            }
+        }
+
+        /// <summary> Child process list. </summary>
+        [WirePath("properties.children")]
+        public IList<string> Children
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.Children;
+            }
+        }
+
+        /// <summary> Thread list. </summary>
+        [WirePath("properties.threads")]
+        public IList<WebAppProcessThreadProperties> ProcessThreads
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.ProcessThreads;
+            }
+        }
+
+        /// <summary> List of open files. </summary>
+        [WirePath("properties.open_file_handles")]
+        public IList<string> OpenFileHandles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.OpenFileHandles;
+            }
+        }
+
+        /// <summary> List of modules. </summary>
+        [WirePath("properties.modules")]
+        public IList<ProcessModuleInfoData> Modules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.Modules;
+            }
+        }
+
+        /// <summary> File name of this process. </summary>
+        [WirePath("properties.file_name")]
+        public string FileName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FileName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.FileName = value;
+            }
+        }
+
+        /// <summary> Command line. </summary>
+        [WirePath("properties.command_line")]
+        public string CommandLine
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CommandLine;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.CommandLine = value;
+            }
+        }
+
+        /// <summary> User name. </summary>
+        [WirePath("properties.user_name")]
+        public string UserName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.UserName = value;
+            }
+        }
+
+        /// <summary> Handle count. </summary>
+        [WirePath("properties.handle_count")]
+        public int? HandleCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HandleCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.HandleCount = value;
+            }
+        }
+
+        /// <summary> Module count. </summary>
+        [WirePath("properties.module_count")]
+        public int? ModuleCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ModuleCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.ModuleCount = value;
+            }
+        }
+
+        /// <summary> Thread count. </summary>
+        [WirePath("properties.thread_count")]
+        public int? ThreadCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThreadCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.ThreadCount = value;
+            }
+        }
+
+        /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.StartOn = value;
+            }
+        }
+
+        /// <summary> Total CPU time. </summary>
+        [WirePath("properties.total_cpu_time")]
+        public string TotalCpuTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalCpuTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.TotalCpuTime = value;
+            }
+        }
+
+        /// <summary> User CPU time. </summary>
+        [WirePath("properties.user_cpu_time")]
+        public string UserCpuTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserCpuTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.UserCpuTime = value;
+            }
+        }
+
+        /// <summary> Privileged CPU time. </summary>
+        [WirePath("properties.privileged_cpu_time")]
+        public string PrivilegedCpuTime
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivilegedCpuTime;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PrivilegedCpuTime = value;
+            }
+        }
+
+        /// <summary> Working set. </summary>
+        [WirePath("properties.working_set")]
+        public long? WorkingSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkingSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.WorkingSet = value;
+            }
+        }
+
+        /// <summary> Peak working set. </summary>
+        [WirePath("properties.peak_working_set")]
+        public long? PeakWorkingSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakWorkingSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PeakWorkingSet = value;
+            }
+        }
+
+        /// <summary> Private memory size. </summary>
+        [WirePath("properties.private_memory")]
+        public long? PrivateMemory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PrivateMemory = value;
+            }
+        }
+
+        /// <summary> Virtual memory size. </summary>
+        [WirePath("properties.virtual_memory")]
+        public long? VirtualMemory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.VirtualMemory = value;
+            }
+        }
+
+        /// <summary> Peak virtual memory usage. </summary>
+        [WirePath("properties.peak_virtual_memory")]
+        public long? PeakVirtualMemory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakVirtualMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PeakVirtualMemory = value;
+            }
+        }
+
+        /// <summary> Paged system memory. </summary>
+        [WirePath("properties.paged_system_memory")]
+        public long? PagedSystemMemory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PagedSystemMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PagedSystemMemory = value;
+            }
+        }
+
+        /// <summary> Non-paged system memory. </summary>
+        [WirePath("properties.non_paged_system_memory")]
+        public long? NonPagedSystemMemory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NonPagedSystemMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.NonPagedSystemMemory = value;
+            }
+        }
+
+        /// <summary> Paged memory. </summary>
+        [WirePath("properties.paged_memory")]
+        public long? PagedMemory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PagedMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PagedMemory = value;
+            }
+        }
+
+        /// <summary> Peak paged memory. </summary>
+        [WirePath("properties.peak_paged_memory")]
+        public long? PeakPagedMemory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeakPagedMemory;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.PeakPagedMemory = value;
+            }
+        }
+
+        /// <summary> Time stamp. </summary>
+        [WirePath("properties.time_stamp")]
+        public DateTimeOffset? TimeStamp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeStamp;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.TimeStamp = value;
+            }
+        }
+
+        /// <summary> List of environment variables. </summary>
+        [WirePath("properties.environment_variables")]
+        public IDictionary<string, string> EnvironmentVariables
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                return Properties.EnvironmentVariables;
+            }
+        }
+
+        /// <summary> Is this the SCM site?. </summary>
+        [WirePath("properties.is_scm_site")]
+        public bool? IsScmSite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsScmSite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsScmSite = value;
+            }
+        }
+
+        /// <summary> Is this a Web Job?. </summary>
+        [WirePath("properties.is_webjob")]
+        public bool? IsWebjob
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsWebjob;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.IsWebjob = value;
+            }
+        }
+
+        /// <summary> Description of process. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProcessInfoProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }

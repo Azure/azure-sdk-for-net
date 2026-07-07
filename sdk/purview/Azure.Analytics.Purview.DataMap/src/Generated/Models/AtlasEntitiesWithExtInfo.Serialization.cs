@@ -37,6 +37,39 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntitiesWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AtlasEntitiesWithExtInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasEntitiesWithExtInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasEntitiesWithExtInfo IPersistableModel<AtlasEntitiesWithExtInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AtlasEntitiesWithExtInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="atlasEntitiesWithExtInfo"> The <see cref="AtlasEntitiesWithExtInfo"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo)
+        {
+            if (atlasEntitiesWithExtInfo == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(atlasEntitiesWithExtInfo, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasEntitiesWithExtInfo"/> from. </param>
         public static explicit operator AtlasEntitiesWithExtInfo(Response response)
         {
@@ -164,41 +197,6 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             return new AtlasEntitiesWithExtInfo(referredEntities ?? new ChangeTrackingDictionary<string, AtlasEntity>(), entities ?? new ChangeTrackingList<AtlasEntity>(), additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasEntitiesWithExtInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasEntitiesWithExtInfo>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AtlasEntitiesWithExtInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasEntitiesWithExtInfo IPersistableModel<AtlasEntitiesWithExtInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasEntitiesWithExtInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="atlasEntitiesWithExtInfo"> The <see cref="AtlasEntitiesWithExtInfo"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo)
-        {
-            if (atlasEntitiesWithExtInfo == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(atlasEntitiesWithExtInfo, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

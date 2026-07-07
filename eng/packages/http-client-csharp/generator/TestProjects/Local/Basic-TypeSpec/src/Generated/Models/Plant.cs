@@ -47,9 +47,9 @@ namespace BasicTypeSpec
         internal string Species { get; set; }
 
         /// <summary> The unique identifier of the plant. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The height of the plant in centimeters. </summary>
-        public int Height { get; }
+        public int Height { get; set; }
     }
 }

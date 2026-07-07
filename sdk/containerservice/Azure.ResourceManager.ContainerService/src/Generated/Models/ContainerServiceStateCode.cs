@@ -7,54 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Tells whether the cluster is Running or Stopped
-    /// Serialized Name: Code
-    /// </summary>
+    /// <summary> Tells whether the cluster is Running or Stopped. </summary>
     public readonly partial struct ContainerServiceStateCode : IEquatable<ContainerServiceStateCode>
     {
         private readonly string _value;
+        /// <summary> The cluster is running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> The cluster is stopped. </summary>
+        private const string StoppedValue = "Stopped";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceStateCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceStateCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RunningValue = "Running";
-        private const string StoppedValue = "Stopped";
-
-        /// <summary>
-        /// The cluster is running.
-        /// Serialized Name: Code.Running
-        /// </summary>
+        /// <summary> The cluster is running. </summary>
         public static ContainerServiceStateCode Running { get; } = new ContainerServiceStateCode(RunningValue);
-        /// <summary>
-        /// The cluster is stopped.
-        /// Serialized Name: Code.Stopped
-        /// </summary>
+
+        /// <summary> The cluster is stopped. </summary>
         public static ContainerServiceStateCode Stopped { get; } = new ContainerServiceStateCode(StoppedValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceStateCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceStateCode left, ContainerServiceStateCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceStateCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceStateCode left, ContainerServiceStateCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceStateCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceStateCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceStateCode(string value) => new ContainerServiceStateCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceStateCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceStateCode?(string value) => value == null ? null : new ContainerServiceStateCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceStateCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceStateCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

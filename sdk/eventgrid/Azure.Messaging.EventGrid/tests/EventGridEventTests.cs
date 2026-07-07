@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventGrid.Tests
         public void PassingBinaryDataToWrongConstructorThrows()
         {
             Assert.That(
-                () => new EventGridEvent("subject", "type", "version", (object) new BinaryData("data")),
+                () => new EventGridEvent("subject", "type", "version", (object)new BinaryData("data")),
                 Throws.InstanceOf<InvalidOperationException>());
         }
 

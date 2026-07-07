@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dell.Storage
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dell.Storage
                 HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
-                    new DellFileSystemOperationSource(Client),
+                    new DellFileSystemResourceOperationSource(Client),
                     _fileSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Dell.Storage
                 HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
-                    new DellFileSystemOperationSource(Client),
+                    new DellFileSystemResourceOperationSource(Client),
                     _fileSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Dell.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DellFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupAsyncCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Dell.Storage
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DellFileSystemResource(Client, data));
+            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetByResourceGroupCollectionResultOfT(_fileSystemsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DellFileSystemCollection.GetAll"), data => new DellFileSystemResource(Client, data));
         }
 
         /// <summary>

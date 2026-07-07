@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DellFileSystemResource(Client, data));
+            return new AsyncPageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionAsyncCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDellStorageSubscriptionResource.GetDellFileSystems"), data => new DellFileSystemResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Dell.Storage.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DellFileSystemResource(Client, data));
+            return new PageableWrapper<DellFileSystemData, DellFileSystemResource>(new FileSystemsGetBySubscriptionCollectionResultOfT(FileSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDellStorageSubscriptionResource.GetDellFileSystems"), data => new DellFileSystemResource(Client, data));
         }
     }
 }

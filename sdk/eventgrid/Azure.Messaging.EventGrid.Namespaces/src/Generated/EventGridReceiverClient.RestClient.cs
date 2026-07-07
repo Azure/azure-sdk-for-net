@@ -27,7 +27,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":receive", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (maxEvents != null)
             {
                 uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents), true);
@@ -53,7 +56,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":acknowledge", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -73,7 +79,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":release", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (releaseDelayInSeconds != null)
             {
                 uri.AppendQuery("releaseDelayInSeconds", releaseDelayInSeconds, true);
@@ -97,7 +106,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":reject", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -117,7 +129,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendPath("/eventsubscriptions/", false);
             uri.AppendPath(eventSubscriptionName, true);
             uri.AppendPath(":renewLock", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

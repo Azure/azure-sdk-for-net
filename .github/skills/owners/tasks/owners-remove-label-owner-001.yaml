@@ -1,0 +1,18 @@
+id: owners-remove-label-owner-001
+name: Remove Service Owner from Label
+description: |
+  Test that the skill removes a service owner from a label.
+tags:
+  - basic
+inputs:
+  prompt: "Remove @oldpartner as service owner from the Key Vault label in azure-sdk-for-net"
+expected:
+  output_contains:
+    - "oldpartner"
+    - "Key Vault"
+  outcomes:
+    - type: tool_called
+      tool_name: azsdk_engsys_codeowner_remove_label_owner
+  behavior:
+    max_tool_calls: 5
+    max_response_time_ms: 30000

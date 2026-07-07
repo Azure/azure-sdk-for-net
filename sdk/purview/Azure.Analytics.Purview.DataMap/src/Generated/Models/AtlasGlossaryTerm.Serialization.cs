@@ -34,6 +34,39 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryTerm>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AtlasGlossaryTerm)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AtlasGlossaryTerm>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AtlasGlossaryTerm IPersistableModel<AtlasGlossaryTerm>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AtlasGlossaryTerm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="atlasGlossaryTerm"> The <see cref="AtlasGlossaryTerm"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AtlasGlossaryTerm atlasGlossaryTerm)
+        {
+            if (atlasGlossaryTerm == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(atlasGlossaryTerm, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AtlasGlossaryTerm"/> from. </param>
         public static explicit operator AtlasGlossaryTerm(Response response)
         {
@@ -976,41 +1009,6 @@ namespace Azure.Analytics.Purview.DataMap
                 validValues ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
                 validValuesFor ?? new ChangeTrackingList<AtlasRelatedTermHeader>(),
                 additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AtlasGlossaryTerm>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AtlasGlossaryTerm>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsPurviewDataMapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AtlasGlossaryTerm)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AtlasGlossaryTerm IPersistableModel<AtlasGlossaryTerm>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AtlasGlossaryTerm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="atlasGlossaryTerm"> The <see cref="AtlasGlossaryTerm"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AtlasGlossaryTerm atlasGlossaryTerm)
-        {
-            if (atlasGlossaryTerm == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(atlasGlossaryTerm, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

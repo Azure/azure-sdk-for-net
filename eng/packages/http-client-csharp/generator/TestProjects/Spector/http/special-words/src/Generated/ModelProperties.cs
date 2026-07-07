@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +17,8 @@ namespace SpecialWords._ModelProperties
     public partial class ModelProperties
     {
         protected ModelProperties() => throw null;
+
+        internal ModelProperties(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
@@ -34,5 +37,13 @@ namespace SpecialWords._ModelProperties
         public virtual Response DictMethods(DictMethods body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response> DictMethodsAsync(DictMethods body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response WithList(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> WithListAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response WithList(ModelWithList body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> WithListAsync(ModelWithList body, CancellationToken cancellationToken = default) => throw null;
     }
 }

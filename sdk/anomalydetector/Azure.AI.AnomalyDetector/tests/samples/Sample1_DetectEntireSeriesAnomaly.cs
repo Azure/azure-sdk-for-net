@@ -58,7 +58,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             try
             {
-                Response response = client.GetUnivariateClient().DetectUnivariateEntireSeries(request.ToRequestContent());
+                Response response = client.GetUnivariateClient().DetectUnivariateEntireSeries(request);
                 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
                 bool hasAnomaly = false;

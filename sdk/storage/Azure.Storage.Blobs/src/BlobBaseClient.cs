@@ -640,6 +640,50 @@ namespace Azure.Storage.Blobs.Specialized
             }
             return default;
         }
+
+        /// <summary>
+        /// Get the Uri with SAS appended if the <see cref="BlobBaseClient"/> has an <see cref="AzureSasCredential"/>,
+        /// for use as the source URI when performing service to service copy
+        /// where the client was initialized with an <see cref="AzureSasCredential"/>.
+        ///
+        /// To retrieve, please utilize the <see cref="BlobUriBuilder"/>.
+        /// To inspect the SAS token (after parsed) utilize the <see cref="SasQueryParameters"/> or <see cref="BlobSasQueryParameters"/>.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client from which to retrieve the URI and SAS credential.
+        /// </param>
+        /// <returns>
+        /// The URI with SAS appended if the client has an <see cref="AzureSasCredential"/>;
+        /// otherwise, the original URI.
+        /// </returns>
+        protected static Uri GetUriWithSas(BlobBaseClient client)
+        {
+            if (client.ClientConfiguration.SasCredential != null)
+            {
+                BlobUriBuilder uriBuilder = new BlobUriBuilder(client.Uri);
+                // Only append SAS if the URI doesn't already contain one
+                if (uriBuilder.Sas == null)
+                {
+                    string signature = client.ClientConfiguration.SasCredential.Signature;
+                    // Strip leading '?' if present to avoid malformed query
+                    if (signature.StartsWith("?", StringComparison.Ordinal))
+                    {
+                        signature = signature.Substring(1);
+                    }
+                    // Use '&' if there's already a query string, otherwise start fresh
+                    if (string.IsNullOrEmpty(uriBuilder.Query))
+                    {
+                        uriBuilder.Query = signature;
+                    }
+                    else
+                    {
+                        uriBuilder.Query += "&" + signature;
+                    }
+                }
+                return uriBuilder.ToUri();
+            }
+            return client.Uri;
+        }
         #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
@@ -1823,7 +1867,7 @@ namespace Azure.Storage.Blobs.Specialized
             Response<BlobDownloadStreamingResult> result = Response.FromValue(
                 response.ToBlobDownloadStreamingResult(),
                 response.GetRawResponse());
-                result.Value.ExpectTrailingDetails = structuredBodyType != null;
+            result.Value.ExpectTrailingDetails = structuredBodyType != null;
             return result;
         }
         #endregion

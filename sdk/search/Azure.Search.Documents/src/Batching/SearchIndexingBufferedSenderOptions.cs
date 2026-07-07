@@ -58,7 +58,7 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// Gets or sets the number of times to retry a failed document.  Note
-        /// that this is different than <see cref="Azure.Core.RetryOptions.MaxRetries"/>
+        /// that this is different than <see cref="Core.RetryOptions.MaxRetries"/>
         /// which will try to resend the same request.  This property is used
         /// to control the number of attempts we will make to submit an indexing
         /// action.
@@ -68,7 +68,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// The initial retry delay. The delay will increase exponentially with
         /// subsequent retries and add random jitter.  Note that this is
-        /// different than <see cref="Azure.Core.RetryOptions.Delay"/> which
+        /// different than <see cref="Core.RetryOptions.Delay"/> which
         /// will only delay before resending the same request.  This property
         /// is used to add delay between additional batch submissions when our
         /// requests are being throttled by the service.
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents
 
         /// <summary>
         /// The maximum permissible delay between retry attempts.  Note that
-        /// this is different than <see cref="Azure.Core.RetryOptions.MaxDelay"/>
+        /// this is different than <see cref="Core.RetryOptions.MaxDelay"/>
         /// which will only delay before resending the same request.  This
         /// property is used to add delay between additional batch
         /// submissions when our requests are being throttled by the service.

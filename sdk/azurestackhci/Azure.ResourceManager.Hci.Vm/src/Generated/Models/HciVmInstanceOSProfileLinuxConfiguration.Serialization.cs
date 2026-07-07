@@ -16,6 +16,46 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> LinuxConfiguration - linux specific configuration values for the virtual machine instance. </summary>
     public partial class HciVmInstanceOSProfileLinuxConfiguration : IJsonModel<HciVmInstanceOSProfileLinuxConfiguration>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciVmInstanceOSProfileLinuxConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciVmInstanceOSProfileLinuxConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciVmInstanceOSProfileLinuxConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciVmInstanceOSProfileLinuxConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciVmInstanceOSProfileLinuxConfiguration IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciVmInstanceOSProfileLinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh, options);
             }
-            if (Optional.IsDefined(ProvisionVmAgent))
+            if (Optional.IsDefined(ShouldProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVmAgent.Value);
+                writer.WriteBooleanValue(ShouldProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(ProvisionVmConfigAgent))
+            if (Optional.IsDefined(ShouldProvisionVmConfigAgent))
             {
                 writer.WritePropertyName("provisionVMConfigAgent"u8);
-                writer.WriteBooleanValue(ProvisionVmConfigAgent.Value);
+                writer.WriteBooleanValue(ShouldProvisionVmConfigAgent.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,8 +138,8 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
             bool? disablePasswordAuthentication = default;
             HciVmOSProfileSshConfiguration ssh = default;
-            bool? provisionVmAgent = default;
-            bool? provisionVmConfigAgent = default;
+            bool? shouldProvisionVmAgent = default;
+            bool? shouldProvisionVmConfigAgent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -127,7 +167,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisionVmAgent = prop.Value.GetBoolean();
+                    shouldProvisionVmAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisionVMConfigAgent"u8))
@@ -136,7 +176,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     {
                         continue;
                     }
-                    provisionVmConfigAgent = prop.Value.GetBoolean();
+                    shouldProvisionVmConfigAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,47 +184,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmInstanceOSProfileLinuxConfiguration(disablePasswordAuthentication, ssh, provisionVmAgent, provisionVmConfigAgent, additionalBinaryDataProperties);
+            return new HciVmInstanceOSProfileLinuxConfiguration(disablePasswordAuthentication, ssh, shouldProvisionVmAgent, shouldProvisionVmConfigAgent, additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HciVmInstanceOSProfileLinuxConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmInstanceOSProfileLinuxConfiguration IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmInstanceOSProfileLinuxConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeHciVmInstanceOSProfileLinuxConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciVmInstanceOSProfileLinuxConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmInstanceOSProfileLinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

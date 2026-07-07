@@ -31,7 +31,7 @@ namespace Azure.Core.Rest
         /// </summary>
         /// <param name="auth"></param>
         public RestClient(PipelinePolicy auth) : this(CreateOptions(auth))
-       {
+        {
         }
 
         private static RestClientOptions CreateOptions(PipelinePolicy auth)
@@ -109,7 +109,8 @@ namespace Azure.Core.Rest
         /// <returns></returns>
         public PipelineResponse Send(PipelineMessage message, RequestOptions options = default)
         {
-            if (options != default) message.Apply(options);
+            if (options != default)
+                message.Apply(options);
             _pipeline.Send(message);
             return message.Response!;
         }

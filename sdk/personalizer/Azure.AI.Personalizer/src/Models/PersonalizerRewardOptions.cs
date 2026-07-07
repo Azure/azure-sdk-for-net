@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Reward given to a rank response. </summary>
     [CodeGenModel("RewardRequest")]
-    public partial class PersonalizerRewardOptions {}
+    public partial class PersonalizerRewardOptions { }
 }

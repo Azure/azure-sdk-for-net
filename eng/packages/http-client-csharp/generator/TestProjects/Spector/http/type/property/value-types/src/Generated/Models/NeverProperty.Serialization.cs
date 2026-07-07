@@ -17,6 +17,17 @@ namespace _Type.Property.ValueTypes
     {
         protected virtual NeverProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<NeverProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        NeverProperty IPersistableModel<NeverProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<NeverProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="neverProperty"> The <see cref="NeverProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(NeverProperty neverProperty) => throw null;
+
         public static explicit operator NeverProperty(Response response) => throw null;
 
         void IJsonModel<NeverProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -26,16 +37,5 @@ namespace _Type.Property.ValueTypes
         NeverProperty IJsonModel<NeverProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual NeverProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<NeverProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        NeverProperty IPersistableModel<NeverProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<NeverProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="neverProperty"> The <see cref="NeverProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(NeverProperty neverProperty) => throw null;
     }
 }

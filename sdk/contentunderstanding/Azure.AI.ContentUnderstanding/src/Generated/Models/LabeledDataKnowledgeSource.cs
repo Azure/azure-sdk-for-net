@@ -14,33 +14,33 @@ namespace Azure.AI.ContentUnderstanding
     public partial class LabeledDataKnowledgeSource : KnowledgeSource
     {
         /// <summary> Initializes a new instance of <see cref="LabeledDataKnowledgeSource"/>. </summary>
-        /// <param name="containerUrl"> The URL of the blob container containing labeled data. </param>
+        /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
         /// <param name="fileListPath"> An optional path to a file listing specific blobs to include. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> or <paramref name="fileListPath"/> is null. </exception>
-        public LabeledDataKnowledgeSource(Uri containerUrl, string fileListPath) : base(KnowledgeSourceKind.LabeledData)
+        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> or <paramref name="fileListPath"/> is null. </exception>
+        public LabeledDataKnowledgeSource(Uri containerUri, string fileListPath) : base(KnowledgeSourceKind.LabeledData)
         {
-            Argument.AssertNotNull(containerUrl, nameof(containerUrl));
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
             Argument.AssertNotNull(fileListPath, nameof(fileListPath));
 
-            ContainerUrl = containerUrl;
+            ContainerUri = containerUri;
             FileListPath = fileListPath;
         }
 
         /// <summary> Initializes a new instance of <see cref="LabeledDataKnowledgeSource"/>. </summary>
         /// <param name="kind"> The kind of knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="containerUrl"> The URL of the blob container containing labeled data. </param>
+        /// <param name="containerUri"> The URL of the blob container containing labeled data. </param>
         /// <param name="prefix"> An optional prefix to filter blobs within the container. </param>
         /// <param name="fileListPath"> An optional path to a file listing specific blobs to include. </param>
-        internal LabeledDataKnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri containerUrl, string prefix, string fileListPath) : base(kind, additionalBinaryDataProperties)
+        internal LabeledDataKnowledgeSource(KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri containerUri, string prefix, string fileListPath) : base(kind, additionalBinaryDataProperties)
         {
-            ContainerUrl = containerUrl;
+            ContainerUri = containerUri;
             Prefix = prefix;
             FileListPath = fileListPath;
         }
 
         /// <summary> The URL of the blob container containing labeled data. </summary>
-        public Uri ContainerUrl { get; set; }
+        public Uri ContainerUri { get; set; }
 
         /// <summary> An optional prefix to filter blobs within the container. </summary>
         public string Prefix { get; set; }

@@ -166,11 +166,57 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
         }
 
+        // This test validates that the "Async" suffix is stripped from the scope name for a protocol
+        // method whose name ends in "Async", since GetScopeName() handles the stripping centrally.
+        [Test]
+        public void TestAsyncProtocolMethodScopeNameStripsAsyncSuffix()
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "p1",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            // create a protocol method whose name ends in "Async" to test the visitor
+            var methodSignature = new MethodSignature(
+                "FooAsync",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
+                $"The response returned from the service.",
+                [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+
+            var updatedMethod = visitor.InvokeVisitMethod(method!);
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            // The "Async" suffix should be stripped from the scope name.
+            Assert.IsTrue(result.Contains("ClientDiagnostics.CreateScope(\"TestClient.Foo\")"),
+                $"Scope name should strip the \"Async\" suffix. Actual: {result}");
+            Assert.IsFalse(result.Contains("TestClient.FooAsync"),
+                $"Scope name should not contain the \"Async\" suffix. Actual: {result}");
+        }
+
         [TestCase(true, ScmMethodKind.Protocol)]
         [TestCase(false, ScmMethodKind.Protocol)]
         [TestCase(true, ScmMethodKind.Convenience)]
         [TestCase(false, ScmMethodKind.Convenience)]
-        public void TestSkipsInstrumentationForPagingMethods(bool isAsync, ScmMethodKind methodKind)
+        public void TestPagingMethodsGetScopeInjected(bool isAsync, ScmMethodKind methodKind)
         {
             var visitor = new TestDistributedTracingVisitor();
 
@@ -196,8 +242,9 @@ namespace Azure.Generator.Tests.Visitors
                 ? new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData))
                 : new CSharpType(typeof(Pageable<>), typeof(BinaryData));
 
+            var methodName = isAsync ? "ListItemsAsync" : "ListItems";
             var methodSignature = new MethodSignature(
-                isAsync ? "ListItemsAsync" : "ListItems",
+                methodName,
                 null,
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 pagingReturnType,
@@ -210,13 +257,14 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(updatedMethod?.BodyStatements);
 
             var result = updatedMethod!.BodyStatements!.ToDisplayString();
-            // Verify that the method body does NOT contain DiagnosticScope instrumentation
+            // Verify that the method body does NOT contain DiagnosticScope instrumentation (no wrapping)
             Assert.IsFalse(result.Contains("DiagnosticScope"),
                 $"Paging method should not have DiagnosticScope instrumentation. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
             Assert.IsFalse(result.Contains("scope.Start()"),
                 $"Paging method should not have scope.Start() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
-            Assert.IsFalse(result.Contains("scope.Failed"),
-                $"Paging method should not have scope.Failed() call. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
+            // Verify the scope name is injected as a constructor argument
+            Assert.IsTrue(result.Contains("\"TestClient.ListItems\""),
+                $"Paging method should have scope name injected. Method: {(isAsync ? "AsyncPageable" : "Pageable")}, Kind: {methodKind}");
         }
 
         private static IEnumerable<TestCaseData> TestUpdatesConstructorsTestCases

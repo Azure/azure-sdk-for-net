@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Storage.Blobs.Specialized;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {

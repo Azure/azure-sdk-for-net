@@ -23,7 +23,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Boolean determining whether certificate validation will be performed to verify the ledger identity TLS certificate is valid.
         /// </summary>
         /// <value></value>
-        public bool VerifyConnection { get; set; }
+        public bool VerifyConnection { get; set; } = true;
 
         /// <summary>
         /// When set to <c>true</c>, <see cref="ConfidentialLedgerClient.GetCurrentLedgerEntry(string, RequestContext)"/> (and its async

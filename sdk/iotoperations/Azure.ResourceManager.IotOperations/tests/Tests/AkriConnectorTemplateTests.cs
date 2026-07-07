@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             if (await templateCollection.ExistsAsync("sdk-test-akriconnector-template"))
             {
-                 var existing = await templateCollection.GetAsync("sdk-test-akriconnector-template");
-                 await existing.Value.DeleteAsync(WaitUntil.Completed);
+                var existing = await templateCollection.GetAsync("sdk-test-akriconnector-template");
+                await existing.Value.DeleteAsync(WaitUntil.Completed);
             }
             var response = await templateCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,

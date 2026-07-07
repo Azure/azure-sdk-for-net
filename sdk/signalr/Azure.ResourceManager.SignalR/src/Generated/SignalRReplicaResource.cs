@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SignalR
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -445,7 +445,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "SignalRReplicaResource.GetReplicaSkus");
         }
 
         /// <summary>
@@ -483,7 +484,8 @@ namespace Azure.ResourceManager.SignalR
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context);
+                context,
+                "SignalRReplicaResource.GetReplicaSkus");
         }
 
         /// <summary>
@@ -615,7 +617,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -663,7 +665,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -710,7 +712,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SignalRReplicaResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -753,7 +755,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SignalRReplicaResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -795,7 +797,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -841,7 +843,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -856,6 +858,39 @@ namespace Azure.ResourceManager.SignalR
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of SignalRReplicaSharedPrivateLinkResources in the <see cref="SignalRReplicaResource"/>. </summary>
+        /// <returns> An object representing collection of SignalRReplicaSharedPrivateLinkResources and their operations over a SignalRReplicaSharedPrivateLinkResource. </returns>
+        public virtual SignalRReplicaSharedPrivateLinkResourceCollection GetSignalRReplicaSharedPrivateLinkResources()
+        {
+            return GetCachedClient(client => new SignalRReplicaSharedPrivateLinkResourceCollection(client, Id));
+        }
+
+        /// <summary> Get the specified shared private link resource. </summary>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the SharedPrivateLinkResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SignalRReplicaSharedPrivateLinkResource>> GetSignalRReplicaSharedPrivateLinkResourceAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
+
+            return await GetSignalRReplicaSharedPrivateLinkResources().GetAsync(sharedPrivateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified shared private link resource. </summary>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the SharedPrivateLinkResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SignalRReplicaSharedPrivateLinkResource> GetSignalRReplicaSharedPrivateLinkResource(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sharedPrivateLinkResourceName, nameof(sharedPrivateLinkResourceName));
+
+            return GetSignalRReplicaSharedPrivateLinkResources().Get(sharedPrivateLinkResourceName, cancellationToken);
         }
     }
 }

@@ -17,7 +17,10 @@ import {
 /**
  * Recursively traverse a client and its children, adding all to the provided array.
  */
-export function traverseClient<T extends { children?: T[] }>(client: T, clients: T[]) {
+export function traverseClient<T extends { children?: T[] }>(
+  client: T,
+  clients: T[]
+) {
   clients.push(client);
   if (client.children) {
     for (const child of client.children) {

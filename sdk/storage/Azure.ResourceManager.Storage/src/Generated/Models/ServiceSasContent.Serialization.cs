@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ServiceSasContent : IUtf8JsonSerializable, IJsonModel<ServiceSasContent>
+    /// <summary> The parameters to list service SAS credentials of a specific resource. </summary>
+    public partial class ServiceSasContent : IJsonModel<ServiceSasContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceSasContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ServiceSasContent"/> for deserialization. </summary>
+        internal ServiceSasContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceSasContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceSasContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceSasContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceSasContent IPersistableModel<ServiceSasContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceSasContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="serviceSasContent"> The <see cref="ServiceSasContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceSasContent serviceSasContent)
+        {
+            if (serviceSasContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(serviceSasContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceSasContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceSasContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("canonicalizedResource"u8);
             writer.WriteStringValue(CanonicalizedResource);
             if (Optional.IsDefined(Resource))
@@ -121,15 +177,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("rsct"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -138,215 +194,187 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        ServiceSasContent IJsonModel<ServiceSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceSasContent IJsonModel<ServiceSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceSasContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceSasContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceSasContent(document.RootElement, options);
         }
 
-        internal static ServiceSasContent DeserializeServiceSasContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceSasContent DeserializeServiceSasContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string canonicalizedResource = default;
-            ServiceSasSignedResourceType? signedResource = default;
-            StorageAccountSasPermission? signedPermission = default;
-            string signedIP = default;
-            StorageAccountHttpProtocol? signedProtocol = default;
-            DateTimeOffset? signedStart = default;
-            DateTimeOffset? signedExpiry = default;
-            string signedIdentifier = default;
-            string startPk = default;
-            string endPk = default;
-            string startRk = default;
-            string endRk = default;
+            ServiceSasSignedResourceType? resource = default;
+            StorageAccountSasPermission? permissions = default;
+            string ipAddressOrRange = default;
+            StorageAccountHttpProtocol? protocols = default;
+            DateTimeOffset? sharedAccessStartOn = default;
+            DateTimeOffset? sharedAccessExpiryOn = default;
+            string identifier = default;
+            string partitionKeyStart = default;
+            string partitionKeyEnd = default;
+            string rowKeyStart = default;
+            string rowKeyEnd = default;
             string keyToSign = default;
-            string rscc = default;
-            string rscd = default;
-            string rsce = default;
-            string rscl = default;
-            string rsct = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string cacheControl = default;
+            string contentDisposition = default;
+            string contentEncoding = default;
+            string contentLanguage = default;
+            string contentType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("canonicalizedResource"u8))
+                if (prop.NameEquals("canonicalizedResource"u8))
                 {
-                    canonicalizedResource = property.Value.GetString();
+                    canonicalizedResource = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("signedResource"u8))
+                if (prop.NameEquals("signedResource"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signedResource = new ServiceSasSignedResourceType(property.Value.GetString());
+                    resource = new ServiceSasSignedResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signedPermission"u8))
+                if (prop.NameEquals("signedPermission"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signedPermission = new StorageAccountSasPermission(property.Value.GetString());
+                    permissions = new StorageAccountSasPermission(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signedIp"u8))
+                if (prop.NameEquals("signedIp"u8))
                 {
-                    signedIP = property.Value.GetString();
+                    ipAddressOrRange = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("signedProtocol"u8))
+                if (prop.NameEquals("signedProtocol"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signedProtocol = property.Value.GetString().ToStorageAccountHttpProtocol();
+                    protocols = prop.Value.GetString().ToStorageAccountHttpProtocol();
                     continue;
                 }
-                if (property.NameEquals("signedStart"u8))
+                if (prop.NameEquals("signedStart"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signedStart = property.Value.GetDateTimeOffset("O");
+                    sharedAccessStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("signedExpiry"u8))
+                if (prop.NameEquals("signedExpiry"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signedExpiry = property.Value.GetDateTimeOffset("O");
+                    sharedAccessExpiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("signedIdentifier"u8))
+                if (prop.NameEquals("signedIdentifier"u8))
                 {
-                    signedIdentifier = property.Value.GetString();
+                    identifier = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startPk"u8))
+                if (prop.NameEquals("startPk"u8))
                 {
-                    startPk = property.Value.GetString();
+                    partitionKeyStart = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endPk"u8))
+                if (prop.NameEquals("endPk"u8))
                 {
-                    endPk = property.Value.GetString();
+                    partitionKeyEnd = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("startRk"u8))
+                if (prop.NameEquals("startRk"u8))
                 {
-                    startRk = property.Value.GetString();
+                    rowKeyStart = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("endRk"u8))
+                if (prop.NameEquals("endRk"u8))
                 {
-                    endRk = property.Value.GetString();
+                    rowKeyEnd = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyToSign"u8))
+                if (prop.NameEquals("keyToSign"u8))
                 {
-                    keyToSign = property.Value.GetString();
+                    keyToSign = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rscc"u8))
+                if (prop.NameEquals("rscc"u8))
                 {
-                    rscc = property.Value.GetString();
+                    cacheControl = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rscd"u8))
+                if (prop.NameEquals("rscd"u8))
                 {
-                    rscd = property.Value.GetString();
+                    contentDisposition = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rsce"u8))
+                if (prop.NameEquals("rsce"u8))
                 {
-                    rsce = property.Value.GetString();
+                    contentEncoding = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rscl"u8))
+                if (prop.NameEquals("rscl"u8))
                 {
-                    rscl = property.Value.GetString();
+                    contentLanguage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rsct"u8))
+                if (prop.NameEquals("rsct"u8))
                 {
-                    rsct = property.Value.GetString();
+                    contentType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceSasContent(
                 canonicalizedResource,
-                signedResource,
-                signedPermission,
-                signedIP,
-                signedProtocol,
-                signedStart,
-                signedExpiry,
-                signedIdentifier,
-                startPk,
-                endPk,
-                startRk,
-                endRk,
+                resource,
+                permissions,
+                ipAddressOrRange,
+                protocols,
+                sharedAccessStartOn,
+                sharedAccessExpiryOn,
+                identifier,
+                partitionKeyStart,
+                partitionKeyEnd,
+                rowKeyStart,
+                rowKeyEnd,
                 keyToSign,
-                rscc,
-                rscd,
-                rsce,
-                rscl,
-                rsct,
-                serializedAdditionalRawData);
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ServiceSasContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceSasContent IPersistableModel<ServiceSasContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceSasContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceSasContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

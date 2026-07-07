@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public readonly partial struct BackupRehydrationPriority : IEquatable<BackupRehydrationPriority>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupRehydrationPriority"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupRehydrationPriority(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string HighValue = "High";
         private const string StandardValue = "Standard";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRehydrationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupRehydrationPriority(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupRehydrationPriority Invalid { get; } = new BackupRehydrationPriority(InvalidValue);
-        /// <summary> High. </summary>
+
+        /// <summary> Gets the High. </summary>
         public static BackupRehydrationPriority High { get; } = new BackupRehydrationPriority(HighValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> Gets the Standard. </summary>
         public static BackupRehydrationPriority Standard { get; } = new BackupRehydrationPriority(StandardValue);
+
         /// <summary> Determines if two <see cref="BackupRehydrationPriority"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupRehydrationPriority left, BackupRehydrationPriority right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupRehydrationPriority"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupRehydrationPriority left, BackupRehydrationPriority right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupRehydrationPriority"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupRehydrationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupRehydrationPriority(string value) => new BackupRehydrationPriority(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupRehydrationPriority"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupRehydrationPriority?(string value) => value == null ? null : new BackupRehydrationPriority(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupRehydrationPriority other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupRehydrationPriority other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

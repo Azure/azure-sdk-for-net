@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
             //BackupPolicy = new ContinuousModeBackupPolicy()
-            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, null, enablePartitionMerge:true)).Id;
+            _databaseAccountIdentifier = (await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, null, enablePartitionMerge: true)).Id;
             await StopSessionRecordingAsync();
         }
 
@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         /* Partition merge is not supported in API version 2025-10-15.
-        [Test]
         [RecordedTest]
         public async Task SqlDatabasePartitionMerge()
         {

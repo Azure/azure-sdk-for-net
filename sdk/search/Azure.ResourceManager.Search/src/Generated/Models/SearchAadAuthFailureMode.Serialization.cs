@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal static partial class SearchAadAuthFailureModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SearchAadAuthFailureMode value) => value switch
         {
             SearchAadAuthFailureMode.Http403 => "http403",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Search.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchAadAuthFailureMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SearchAadAuthFailureMode ToSearchAadAuthFailureMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "http403")) return SearchAadAuthFailureMode.Http403;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "http401WithBearerChallenge")) return SearchAadAuthFailureMode.Http401WithBearerChallenge;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "http403"))
+            {
+                return SearchAadAuthFailureMode.Http403;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "http401WithBearerChallenge"))
+            {
+                return SearchAadAuthFailureMode.Http401WithBearerChallenge;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchAadAuthFailureMode value.");
         }
     }

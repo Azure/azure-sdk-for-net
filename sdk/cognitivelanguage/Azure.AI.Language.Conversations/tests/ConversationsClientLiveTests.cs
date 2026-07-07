@@ -276,7 +276,7 @@ namespace Azure.AI.Language.Conversations.Tests
                             new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
                         })
                     });
-            List<AnalyzeConversationOperationAction> actions =  new List<AnalyzeConversationOperationAction>
+            List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
                     {
                         new SummarizationOperationAction()
                         {

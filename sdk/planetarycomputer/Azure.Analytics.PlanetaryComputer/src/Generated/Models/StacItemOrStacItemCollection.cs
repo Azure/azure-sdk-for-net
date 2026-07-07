@@ -37,7 +37,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="shortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemOrStacItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemOrStacItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             StacVersion = stacVersion;
@@ -59,10 +59,10 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<StacLink> Links { get; }
 
         /// <summary> MSFT Created. </summary>
-        public string CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> MSFT Updated. </summary>
-        public string UpdatedOn { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
 
         /// <summary> MSFT Short Description. </summary>
         public string ShortDescription { get; set; }

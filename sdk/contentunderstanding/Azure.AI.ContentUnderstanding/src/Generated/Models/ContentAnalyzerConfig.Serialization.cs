@@ -32,6 +32,29 @@ namespace Azure.AI.ContentUnderstanding
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContentAnalyzerConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContentAnalyzerConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContentAnalyzerConfig IPersistableModel<ContentAnalyzerConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContentAnalyzerConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContentAnalyzerConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -50,10 +73,10 @@ namespace Azure.AI.ContentUnderstanding
             {
                 throw new FormatException($"The model {nameof(ContentAnalyzerConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ReturnDetails))
+            if (Optional.IsDefined(ShouldReturnDetails))
             {
                 writer.WritePropertyName("returnDetails"u8);
-                writer.WriteBooleanValue(ReturnDetails.Value);
+                writer.WriteBooleanValue(ShouldReturnDetails.Value);
             }
             if (Optional.IsCollectionDefined(Locales))
             {
@@ -141,10 +164,10 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("segmentPerPage"u8);
                 writer.WriteBooleanValue(SegmentPerPage.Value);
             }
-            if (Optional.IsDefined(OmitContent))
+            if (Optional.IsDefined(ShouldOmitContent))
             {
                 writer.WritePropertyName("omitContent"u8);
-                writer.WriteBooleanValue(OmitContent.Value);
+                writer.WriteBooleanValue(ShouldOmitContent.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -188,7 +211,7 @@ namespace Azure.AI.ContentUnderstanding
             {
                 return null;
             }
-            bool? returnDetails = default;
+            bool? shouldReturnDetails = default;
             IList<string> locales = default;
             bool? enableOcr = default;
             bool? enableLayout = default;
@@ -203,7 +226,7 @@ namespace Azure.AI.ContentUnderstanding
             IDictionary<string, ContentCategoryDefinition> contentCategories = default;
             bool? enableSegment = default;
             bool? segmentPerPage = default;
-            bool? omitContent = default;
+            bool? shouldOmitContent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +236,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    returnDetails = prop.Value.GetBoolean();
+                    shouldReturnDetails = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("locales"u8))
@@ -365,7 +388,7 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    omitContent = prop.Value.GetBoolean();
+                    shouldOmitContent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -374,7 +397,7 @@ namespace Azure.AI.ContentUnderstanding
                 }
             }
             return new ContentAnalyzerConfig(
-                returnDetails,
+                shouldReturnDetails,
                 locales ?? new ChangeTrackingList<string>(),
                 enableOcr,
                 enableLayout,
@@ -389,31 +412,8 @@ namespace Azure.AI.ContentUnderstanding
                 contentCategories ?? new ChangeTrackingDictionary<string, ContentCategoryDefinition>(),
                 enableSegment,
                 segmentPerPage,
-                omitContent,
+                shouldOmitContent,
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentAnalyzerConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentAnalyzerConfig>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ContentAnalyzerConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ContentAnalyzerConfig IPersistableModel<ContentAnalyzerConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentAnalyzerConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

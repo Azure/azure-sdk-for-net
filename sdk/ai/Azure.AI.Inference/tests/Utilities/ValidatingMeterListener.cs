@@ -66,7 +66,8 @@ namespace Azure.AI.Inference.Tests.Utilities
         {
             // Disable all instruments (histograms) as a measure to clean up
             // for consequent tests.
-            foreach (var instrument in m_instruments.Values) {
+            foreach (var instrument in m_instruments.Values)
+            {
                 m_meterListener.DisableMeasurementEvents(instrument);
             }
             m_meterListener.Dispose();
@@ -80,7 +81,7 @@ namespace Azure.AI.Inference.Tests.Utilities
         /// <returns></returns>
         private static Dictionary<string, object> GetDefaultTags(string requestModel, string responseModel, Uri endpoint, string errorType)
         {
-             var standardTags = new Dictionary<string, object>{
+            var standardTags = new Dictionary<string, object>{
                 { GenAiSystemKey, GenAiSystemValue},
                 { GenAiRequestModelKey, requestModel},
                 { ServerAddressKey, endpoint.Host },

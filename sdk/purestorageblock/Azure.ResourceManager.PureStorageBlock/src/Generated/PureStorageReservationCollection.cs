@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _reservationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, PureStorageReservationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
-                    new PureStorageReservationOperationSource(Client),
+                    new PureStorageReservationResourceOperationSource(Client),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _reservationsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, reservationName, PureStorageReservationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
-                    new PureStorageReservationOperationSource(Client),
+                    new PureStorageReservationResourceOperationSource(Client),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupAsyncCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PureStorageReservationResource(Client, data));
+            return new AsyncPageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupAsyncCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PureStorageReservationResource(Client, data));
+            return new PageableWrapper<PureStorageReservationData, PureStorageReservationResource>(new ReservationsGetByResourceGroupCollectionResultOfT(_reservationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStorageReservationCollection.GetAll"), data => new PureStorageReservationResource(Client, data));
         }
 
         /// <summary>

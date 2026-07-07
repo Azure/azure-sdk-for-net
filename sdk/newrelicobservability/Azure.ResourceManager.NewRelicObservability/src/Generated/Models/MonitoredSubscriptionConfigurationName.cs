@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    /// <summary> The MonitoredSubscriptionConfigurationName. </summary>
+    /// <summary></summary>
     public readonly partial struct MonitoredSubscriptionConfigurationName : IEquatable<MonitoredSubscriptionConfigurationName>
     {
         private readonly string _value;
+        private const string DefaultValue = "default";
 
         /// <summary> Initializes a new instance of <see cref="MonitoredSubscriptionConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitoredSubscriptionConfigurationName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DefaultValue = "default";
-
-        /// <summary> default. </summary>
+        /// <summary> Gets the Default. </summary>
         public static MonitoredSubscriptionConfigurationName Default { get; } = new MonitoredSubscriptionConfigurationName(DefaultValue);
+
         /// <summary> Determines if two <see cref="MonitoredSubscriptionConfigurationName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitoredSubscriptionConfigurationName left, MonitoredSubscriptionConfigurationName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitoredSubscriptionConfigurationName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitoredSubscriptionConfigurationName left, MonitoredSubscriptionConfigurationName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoredSubscriptionConfigurationName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitoredSubscriptionConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitoredSubscriptionConfigurationName(string value) => new MonitoredSubscriptionConfigurationName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitoredSubscriptionConfigurationName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitoredSubscriptionConfigurationName?(string value) => value == null ? null : new MonitoredSubscriptionConfigurationName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitoredSubscriptionConfigurationName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitoredSubscriptionConfigurationName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

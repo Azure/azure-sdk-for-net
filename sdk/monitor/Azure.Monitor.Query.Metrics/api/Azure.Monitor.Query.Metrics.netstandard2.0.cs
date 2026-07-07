@@ -9,6 +9,7 @@ namespace Azure.Monitor.Query.Metrics
     public partial class MetricsClient
     {
         protected MetricsClient() { }
+        public MetricsClient(Azure.Monitor.Query.Metrics.MetricsClientSettings settings) { }
         public MetricsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MetricsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.Metrics.MetricsClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
@@ -33,6 +34,13 @@ namespace Azure.Monitor.Query.Metrics
         public static bool operator !=(Azure.Monitor.Query.Metrics.MetricsClientAudience left, Azure.Monitor.Query.Metrics.MetricsClientAudience right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class MetricsClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Query.Metrics.MetricsClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddMetricsClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Query.Metrics.MetricsClientSettings> configureSettings) { throw null; }
+    }
     public partial class MetricsClientOptions : Azure.Core.ClientOptions
     {
         public MetricsClientOptions(Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion version = Azure.Monitor.Query.Metrics.MetricsClientOptions.ServiceVersion.V2024_02_01) { }
@@ -41,6 +49,13 @@ namespace Azure.Monitor.Query.Metrics
         {
             V2024_02_01 = 1,
         }
+    }
+    public partial class MetricsClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public MetricsClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Monitor.Query.Metrics.MetricsClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class MetricsQueryResourcesOptions
     {

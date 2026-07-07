@@ -18,6 +18,14 @@ namespace _Type.Union
 
         protected virtual GetResponse2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<GetResponse2>.Write(ModelReaderWriterOptions options) => throw null;
+
+        GetResponse2 IPersistableModel<GetResponse2>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<GetResponse2>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator GetResponse2(Response response) => throw null;
 
         void IJsonModel<GetResponse2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,13 +35,5 @@ namespace _Type.Union
         GetResponse2 IJsonModel<GetResponse2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual GetResponse2 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<GetResponse2>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        GetResponse2 IPersistableModel<GetResponse2>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<GetResponse2>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

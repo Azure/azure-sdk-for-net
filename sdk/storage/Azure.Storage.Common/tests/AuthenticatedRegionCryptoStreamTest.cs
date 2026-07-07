@@ -393,7 +393,7 @@ namespace Azure.Storage.Test
         /// <param name="readSize"></param>
         [Test]
         public void VerySmallSourceStreamRead(
-            [Values(Constants.KB/2, Constants.KB - 5, Constants.KB, 2 * Constants.KB)] int readSize)
+            [Values(Constants.KB / 2, Constants.KB - 5, Constants.KB, 2 * Constants.KB)] int readSize)
         {
             const int bufferSize = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
             const int dataLength = Constants.KB;

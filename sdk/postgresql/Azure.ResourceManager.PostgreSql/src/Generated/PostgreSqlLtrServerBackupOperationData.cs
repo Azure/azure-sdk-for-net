@@ -13,44 +13,11 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary>
-    /// A class representing the PostgreSqlLtrServerBackupOperation data model.
-    /// Response for the LTR backup Operation API call
-    /// Serialized Name: BackupsLongTermRetentionOperation
-    /// </summary>
+    /// <summary> Response for the LTR backup Operation API call. </summary>
     public partial class PostgreSqlLtrServerBackupOperationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
         public PostgreSqlLtrServerBackupOperationData()
@@ -58,125 +25,190 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="datasourceSizeInBytes">
-        /// Size of datasource in bytes
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.datasourceSizeInBytes
-        /// </param>
-        /// <param name="dataTransferredInBytes">
-        /// Data transferred in bytes
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.dataTransferredInBytes
-        /// </param>
-        /// <param name="backupName">
-        /// Name of Backup operation
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupName
-        /// </param>
-        /// <param name="backupMetadata">
-        /// Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupMetadata
-        /// </param>
-        /// <param name="status">
-        /// Service-set extensible enum indicating the status of operation
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.status
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of the operation.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the operation.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.endTime
-        /// </param>
-        /// <param name="percentComplete">
-        /// PercentageCompleted
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.percentComplete
-        /// </param>
-        /// <param name="errorCode">
-        /// The error code.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorCode
-        /// </param>
-        /// <param name="errorMessage">
-        /// The error message.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorMessage
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? datasourceSizeInBytes, long? dataTransferredInBytes, string backupName, string backupMetadata, PostgreSqlExecutionStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Long Term Retention Backup Operation Resource Properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlLtrServerBackupOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LtrBackupOperationResponseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DatasourceSizeInBytes = datasourceSizeInBytes;
-            DataTransferredInBytes = dataTransferredInBytes;
-            BackupName = backupName;
-            BackupMetadata = backupMetadata;
-            Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
-            PercentComplete = percentComplete;
-            ErrorCode = errorCode;
-            ErrorMessage = errorMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Size of datasource in bytes
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.datasourceSizeInBytes
-        /// </summary>
+        /// <summary> Long Term Retention Backup Operation Resource Properties. </summary>
+        [WirePath("properties")]
+        internal LtrBackupOperationResponseProperties Properties { get; set; }
+
+        /// <summary> Size of datasource in bytes. </summary>
         [WirePath("properties.datasourceSizeInBytes")]
-        public long? DatasourceSizeInBytes { get; set; }
-        /// <summary>
-        /// Data transferred in bytes
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.dataTransferredInBytes
-        /// </summary>
+        public long? DatasourceSizeInBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatasourceSizeInBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LtrBackupOperationResponseProperties();
+                }
+                Properties.DatasourceSizeInBytes = value;
+            }
+        }
+
+        /// <summary> Data transferred in bytes. </summary>
         [WirePath("properties.dataTransferredInBytes")]
-        public long? DataTransferredInBytes { get; set; }
-        /// <summary>
-        /// Name of Backup operation
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupName
-        /// </summary>
+        public long? DataTransferredInBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataTransferredInBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LtrBackupOperationResponseProperties();
+                }
+                Properties.DataTransferredInBytes = value;
+            }
+        }
+
+        /// <summary> Name of Backup operation. </summary>
         [WirePath("properties.backupName")]
-        public string BackupName { get; set; }
-        /// <summary>
-        /// Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.backupMetadata
-        /// </summary>
+        public string BackupName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LtrBackupOperationResponseProperties();
+                }
+                Properties.BackupName = value;
+            }
+        }
+
+        /// <summary> Metadata to be stored in RP. Store everything that will be required to perform a successful restore using this Recovery point. e.g. Versions, DataFormat etc. </summary>
         [WirePath("properties.backupMetadata")]
-        public string BackupMetadata { get; set; }
-        /// <summary>
-        /// Service-set extensible enum indicating the status of operation
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.status
-        /// </summary>
+        public string BackupMetadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupMetadata;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LtrBackupOperationResponseProperties();
+                }
+                Properties.BackupMetadata = value;
+            }
+        }
+
+        /// <summary> Service-set extensible enum indicating the status of operation. </summary>
         [WirePath("properties.status")]
-        public PostgreSqlExecutionStatus? Status { get; set; }
-        /// <summary>
-        /// Start time of the operation.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.startTime
-        /// </summary>
+        public PostgreSqlExecutionStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LtrBackupOperationResponseProperties();
+                    }
+                    Properties.Status = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Start time of the operation. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// End time of the operation.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.endTime
-        /// </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LtrBackupOperationResponseProperties();
+                    }
+                    Properties.StartOn = value.Value;
+                }
+            }
+        }
+
+        /// <summary> End time of the operation. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// PercentageCompleted
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.percentComplete
-        /// </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LtrBackupOperationResponseProperties();
+                }
+                Properties.EndOn = value;
+            }
+        }
+
+        /// <summary> Percentage completed. </summary>
         [WirePath("properties.percentComplete")]
-        public double? PercentComplete { get; set; }
-        /// <summary>
-        /// The error code.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorCode
-        /// </summary>
+        public double? PercentComplete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PercentComplete;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LtrBackupOperationResponseProperties();
+                }
+                Properties.PercentComplete = value;
+            }
+        }
+
+        /// <summary> Error code. </summary>
         [WirePath("properties.errorCode")]
-        public string ErrorCode { get; }
-        /// <summary>
-        /// The error message.
-        /// Serialized Name: BackupsLongTermRetentionOperation.properties.errorMessage
-        /// </summary>
+        public string ErrorCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorCode;
+            }
+        }
+
+        /// <summary> Error message. </summary>
         [WirePath("properties.errorMessage")]
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorMessage;
+            }
+        }
     }
 }

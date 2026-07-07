@@ -287,7 +287,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Create analyzer configuration
             var config = new ContentAnalyzerConfig
             {
-                ReturnDetails = true
+                ShouldReturnDetails = true
             };
 
             // Create the custom analyzer
@@ -391,10 +391,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 // Verify config
                 Assert.IsNotNull(retrievedAnalyzer.Config, "Config should not be null");
-                Assert.IsNotNull(retrievedAnalyzer.Config!.ReturnDetails, "ReturnDetails should not be null");
-                Assert.AreEqual(true, retrievedAnalyzer.Config.ReturnDetails,
+                Assert.IsNotNull(retrievedAnalyzer.Config!.ShouldReturnDetails, "ReturnDetails should not be null");
+                Assert.AreEqual(true, retrievedAnalyzer.Config.ShouldReturnDetails,
                     "ReturnDetails should be true");
-                Console.WriteLine($"Config verified (ReturnDetails={retrievedAnalyzer.Config.ReturnDetails})");
+                Console.WriteLine($"Config verified (ReturnDetails={retrievedAnalyzer.Config.ShouldReturnDetails})");
 
                 // Verify models
                 Assert.IsNotNull(retrievedAnalyzer.Models, "Models should not be null");

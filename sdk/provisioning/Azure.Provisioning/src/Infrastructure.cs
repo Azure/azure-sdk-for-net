@@ -52,7 +52,8 @@ public class Infrastructure(string bicepName = "main") : Provisionable
             construct.ParentInfrastructure != this)
         {
             // Don't parent expression references
-            if (((IBicepValue)construct).Kind == BicepValueKind.Expression) { return; }
+            if (((IBicepValue)construct).Kind == BicepValueKind.Expression)
+            { return; }
 
             // Remove it from any existing Infrastructure first
             construct.ParentInfrastructure?.Remove(this);
@@ -111,8 +112,10 @@ public class Infrastructure(string bicepName = "main") : Provisionable
     /// <returns>Whether the name is a valid bicep identifier.</returns>
     public static bool IsValidBicepIdentifier(string? bicepIdentifier)
     {
-        if (string.IsNullOrEmpty(bicepIdentifier)) { return false; }
-        if (char.IsDigit(bicepIdentifier![0])) { return false; }
+        if (string.IsNullOrEmpty(bicepIdentifier))
+        { return false; }
+        if (char.IsDigit(bicepIdentifier![0]))
+        { return false; }
         foreach (char ch in bicepIdentifier)
         {
             if (!IsAsciiLetterOrDigit(ch) && ch != '_')
@@ -206,7 +209,8 @@ public class Infrastructure(string bicepName = "main") : Provisionable
     {
         options ??= new();
         base.Validate(options);
-        foreach (Provisionable resource in GetProvisionableResources()) { resource.Validate(options); }
+        foreach (Provisionable resource in GetProvisionableResources())
+        { resource.Validate(options); }
     }
 
     /// <inheritdoc/>
@@ -216,7 +220,8 @@ public class Infrastructure(string bicepName = "main") : Provisionable
         base.Resolve(options);
 
         Provisionable[] cached = [.. GetProvisionableResources()]; // Copy so Resolve can mutate
-        foreach (Provisionable resource in cached) { resource.Resolve(options); }
+        foreach (Provisionable resource in cached)
+        { resource.Resolve(options); }
 
         foreach (InfrastructureResolver resolver in options.InfrastructureResolvers)
         {

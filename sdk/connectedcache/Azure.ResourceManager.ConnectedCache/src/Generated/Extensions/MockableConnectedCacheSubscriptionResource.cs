@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetBySubscriptionAsyncCollectionResultOfT(IspCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new IspCustomerResource(Client, data));
+            return new AsyncPageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetBySubscriptionAsyncCollectionResultOfT(IspCustomersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConnectedCacheSubscriptionResource.GetIspCustomers"), data => new IspCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetBySubscriptionCollectionResultOfT(IspCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new IspCustomerResource(Client, data));
+            return new PageableWrapper<IspCustomerData, IspCustomerResource>(new IspCustomersGetBySubscriptionCollectionResultOfT(IspCustomersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConnectedCacheSubscriptionResource.GetIspCustomers"), data => new IspCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetBySubscriptionAsyncCollectionResultOfT(EnterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EnterpriseMccCustomerResource(Client, data));
+            return new AsyncPageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetBySubscriptionAsyncCollectionResultOfT(EnterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers"), data => new EnterpriseMccCustomerResource(Client, data));
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ConnectedCache.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetBySubscriptionCollectionResultOfT(EnterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EnterpriseMccCustomerResource(Client, data));
+            return new PageableWrapper<EnterpriseMccCustomerData, EnterpriseMccCustomerResource>(new EnterpriseMccCustomersGetBySubscriptionCollectionResultOfT(EnterpriseMccCustomersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableConnectedCacheSubscriptionResource.GetEnterpriseMccCustomers"), data => new EnterpriseMccCustomerResource(Client, data));
         }
     }
 }

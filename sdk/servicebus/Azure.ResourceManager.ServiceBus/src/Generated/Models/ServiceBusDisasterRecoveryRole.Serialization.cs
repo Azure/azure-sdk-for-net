@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal static partial class ServiceBusDisasterRecoveryRoleExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ServiceBusDisasterRecoveryRole value) => value switch
         {
             ServiceBusDisasterRecoveryRole.Primary => "Primary",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusDisasterRecoveryRole value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ServiceBusDisasterRecoveryRole ToServiceBusDisasterRecoveryRole(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return ServiceBusDisasterRecoveryRole.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryNotReplicating")) return ServiceBusDisasterRecoveryRole.PrimaryNotReplicating;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return ServiceBusDisasterRecoveryRole.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
+            {
+                return ServiceBusDisasterRecoveryRole.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryNotReplicating"))
+            {
+                return ServiceBusDisasterRecoveryRole.PrimaryNotReplicating;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
+            {
+                return ServiceBusDisasterRecoveryRole.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusDisasterRecoveryRole value.");
         }
     }

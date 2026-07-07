@@ -19,6 +19,17 @@ namespace _Type.Property.ValueTypes
 
         protected virtual UnionIntLiteralProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<UnionIntLiteralProperty>.Write(ModelReaderWriterOptions options) => throw null;
+
+        UnionIntLiteralProperty IPersistableModel<UnionIntLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<UnionIntLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="unionIntLiteralProperty"> The <see cref="UnionIntLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(UnionIntLiteralProperty unionIntLiteralProperty) => throw null;
+
         public static explicit operator UnionIntLiteralProperty(Response response) => throw null;
 
         void IJsonModel<UnionIntLiteralProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -28,16 +39,5 @@ namespace _Type.Property.ValueTypes
         UnionIntLiteralProperty IJsonModel<UnionIntLiteralProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual UnionIntLiteralProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<UnionIntLiteralProperty>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        UnionIntLiteralProperty IPersistableModel<UnionIntLiteralProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<UnionIntLiteralProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="unionIntLiteralProperty"> The <see cref="UnionIntLiteralProperty"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(UnionIntLiteralProperty unionIntLiteralProperty) => throw null;
     }
 }

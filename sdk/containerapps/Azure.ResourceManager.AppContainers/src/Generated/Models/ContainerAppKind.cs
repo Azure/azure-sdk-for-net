@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppKind : IEquatable<ContainerAppKind>
     {
         private readonly string _value;
+        /// <summary> workflowapp. </summary>
+        private const string WorkflowappValue = "workflowapp";
+        /// <summary> functionapp. </summary>
+        private const string FunctionappValue = "functionapp";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WorkflowappValue = "workflowapp";
-        private const string FunctionappValue = "functionapp";
+            _value = value;
+        }
 
         /// <summary> workflowapp. </summary>
         public static ContainerAppKind Workflowapp { get; } = new ContainerAppKind(WorkflowappValue);
+
         /// <summary> functionapp. </summary>
         public static ContainerAppKind Functionapp { get; } = new ContainerAppKind(FunctionappValue);
+
         /// <summary> Determines if two <see cref="ContainerAppKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppKind left, ContainerAppKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppKind left, ContainerAppKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppKind(string value) => new ContainerAppKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppKind?(string value) => value == null ? null : new ContainerAppKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

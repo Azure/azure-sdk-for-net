@@ -26,7 +26,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #endif
                 var containerClient = new BlobContainerClient(accountUri, credential);
                 await containerClient.CreateIfNotExistsAsync();
-#endregion
+                #endregion
 
                 try
                 {

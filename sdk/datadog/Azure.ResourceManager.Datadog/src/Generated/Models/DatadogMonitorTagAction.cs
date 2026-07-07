@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Datadog;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Datadog.Models
     public readonly partial struct DatadogMonitorTagAction : IEquatable<DatadogMonitorTagAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DatadogMonitorTagAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DatadogMonitorTagAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IncludeValue = "Include";
         private const string ExcludeValue = "Exclude";
 
-        /// <summary> Include. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogMonitorTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DatadogMonitorTagAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Include. </summary>
         public static DatadogMonitorTagAction Include { get; } = new DatadogMonitorTagAction(IncludeValue);
-        /// <summary> Exclude. </summary>
+
+        /// <summary> Gets the Exclude. </summary>
         public static DatadogMonitorTagAction Exclude { get; } = new DatadogMonitorTagAction(ExcludeValue);
+
         /// <summary> Determines if two <see cref="DatadogMonitorTagAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatadogMonitorTagAction left, DatadogMonitorTagAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatadogMonitorTagAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatadogMonitorTagAction left, DatadogMonitorTagAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatadogMonitorTagAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatadogMonitorTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatadogMonitorTagAction(string value) => new DatadogMonitorTagAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatadogMonitorTagAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatadogMonitorTagAction?(string value) => value == null ? null : new DatadogMonitorTagAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatadogMonitorTagAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatadogMonitorTagAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

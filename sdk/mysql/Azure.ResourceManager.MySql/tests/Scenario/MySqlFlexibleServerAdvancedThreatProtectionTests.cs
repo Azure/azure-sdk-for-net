@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.Tests
 {
-    public class MySqlFlexibleServerAdvancedThreatProtectionTests: MySqlManagementTestBase
+    public class MySqlFlexibleServerAdvancedThreatProtectionTests : MySqlManagementTestBase
     {
         public MySqlFlexibleServerAdvancedThreatProtectionTests(bool isAsync)
             : base(isAsync)//,RecordedTestMode.Record)

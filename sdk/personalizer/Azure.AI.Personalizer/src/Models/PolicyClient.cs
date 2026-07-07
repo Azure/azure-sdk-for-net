@@ -3,5 +3,5 @@
 
 namespace Azure.AI.Personalizer
 {
-    internal partial class  PolicyClient {}
+    internal partial class PolicyClient { }
 }

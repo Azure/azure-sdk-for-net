@@ -8,52 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary>
-    /// Identities associated with a server.
-    /// Serialized Name: UserAssignedIdentity
-    /// </summary>
+    /// <summary> Identities associated with a server. </summary>
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
-        /// <param name="identityType">
-        /// Types of identities associated with a server.
-        /// Serialized Name: UserAssignedIdentity.type
-        /// </param>
+        /// <param name="identityType"> Types of identities associated with a server. </param>
         public PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType identityType)
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
@@ -61,59 +27,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
-        /// <param name="userAssignedIdentities">
-        /// Map of user assigned managed identities.
-        /// Serialized Name: UserAssignedIdentity.userAssignedIdentities
-        /// </param>
-        /// <param name="principalId">
-        /// Identifier of the object of the service principal associated to the user assigned managed identity.
-        /// Serialized Name: UserAssignedIdentity.principalId
-        /// </param>
-        /// <param name="identityType">
-        /// Types of identities associated with a server.
-        /// Serialized Name: UserAssignedIdentity.type
-        /// </param>
-        /// <param name="tenantId">
-        /// Identifier of the tenant of a server.
-        /// Serialized Name: UserAssignedIdentity.tenantId
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
+        /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
+        /// <param name="identityType"> Types of identities associated with a server. </param>
+        /// <param name="tenantId"> Identifier of the tenant of a server. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities, Guid? principalId, PostgreSqlFlexibleServerIdentityType identityType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserAssignedIdentities = userAssignedIdentities;
             PrincipalId = principalId;
             IdentityType = identityType;
             TenantId = tenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerUserAssignedIdentity"/> for deserialization. </summary>
-        internal PostgreSqlFlexibleServerUserAssignedIdentity()
-        {
-        }
-
-        /// <summary>
-        /// Map of user assigned managed identities.
-        /// Serialized Name: UserAssignedIdentity.userAssignedIdentities
-        /// </summary>
+        /// <summary> Map of user assigned managed identities. </summary>
         [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
-        /// <summary>
-        /// Identifier of the object of the service principal associated to the user assigned managed identity.
-        /// Serialized Name: UserAssignedIdentity.principalId
-        /// </summary>
+
+        /// <summary> Identifier of the object of the service principal associated to the user assigned managed identity. </summary>
         [WirePath("principalId")]
         public Guid? PrincipalId { get; set; }
-        /// <summary>
-        /// Types of identities associated with a server.
-        /// Serialized Name: UserAssignedIdentity.type
-        /// </summary>
+
+        /// <summary> Types of identities associated with a server. </summary>
         [WirePath("type")]
         public PostgreSqlFlexibleServerIdentityType IdentityType { get; set; }
-        /// <summary>
-        /// Identifier of the tenant of a server.
-        /// Serialized Name: UserAssignedIdentity.tenantId
-        /// </summary>
+
+        /// <summary> Identifier of the tenant of a server. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; }
     }

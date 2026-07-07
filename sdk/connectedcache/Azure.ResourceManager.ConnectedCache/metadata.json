@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-11-30-preview"
+  "apiVersions": {
+    "Microsoft.ConnectedCache": "2024-11-30-preview"
+  }
 }

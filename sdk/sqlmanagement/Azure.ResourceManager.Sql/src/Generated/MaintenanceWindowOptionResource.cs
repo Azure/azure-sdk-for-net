@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a MaintenanceWindowOption along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceWindowOptionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetMaintenanceWindowOptionResource method.
+    /// A class representing a MaintenanceWindowOption along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceWindowOptionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource"/> using the GetMaintenanceWindowOption method.
     /// </summary>
     public partial class MaintenanceWindowOptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="MaintenanceWindowOptionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serverName"> The serverName. </param>
-        /// <param name="databaseName"> The databaseName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _maintenanceWindowOptionClientDiagnostics;
-        private readonly MaintenanceWindowOptionsRestOperations _maintenanceWindowOptionRestClient;
+        private readonly ClientDiagnostics _maintenanceWindowOptionsClientDiagnostics;
+        private readonly MaintenanceWindowOptions _maintenanceWindowOptionsRestClient;
         private readonly MaintenanceWindowOptionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/maintenanceWindowOptions";
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowOptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MaintenanceWindowOptionResource for mocking. </summary>
         protected MaintenanceWindowOptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowOptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MaintenanceWindowOptionResource(ArmClient client, MaintenanceWindowOptionData data) : this(client, data.Id)
@@ -54,75 +43,98 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MaintenanceWindowOptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaintenanceWindowOptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _maintenanceWindowOptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string maintenanceWindowOptionApiVersion);
-            _maintenanceWindowOptionRestClient = new MaintenanceWindowOptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceWindowOptionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _maintenanceWindowOptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _maintenanceWindowOptionsRestClient = new MaintenanceWindowOptions(_maintenanceWindowOptionsClientDiagnostics, Pipeline, Endpoint, maintenanceWindowOptionApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual MaintenanceWindowOptionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a list of available maintenance windows.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceWindowOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceWindowOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MaintenanceWindowOptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceWindowOptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowOptionsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<MaintenanceWindowOptionResource>> GetAsync(string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
+            Argument.AssertNotNullOrEmpty(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
 
-            using var scope = _maintenanceWindowOptionClientDiagnostics.CreateScope("MaintenanceWindowOptionResource.Get");
+            using DiagnosticScope scope = _maintenanceWindowOptionsClientDiagnostics.CreateScope("MaintenanceWindowOptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _maintenanceWindowOptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceWindowOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MaintenanceWindowOptionData> response = Response.FromValue(MaintenanceWindowOptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MaintenanceWindowOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,37 +148,46 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of available maintenance windows.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceWindowOptions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MaintenanceWindowOptionsOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MaintenanceWindowOptionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="MaintenanceWindowOptionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="maintenanceWindowOptionsName"> Maintenance window options name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowOptionsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowOptionsName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<MaintenanceWindowOptionResource> Get(string maintenanceWindowOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
+            Argument.AssertNotNullOrEmpty(maintenanceWindowOptionsName, nameof(maintenanceWindowOptionsName));
 
-            using var scope = _maintenanceWindowOptionClientDiagnostics.CreateScope("MaintenanceWindowOptionResource.Get");
+            using DiagnosticScope scope = _maintenanceWindowOptionsClientDiagnostics.CreateScope("MaintenanceWindowOptionResource.Get");
             scope.Start();
             try
             {
-                var response = _maintenanceWindowOptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _maintenanceWindowOptionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, maintenanceWindowOptionsName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MaintenanceWindowOptionData> response = Response.FromValue(MaintenanceWindowOptionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new MaintenanceWindowOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

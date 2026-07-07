@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StandbyPool
         {
             if (id.ResourceType != StandbyVirtualMachinePoolResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StandbyVirtualMachinePoolResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StandbyVirtualMachinePoolResource.ResourceType), nameof(id));
             }
         }
 
@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(_standbyVirtualMachinePoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
+            return new AsyncPageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(
+                _standbyVirtualMachinePoolRuntimeViewsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyVirtualMachinePoolRuntimeViewCollection.GetAll"), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>
@@ -205,7 +211,13 @@ namespace Azure.ResourceManager.StandbyPool
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(_standbyVirtualMachinePoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
+            return new PageableWrapper<StandbyVirtualMachinePoolRuntimeViewData, StandbyVirtualMachinePoolRuntimeViewResource>(new StandbyVirtualMachinePoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(
+                _standbyVirtualMachinePoolRuntimeViewsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StandbyVirtualMachinePoolRuntimeViewCollection.GetAll"), data => new StandbyVirtualMachinePoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>

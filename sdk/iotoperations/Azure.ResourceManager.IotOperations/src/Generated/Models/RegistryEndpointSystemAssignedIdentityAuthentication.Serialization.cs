@@ -16,10 +16,45 @@ namespace Azure.ResourceManager.IotOperations.Models
     /// <summary> System assigned identity authentication. </summary>
     public partial class RegistryEndpointSystemAssignedIdentityAuthentication : RegistryEndpointAuthentication, IJsonModel<RegistryEndpointSystemAssignedIdentityAuthentication>
     {
-        /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/> for deserialization. </summary>
-        internal RegistryEndpointSystemAssignedIdentityAuthentication()
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RegistryEndpointAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
+            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRegistryEndpointSystemAssignedIdentityAuthentication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegistryEndpointSystemAssignedIdentityAuthentication)} does not support reading '{options.Format}' format.");
+            }
         }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RegistryEndpointSystemAssignedIdentityAuthentication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RegistryEndpointSystemAssignedIdentityAuthentication IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => (RegistryEndpointSystemAssignedIdentityAuthentication)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -91,45 +126,5 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             return new RegistryEndpointSystemAssignedIdentityAuthentication(@method, additionalBinaryDataProperties, systemAssignedManagedIdentitySettings);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotOperationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RegistryEndpointSystemAssignedIdentityAuthentication)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        RegistryEndpointSystemAssignedIdentityAuthentication IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options) => (RegistryEndpointSystemAssignedIdentityAuthentication)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override RegistryEndpointAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeRegistryEndpointSystemAssignedIdentityAuthentication(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RegistryEndpointSystemAssignedIdentityAuthentication)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegistryEndpointSystemAssignedIdentityAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

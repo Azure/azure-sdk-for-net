@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The properties related to an event hub endpoint. </summary>
     public partial class RoutingEventHubProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoutingEventHubProperties"/>. </summary>
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
         /// <param name="subscriptionId"> The subscription identifier of the event hub endpoint. </param>
         /// <param name="resourceGroup"> The name of the resource group of the event hub endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingEventHubProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingEventHubProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -78,43 +50,51 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RoutingEventHubProperties"/> for deserialization. </summary>
-        internal RoutingEventHubProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the event hub endpoint. </summary>
         public Guid? Id { get; set; }
+
         /// <summary> The connection string of the event hub endpoint. </summary>
         public string ConnectionString { get; set; }
+
         /// <summary> The url of the event hub endpoint. It must include the protocol sb://. </summary>
         public string Endpoint { get; set; }
+
         /// <summary> Event hub name on the event hub namespace. </summary>
         public string EntityPath { get; set; }
+
         /// <summary> Method used to authenticate against the event hub endpoint. </summary>
         public IotHubAuthenticationType? AuthenticationType { get; set; }
+
         /// <summary> Managed identity properties of routing event hub endpoint. </summary>
         internal ManagedIdentity Identity { get; set; }
-        /// <summary> The user assigned identity. </summary>
-        public ResourceIdentifier UserAssignedIdentity
-        {
-            get => Identity is null ? default : Identity.UserAssignedIdentity;
-            set
-            {
-                if (Identity is null)
-                    Identity = new ManagedIdentity();
-                Identity.UserAssignedIdentity = value;
-            }
-        }
 
         /// <summary> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </summary>
         public string Name { get; set; }
+
         /// <summary> The subscription identifier of the event hub endpoint. </summary>
         public string SubscriptionId { get; set; }
+
         /// <summary> The name of the resource group of the event hub endpoint. </summary>
         public string ResourceGroup { get; set; }
+
+        /// <summary> The user assigned identity. </summary>
+        public ResourceIdentifier UserAssignedIdentity
+        {
+            get
+            {
+                return Identity is null ? default : Identity.UserAssignedIdentity;
+            }
+            set
+            {
+                if (Identity is null)
+                {
+                    Identity = new ManagedIdentity();
+                }
+                Identity.UserAssignedIdentity = value;
+            }
+        }
     }
 }

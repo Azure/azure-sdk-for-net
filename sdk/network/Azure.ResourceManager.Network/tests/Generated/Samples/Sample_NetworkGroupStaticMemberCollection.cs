@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 ResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroup/rg1/providers/Microsoft.Network/virtualnetworks/vnet1"),
             };
-            ArmOperation<NetworkGroupStaticMemberResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, staticMemberName, data);
+            ArmOperation<NetworkGroupStaticMemberResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, staticMemberName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkGroupStaticMemberResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

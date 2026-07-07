@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
@@ -24,75 +25,81 @@ namespace Azure.ResourceManager.Purview
     /// </summary>
     public partial class PurviewKafkaConfigurationCollection : ArmCollection, IEnumerable<PurviewKafkaConfigurationResource>, IAsyncEnumerable<PurviewKafkaConfigurationResource>
     {
-        private readonly ClientDiagnostics _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics;
-        private readonly KafkaConfigurationsRestOperations _purviewKafkaConfigurationKafkaConfigurationsRestClient;
+        private readonly ClientDiagnostics _kafkaConfigurationsClientDiagnostics;
+        private readonly KafkaConfigurations _kafkaConfigurationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PurviewKafkaConfigurationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PurviewKafkaConfigurationCollection for mocking. </summary>
         protected PurviewKafkaConfigurationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PurviewKafkaConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewKafkaConfigurationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PurviewKafkaConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewKafkaConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PurviewKafkaConfigurationResource.ResourceType, out string purviewKafkaConfigurationKafkaConfigurationsApiVersion);
-            _purviewKafkaConfigurationKafkaConfigurationsRestClient = new KafkaConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, purviewKafkaConfigurationKafkaConfigurationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PurviewKafkaConfigurationResource.ResourceType, out string purviewKafkaConfigurationApiVersion);
+            _kafkaConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Purview", PurviewKafkaConfigurationResource.ResourceType.Namespace, Diagnostics);
+            _kafkaConfigurationsRestClient = new KafkaConfigurations(_kafkaConfigurationsClientDiagnostics, Pipeline, Endpoint, purviewKafkaConfigurationApiVersion ?? "2024-04-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PurviewAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PurviewAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update Kafka Configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="kafkaConfigurationName"> The kafka configuration name. </param>
+        /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="data"> The kafka configuration of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PurviewKafkaConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kafkaConfigurationName, PurviewKafkaConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, PurviewKafkaConfigurationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PurviewKafkaConfigurationData> response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PurviewArmOperation<PurviewKafkaConfigurationResource> operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,44 +113,48 @@ namespace Azure.ResourceManager.Purview
         /// Create or update Kafka Configuration
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="kafkaConfigurationName"> The kafka configuration name. </param>
+        /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="data"> The kafka configuration of the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PurviewKafkaConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string kafkaConfigurationName, PurviewKafkaConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data, cancellationToken);
-                var uri = _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, PurviewKafkaConfigurationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PurviewKafkaConfigurationData> response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PurviewArmOperation<PurviewKafkaConfigurationResource> operation = new PurviewArmOperation<PurviewKafkaConfigurationResource>(Response.FromValue(new PurviewKafkaConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.Purview
         /// Gets the kafka configuration for the account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PurviewKafkaConfigurationResource>> GetAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Get");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _purviewKafkaConfigurationKafkaConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PurviewKafkaConfigurationData> response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PurviewKafkaConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.Purview
         /// Gets the kafka configuration for the account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PurviewKafkaConfigurationResource> Get(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Get");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _purviewKafkaConfigurationKafkaConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PurviewKafkaConfigurationData> response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PurviewKafkaConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,98 +266,122 @@ namespace Azure.ResourceManager.Purview
         /// Lists the Kafka configurations in the Account
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_ListByAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_ListByAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="skipToken"> The skip token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewKafkaConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PurviewKafkaConfigurationResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewKafkaConfigurationResource(Client, PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(e)), _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics, Pipeline, "PurviewKafkaConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the Kafka configurations in the Account
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_ListByAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PurviewKafkaConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PurviewKafkaConfigurationResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PurviewKafkaConfigurationResource> GetAllAsync(string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewKafkaConfigurationKafkaConfigurationsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewKafkaConfigurationResource(Client, PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(e)), _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics, Pipeline, "PurviewKafkaConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PurviewKafkaConfigurationData, PurviewKafkaConfigurationResource>(new KafkaConfigurationsGetByAccountAsyncCollectionResultOfT(
+                _kafkaConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                skipToken,
+                context,
+                "PurviewKafkaConfigurationCollection.GetAll"), data => new PurviewKafkaConfigurationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists the Kafka configurations in the Account
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_ListByAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="skipToken"> The skip token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PurviewKafkaConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PurviewKafkaConfigurationResource> GetAll(string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PurviewKafkaConfigurationData, PurviewKafkaConfigurationResource>(new KafkaConfigurationsGetByAccountCollectionResultOfT(
+                _kafkaConfigurationsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                skipToken,
+                context,
+                "PurviewKafkaConfigurationCollection.GetAll"), data => new PurviewKafkaConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Exists");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _purviewKafkaConfigurationKafkaConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PurviewKafkaConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PurviewKafkaConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,36 +395,50 @@ namespace Azure.ResourceManager.Purview
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Exists");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _purviewKafkaConfigurationKafkaConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PurviewKafkaConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PurviewKafkaConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,38 +452,54 @@ namespace Azure.ResourceManager.Purview
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PurviewKafkaConfigurationResource>> GetIfExistsAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _purviewKafkaConfigurationKafkaConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PurviewKafkaConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PurviewKafkaConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PurviewKafkaConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PurviewKafkaConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,38 +513,54 @@ namespace Azure.ResourceManager.Purview
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/kafkaConfigurations/{kafkaConfigurationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>KafkaConfigurations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> KafkaConfigurations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PurviewKafkaConfigurationResource> GetIfExists(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(kafkaConfigurationName, nameof(kafkaConfigurationName));
 
-            using var scope = _purviewKafkaConfigurationKafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _kafkaConfigurationsClientDiagnostics.CreateScope("PurviewKafkaConfigurationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _purviewKafkaConfigurationKafkaConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _kafkaConfigurationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kafkaConfigurationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PurviewKafkaConfigurationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PurviewKafkaConfigurationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PurviewKafkaConfigurationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PurviewKafkaConfigurationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PurviewKafkaConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +580,7 @@ namespace Azure.ResourceManager.Purview
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PurviewKafkaConfigurationResource> IAsyncEnumerable<PurviewKafkaConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

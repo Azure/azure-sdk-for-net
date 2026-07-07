@@ -22,7 +22,8 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="toolDelegates">Dictionary in name and delegate in pair</param>
         /// <param name="maxRetry">Maximum number of errors allowed and retry per stream. Default value is 10.</param>
-        public AutoFunctionCallOptions(Dictionary<string, Delegate> toolDelegates, int maxRetry) {
+        public AutoFunctionCallOptions(Dictionary<string, Delegate> toolDelegates, int maxRetry)
+        {
             ValidateAutoFunctions(toolDelegates);
             _autoFunctionCallDelegates.Clear();
 

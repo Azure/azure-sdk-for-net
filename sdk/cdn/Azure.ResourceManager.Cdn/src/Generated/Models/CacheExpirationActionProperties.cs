@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -16,38 +17,33 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
-        public CacheExpirationActionProperties(CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType)
+        public CacheExpirationActionProperties(CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType) : base(DeliveryRuleActionParametersType.DeliveryRuleCacheExpirationActionParameters)
         {
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleCacheExpirationActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/>. </summary>
         /// <param name="typeName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cacheBehavior"> Caching behavior for the requests. </param>
         /// <param name="cacheType"> The level at which the content needs to be cached. </param>
         /// <param name="cacheDuration"> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </param>
-        internal CacheExpirationActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDuration) : base(typeName, serializedAdditionalRawData)
+        internal CacheExpirationActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType, TimeSpan? cacheDuration) : base(typeName, additionalBinaryDataProperties)
         {
             CacheBehavior = cacheBehavior;
             CacheType = cacheType;
             CacheDuration = cacheDuration;
-            TypeName = typeName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CacheExpirationActionProperties"/> for deserialization. </summary>
-        internal CacheExpirationActionProperties()
-        {
         }
 
         /// <summary> Caching behavior for the requests. </summary>
         [WirePath("cacheBehavior")]
         public CacheBehaviorSetting CacheBehavior { get; set; }
+
         /// <summary> The level at which the content needs to be cached. </summary>
         [WirePath("cacheType")]
         public CdnCacheLevel CacheType { get; set; }
+
         /// <summary> The duration for which the content needs to be cached. Allowed format is [d.]hh:mm:ss. </summary>
         [WirePath("cacheDuration")]
         public TimeSpan? CacheDuration { get; set; }

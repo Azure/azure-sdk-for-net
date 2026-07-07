@@ -18,7 +18,8 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response">The response containing a WWW-Authenticate header.</param>
         /// <returns>True</returns>
-        public static bool IsCaeClaimsChallenge(Response response){
+        public static bool IsCaeClaimsChallenge(Response response)
+        {
             string? error = GetChallengeParameterFromResponse(response, "Bearer", "error");
             return error == "insufficient_claims";
         }

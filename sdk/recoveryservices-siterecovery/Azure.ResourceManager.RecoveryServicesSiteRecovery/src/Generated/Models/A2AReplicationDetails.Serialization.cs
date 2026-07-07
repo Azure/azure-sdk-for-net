@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AReplicationDetails : IUtf8JsonSerializable, IJsonModel<A2AReplicationDetails>
+    /// <summary> A2A provider specific settings. </summary>
+    public partial class A2AReplicationDetails : ReplicationProviderSpecificSettings, IJsonModel<A2AReplicationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AReplicationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeA2AReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<A2AReplicationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AReplicationDetails IPersistableModel<A2AReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (A2AReplicationDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<A2AReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<A2AReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(FabricObjectId))
             {
@@ -104,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProtectedDisks)
+                foreach (A2AProtectedDiskDetails item in ProtectedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -114,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("unprotectedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in UnprotectedDisks)
+                foreach (A2AUnprotectedDiskDetails item in UnprotectedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -124,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("protectedManagedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProtectedManagedDisks)
+                foreach (A2AProtectedManagedDiskDetails item in ProtectedManagedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -189,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmNics)
+                foreach (VmNicDetails item in VmNics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -335,28 +376,100 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("churnOptionSelected"u8);
                 writer.WriteStringValue(ChurnOptionSelected.Value.ToString());
             }
+            if (Optional.IsDefined(AgentReinstallAttemptToVersion))
+            {
+                writer.WritePropertyName("agentReinstallAttemptToVersion"u8);
+                writer.WriteStringValue(AgentReinstallAttemptToVersion);
+            }
+            if (Optional.IsDefined(OsFamilyName))
+            {
+                writer.WritePropertyName("osFamilyName"u8);
+                writer.WriteStringValue(OsFamilyName);
+            }
+            if (Optional.IsDefined(DistroName))
+            {
+                writer.WritePropertyName("distroName"u8);
+                writer.WriteStringValue(DistroName);
+            }
+            if (Optional.IsDefined(DistroNameForWhichAgentIsInstalled))
+            {
+                writer.WritePropertyName("distroNameForWhichAgentIsInstalled"u8);
+                writer.WriteStringValue(DistroNameForWhichAgentIsInstalled);
+            }
+            if (Optional.IsDefined(IsAgentUpgradeable))
+            {
+                writer.WritePropertyName("isAgentUpgradeable"u8);
+                writer.WriteBooleanValue(IsAgentUpgradeable.Value);
+            }
+            if (Optional.IsDefined(IsAgentReinstallRequired))
+            {
+                writer.WritePropertyName("isAgentReinstallRequired"u8);
+                writer.WriteBooleanValue(IsAgentReinstallRequired.Value);
+            }
+            if (Optional.IsDefined(ReasonsBlockingReInstall))
+            {
+                writer.WritePropertyName("reasonsBlockingReInstall"u8);
+                writer.WriteStringValue(ReasonsBlockingReInstall);
+            }
+            if (Optional.IsCollectionDefined(ReasonsBlockingReinstallDetails))
+            {
+                writer.WritePropertyName("reasonsBlockingReinstallDetails"u8);
+                writer.WriteStartArray();
+                foreach (A2AAgentReinstallBlockingErrorDetails item in ReasonsBlockingReinstallDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsAgentUpgradeInProgress))
+            {
+                writer.WritePropertyName("isAgentUpgradeInProgress"u8);
+                writer.WriteBooleanValue(IsAgentUpgradeInProgress.Value);
+            }
+            if (Optional.IsDefined(AutoAgentUpgradeRetryCount))
+            {
+                writer.WritePropertyName("autoAgentUpgradeRetryCount"u8);
+                writer.WriteNumberValue(AutoAgentUpgradeRetryCount.Value);
+            }
+            if (Optional.IsDefined(IsAgentUpgradeRetryThresholdExhausted))
+            {
+                writer.WritePropertyName("isAgentUpgradeRetryThresholdExhausted"u8);
+                writer.WriteBooleanValue(IsAgentUpgradeRetryThresholdExhausted.Value);
+            }
+            if (Optional.IsDefined(PlatformFaultDomain))
+            {
+                writer.WritePropertyName("platformFaultDomain"u8);
+                writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
         }
 
-        A2AReplicationDetails IJsonModel<A2AReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AReplicationDetails IJsonModel<A2AReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (A2AReplicationDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeA2AReplicationDetails(document.RootElement, options);
         }
 
-        internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static A2AReplicationDetails DeserializeA2AReplicationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "A2A";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier fabricObjectId = default;
             string initialPrimaryZone = default;
             AzureLocation? initialPrimaryFabricLocation = default;
@@ -400,7 +513,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string lifecycleId = default;
             ResourceIdentifier testFailoverRecoveryFabricObjectId = default;
             long? rpoInSeconds = default;
-            DateTimeOffset? lastRpoCalculatedTime = default;
+            DateTimeOffset? lastRpoCalculatedOn = default;
             string primaryAvailabilityZone = default;
             string recoveryAvailabilityZone = default;
             SiteRecoveryExtendedLocation primaryExtendedLocation = default;
@@ -413,473 +526,574 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier recoveryVirtualMachineScaleSetId = default;
             ResourceIdentifier recoveryCapacityReservationGroupId = default;
             ChurnOptionSelected? churnOptionSelected = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string agentReinstallAttemptToVersion = default;
+            string osFamilyName = default;
+            string distroName = default;
+            string distroNameForWhichAgentIsInstalled = default;
+            bool? isAgentUpgradeable = default;
+            bool? isAgentReinstallRequired = default;
+            string reasonsBlockingReInstall = default;
+            IList<A2AAgentReinstallBlockingErrorDetails> reasonsBlockingReinstallDetails = default;
+            bool? isAgentUpgradeInProgress = default;
+            long? autoAgentUpgradeRetryCount = default;
+            bool? isAgentUpgradeRetryThresholdExhausted = default;
+            int? platformFaultDomain = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("fabricObjectId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("fabricObjectId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
+                    fabricObjectId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryZone"u8))
+                if (prop.NameEquals("initialPrimaryZone"u8))
                 {
-                    initialPrimaryZone = property.Value.GetString();
+                    initialPrimaryZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryFabricLocation"u8))
+                if (prop.NameEquals("initialPrimaryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialPrimaryFabricLocation = new AzureLocation(property.Value.GetString());
+                    initialPrimaryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryZone"u8))
+                if (prop.NameEquals("initialRecoveryZone"u8))
                 {
-                    initialRecoveryZone = property.Value.GetString();
+                    initialRecoveryZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryExtendedLocation"u8))
+                if (prop.NameEquals("initialPrimaryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryExtendedLocation"u8))
+                if (prop.NameEquals("initialRecoveryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryFabricLocation"u8))
+                if (prop.NameEquals("initialRecoveryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialRecoveryFabricLocation = new AzureLocation(property.Value.GetString());
+                    initialRecoveryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupId"u8))
+                if (prop.NameEquals("multiVmGroupId"u8))
                 {
-                    multiVmGroupId = property.Value.GetString();
+                    multiVmGroupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupName"u8))
+                if (prop.NameEquals("multiVmGroupName"u8))
                 {
-                    multiVmGroupName = property.Value.GetString();
+                    multiVmGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupCreateOption"u8))
+                if (prop.NameEquals("multiVmGroupCreateOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    multiVmGroupCreateOption = new MultiVmGroupCreateOption(property.Value.GetString());
+                    multiVmGroupCreateOption = new MultiVmGroupCreateOption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("managementId"u8))
+                if (prop.NameEquals("managementId"u8))
                 {
-                    managementId = property.Value.GetString();
+                    managementId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionClusterId"u8))
+                if (prop.NameEquals("protectionClusterId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectionClusterId = new ResourceIdentifier(property.Value.GetString());
+                    protectionClusterId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("isClusterInfraReady"u8))
+                if (prop.NameEquals("isClusterInfraReady"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isClusterInfraReady = property.Value.GetBoolean();
+                    isClusterInfraReady = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("protectedDisks"u8))
+                if (prop.NameEquals("protectedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<A2AProtectedDiskDetails> array = new List<A2AProtectedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(A2AProtectedDiskDetails.DeserializeA2AProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("unprotectedDisks"u8))
+                if (prop.NameEquals("unprotectedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<A2AUnprotectedDiskDetails> array = new List<A2AUnprotectedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(A2AUnprotectedDiskDetails.DeserializeA2AUnprotectedDiskDetails(item, options));
                     }
                     unprotectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("protectedManagedDisks"u8))
+                if (prop.NameEquals("protectedManagedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<A2AProtectedManagedDiskDetails> array = new List<A2AProtectedManagedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(A2AProtectedManagedDiskDetails.DeserializeA2AProtectedManagedDiskDetails(item, options));
                     }
                     protectedManagedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryBootDiagStorageAccountId"u8))
+                if (prop.NameEquals("recoveryBootDiagStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryBootDiagStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryBootDiagStorageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryFabricLocation"u8))
+                if (prop.NameEquals("primaryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryFabricLocation = new AzureLocation(property.Value.GetString());
+                    primaryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricLocation"u8))
+                if (prop.NameEquals("recoveryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryFabricLocation = new AzureLocation(property.Value.GetString());
+                    recoveryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    osType = property.Value.GetString();
+                    osType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureVMSize"u8))
+                if (prop.NameEquals("recoveryAzureVMSize"u8))
                 {
-                    recoveryAzureVmSize = property.Value.GetString();
+                    recoveryAzureVmSize = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureVMName"u8))
+                if (prop.NameEquals("recoveryAzureVMName"u8))
                 {
-                    recoveryAzureVmName = property.Value.GetString();
+                    recoveryAzureVmName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureResourceGroupId"u8))
+                if (prop.NameEquals("recoveryAzureResourceGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryAzureResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryAzureResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryCloudService"u8))
+                if (prop.NameEquals("recoveryCloudService"u8))
                 {
-                    recoveryCloudService = property.Value.GetString();
+                    recoveryCloudService = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilitySet"u8))
+                if (prop.NameEquals("recoveryAvailabilitySet"u8))
                 {
-                    recoveryAvailabilitySet = property.Value.GetString();
+                    recoveryAvailabilitySet = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectedRecoveryAzureNetworkId"u8))
+                if (prop.NameEquals("selectedRecoveryAzureNetworkId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selectedRecoveryAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    selectedRecoveryAzureNetworkId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("selectedTfoAzureNetworkId"u8))
+                if (prop.NameEquals("selectedTfoAzureNetworkId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selectedTfoAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    selectedTfoAzureNetworkId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmNics"u8))
+                if (prop.NameEquals("vmNics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VmNicDetails> array = new List<VmNicDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("vmSyncedConfigDetails"u8))
+                if (prop.NameEquals("vmSyncedConfigDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmSyncedConfigDetails = A2AVmSyncedConfigDetails.DeserializeA2AVmSyncedConfigDetails(property.Value, options);
+                    vmSyncedConfigDetails = A2AVmSyncedConfigDetails.DeserializeA2AVmSyncedConfigDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("monitoringPercentageCompletion"u8))
+                if (prop.NameEquals("monitoringPercentageCompletion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitoringPercentageCompletion = property.Value.GetInt32();
+                    monitoringPercentageCompletion = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("monitoringJobType"u8))
+                if (prop.NameEquals("monitoringJobType"u8))
                 {
-                    monitoringJobType = property.Value.GetString();
+                    monitoringJobType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"u8))
+                if (prop.NameEquals("lastHeartbeat"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastHeartbeat = property.Value.GetDateTimeOffset("O");
+                    lastHeartbeat = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersion"u8))
+                if (prop.NameEquals("agentVersion"u8))
                 {
-                    agentVersion = property.Value.GetString();
+                    agentVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentExpiryDate"u8))
+                if (prop.NameEquals("agentExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentExpireOn = property.Value.GetDateTimeOffset("O");
+                    agentExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isReplicationAgentUpdateRequired"u8))
+                if (prop.NameEquals("isReplicationAgentUpdateRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isReplicationAgentUpdateRequired = property.Value.GetBoolean();
+                    isReplicationAgentUpdateRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("agentCertificateExpiryDate"u8))
+                if (prop.NameEquals("agentCertificateExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentCertificateExpireOn = property.Value.GetDateTimeOffset("O");
+                    agentCertificateExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isReplicationAgentCertificateUpdateRequired"u8))
+                if (prop.NameEquals("isReplicationAgentCertificateUpdateRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isReplicationAgentCertificateUpdateRequired = property.Value.GetBoolean();
+                    isReplicationAgentCertificateUpdateRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricObjectId"u8))
+                if (prop.NameEquals("recoveryFabricObjectId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryFabricObjectId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryFabricObjectId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmProtectionState"u8))
+                if (prop.NameEquals("vmProtectionState"u8))
                 {
-                    vmProtectionState = property.Value.GetString();
+                    vmProtectionState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionStateDescription"u8))
+                if (prop.NameEquals("vmProtectionStateDescription"u8))
                 {
-                    vmProtectionStateDescription = property.Value.GetString();
+                    vmProtectionStateDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lifecycleId"u8))
+                if (prop.NameEquals("lifecycleId"u8))
                 {
-                    lifecycleId = property.Value.GetString();
+                    lifecycleId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testFailoverRecoveryFabricObjectId"u8))
+                if (prop.NameEquals("testFailoverRecoveryFabricObjectId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    testFailoverRecoveryFabricObjectId = new ResourceIdentifier(property.Value.GetString());
+                    testFailoverRecoveryFabricObjectId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rpoInSeconds"u8))
+                if (prop.NameEquals("rpoInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rpoInSeconds = property.Value.GetInt64();
+                    rpoInSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"u8))
+                if (prop.NameEquals("lastRpoCalculatedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
+                    lastRpoCalculatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("primaryAvailabilityZone"u8))
+                if (prop.NameEquals("primaryAvailabilityZone"u8))
                 {
-                    primaryAvailabilityZone = property.Value.GetString();
+                    primaryAvailabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilityZone"u8))
+                if (prop.NameEquals("recoveryAvailabilityZone"u8))
                 {
-                    recoveryAvailabilityZone = property.Value.GetString();
+                    recoveryAvailabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryExtendedLocation"u8))
+                if (prop.NameEquals("primaryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("recoveryExtendedLocation"u8))
+                if (prop.NameEquals("recoveryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vmEncryptionType"u8))
+                if (prop.NameEquals("vmEncryptionType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmEncryptionType = new SiteRecoveryVmEncryptionType(property.Value.GetString());
+                    vmEncryptionType = new SiteRecoveryVmEncryptionType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tfoAzureVMName"u8))
+                if (prop.NameEquals("tfoAzureVMName"u8))
                 {
-                    tfoAzureVmName = property.Value.GetString();
+                    tfoAzureVmName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureGeneration"u8))
+                if (prop.NameEquals("recoveryAzureGeneration"u8))
                 {
-                    recoveryAzureGeneration = property.Value.GetString();
+                    recoveryAzureGeneration = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryProximityPlacementGroupId"u8))
+                if (prop.NameEquals("recoveryProximityPlacementGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryProximityPlacementGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("autoProtectionOfDataDisk"u8))
+                if (prop.NameEquals("autoProtectionOfDataDisk"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoProtectionOfDataDisk = new AutoProtectionOfDataDisk(property.Value.GetString());
+                    autoProtectionOfDataDisk = new AutoProtectionOfDataDisk(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryVirtualMachineScaleSetId"u8))
+                if (prop.NameEquals("recoveryVirtualMachineScaleSetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryVirtualMachineScaleSetId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryVirtualMachineScaleSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryCapacityReservationGroupId"u8))
+                if (prop.NameEquals("recoveryCapacityReservationGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryCapacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryCapacityReservationGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("churnOptionSelected"u8))
+                if (prop.NameEquals("churnOptionSelected"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    churnOptionSelected = new ChurnOptionSelected(property.Value.GetString());
+                    churnOptionSelected = new ChurnOptionSelected(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("agentReinstallAttemptToVersion"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    agentReinstallAttemptToVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("osFamilyName"u8))
+                {
+                    osFamilyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("distroName"u8))
+                {
+                    distroName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("distroNameForWhichAgentIsInstalled"u8))
+                {
+                    distroNameForWhichAgentIsInstalled = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isAgentUpgradeable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAgentUpgradeable = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("isAgentReinstallRequired"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAgentReinstallRequired = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("reasonsBlockingReInstall"u8))
+                {
+                    reasonsBlockingReInstall = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("reasonsBlockingReinstallDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<A2AAgentReinstallBlockingErrorDetails> array = new List<A2AAgentReinstallBlockingErrorDetails>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(A2AAgentReinstallBlockingErrorDetails.DeserializeA2AAgentReinstallBlockingErrorDetails(item, options));
+                    }
+                    reasonsBlockingReinstallDetails = array;
+                    continue;
+                }
+                if (prop.NameEquals("isAgentUpgradeInProgress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAgentUpgradeInProgress = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("autoAgentUpgradeRetryCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoAgentUpgradeRetryCount = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("isAgentUpgradeRetryThresholdExhausted"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAgentUpgradeRetryThresholdExhausted = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("platformFaultDomain"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    platformFaultDomain = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new A2AReplicationDetails(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 fabricObjectId,
                 initialPrimaryZone,
                 initialPrimaryFabricLocation,
@@ -923,7 +1137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 lifecycleId,
                 testFailoverRecoveryFabricObjectId,
                 rpoInSeconds,
-                lastRpoCalculatedTime,
+                lastRpoCalculatedOn,
                 primaryAvailabilityZone,
                 recoveryAvailabilityZone,
                 primaryExtendedLocation,
@@ -935,38 +1149,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 autoProtectionOfDataDisk,
                 recoveryVirtualMachineScaleSetId,
                 recoveryCapacityReservationGroupId,
-                churnOptionSelected);
+                churnOptionSelected,
+                agentReinstallAttemptToVersion,
+                osFamilyName,
+                distroName,
+                distroNameForWhichAgentIsInstalled,
+                isAgentUpgradeable,
+                isAgentReinstallRequired,
+                reasonsBlockingReInstall,
+                reasonsBlockingReinstallDetails ?? new ChangeTrackingList<A2AAgentReinstallBlockingErrorDetails>(),
+                isAgentUpgradeInProgress,
+                autoAgentUpgradeRetryCount,
+                isAgentUpgradeRetryThresholdExhausted,
+                platformFaultDomain);
         }
-
-        BinaryData IPersistableModel<A2AReplicationDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        A2AReplicationDetails IPersistableModel<A2AReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeA2AReplicationDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<A2AReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

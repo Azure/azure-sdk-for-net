@@ -18,6 +18,14 @@ namespace Specs.Azure.ClientGenerator.Core.Access._PublicOperation
 
         protected virtual PublicDecoratorModelInPublic PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<PublicDecoratorModelInPublic>.Write(ModelReaderWriterOptions options) => throw null;
+
+        PublicDecoratorModelInPublic IPersistableModel<PublicDecoratorModelInPublic>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<PublicDecoratorModelInPublic>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         public static explicit operator PublicDecoratorModelInPublic(Response response) => throw null;
 
         void IJsonModel<PublicDecoratorModelInPublic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -27,13 +35,5 @@ namespace Specs.Azure.ClientGenerator.Core.Access._PublicOperation
         PublicDecoratorModelInPublic IJsonModel<PublicDecoratorModelInPublic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual PublicDecoratorModelInPublic JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<PublicDecoratorModelInPublic>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        PublicDecoratorModelInPublic IPersistableModel<PublicDecoratorModelInPublic>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<PublicDecoratorModelInPublic>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

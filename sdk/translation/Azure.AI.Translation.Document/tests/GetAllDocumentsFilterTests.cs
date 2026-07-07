@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Document.Tests
             // list docs
             var options = new GetDocumentStatusesOptions
             {
-                Statuses = {DocumentTranslationStatus.Succeeded}
+                Statuses = { DocumentTranslationStatus.Succeeded }
             };
             var result = operation.GetDocumentStatuses(options: options);
 
@@ -103,7 +103,7 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual(1, docsAfterLastDate.Count());
 
             // Asserting that the last 3/5 docs are returned
-             Assert.AreEqual(3, docsAfterIndex2Date.Count());
+            Assert.AreEqual(3, docsAfterIndex2Date.Count());
         }
 
         [RecordedTest]

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             if (id.ResourceType != ElasticSanVolumeGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticSanVolumeGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ElasticSanVolumeGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticSanArmOperation<ElasticSanSnapshotResource> operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(
-                    new ElasticSanSnapshotOperationSource(Client),
+                    new ElasticSanSnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ElasticSan
                 HttpMessage message = _snapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, snapshotName, ElasticSanSnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticSanArmOperation<ElasticSanSnapshotResource> operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(
-                    new ElasticSanSnapshotOperationSource(Client),
+                    new ElasticSanSnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -301,7 +301,8 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ElasticSanSnapshotResource(Client, data));
+                context,
+                "ElasticSanSnapshotCollection.GetAll"), data => new ElasticSanSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +338,8 @@ namespace Azure.ResourceManager.ElasticSan
                 Id.Parent.Name,
                 Id.Name,
                 filter,
-                context), data => new ElasticSanSnapshotResource(Client, data));
+                context,
+                "ElasticSanSnapshotCollection.GetAll"), data => new ElasticSanSnapshotResource(Client, data));
         }
 
         /// <summary>

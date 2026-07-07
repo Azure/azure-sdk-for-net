@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota.Models
                 {
                     Properties = new GroupQuotaRequestBaseProperties();
                 }
-                Properties.Limit = value.Value;
+                Properties.Limit = value;
             }
         }
 

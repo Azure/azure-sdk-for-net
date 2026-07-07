@@ -18,23 +18,23 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Initializes a new instance of <see cref="DocumentHyperlink"/>. </summary>
         /// <param name="content"> Hyperlinked content. </param>
-        /// <param name="url"> URL of the hyperlink. </param>
-        internal DocumentHyperlink(string content, string url)
+        /// <param name="uri"> URL of the hyperlink. </param>
+        internal DocumentHyperlink(string content, string uri)
         {
             Content = content;
-            Url = url;
+            Uri = uri;
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentHyperlink"/>. </summary>
         /// <param name="content"> Hyperlinked content. </param>
-        /// <param name="url"> URL of the hyperlink. </param>
+        /// <param name="uri"> URL of the hyperlink. </param>
         /// <param name="span"> Span of the hyperlink in the markdown content. </param>
         /// <param name="source"> Position of the hyperlink. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentHyperlink(string content, string url, ContentSpan span, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentHyperlink(string content, string uri, ContentSpan span, string source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
-            Url = url;
+            Uri = uri;
             Span = span;
             Source = source;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,7 +44,7 @@ namespace Azure.AI.ContentUnderstanding
         public string Content { get; }
 
         /// <summary> URL of the hyperlink. </summary>
-        public string Url { get; }
+        public string Uri { get; }
 
         /// <summary> Span of the hyperlink in the markdown content. </summary>
         public ContentSpan Span { get; }

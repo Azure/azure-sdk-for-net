@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -38,7 +40,8 @@ namespace Azure.Generator.Tests.TestHelpers
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
             string? configurationJson = null,
-            string? inputNamespace = null)
+            string? inputNamespace = null,
+            IEnumerable<string>? lastContractSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -90,7 +93,7 @@ namespace Azure.Generator.Tests.TestHelpers
                 mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
             }
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, BuildLastContractCompilation(lastContractSources))) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
 
             if (visitors != null)
@@ -119,6 +122,31 @@ namespace Azure.Generator.Tests.TestHelpers
                     "_customCodeView",
                     BindingFlags.NonPublic | BindingFlags.Instance)?
                 .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+        }
+
+        private static Compilation? BuildLastContractCompilation(IEnumerable<string>? sources)
+        {
+            if (sources is null)
+            {
+                return null;
+            }
+
+            var syntaxTrees = new List<SyntaxTree>();
+            foreach (var src in sources)
+            {
+                syntaxTrees.Add(CSharpSyntaxTree.ParseText(src));
+            }
+
+            var references = new[]
+            {
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
+            };
+
+            return CSharpCompilation.Create(
+                "LastContract",
+                syntaxTrees,
+                references,
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
         }
     }
 }

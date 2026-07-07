@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [RecordedTest]
         public async Task Exist()
         {
-            bool flag  = await _subscriptionSecurityTaskCollection.ExistsAsync(_existTaskName);
+            bool flag = await _subscriptionSecurityTaskCollection.ExistsAsync(_existTaskName);
             Assert.IsTrue(flag);
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             var list = await _subscriptionSecurityTaskCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            ValidateAscLocationLocationTaskResource(list.First(item=>item.Data.Name == _existTaskName));
+            ValidateAscLocationLocationTaskResource(list.First(item => item.Data.Name == _existTaskName));
         }
 
         private void ValidateAscLocationLocationTaskResource(SubscriptionSecurityTaskResource task)

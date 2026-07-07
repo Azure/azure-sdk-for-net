@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Cdn
 {
+    /// <summary></summary>
     public partial class ProfileResource : IJsonModel<ProfileData>
     {
-        private static ProfileData s_dataDeserializationInstance;
-        private static ProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProfileData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProfileData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProfileData>)Data).Write(writer, options);
 
-        ProfileData IJsonModel<ProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProfileData IJsonModel<ProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProfileData>(Data, options, AzureResourceManagerCdnContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProfileData IPersistableModel<ProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfileData>(data, options, AzureResourceManagerCdnContext.Default);
 
-        string IPersistableModel<ProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

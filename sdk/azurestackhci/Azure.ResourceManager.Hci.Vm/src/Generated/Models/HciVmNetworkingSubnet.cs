@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 {
                     Properties = new SubnetProperties();
                 }
-                Properties.IPAllocationMethod = value.Value;
+                Properties.IPAllocationMethod = value;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 {
                     Properties = new SubnetProperties();
                 }
-                Properties.Vlan = value.Value;
+                Properties.Vlan = value;
             }
         }
 

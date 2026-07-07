@@ -256,7 +256,7 @@ namespace Azure.Storage
             using Stream networkStream = response.Value.Content;
             // use stream copy to ensure consumption of any trailing metadata (e.g. structured message)
             // allow buffer limits to catch the error of data size mismatch
-            int totalCopiedBytes = (int) await networkStream.CopyToInternal(new MemoryStream(_buffer), async, cancellationToken).ConfigureAwait((false));
+            int totalCopiedBytes = (int)await networkStream.CopyToInternal(new MemoryStream(_buffer), async, cancellationToken).ConfigureAwait((false));
 
             _bufferPosition = 0;
             _bufferLength = totalCopiedBytes;

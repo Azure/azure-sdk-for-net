@@ -7,53 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The DeploymentDiagnosticsDefinition. </summary>
     public partial class DeploymentDiagnosticsDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeploymentDiagnosticsDefinition"/>. </summary>
-        /// <param name="level"> Denotes the additional response level. </param>
-        /// <param name="code"> The error code. </param>
-        /// <param name="message"> The error message. </param>
-        internal DeploymentDiagnosticsDefinition(Level level, string code, string message)
+        internal DeploymentDiagnosticsDefinition()
         {
-            Level = level;
-            Code = code;
-            Message = message;
             AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
@@ -63,34 +29,33 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="additionalInfo"> The error additional info. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentDiagnosticsDefinition(Level level, string code, string message, string target, IReadOnlyList<ErrorAdditionalInfo> additionalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeploymentDiagnosticsDefinition(Level level, string code, string message, string target, IReadOnlyList<ErrorAdditionalInfo> additionalInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Level = level;
             Code = code;
             Message = message;
             Target = target;
             AdditionalInfo = additionalInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeploymentDiagnosticsDefinition"/> for deserialization. </summary>
-        internal DeploymentDiagnosticsDefinition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Denotes the additional response level. </summary>
         [WirePath("level")]
         public Level Level { get; }
+
         /// <summary> The error code. </summary>
         [WirePath("code")]
         public string Code { get; }
+
         /// <summary> The error message. </summary>
         [WirePath("message")]
         public string Message { get; }
+
         /// <summary> The error target. </summary>
         [WirePath("target")]
         public string Target { get; }
+
         /// <summary> The error additional info. </summary>
         [WirePath("additionalInfo")]
         public IReadOnlyList<ErrorAdditionalInfo> AdditionalInfo { get; }

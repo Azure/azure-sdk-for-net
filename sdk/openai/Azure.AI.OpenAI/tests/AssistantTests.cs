@@ -3,18 +3,18 @@
 
 #nullable disable
 
-using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI.Assistants;
-using OpenAI.Files;
-using OpenAI.TestFramework;
-using OpenAI.TestFramework.Utils;
-using OpenAI.VectorStores;
 using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Tests.Utils.Config;
+using OpenAI.Assistants;
+using OpenAI.Files;
+using OpenAI.TestFramework;
+using OpenAI.TestFramework.Utils;
+using OpenAI.VectorStores;
 
 namespace Azure.AI.OpenAI.Tests;
 
@@ -372,7 +372,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         AssistantThread thread = await client.CreateThreadAsync(new ThreadCreationOptions()
         {
             InitialMessages = { new(MessageRole.User, ["Please graph the equation y = 3x + 4"]), },
-        }); 
+        });
         Validate(thread);
 
         ThreadRun run = await client.CreateRunAsync(thread.Id, assistant.Id);

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeSkuTier : IEquatable<DataBoxEdgeSkuTier>
     {
         private readonly string _value;
+        private const string StandardValue = "Standard";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataBoxEdgeSkuTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StandardValue = "Standard";
-
-        /// <summary> Standard. </summary>
+        /// <summary> Gets the Standard. </summary>
         public static DataBoxEdgeSkuTier Standard { get; } = new DataBoxEdgeSkuTier(StandardValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeSkuTier left, DataBoxEdgeSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeSkuTier left, DataBoxEdgeSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeSkuTier(string value) => new DataBoxEdgeSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeSkuTier?(string value) => value == null ? null : new DataBoxEdgeSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

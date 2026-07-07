@@ -24,7 +24,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
         /// <summary>
         /// Gets the STAC item ID used for testing.
-    /// </summary>
+        /// </summary>
         public string ItemId => GetRecordedVariable("PLANETARYCOMPUTER_ITEM_ID");
 
         /// <summary>

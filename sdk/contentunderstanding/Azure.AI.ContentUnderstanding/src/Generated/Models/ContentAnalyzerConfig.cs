@@ -24,7 +24,7 @@ namespace Azure.AI.ContentUnderstanding
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentAnalyzerConfig"/>. </summary>
-        /// <param name="returnDetails"> Return all content details. </param>
+        /// <param name="shouldReturnDetails"> Return all content details. </param>
         /// <param name="locales"> List of locale hints for speech transcription. </param>
         /// <param name="enableOcr"> Enable optical character recognition (OCR). </param>
         /// <param name="enableLayout"> Enable layout analysis. </param>
@@ -39,14 +39,14 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="contentCategories"> Map of categories to classify the input content(s) against. </param>
         /// <param name="enableSegment"> Enable segmentation of the input by contentCategories. </param>
         /// <param name="segmentPerPage"> Force segmentation of document content by page. </param>
-        /// <param name="omitContent">
+        /// <param name="shouldOmitContent">
         /// Omit the content for this analyzer from analyze result.
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentAnalyzerConfig(bool? returnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? omitContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentAnalyzerConfig(bool? shouldReturnDetails, IList<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ReturnDetails = returnDetails;
+            ShouldReturnDetails = shouldReturnDetails;
             Locales = locales;
             EnableOcr = enableOcr;
             EnableLayout = enableLayout;
@@ -61,12 +61,12 @@ namespace Azure.AI.ContentUnderstanding
             ContentCategories = contentCategories;
             EnableSegment = enableSegment;
             SegmentPerPage = segmentPerPage;
-            OmitContent = omitContent;
+            ShouldOmitContent = shouldOmitContent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Return all content details. </summary>
-        public bool? ReturnDetails { get; set; }
+        public bool? ShouldReturnDetails { get; set; }
 
         /// <summary> List of locale hints for speech transcription. </summary>
         public IList<string> Locales { get; }
@@ -114,6 +114,6 @@ namespace Azure.AI.ContentUnderstanding
         /// Omit the content for this analyzer from analyze result.
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </summary>
-        public bool? OmitContent { get; set; }
+        public bool? ShouldOmitContent { get; set; }
     }
 }

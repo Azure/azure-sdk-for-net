@@ -14,17 +14,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     public partial class KnowledgeRetrievalLowReasoningEffort : KnowledgeRetrievalReasoningEffort
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalLowReasoningEffort"/>. </summary>
-        public KnowledgeRetrievalLowReasoningEffort()
+        public KnowledgeRetrievalLowReasoningEffort() : base(KnowledgeRetrievalReasoningEffortKind.Low)
         {
-            Kind = KnowledgeRetrievalReasoningEffortKind.Low;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalLowReasoningEffort"/>. </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeRetrievalLowReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal KnowledgeRetrievalLowReasoningEffort(KnowledgeRetrievalReasoningEffortKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
         {
-            Kind = kind;
         }
     }
 }

@@ -11,13 +11,12 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Represents a search index retrieval activity record. </summary>
-    public partial class KnowledgeBaseSearchIndexActivityRecord : KnowledgeBaseRetrievalActivityRecord
+    public partial class KnowledgeBaseSearchIndexActivityRecord : KnowledgeBaseActivityRecord
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSearchIndexActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
-        internal KnowledgeBaseSearchIndexActivityRecord(int id) : base(id)
+        internal KnowledgeBaseSearchIndexActivityRecord(int id) : base(id, KnowledgeBaseActivityRecordType.SearchIndex)
         {
-            Type = "searchIndex";
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSearchIndexActivityRecord"/>. </summary>
@@ -25,21 +24,33 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="type"> The type of the activity record. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
         /// <param name="queryTime"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
+        /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
-        internal KnowledgeBaseSearchIndexActivityRecord(int id, string type, int? elapsedMs, KnowledgeBaseErrorDetail error, IDictionary<string, BinaryData> serializedAdditionalRawData, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments) : base(id, type, elapsedMs, error, serializedAdditionalRawData, knowledgeSourceName, queryTime, count)
+        internal KnowledgeBaseSearchIndexActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
+            KnowledgeSourceName = knowledgeSourceName;
+            QueryTime = queryTime;
+            Count = count;
+            ImageServing = imageServing;
             SearchIndexArguments = searchIndexArguments;
-            Type = type ?? "searchIndex";
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSearchIndexActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeBaseSearchIndexActivityRecord()
-        {
-        }
+        /// <summary> The knowledge source for the retrieval activity. </summary>
+        public string KnowledgeSourceName { get; }
+
+        /// <summary> The query time for this retrieval activity. </summary>
+        public DateTimeOffset? QueryTime { get; }
+
+        /// <summary> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </summary>
+        public int? Count { get; }
+
+        /// <summary> Statistics about image serving for this retrieval activity. </summary>
+        public ImageServingStatistics ImageServing { get; }
 
         /// <summary> The search index arguments for the retrieval activity. </summary>
         public KnowledgeBaseSearchIndexActivityArguments SearchIndexArguments { get; }

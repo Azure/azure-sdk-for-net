@@ -183,7 +183,7 @@ namespace Azure.Storage.Test.Shared
                 new Uri(config.VaultEndpoint),
                 GetKeyClientTokenCredential(config));
 
-        private  TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+        private TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
             => TestEnvironment.Credential;
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -16,37 +17,25 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="WorkflowExpressionResourceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal WorkflowExpressionResourceErrorInfo(string code, string message) : base(code)
         {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(message, nameof(message));
-
             Message = message;
             Details = new ChangeTrackingList<WorkflowExpressionResourceErrorInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowExpressionResourceErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
-        internal WorkflowExpressionResourceErrorInfo(string code, IDictionary<string, BinaryData> serializedAdditionalRawData, string message, IReadOnlyList<WorkflowExpressionResourceErrorInfo> details) : base(code, serializedAdditionalRawData)
+        internal WorkflowExpressionResourceErrorInfo(string code, IDictionary<string, BinaryData> additionalBinaryDataProperties, string message, IReadOnlyList<WorkflowExpressionResourceErrorInfo> details) : base(code, additionalBinaryDataProperties)
         {
             Message = message;
             Details = details;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowExpressionResourceErrorInfo"/> for deserialization. </summary>
-        internal WorkflowExpressionResourceErrorInfo()
-        {
-        }
-
         /// <summary> The error message. </summary>
         [WirePath("message")]
         public string Message { get; }
-        /// <summary> The error details. </summary>
-        [WirePath("details")]
-        public IReadOnlyList<WorkflowExpressionResourceErrorInfo> Details { get; }
     }
 }

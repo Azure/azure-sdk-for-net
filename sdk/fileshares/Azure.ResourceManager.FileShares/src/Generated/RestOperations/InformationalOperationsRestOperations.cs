@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath("/providers/Microsoft.FileShares/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/getUsageData", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath("/providers/Microsoft.FileShares/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/getLimits", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.FileShares
             uri.AppendPath("/providers/Microsoft.FileShares/locations/", false);
             uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/getProvisioningRecommendation", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

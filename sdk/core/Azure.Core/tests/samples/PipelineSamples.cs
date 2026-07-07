@@ -85,7 +85,8 @@ namespace Azure.Core.Samples
                 _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
                 #endregion
                 if (_pipeline == null)
-                { throw new Exception(); };
+                { throw new Exception(); }
+                ;
             }
         }
 

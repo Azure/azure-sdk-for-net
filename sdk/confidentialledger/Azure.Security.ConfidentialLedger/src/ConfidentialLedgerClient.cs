@@ -115,7 +115,7 @@ namespace Azure.Security.ConfidentialLedger
 
             _pipeline = HttpPipelineBuilder.Build(
                 actualOptions,
-                new HttpPipelinePolicy[] { new FailoverPolicy(_failoverService, actualOptions.FailoverNetworkTimeout) },
+                new HttpPipelinePolicy[] { new ConfidentialLedgerRedirectPolicy(ledgerEndpoint), new FailoverPolicy(_failoverService, actualOptions.FailoverNetworkTimeout) },
                 _tokenCredential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },

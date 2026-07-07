@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetBySubscriptionAsyncCollectionResultOfT(TrafficControllerInterfaceRestClient, Id.SubscriptionId, context), data => new TrafficControllerResource(Client, data));
+            return new AsyncPageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetBySubscriptionAsyncCollectionResultOfT(TrafficControllerInterfaceRestClient, Id.SubscriptionId, context, "MockableServiceNetworkingSubscriptionResource.GetTrafficControllers"), data => new TrafficControllerResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetBySubscriptionCollectionResultOfT(TrafficControllerInterfaceRestClient, Id.SubscriptionId, context), data => new TrafficControllerResource(Client, data));
+            return new PageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetBySubscriptionCollectionResultOfT(TrafficControllerInterfaceRestClient, Id.SubscriptionId, context, "MockableServiceNetworkingSubscriptionResource.GetTrafficControllers"), data => new TrafficControllerResource(Client, data));
         }
     }
 }

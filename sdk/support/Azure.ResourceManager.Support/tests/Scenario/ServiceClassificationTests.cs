@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.Support.Tests
         {
         }
 
-/*        [RecordedTest]
-        public async Task ClassifyServices()
-        {
-            var serviceClassificationContent = new ServiceClassificationContent()
-            {
-                IssueSummary = "test",
-                ResourceId = new Core.ResourceIdentifier(_resourceId),
-            };
-            var serviceClassificationOutput = await DefaultSubscription.ClassifyServicesServiceClassificationAsync(serviceClassificationContent);
-            this.ValidateServiceClassification(serviceClassificationOutput.Value.ServiceClassificationResults.FirstOrDefault());
-        }
+        /*        [RecordedTest]
+                public async Task ClassifyServices()
+                {
+                    var serviceClassificationContent = new ServiceClassificationContent()
+                    {
+                        IssueSummary = "test",
+                        ResourceId = new Core.ResourceIdentifier(_resourceId),
+                    };
+                    var serviceClassificationOutput = await DefaultSubscription.ClassifyServicesServiceClassificationAsync(serviceClassificationContent);
+                    this.ValidateServiceClassification(serviceClassificationOutput.Value.ServiceClassificationResults.FirstOrDefault());
+                }
 
-        private void ValidateServiceClassification(ServiceClassificationAnswer serviceClassification)
-        {
-            Assert.IsNotNull(serviceClassification);
-            Assert.IsNotEmpty(serviceClassification.ServiceId);
-            Assert.IsNotEmpty(serviceClassification.DisplayName);
-            Assert.NotZero(serviceClassification.ResourceTypes.Count);
-        }*/
+                private void ValidateServiceClassification(ServiceClassificationAnswer serviceClassification)
+                {
+                    Assert.IsNotNull(serviceClassification);
+                    Assert.IsNotEmpty(serviceClassification.ServiceId);
+                    Assert.IsNotEmpty(serviceClassification.DisplayName);
+                    Assert.NotZero(serviceClassification.ResourceTypes.Count);
+                }*/
     }
 }

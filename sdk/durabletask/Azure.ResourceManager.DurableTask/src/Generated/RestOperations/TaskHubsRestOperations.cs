@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(schedulerName, true);
             uri.AppendPath("/taskHubs/", false);
             uri.AppendPath(taskHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +77,10 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(schedulerName, true);
             uri.AppendPath("/taskHubs/", false);
             uri.AppendPath(taskHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -97,7 +103,10 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath(schedulerName, true);
             uri.AppendPath("/taskHubs/", false);
             uri.AppendPath(taskHubName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -116,7 +125,10 @@ namespace Azure.ResourceManager.DurableTask
             uri.AppendPath("/providers/Microsoft.DurableTask/schedulers/", false);
             uri.AppendPath(schedulerName, true);
             uri.AppendPath("/taskHubs", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -128,8 +140,18 @@ namespace Azure.ResourceManager.DurableTask
         internal HttpMessage CreateNextGetBySchedulerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string schedulerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            uri.UpdateQuery("api-version", _apiVersion);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

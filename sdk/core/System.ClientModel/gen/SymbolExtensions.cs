@@ -1,25 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using Microsoft.CodeAnalysis;
 
 namespace System.ClientModel.SourceGeneration;
 
 internal static class SymbolExtensions
 {
-    public static bool InheritsFrom(this INamedTypeSymbol namedTypeSymbol, INamedTypeSymbol baseType)
-    {
-        while (namedTypeSymbol.BaseType is not null)
-        {
-            if (SymbolEqualityComparer.Default.Equals(namedTypeSymbol.BaseType, baseType))
-                return true;
-
-            namedTypeSymbol = namedTypeSymbol.BaseType;
-        }
-        return false;
-    }
-
     public static ITypeSymbol? GetItemSymbol(this ITypeSymbol typeSymbol, TypeSymbolKindCache cache)
     {
         switch (typeSymbol)
@@ -40,5 +27,20 @@ internal static class SymbolExtensions
             default:
                 return null;
         }
+    }
+
+    /// <summary>
+    /// Checks if the given type inherits from the specified base type.
+    /// </summary>
+    public static bool InheritsFrom(this INamedTypeSymbol type, INamedTypeSymbol baseType)
+    {
+        for (var current = type.BaseType; current != null; current = current.BaseType)
+        {
+            if (SymbolEqualityComparer.Default.Equals(current, baseType))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

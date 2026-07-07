@@ -17,6 +17,14 @@ namespace Specs.Azure.Core.Page
 
         protected virtual UserOrder PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<UserOrder>.Write(ModelReaderWriterOptions options) => throw null;
+
+        UserOrder IPersistableModel<UserOrder>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<UserOrder>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
         void IJsonModel<UserOrder>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -24,13 +32,5 @@ namespace Specs.Azure.Core.Page
         UserOrder IJsonModel<UserOrder>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual UserOrder JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<UserOrder>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        UserOrder IPersistableModel<UserOrder>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<UserOrder>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
     }
 }

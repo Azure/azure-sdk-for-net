@@ -68,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 ?.GetValue(transmitter);
 
             endpoint = typeof(ApplicationInsightsRestClient)
-                .GetField("_host", BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetField("_endpoint", BindingFlags.Instance | BindingFlags.NonPublic)
                 ?.GetValue(serviceRestClient)
                 ?.ToString();
         }

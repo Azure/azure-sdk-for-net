@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the provision operation request. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
-        internal DedicatedCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedCapacityProperties properties, CapacitySku sku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DedicatedCapacityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedCapacityProperties properties, CapacitySku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the provision operation request. </summary>
@@ -52,23 +52,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         /// <summary> The SKU of the PowerBI Dedicated capacity resource. </summary>
         public CapacitySku Sku { get; set; }
-
-        /// <summary> A collection of Dedicated capacity administrators. </summary>
-        public DedicatedCapacityAdministrators Administration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Administration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DedicatedCapacityProperties();
-                }
-                Properties.Administration = value;
-            }
-        }
 
         /// <summary> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </summary>
         public Mode? Mode
@@ -83,7 +66,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     Properties = new DedicatedCapacityProperties();
                 }
-                Properties.Mode = value.Value;
+                Properties.Mode = value;
             }
         }
 
@@ -102,6 +85,19 @@ namespace Azure.ResourceManager.PowerBIDedicated
             get
             {
                 return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
+        /// <summary> An array of administrator user identities. </summary>
+        public IList<string> AdministrationMembers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedCapacityProperties();
+                }
+                return Properties.AdministrationMembers;
             }
         }
 

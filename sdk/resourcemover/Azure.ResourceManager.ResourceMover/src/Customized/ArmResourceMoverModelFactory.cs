@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverResourceDependency"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MoverResourceDependency MoverResourceDependency(ResourceIdentifier id, string resolutionStatus, MoverResourceResolutionType? resolutionType, MoverDependencyType? dependencyType, ResourceIdentifier manualResolutionTargetId, ResourceIdentifier automaticResolutionResourceId, bool? isOptional)
-            => MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, manualResolutionTargetId, automaticResolutionResourceId, isDependencyOptional : null);
+            => MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, manualResolutionTargetId, automaticResolutionResourceId, isDependencyOptional: null);
     }
 }

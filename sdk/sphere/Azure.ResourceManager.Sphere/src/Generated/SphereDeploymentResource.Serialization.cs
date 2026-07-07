@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sphere
 {
+    /// <summary></summary>
     public partial class SphereDeploymentResource : IJsonModel<SphereDeploymentData>
     {
-        private static SphereDeploymentData s_dataDeserializationInstance;
-        private static SphereDeploymentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SphereDeploymentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SphereDeploymentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SphereDeploymentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SphereDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeploymentData>)Data).Write(writer, options);
 
-        SphereDeploymentData IJsonModel<SphereDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereDeploymentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SphereDeploymentData IJsonModel<SphereDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SphereDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereDeploymentData>(Data, options, AzureResourceManagerSphereContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SphereDeploymentData IPersistableModel<SphereDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereDeploymentData>(data, options, AzureResourceManagerSphereContext.Default);
 
-        string IPersistableModel<SphereDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereDeploymentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SphereDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

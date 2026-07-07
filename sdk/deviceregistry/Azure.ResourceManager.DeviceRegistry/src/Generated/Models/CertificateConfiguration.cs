@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="certificateAuthorityConfiguration"> The configuration to set up an ICA. </param>
         /// <param name="leafCertificateValidityPeriodInDays"> The validity period in days. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateAuthorityConfiguration"/> is null. </exception>
-        public CertificateConfiguration(CertificateAuthorityConfiguration certificateAuthorityConfiguration, int? leafCertificateValidityPeriodInDays)
+        public CertificateConfiguration(CertificateAuthorityConfiguration certificateAuthorityConfiguration, int leafCertificateValidityPeriodInDays)
         {
             Argument.AssertNotNull(certificateAuthorityConfiguration, nameof(certificateAuthorityConfiguration));
 
             CertificateAuthorityConfiguration = certificateAuthorityConfiguration;
-            LeafCertificateConfiguration = leafCertificateValidityPeriodInDays is null ? default : new LeafCertificateConfiguration(leafCertificateValidityPeriodInDays.Value);
+            LeafCertificateConfiguration = new LeafCertificateConfiguration(leafCertificateValidityPeriodInDays);
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         internal LeafCertificateConfiguration LeafCertificateConfiguration { get; set; }
 
         /// <summary> The validity period in days. </summary>
-        public int? LeafCertificateValidityPeriodInDays
+        public int LeafCertificateValidityPeriodInDays
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             set
             {
-                LeafCertificateConfiguration = value.HasValue ? new LeafCertificateConfiguration(value.Value) : default;
+                LeafCertificateConfiguration = new LeafCertificateConfiguration(value);
             }
         }
     }

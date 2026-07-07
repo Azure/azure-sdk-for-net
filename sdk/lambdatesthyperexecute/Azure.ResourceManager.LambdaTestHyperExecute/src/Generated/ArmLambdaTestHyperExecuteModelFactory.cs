@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
     public static partial class ArmLambdaTestHyperExecuteModelFactory
     {
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,41 +37,65 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
-        /// <param name="marketplace"> Marketplace details of the resource. </param>
-        /// <param name="user"> Details of the user. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="partnerLicensesSubscribed"> The number of licenses subscribed. </param>
-        /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOrganizationProperties"/> instance for mocking. </returns>
-        public static LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace = default, LambdaTestHyperExecuteUserDetails user = default, LambdaTestHyperExecuteOfferProvisioningState? provisioningState = default, int? partnerLicensesSubscribed = default, LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = default)
-        {
-            return new LambdaTestHyperExecuteOrganizationProperties(
-                marketplace,
-                user,
-                provisioningState,
-                partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, null),
-                singleSignOnProperties,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.LambdaTestHyperExecuteMarketplaceDetails"/> instance for mocking. </returns>
         public static LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = default, LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus = default, LambdaTestHyperExecuteOfferDetails offerDetails = default)
         {
-            return new LambdaTestHyperExecuteMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+            return new LambdaTestHyperExecuteMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
         }
 
-        /// <summary> Properties specific to Single Sign On Resource. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOfferDetails"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteOfferDetails LambdaTestHyperExecuteOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        {
+            return new LambdaTestHyperExecuteOfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                default);
+        }
+
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteUserDetails"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteUserDetails LambdaTestHyperExecuteUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        {
+            return new LambdaTestHyperExecuteUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
+                default);
+        }
+
+        /// <param name="subscribedLicensesCount"> The number of licenses subscribed. </param>
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOfferPartnerProperties"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteOfferPartnerProperties LambdaTestHyperExecuteOfferPartnerProperties(int subscribedLicensesCount = default)
+        {
+            return new LambdaTestHyperExecuteOfferPartnerProperties(subscribedLicensesCount, default);
+        }
+
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
         /// <param name="state"> State of the Single Sign On for the resource. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
@@ -88,11 +111,10 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 state,
                 enterpriseAppId,
                 uri,
-                aadDomains.ToList(),
-                additionalBinaryDataProperties: null);
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> The type used for update operations of the Organization Resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOrganizationPatch"/> instance for mocking. </returns>
@@ -100,7 +122,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new LambdaTestHyperExecuteOrganizationPatch(tags, identity, additionalBinaryDataProperties: null);
+            return new LambdaTestHyperExecuteOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
     }
 }

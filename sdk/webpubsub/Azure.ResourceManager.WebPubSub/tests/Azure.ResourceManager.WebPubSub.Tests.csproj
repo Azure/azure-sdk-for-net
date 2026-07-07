@@ -1,8 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.WebPubSub.csproj" />
     <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>

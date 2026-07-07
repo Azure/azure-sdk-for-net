@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes the properties of an existing shared private link resource managed by the Azure AI Search service. </summary>
     public partial class SharedSearchServicePrivateLinkResourceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResourceProperties"/>. </summary>
         public SharedSearchServicePrivateLinkResourceProperties()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="resourceRegion"> Optional. Can be used to specify the Azure Resource Manager location of the resource for which a shared private link is being created. This is only required for those resources whose DNS configuration are regional (such as Azure Kubernetes Service). </param>
         /// <param name="sharedPrivateLinkResourceStatus"> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </param>
         /// <param name="sharedPrivateLinkResourceProvisioningState"> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedSearchServicePrivateLinkResourceProperties(ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, AzureLocation? resourceRegion, SearchServiceSharedPrivateLinkResourceStatus? sharedPrivateLinkResourceStatus, SearchServiceSharedPrivateLinkResourceProvisioningState? sharedPrivateLinkResourceProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SharedSearchServicePrivateLinkResourceProperties(ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, AzureLocation? resourceRegion, SearchServiceSharedPrivateLinkResourceStatus? sharedPrivateLinkResourceStatus, SearchServiceSharedPrivateLinkResourceProvisioningState? sharedPrivateLinkResourceProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateLinkResourceId = privateLinkResourceId;
             GroupId = groupId;
@@ -67,24 +39,29 @@ namespace Azure.ResourceManager.Search.Models
             ResourceRegion = resourceRegion;
             SharedPrivateLinkResourceStatus = sharedPrivateLinkResourceStatus;
             SharedPrivateLinkResourceProvisioningState = sharedPrivateLinkResourceProvisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource ID of the resource the shared private link resource is for. </summary>
         [WirePath("privateLinkResourceId")]
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
+
         /// <summary> The group ID from the provider of resource the shared private link resource is for. </summary>
         [WirePath("groupId")]
         public string GroupId { get; set; }
+
         /// <summary> The message for requesting approval of the shared private link resource. </summary>
         [WirePath("requestMessage")]
         public string RequestMessage { get; set; }
+
         /// <summary> Optional. Can be used to specify the Azure Resource Manager location of the resource for which a shared private link is being created. This is only required for those resources whose DNS configuration are regional (such as Azure Kubernetes Service). </summary>
         [WirePath("resourceRegion")]
         public AzureLocation? ResourceRegion { get; set; }
+
         /// <summary> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </summary>
         [WirePath("status")]
         public SearchServiceSharedPrivateLinkResourceStatus? SharedPrivateLinkResourceStatus { get; set; }
+
         /// <summary> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
         [WirePath("provisioningState")]
         public SearchServiceSharedPrivateLinkResourceProvisioningState? SharedPrivateLinkResourceProvisioningState { get; set; }

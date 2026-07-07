@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id, recommendationId, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.ToString(), recommendationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id, recommendationId, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.ToString(), recommendationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AdvisorRecommendationData> response = Response.FromValue(AdvisorRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,11 +170,12 @@ namespace Azure.ResourceManager.Advisor
             };
             return new AsyncPageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new ResourceRecommendationBasesGetByTenantAsyncCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
-                Id,
+                Id.ToString(),
                 filter,
                 top,
                 skipToken,
-                context), data => new AdvisorRecommendationResource(Client, data));
+                context,
+                "AdvisorRecommendationCollection.GetAll"), data => new AdvisorRecommendationResource(Client, data));
         }
 
         /// <summary>
@@ -207,11 +208,12 @@ namespace Azure.ResourceManager.Advisor
             };
             return new PageableWrapper<AdvisorRecommendationData, AdvisorRecommendationResource>(new ResourceRecommendationBasesGetByTenantCollectionResultOfT(
                 _resourceRecommendationBasesRestClient,
-                Id,
+                Id.ToString(),
                 filter,
                 top,
                 skipToken,
-                context), data => new AdvisorRecommendationResource(Client, data));
+                context,
+                "AdvisorRecommendationCollection.GetAll"), data => new AdvisorRecommendationResource(Client, data));
         }
 
         /// <summary>
@@ -247,7 +249,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id, recommendationId, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.ToString(), recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorRecommendationData> response = default;
@@ -304,7 +306,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id, recommendationId, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.ToString(), recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorRecommendationData> response = default;
@@ -361,7 +363,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id, recommendationId, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.ToString(), recommendationId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AdvisorRecommendationData> response = default;
@@ -422,7 +424,7 @@ namespace Azure.ResourceManager.Advisor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id, recommendationId, context);
+                HttpMessage message = _resourceRecommendationBasesRestClient.CreateGetRequest(Id.ToString(), recommendationId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AdvisorRecommendationData> response = default;

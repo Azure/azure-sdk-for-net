@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     public readonly partial struct GuestConfigurationAssignmentReportType : IEquatable<GuestConfigurationAssignmentReportType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GuestConfigurationAssignmentReportType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ConsistencyValue = "Consistency";
         private const string InitialValue = "Initial";
 
-        /// <summary> Consistency. </summary>
+        /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GuestConfigurationAssignmentReportType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Consistency. </summary>
         public static GuestConfigurationAssignmentReportType Consistency { get; } = new GuestConfigurationAssignmentReportType(ConsistencyValue);
-        /// <summary> Initial. </summary>
+
+        /// <summary> Gets the Initial. </summary>
         public static GuestConfigurationAssignmentReportType Initial { get; } = new GuestConfigurationAssignmentReportType(InitialValue);
+
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentReportType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GuestConfigurationAssignmentReportType left, GuestConfigurationAssignmentReportType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GuestConfigurationAssignmentReportType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GuestConfigurationAssignmentReportType left, GuestConfigurationAssignmentReportType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GuestConfigurationAssignmentReportType(string value) => new GuestConfigurationAssignmentReportType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GuestConfigurationAssignmentReportType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GuestConfigurationAssignmentReportType?(string value) => value == null ? null : new GuestConfigurationAssignmentReportType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GuestConfigurationAssignmentReportType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GuestConfigurationAssignmentReportType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

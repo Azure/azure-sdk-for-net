@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MySql
             TryGetApiVersion(MySqlServerKeyResource.ResourceType, out string mySqlServerKeyServerKeysApiVersion);
             _mySqlServerKeyServerKeysRestClient = new ServerKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlServerKeyServerKeysApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

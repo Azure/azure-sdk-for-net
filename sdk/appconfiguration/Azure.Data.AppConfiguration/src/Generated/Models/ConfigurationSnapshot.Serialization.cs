@@ -38,6 +38,39 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConfigurationSnapshot)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConfigurationSnapshot>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfigurationSnapshot IPersistableModel<ConfigurationSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConfigurationSnapshot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="configurationSnapshot"> The <see cref="ConfigurationSnapshot"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ConfigurationSnapshot configurationSnapshot)
+        {
+            if (configurationSnapshot == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(configurationSnapshot, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationSnapshot"/> from. </param>
         public static explicit operator ConfigurationSnapshot(Response response)
         {
@@ -69,41 +102,6 @@ namespace Azure.Data.AppConfiguration
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConfigurationSnapshot(document.RootElement, options);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationSnapshot>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConfigurationSnapshot)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSnapshot IPersistableModel<ConfigurationSnapshot>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigurationSnapshot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="configurationSnapshot"> The <see cref="ConfigurationSnapshot"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ConfigurationSnapshot configurationSnapshot)
-        {
-            if (configurationSnapshot == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationSnapshot, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

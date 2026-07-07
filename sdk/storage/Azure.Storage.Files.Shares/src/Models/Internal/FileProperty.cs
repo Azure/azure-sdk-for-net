@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal partial class FileProperty {}
+    internal partial class FileProperty { }
 }

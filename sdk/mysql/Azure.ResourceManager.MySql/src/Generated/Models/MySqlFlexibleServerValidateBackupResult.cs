@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
             get
             {
-                return Properties.NumberOfContainers;
+                return Properties is null ? default : Properties.NumberOfContainers;
             }
         }
     }

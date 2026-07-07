@@ -19,8 +19,10 @@ internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
 
     public TokenCredentialAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan? refreshOffset = null)
     {
-        if (credential == null) throw new ArgumentNullException(nameof(credential));
-        if (scopes == null) throw new ArgumentNullException(nameof(scopes));
+        if (credential == null)
+            throw new ArgumentNullException(nameof(credential));
+        if (scopes == null)
+            throw new ArgumentNullException(nameof(scopes));
 
         _credential = credential;
         _scopes = scopes.ToArray();
@@ -37,7 +39,7 @@ internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
                 _currentToken = _credential.GetToken(tokenRequestContext, cancellationToken: default);
             }
 
-            if (_currentToken==null)
+            if (_currentToken == null)
             {
                 throw new InvalidOperationException("TokenCredential returned null token.");
             }
@@ -78,7 +80,8 @@ internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
 
     private bool IsTokenFresh()
     {
-        if (!_currentToken.HasValue) return false;
+        if (!_currentToken.HasValue)
+            return false;
         DateTimeOffset refreshAt = _currentToken.Value.RefreshOn ?? (_currentToken.Value.ExpiresOn - _refreshOffset);
         return DateTimeOffset.UtcNow < refreshAt;
     }

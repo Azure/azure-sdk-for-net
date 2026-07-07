@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DataBox
     {
         private readonly ClientDiagnostics _jobResourcesClientDiagnostics;
         private readonly JobResources _jobResourcesRestClient;
-        private readonly ClientDiagnostics _dataBoxClientClientDiagnostics;
-        private readonly DataBoxClient _dataBoxClientRestClient;
 
         /// <summary> Initializes a new instance of DataBoxJobCollection for mocking. </summary>
         protected DataBoxJobCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.DataBox
             TryGetApiVersion(DataBoxJobResource.ResourceType, out string dataBoxJobApiVersion);
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
             _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
-            _dataBoxClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBox", DataBoxJobResource.ResourceType.Namespace, Diagnostics);
-            _dataBoxClientRestClient = new DataBoxClient(_dataBoxClientClientDiagnostics, Pipeline, Endpoint, dataBoxJobApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +51,7 @@ namespace Azure.ResourceManager.DataBox
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.DataBox
                 HttpMessage message = _jobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, DataBoxJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxArmOperation<DataBoxJobResource> operation = new DataBoxArmOperation<DataBoxJobResource>(
-                    new DataBoxJobOperationSource(Client),
+                    new DataBoxJobResourceOperationSource(Client),
                     _jobResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -301,7 +297,13 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupAsyncCollectionResultOfT(_jobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, skipToken, context), data => new DataBoxJobResource(Client, data));
+            return new AsyncPageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupAsyncCollectionResultOfT(
+                _jobResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "DataBoxJobCollection.GetAll"), data => new DataBoxJobResource(Client, data));
         }
 
         /// <summary>
@@ -330,7 +332,13 @@ namespace Azure.ResourceManager.DataBox
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupCollectionResultOfT(_jobResourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, skipToken, context), data => new DataBoxJobResource(Client, data));
+            return new PageableWrapper<DataBoxJobData, DataBoxJobResource>(new JobResourcesGetByResourceGroupCollectionResultOfT(
+                _jobResourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                skipToken,
+                context,
+                "DataBoxJobCollection.GetAll"), data => new DataBoxJobResource(Client, data));
         }
 
         /// <summary>

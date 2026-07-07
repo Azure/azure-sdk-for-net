@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(ResourceType, out string nginxDeploymentApiKeyApiVersion);
             _nginxDeploymentApiKeyResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentApiKeyResponsesRestClient = new NginxDeploymentApiKeyResponses(_nginxDeploymentApiKeyResponsesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentApiKeyApiVersion ?? "2025-03-01-preview");
+            _nginxDeploymentApiKeyResponsesRestClient = new NginxDeploymentApiKeyResponses(_nginxDeploymentApiKeyResponsesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentApiKeyApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Nginx
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The API Key object containing fields (e.g. secret text, expiration date) to upsert the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NginxDeploymentApiKeyResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentApiKeyResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Update");
             scope.Start();
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01-preview. </description>
+        /// <description> 2025-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The API Key object containing fields (e.g. secret text, expiration date) to upsert the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NginxDeploymentApiKeyResource> Update(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentApiKeyResource> Update(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Update");
             scope.Start();

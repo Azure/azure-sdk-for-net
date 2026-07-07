@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _registryEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, registryEndpointName, IotOperationsRegistryEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsRegistryEndpointResource> operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(
-                    new IotOperationsRegistryEndpointOperationSource(Client),
+                    new IotOperationsRegistryEndpointResourceOperationSource(Client),
                     _registryEndpointClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _registryEndpointRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, registryEndpointName, IotOperationsRegistryEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsRegistryEndpointResource> operation = new IotOperationsArmOperation<IotOperationsRegistryEndpointResource>(
-                    new IotOperationsRegistryEndpointOperationSource(Client),
+                    new IotOperationsRegistryEndpointResourceOperationSource(Client),
                     _registryEndpointClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsRegistryEndpointData, IotOperationsRegistryEndpointResource>(new RegistryEndpointGetByInstanceResourceAsyncCollectionResultOfT(_registryEndpointRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsRegistryEndpointResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsRegistryEndpointData, IotOperationsRegistryEndpointResource>(new RegistryEndpointGetByInstanceResourceAsyncCollectionResultOfT(
+                _registryEndpointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsRegistryEndpointCollection.GetAll"), data => new IotOperationsRegistryEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsRegistryEndpointData, IotOperationsRegistryEndpointResource>(new RegistryEndpointGetByInstanceResourceCollectionResultOfT(_registryEndpointRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsRegistryEndpointResource(Client, data));
+            return new PageableWrapper<IotOperationsRegistryEndpointData, IotOperationsRegistryEndpointResource>(new RegistryEndpointGetByInstanceResourceCollectionResultOfT(
+                _registryEndpointRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsRegistryEndpointCollection.GetAll"), data => new IotOperationsRegistryEndpointResource(Client, data));
         }
 
         /// <summary>

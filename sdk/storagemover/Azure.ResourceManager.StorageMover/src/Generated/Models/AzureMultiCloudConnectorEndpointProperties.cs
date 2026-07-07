@@ -31,11 +31,12 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="AzureMultiCloudConnectorEndpointProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="endpointKind"> The Endpoint resource kind source or target. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="multiCloudConnectorId"> The Azure Resource ID of the MultiCloud Connector resource. </param>
         /// <param name="awsS3BucketId"> The AWS S3 bucket ARM resource Id. </param>
-        internal AzureMultiCloudConnectorEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId) : base(endpointType, description, provisioningState, additionalBinaryDataProperties)
+        internal AzureMultiCloudConnectorEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier multiCloudConnectorId, ResourceIdentifier awsS3BucketId) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             MultiCloudConnectorId = multiCloudConnectorId;
             AwsS3BucketId = awsS3BucketId;

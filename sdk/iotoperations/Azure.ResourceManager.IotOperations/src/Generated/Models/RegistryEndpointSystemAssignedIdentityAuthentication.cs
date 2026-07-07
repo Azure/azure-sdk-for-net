@@ -14,6 +14,12 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class RegistryEndpointSystemAssignedIdentityAuthentication : RegistryEndpointAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>. </summary>
+        public RegistryEndpointSystemAssignedIdentityAuthentication() : base(RegistryEndpointAuthenticationMethod.SystemAssignedManagedIdentity)
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>. </summary>
         /// <param name="method"> The authentication method. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="systemAssignedManagedIdentitySettings"> System assigned managed identity properties. </param>

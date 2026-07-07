@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class MySqlMigrationTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MySqlMigrationType value) => value switch
         {
             MySqlMigrationType.LocalToRemote => "LocalToRemote",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlMigrationType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MySqlMigrationType ToMySqlMigrationType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalToRemote")) return MySqlMigrationType.LocalToRemote;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RemoteToLocal")) return MySqlMigrationType.RemoteToLocal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalToRemote"))
+            {
+                return MySqlMigrationType.LocalToRemote;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RemoteToLocal"))
+            {
+                return MySqlMigrationType.RemoteToLocal;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MySqlMigrationType value.");
         }
     }

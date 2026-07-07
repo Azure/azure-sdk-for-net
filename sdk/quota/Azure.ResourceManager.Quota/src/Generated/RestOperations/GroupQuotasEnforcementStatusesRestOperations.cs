@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(resourceProviderName, true);
             uri.AppendPath("/locationSettings/", false);
             uri.AppendPath(location.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,12 +77,15 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(resourceProviderName, true);
             uri.AppendPath("/locationSettings/", false);
             uri.AppendPath(location.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }
@@ -100,12 +106,15 @@ namespace Azure.ResourceManager.Quota
             uri.AppendPath(resourceProviderName, true);
             uri.AppendPath("/locationSettings/", false);
             uri.AppendPath(location.ToString(), true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            if ("application/json" != null)
+            if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/json");
             }

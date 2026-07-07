@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SignalR;
@@ -20,9 +19,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableSignalRResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _signalRReplicaSharedPrivateLinkResourcesClientDiagnostics;
-        private SignalRReplicaSharedPrivateLinkResources _signalRReplicaSharedPrivateLinkResourcesRestClient;
-
         /// <summary> Initializes a new instance of MockableSignalRResourceGroupResource for mocking. </summary>
         protected MockableSignalRResourceGroupResource()
         {
@@ -34,10 +30,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
         internal MockableSignalRResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics SignalRReplicaSharedPrivateLinkResourcesClientDiagnostics => _signalRReplicaSharedPrivateLinkResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SignalR.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SignalRReplicaSharedPrivateLinkResources SignalRReplicaSharedPrivateLinkResourcesRestClient => _signalRReplicaSharedPrivateLinkResourcesRestClient ??= new SignalRReplicaSharedPrivateLinkResources(SignalRReplicaSharedPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, "2025-01-01-preview");
 
         /// <summary> Gets a collection of SignalRs in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of SignalRs and their operations over a SignalRResource. </returns>
@@ -102,88 +94,6 @@ namespace Azure.ResourceManager.SignalR.Mocking
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             return GetSignalRs().Get(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List shared private link resources
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the SignalRResource. </param>
-        /// <param name="replicaName"> The name of the Replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="replicaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SignalRReplicaSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SignalRReplicaSharedPrivateLinkResource> GetSignalRReplicaSharedPrivateLinkResourcesAsync(string resourceName, string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRReplicaSharedPrivateLinkResourcesGetAllAsyncCollectionResultOfT(
-                SignalRReplicaSharedPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                resourceName,
-                replicaName,
-                context), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
-        }
-
-        /// <summary>
-        /// List shared private link resources
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/signalR/{resourceName}/replicas/{replicaName}/sharedPrivateLinkResources. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SharedPrivateLinkResources_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceName"> The name of the SignalRResource. </param>
-        /// <param name="replicaName"> The name of the Replica. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="replicaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="SignalRReplicaSharedPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SignalRReplicaSharedPrivateLinkResource> GetSignalRReplicaSharedPrivateLinkResources(string resourceName, string replicaName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<SignalRSharedPrivateLinkResourceData, SignalRReplicaSharedPrivateLinkResource>(new SignalRReplicaSharedPrivateLinkResourcesGetAllCollectionResultOfT(
-                SignalRReplicaSharedPrivateLinkResourcesRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                resourceName,
-                replicaName,
-                context), data => new SignalRReplicaSharedPrivateLinkResource(Client, data));
         }
     }
 }

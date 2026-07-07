@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsAkriConnectorTemplateResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsAkriConnectorTemplateResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsAkriConnectorTemplateResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectorName, IotOperationsAkriConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsAkriConnectorResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorResource>(
-                    new IotOperationsAkriConnectorOperationSource(Client),
+                    new IotOperationsAkriConnectorResourceOperationSource(Client),
                     _akriConnectorClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectorName, IotOperationsAkriConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsAkriConnectorResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorResource>(
-                    new IotOperationsAkriConnectorOperationSource(Client),
+                    new IotOperationsAkriConnectorResourceOperationSource(Client),
                     _akriConnectorClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsAkriConnectorResource(Client, data));
+                context,
+                "IotOperationsAkriConnectorCollection.GetAll"), data => new IotOperationsAkriConnectorResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsAkriConnectorResource(Client, data));
+                context,
+                "IotOperationsAkriConnectorCollection.GetAll"), data => new IotOperationsAkriConnectorResource(Client, data));
         }
 
         /// <summary>

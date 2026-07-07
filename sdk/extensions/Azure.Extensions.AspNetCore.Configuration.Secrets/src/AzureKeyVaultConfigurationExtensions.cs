@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 
 namespace Microsoft.Extensions.Configuration
@@ -101,6 +103,63 @@ namespace Microsoft.Extensions.Configuration
             Argument.AssertNotNull(options.Manager, $"{nameof(options)}.{nameof(options.Manager)}");
 
             configurationBuilder.Add(new AzureKeyVaultConfigurationSource(client, options));
+
+            return configurationBuilder;
+        }
+
+        /// <summary>
+        /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from Azure Key Vault.
+        /// The <see cref="SecretClient"/> is created from the specified configuration section using
+        /// <see cref="SecretClientSettings"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method uses the <c>Azure.Core</c> configuration extensions (built on <c>System.ClientModel</c>) to create a
+        /// <see cref="SecretClient"/> from the specified configuration section. The section should contain the <c>VaultUri</c>
+        /// and <c>Credential</c> properties. For more information, see
+        /// <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md">Configuration and Dependency Injection for Azure SDK Clients</see>.
+        /// </remarks>
+        /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
+        /// <param name="sectionName">The name of the configuration section that contains the <see cref="SecretClientSettings"/>.</param>
+        /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
+        [Experimental("SCME0002")]
+        public static IConfigurationBuilder AddKeyVaultSecrets(
+            this IConfigurationBuilder configurationBuilder,
+            string sectionName)
+        {
+            return AddKeyVaultSecrets(configurationBuilder, sectionName, null);
+        }
+
+        /// <summary>
+        /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from Azure Key Vault.
+        /// The <see cref="SecretClient"/> is created from the specified configuration section using
+        /// <see cref="SecretClientSettings"/>. The <paramref name="configureSettings"/> callback can be used
+        /// to modify the settings before the client is created.
+        /// </summary>
+        /// <remarks>
+        /// This method uses the <c>Azure.Core</c> configuration extensions (built on <c>System.ClientModel</c>) to create a
+        /// <see cref="SecretClient"/> from the specified configuration section. The section should contain the <c>VaultUri</c>
+        /// and <c>Credential</c> properties. For more information, see
+        /// <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md">Configuration and Dependency Injection for Azure SDK Clients</see>.
+        /// </remarks>
+        /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
+        /// <param name="sectionName">The name of the configuration section that contains the <see cref="SecretClientSettings"/>.</param>
+        /// <param name="configureSettings">An optional callback to configure the <see cref="SecretClientSettings"/> before the client is created.</param>
+        /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
+        [Experimental("SCME0002")]
+        public static IConfigurationBuilder AddKeyVaultSecrets(
+            this IConfigurationBuilder configurationBuilder,
+            string sectionName,
+            Action<SecretClientSettings> configureSettings)
+        {
+            Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
+            Argument.AssertNotNullOrEmpty(sectionName, nameof(sectionName));
+
+            IConfiguration configuration = configurationBuilder.Build();
+            SecretClientSettings settings = configuration.GetAzureClientSettings<SecretClientSettings>(sectionName);
+            configureSettings?.Invoke(settings);
+
+            SecretClient client = new SecretClient(settings);
+            configurationBuilder.Add(new AzureKeyVaultConfigurationSource(client, new AzureKeyVaultConfigurationOptions()));
 
             return configurationBuilder;
         }

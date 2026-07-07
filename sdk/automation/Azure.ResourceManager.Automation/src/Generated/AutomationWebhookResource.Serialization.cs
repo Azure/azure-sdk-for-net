@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary></summary>
     public partial class AutomationWebhookResource : IJsonModel<AutomationWebhookData>
     {
-        private static AutomationWebhookData s_dataDeserializationInstance;
-        private static AutomationWebhookData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AutomationWebhookData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AutomationWebhookData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AutomationWebhookData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutomationWebhookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWebhookData>)Data).Write(writer, options);
 
-        AutomationWebhookData IJsonModel<AutomationWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationWebhookData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationWebhookData IJsonModel<AutomationWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AutomationWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationWebhookData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AutomationWebhookData IPersistableModel<AutomationWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationWebhookData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<AutomationWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationWebhookData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutomationWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

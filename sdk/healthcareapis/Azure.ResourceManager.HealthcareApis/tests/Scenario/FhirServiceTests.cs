@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -13,6 +13,8 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Tests
 {
+    [NUnit.Framework.Ignore("Recordings need re-recording with current EventHubs SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57316")]
+
     internal class FhirServiceTests : HealthcareApisManagementTestBase
     {
         private const string fhirServicePrefixName = "fhir";

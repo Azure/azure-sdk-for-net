@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsDataflowProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsDataflowProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsDataflowProfileResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowName, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowName, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsDataflowResource(Client, data));
+                context,
+                "IotOperationsDataflowCollection.GetAll"), data => new IotOperationsDataflowResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsDataflowResource(Client, data));
+                context,
+                "IotOperationsDataflowCollection.GetAll"), data => new IotOperationsDataflowResource(Client, data));
         }
 
         /// <summary>

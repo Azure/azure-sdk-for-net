@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary>
     /// A class representing a collection of <see cref="PublicCloudInventoryResource"/> and their operations.
-    /// Each <see cref="PublicCloudInventoryResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="PublicCloudInventoryCollection"/> instance call the GetPublicCloudInventories method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="PublicCloudInventoryResource"/> in the collection will belong to the same instance of <see cref="PublicCloudConnectorSolutionConfigurationResource"/>.
+    /// To get a <see cref="PublicCloudInventoryCollection"/> instance call the GetPublicCloudInventories method from an instance of <see cref="PublicCloudConnectorSolutionConfigurationResource"/>.
     /// </summary>
     public partial class PublicCloudInventoryCollection : ArmCollection, IEnumerable<PublicCloudInventoryResource>, IAsyncEnumerable<PublicCloudInventoryResource>
     {
@@ -40,6 +41,17 @@ namespace Azure.ResourceManager.HybridConnectivity
             TryGetApiVersion(PublicCloudInventoryResource.ResourceType, out string publicCloudInventoryApiVersion);
             _inventoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", PublicCloudInventoryResource.ResourceType.Namespace, Diagnostics);
             _inventoryRestClient = new Inventory(_inventoryClientDiagnostics, Pipeline, Endpoint, publicCloudInventoryApiVersion ?? "2024-12-01");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != PublicCloudConnectorSolutionConfigurationResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PublicCloudConnectorSolutionConfigurationResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
@@ -75,7 +87,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, inventoryId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,7 +136,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, inventoryId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicCloudInventoryData> response = Response.FromValue(PublicCloudInventoryData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +177,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationAsyncCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context), data => new PublicCloudInventoryResource(Client, data));
+            return new AsyncPageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationAsyncCollectionResultOfT(_inventoryRestClient, Id.Parent.ToString(), Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>
@@ -193,7 +205,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationCollectionResultOfT(_inventoryRestClient, Id.Parent, Id.Name, context), data => new PublicCloudInventoryResource(Client, data));
+            return new PageableWrapper<PublicCloudInventoryData, PublicCloudInventoryResource>(new InventoryGetBySolutionConfigurationCollectionResultOfT(_inventoryRestClient, Id.Parent.ToString(), Id.Name, context, "PublicCloudInventoryCollection.GetAll"), data => new PublicCloudInventoryResource(Client, data));
         }
 
         /// <summary>
@@ -229,7 +241,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, inventoryId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCloudInventoryData> response = default;
@@ -286,7 +298,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, inventoryId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCloudInventoryData> response = default;
@@ -343,7 +355,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, inventoryId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicCloudInventoryData> response = default;
@@ -404,7 +416,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent, Id.Name, inventoryId, context);
+                HttpMessage message = _inventoryRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, inventoryId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicCloudInventoryData> response = default;

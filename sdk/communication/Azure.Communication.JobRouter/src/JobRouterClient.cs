@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,8 +7,7 @@ using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Autorest.CSharp.Core;
-
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.Communication.JobRouter
 {
     [CodeGenSuppress("JobRouterClient", typeof(Uri))]
@@ -74,7 +73,7 @@ namespace Azure.Communication.JobRouter
             options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -91,7 +90,6 @@ namespace Azure.Communication.JobRouter
         private JobRouterClient(string endpoint, TokenCredential tokenCredential, JobRouterClientOptions options)
             : this(new Uri(endpoint, UriKind.Absolute), options.BuildHttpPipeline(tokenCredential), options)
         {
-            _tokenCredential = tokenCredential;
         }
 
         private JobRouterClient(string endpoint, AzureKeyCredential keyCredential, JobRouterClientOptions options)
@@ -116,7 +114,7 @@ namespace Azure.Communication.JobRouter
             options ??= new JobRouterClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = pipeline;
+            Pipeline = pipeline;
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -173,10 +171,10 @@ namespace Azure.Communication.JobRouter
                         jobId: options.JobId,
                         content: request.ToRequestContent(),
                         requestConditions: options.RequestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(RouterJob.FromResponse(response), response);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -231,9 +229,9 @@ namespace Azure.Communication.JobRouter
                     jobId: options.JobId,
                     content: request.ToRequestContent(),
                     requestConditions: options.RequestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(RouterJob.FromResponse(response), response);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -291,10 +289,10 @@ namespace Azure.Communication.JobRouter
                         jobId: options.JobId,
                         content: request.ToRequestContent(),
                         requestConditions: options.RequestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(RouterJob.FromResponse(response), response);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -348,9 +346,9 @@ namespace Azure.Communication.JobRouter
                     jobId: options.JobId,
                     content: request.ToRequestContent(),
                     requestConditions: options.RequestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(RouterJob.FromResponse(response), response);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -378,10 +376,10 @@ namespace Azure.Communication.JobRouter
                         jobId: job.Id,
                         content: job.ToRequestContent(),
                         requestConditions: requestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(RouterJob.FromResponse(response), response);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -407,9 +405,9 @@ namespace Azure.Communication.JobRouter
                     jobId: job.Id,
                     content: job.ToRequestContent(),
                     requestConditions: requestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(RouterJob.FromResponse(response), response);
+                return Response.FromValue((RouterJob)response, response);
             }
             catch (Exception ex)
             {
@@ -449,7 +447,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertJobRequest(jobId, content, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -489,7 +487,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertJobRequest(jobId, content, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -559,7 +557,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateReclassifyJobRequest(jobId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -599,7 +597,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateReclassifyJobRequest(jobId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -671,7 +669,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateCloseJobRequest(jobId, assignmentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -713,7 +711,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateCloseJobRequest(jobId, assignmentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -781,7 +779,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateCancelJobRequest(jobId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -821,7 +819,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateCancelJobRequest(jobId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -893,7 +891,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateCompleteJobRequest(jobId, assignmentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -935,7 +933,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateCompleteJobRequest(jobId, assignmentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1007,7 +1005,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateDeclineJobOfferRequest(workerId, offerId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1049,7 +1047,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateDeclineJobOfferRequest(workerId, offerId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1121,7 +1119,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUnassignJobRequest(jobId, assignmentId, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1163,7 +1161,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUnassignJobRequest(jobId, assignmentId, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1185,10 +1183,7 @@ namespace Azure.Communication.JobRouter
             DateTimeOffset? scheduledBefore = null, DateTimeOffset? scheduledAfter = null,
             CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(pageSizeHint, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, pageSizeHint, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterJob.DeserializeRouterJob(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return new JobRouterClientGetJobsAsyncCollectionResultOfT(this, null, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, cancellationToken.ToRequestContext(), "JobRouterClient.GetJobs");
         }
 
         /// <summary> Retrieves list of jobs based on filter parameters. </summary>
@@ -1203,10 +1198,7 @@ namespace Azure.Communication.JobRouter
             string channelId = null, string classificationPolicyId = null, DateTimeOffset? scheduledBefore = null,
             DateTimeOffset? scheduledAfter = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(pageSizeHint, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, pageSizeHint, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterJob.DeserializeRouterJob(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return new JobRouterClientGetJobsCollectionResultOfT(this, null, status?.ToString(), queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, cancellationToken.ToRequestContext(), "JobRouterClient.GetJobs");
         }
 
         /// <summary>
@@ -1235,9 +1227,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetJobsAsync(string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(pageSizeHint, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, pageSizeHint, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return new JobRouterClientGetJobsAsyncCollectionResult(this, null, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context, "JobRouterClient.GetJobs");
         }
 
         /// <summary>
@@ -1266,9 +1256,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetJobs(string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(pageSizeHint, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, pageSizeHint, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetJobs", "value", "nextLink", context);
+            return new JobRouterClientGetJobsCollectionResult(this, null, status, queueId, channelId, classificationPolicyId, scheduledBefore, scheduledAfter, context, "JobRouterClient.GetJobs");
         }
 
         #endregion Job
@@ -1311,10 +1299,10 @@ namespace Azure.Communication.JobRouter
                         workerId: options.WorkerId,
                         content: request.ToRequestContent(),
                         requestConditions: options.RequestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(RouterWorker.FromResponse(response), response);
+                return Response.FromValue((RouterWorker)response, response);
             }
             catch (Exception ex)
             {
@@ -1359,9 +1347,9 @@ namespace Azure.Communication.JobRouter
                     workerId: options.WorkerId,
                     content: request.ToRequestContent(),
                     requestConditions: options.RequestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(RouterWorker.FromResponse(response), response);
+                return Response.FromValue((RouterWorker)response, response);
             }
             catch (Exception ex)
             {
@@ -1387,10 +1375,10 @@ namespace Azure.Communication.JobRouter
                         workerId: worker.Id,
                         content: worker.ToRequestContent(),
                         requestConditions: requestConditions ?? new RequestConditions(),
-                        context: FromCancellationToken(cancellationToken))
+                        context: cancellationToken.ToRequestContext())
                     .ConfigureAwait(false);
 
-                return Response.FromValue(RouterWorker.FromResponse(response), response);
+                return Response.FromValue((RouterWorker)response, response);
             }
             catch (Exception ex)
             {
@@ -1416,9 +1404,9 @@ namespace Azure.Communication.JobRouter
                     workerId: worker.Id,
                     content: worker.ToRequestContent(),
                     requestConditions: requestConditions ?? new RequestConditions(),
-                    context: FromCancellationToken(cancellationToken));
+                    context: cancellationToken.ToRequestContext());
 
-                return Response.FromValue(RouterWorker.FromResponse(response), response);
+                return Response.FromValue((RouterWorker)response, response);
             }
             catch (Exception ex)
             {
@@ -1458,7 +1446,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, requestConditions, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1498,7 +1486,7 @@ namespace Azure.Communication.JobRouter
             try
             {
                 using HttpMessage message = CreateUpsertWorkerRequest(workerId, content, requestConditions, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1515,10 +1503,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<RouterWorker> GetWorkersAsync(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(pageSizeHint, state?.ToString(), channelId, queueId, hasCapacity, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, pageSizeHint, state?.ToString(), channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RouterWorker.DeserializeRouterWorker(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return new JobRouterClientGetWorkersAsyncCollectionResultOfT(this, null, state?.ToString(), channelId, queueId, hasCapacity, cancellationToken.ToRequestContext(), "JobRouterClient.GetWorkers");
         }
 
         /// <summary> Retrieves existing workers. </summary>
@@ -1529,10 +1514,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<RouterWorker> GetWorkers(RouterWorkerStateSelector? state = null, string channelId = null, string queueId = null, bool? hasCapacity = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(pageSizeHint, state?.ToString(), channelId, queueId, hasCapacity, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, pageSizeHint, state?.ToString(), channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RouterWorker.DeserializeRouterWorker(e), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return new JobRouterClientGetWorkersCollectionResultOfT(this, null, state?.ToString(), channelId, queueId, hasCapacity, cancellationToken.ToRequestContext(), "JobRouterClient.GetWorkers");
         }
 
         /// <summary>
@@ -1559,9 +1541,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual AsyncPageable<BinaryData> GetWorkersAsync(string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(pageSizeHint, state, channelId, queueId, hasCapacity, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, pageSizeHint, state, channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return new JobRouterClientGetWorkersAsyncCollectionResult(this, null, state, channelId, queueId, hasCapacity, context, "JobRouterClient.GetWorkers");
         }
 
         /// <summary>
@@ -1588,9 +1568,7 @@ namespace Azure.Communication.JobRouter
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         public virtual Pageable<BinaryData> GetWorkers(string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkersRequest(pageSizeHint, state, channelId, queueId, hasCapacity, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkersNextPageRequest(nextLink, pageSizeHint, state, channelId, queueId, hasCapacity, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "JobRouterClient.GetWorkers", "value", "nextLink", context);
+            return new JobRouterClientGetWorkersCollectionResult(this, null, state, channelId, queueId, hasCapacity, context, "JobRouterClient.GetWorkers");
         }
 
         #endregion Worker
@@ -1600,7 +1578,7 @@ namespace Azure.Communication.JobRouter
         internal HttpMessage CreateGetJobsNextPageRequest(string nextLink, int? maxpagesize, string status, string queueId, string channelId, string classificationPolicyId, DateTimeOffset? scheduledBefore, DateTimeOffset? scheduledAfter, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1617,7 +1595,7 @@ namespace Azure.Communication.JobRouter
         internal HttpMessage CreateGetWorkersNextPageRequest(string nextLink, int? maxpagesize, string state, string channelId, string queueId, bool? hasCapacity, RequestContext context)
 #pragma warning restore CA1801 // Review unused parameters
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();

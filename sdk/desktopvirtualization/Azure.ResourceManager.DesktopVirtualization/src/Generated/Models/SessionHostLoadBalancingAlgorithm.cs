@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     public readonly partial struct SessionHostLoadBalancingAlgorithm : IEquatable<SessionHostLoadBalancingAlgorithm>
     {
         private readonly string _value;
+        /// <summary> Breadth First Algorithm for Load Balancing. </summary>
+        private const string BreadthFirstValue = "BreadthFirst";
+        /// <summary> Depth First Algorithm for Load Balancing. </summary>
+        private const string DepthFirstValue = "DepthFirst";
 
         /// <summary> Initializes a new instance of <see cref="SessionHostLoadBalancingAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SessionHostLoadBalancingAlgorithm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BreadthFirstValue = "BreadthFirst";
-        private const string DepthFirstValue = "DepthFirst";
-
-        /// <summary> BreadthFirst. </summary>
+        /// <summary> Breadth First Algorithm for Load Balancing. </summary>
         public static SessionHostLoadBalancingAlgorithm BreadthFirst { get; } = new SessionHostLoadBalancingAlgorithm(BreadthFirstValue);
-        /// <summary> DepthFirst. </summary>
+
+        /// <summary> Depth First Algorithm for Load Balancing. </summary>
         public static SessionHostLoadBalancingAlgorithm DepthFirst { get; } = new SessionHostLoadBalancingAlgorithm(DepthFirstValue);
+
         /// <summary> Determines if two <see cref="SessionHostLoadBalancingAlgorithm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SessionHostLoadBalancingAlgorithm left, SessionHostLoadBalancingAlgorithm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SessionHostLoadBalancingAlgorithm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SessionHostLoadBalancingAlgorithm left, SessionHostLoadBalancingAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SessionHostLoadBalancingAlgorithm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SessionHostLoadBalancingAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SessionHostLoadBalancingAlgorithm(string value) => new SessionHostLoadBalancingAlgorithm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SessionHostLoadBalancingAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SessionHostLoadBalancingAlgorithm?(string value) => value == null ? null : new SessionHostLoadBalancingAlgorithm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SessionHostLoadBalancingAlgorithm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SessionHostLoadBalancingAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

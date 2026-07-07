@@ -346,7 +346,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("ClientName.ActivityName.Start", startEvent.Key);
             Assert.AreEqual("ClientName.ActivityName.Stop", stopEvent.Key);
 
-            var diagnosticSourceActivity = (Activity) startEvent.Value;
+            var diagnosticSourceActivity = (Activity)startEvent.Value;
             Assert.AreEqual(ActivityIdFormat.W3C, diagnosticSourceActivity.IdFormat);
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
@@ -430,6 +430,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual(traceId, activity.TraceId.ToString());
             Assert.AreEqual(spanId, activity.ParentSpanId.ToString());
             Assert.AreEqual(traceState, activity.TraceStateString);
+            // The traceparent comes from an external source (e.g. a messaging broker), so the parent context
+            // must be marked as remote so samplers that distinguish local vs. remote parents behave correctly.
+            Assert.IsTrue(activity.HasRemoteParent);
         }
 
         [Test]

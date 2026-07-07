@@ -37,6 +37,29 @@ namespace Azure.AI.Translation.Text
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TranslationTarget>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TranslationTarget)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TranslationTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TranslationTarget IPersistableModel<TranslationTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TranslationTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TranslationTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -82,20 +105,15 @@ namespace Azure.AI.Translation.Text
                 writer.WritePropertyName("allowFallback"u8);
                 writer.WriteBooleanValue(AllowFallback.Value);
             }
-            if (Optional.IsDefined(Grade))
-            {
-                writer.WritePropertyName("grade"u8);
-                writer.WriteStringValue(Grade);
-            }
             if (Optional.IsDefined(Tone))
             {
                 writer.WritePropertyName("tone"u8);
-                writer.WriteStringValue(Tone);
+                writer.WriteStringValue(Tone.Value.ToString());
             }
             if (Optional.IsDefined(Gender))
             {
                 writer.WritePropertyName("gender"u8);
-                writer.WriteStringValue(Gender);
+                writer.WriteStringValue(Gender.Value.ToString());
             }
             if (Optional.IsDefined(AdaptiveDatasetId))
             {
@@ -160,9 +178,8 @@ namespace Azure.AI.Translation.Text
             ProfanityMarker? profanityMarker = default;
             string deploymentName = default;
             bool? allowFallback = default;
-            string grade = default;
-            string tone = default;
-            string gender = default;
+            TranslationTone? tone = default;
+            TranslationGender? gender = default;
             string adaptiveDatasetId = default;
             IList<ReferenceTextPair> referenceTextPairs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -210,19 +227,22 @@ namespace Azure.AI.Translation.Text
                     allowFallback = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("grade"u8))
-                {
-                    grade = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("tone"u8))
                 {
-                    tone = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tone = new TranslationTone(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("gender"u8))
                 {
-                    gender = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gender = new TranslationGender(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("adaptiveDatasetId"u8))
@@ -256,35 +276,11 @@ namespace Azure.AI.Translation.Text
                 profanityMarker,
                 deploymentName,
                 allowFallback,
-                grade,
                 tone,
                 gender,
                 adaptiveDatasetId,
                 referenceTextPairs ?? new ChangeTrackingList<ReferenceTextPair>(),
                 additionalBinaryDataProperties);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TranslationTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<TranslationTarget>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TranslationTarget)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        TranslationTarget IPersistableModel<TranslationTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TranslationTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

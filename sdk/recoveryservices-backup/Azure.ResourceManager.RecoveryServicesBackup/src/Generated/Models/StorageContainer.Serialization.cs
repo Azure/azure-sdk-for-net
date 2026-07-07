@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class StorageContainer : IUtf8JsonSerializable, IJsonModel<StorageContainer>
+    /// <summary> Azure Storage Account workload-specific container. </summary>
+    public partial class StorageContainer : BackupGenericProtectionContainer, IJsonModel<StorageContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectionContainer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageContainer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageContainer)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageContainer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageContainer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageContainer IPersistableModel<StorageContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => (StorageContainer)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageContainer)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SourceResourceId))
             {
@@ -67,128 +108,131 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        StorageContainer IJsonModel<StorageContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageContainer IJsonModel<StorageContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (StorageContainer)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BackupGenericProtectionContainer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageContainer)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageContainer(document.RootElement, options);
         }
 
-        internal static StorageContainer DeserializeStorageContainer(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageContainer DeserializeStorageContainer(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier sourceResourceId = default;
-            string storageAccountVersion = default;
-            string resourceGroup = default;
-            long? protectedItemCount = default;
-            AcquireStorageAccountLock? acquireStorageAccountLock = default;
-            WorkloadOperationType? operationType = default;
             string friendlyName = default;
             BackupManagementType? backupManagementType = default;
             string registrationStatus = default;
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceIdentifier sourceResourceId = default;
+            string storageAccountVersion = default;
+            string resourceGroup = default;
+            long? protectedItemCount = default;
+            AcquireStorageAccountLock? acquireStorageAccountLock = default;
+            WorkloadOperationType? operationType = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceResourceId"u8))
+                if (prop.NameEquals("friendlyName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    friendlyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("backupManagementType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    backupManagementType = new BackupManagementType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountVersion"u8))
+                if (prop.NameEquals("registrationStatus"u8))
                 {
-                    storageAccountVersion = property.Value.GetString();
+                    registrationStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"u8))
+                if (prop.NameEquals("healthStatus"u8))
                 {
-                    resourceGroup = property.Value.GetString();
+                    healthStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectedItemCount"u8))
+                if (prop.NameEquals("containerType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    containerType = new ProtectableContainerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("protectableObjectType"u8))
+                {
+                    protectableObjectType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protectedItemCount = property.Value.GetInt64();
+                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("acquireStorageAccountLock"u8))
+                if (prop.NameEquals("storageAccountVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    storageAccountVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceGroup"u8))
+                {
+                    resourceGroup = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("protectedItemCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    acquireStorageAccountLock = new AcquireStorageAccountLock(property.Value.GetString());
+                    protectedItemCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("operationType"u8))
+                if (prop.NameEquals("acquireStorageAccountLock"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationType = new WorkloadOperationType(property.Value.GetString());
+                    acquireStorageAccountLock = new AcquireStorageAccountLock(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("friendlyName"u8))
+                if (prop.NameEquals("operationType"u8))
                 {
-                    friendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("backupManagementType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    backupManagementType = new BackupManagementType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("registrationStatus"u8))
-                {
-                    registrationStatus = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("healthStatus"u8))
-                {
-                    healthStatus = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("containerType"u8))
-                {
-                    containerType = property.Value.GetString().ToProtectableContainerType();
-                    continue;
-                }
-                if (property.NameEquals("protectableObjectType"u8))
-                {
-                    protectableObjectType = property.Value.GetString();
+                    operationType = new WorkloadOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageContainer(
                 friendlyName,
                 backupManagementType,
@@ -196,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 sourceResourceId,
                 storageAccountVersion,
                 resourceGroup,
@@ -204,36 +248,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 acquireStorageAccountLock,
                 operationType);
         }
-
-        BinaryData IPersistableModel<StorageContainer>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageContainer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StorageContainer IPersistableModel<StorageContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageContainer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageContainer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StorageContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

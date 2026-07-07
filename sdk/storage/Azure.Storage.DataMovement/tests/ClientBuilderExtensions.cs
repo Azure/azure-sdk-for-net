@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Test.Shared;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     Azure.Storage.Blobs.BlobServiceClient,

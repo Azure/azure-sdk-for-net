@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
+    /// <summary></summary>
     public partial class AppConfigurationKeyValueResource : IJsonModel<AppConfigurationKeyValueData>
     {
-        private static AppConfigurationKeyValueData s_dataDeserializationInstance;
-        private static AppConfigurationKeyValueData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AppConfigurationKeyValueData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AppConfigurationKeyValueData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AppConfigurationKeyValueData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppConfigurationKeyValueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationKeyValueData>)Data).Write(writer, options);
 
-        AppConfigurationKeyValueData IJsonModel<AppConfigurationKeyValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppConfigurationKeyValueData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppConfigurationKeyValueData IJsonModel<AppConfigurationKeyValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AppConfigurationKeyValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppConfigurationKeyValueData>(Data, options, AzureResourceManagerAppConfigurationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AppConfigurationKeyValueData IPersistableModel<AppConfigurationKeyValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppConfigurationKeyValueData>(data, options, AzureResourceManagerAppConfigurationContext.Default);
 
-        string IPersistableModel<AppConfigurationKeyValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppConfigurationKeyValueData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppConfigurationKeyValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

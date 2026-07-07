@@ -18,14 +18,17 @@ namespace Azure.AI.Language.Text.Authoring
     {
         private readonly TextAnalysisAuthoringClient _client;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TextAnalysisAuthoringClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult(TextAnalysisAuthoringClient client, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult(TextAnalysisAuthoringClient client, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TextAnalysisAuthoringClientGetSupportedPrebuiltEntitiesCollectionResult as an enumerable collection. </summary>
@@ -43,13 +46,13 @@ namespace Azure.AI.Language.Text.Authoring
                     yield break;
                 }
                 PagedTextAnalysisAuthoringPrebuiltEntity result = (PagedTextAnalysisAuthoringPrebuiltEntity)response;
+                nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
                     items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAILanguageTextAuthoringContext.Default));
                 }
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                nextPage = result.NextLink;
+                yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
@@ -63,7 +66,7 @@ namespace Azure.AI.Language.Text.Authoring
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetSupportedPrebuiltEntitiesRequest(nextLink, _context) : _client.CreateGetSupportedPrebuiltEntitiesRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

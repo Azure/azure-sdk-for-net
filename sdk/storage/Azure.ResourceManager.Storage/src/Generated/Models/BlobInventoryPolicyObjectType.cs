@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct BlobInventoryPolicyObjectType : IEquatable<BlobInventoryPolicyObjectType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyObjectType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BlobInventoryPolicyObjectType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BlobValue = "Blob";
         private const string ContainerValue = "Container";
 
-        /// <summary> Blob. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BlobInventoryPolicyObjectType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Blob. </summary>
         public static BlobInventoryPolicyObjectType Blob { get; } = new BlobInventoryPolicyObjectType(BlobValue);
-        /// <summary> Container. </summary>
+
+        /// <summary> Gets the Container. </summary>
         public static BlobInventoryPolicyObjectType Container { get; } = new BlobInventoryPolicyObjectType(ContainerValue);
+
         /// <summary> Determines if two <see cref="BlobInventoryPolicyObjectType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobInventoryPolicyObjectType left, BlobInventoryPolicyObjectType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobInventoryPolicyObjectType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobInventoryPolicyObjectType left, BlobInventoryPolicyObjectType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobInventoryPolicyObjectType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobInventoryPolicyObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobInventoryPolicyObjectType(string value) => new BlobInventoryPolicyObjectType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobInventoryPolicyObjectType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobInventoryPolicyObjectType?(string value) => value == null ? null : new BlobInventoryPolicyObjectType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobInventoryPolicyObjectType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobInventoryPolicyObjectType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -14,51 +15,81 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public readonly partial struct ContainerServiceFleetUpgradeChannel : IEquatable<ContainerServiceFleetUpgradeChannel>
     {
         private readonly string _value;
+        /// <summary>
+        ///  Upgrades the clusters kubernetes version to the latest supported patch release on minor version N-1, where N is the latest supported minor version.
+        ///  For example, if a cluster runs version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, the cluster upgrades to 1.18.6.
+        /// </summary>
+        private const string StableValue = "Stable";
+        /// <summary> Upgrades the clusters kubernetes version to the latest supported patch release on the latest supported minor version. </summary>
+        private const string RapidValue = "Rapid";
+        /// <summary> Upgrade node image version of the clusters. </summary>
+        private const string NodeImageValue = "NodeImage";
+        /// <summary>
+        ///   Upgrades the clusters Kubernetes version to the latest supported patch version of the specified target Kubernetes version.
+        ///   For information on the behavior of update run for Kubernetes version upgrade, 
+        ///   see https://learn.microsoft.com/en-us/azure/kubernetes-fleet/update-orchestration?tabs=azure-portal
+        /// </summary>
+        private const string TargetKubernetesVersionValue = "TargetKubernetesVersion";
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpgradeChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerServiceFleetUpgradeChannel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StableValue = "Stable";
-        private const string RapidValue = "Rapid";
-        private const string NodeImageValue = "NodeImage";
-        private const string TargetKubernetesVersionValue = "TargetKubernetesVersion";
+            _value = value;
+        }
 
         /// <summary>
         ///  Upgrades the clusters kubernetes version to the latest supported patch release on minor version N-1, where N is the latest supported minor version.
         ///  For example, if a cluster runs version 1.17.7 and versions 1.17.9, 1.18.4, 1.18.6, and 1.19.1 are available, the cluster upgrades to 1.18.6.
         /// </summary>
         public static ContainerServiceFleetUpgradeChannel Stable { get; } = new ContainerServiceFleetUpgradeChannel(StableValue);
+
         /// <summary> Upgrades the clusters kubernetes version to the latest supported patch release on the latest supported minor version. </summary>
         public static ContainerServiceFleetUpgradeChannel Rapid { get; } = new ContainerServiceFleetUpgradeChannel(RapidValue);
+
         /// <summary> Upgrade node image version of the clusters. </summary>
         public static ContainerServiceFleetUpgradeChannel NodeImage { get; } = new ContainerServiceFleetUpgradeChannel(NodeImageValue);
+
         /// <summary>
         ///   Upgrades the clusters Kubernetes version to the latest supported patch version of the specified target Kubernetes version.
-        ///   For information on the behavior of update run for Kubernetes version upgrade,
+        ///   For information on the behavior of update run for Kubernetes version upgrade, 
         ///   see https://learn.microsoft.com/en-us/azure/kubernetes-fleet/update-orchestration?tabs=azure-portal
         /// </summary>
         public static ContainerServiceFleetUpgradeChannel TargetKubernetesVersion { get; } = new ContainerServiceFleetUpgradeChannel(TargetKubernetesVersionValue);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpgradeChannel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerServiceFleetUpgradeChannel left, ContainerServiceFleetUpgradeChannel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerServiceFleetUpgradeChannel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerServiceFleetUpgradeChannel left, ContainerServiceFleetUpgradeChannel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerServiceFleetUpgradeChannel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetUpgradeChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerServiceFleetUpgradeChannel(string value) => new ContainerServiceFleetUpgradeChannel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetUpgradeChannel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerServiceFleetUpgradeChannel?(string value) => value == null ? null : new ContainerServiceFleetUpgradeChannel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerServiceFleetUpgradeChannel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerServiceFleetUpgradeChannel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

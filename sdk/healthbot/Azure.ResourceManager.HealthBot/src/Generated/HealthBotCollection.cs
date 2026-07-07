@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, botName, HealthBotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new HealthBotResource(Client, data));
+            return new AsyncPageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupAsyncCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.HealthBot
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new HealthBotResource(Client, data));
+            return new PageableWrapper<HealthBotData, HealthBotResource>(new BotsGetByResourceGroupCollectionResultOfT(_botsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HealthBotCollection.GetAll"), data => new HealthBotResource(Client, data));
         }
 
         /// <summary>

@@ -83,6 +83,10 @@ namespace Azure.Generator.Management.Utilities
             return operationKind switch
             {
                 ResourceOperationKind.List => isAsync ? $"Get{resourceName.Pluralize()}Async" : $"Get{resourceName.Pluralize()}",
+                ResourceOperationKind.Read => isAsync ? $"Get{resourceName}Async" : $"Get{resourceName}",
+                ResourceOperationKind.Create => isAsync ? $"CreateOrUpdate{resourceName}Async" : $"CreateOrUpdate{resourceName}",
+                ResourceOperationKind.Delete => isAsync ? $"Delete{resourceName}Async" : $"Delete{resourceName}",
+                ResourceOperationKind.Update => isAsync ? $"Update{resourceName}Async" : $"Update{resourceName}",
                 _ => null
             };
         }

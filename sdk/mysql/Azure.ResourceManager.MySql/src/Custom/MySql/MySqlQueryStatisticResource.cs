@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql
             TryGetApiVersion(ResourceType, out string mySqlQueryStatisticTopQueryStatisticsApiVersion);
             _mySqlQueryStatisticTopQueryStatisticsRestClient = new TopQueryStatisticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlQueryStatisticTopQueryStatisticsApiVersion);
 #if DEBUG
-			ValidateResourceId(Id);
+            ValidateResourceId(Id);
 #endif
         }
 

@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary>
         /// The base64 encoded certificate raw data string
         /// </summary>
-        public Byte[] Certificate {get; set;}
+        public Byte[] Certificate { get; set; }
     }
 }

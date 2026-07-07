@@ -1,0 +1,4 @@
+import:
+  - ../../.vscode/cspell.json
+words:
+  - cspm

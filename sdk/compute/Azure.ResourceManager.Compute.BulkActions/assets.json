@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/compute/Azure.ResourceManager.Compute.BulkActions",
+  "Tag": "net/compute/Azure.ResourceManager.Compute.BulkActions_54c5b61523"
+}

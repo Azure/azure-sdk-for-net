@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.ComponentModel;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager

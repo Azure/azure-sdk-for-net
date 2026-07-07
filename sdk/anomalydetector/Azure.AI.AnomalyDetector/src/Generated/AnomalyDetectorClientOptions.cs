@@ -6,25 +6,19 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Client options for AnomalyDetectorClient. </summary>
+    /// <summary> Client options for <see cref="AnomalyDetectorClient"/>. </summary>
     public partial class AnomalyDetectorClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_1;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "v1.1". </summary>
-            V1_1 = 1,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of AnomalyDetectorClientOptions. </summary>
+        /// <summary> Initializes a new instance of AnomalyDetectorClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public AnomalyDetectorClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -32,6 +26,37 @@ namespace Azure.AI.AnomalyDetector
                 ServiceVersion.V1_1 => "v1.1",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of AnomalyDetectorClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal AnomalyDetectorClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "v1.1";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> V1_1. </summary>
+            V1_1 = 1
         }
     }
 }

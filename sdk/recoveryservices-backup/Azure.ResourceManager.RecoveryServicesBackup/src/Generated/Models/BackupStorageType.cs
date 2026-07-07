@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupStorageType : IEquatable<BackupStorageType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupStorageType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupStorageType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string GeoRedundantValue = "GeoRedundant";
         private const string LocallyRedundantValue = "LocallyRedundant";
         private const string ZoneRedundantValue = "ZoneRedundant";
         private const string ReadAccessGeoZoneRedundantValue = "ReadAccessGeoZoneRedundant";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupStorageType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupStorageType Invalid { get; } = new BackupStorageType(InvalidValue);
-        /// <summary> GeoRedundant. </summary>
+
+        /// <summary> Gets the GeoRedundant. </summary>
         public static BackupStorageType GeoRedundant { get; } = new BackupStorageType(GeoRedundantValue);
-        /// <summary> LocallyRedundant. </summary>
+
+        /// <summary> Gets the LocallyRedundant. </summary>
         public static BackupStorageType LocallyRedundant { get; } = new BackupStorageType(LocallyRedundantValue);
-        /// <summary> ZoneRedundant. </summary>
+
+        /// <summary> Gets the ZoneRedundant. </summary>
         public static BackupStorageType ZoneRedundant { get; } = new BackupStorageType(ZoneRedundantValue);
-        /// <summary> ReadAccessGeoZoneRedundant. </summary>
+
+        /// <summary> Gets the ReadAccessGeoZoneRedundant. </summary>
         public static BackupStorageType ReadAccessGeoZoneRedundant { get; } = new BackupStorageType(ReadAccessGeoZoneRedundantValue);
+
         /// <summary> Determines if two <see cref="BackupStorageType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupStorageType left, BackupStorageType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupStorageType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupStorageType left, BackupStorageType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupStorageType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupStorageType(string value) => new BackupStorageType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupStorageType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupStorageType?(string value) => value == null ? null : new BackupStorageType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupStorageType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupStorageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

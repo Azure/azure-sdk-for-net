@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.ImageInformation;
+                return Properties is null ? default : Properties.ImageInformation;
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.CostInformation;
+                return Properties is null ? default : Properties.CostInformation;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.AvailabilityInformation;
+                return Properties is null ? default : Properties.AvailabilityInformation;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.HierarchyInformation;
+                return Properties is null ? default : Properties.HierarchyInformation;
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.FulfilledBy;
+                return Properties is null ? default : Properties.FulfilledBy;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.FilterableProperties;
+                return Properties is null ? default : Properties.FilterableProperties;
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return Properties.Products;
+                return Properties is null ? default : Properties.Products;
             }
         }
     }

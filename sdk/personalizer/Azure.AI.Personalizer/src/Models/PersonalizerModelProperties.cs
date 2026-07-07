@@ -7,5 +7,5 @@ namespace Azure.AI.Personalizer
 {
     /// <summary> Properties related to the trained model. </summary>
     [CodeGenModel("ModelProperties")]
-    public partial class PersonalizerModelProperties {}
+    public partial class PersonalizerModelProperties { }
 }

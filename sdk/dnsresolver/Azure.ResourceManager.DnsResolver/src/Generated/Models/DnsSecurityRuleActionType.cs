@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public readonly partial struct DnsSecurityRuleActionType : IEquatable<DnsSecurityRuleActionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleActionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DnsSecurityRuleActionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "Allow";
         private const string AlertValue = "Alert";
         private const string BlockValue = "Block";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSecurityRuleActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DnsSecurityRuleActionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static DnsSecurityRuleActionType Allow { get; } = new DnsSecurityRuleActionType(AllowValue);
-        /// <summary> Alert. </summary>
+
+        /// <summary> Gets the Alert. </summary>
         public static DnsSecurityRuleActionType Alert { get; } = new DnsSecurityRuleActionType(AlertValue);
-        /// <summary> Block. </summary>
+
+        /// <summary> Gets the Block. </summary>
         public static DnsSecurityRuleActionType Block { get; } = new DnsSecurityRuleActionType(BlockValue);
+
         /// <summary> Determines if two <see cref="DnsSecurityRuleActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DnsSecurityRuleActionType left, DnsSecurityRuleActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DnsSecurityRuleActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DnsSecurityRuleActionType left, DnsSecurityRuleActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DnsSecurityRuleActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DnsSecurityRuleActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DnsSecurityRuleActionType(string value) => new DnsSecurityRuleActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DnsSecurityRuleActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DnsSecurityRuleActionType?(string value) => value == null ? null : new DnsSecurityRuleActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DnsSecurityRuleActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DnsSecurityRuleActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

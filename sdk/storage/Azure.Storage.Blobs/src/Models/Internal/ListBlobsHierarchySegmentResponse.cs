@@ -3,5 +3,5 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    internal partial class ListBlobsHierarchySegmentResponse {}
+    internal partial class ListBlobsHierarchySegmentResponse { }
 }

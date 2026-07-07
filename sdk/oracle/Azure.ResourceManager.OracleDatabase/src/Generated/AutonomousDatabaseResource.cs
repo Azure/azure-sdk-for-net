@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabasePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabasePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseLifecycleAction.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateChangeDisasterRecoveryConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DisasterRecoveryConfigurationDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreAutonomousDatabaseDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RestoreAutonomousDatabaseDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateShrinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateShrinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _autonomousDatabasesRestClient.CreateSwitchoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutonomousDatabaseActionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<AutonomousDatabaseResource> operation = new OracleDatabaseArmOperation<AutonomousDatabaseResource>(
-                    new AutonomousDatabaseOperationSource(Client),
+                    new AutonomousDatabaseResourceOperationSource(Client),
                     _autonomousDatabasesClientDiagnostics,
                     Pipeline,
                     message.Request,

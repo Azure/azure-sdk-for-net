@@ -35,7 +35,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Initial description",
                 Config = new ContentAnalyzerConfig
                 {
-                    ReturnDetails = true
+                    ShouldReturnDetails = true
                 }
             };
             initialAnalyzer.Models["completion"] = "gpt-4.1";
@@ -213,10 +213,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                         // Config properties should be preserved if not explicitly updated
                         Console.WriteLine("Config exists in updated analyzer");
 
-                        if (currentAnalyzer.Value.Config.ReturnDetails.HasValue &&
-                            updated.Value.Config.ReturnDetails.HasValue)
+                        if (currentAnalyzer.Value.Config.ShouldReturnDetails.HasValue &&
+                            updated.Value.Config.ShouldReturnDetails.HasValue)
                         {
-                            Console.WriteLine($"  ReturnDetails: {updated.Value.Config.ReturnDetails.Value}");
+                            Console.WriteLine($"  ReturnDetails: {updated.Value.Config.ShouldReturnDetails.Value}");
                         }
                     }
                     else

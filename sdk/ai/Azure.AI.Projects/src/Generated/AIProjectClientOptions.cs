@@ -4,6 +4,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Projects
 {
@@ -24,6 +26,27 @@ namespace Azure.AI.Projects
             };
         }
 
+        /// <summary> Initializes a new instance of AIProjectClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal AIProjectClientOptions(IConfigurationSection section) : base(section)
+        {
+            Version = "v1";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            string userAgentApplicationId = section["UserAgentApplicationId"];
+            if (!string.IsNullOrEmpty(userAgentApplicationId))
+            {
+                UserAgentApplicationId = userAgentApplicationId;
+            }
+        }
+
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
@@ -32,7 +55,7 @@ namespace Azure.AI.Projects
         {
             /// <summary> Azure AI API version 2025-05-01. </summary>
             V2025_05_01 = 1,
-            /// <summary> Azure AI API version v1. </summary>
+            /// <summary> Microsoft Foundry API version v1. </summary>
             V1 = 2
         }
     }

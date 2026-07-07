@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-07-15-preview"
+  "apiVersions": {
+    "HealthDataAIServices.DeidServices": "2025-07-15-preview"
+  }
 }
