@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Memory
     /// Base definition for memory store configurations.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MemoryStoreDefaultDefinition"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class MemoryStoreDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

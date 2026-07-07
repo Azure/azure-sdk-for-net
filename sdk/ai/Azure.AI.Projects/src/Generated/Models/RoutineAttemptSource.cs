@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Known source paths that can produce a routine run. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct RoutineAttemptSource : IEquatable<RoutineAttemptSource>
     {
         private readonly string _value;

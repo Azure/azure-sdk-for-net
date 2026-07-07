@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A toolbox search tool stored in a toolbox. </summary>
-    [Experimental("AAIP001")]
     public partial class ToolboxSearchPreviewToolboxTool : ToolboxTool
     {
         /// <summary> Initializes a new instance of <see cref="ToolboxSearchPreviewToolboxTool"/>. </summary>

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
-    [Experimental("AAIP001")]
     public partial class UserProfileMemoryItem : MemoryItem
     {
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/>. </summary>

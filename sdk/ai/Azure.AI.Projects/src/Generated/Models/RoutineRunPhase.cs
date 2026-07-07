@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Known lifecycle phases recorded for a routine run. </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct RoutineRunPhase : IEquatable<RoutineRunPhase>
     {
         private readonly string _value;

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A recurring cron-based routine trigger. </summary>
-    [Experimental("AAIP001")]
     public partial class ScheduleRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleRoutineTrigger"/>. </summary>
