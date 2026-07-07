@@ -496,13 +496,14 @@ namespace Azure.Generator.Provisioning.Providers
                 var isOutput = (prop.IsReadOnly && !RequiredInputProperties.Contains(serializedName)
                         && !_createBodyWritableProperties.Contains(serializedName))
                     || OutputOnlyProperties.Contains(serializedName);
-                var isSettable = !isOutput && _hasWritableScopes;
+                var isResourceName = string.Equals(serializedName, "name", StringComparison.OrdinalIgnoreCase);
+                var isSettable = !isOutput && (_hasWritableScopes || isResourceName);
                 var isRequired = prop.IsRequired || RequiredInputProperties.Contains(serializedName);
 
                 var propertyName = prop.Name.ToIdentifierName();
                 // For singleton resources, the "name" property is output-only with a default value
                 string? defaultValue = null;
-                if (serializedName == "name"
+                if (isResourceName
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
                     defaultValue = singletonResourceName;
