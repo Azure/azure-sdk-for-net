@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerRegistry
         /// <summary> Creates a new ContainerRegistryPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerRegistryPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/privateLinkResources", resourceVersion ?? "2025-11-01")
+        internal ContainerRegistryPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries/privateLinkResources", resourceVersion ?? "2025-11-01")
         {
         }
 
@@ -38,18 +38,13 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 
@@ -63,18 +58,13 @@ namespace Azure.Provisioning.ContainerRegistry
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal ContainerRegistryPrivateLinkResourceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -98,10 +88,6 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ContainerRegistryPrivateLinkResourceProperties();
-                }
                 return Properties.GroupId;
             }
         }
@@ -111,10 +97,6 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ContainerRegistryPrivateLinkResourceProperties();
-                }
                 return Properties.RequiredMembers;
             }
         }
@@ -124,15 +106,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredZoneNames;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerRegistryPrivateLinkResourceProperties();
-                }
-                Properties.RequiredZoneNames = value;
+                return Properties.RequiredZoneNames;
             }
         }
 
