@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
