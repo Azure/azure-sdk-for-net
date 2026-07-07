@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ImageBuilder.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="TriggerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ImageTemplateTriggerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TriggerResource"/> object. </returns>
-        public virtual TriggerResource GetTriggerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ImageTemplateTriggerResource"/> object. </returns>
+        public virtual ImageTemplateTriggerResource GetImageTemplateTriggerResource(ResourceIdentifier id)
         {
-            TriggerResource.ValidateResourceId(id);
-            return new TriggerResource(Client, id);
+            ImageTemplateTriggerResource.ValidateResourceId(id);
+            return new ImageTemplateTriggerResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ImageTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>

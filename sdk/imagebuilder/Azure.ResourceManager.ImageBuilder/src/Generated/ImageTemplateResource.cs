@@ -875,11 +875,11 @@ namespace Azure.ResourceManager.ImageBuilder
             }
         }
 
-        /// <summary> Gets a collection of Triggers in the <see cref="ImageTemplateResource"/>. </summary>
-        /// <returns> An object representing collection of Triggers and their operations over a TriggerResource. </returns>
-        public virtual TriggerCollection GetTriggers()
+        /// <summary> Gets a collection of ImageTemplateTriggers in the <see cref="ImageTemplateResource"/>. </summary>
+        /// <returns> An object representing collection of ImageTemplateTriggers and their operations over a ImageTemplateTriggerResource. </returns>
+        public virtual ImageTemplateTriggerCollection GetImageTemplateTriggers()
         {
-            return GetCachedClient(client => new TriggerCollection(client, Id));
+            return GetCachedClient(client => new ImageTemplateTriggerCollection(client, Id));
         }
 
         /// <summary> Get the specified trigger for the specified image template resource. </summary>
@@ -888,11 +888,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TriggerResource>> GetTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageTemplateTriggerResource>> GetImageTemplateTriggerAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            return await GetTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
+            return await GetImageTemplateTriggers().GetAsync(triggerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the specified trigger for the specified image template resource. </summary>
@@ -901,11 +901,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TriggerResource> GetTrigger(string triggerName, CancellationToken cancellationToken = default)
+        public virtual Response<ImageTemplateTriggerResource> GetImageTemplateTrigger(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            return GetTriggers().Get(triggerName, cancellationToken);
+            return GetImageTemplateTriggers().Get(triggerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RunOutputs in the <see cref="ImageTemplateResource"/>. </summary>

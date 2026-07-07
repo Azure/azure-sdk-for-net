@@ -15,63 +15,63 @@ using Azure.ResourceManager.ImageBuilder;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> The result of List triggers operation. </summary>
-    internal partial class TriggerListResult : IJsonModel<TriggerListResult>
+    internal partial class ImageTemplateTriggerListResult : IJsonModel<ImageTemplateTriggerListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="TriggerListResult"/> for deserialization. </summary>
-        internal TriggerListResult()
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateTriggerListResult"/> for deserialization. </summary>
+        internal ImageTemplateTriggerListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ImageTemplateTriggerListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateTriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTriggerListResult(document.RootElement, options);
+                        return DeserializeImageTemplateTriggerListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggerListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplateTriggerListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateTriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerImageBuilderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TriggerListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplateTriggerListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TriggerListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ImageTemplateTriggerListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerListResult IPersistableModel<TriggerListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImageTemplateTriggerListResult IPersistableModel<ImageTemplateTriggerListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TriggerListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImageTemplateTriggerListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TriggerListResult"/> from. </param>
-        internal static TriggerListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ImageTemplateTriggerListResult"/> from. </param>
+        internal static ImageTemplateTriggerListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTriggerListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeImageTemplateTriggerListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TriggerListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImageTemplateTriggerListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateTriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplateTriggerListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (TriggerData item in Value)
+            foreach (ImageTemplateTriggerData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -118,40 +118,40 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerListResult IJsonModel<TriggerListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImageTemplateTriggerListResult IJsonModel<ImageTemplateTriggerListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ImageTemplateTriggerListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateTriggerListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplateTriggerListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTriggerListResult(document.RootElement, options);
+            return DeserializeImageTemplateTriggerListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TriggerListResult DeserializeTriggerListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImageTemplateTriggerListResult DeserializeImageTemplateTriggerListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<TriggerData> value = default;
+            IList<ImageTemplateTriggerData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<TriggerData> array = new List<TriggerData>();
+                    List<ImageTemplateTriggerData> array = new List<ImageTemplateTriggerData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TriggerData.DeserializeTriggerData(item, options));
+                        array.Add(ImageTemplateTriggerData.DeserializeImageTemplateTriggerData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TriggerListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ImageTemplateTriggerListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -13,52 +13,52 @@ using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
-    /// <summary> Specifies optimization to be performed on image. </summary>
-    public partial class ImageTemplatePropertiesOptimize : IJsonModel<ImageTemplatePropertiesOptimize>
+    /// <summary> Parameters for updating an image template. </summary>
+    public partial class ImageTemplatePatchProperties : IJsonModel<ImageTemplatePatchProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImageTemplatePropertiesOptimize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ImageTemplatePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesOptimize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImageTemplatePropertiesOptimize(document.RootElement, options);
+                        return DeserializeImageTemplatePatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageTemplatePropertiesOptimize)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplatePatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesOptimize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerImageBuilderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImageTemplatePropertiesOptimize)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplatePatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageTemplatePropertiesOptimize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ImageTemplatePatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageTemplatePropertiesOptimize IPersistableModel<ImageTemplatePropertiesOptimize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImageTemplatePatchProperties IPersistableModel<ImageTemplatePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageTemplatePropertiesOptimize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImageTemplatePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImageTemplatePropertiesOptimize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImageTemplatePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesOptimize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageTemplatePropertiesOptimize)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplatePatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(VmBoot))
+            if (Optional.IsCollectionDefined(Distribute))
             {
-                writer.WritePropertyName("vmBoot"u8);
-                writer.WriteObjectValue(VmBoot, options);
+                writer.WritePropertyName("distribute"u8);
+                writer.WriteStartArray();
+                foreach (ImageTemplateDistributor item in Distribute)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Workload))
+            if (Optional.IsDefined(VmProfile))
             {
-                writer.WritePropertyName("workload"u8);
-                writer.WriteObjectValue(Workload, options);
+                writer.WritePropertyName("vmProfile"u8);
+                writer.WriteObjectValue(VmProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +108,55 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageTemplatePropertiesOptimize IJsonModel<ImageTemplatePropertiesOptimize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImageTemplatePatchProperties IJsonModel<ImageTemplatePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImageTemplatePropertiesOptimize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ImageTemplatePatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesOptimize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageTemplatePropertiesOptimize)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplatePatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageTemplatePropertiesOptimize(document.RootElement, options);
+            return DeserializeImageTemplatePatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ImageTemplatePropertiesOptimize DeserializeImageTemplatePropertiesOptimize(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImageTemplatePatchProperties DeserializeImageTemplatePatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ImageTemplatePropertiesOptimizeVmBoot vmBoot = default;
-            ImageTemplatePropertiesOptimizeWorkload workload = default;
+            IList<ImageTemplateDistributor> distribute = default;
+            ImageTemplateVmProfile vmProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("vmBoot"u8))
+                if (prop.NameEquals("distribute"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmBoot = ImageTemplatePropertiesOptimizeVmBoot.DeserializeImageTemplatePropertiesOptimizeVmBoot(prop.Value, options);
+                    List<ImageTemplateDistributor> array = new List<ImageTemplateDistributor>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ImageTemplateDistributor.DeserializeImageTemplateDistributor(item, options));
+                    }
+                    distribute = array;
                     continue;
                 }
-                if (prop.NameEquals("workload"u8))
+                if (prop.NameEquals("vmProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    workload = ImageTemplatePropertiesOptimizeWorkload.DeserializeImageTemplatePropertiesOptimizeWorkload(prop.Value, options);
+                    vmProfile = ImageTemplateVmProfile.DeserializeImageTemplateVmProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +164,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImageTemplatePropertiesOptimize(vmBoot, workload, additionalBinaryDataProperties);
+            return new ImageTemplatePatchProperties(distribute ?? new ChangeTrackingList<ImageTemplateDistributor>(), vmProfile, additionalBinaryDataProperties);
         }
     }
 }

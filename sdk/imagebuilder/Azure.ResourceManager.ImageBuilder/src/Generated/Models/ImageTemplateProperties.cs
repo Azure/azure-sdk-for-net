@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="autoRun"> Indicates whether or not to automatically run the image template build on template creation or update. </param>
         /// <param name="managedResourceTags"> Tags that will be applied to the resource group and/or resources created by the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateProperties(ImageTemplateSource source, IList<ImageTemplateCustomizer> customize, ImageTemplatePropertiesOptimize optimize, ImageTemplatePropertiesValidate validate, IList<ImageTemplateDistributor> distribute, ImageTemplatePropertiesErrorHandling errorHandling, ProvisioningState? provisioningState, ProvisioningError provisioningError, ImageTemplateLastRunStatus lastRunStatus, int? buildTimeoutInMinutes, ImageTemplateVmProfile vmProfile, IList<DataDisk> additionalDataDisks, string stagingResourceGroup, string exactStagingResourceGroup, ImageTemplateAutoRun autoRun, IDictionary<string, string> managedResourceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateProperties(ImageTemplateSource source, IList<ImageTemplateCustomizer> customize, ImageTemplateOptimizeConfig optimize, ImageTemplateValidationConfig validate, IList<ImageTemplateDistributor> distribute, ImageTemplateErrorHandling errorHandling, ProvisioningState? provisioningState, ProvisioningError provisioningError, ImageTemplateLastRunStatus lastRunStatus, int? buildTimeoutInMinutes, ImageTemplateVmProfile vmProfile, IList<DataDisk> additionalDataDisks, string stagingResourceGroup, string exactStagingResourceGroup, ImageTemplateAutoRun autoRun, IDictionary<string, string> managedResourceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Customize = customize;
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public IList<ImageTemplateCustomizer> Customize { get; } = new ChangeTrackingList<ImageTemplateCustomizer>();
 
         /// <summary> Specifies optimization to be performed on image. </summary>
-        public ImageTemplatePropertiesOptimize Optimize { get; set; }
+        public ImageTemplateOptimizeConfig Optimize { get; set; }
 
         /// <summary> Configuration options and list of validations to be performed on the resulting image. </summary>
-        public ImageTemplatePropertiesValidate Validate { get; set; }
+        public ImageTemplateValidationConfig Validate { get; set; }
 
         /// <summary> The distribution targets where the image output needs to go to. </summary>
         public IList<ImageTemplateDistributor> Distribute { get; } = new ChangeTrackingList<ImageTemplateDistributor>();
 
         /// <summary> Error handling options upon a build failure. </summary>
-        public ImageTemplatePropertiesErrorHandling ErrorHandling { get; set; }
+        public ImageTemplateErrorHandling ErrorHandling { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }

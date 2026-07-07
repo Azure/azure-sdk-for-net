@@ -12,22 +12,22 @@ using Azure.ResourceManager.ImageBuilder;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> Parameters for updating an image template. </summary>
-    public partial class ImageTemplateUpdateParametersProperties
+    public partial class ImageTemplatePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplateUpdateParametersProperties"/>. </summary>
-        public ImageTemplateUpdateParametersProperties()
+        /// <summary> Initializes a new instance of <see cref="ImageTemplatePatchProperties"/>. </summary>
+        public ImageTemplatePatchProperties()
         {
             Distribute = new ChangeTrackingList<ImageTemplateDistributor>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplateUpdateParametersProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplatePatchProperties"/>. </summary>
         /// <param name="distribute"> The distribution targets where the image output needs to go to. </param>
         /// <param name="vmProfile"> Describes how virtual machine is set up to build images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplateUpdateParametersProperties(IList<ImageTemplateDistributor> distribute, ImageTemplateVmProfile vmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplatePatchProperties(IList<ImageTemplateDistributor> distribute, ImageTemplateVmProfile vmProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Distribute = distribute;
             VmProfile = vmProfile;

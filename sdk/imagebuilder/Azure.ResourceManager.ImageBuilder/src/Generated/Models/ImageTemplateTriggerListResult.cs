@@ -13,23 +13,23 @@ using Azure.ResourceManager.ImageBuilder;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> The result of List triggers operation. </summary>
-    internal partial class TriggerListResult
+    internal partial class ImageTemplateTriggerListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TriggerListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateTriggerListResult"/>. </summary>
         /// <param name="value"> The Trigger items on this page. </param>
-        internal TriggerListResult(IEnumerable<TriggerData> value)
+        internal ImageTemplateTriggerListResult(IEnumerable<ImageTemplateTriggerData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateTriggerListResult"/>. </summary>
         /// <param name="value"> The Trigger items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerListResult(IList<TriggerData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateTriggerListResult(IList<ImageTemplateTriggerData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         }
 
         /// <summary> The Trigger items on this page. </summary>
-        public IList<TriggerData> Value { get; }
+        public IList<ImageTemplateTriggerData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

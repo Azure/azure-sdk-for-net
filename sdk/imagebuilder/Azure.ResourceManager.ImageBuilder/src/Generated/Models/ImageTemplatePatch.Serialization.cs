@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             }
             ImageTemplateIdentity identity = default;
             IDictionary<string, string> tags = default;
-            ImageTemplateUpdateParametersProperties properties = default;
+            ImageTemplatePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    properties = ImageTemplateUpdateParametersProperties.DeserializeImageTemplateUpdateParametersProperties(prop.Value, options);
+                    properties = ImageTemplatePatchProperties.DeserializeImageTemplatePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

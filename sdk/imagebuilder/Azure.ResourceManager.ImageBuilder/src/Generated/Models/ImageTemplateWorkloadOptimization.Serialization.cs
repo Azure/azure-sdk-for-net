@@ -13,52 +13,52 @@ using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
-    /// <summary> Describes the status of a trigger. </summary>
-    public partial class TriggerStatus : IJsonModel<TriggerStatus>
+    /// <summary> Optimization is applied on the image for specific workloads. </summary>
+    public partial class ImageTemplateWorkloadOptimization : IJsonModel<ImageTemplateWorkloadOptimization>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ImageTemplateWorkloadOptimization PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateWorkloadOptimization>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTriggerStatus(document.RootElement, options);
+                        return DeserializeImageTemplateWorkloadOptimization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggerStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplateWorkloadOptimization)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateWorkloadOptimization>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerImageBuilderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TriggerStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplateWorkloadOptimization)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TriggerStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ImageTemplateWorkloadOptimization>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerStatus IPersistableModel<TriggerStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImageTemplateWorkloadOptimization IPersistableModel<ImageTemplateWorkloadOptimization>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TriggerStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImageTemplateWorkloadOptimization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TriggerStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImageTemplateWorkloadOptimization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateWorkloadOptimization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplateWorkloadOptimization)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (Optional.IsDefined(ScriptUri))
             {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
+                writer.WritePropertyName("scriptUri"u8);
+                writer.WriteStringValue(ScriptUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecordedOn))
+            if (Optional.IsDefined(Sha256Checksum))
             {
-                writer.WritePropertyName("time"u8);
-                writer.WriteStringValue(RecordedOn.Value, "O");
+                writer.WritePropertyName("sha256Checksum"u8);
+                writer.WriteStringValue(Sha256Checksum);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,52 +108,52 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerStatus IJsonModel<TriggerStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImageTemplateWorkloadOptimization IJsonModel<ImageTemplateWorkloadOptimization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ImageTemplateWorkloadOptimization JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateWorkloadOptimization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplateWorkloadOptimization)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTriggerStatus(document.RootElement, options);
+            return DeserializeImageTemplateWorkloadOptimization(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TriggerStatus DeserializeTriggerStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImageTemplateWorkloadOptimization DeserializeImageTemplateWorkloadOptimization(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string code = default;
-            string message = default;
-            DateTimeOffset? recordedOn = default;
+            WorkloadOptimizationState? state = default;
+            string scriptUri = default;
+            string sha256Checksum = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("code"u8))
-                {
-                    code = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("message"u8))
-                {
-                    message = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("time"u8))
+                if (prop.NameEquals("state"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recordedOn = prop.Value.GetDateTimeOffset("O");
+                    state = prop.Value.GetString().ToWorkloadOptimizationState();
+                    continue;
+                }
+                if (prop.NameEquals("scriptUri"u8))
+                {
+                    scriptUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sha256Checksum"u8))
+                {
+                    sha256Checksum = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TriggerStatus(code, message, recordedOn, additionalBinaryDataProperties);
+            return new ImageTemplateWorkloadOptimization(state, scriptUri, sha256Checksum, additionalBinaryDataProperties);
         }
     }
 }

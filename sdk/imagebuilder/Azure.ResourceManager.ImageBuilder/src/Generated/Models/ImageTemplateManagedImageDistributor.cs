@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ImageBuilder;
 
 namespace Azure.ResourceManager.ImageBuilder.Models
@@ -18,12 +19,11 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="runOutputName"> The name to be used for the associated RunOutput. </param>
         /// <param name="imageId"> Resource Id of the Managed Disk Image. </param>
         /// <param name="location"> Azure location for the image, should match if image already exists. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runOutputName"/>, <paramref name="imageId"/> or <paramref name="location"/> is null. </exception>
-        public ImageTemplateManagedImageDistributor(string runOutputName, string imageId, string location) : base("ManagedImage", runOutputName)
+        /// <exception cref="ArgumentNullException"> <paramref name="runOutputName"/> or <paramref name="imageId"/> is null. </exception>
+        public ImageTemplateManagedImageDistributor(string runOutputName, string imageId, AzureLocation location) : base("ManagedImage", runOutputName)
         {
             Argument.AssertNotNull(runOutputName, nameof(runOutputName));
             Argument.AssertNotNull(imageId, nameof(imageId));
-            Argument.AssertNotNull(location, nameof(location));
 
             ImageId = imageId;
             Location = location;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageId"> Resource Id of the Managed Disk Image. </param>
         /// <param name="location"> Azure location for the image, should match if image already exists. </param>
-        internal ImageTemplateManagedImageDistributor(string @type, string runOutputName, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageId, string location) : base(@type, runOutputName, artifactTags, additionalBinaryDataProperties)
+        internal ImageTemplateManagedImageDistributor(string @type, string runOutputName, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageId, AzureLocation location) : base(@type, runOutputName, artifactTags, additionalBinaryDataProperties)
         {
             ImageId = imageId;
             Location = location;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public string ImageId { get; set; }
 
         /// <summary> Azure location for the image, should match if image already exists. </summary>
-        public string Location { get; set; }
+        public AzureLocation Location { get; set; }
     }
 }

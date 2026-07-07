@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> Error handling options upon a build failure. </summary>
-    public partial class ImageTemplatePropertiesErrorHandling
+    public partial class ImageTemplateErrorHandling
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplatePropertiesErrorHandling"/>. </summary>
-        public ImageTemplatePropertiesErrorHandling()
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateErrorHandling"/>. </summary>
+        public ImageTemplateErrorHandling()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplatePropertiesErrorHandling"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateErrorHandling"/>. </summary>
         /// <param name="onCustomizerError"> If there is a customizer error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a customizer error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <param name="onValidationError"> If there is a validation error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a validation error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplatePropertiesErrorHandling(OnBuildError? onCustomizerError, OnBuildError? onValidationError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateErrorHandling(OnBuildError? onCustomizerError, OnBuildError? onValidationError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OnCustomizerError = onCustomizerError;
             OnValidationError = onValidationError;

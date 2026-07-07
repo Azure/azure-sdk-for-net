@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ImageBuilder
 {
     /// <summary></summary>
-    internal partial class TriggerResourceOperationSource : IOperationSource<TriggerResource>
+    internal partial class ImageTemplateTriggerResourceOperationSource : IOperationSource<ImageTemplateTriggerResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal TriggerResourceOperationSource(ArmClient client)
+        internal ImageTemplateTriggerResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        TriggerResource IOperationSource<TriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ImageTemplateTriggerResource IOperationSource<ImageTemplateTriggerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            TriggerData data = TriggerData.DeserializeTriggerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new TriggerResource(_client, data);
+            ImageTemplateTriggerData data = ImageTemplateTriggerData.DeserializeImageTemplateTriggerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ImageTemplateTriggerResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<TriggerResource> IOperationSource<TriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ImageTemplateTriggerResource> IOperationSource<ImageTemplateTriggerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            TriggerData data = TriggerData.DeserializeTriggerData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new TriggerResource(_client, data);
+            ImageTemplateTriggerData data = ImageTemplateTriggerData.DeserializeImageTemplateTriggerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ImageTemplateTriggerResource(_client, data);
         }
     }
 }

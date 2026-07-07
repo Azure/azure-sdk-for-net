@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="tags"> The user-specified tags associated with the image template. </param>
         /// <param name="properties"> Parameters for updating an image template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplatePatch(ImageTemplateIdentity identity, IDictionary<string, string> tags, ImageTemplateUpdateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplatePatch(ImageTemplateIdentity identity, IDictionary<string, string> tags, ImageTemplatePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Parameters for updating an image template. </summary>
-        public ImageTemplateUpdateParametersProperties Properties { get; set; }
+        public ImageTemplatePatchProperties Properties { get; set; }
     }
 }

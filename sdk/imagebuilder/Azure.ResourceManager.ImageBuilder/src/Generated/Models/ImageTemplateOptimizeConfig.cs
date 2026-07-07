@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> Specifies optimization to be performed on image. </summary>
-    public partial class ImageTemplatePropertiesOptimize
+    public partial class ImageTemplateOptimizeConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplatePropertiesOptimize"/>. </summary>
-        public ImageTemplatePropertiesOptimize()
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateOptimizeConfig"/>. </summary>
+        public ImageTemplateOptimizeConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplatePropertiesOptimize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateOptimizeConfig"/>. </summary>
         /// <param name="vmBoot"> Optimization is applied on the image for a faster VM boot. </param>
         /// <param name="workload"> Optimization is applied on the image for specific workloads. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplatePropertiesOptimize(ImageTemplatePropertiesOptimizeVmBoot vmBoot, ImageTemplatePropertiesOptimizeWorkload workload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateOptimizeConfig(ImageTemplatePropertiesOptimizeVmBoot vmBoot, ImageTemplateWorkloadOptimization workload, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmBoot = vmBoot;
             Workload = workload;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         internal ImageTemplatePropertiesOptimizeVmBoot VmBoot { get; set; }
 
         /// <summary> Optimization is applied on the image for specific workloads. </summary>
-        public ImageTemplatePropertiesOptimizeWorkload Workload { get; set; }
+        public ImageTemplateWorkloadOptimization Workload { get; set; }
 
         /// <summary> Enabling this field will improve VM boot time by optimizing the final customized image output. </summary>
         public VMBootOptimizationState? VmBootState

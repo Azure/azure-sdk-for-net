@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ImageBuilder
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TriggerResource"/> and their operations.
-    /// Each <see cref="TriggerResource"/> in the collection will belong to the same instance of <see cref="ImageTemplateResource"/>.
-    /// To get a <see cref="TriggerCollection"/> instance call the GetTriggers method from an instance of <see cref="ImageTemplateResource"/>.
+    /// A class representing a collection of <see cref="ImageTemplateTriggerResource"/> and their operations.
+    /// Each <see cref="ImageTemplateTriggerResource"/> in the collection will belong to the same instance of <see cref="ImageTemplateResource"/>.
+    /// To get a <see cref="ImageTemplateTriggerCollection"/> instance call the GetImageTemplateTriggers method from an instance of <see cref="ImageTemplateResource"/>.
     /// </summary>
-    public partial class TriggerCollection : ArmCollection, IEnumerable<TriggerResource>, IAsyncEnumerable<TriggerResource>
+    public partial class ImageTemplateTriggerCollection : ArmCollection, IEnumerable<ImageTemplateTriggerResource>, IAsyncEnumerable<ImageTemplateTriggerResource>
     {
         private readonly ClientDiagnostics _triggersClientDiagnostics;
         private readonly Triggers _triggersRestClient;
 
-        /// <summary> Initializes a new instance of TriggerCollection for mocking. </summary>
-        protected TriggerCollection()
+        /// <summary> Initializes a new instance of ImageTemplateTriggerCollection for mocking. </summary>
+        protected ImageTemplateTriggerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateTriggerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TriggerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ImageTemplateTriggerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(TriggerResource.ResourceType, out string triggerApiVersion);
-            _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", TriggerResource.ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, triggerApiVersion ?? "2025-10-01");
+            TryGetApiVersion(ImageTemplateTriggerResource.ResourceType, out string imageTemplateTriggerApiVersion);
+            _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ImageTemplateTriggerResource.ResourceType.Namespace, Diagnostics);
+            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, imageTemplateTriggerApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TriggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string triggerName, TriggerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ImageTemplateTriggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string triggerName, ImageTemplateTriggerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, TriggerData.ToRequestContent(data), context);
+                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, ImageTemplateTriggerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ImageBuilderArmOperation<TriggerResource> operation = new ImageBuilderArmOperation<TriggerResource>(
-                    new TriggerResourceOperationSource(Client),
+                ImageBuilderArmOperation<ImageTemplateTriggerResource> operation = new ImageBuilderArmOperation<ImageTemplateTriggerResource>(
+                    new ImageTemplateTriggerResourceOperationSource(Client),
                     _triggersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TriggerResource> CreateOrUpdate(WaitUntil waitUntil, string triggerName, TriggerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ImageTemplateTriggerResource> CreateOrUpdate(WaitUntil waitUntil, string triggerName, ImageTemplateTriggerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, TriggerData.ToRequestContent(data), context);
+                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, ImageTemplateTriggerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ImageBuilderArmOperation<TriggerResource> operation = new ImageBuilderArmOperation<TriggerResource>(
-                    new TriggerResourceOperationSource(Client),
+                ImageBuilderArmOperation<ImageTemplateTriggerResource> operation = new ImageBuilderArmOperation<ImageTemplateTriggerResource>(
+                    new ImageTemplateTriggerResourceOperationSource(Client),
                     _triggersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +191,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TriggerResource>> GetAsync(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageTemplateTriggerResource>> GetAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.Get");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.Get");
             scope.Start();
             try
             {
@@ -205,12 +205,12 @@ namespace Azure.ResourceManager.ImageBuilder
                 };
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TriggerData> response = Response.FromValue(TriggerData.FromResponse(result), result);
+                Response<ImageTemplateTriggerData> response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ImageTemplateTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TriggerResource> Get(string triggerName, CancellationToken cancellationToken = default)
+        public virtual Response<ImageTemplateTriggerResource> Get(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.Get");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.Get");
             scope.Start();
             try
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.ImageBuilder
                 };
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TriggerData> response = Response.FromValue(TriggerData.FromResponse(result), result);
+                Response<ImageTemplateTriggerData> response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ImageTemplateTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -286,20 +286,20 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TriggerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ImageTemplateTriggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ImageTemplateTriggerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TriggerData, TriggerResource>(new TriggersGetByImageTemplateAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new TriggersGetByImageTemplateAsyncCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "TriggerCollection.GetAll"), data => new TriggerResource(Client, data));
+                "ImageTemplateTriggerCollection.GetAll"), data => new ImageTemplateTriggerResource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +320,20 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TriggerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TriggerResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ImageTemplateTriggerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ImageTemplateTriggerResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TriggerData, TriggerResource>(new TriggersGetByImageTemplateCollectionResultOfT(
+            return new PageableWrapper<ImageTemplateTriggerData, ImageTemplateTriggerResource>(new TriggersGetByImageTemplateCollectionResultOfT(
                 _triggersRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "TriggerCollection.GetAll"), data => new TriggerResource(Client, data));
+                "ImageTemplateTriggerCollection.GetAll"), data => new ImageTemplateTriggerResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ImageBuilder
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.Exists");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.ImageBuilder
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TriggerData> response = default;
+                Response<ImageTemplateTriggerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TriggerData.FromResponse(result), result);
+                        response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TriggerData)null, result);
+                        response = Response.FromValue((ImageTemplateTriggerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ImageBuilder
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.Exists");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.ImageBuilder
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TriggerData> response = default;
+                Response<ImageTemplateTriggerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TriggerData.FromResponse(result), result);
+                        response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TriggerData)null, result);
+                        response = Response.FromValue((ImageTemplateTriggerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<TriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ImageTemplateTriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.GetIfExists");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +486,23 @@ namespace Azure.ResourceManager.ImageBuilder
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<TriggerData> response = default;
+                Response<ImageTemplateTriggerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TriggerData.FromResponse(result), result);
+                        response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TriggerData)null, result);
+                        response = Response.FromValue((ImageTemplateTriggerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TriggerResource>(response.GetRawResponse());
+                    return new NoValueResponse<ImageTemplateTriggerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ImageTemplateTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<TriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ImageTemplateTriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerCollection.GetIfExists");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +547,23 @@ namespace Azure.ResourceManager.ImageBuilder
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, triggerName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<TriggerData> response = default;
+                Response<ImageTemplateTriggerData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(TriggerData.FromResponse(result), result);
+                        response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((TriggerData)null, result);
+                        response = Response.FromValue((ImageTemplateTriggerData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<TriggerResource>(response.GetRawResponse());
+                    return new NoValueResponse<ImageTemplateTriggerResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new TriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ImageTemplateTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ImageBuilder
             }
         }
 
-        IEnumerator<TriggerResource> IEnumerable<TriggerResource>.GetEnumerator()
+        IEnumerator<ImageTemplateTriggerResource> IEnumerable<ImageTemplateTriggerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<TriggerResource> IAsyncEnumerable<TriggerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ImageTemplateTriggerResource> IAsyncEnumerable<ImageTemplateTriggerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

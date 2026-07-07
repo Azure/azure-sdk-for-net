@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> Optimization is applied on the image for specific workloads. </summary>
-    public partial class ImageTemplatePropertiesOptimizeWorkload
+    public partial class ImageTemplateWorkloadOptimization
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplatePropertiesOptimizeWorkload"/>. </summary>
-        public ImageTemplatePropertiesOptimizeWorkload()
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateWorkloadOptimization"/>. </summary>
+        public ImageTemplateWorkloadOptimization()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageTemplatePropertiesOptimizeWorkload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateWorkloadOptimization"/>. </summary>
         /// <param name="state"> Enabling this field will optimize vm images for specific workloads. </param>
         /// <param name="scriptUri"> URI of the script to be run for workload optimization. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the script provided in the scriptUri field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageTemplatePropertiesOptimizeWorkload(WorkloadOptimizationState? state, string scriptUri, string sha256Checksum, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageTemplateWorkloadOptimization(WorkloadOptimizationState? state, string scriptUri, string sha256Checksum, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ScriptUri = scriptUri;

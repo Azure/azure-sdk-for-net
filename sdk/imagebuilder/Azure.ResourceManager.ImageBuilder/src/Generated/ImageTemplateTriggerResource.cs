@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ImageBuilder
 {
     /// <summary>
-    /// A class representing a Trigger along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TriggerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ImageTemplateResource"/> using the GetTriggers method.
+    /// A class representing a ImageTemplateTrigger along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ImageTemplateTriggerResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ImageTemplateResource"/> using the GetImageTemplateTriggers method.
     /// </summary>
-    public partial class TriggerResource : ArmResource
+    public partial class ImageTemplateTriggerResource : ArmResource
     {
         private readonly ClientDiagnostics _triggersClientDiagnostics;
         private readonly Triggers _triggersRestClient;
-        private readonly TriggerData _data;
+        private readonly ImageTemplateTriggerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.VirtualMachineImages/imageTemplates/triggers";
 
-        /// <summary> Initializes a new instance of TriggerResource for mocking. </summary>
-        protected TriggerResource()
+        /// <summary> Initializes a new instance of ImageTemplateTriggerResource for mocking. </summary>
+        protected ImageTemplateTriggerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TriggerResource(ArmClient client, TriggerData data) : this(client, data.Id)
+        internal ImageTemplateTriggerResource(ArmClient client, ImageTemplateTriggerData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageTemplateTriggerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal TriggerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ImageTemplateTriggerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string triggerApiVersion);
+            TryGetApiVersion(ResourceType, out string imageTemplateTriggerApiVersion);
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImageBuilder", ResourceType.Namespace, Diagnostics);
-            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, triggerApiVersion ?? "2025-10-01");
+            _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, imageTemplateTriggerApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ImageBuilder
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual TriggerData Data
+        public virtual ImageTemplateTriggerData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TriggerResource"/>. </description>
+        /// <description> <see cref="ImageTemplateTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TriggerResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ImageTemplateTriggerResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerResource.Get");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ImageBuilder
                 };
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TriggerData> response = Response.FromValue(TriggerData.FromResponse(result), result);
+                Response<ImageTemplateTriggerData> response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ImageTemplateTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TriggerResource"/>. </description>
+        /// <description> <see cref="ImageTemplateTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TriggerResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ImageTemplateTriggerResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerResource.Get");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ImageBuilder
                 };
                 HttpMessage message = _triggersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TriggerData> response = Response.FromValue(TriggerData.FromResponse(result), result);
+                Response<ImageTemplateTriggerData> response = Response.FromValue(ImageTemplateTriggerData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new TriggerResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ImageTemplateTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TriggerResource"/>. </description>
+        /// <description> <see cref="ImageTemplateTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerResource.Delete");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TriggerResource"/>. </description>
+        /// <description> <see cref="ImageTemplateTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerResource.Delete");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerResource.Delete");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary>
-        /// Update a Trigger.
+        /// Update a ImageTemplateTrigger.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TriggerResource"/>. </description>
+        /// <description> <see cref="ImageTemplateTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="data"> Parameters supplied to the CreateTrigger operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TriggerResource>> UpdateAsync(WaitUntil waitUntil, TriggerData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ImageTemplateTriggerResource>> UpdateAsync(WaitUntil waitUntil, ImageTemplateTriggerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerResource.Update");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerResource.Update");
             scope.Start();
             try
             {
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TriggerData.ToRequestContent(data), context);
+                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImageTemplateTriggerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ImageBuilderArmOperation<TriggerResource> operation = new ImageBuilderArmOperation<TriggerResource>(
-                    new TriggerResourceOperationSource(Client),
+                ImageBuilderArmOperation<ImageTemplateTriggerResource> operation = new ImageBuilderArmOperation<ImageTemplateTriggerResource>(
+                    new ImageTemplateTriggerResourceOperationSource(Client),
                     _triggersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary>
-        /// Update a Trigger.
+        /// Update a ImageTemplateTrigger.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ImageBuilder
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="TriggerResource"/>. </description>
+        /// <description> <see cref="ImageTemplateTriggerResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.ImageBuilder
         /// <param name="data"> Parameters supplied to the CreateTrigger operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TriggerResource> Update(WaitUntil waitUntil, TriggerData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ImageTemplateTriggerResource> Update(WaitUntil waitUntil, ImageTemplateTriggerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("TriggerResource.Update");
+            using DiagnosticScope scope = _triggersClientDiagnostics.CreateScope("ImageTemplateTriggerResource.Update");
             scope.Start();
             try
             {
@@ -381,10 +381,10 @@ namespace Azure.ResourceManager.ImageBuilder
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, TriggerData.ToRequestContent(data), context);
+                HttpMessage message = _triggersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ImageTemplateTriggerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ImageBuilderArmOperation<TriggerResource> operation = new ImageBuilderArmOperation<TriggerResource>(
-                    new TriggerResourceOperationSource(Client),
+                ImageBuilderArmOperation<ImageTemplateTriggerResource> operation = new ImageBuilderArmOperation<ImageTemplateTriggerResource>(
+                    new ImageTemplateTriggerResourceOperationSource(Client),
                     _triggersClientDiagnostics,
                     Pipeline,
                     message.Request,

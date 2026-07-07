@@ -14,51 +14,51 @@ using Azure.ResourceManager.ImageBuilder;
 namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary> Configuration options and list of validations to be performed on the resulting image. </summary>
-    public partial class ImageTemplatePropertiesValidate : IJsonModel<ImageTemplatePropertiesValidate>
+    public partial class ImageTemplateValidationConfig : IJsonModel<ImageTemplateValidationConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImageTemplatePropertiesValidate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ImageTemplateValidationConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesValidate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImageTemplatePropertiesValidate(document.RootElement, options);
+                        return DeserializeImageTemplateValidationConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageTemplatePropertiesValidate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplateValidationConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesValidate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerImageBuilderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImageTemplatePropertiesValidate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageTemplateValidationConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImageTemplatePropertiesValidate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ImageTemplateValidationConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageTemplatePropertiesValidate IPersistableModel<ImageTemplatePropertiesValidate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ImageTemplateValidationConfig IPersistableModel<ImageTemplateValidationConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImageTemplatePropertiesValidate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImageTemplateValidationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImageTemplatePropertiesValidate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImageTemplateValidationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesValidate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageTemplatePropertiesValidate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplateValidationConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ContinueDistributeOnFailure))
+            if (Optional.IsDefined(ShouldContinueDistributeOnFailure))
             {
                 writer.WritePropertyName("continueDistributeOnFailure"u8);
-                writer.WriteBooleanValue(ContinueDistributeOnFailure.Value);
+                writer.WriteBooleanValue(ShouldContinueDistributeOnFailure.Value);
             }
-            if (Optional.IsDefined(SourceValidationOnly))
+            if (Optional.IsDefined(IsSourceValidationOnly))
             {
                 writer.WritePropertyName("sourceValidationOnly"u8);
-                writer.WriteBooleanValue(SourceValidationOnly.Value);
+                writer.WriteBooleanValue(IsSourceValidationOnly.Value);
             }
             if (Optional.IsCollectionDefined(InVMValidations))
             {
@@ -113,31 +113,31 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImageTemplatePropertiesValidate IJsonModel<ImageTemplatePropertiesValidate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ImageTemplateValidationConfig IJsonModel<ImageTemplateValidationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImageTemplatePropertiesValidate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ImageTemplateValidationConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplatePropertiesValidate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageTemplateValidationConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageTemplatePropertiesValidate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageTemplateValidationConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImageTemplatePropertiesValidate(document.RootElement, options);
+            return DeserializeImageTemplateValidationConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ImageTemplatePropertiesValidate DeserializeImageTemplatePropertiesValidate(JsonElement element, ModelReaderWriterOptions options)
+        internal static ImageTemplateValidationConfig DeserializeImageTemplateValidationConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? continueDistributeOnFailure = default;
-            bool? sourceValidationOnly = default;
+            bool? shouldContinueDistributeOnFailure = default;
+            bool? isSourceValidationOnly = default;
             IList<ImageTemplateInVMValidator> inVMValidations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    continueDistributeOnFailure = prop.Value.GetBoolean();
+                    shouldContinueDistributeOnFailure = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sourceValidationOnly"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    sourceValidationOnly = prop.Value.GetBoolean();
+                    isSourceValidationOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("inVMValidations"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImageTemplatePropertiesValidate(continueDistributeOnFailure, sourceValidationOnly, inVMValidations ?? new ChangeTrackingList<ImageTemplateInVMValidator>(), additionalBinaryDataProperties);
+            return new ImageTemplateValidationConfig(shouldContinueDistributeOnFailure, isSourceValidationOnly, inVMValidations ?? new ChangeTrackingList<ImageTemplateInVMValidator>(), additionalBinaryDataProperties);
         }
     }
 }

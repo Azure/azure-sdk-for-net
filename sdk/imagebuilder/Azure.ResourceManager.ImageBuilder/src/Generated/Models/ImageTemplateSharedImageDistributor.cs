@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="galleryImageId"> Resource Id of the Azure Compute Gallery image. </param>
         /// <param name="replicationRegions"> [Deprecated] A list of regions that the image will be replicated to. This list can be specified only if targetRegions is not specified. This field is deprecated - use targetRegions instead. </param>
-        /// <param name="excludeFromLatest"> Flag that indicates whether created image version should be excluded from latest. Omit to use the default (false). </param>
+        /// <param name="isExcludedFromLatest"> Flag that indicates whether created image version should be excluded from latest. Omit to use the default (false). </param>
         /// <param name="storageAccountType"> [Deprecated] Storage account type to be used to store the shared image. Omit to use the default (Standard_LRS). This field can be specified only if replicationRegions is specified. This field is deprecated - use targetRegions instead. </param>
         /// <param name="targetRegions"> The target regions where the distributed Image Version is going to be replicated to. This object supersedes replicationRegions and can be specified only if replicationRegions is not specified. </param>
         /// <param name="versioning"> Describes how to generate new x.y.z version number for distribution. </param>
         /// <param name="replicationMode"> Describes replication mode for distribution in Azure Compute Gallery. Omit to use the default (Full). </param>
-        internal ImageTemplateSharedImageDistributor(string @type, string runOutputName, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string galleryImageId, IList<string> replicationRegions, bool? excludeFromLatest, SharedImageStorageAccountType? storageAccountType, IList<TargetRegion> targetRegions, DistributeVersioner versioning, ReplicationMode? replicationMode) : base(@type, runOutputName, artifactTags, additionalBinaryDataProperties)
+        internal ImageTemplateSharedImageDistributor(string @type, string runOutputName, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties, string galleryImageId, IList<string> replicationRegions, bool? isExcludedFromLatest, SharedImageStorageAccountType? storageAccountType, IList<TargetRegion> targetRegions, DistributeVersioner versioning, ReplicationMode? replicationMode) : base(@type, runOutputName, artifactTags, additionalBinaryDataProperties)
         {
             GalleryImageId = galleryImageId;
             ReplicationRegions = replicationRegions;
-            ExcludeFromLatest = excludeFromLatest;
+            IsExcludedFromLatest = isExcludedFromLatest;
             StorageAccountType = storageAccountType;
             TargetRegions = targetRegions;
             Versioning = versioning;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public IList<string> ReplicationRegions { get; }
 
         /// <summary> Flag that indicates whether created image version should be excluded from latest. Omit to use the default (false). </summary>
-        public bool? ExcludeFromLatest { get; set; }
+        public bool? IsExcludedFromLatest { get; set; }
 
         /// <summary> [Deprecated] Storage account type to be used to store the shared image. Omit to use the default (Standard_LRS). This field can be specified only if replicationRegions is specified. This field is deprecated - use targetRegions instead. </summary>
         public SharedImageStorageAccountType? StorageAccountType { get; set; }

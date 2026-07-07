@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of a trigger. </param>
-        /// <returns> A new <see cref="ImageBuilder.TriggerData"/> instance for mocking. </returns>
-        public static TriggerData TriggerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TriggerProperties properties = default)
+        /// <returns> A new <see cref="ImageBuilder.ImageTemplateTriggerData"/> instance for mocking. </returns>
+        public static ImageTemplateTriggerData ImageTemplateTriggerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TriggerProperties properties = default)
         {
-            return new TriggerData(
+            return new ImageTemplateTriggerData(
                 id,
                 name,
                 resourceType,
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="code"> The status code. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
+        /// <param name="recordedOn"> The time of the status. </param>
         /// <returns> A new <see cref="Models.TriggerStatus"/> instance for mocking. </returns>
-        public static TriggerStatus TriggerStatus(string code = default, string message = default, DateTimeOffset? time = default)
+        public static TriggerStatus TriggerStatus(string code = default, string message = default, DateTimeOffset? recordedOn = default)
         {
-            return new TriggerStatus(code, message, time, default);
+            return new TriggerStatus(code, message, recordedOn, default);
         }
 
         /// <param name="status"> Trigger status. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="autoRunState"> Enabling this field will trigger an automatic build on image template creation or update. </param>
         /// <param name="identity"> The identity of the image template, if configured. </param>
         /// <returns> A new <see cref="ImageBuilder.ImageTemplateData"/> instance for mocking. </returns>
-        public static ImageTemplateData ImageTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageTemplateSource source = default, IEnumerable<ImageTemplateCustomizer> customize = default, ImageTemplatePropertiesOptimize optimize = default, ImageTemplatePropertiesValidate validate = default, IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplatePropertiesErrorHandling errorHandling = default, ProvisioningState? provisioningState = default, ProvisioningError provisioningError = default, ImageTemplateLastRunStatus lastRunStatus = default, int? buildTimeoutInMinutes = default, ImageTemplateVmProfile vmProfile = default, IEnumerable<DataDisk> additionalDataDisks = default, string stagingResourceGroup = default, string exactStagingResourceGroup = default, IDictionary<string, string> managedResourceTags = default, AutoRunState? autoRunState = default, ImageTemplateIdentity identity = default)
+        public static ImageTemplateData ImageTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageTemplateSource source = default, IEnumerable<ImageTemplateCustomizer> customize = default, ImageTemplateOptimizeConfig optimize = default, ImageTemplateValidationConfig validate = default, IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateErrorHandling errorHandling = default, ProvisioningState? provisioningState = default, ProvisioningError provisioningError = default, ImageTemplateLastRunStatus lastRunStatus = default, int? buildTimeoutInMinutes = default, ImageTemplateVmProfile vmProfile = default, IEnumerable<DataDisk> additionalDataDisks = default, string stagingResourceGroup = default, string exactStagingResourceGroup = default, IDictionary<string, string> managedResourceTags = default, AutoRunState? autoRunState = default, ImageTemplateIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -234,11 +234,11 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="scriptUri"> URI of the PowerShell script to be run for customizing. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the power shell script provided in the scriptUri field above. </param>
         /// <param name="inline"> Array of PowerShell commands to execute. </param>
-        /// <param name="runElevated"> If specified, the PowerShell script will be run with elevated privileges. </param>
-        /// <param name="runAsSystem"> If specified, the PowerShell script will be run with elevated privileges using the Local System user. Can only be true when the runElevated field above is set to true. </param>
+        /// <param name="isRunElevated"> If specified, the PowerShell script will be run with elevated privileges. </param>
+        /// <param name="isRunAsSystem"> If specified, the PowerShell script will be run with elevated privileges using the Local System user. Can only be true when the runElevated field above is set to true. </param>
         /// <param name="validExitCodes"> Valid exit codes for the PowerShell script. [Default: 0]. </param>
         /// <returns> A new <see cref="Models.ImageTemplatePowerShellCustomizer"/> instance for mocking. </returns>
-        public static ImageTemplatePowerShellCustomizer ImageTemplatePowerShellCustomizer(string name = default, string scriptUri = default, string sha256Checksum = default, IEnumerable<string> inline = default, bool? runElevated = default, bool? runAsSystem = default, IEnumerable<int> validExitCodes = default)
+        public static ImageTemplatePowerShellCustomizer ImageTemplatePowerShellCustomizer(string name = default, string scriptUri = default, string sha256Checksum = default, IEnumerable<string> inline = default, bool? isRunElevated = default, bool? isRunAsSystem = default, IEnumerable<int> validExitCodes = default)
         {
             inline ??= new ChangeTrackingList<string>();
             validExitCodes ??= new ChangeTrackingList<int>();
@@ -250,8 +250,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 scriptUri,
                 sha256Checksum,
                 (inline ?? new ChangeTrackingList<string>()).ToList(),
-                runElevated,
-                runAsSystem,
+                isRunElevated,
+                isRunAsSystem,
                 (validExitCodes ?? new ChangeTrackingList<int>()).ToList());
         }
 
@@ -273,30 +273,30 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="vmBootState"> Enabling this field will improve VM boot time by optimizing the final customized image output. </param>
         /// <param name="workload"> Optimization is applied on the image for specific workloads. </param>
-        /// <returns> A new <see cref="Models.ImageTemplatePropertiesOptimize"/> instance for mocking. </returns>
-        public static ImageTemplatePropertiesOptimize ImageTemplatePropertiesOptimize(VMBootOptimizationState? vmBootState = default, ImageTemplatePropertiesOptimizeWorkload workload = default)
+        /// <returns> A new <see cref="Models.ImageTemplateOptimizeConfig"/> instance for mocking. </returns>
+        public static ImageTemplateOptimizeConfig ImageTemplateOptimizeConfig(VMBootOptimizationState? vmBootState = default, ImageTemplateWorkloadOptimization workload = default)
         {
-            return new ImageTemplatePropertiesOptimize(vmBootState is null ? default : new ImageTemplatePropertiesOptimizeVmBoot(vmBootState, default), workload, default);
+            return new ImageTemplateOptimizeConfig(vmBootState is null ? default : new ImageTemplatePropertiesOptimizeVmBoot(vmBootState, default), workload, default);
         }
 
         /// <param name="state"> Enabling this field will optimize vm images for specific workloads. </param>
         /// <param name="scriptUri"> URI of the script to be run for workload optimization. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the script provided in the scriptUri field. </param>
-        /// <returns> A new <see cref="Models.ImageTemplatePropertiesOptimizeWorkload"/> instance for mocking. </returns>
-        public static ImageTemplatePropertiesOptimizeWorkload ImageTemplatePropertiesOptimizeWorkload(WorkloadOptimizationState? state = default, string scriptUri = default, string sha256Checksum = default)
+        /// <returns> A new <see cref="Models.ImageTemplateWorkloadOptimization"/> instance for mocking. </returns>
+        public static ImageTemplateWorkloadOptimization ImageTemplateWorkloadOptimization(WorkloadOptimizationState? state = default, string scriptUri = default, string sha256Checksum = default)
         {
-            return new ImageTemplatePropertiesOptimizeWorkload(state, scriptUri, sha256Checksum, default);
+            return new ImageTemplateWorkloadOptimization(state, scriptUri, sha256Checksum, default);
         }
 
-        /// <param name="continueDistributeOnFailure"> If validation fails and this field is set to false, output image(s) will not be distributed. This is the default behavior. If validation fails and this field is set to true, output image(s) will still be distributed. Please use this option with caution as it may result in bad images being distributed for use. In either case (true or false), the end to end image run will be reported as having failed in case of a validation failure. [Note: This field has no effect if validation succeeds.]. </param>
-        /// <param name="sourceValidationOnly"> If this field is set to true, the image specified in the 'source' section will directly be validated. No separate build will be run to generate and then validate a customized image. </param>
+        /// <param name="shouldContinueDistributeOnFailure"> If validation fails and this field is set to false, output image(s) will not be distributed. This is the default behavior. If validation fails and this field is set to true, output image(s) will still be distributed. Please use this option with caution as it may result in bad images being distributed for use. In either case (true or false), the end to end image run will be reported as having failed in case of a validation failure. [Note: This field has no effect if validation succeeds.]. </param>
+        /// <param name="isSourceValidationOnly"> If this field is set to true, the image specified in the 'source' section will directly be validated. No separate build will be run to generate and then validate a customized image. </param>
         /// <param name="inVMValidations"> List of validations to be performed. </param>
-        /// <returns> A new <see cref="Models.ImageTemplatePropertiesValidate"/> instance for mocking. </returns>
-        public static ImageTemplatePropertiesValidate ImageTemplatePropertiesValidate(bool? continueDistributeOnFailure = default, bool? sourceValidationOnly = default, IEnumerable<ImageTemplateInVMValidator> inVMValidations = default)
+        /// <returns> A new <see cref="Models.ImageTemplateValidationConfig"/> instance for mocking. </returns>
+        public static ImageTemplateValidationConfig ImageTemplateValidationConfig(bool? shouldContinueDistributeOnFailure = default, bool? isSourceValidationOnly = default, IEnumerable<ImageTemplateInVMValidator> inVMValidations = default)
         {
             inVMValidations ??= new ChangeTrackingList<ImageTemplateInVMValidator>();
 
-            return new ImageTemplatePropertiesValidate(continueDistributeOnFailure, sourceValidationOnly, (inVMValidations ?? new ChangeTrackingList<ImageTemplateInVMValidator>()).ToList(), default);
+            return new ImageTemplateValidationConfig(shouldContinueDistributeOnFailure, isSourceValidationOnly, (inVMValidations ?? new ChangeTrackingList<ImageTemplateInVMValidator>()).ToList(), default);
         }
 
         /// <param name="type"> The type of validation you want to use on the Image. For example, "Shell" can be shell validation. </param>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="scriptUri"> URI of the PowerShell script to be run for validation. It can be a github link, Azure Storage URI, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the power shell script provided in the scriptUri field above. </param>
         /// <param name="inline"> Array of PowerShell commands to execute. </param>
-        /// <param name="runElevated"> If specified, the PowerShell script will be run with elevated privileges. </param>
-        /// <param name="runAsSystem"> If specified, the PowerShell script will be run with elevated privileges using the Local System user. Can only be true when the runElevated field above is set to true. </param>
+        /// <param name="isRunElevated"> If specified, the PowerShell script will be run with elevated privileges. </param>
+        /// <param name="isRunAsSystem"> If specified, the PowerShell script will be run with elevated privileges using the Local System user. Can only be true when the runElevated field above is set to true. </param>
         /// <param name="validExitCodes"> Valid exit codes for the PowerShell script. [Default: 0]. </param>
         /// <returns> A new <see cref="Models.ImageTemplatePowerShellValidator"/> instance for mocking. </returns>
-        public static ImageTemplatePowerShellValidator ImageTemplatePowerShellValidator(string name = default, string scriptUri = default, string sha256Checksum = default, IEnumerable<string> inline = default, bool? runElevated = default, bool? runAsSystem = default, IEnumerable<int> validExitCodes = default)
+        public static ImageTemplatePowerShellValidator ImageTemplatePowerShellValidator(string name = default, string scriptUri = default, string sha256Checksum = default, IEnumerable<string> inline = default, bool? isRunElevated = default, bool? isRunAsSystem = default, IEnumerable<int> validExitCodes = default)
         {
             inline ??= new ChangeTrackingList<string>();
             validExitCodes ??= new ChangeTrackingList<int>();
@@ -345,8 +345,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 scriptUri,
                 sha256Checksum,
                 (inline ?? new ChangeTrackingList<string>()).ToList(),
-                runElevated,
-                runAsSystem,
+                isRunElevated,
+                isRunAsSystem,
                 (validExitCodes ?? new ChangeTrackingList<int>()).ToList());
         }
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="imageId"> Resource Id of the Managed Disk Image. </param>
         /// <param name="location"> Azure location for the image, should match if image already exists. </param>
         /// <returns> A new <see cref="Models.ImageTemplateManagedImageDistributor"/> instance for mocking. </returns>
-        public static ImageTemplateManagedImageDistributor ImageTemplateManagedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, string imageId = default, string location = default)
+        public static ImageTemplateManagedImageDistributor ImageTemplateManagedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, string imageId = default, AzureLocation location = default)
         {
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -399,13 +399,13 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="artifactTags"> Tags that will be applied to the artifact once it has been created/updated by the distributor. </param>
         /// <param name="galleryImageId"> Resource Id of the Azure Compute Gallery image. </param>
         /// <param name="replicationRegions"> [Deprecated] A list of regions that the image will be replicated to. This list can be specified only if targetRegions is not specified. This field is deprecated - use targetRegions instead. </param>
-        /// <param name="excludeFromLatest"> Flag that indicates whether created image version should be excluded from latest. Omit to use the default (false). </param>
+        /// <param name="isExcludedFromLatest"> Flag that indicates whether created image version should be excluded from latest. Omit to use the default (false). </param>
         /// <param name="storageAccountType"> [Deprecated] Storage account type to be used to store the shared image. Omit to use the default (Standard_LRS). This field can be specified only if replicationRegions is specified. This field is deprecated - use targetRegions instead. </param>
         /// <param name="targetRegions"> The target regions where the distributed Image Version is going to be replicated to. This object supersedes replicationRegions and can be specified only if replicationRegions is not specified. </param>
         /// <param name="versioning"> Describes how to generate new x.y.z version number for distribution. </param>
         /// <param name="replicationMode"> Describes replication mode for distribution in Azure Compute Gallery. Omit to use the default (Full). </param>
         /// <returns> A new <see cref="Models.ImageTemplateSharedImageDistributor"/> instance for mocking. </returns>
-        public static ImageTemplateSharedImageDistributor ImageTemplateSharedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, string galleryImageId = default, IEnumerable<string> replicationRegions = default, bool? excludeFromLatest = default, SharedImageStorageAccountType? storageAccountType = default, IEnumerable<TargetRegion> targetRegions = default, DistributeVersioner versioning = default, ReplicationMode? replicationMode = default)
+        public static ImageTemplateSharedImageDistributor ImageTemplateSharedImageDistributor(string runOutputName = default, IDictionary<string, string> artifactTags = default, string galleryImageId = default, IEnumerable<string> replicationRegions = default, bool? isExcludedFromLatest = default, SharedImageStorageAccountType? storageAccountType = default, IEnumerable<TargetRegion> targetRegions = default, DistributeVersioner versioning = default, ReplicationMode? replicationMode = default)
         {
             artifactTags ??= new ChangeTrackingDictionary<string, string>();
             replicationRegions ??= new ChangeTrackingList<string>();
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 default,
                 galleryImageId,
                 (replicationRegions ?? new ChangeTrackingList<string>()).ToList(),
-                excludeFromLatest,
+                isExcludedFromLatest,
                 storageAccountType,
                 (targetRegions ?? new ChangeTrackingList<TargetRegion>()).ToList(),
                 versioning,
@@ -467,10 +467,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="onCustomizerError"> If there is a customizer error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a customizer error and this field is set to 'abort', the build VM will be preserved. </param>
         /// <param name="onValidationError"> If there is a validation error and this field is set to 'cleanup', the build VM and associated network resources will be cleaned up. This is the default behavior. If there is a validation error and this field is set to 'abort', the build VM will be preserved. </param>
-        /// <returns> A new <see cref="Models.ImageTemplatePropertiesErrorHandling"/> instance for mocking. </returns>
-        public static ImageTemplatePropertiesErrorHandling ImageTemplatePropertiesErrorHandling(OnBuildError? onCustomizerError = default, OnBuildError? onValidationError = default)
+        /// <returns> A new <see cref="Models.ImageTemplateErrorHandling"/> instance for mocking. </returns>
+        public static ImageTemplateErrorHandling ImageTemplateErrorHandling(OnBuildError? onCustomizerError = default, OnBuildError? onValidationError = default)
         {
-            return new ImageTemplatePropertiesErrorHandling(onCustomizerError, onValidationError, default);
+            return new ImageTemplateErrorHandling(onCustomizerError, onValidationError, default);
         }
 
         /// <param name="provisioningErrorCode"> Error code of the provisioning failure. </param>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="tags"> The user-specified tags associated with the image template. </param>
         /// <param name="properties"> Parameters for updating an image template. </param>
         /// <returns> A new <see cref="Models.ImageTemplatePatch"/> instance for mocking. </returns>
-        public static ImageTemplatePatch ImageTemplatePatch(ImageTemplateIdentity identity = default, IDictionary<string, string> tags = default, ImageTemplateUpdateParametersProperties properties = default)
+        public static ImageTemplatePatch ImageTemplatePatch(ImageTemplateIdentity identity = default, IDictionary<string, string> tags = default, ImageTemplatePatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -557,12 +557,12 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 
         /// <param name="distribute"> The distribution targets where the image output needs to go to. </param>
         /// <param name="vmProfile"> Describes how virtual machine is set up to build images. </param>
-        /// <returns> A new <see cref="Models.ImageTemplateUpdateParametersProperties"/> instance for mocking. </returns>
-        public static ImageTemplateUpdateParametersProperties ImageTemplateUpdateParametersProperties(IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateVmProfile vmProfile = default)
+        /// <returns> A new <see cref="Models.ImageTemplatePatchProperties"/> instance for mocking. </returns>
+        public static ImageTemplatePatchProperties ImageTemplatePatchProperties(IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateVmProfile vmProfile = default)
         {
             distribute ??= new ChangeTrackingList<ImageTemplateDistributor>();
 
-            return new ImageTemplateUpdateParametersProperties((distribute ?? new ChangeTrackingList<ImageTemplateDistributor>()).ToList(), vmProfile, default);
+            return new ImageTemplatePatchProperties((distribute ?? new ChangeTrackingList<ImageTemplateDistributor>()).ToList(), vmProfile, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

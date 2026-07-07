@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary> Specifies optimization to be performed on image. </summary>
-        public ImageTemplatePropertiesOptimize Optimize
+        public ImageTemplateOptimizeConfig Optimize
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary> Configuration options and list of validations to be performed on the resulting image. </summary>
-        public ImageTemplatePropertiesValidate Validate
+        public ImageTemplateValidationConfig Validate
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ImageBuilder
         }
 
         /// <summary> Error handling options upon a build failure. </summary>
-        public ImageTemplatePropertiesErrorHandling ErrorHandling
+        public ImageTemplateErrorHandling ErrorHandling
         {
             get
             {

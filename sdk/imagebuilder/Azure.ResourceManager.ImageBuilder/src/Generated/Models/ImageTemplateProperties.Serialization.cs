@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             }
             ImageTemplateSource source = default;
             IList<ImageTemplateCustomizer> customize = default;
-            ImageTemplatePropertiesOptimize optimize = default;
-            ImageTemplatePropertiesValidate validate = default;
+            ImageTemplateOptimizeConfig optimize = default;
+            ImageTemplateValidationConfig validate = default;
             IList<ImageTemplateDistributor> distribute = default;
-            ImageTemplatePropertiesErrorHandling errorHandling = default;
+            ImageTemplateErrorHandling errorHandling = default;
             ProvisioningState? provisioningState = default;
             ProvisioningError provisioningError = default;
             ImageTemplateLastRunStatus lastRunStatus = default;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    optimize = ImageTemplatePropertiesOptimize.DeserializeImageTemplatePropertiesOptimize(prop.Value, options);
+                    optimize = ImageTemplateOptimizeConfig.DeserializeImageTemplateOptimizeConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("validate"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    validate = ImageTemplatePropertiesValidate.DeserializeImageTemplatePropertiesValidate(prop.Value, options);
+                    validate = ImageTemplateValidationConfig.DeserializeImageTemplateValidationConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("distribute"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    errorHandling = ImageTemplatePropertiesErrorHandling.DeserializeImageTemplatePropertiesErrorHandling(prop.Value, options);
+                    errorHandling = ImageTemplateErrorHandling.DeserializeImageTemplateErrorHandling(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

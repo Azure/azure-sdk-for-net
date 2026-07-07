@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <summary> Initializes a new instance of <see cref="TriggerStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
-        /// <param name="time"> The time of the status. </param>
+        /// <param name="recordedOn"> The time of the status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerStatus(string code, string message, DateTimeOffset? time, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggerStatus(string code, string message, DateTimeOffset? recordedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
-            Time = time;
+            RecordedOn = recordedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public string Message { get; }
 
         /// <summary> The time of the status. </summary>
-        public DateTimeOffset? Time { get; }
+        public DateTimeOffset? RecordedOn { get; }
     }
 }

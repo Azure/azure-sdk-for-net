@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         /// <param name="scriptUri"> URI of the PowerShell script to be run for customizing. It can be a github link, SAS URI for Azure Storage, etc. </param>
         /// <param name="sha256Checksum"> SHA256 checksum of the power shell script provided in the scriptUri field above. </param>
         /// <param name="inline"> Array of PowerShell commands to execute. </param>
-        /// <param name="runElevated"> If specified, the PowerShell script will be run with elevated privileges. </param>
-        /// <param name="runAsSystem"> If specified, the PowerShell script will be run with elevated privileges using the Local System user. Can only be true when the runElevated field above is set to true. </param>
+        /// <param name="isRunElevated"> If specified, the PowerShell script will be run with elevated privileges. </param>
+        /// <param name="isRunAsSystem"> If specified, the PowerShell script will be run with elevated privileges using the Local System user. Can only be true when the runElevated field above is set to true. </param>
         /// <param name="validExitCodes"> Valid exit codes for the PowerShell script. [Default: 0]. </param>
-        internal ImageTemplatePowerShellCustomizer(string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, string scriptUri, string sha256Checksum, IList<string> inline, bool? runElevated, bool? runAsSystem, IList<int> validExitCodes) : base(@type, name, additionalBinaryDataProperties)
+        internal ImageTemplatePowerShellCustomizer(string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, string scriptUri, string sha256Checksum, IList<string> inline, bool? isRunElevated, bool? isRunAsSystem, IList<int> validExitCodes) : base(@type, name, additionalBinaryDataProperties)
         {
             ScriptUri = scriptUri;
             Sha256Checksum = sha256Checksum;
             Inline = inline;
-            RunElevated = runElevated;
-            RunAsSystem = runAsSystem;
+            IsRunElevated = isRunElevated;
+            IsRunAsSystem = isRunAsSystem;
             ValidExitCodes = validExitCodes;
         }
 
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public IList<string> Inline { get; }
 
         /// <summary> If specified, the PowerShell script will be run with elevated privileges. </summary>
-        public bool? RunElevated { get; set; }
+        public bool? IsRunElevated { get; set; }
 
         /// <summary> If specified, the PowerShell script will be run with elevated privileges using the Local System user. Can only be true when the runElevated field above is set to true. </summary>
-        public bool? RunAsSystem { get; set; }
+        public bool? IsRunAsSystem { get; set; }
 
         /// <summary> Valid exit codes for the PowerShell script. [Default: 0]. </summary>
         public IList<int> ValidExitCodes { get; }

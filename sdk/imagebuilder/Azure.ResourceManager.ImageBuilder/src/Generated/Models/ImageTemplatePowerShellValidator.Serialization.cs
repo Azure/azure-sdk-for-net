@@ -100,15 +100,15 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RunElevated))
+            if (Optional.IsDefined(IsRunElevated))
             {
                 writer.WritePropertyName("runElevated"u8);
-                writer.WriteBooleanValue(RunElevated.Value);
+                writer.WriteBooleanValue(IsRunElevated.Value);
             }
-            if (Optional.IsDefined(RunAsSystem))
+            if (Optional.IsDefined(IsRunAsSystem))
             {
                 writer.WritePropertyName("runAsSystem"u8);
-                writer.WriteBooleanValue(RunAsSystem.Value);
+                writer.WriteBooleanValue(IsRunAsSystem.Value);
             }
             if (Optional.IsCollectionDefined(ValidExitCodes))
             {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             string scriptUri = default;
             string sha256Checksum = default;
             IList<string> inline = default;
-            bool? runElevated = default;
-            bool? runAsSystem = default;
+            bool? isRunElevated = default;
+            bool? isRunAsSystem = default;
             IList<int> validExitCodes = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    runElevated = prop.Value.GetBoolean();
+                    isRunElevated = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("runAsSystem"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    runAsSystem = prop.Value.GetBoolean();
+                    isRunAsSystem = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("validExitCodes"u8))
@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 scriptUri,
                 sha256Checksum,
                 inline ?? new ChangeTrackingList<string>(),
-                runElevated,
-                runAsSystem,
+                isRunElevated,
+                isRunAsSystem,
                 validExitCodes ?? new ChangeTrackingList<int>());
         }
     }

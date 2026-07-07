@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExcludeFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
-                writer.WriteBooleanValue(ExcludeFromLatest.Value);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (Optional.IsDefined(StorageAccountType))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string galleryImageId = default;
             IList<string> replicationRegions = default;
-            bool? excludeFromLatest = default;
+            bool? isExcludedFromLatest = default;
             SharedImageStorageAccountType? storageAccountType = default;
             IList<TargetRegion> targetRegions = default;
             DistributeVersioner versioning = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     {
                         continue;
                     }
-                    excludeFromLatest = prop.Value.GetBoolean();
+                    isExcludedFromLatest = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storageAccountType"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                 additionalBinaryDataProperties,
                 galleryImageId,
                 replicationRegions ?? new ChangeTrackingList<string>(),
-                excludeFromLatest,
+                isExcludedFromLatest,
                 storageAccountType,
                 targetRegions ?? new ChangeTrackingList<TargetRegion>(),
                 versioning,
