@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Creates a new BatchPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BatchPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/privateLinkResources", resourceVersion ?? "2025-06-01")
+        internal BatchPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/privateLinkResources", resourceVersion ?? "2025-06-01")
         {
         }
 
