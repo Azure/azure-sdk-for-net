@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Creates a new NetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-06-01")
+        internal NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -38,18 +38,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
-            }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
             }
         }
 

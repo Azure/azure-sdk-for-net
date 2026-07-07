@@ -310,7 +310,7 @@ namespace Azure.Provisioning.CostManagement
             _properties = DefineModelProperty<ExportRunProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             DefineAdditionalProperties();

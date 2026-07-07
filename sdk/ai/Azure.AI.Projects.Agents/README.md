@@ -203,7 +203,7 @@ azure-ai-agentserver-responses
 
 Prepare the metadata for Agent:
 
-```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
+```C# Snippet:Sample_CodeAgentMetadata_CodeAgentProj
 private static AgentVersionFromCodeMetadata GetAgentMetadata()
 {
     HostedAgentDefinition agentDefinition = new(
@@ -226,7 +226,7 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata()
 
 Deploy the Agent.
 
-```C# Snippet:Sample_CodeAgentDeployment_CodeAgent_Async
+```C# Snippet:Sample_CodeAgentDeployment_CodeAgentProj_Async
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionFromCodeAsync(
     agentName: "myCodeAgent",
