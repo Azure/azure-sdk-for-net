@@ -65,7 +65,7 @@ namespace Azure.Generator.Provisioning
             var projections = ProvisioningResourceProjection.Create(allMetadata);
             foreach (var projection in projections)
             {
-                var resource = new ProvisioningResourceProvider(projection);
+                var resource = new ProvisioningResourceProvider(projection, projection.WritableScopes.Count > 0);
                 list.Add(resource);
                 foreach (var resourceIdPattern in projection.ResourceIdPatterns)
                 {
@@ -120,6 +120,25 @@ namespace Azure.Generator.Provisioning
         {
             _modelSettableUsage ??= CollectReachableTypes().ModelSettableUsage;
             return !_modelSettableUsage.TryGetValue(model, out var isSettable) || isSettable;
+        }
+
+        internal bool IsResourceSettable(InputModelType model)
+        {
+            if (TryGetResourcesByModel(model, out var resources))
+            {
+                return resources.Any(r => r.IsSettableResource);
+            }
+
+            var baseModel = model.BaseModel;
+            while (baseModel != null)
+            {
+                if (TryGetResourcesByModel(baseModel, out resources))
+                {
+                    return resources.Any(r => r.IsSettableResource);
+                }
+                baseModel = baseModel.BaseModel;
+            }
+            return false;
         }
 
         /// <inheritdoc/>
@@ -244,6 +263,8 @@ namespace Azure.Generator.Provisioning
 
             foreach (var resource in Resources)
             {
+                // Start from all resources for output reachability. Settable dye starts when
+                // Visit reaches each resource and follows non-output properties of settable resources.
                 queue.Enqueue((resource.ResourceProjection!.ResourceModel, false));
             }
 
@@ -257,9 +278,9 @@ namespace Azure.Generator.Provisioning
 
         private static void EnqueueResourceProperties(ProvisioningResourceProvider resource, Queue<(InputType Type, bool IsSettable)> queue)
         {
-            foreach (var (property, isSettable) in resource.GetReachableProperties())
+            foreach (var (property, isOutput) in resource.GetReachableProperties())
             {
-                queue.Enqueue((property.Type, isSettable));
+                queue.Enqueue((property.Type, resource.IsSettableResource && !isOutput));
             }
         }
 
@@ -285,9 +306,9 @@ namespace Azure.Generator.Provisioning
                             EnqueueResourceProperties(resource, queue);
                         }
                         if (model.BaseModel != null)
-                            queue.Enqueue((model.BaseModel, item.IsSettable));
+                            queue.Enqueue((model.BaseModel, resources.Any(r => r.IsSettableResource)));
                         foreach (var derived in model.DerivedModels)
-                            queue.Enqueue((derived, item.IsSettable));
+                            queue.Enqueue((derived, resources.Any(r => r.IsSettableResource)));
                         break;
                     }
 

@@ -49,7 +49,7 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly InputModelType _inputModel;
         private readonly ProvisioningResourceProjection? _resourceProjection;
         private readonly string? _defaultApiVersion;
-        private readonly bool _hasWritableScopes;
+        private readonly bool _isSettableResource;
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,
         /// with their resolved isOutput/isRequired/bicepPath metadata.
@@ -81,6 +81,8 @@ namespace Azure.Generator.Provisioning.Providers
         /// </summary>
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
+        internal bool IsSettableResource => _isSettableResource;
+
         /// <summary>
         /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
         /// </summary>
@@ -105,13 +107,13 @@ namespace Azure.Generator.Provisioning.Providers
                 propInfo.TypeOverride);
         }
 
-        internal IEnumerable<(InputModelProperty Property, bool IsSettable)> GetReachableProperties()
-            => _allProperties.Select(p => (p.Property, p.IsSettable));
+        internal IEnumerable<(InputModelProperty Property, bool IsOutput)> GetReachableProperties()
+            => _allProperties.Select(p => (p.Property, p.IsOutput));
 
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
-        public ProvisioningResourceProvider(ProvisioningResourceProjection projection)
+        public ProvisioningResourceProvider(ProvisioningResourceProjection projection, bool isSettableResource)
             : base(projection.ResourceModel)
         {
             _inputModel = projection.ResourceModel;
@@ -119,7 +121,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
-            _hasWritableScopes = projection.WritableScopes.Count > 0;
+            _isSettableResource = isSettableResource;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
@@ -134,7 +136,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
             _resourceProjection = null;
             _defaultApiVersion = null;
-            _hasWritableScopes = GetBaseResourceProjection(inputModel)?.WritableScopes.Count > 0;
+            _isSettableResource = ProvisioningGenerator.Instance.OutputLibrary.IsResourceSettable(inputModel);
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
             _propertyLookup = _allProperties.ToDictionary(p => p.Property);
@@ -290,7 +292,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var sig = new ConstructorSignature(
                     Type,
                     $"Creates a new {Name}.",
-                    _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
+                    _isSettableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                     [bicepIdentifierParam, resourceVersionParam],
                     null,
                     initializer);
@@ -314,7 +316,7 @@ namespace Azure.Generator.Provisioning.Providers
             var baseSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
-                _hasWritableScopes ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
+                _isSettableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                 [bicepIdentifierParam, resourceVersionParam],
                 null,
                 baseInitializer);
@@ -497,10 +499,10 @@ namespace Azure.Generator.Provisioning.Providers
                     || OutputOnlyProperties.Contains(serializedName);
                 // Read-only resources are referenced through FromExisting, so Name must remain settable.
                 // Other non-output properties are settable only when the resource has a writable scope.
-                var isSettable = !isOutput && (_hasWritableScopes || isResourceName);
+                var isSettable = !isOutput && (_isSettableResource || isResourceName);
                 // Read-only resources should not require body properties that users cannot set.
                 // Metadata inputs such as resource name remain required even without writable scopes.
-                var isRequired = isResourceName || (prop.IsRequired && _hasWritableScopes);
+                var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
                 // For singleton resources, the "name" property is output-only with a default value
@@ -923,24 +925,10 @@ namespace Azure.Generator.Provisioning.Providers
                     prop.Name.ToIdentifierName(),
                     bicepPath,
                     prop.IsReadOnly,
-                    !prop.IsReadOnly && _hasWritableScopes,
+                    !prop.IsReadOnly && _isSettableResource,
                     prop.IsRequired));
             }
             return result;
-        }
-
-        private static ProvisioningResourceProjection? GetBaseResourceProjection(InputModelType inputModel)
-        {
-            var baseModel = inputModel.BaseModel;
-            while (baseModel != null)
-            {
-                if (ProvisioningGenerator.Instance.OutputLibrary.TryGetResourcesByModel(baseModel, out var resources))
-                {
-                    return resources.FirstOrDefault()?.ResourceProjection;
-                }
-                baseModel = baseModel.BaseModel;
-            }
-            return null;
         }
 
         /// <summary>

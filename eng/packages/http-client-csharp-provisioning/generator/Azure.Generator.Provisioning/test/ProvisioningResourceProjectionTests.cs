@@ -194,7 +194,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var provider = CreateResourceProvider(readOnlyResource);
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(writableProperty);
 
@@ -216,7 +216,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var provider = CreateResourceProvider(readOnlyResource);
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(nameProperty);
 
@@ -239,7 +239,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var provider = CreateResourceProvider(readOnlyResource);
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(requiredProperty);
 
@@ -262,7 +262,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var provider = CreateResourceProvider(readOnlyResource);
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(uppercaseNameProperty);
 
@@ -285,7 +285,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var provider = CreateResourceProvider(readOnlyResource);
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(uppercaseTypeProperty);
 
@@ -308,7 +308,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, detailsModel]);
-            var resourceProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var resourceProvider = CreateResourceProvider(readOnlyResource);
             RegisterResourceProviders(resourceProvider);
             var modelProvider = new ProvisioningModelProvider(detailsModel);
 
@@ -339,7 +339,7 @@ namespace Azure.Generator.Provisioning.Tests
                     CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
                 ]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [resourceModel, detailsModel]);
-            var resourceProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([writableResource])[0]);
+            var resourceProvider = CreateResourceProvider(writableResource);
             RegisterResourceProviders(resourceProvider);
             var modelProvider = new ProvisioningModelProvider(detailsModel);
 
@@ -365,7 +365,7 @@ namespace Azure.Generator.Provisioning.Tests
                 singletonResourceName: "default",
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([singletonResource])[0]);
+            var provider = CreateResourceProvider(singletonResource);
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(nameProperty);
 
@@ -392,7 +392,7 @@ namespace Azure.Generator.Provisioning.Tests
                     CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
                 ]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([writableResource])[0]);
+            var provider = CreateResourceProvider(writableResource);
 
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(writableProperty);
 
@@ -413,7 +413,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var provider = CreateResourceProvider(readOnlyResource);
 
             var constructor = provider.Constructors.Single();
 
@@ -437,7 +437,7 @@ namespace Azure.Generator.Provisioning.Tests
                     CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
                 ]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [model]);
-            var provider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([writableResource])[0]);
+            var provider = CreateResourceProvider(writableResource);
 
             var constructor = provider.Constructors.Single();
 
@@ -465,7 +465,7 @@ namespace Azure.Generator.Provisioning.Tests
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel]);
-            var baseProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([readOnlyResource])[0]);
+            var baseProvider = CreateResourceProvider(readOnlyResource);
             RegisterResourceProviders(baseProvider);
             var derivedProvider = new ProvisioningResourceProvider(derivedModel);
 
@@ -501,7 +501,7 @@ namespace Azure.Generator.Provisioning.Tests
                     CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
                 ]);
             ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel]);
-            var baseProvider = new ProvisioningResourceProvider(ProvisioningResourceProjection.Create([writableResource])[0]);
+            var baseProvider = CreateResourceProvider(writableResource);
             RegisterResourceProviders(baseProvider);
             var derivedProvider = new ProvisioningResourceProvider(derivedModel);
 
@@ -642,6 +642,12 @@ namespace Azure.Generator.Provisioning.Tests
             typeof(ProvisioningOutputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, null);
+        }
+
+        private static ProvisioningResourceProvider CreateResourceProvider(ArmResourceMetadata metadata)
+        {
+            var projection = ProvisioningResourceProjection.Create([metadata])[0];
+            return new ProvisioningResourceProvider(projection, projection.WritableScopes.Count > 0);
         }
 
         private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)
