@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.HanaOnAzure
         internal ProviderInstanceProperties Properties { get; set; }
 
         /// <summary> The type of provider instance. </summary>
-        public string Type
+        public string ProviderType
         {
             get
             {
-                return Properties is null ? default : Properties.Type;
+                return Properties is null ? default : Properties.ProviderType;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HanaOnAzure
                 {
                     Properties = new ProviderInstanceProperties();
                 }
-                Properties.Type = value;
+                Properties.ProviderType = value;
             }
         }
 

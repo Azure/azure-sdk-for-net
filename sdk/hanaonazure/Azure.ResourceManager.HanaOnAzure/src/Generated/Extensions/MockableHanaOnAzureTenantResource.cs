@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HanaOnAzureOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HanaOnAzureOperationInfo> GetAllAsync(CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<HanaOnAzureOperationInfo> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HanaOnAzureOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HanaOnAzureOperationInfo> GetAll(CancellationToken cancellationToken = default)
+        internal virtual Pageable<HanaOnAzureOperationInfo> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HanaOnAzure.Models
 {
     /// <summary> Detailed HANA operation information. </summary>
-    public partial class HanaOnAzureOperationDisplay
+    internal partial class HanaOnAzureOperationDisplay
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
