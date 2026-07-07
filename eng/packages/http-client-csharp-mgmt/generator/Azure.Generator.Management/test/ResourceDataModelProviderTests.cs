@@ -143,23 +143,8 @@ namespace Azure.Generator.Mgmt.Tests
                 }
                 """;
             _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], customizationSources: [customization]);
-            var resourceDataType = new CSharpType(typeof(ResourceData));
-            var trackedResourceDataType = new CSharpType(typeof(TrackedResourceData));
-            var emptyResourceInput = InputFactory.Model("Resource", properties: [], usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-            typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId))!
-                .GetSetMethod(true)!
-                .Invoke(emptyResourceInput, ["Azure.ResourceManager.CommonTypes.Resource"]);
-            var resourceSystemProvider = new SystemObjectModelProvider(resourceDataType, emptyResourceInput);
-            var trackedSystemProvider = new SystemObjectModelProvider(
-                trackedResourceDataType,
-                InputFactory.Model("TrackedResource", properties: [], baseModel: emptyResourceInput, usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json));
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataType] = resourceSystemProvider;
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceDataType] = trackedSystemProvider;
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceSystemProvider.Type] = resourceSystemProvider;
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedSystemProvider.Type] = trackedSystemProvider;
 
             var resourceDataModel = new ResourceDataModelProvider(resourceModel);
-            ManagementMockHelpers.SetCustomCodeView(resourceDataModel, new TrackedResourceDataCustomCodeView());
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataModel.Type] = resourceDataModel;
             _ = resourceDataModel.Constructors;
             _ = resourceDataModel.SerializationProviders.SelectMany(s => s.Methods).ToArray();
@@ -410,13 +395,6 @@ namespace Azure.Generator.Mgmt.Tests
         {
             protected override string BuildName() => "ResponseTypeData";
             protected override string BuildNamespace() => "Samples.Models";
-            protected override string BuildRelativeFilePath() => "ResponseTypeData.cs";
-        }
-
-        private class TrackedResourceDataCustomCodeView : TypeProvider
-        {
-            protected override CSharpType BuildBaseType() => new(typeof(TrackedResourceData));
-            protected override string BuildName() => "ResponseTypeData";
             protected override string BuildRelativeFilePath() => "ResponseTypeData.cs";
         }
 
