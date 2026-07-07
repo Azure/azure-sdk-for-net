@@ -276,18 +276,6 @@ namespace Azure.Generator.Mgmt.Tests
         [Test]
         public void CustomCodeBaseTypeOverride_RebuildsSerializationAsOverride()
         {
-            var trackedResourceInputModel = InputFactory.Model(
-                "TrackedResource",
-                properties: [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("location", InputPrimitiveType.String),
-                    InputFactory.Property("tags", InputPrimitiveType.String),
-                ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-
             var inputModel = InputFactory.Model(
                 "MyTrackedModel",
                 properties: [
@@ -301,29 +289,33 @@ namespace Azure.Generator.Mgmt.Tests
                 ],
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
 
-            _ = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [inputModel, trackedResourceInputModel]);
-
-            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
-                new SystemObjectModelProvider(trackedResourceType, trackedResourceInputModel);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
 
             var model = new ModelProvider(inputModel);
             SetCustomCodeView(model, new TrackedResourceDataCustomCodeView());
-
-            _ = model.SerializationProviders.SelectMany(s => s.Methods).ToArray();
-
-            var visitor = new TestableInheritableSystemObjectModelVisitor();
-            var result = visitor.InvokePreVisitModel(inputModel, model);
-
-            Assert.That(result, Is.Not.Null);
-            var serialization = result!.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[model.Type] = model;
+            var serialization = model.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
             var jsonModelWriteCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelWriteCore");
+            Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+
+            var visitor = new TestableSerializationVisitor();
+            visitor.InvokeVisitType(serialization);
+
             Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.True);
+            var jsonModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelCreateCore");
+            var persistableModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "PersistableModelCreateCore");
+            Assert.That(jsonModelCreateCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(persistableModelCreateCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual), Is.True);
+            Assert.That(jsonModelCreateCore.Signature.ReturnType, Is.EqualTo(new CSharpType(typeof(ResourceData))));
+            Assert.That(persistableModelCreateCore.Signature.ReturnType, Is.EqualTo(new CSharpType(typeof(ResourceData))));
 
             var serializationContent = new TypeProviderWriter(serialization).Write().Content;
             Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
             Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
+            Assert.That(serializationContent, Does.Contain("protected virtual global::Azure.ResourceManager.Models.ResourceData JsonModelCreateCore"));
+            Assert.That(serializationContent, Does.Contain("protected virtual global::Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore"));
+            Assert.That(serializationContent, Does.Contain("return ((global::Samples.MyTrackedModel)this.JsonModelCreateCore(ref reader, options));"));
+            Assert.That(serializationContent, Does.Contain("return ((global::Samples.MyTrackedModel)this.PersistableModelCreateCore(data, options));"));
         }
 
         [Test]
@@ -390,6 +382,14 @@ namespace Azure.Generator.Mgmt.Tests
             public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
             {
                 return base.PreVisitModel(inputType, type);
+            }
+        }
+
+        private class TestableSerializationVisitor : SerializationVisitor
+        {
+            public TypeProvider? InvokeVisitType(TypeProvider type)
+            {
+                return base.VisitType(type);
             }
         }
     }

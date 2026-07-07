@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using Azure.ResourceManager.Models;
 using System;
 using System.ClientModel.Primitives;
 using System.Linq;
@@ -27,11 +28,86 @@ internal class SerializationVisitor : ScmLibraryVisitor
             foreach (var method in serializationType.Methods)
             {
                 TryUpdateExplicitCreateMethod(method);
+                TryAlignCustomResourceDataBaseSerialization(method, serializationType);
+                TryUpdateCustomResourceDataExplicitCreateMethod(method, serializationType);
             }
         }
 
         return base.VisitType(type);
     }
+
+    private static bool TryAlignCustomResourceDataBaseSerialization(MethodProvider method, MrwSerializationTypeDefinition serializationType)
+    {
+        if (!HasCustomFrameworkResourceDataBase(serializationType.Type)
+            || !ShouldAlignBaseSerializationCore(method))
+        {
+            return false;
+        }
+
+        if (method.Signature.Name == "JsonModelWriteCore")
+        {
+            var modifiers = method.Signature.Modifiers & ~MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Override;
+            method.Signature.Update(modifiers: modifiers);
+
+            if (method.BodyStatements is not null)
+            {
+                var statements = method.BodyStatements.ToList();
+                var arguments = method.Signature.Parameters.Select(p => p.AsArgument()).ToArray();
+                var insertIndex = Math.Min(2, statements.Count);
+                statements.Insert(insertIndex, Base.Invoke(method.Signature.Name, arguments).Terminate());
+                method.Update(signature: method.Signature, bodyStatements: statements);
+            }
+        }
+        else
+        {
+            method.Signature.Update(returnType: new CSharpType(typeof(ResourceData)));
+        }
+
+        return true;
+    }
+
+    private static bool TryUpdateCustomResourceDataExplicitCreateMethod(MethodProvider method, MrwSerializationTypeDefinition serializationType)
+    {
+        if (!HasCustomFrameworkResourceDataBase(serializationType.Type)
+            || method.Signature.Name != nameof(IJsonModel<object>.Create)
+            || method.Signature.ExplicitInterface is null
+            || method.Signature.ReturnType is not { } returnType
+            || method.Signature.Parameters.Count != 2
+            || !returnType.AreNamesEqual(serializationType.Type))
+        {
+            return false;
+        }
+
+        var firstParameter = method.Signature.Parameters[0];
+        var createCoreMethodName = firstParameter.Type.AreNamesEqual(typeof(BinaryData))
+            ? "PersistableModelCreateCore"
+            : "JsonModelCreateCore";
+        var arguments = method.Signature.Parameters.Select(p => p.AsArgument()).ToArray();
+        var body = This.Invoke(createCoreMethodName, arguments).CastTo(returnType);
+        method.Update(signature: method.Signature, bodyStatements: new MethodBodyStatement[] { Return(body) });
+        return true;
+    }
+
+    private static bool HasCustomFrameworkResourceDataBase(CSharpType type)
+    {
+        var baseType = type.BaseType;
+        if (baseType is null
+            || (!baseType.AreNamesEqual(new CSharpType(typeof(ResourceData)))
+                && !baseType.AreNamesEqual(new CSharpType(typeof(TrackedResourceData)))))
+        {
+            return false;
+        }
+
+        return ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(type, out var typeProvider)
+            && typeProvider is ModelProvider { BaseModelProvider: null };
+    }
+
+    private static bool ShouldAlignBaseSerializationCore(MethodProvider method)
+        => method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Virtual)
+            && !method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override)
+            && (method.Signature.Name == "JsonModelWriteCore"
+                || method.Signature.Name == "JsonModelCreateCore"
+                || method.Signature.Name == "PersistableModelCreateCore");
 
     /// <inheritdoc/>
     protected override MethodProvider? VisitMethod(MethodProvider method)
