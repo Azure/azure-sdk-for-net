@@ -623,6 +623,15 @@ namespace Azure.Generator.Provisioning.Tests
         private static void RegisterResourceProviders(params ProvisioningResourceProvider[] providers)
         {
             var outputLibrary = ProvisioningGenerator.Instance.OutputLibrary;
+            var resourceProjectionInfos = providers
+                .Where(provider => provider.ResourceProjection is not null)
+                .Select(provider => new ProvisioningOutputLibrary.ResourceProjectionInfo(provider.ResourceProjection!, provider.IsSettableResource))
+                .ToList();
+            var resourceProjectionInfosByModel = resourceProjectionInfos
+                .GroupBy(info => info.Projection.ResourceModel)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group.ToList());
             var resourcesByModel = providers
                 .Where(provider => provider.ResourceProjection is not null)
                 .GroupBy(provider => provider.ResourceProjection!.ResourceModel)
@@ -639,6 +648,12 @@ namespace Azure.Generator.Provisioning.Tests
             typeof(ProvisioningOutputLibrary)
                 .GetField("_resourcesByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, resourcesByModel);
+            typeof(ProvisioningOutputLibrary)
+                .GetField("_resourceProjectionInfos", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(outputLibrary, resourceProjectionInfos);
+            typeof(ProvisioningOutputLibrary)
+                .GetField("_resourceProjectionInfosByModel", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(outputLibrary, resourceProjectionInfosByModel);
             typeof(ProvisioningOutputLibrary)
                 .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(outputLibrary, null);
