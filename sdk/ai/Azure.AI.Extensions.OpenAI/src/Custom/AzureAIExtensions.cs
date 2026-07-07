@@ -38,6 +38,16 @@ public static partial class AzureAIExtensions
     // the type is internal to the OpenAI assembly.
     private const string OpenAIUnknownResponseItemTypeName = "OpenAI.Responses.InternalUnknownItemResource";
 
+    // True when OpenAI could not recognize the item's discriminator and bucketed it into its
+    // opaque unknown type. Those are the only items that need re-dispatch through the Azure context.
+    private static bool IsOpaqueAgentResponseItem(ResponseItem item)
+        => item is not null
+            && string.Equals(item.GetType().FullName, OpenAIUnknownResponseItemTypeName, StringComparison.Ordinal);
+
+    // Returns the strongly-typed Azure subtype for an opaque item, or the item unchanged otherwise.
+    private static ResponseItem NormalizeAgentResponseItem(ResponseItem item)
+        => IsOpaqueAgentResponseItem(item) ? item.AsAgentResponseItem() : item;
+
     /// <summary>
     /// Re-dispatches any opaque (unrecognized) items in a response's output through the Azure
     /// context so callers receive strongly-typed Azure subtypes without invoking
@@ -62,12 +72,37 @@ public static partial class AzureAIExtensions
         for (int i = 0; i < items.Count; i++)
         {
             ResponseItem item = items[i];
-            if (item is not null
-                && string.Equals(item.GetType().FullName, OpenAIUnknownResponseItemTypeName, StringComparison.Ordinal))
+            if (IsOpaqueAgentResponseItem(item))
             {
                 items[i] = item.AsAgentResponseItem();
             }
         }
+    }
+
+    /// <summary>
+    /// Re-dispatches opaque response items carried by a streaming update into their strongly-typed
+    /// Azure subtypes, mutating the update in place. Incremental item updates carry a single
+    /// <c>ResponseItem</c>; the terminal completed update carries the full aggregate
+    /// <see cref="ResponseResult"/>, whose output items are normalized via
+    /// <see cref="NormalizeAgentOutputItems(ResponseResult)"/>. Other update kinds pass through
+    /// unchanged. Temporary client-side bridge, mirroring <see cref="NormalizeAgentOutputItems"/>.
+    /// </summary>
+    internal static StreamingResponseUpdate NormalizeStreamingUpdate(StreamingResponseUpdate update)
+    {
+        switch (update)
+        {
+            case StreamingResponseOutputItemAddedUpdate added:
+                added.Item = NormalizeAgentResponseItem(added.Item);
+                break;
+            case StreamingResponseOutputItemDoneUpdate done:
+                done.Item = NormalizeAgentResponseItem(done.Item);
+                break;
+            case StreamingResponseCompletedUpdate completed:
+                NormalizeAgentOutputItems(completed.Response);
+                break;
+        }
+
+        return update;
     }
 
     // ResponseResult

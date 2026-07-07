@@ -422,7 +422,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         ApplyClientDefaults(options);
         if (!OpenTelemetryResponseScope.IsEnabled)
         {
-            return base.CreateResponseStreaming(options, cancellationToken);
+            return new NormalizingStreamingCollectionResult(base.CreateResponseStreaming(options, cancellationToken));
         }
 
         var telemetryContext = StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName);
@@ -430,7 +430,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         try
         {
             var innerResult = base.CreateResponseStreaming(options, cancellationToken);
-            return new TelemetryStreamingCollectionResult(innerResult, telemetryContext);
+            return new NormalizingStreamingCollectionResult(new TelemetryStreamingCollectionResult(innerResult, telemetryContext));
         }
         catch (Exception ex)
         {
@@ -515,7 +515,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         ApplyClientDefaults(options);
         if (!OpenTelemetryResponseScope.IsEnabled)
         {
-            return base.CreateResponseStreamingAsync(options, cancellationToken);
+            return new NormalizingAsyncStreamingCollectionResult(base.CreateResponseStreamingAsync(options, cancellationToken));
         }
 
         var telemetryContext = StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName);
@@ -523,7 +523,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         try
         {
             var innerResult = base.CreateResponseStreamingAsync(options, cancellationToken);
-            return new TelemetryAsyncStreamingCollectionResult(innerResult, telemetryContext);
+            return new NormalizingAsyncStreamingCollectionResult(new TelemetryAsyncStreamingCollectionResult(innerResult, telemetryContext));
         }
         catch (Exception ex)
         {
