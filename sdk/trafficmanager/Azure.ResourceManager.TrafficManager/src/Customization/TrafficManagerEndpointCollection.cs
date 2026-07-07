@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.TrafficManager
     /// The class to overcome issue with the TrafficManagerEndpointData Collection REST API where there is no REST API counterpart that GETs all
     /// endpoint data resources. The all endpoint data resources are retrieved from the collection of endpoints attached to <see cref="TrafficManagerProfileData"/>.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This class is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
     public partial class TrafficManagerEndpointCollection : ArmCollection, IEnumerable<TrafficManagerEndpointData>, IAsyncEnumerable<TrafficManagerEndpointData>
     {
         private readonly ClientDiagnostics _endpointsClientDiagnostics;
@@ -73,6 +75,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual async Task<ArmOperation<TrafficManagerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             return await CreateOrUpdateAsync(waitUntil, ParseEndpointType(endpointType), endpointName, data, cancellationToken).ConfigureAwait(false);
@@ -84,6 +87,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual async Task<ArmOperation<TrafficManagerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TrafficManagerEndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual ArmOperation<TrafficManagerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             return CreateOrUpdate(waitUntil, ParseEndpointType(endpointType), endpointName, data, cancellationToken);
@@ -134,6 +140,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint to be created or updated. </param>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual ArmOperation<TrafficManagerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, TrafficManagerEndpointType endpointType, string endpointName, TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -171,6 +179,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             return await GetAsync(ParseEndpointType(endpointType), endpointName, cancellationToken).ConfigureAwait(false);
@@ -180,6 +189,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual async Task<Response<TrafficManagerEndpointResource>> GetAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -213,6 +224,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual Response<TrafficManagerEndpointResource> Get(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             return Get(ParseEndpointType(endpointType), endpointName, cancellationToken);
@@ -222,6 +234,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual Response<TrafficManagerEndpointResource> Get(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -355,6 +369,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual async Task<NullableResponse<TrafficManagerEndpointResource>> GetIfExistsAsync(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             return await GetIfExistsAsync(ParseEndpointType(endpointType), endpointName, cancellationToken).ConfigureAwait(false);
@@ -364,6 +379,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual async Task<NullableResponse<TrafficManagerEndpointResource>> GetIfExistsAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
@@ -409,6 +426,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual NullableResponse<TrafficManagerEndpointResource> GetIfExists(string endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             return GetIfExists(ParseEndpointType(endpointType), endpointName, cancellationToken);
@@ -418,6 +436,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
         /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use AzureEndpointTrafficManagerEndpointCollection, ExternalEndpointTrafficManagerEndpointCollection, or NestedEndpointTrafficManagerEndpointCollection instead.", false)]
         public virtual NullableResponse<TrafficManagerEndpointResource> GetIfExists(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
