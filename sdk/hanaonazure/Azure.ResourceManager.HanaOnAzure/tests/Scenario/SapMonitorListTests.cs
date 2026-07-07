@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Tests.Scenario
         }
 
         [RecordedTest]
-        [Ignore("https://learn.microsoft.com/en-us/azure/sap/large-instances/decommission-sap-hana")]
+        [Ignore("service is retired")]
         public async Task List()
         {
             ResourceGroupResource resourceGroup = await CreateResourceGroup(DefaultSubscription, "sapmon-rg", AzureLocation.WestUS2);
