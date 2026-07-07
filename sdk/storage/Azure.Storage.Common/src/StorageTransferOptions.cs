@@ -37,7 +37,7 @@ namespace Azure.Storage
         /// The size of the first request in bytes. Blobs smaller than this limit will
         /// be transferred in a single request. Blobs larger than this limit will continue being
         /// transferred in chunks of size <see cref="MaximumTransferSize"/>. This property is a
-        /// backwards-compatible facade for <see cref="MaximumTransferSize"/>, which supports
+        /// backwards-compatible facade for <see cref="InitialTransferSize"/>, which supports
         /// long values. Use <see cref="InitialTransferSize"/> for full access of supported values.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
