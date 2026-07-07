@@ -25,7 +25,7 @@
     }
   },
   "models": {
-    "_comment": "Required when contentCategories is set, unless the resource has defaults via samples/sample_update_defaults.py.",
+    "_comment": "Required when contentCategories is set, unless the resource has defaults via samples/Sample00_UpdateDefaults.md.",
     "completion": "gpt-4.1",
     "embedding": "text-embedding-3-large"
   }

@@ -367,7 +367,7 @@ internal static partial class CreateAndTestRouterCommand
                     Console.Error.WriteLine(
                         $"[WARN]    inner schema '{alias}' has fieldSchema but no models.completion; " +
                         "this will fail unless resource defaults are configured " +
-                        "(see samples/sample_update_defaults.py).");
+                        "(see samples/Sample00_UpdateDefaults.md).");
                 }
             }
         }
