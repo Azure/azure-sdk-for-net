@@ -35,8 +35,8 @@ namespace Azure.Storage
 
         /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
-        /// be downloaded in a single request. Blobs larger than this limit will continue being
-        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>. This property is a
+        /// be transferred in a single request. Blobs larger than this limit will continue being
+        /// transferred in chunks of size <see cref="MaximumTransferSize"/>. This property is a
         /// backwards-compatible facade for <see cref="MaximumTransferSize"/>, which supports
         /// long values. Use <see cref="InitialTransferSize"/> for full access of supported values.
         /// </summary>
@@ -49,8 +49,8 @@ namespace Azure.Storage
 
         /// <summary>
         /// The size of the first range request in bytes. Blobs smaller than this limit will
-        /// be downloaded in a single request. Blobs larger than this limit will continue being
-        /// downloaded in chunks of size <see cref="MaximumTransferSize"/>.
+        /// be transferred in a single request. Blobs larger than this limit will continue being
+        /// transferred in chunks of size <see cref="MaximumTransferSize"/>.
         /// </summary>
         public long? InitialTransferSize { get; set; }
 
