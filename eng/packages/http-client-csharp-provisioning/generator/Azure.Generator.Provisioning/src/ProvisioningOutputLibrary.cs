@@ -27,15 +27,15 @@ namespace Azure.Generator.Provisioning
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
         /// </summary>
-        internal BuiltInRoleProvider? BuiltInRole => GetNullableValue(ref _builtInRole);
+        internal BuiltInRoleProvider? BuiltInRole => GetNullableValue(_builtInRole);
 
-        private T GetValue<T>(ref T? field) where T : class
+        private T GetValue<T>(T? field) where T : class
         {
             InitializeResources();
             return field!;
         }
 
-        private T? GetNullableValue<T>(ref T? field) where T : class
+        private T? GetNullableValue<T>(T? field) where T : class
         {
             InitializeResources();
             return field;
@@ -44,7 +44,7 @@ namespace Azure.Generator.Provisioning
         /// <summary>
         /// Gets all provisioning resource providers.
         /// </summary>
-        internal IReadOnlyList<ProvisioningResourceProvider> Resources => GetValue(ref _resources);
+        internal IReadOnlyList<ProvisioningResourceProvider> Resources => GetValue(_resources);
 
         private void InitializeResources()
         {
@@ -89,7 +89,7 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal bool TryGetResourcesByModel(InputModelType model, out IReadOnlyList<ProvisioningResourceProvider> resources)
         {
-            if (GetValue(ref _resourcesByModel).TryGetValue(model, out var list))
+            if (GetValue(_resourcesByModel).TryGetValue(model, out var list))
             {
                 resources = list;
                 return true;
@@ -104,7 +104,7 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal ProvisioningResourceProvider? GetResourceByIdPattern(RequestPathPattern resourceIdPattern)
         {
-            GetValue(ref _resourcesByIdPattern).TryGetValue(resourceIdPattern.SerializedPath, out var resource);
+            GetValue(_resourcesByIdPattern).TryGetValue(resourceIdPattern.SerializedPath, out var resource);
             return resource;
         }
 
