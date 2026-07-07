@@ -103,7 +103,11 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             var references = new[]
             {
                 MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                MetadataReference.CreateFromFile(typeof(Type).Assembly.Location)
+                MetadataReference.CreateFromFile(typeof(Type).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(Azure.ResourceManager.Models.ResourceData).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(BinaryData).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(System.ClientModel.Primitives.ModelReaderWriterOptions).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(System.Text.Json.Utf8JsonWriter).Assembly.Location)
             };
 
             return CSharpCompilation.Create(

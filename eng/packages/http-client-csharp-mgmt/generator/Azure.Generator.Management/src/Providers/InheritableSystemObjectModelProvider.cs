@@ -10,12 +10,23 @@ namespace Azure.Generator.Management.Providers
 {
     internal sealed class InheritableSystemObjectModelProvider : SystemObjectModelProvider
     {
-        public InheritableSystemObjectModelProvider(CSharpType systemType, InputModelType inputModel, IReadOnlyList<PropertyProvider> inheritedProperties)
+        private readonly ModelProvider? _baseModelProvider;
+
+        public InheritableSystemObjectModelProvider(
+            CSharpType systemType,
+            InputModelType inputModel,
+            ModelProvider? baseModelProvider,
+            IReadOnlyList<PropertyProvider>? inheritedProperties = null)
             : base(systemType, inputModel)
         {
-            InheritedProperties = inheritedProperties;
+            _baseModelProvider = baseModelProvider;
+            InheritedProperties = inheritedProperties ?? [];
         }
 
         internal IReadOnlyList<PropertyProvider> InheritedProperties { get; }
+
+        protected override CSharpType? BuildBaseType() => _baseModelProvider?.Type;
+
+        protected override ModelProvider? BuildBaseModelProvider() => _baseModelProvider;
     }
 }

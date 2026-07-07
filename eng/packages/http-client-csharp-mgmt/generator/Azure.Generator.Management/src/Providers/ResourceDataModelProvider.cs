@@ -4,10 +4,10 @@
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Azure.ResourceManager.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -28,9 +28,6 @@ namespace Azure.Generator.Management.Providers
     /// </remarks>
     internal class ResourceDataModelProvider : ModelProvider
     {
-        private static readonly CSharpType _resourceDataType = new(typeof(ResourceData));
-        private static readonly CSharpType _trackedResourceDataType = new(typeof(TrackedResourceData));
-
         public ResourceDataModelProvider(InputModelType inputModel)
             : base(inputModel)
         {
@@ -67,48 +64,12 @@ namespace Azure.Generator.Management.Providers
                 return null;
             }
 
-            if (AreSameFrameworkType(baseType, _trackedResourceDataType))
-            {
-                return CreateTrackedResourceDataProvider();
-            }
-
-            if (AreSameFrameworkType(baseType, _resourceDataType))
-            {
-                return CreateResourceDataProvider();
-            }
-
-            return null;
-        }
-
-        private SystemObjectModelProvider CreateTrackedResourceDataProvider()
-        {
-            var resourceDataInput = CreateResourceDataInputModel();
-            var resourceDataProvider = RegisterSystemObjectModelProvider(_resourceDataType, resourceDataInput);
-            var trackedResourceDataInput = CreateSystemInputModel(
-                "TrackedResource",
-                "Azure.ResourceManager.CommonTypes.TrackedResource",
-                resourceDataInput);
-
-            return RegisterSystemObjectModelProvider(
-                _trackedResourceDataType,
-                trackedResourceDataInput,
-                [.. resourceDataProvider.InheritedProperties, .. GetInheritedProperties(_trackedResourceDataType)]);
-        }
-
-        private SystemObjectModelProvider CreateResourceDataProvider()
-            => RegisterSystemObjectModelProvider(_resourceDataType, CreateResourceDataInputModel());
-
-        private InputModelType CreateResourceDataInputModel()
-        {
-            return CreateSystemInputModel(
-                "Resource",
-                "Azure.ResourceManager.CommonTypes.Resource");
+            return TryCreateInheritableSystemObjectModelProvider(baseType, [], requireSerializationCapability: true);
         }
 
         private InputModelType CreateSystemInputModel(
             string name,
-            string crossLanguageDefinitionId,
-            InputModelType? baseModel = null)
+            string crossLanguageDefinitionId)
         {
             return new InputModelType(
                 name,
@@ -120,7 +81,7 @@ namespace Azure.Generator.Management.Providers
                 InputModel.Doc,
                 InputModel.Usage,
                 [],
-                baseModel,
+                null,
                 [],
                 null,
                 null,
@@ -131,11 +92,22 @@ namespace Azure.Generator.Management.Providers
                 InputModel.IsDynamicModel);
         }
 
-        private static InheritableSystemObjectModelProvider RegisterSystemObjectModelProvider(
+        private InheritableSystemObjectModelProvider? TryCreateInheritableSystemObjectModelProvider(
             CSharpType systemType,
-            InputModelType inputModel,
-            IReadOnlyList<PropertyProvider>? inheritedProperties = null)
+            HashSet<string> visited,
+            bool requireSerializationCapability)
         {
+            if (systemType.IsFrameworkType && systemType.FrameworkType == typeof(object))
+            {
+                return null;
+            }
+
+            var key = $"{systemType.Namespace}.{systemType.Name}";
+            if (!visited.Add(key))
+            {
+                return null;
+            }
+
             var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
             if (typeMap.TryGetValue(systemType, out var existingProvider) &&
                 existingProvider is InheritableSystemObjectModelProvider existingSystemObjectModelProvider)
@@ -143,8 +115,29 @@ namespace Azure.Generator.Management.Providers
                 return existingSystemObjectModelProvider;
             }
 
-            var systemObjectModelProvider = new InheritableSystemObjectModelProvider(systemType, inputModel, inheritedProperties ?? GetInheritedProperties(systemType));
+            var referencedType = TryGetReferencedType(systemType);
+            if (requireSerializationCapability &&
+                (referencedType is null || !HasJsonModelWriteCoreInHierarchy(referencedType, new HashSet<string>(visited))))
+            {
+                return null;
+            }
+
+            var referencedBaseType = referencedType?.BaseType ??
+                systemType.BaseType ??
+                (referencedType is not null ? TryGetSerializationRootBaseType(referencedType, systemType) : null);
+            var baseModelProvider = referencedBaseType is not null
+                ? TryCreateInheritableSystemObjectModelProvider(referencedBaseType, new HashSet<string>(visited), requireSerializationCapability: false)
+                : null;
+            var inputModel = CreateSystemInputModel(
+                systemType.Name,
+                string.IsNullOrEmpty(systemType.Namespace) ? systemType.Name : $"{systemType.Namespace}.{systemType.Name}");
+            var systemObjectModelProvider = new InheritableSystemObjectModelProvider(
+                systemType,
+                inputModel,
+                baseModelProvider,
+                referencedType?.Properties);
             typeMap[systemType] = systemObjectModelProvider;
+            typeMap[systemObjectModelProvider.Type] = systemObjectModelProvider;
             if (systemType.IsFrameworkType)
             {
                 typeMap[new CSharpType(systemType.FrameworkType)] = systemObjectModelProvider;
@@ -152,25 +145,55 @@ namespace Azure.Generator.Management.Providers
             return systemObjectModelProvider;
         }
 
-        private static IReadOnlyList<PropertyProvider> GetInheritedProperties(CSharpType systemType)
+        private static TypeProvider? TryGetReferencedType(CSharpType systemType)
         {
             var sourceInputModel = ManagementClientGenerator.Instance.SourceInputModel;
             if (sourceInputModel is null || string.IsNullOrEmpty(systemType.Namespace))
             {
-                return [];
+                return null;
             }
 
             return sourceInputModel.FindForTypeInCustomization(
                 systemType.Namespace,
                 systemType.Name,
                 declaringTypeName: null,
-                includeReferencedAssemblies: true)?.Properties ?? [];
+                includeReferencedAssemblies: true);
         }
 
-        private static bool AreSameFrameworkType(CSharpType type, CSharpType frameworkType)
-            => type.AreNamesEqual(frameworkType) ||
-                (type.IsFrameworkType &&
-                 frameworkType.IsFrameworkType &&
-                 type.FrameworkType == frameworkType.FrameworkType);
+        private static bool HasJsonModelWriteCoreInHierarchy(TypeProvider typeProvider, HashSet<string> visited)
+        {
+            if (typeProvider.Methods.Any(method => method.Signature.Name == "JsonModelWriteCore"))
+            {
+                return true;
+            }
+
+            var baseType = typeProvider.BaseType ?? typeProvider.Type.BaseType;
+            if (baseType is null)
+            {
+                return false;
+            }
+
+            var key = $"{baseType.Namespace}.{baseType.Name}";
+            return visited.Add(key) &&
+                TryGetReferencedType(baseType) is { } baseTypeProvider &&
+                HasJsonModelWriteCoreInHierarchy(baseTypeProvider, visited);
+        }
+
+        private static CSharpType? TryGetSerializationRootBaseType(TypeProvider typeProvider, CSharpType systemType)
+        {
+            foreach (var method in typeProvider.Methods)
+            {
+                if (method.Signature.Name is not ("JsonModelCreateCore" or "PersistableModelCreateCore") ||
+                    method.Signature.ReturnType is not { } returnType ||
+                    returnType.AreNamesEqual(systemType))
+                {
+                    continue;
+                }
+
+                return returnType;
+            }
+
+            return null;
+        }
     }
 }

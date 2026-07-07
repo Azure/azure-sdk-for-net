@@ -160,13 +160,17 @@ namespace Azure.Generator.Mgmt.Tests
             var resourceSystemProvider = new InheritableSystemObjectModelProvider(
                 resourceDataType,
                 emptyResourceInput,
+                null,
                 new SystemObjectModelProvider(resourceDataType, resourceMetadataInput).Properties);
             var trackedSystemProvider = new InheritableSystemObjectModelProvider(
                 trackedResourceDataType,
                 InputFactory.Model("TrackedResource", properties: [], baseModel: emptyResourceInput, usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json),
-                [.. resourceSystemProvider.InheritedProperties, .. new SystemObjectModelProvider(trackedResourceDataType, trackedMetadataInput).Properties]);
+                resourceSystemProvider,
+                new SystemObjectModelProvider(trackedResourceDataType, trackedMetadataInput).Properties);
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataType] = resourceSystemProvider;
             ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceDataType] = trackedSystemProvider;
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceSystemProvider.Type] = resourceSystemProvider;
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedSystemProvider.Type] = trackedSystemProvider;
 
             var resourceDataModel = new ResourceDataModelProvider(resourceModel);
             ManagementMockHelpers.SetCustomCodeView(resourceDataModel, new TrackedResourceDataCustomCodeView());
@@ -207,6 +211,75 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(serializationContent, Does.Contain("protected virtual global::Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore"));
             Assert.That(serializationContent, Does.Contain("=> ((global::Samples.ResponseTypeData)this.JsonModelCreateCore(ref reader, options));"));
             Assert.That(serializationContent, Does.Contain("=> ((global::Samples.ResponseTypeData)this.PersistableModelCreateCore(data, options));"));
+        }
+
+        [Test]
+        public void CustomExternalSerializableBaseResolvesSystemBaseModelProvider()
+        {
+            const string customization = """
+                namespace Custom.Models
+                {
+                    public class ExternalResourceData
+                    {
+                        public string Id { get; }
+
+                        protected virtual void JsonModelWriteCore()
+                        {
+                        }
+                    }
+                }
+                """;
+            var inputModel = InputFactory.Model(
+                "ResponseType",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("value", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel], customizationSources: [customization]);
+
+            var modelProvider = new ResourceDataModelProvider(inputModel);
+            ManagementMockHelpers.SetCustomCodeView(modelProvider, new ExternalResourceDataCustomCodeView());
+
+            Assert.That(modelProvider.BaseModelProvider, Is.InstanceOf<InheritableSystemObjectModelProvider>());
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, modelProvider);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.Properties.Select(p => p.Name), Does.Not.Contain("Id"));
+            Assert.That(result.Properties.Select(p => p.Name), Does.Contain("Value"));
+        }
+
+        [Test]
+        public void ReferencedAssemblyCustomResourceDataBaseResolvesSerializationRootType()
+        {
+            const string customization = """
+                using Azure.ResourceManager.Models;
+
+                namespace Samples
+                {
+                    public partial class ResponseTypeData : TrackedResourceData
+                    {
+                    }
+                }
+                """;
+            var (client, models) = InputResourceData.ClientWithResource();
+            var resourceModel = models.Single();
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], customizationSources: [customization]);
+
+            var resourceDataModel = new ResourceDataModelProvider(resourceModel);
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataModel.Type] = resourceDataModel;
+
+            var serialization = resourceDataModel.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
+            var jsonModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelCreateCore");
+            var persistableModelCreateCore = serialization.Methods.Single(m => m.Signature.Name == "PersistableModelCreateCore");
+
+            Assert.That(resourceDataModel.BaseModelProvider, Is.InstanceOf<InheritableSystemObjectModelProvider>());
+            Assert.That(resourceDataModel.BaseModelProvider!.BaseModelProvider, Is.InstanceOf<InheritableSystemObjectModelProvider>());
+            Assert.That(jsonModelCreateCore.Signature.ReturnType!.AreNamesEqual(new CSharpType(typeof(ResourceData))), Is.True);
+            Assert.That(persistableModelCreateCore.Signature.ReturnType!.AreNamesEqual(new CSharpType(typeof(ResourceData))), Is.True);
         }
 
         [Test]
@@ -359,6 +432,20 @@ namespace Azure.Generator.Mgmt.Tests
             protected override CSharpType BuildBaseType() => new(typeof(TrackedResourceData));
             protected override string BuildName() => "ResponseTypeData";
             protected override string BuildRelativeFilePath() => "ResponseTypeData.cs";
+        }
+
+        private class ExternalResourceDataCustomCodeView : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => new ExternalResourceDataProvider().Type;
+            protected override string BuildName() => "ResponseTypeData";
+            protected override string BuildRelativeFilePath() => "ResponseTypeData.cs";
+        }
+
+        private class ExternalResourceDataProvider : TypeProvider
+        {
+            protected override string BuildName() => "ExternalResourceData";
+            protected override string BuildNamespace() => "Custom.Models";
+            protected override string BuildRelativeFilePath() => "ExternalResourceData.cs";
         }
     }
 }
