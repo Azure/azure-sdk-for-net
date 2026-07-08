@@ -368,11 +368,12 @@ namespace Azure.Generator.Management.Providers
             var formatBuilder = new StringBuilder();
             var refCount = 0;
 
-            foreach (var segment in _operationContext.ContextualPath)
+            foreach (var rawSegment in _operationContext.ContextualPath)
             {
+                var segment = StripQueryString(rawSegment);
                 if (segment.IsConstant)
                 {
-                    formatBuilder.Append($"/{segment}");
+                    formatBuilder.Append($"/{EscapeFormatLiteral(segment.Value)}");
                 }
                 else
                 {
@@ -402,6 +403,15 @@ namespace Azure.Generator.Management.Providers
             };
 
             return new MethodProvider(signature, bodyStatements, this);
+
+            static RequestPathSegment StripQueryString(RequestPathSegment segment)
+            {
+                var queryIndex = segment.Value.IndexOf('?');
+                return queryIndex < 0 ? segment : new RequestPathSegment(segment.Value[..queryIndex]);
+            }
+
+            static string EscapeFormatLiteral(string value)
+                => value.Replace("{", "{{").Replace("}", "}}");
         }
 
         internal string ResourceTypeValue => _resourceMetadata.ResourceType;

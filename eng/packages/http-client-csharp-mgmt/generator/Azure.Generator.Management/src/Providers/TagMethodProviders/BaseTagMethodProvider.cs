@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -14,8 +15,10 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
@@ -26,7 +29,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly MethodBodyStatement[] _bodyStatements;
         protected readonly TypeProvider _enclosingType;
         protected readonly ResourceClientProvider _resource;
-        protected readonly MethodProvider _updateMethodProvider;
+        protected readonly ResourceOperationMethodProvider _updateMethodProvider;
         protected readonly InputServiceMethod _getMethodProvider;
         protected readonly ClientProvider _updateRestClient;
         protected readonly ClientProvider _getRestClient;
@@ -40,6 +43,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         private readonly ParameterContextRegistry _parameterMappings;
+        private readonly ParameterContextRegistry _updateParameterMappings;
+        private readonly RequestPathPattern _updatePath;
 
         // TODO: make a struct to group the input parameters
         protected BaseTagMethodProvider(
@@ -59,6 +64,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _getMethodProvider = getMethod;
             _operationContext = operationContext;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
+            _updatePath = new RequestPathPattern(updateMethodProvider.ServiceMethod.Operation.Path);
+            _updateParameterMappings = operationContext.BuildParameterMapping(_updatePath);
             _enclosingType = resource;
             _updateRestClient = updateRestClientInfo.RestClientProvider;
             _getRestClient = getRestClientInfo.RestClientProvider;
@@ -195,24 +202,128 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected MethodBodyStatement UpdateResourceStatement(
             VariableExpression dataVar,
             ParameterProvider cancellationTokenParam,
-            MethodProvider updateMethod,
             out VariableExpression resultVar)
         {
             var updateMethodName = _isAsync ? "UpdateAsync" : "Update";
-            var parameters = new List<ValueExpression>();
-            if (_isLongRunningUpdateOperation)
-            {
-                parameters.Add(Static(typeof(WaitUntil)).Property("Completed"));
-            }
-
-            parameters.Add(dataVar);
-            parameters.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
+            var parameters = BuildUpdateMethodArguments(dataVar, cancellationTokenParam);
 
             return Declare(
                 "result",
-                updateMethod.Signature.ReturnType!,
+                _updateMethodProvider.Signature.ReturnType!,
                 This.Invoke(updateMethodName, parameters, null, _isAsync),
                 out resultVar);
+        }
+
+        private IReadOnlyList<ValueExpression> BuildUpdateMethodArguments(
+            VariableExpression dataVar,
+            ParameterProvider cancellationTokenParam)
+        {
+            var arguments = new List<ValueExpression>();
+            foreach (var parameter in _updateMethodProvider.Signature.Parameters)
+            {
+                if (parameter.Type.Equals(typeof(WaitUntil)))
+                {
+                    arguments.Add(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed)));
+                }
+                else if (parameter.Type.Equals(typeof(CancellationToken)))
+                {
+                    arguments.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
+                }
+                else if (parameter.Location == ParameterLocation.Body)
+                {
+                    arguments.Add(dataVar);
+                }
+                else if (TryBuildContextualUpdateArgument(parameter, out var contextualArgument))
+                {
+                    arguments.Add(contextualArgument);
+                }
+                else if (TryBuildResourceIdUpdateArgument(parameter, out var resourceIdArgument))
+                {
+                    arguments.Add(resourceIdArgument);
+                }
+                else if (parameter.DefaultValue is not null)
+                {
+                    continue;
+                }
+                else
+                {
+                    arguments.Add(Default.CastTo(parameter.Type));
+                }
+            }
+
+            return arguments;
+        }
+
+        private bool TryBuildContextualUpdateArgument(ParameterProvider parameter, out ValueExpression argument)
+        {
+            if (_updateParameterMappings.TryGetValue(parameter.WireInfo.SerializedName, out var mapping) &&
+                mapping.ContextualParameter is not null)
+            {
+                argument = ConvertContextualArgument(
+                    mapping.ContextualParameter.BuildValueExpression(This.As<ArmResource>().Id()),
+                    mapping.ContextualParameter.ValueType,
+                    parameter.Type);
+                return true;
+            }
+
+            argument = Default.CastTo(parameter.Type);
+            return false;
+        }
+
+        private bool TryBuildResourceIdUpdateArgument(ParameterProvider parameter, out ValueExpression argument)
+        {
+            var serializedName = parameter.WireInfo.SerializedName;
+            var id = This.As<ArmResource>().Id();
+            ValueExpression? value = serializedName switch
+            {
+                "subscriptionId" => id.SubscriptionId(),
+                "resourceGroupName" => id.ResourceGroupName(),
+                _ when IsUpdateResourceNameParameter(serializedName) => id.Name(),
+                _ => null
+            };
+
+            if (value is not null)
+            {
+                argument = ConvertContextualArgument(value, typeof(string), parameter.Type);
+                return true;
+            }
+
+            argument = Default.CastTo(parameter.Type);
+            return false;
+        }
+
+        private bool IsUpdateResourceNameParameter(string serializedName)
+        {
+            for (int i = _updatePath.Count - 1; i >= 0; i--)
+            {
+                var segment = _updatePath[i];
+                if (!segment.IsConstant)
+                {
+                    return segment.VariableName == serializedName;
+                }
+            }
+
+            return false;
+        }
+
+        private static ValueExpression ConvertContextualArgument(ValueExpression expression, Type fromType, CSharpType toType)
+        {
+            if (toType.Equals(fromType))
+            {
+                return expression;
+            }
+
+            if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
+            {
+                return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
+            }
+
+            if (fromType == typeof(ResourceIdentifier) && toType.Equals(typeof(string)))
+            {
+                return expression.InvokeToString();
+            }
+
+            return expression;
         }
 
         protected List<MethodBodyStatement> BuildElseStatements(
@@ -225,7 +336,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Get current resource data
             statements.Add(GetResourceDataStatements("current", _resource, _isAsync, cancellationTokenParam, out var resourceDataVar));
 
-            var updateParam = _updateMethodProvider.Signature.Parameters.Where(p => !p.Type.Equals(typeof(WaitUntil))).First();
+            var updateParam = _updateMethodProvider.Signature.Parameters.First(p => p.Location == ParameterLocation.Body);
 
             VariableExpression resultVar;
             if (_isPatch) // patch case
@@ -267,12 +378,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
                 // Apply the specific tag operation to the patch
                 statements.Add(tagOperation(patchVar.Property("Tags")));
-                statements.Add(UpdateResourceStatement(patchVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
+                statements.Add(UpdateResourceStatement(patchVar, cancellationTokenParam, out resultVar));
             }
             else
             {
                 statements.Add(tagOperation(resourceDataVar.Property("Tags")));
-                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, _updateMethodProvider, out resultVar));
+                statements.Add(UpdateResourceStatement(resourceDataVar, cancellationTokenParam, out resultVar));
             }
 
             statements.Add(CreateSecondaryPathResponseStatement(resultVar.As<Response>()));
