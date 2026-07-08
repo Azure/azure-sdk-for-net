@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Response for deleting a memory item from a memory store. </summary>
-    [Experimental("AAIP001")]
     public partial class MemoryDeletionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

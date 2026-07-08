@@ -6,7 +6,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -89,7 +88,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryStore> CreateMemoryStore(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -109,7 +107,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryStore>> CreateMemoryStoreAsync(string name, MemoryStoreDefinition definition, string description = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -324,7 +321,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<DeleteMemoryStoreResponse> DeleteMemoryStore(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -339,7 +335,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<DeleteMemoryStoreResponse>> DeleteMemoryStoreAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -581,7 +576,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryStoreDeleteScopeResponse> DeleteScope(string name, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -599,7 +593,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryStoreDeleteScopeResponse>> DeleteScopeAsync(string name, string scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -667,7 +660,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryItem> CreateMemory(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -688,7 +680,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="scope"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryItem>> CreateMemoryAsync(string name, string scope, string content, MemoryItemKind kind, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -760,7 +751,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryItem> UpdateMemory(string name, string memoryId, string content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -780,7 +770,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/>, <paramref name="memoryId"/> or <paramref name="content"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryItem>> UpdateMemoryAsync(string name, string memoryId, string content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -847,7 +836,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryItem> GetMemory(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -864,7 +852,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryItem>> GetMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -980,7 +967,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<MemoryDeletionResult> DeleteMemory(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -997,7 +983,6 @@ namespace Azure.AI.Projects.Memory
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="memoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="memoryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<MemoryDeletionResult>> DeleteMemoryAsync(string name, string memoryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
