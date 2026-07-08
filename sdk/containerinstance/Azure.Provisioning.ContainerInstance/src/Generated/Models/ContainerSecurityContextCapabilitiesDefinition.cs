@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _add = DefineListProperty<string>(nameof(Add), new string[] { "add" });
             _drop = DefineListProperty<string>(nameof(Drop), new string[] { "drop" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerSecurityContextCapabilitiesDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.CosmosDB
                     yield break;
                 }
                 MongoMIRoleDefinitionListResult result = MongoMIRoleDefinitionListResult.FromResponse(response);
-                yield return Page<MongoMIRoleDefinitionData>.FromValues((IReadOnlyList<MongoMIRoleDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MongoMIRoleDefinitionData>.FromValues((IReadOnlyList<MongoMIRoleDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

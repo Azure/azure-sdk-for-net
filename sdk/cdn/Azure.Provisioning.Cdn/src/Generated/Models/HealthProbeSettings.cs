@@ -91,6 +91,10 @@ namespace Azure.Provisioning.Cdn
             _probeRequestType = DefineProperty<HealthProbeRequestType>(nameof(ProbeRequestType), new string[] { "probeRequestType" });
             _probeProtocol = DefineProperty<HealthProbeProtocol>(nameof(ProbeProtocol), new string[] { "probeProtocol" });
             _probeIntervalInSeconds = DefineProperty<int>(nameof(ProbeIntervalInSeconds), new string[] { "probeIntervalInSeconds" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for HealthProbeSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

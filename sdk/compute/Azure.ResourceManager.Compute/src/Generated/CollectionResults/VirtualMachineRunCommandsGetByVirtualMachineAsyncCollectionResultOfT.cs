@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 VirtualMachineRunCommandsListResult result = VirtualMachineRunCommandsListResult.FromResponse(response);
-                yield return Page<VirtualMachineRunCommandData>.FromValues((IReadOnlyList<VirtualMachineRunCommandData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualMachineRunCommandData>.FromValues((IReadOnlyList<VirtualMachineRunCommandData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

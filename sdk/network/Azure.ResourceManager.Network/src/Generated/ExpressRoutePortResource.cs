@@ -415,11 +415,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<GenerateExpressRoutePortsLoaResult>> GenerateLOAAsync(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateExpressRoutePortsLoaResult>> GenerateLoaAsync(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _expressRoutePortsClientDiagnostics.CreateScope("ExpressRoutePortResource.GenerateLOA");
+            using DiagnosticScope scope = _expressRoutePortsClientDiagnostics.CreateScope("ExpressRoutePortResource.GenerateLoa");
             scope.Start();
             try
             {
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsRestClient.CreateGenerateLOARequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRoutePortsLoaContent.ToRequestContent(content), context);
+                HttpMessage message = _expressRoutePortsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRoutePortsLoaContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GenerateExpressRoutePortsLoaResult> response = Response.FromValue(GenerateExpressRoutePortsLoaResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -467,11 +467,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Request parameters supplied to generate a letter of authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<GenerateExpressRoutePortsLoaResult> GenerateLOA(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken = default)
+        public virtual Response<GenerateExpressRoutePortsLoaResult> GenerateLoa(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _expressRoutePortsClientDiagnostics.CreateScope("ExpressRoutePortResource.GenerateLOA");
+            using DiagnosticScope scope = _expressRoutePortsClientDiagnostics.CreateScope("ExpressRoutePortResource.GenerateLoa");
             scope.Start();
             try
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortsRestClient.CreateGenerateLOARequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRoutePortsLoaContent.ToRequestContent(content), context);
+                HttpMessage message = _expressRoutePortsRestClient.CreateGenerateLoaRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GenerateExpressRoutePortsLoaContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GenerateExpressRoutePortsLoaResult> response = Response.FromValue(GenerateExpressRoutePortsLoaResult.FromResponse(result), result);
                 if (response.Value == null)

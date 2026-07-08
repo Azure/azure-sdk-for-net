@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FrontEndIpConfiguration))
+            if (Optional.IsCollectionDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIpConfiguration"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in FrontEndIpConfiguration)
+                foreach (NetworkSubResource item in FrontEndIPConfiguration)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IList<DdosDetectionRule> detectionRules = default;
-            IList<NetworkSubResource> frontEndIpConfiguration = default;
+            IList<NetworkSubResource> frontEndIPConfiguration = default;
             IReadOnlyList<WritableSubResource> publicIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
-                    frontEndIpConfiguration = array;
+                    frontEndIPConfiguration = array;
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddresses"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 provisioningState,
                 detectionRules ?? new ChangeTrackingList<DdosDetectionRule>(),
-                frontEndIpConfiguration ?? new ChangeTrackingList<NetworkSubResource>(),
+                frontEndIPConfiguration ?? new ChangeTrackingList<NetworkSubResource>(),
                 publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
                 additionalBinaryDataProperties);
         }

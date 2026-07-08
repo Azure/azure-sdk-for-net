@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearninRegistryComponentContainerResource
     {
         // Customized: keep the historical MachineLearnin* typo in method names for source compatibility.
+        /// <summary> Gets a collection of MachineLearninRegistryComponentVersionResources in the <see cref="MachineLearninRegistryComponentContainerResource"/>. </summary>
         public virtual MachineLearninRegistryComponentVersionCollection GetMachineLearninRegistryComponentVersions() => new MachineLearninRegistryComponentVersionCollection(Client, Id);
         /// <summary> Gets a registry component version. </summary>
         [ForwardsClientCalls]

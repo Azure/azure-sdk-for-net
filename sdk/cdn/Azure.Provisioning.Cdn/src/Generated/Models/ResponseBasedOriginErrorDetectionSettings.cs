@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Cdn
             _responseBasedDetectedErrorType = DefineProperty<ResponseBasedDetectedErrorType>(nameof(ResponseBasedDetectedErrorType), new string[] { "responseBasedDetectedErrorTypes" });
             _responseBasedFailoverThresholdPercentage = DefineProperty<int>(nameof(ResponseBasedFailoverThresholdPercentage), new string[] { "responseBasedFailoverThresholdPercentage" });
             _httpErrorRanges = DefineListProperty<HttpErrorRange>(nameof(HttpErrorRanges), new string[] { "httpErrorRanges" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ResponseBasedOriginErrorDetectionSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

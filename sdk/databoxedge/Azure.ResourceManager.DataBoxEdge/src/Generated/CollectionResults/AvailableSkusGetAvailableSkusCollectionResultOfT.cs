@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                     yield break;
                 }
                 AvailableDataBoxEdgeSkuList result = AvailableDataBoxEdgeSkuList.FromResponse(response);
-                yield return Page<AvailableDataBoxEdgeSku>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AvailableDataBoxEdgeSku>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

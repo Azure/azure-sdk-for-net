@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary>
     /// Base properties for all compute resource types.
     /// The computeType discriminator determines the concrete property shape.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClusterComputeProperties"/> and <see cref="ContainerInstanceComputeProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesClusterComputeProperties"/> and <see cref="ContainerInstanceComputeProperties"/>.
     /// </summary>
     public abstract partial class CognitiveServicesComputeProperties
     {

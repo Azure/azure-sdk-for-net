@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Grafana
                     yield break;
                 }
                 DashboardDefinitionListResponse result = DashboardDefinitionListResponse.FromResponse(response);
-                yield return Page<DashboardDefinitionData>.FromValues((IReadOnlyList<DashboardDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DashboardDefinitionData>.FromValues((IReadOnlyList<DashboardDefinitionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

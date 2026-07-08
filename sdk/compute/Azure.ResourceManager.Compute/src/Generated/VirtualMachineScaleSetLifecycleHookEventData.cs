@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Defines the virtual machine scale set lifecycle hook event properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VmScaleSetLifecycleHookEventProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal VirtualMachineScaleSetLifecycleHookEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineScaleSetLifecycleHookEventProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Defines the virtual machine scale set lifecycle hook event properties. </summary>
-        public VmScaleSetLifecycleHookEventProperties Properties { get; }
+        public VirtualMachineScaleSetLifecycleHookEventProperties Properties { get; }
     }
 }

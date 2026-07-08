@@ -8,48 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the PublishingUser data model.
-    /// User credentials used for publishing activity.
-    /// Serialized Name: User
-    /// </summary>
+    /// <summary> User credentials used for publishing activity. </summary>
     public partial class PublishingUserData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PublishingUserData"/>. </summary>
         public PublishingUserData()
@@ -57,81 +25,116 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="PublishingUserData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: User.kind
-        /// </param>
-        /// <param name="publishingUserName">
-        /// Username used for publishing.
-        /// Serialized Name: User.properties.publishingUserName
-        /// </param>
-        /// <param name="publishingPassword">
-        /// Password used for publishing.
-        /// Serialized Name: User.properties.publishingPassword
-        /// </param>
-        /// <param name="publishingPasswordHash">
-        /// Password hash used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHash
-        /// </param>
-        /// <param name="publishingPasswordHashSalt">
-        /// Password hash salt used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHashSalt
-        /// </param>
-        /// <param name="scmUri">
-        /// Url of SCM site.
-        /// Serialized Name: User.properties.scmUri
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string publishingUserName, string publishingPassword, string publishingPasswordHash, string publishingPasswordHashSalt, Uri scmUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> User resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PublishingUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UserProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            PublishingUserName = publishingUserName;
-            PublishingPassword = publishingPassword;
-            PublishingPasswordHash = publishingPasswordHash;
-            PublishingPasswordHashSalt = publishingPasswordHashSalt;
-            ScmUri = scmUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: User.kind
-        /// </summary>
+        /// <summary> User resource specific properties. </summary>
+        [WirePath("properties")]
+        internal UserProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// Username used for publishing.
-        /// Serialized Name: User.properties.publishingUserName
-        /// </summary>
+
+        /// <summary> Username used for publishing. </summary>
         [WirePath("properties.publishingUserName")]
-        public string PublishingUserName { get; set; }
-        /// <summary>
-        /// Password used for publishing.
-        /// Serialized Name: User.properties.publishingPassword
-        /// </summary>
+        public string PublishingUserName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishingUserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                Properties.PublishingUserName = value;
+            }
+        }
+
+        /// <summary> Password used for publishing. </summary>
         [WirePath("properties.publishingPassword")]
-        public string PublishingPassword { get; set; }
-        /// <summary>
-        /// Password hash used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHash
-        /// </summary>
+        public string PublishingPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishingPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                Properties.PublishingPassword = value;
+            }
+        }
+
+        /// <summary> Password hash used for publishing. </summary>
         [WirePath("properties.publishingPasswordHash")]
-        public string PublishingPasswordHash { get; set; }
-        /// <summary>
-        /// Password hash salt used for publishing.
-        /// Serialized Name: User.properties.publishingPasswordHashSalt
-        /// </summary>
+        public string PublishingPasswordHash
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishingPasswordHash;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                Properties.PublishingPasswordHash = value;
+            }
+        }
+
+        /// <summary> Password hash salt used for publishing. </summary>
         [WirePath("properties.publishingPasswordHashSalt")]
-        public string PublishingPasswordHashSalt { get; set; }
-        /// <summary>
-        /// Url of SCM site.
-        /// Serialized Name: User.properties.scmUri
-        /// </summary>
+        public string PublishingPasswordHashSalt
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishingPasswordHashSalt;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                Properties.PublishingPasswordHashSalt = value;
+            }
+        }
+
+        /// <summary> Url of SCM site. </summary>
         [WirePath("properties.scmUri")]
-        public Uri ScmUri { get; set; }
+        public Uri ScmUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScmUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new UserProperties();
+                }
+                Properties.ScmUri = value;
+            }
+        }
     }
 }

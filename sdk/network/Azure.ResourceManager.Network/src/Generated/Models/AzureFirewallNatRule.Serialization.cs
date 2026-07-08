@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("translatedFqdn"u8);
                 writer.WriteStringValue(TranslatedFqdn);
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
-                foreach (string item in SourceIpGroups)
+                foreach (string item in SourceIPGroups)
                 {
                     if (item == null)
                     {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network.Models
             string translatedAddress = default;
             string translatedPort = default;
             string translatedFqdn = default;
-            IList<string> sourceIpGroups = default;
+            IList<string> sourceIPGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network.Models
                 translatedAddress,
                 translatedPort,
                 translatedFqdn,
-                sourceIpGroups ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

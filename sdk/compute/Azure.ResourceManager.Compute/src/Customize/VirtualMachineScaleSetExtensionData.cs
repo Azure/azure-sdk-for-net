@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Compute
     [CodeGenSuppress("VmssExtensionName")]
     public partial class VirtualMachineScaleSetExtensionData : ResourceData
     {
+        /// <summary> Writes the JSON representation of the model to the provided writer. </summary>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetExtensionData>)this).GetFormatFromOptions(options) : options.Format;

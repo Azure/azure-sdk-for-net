@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class DataConnectorConnectContent : IUtf8JsonSerializable, IJsonModel<DataConnectorConnectContent>
+    /// <summary> Represents Codeless API Polling data connector. </summary>
+    public partial class DataConnectorConnectContent : IJsonModel<DataConnectorConnectContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectorConnectContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataConnectorConnectContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataConnectorConnectContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataConnectorConnectContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataConnectorConnectContent IPersistableModel<DataConnectorConnectContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataConnectorConnectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataConnectorConnectContent"> The <see cref="DataConnectorConnectContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataConnectorConnectContent dataConnectorConnectContent)
+        {
+            if (dataConnectorConnectContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dataConnectorConnectContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataConnectorConnectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -88,7 +139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("requestConfigUserInputValues"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequestConfigUserInputValues)
+                foreach (BinaryData item in RequestConfigUserInputValues)
                 {
                     if (item == null)
                     {
@@ -96,9 +147,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item);
+                    writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,15 +157,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -123,22 +174,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        DataConnectorConnectContent IJsonModel<DataConnectorConnectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataConnectorConnectContent IJsonModel<DataConnectorConnectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataConnectorConnectContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataConnectorConnectContent(document.RootElement, options);
         }
 
-        internal static DataConnectorConnectContent DeserializeDataConnectorConnectContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataConnectorConnectContent DeserializeDataConnectorConnectContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -154,72 +210,71 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string userName = default;
             string password = default;
             IList<BinaryData> requestConfigUserInputValues = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    kind = new ConnectAuthKind(property.Value.GetString());
+                    kind = new ConnectAuthKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("apiKey"u8))
+                if (prop.NameEquals("apiKey"u8))
                 {
-                    apiKey = property.Value.GetString();
+                    apiKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataCollectionEndpoint"u8))
+                if (prop.NameEquals("dataCollectionEndpoint"u8))
                 {
-                    dataCollectionEndpoint = property.Value.GetString();
+                    dataCollectionEndpoint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataCollectionRuleImmutableId"u8))
+                if (prop.NameEquals("dataCollectionRuleImmutableId"u8))
                 {
-                    dataCollectionRuleImmutableId = property.Value.GetString();
+                    dataCollectionRuleImmutableId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("outputStream"u8))
+                if (prop.NameEquals("outputStream"u8))
                 {
-                    outputStream = property.Value.GetString();
+                    outputStream = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSecret"u8))
+                if (prop.NameEquals("clientSecret"u8))
                 {
-                    clientSecret = property.Value.GetString();
+                    clientSecret = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientId"u8))
+                if (prop.NameEquals("clientId"u8))
                 {
-                    clientId = property.Value.GetString();
+                    clientId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authorizationCode"u8))
+                if (prop.NameEquals("authorizationCode"u8))
                 {
-                    authorizationCode = property.Value.GetString();
+                    authorizationCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userName"u8))
+                if (prop.NameEquals("userName"u8))
                 {
-                    userName = property.Value.GetString();
+                    userName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("password"u8))
+                if (prop.NameEquals("password"u8))
                 {
-                    password = property.Value.GetString();
+                    password = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestConfigUserInputValues"u8))
+                if (prop.NameEquals("requestConfigUserInputValues"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -235,10 +290,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataConnectorConnectContent(
                 kind,
                 apiKey,
@@ -251,38 +305,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 userName,
                 password,
                 requestConfigUserInputValues ?? new ChangeTrackingList<BinaryData>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataConnectorConnectContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataConnectorConnectContent IPersistableModel<DataConnectorConnectContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataConnectorConnectContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataConnectorConnectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

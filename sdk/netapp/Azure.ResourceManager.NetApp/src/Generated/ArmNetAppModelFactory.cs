@@ -2153,22 +2153,22 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="status">
         /// The bucket credentials status. There states:
-        ///                         
-        ///                          "NoCredentialsSet": Access and Secret key pair have not been generated.
-        ///                          "CredentialsExpired": Access and Secret key pair have expired.
-        ///                          "Active": The certificate has been installed and credentials are unexpired.
+        ///                                     
+        ///                                      "NoCredentialsSet": Access and Secret key pair have not been generated.
+        ///                                      "CredentialsExpired": Access and Secret key pair have expired.
+        ///                                      "Active": The certificate has been installed and credentials are unexpired.
         /// </param>
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
         /// <param name="keyVaultDetails">
         /// Specifies the Azure Key Vault settings. These are used when
-        ///                          a) retrieving the bucket server certificate, and
-        ///                          b) storing the bucket credentials
-        ///                         
-        ///                          Notes:
-        ///                         
-        ///                          1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
-        ///                          2. These properties are mutually exclusive with the server.certificateObject property.
+        ///                                      a) retrieving the bucket server certificate, and
+        ///                                      b) storing the bucket credentials
+        ///                                     
+        ///                                      Notes:
+        ///                                     
+        ///                                      1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
+        ///                                      2. These properties are mutually exclusive with the server.certificateObject property.
         /// </param>
         /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2202,13 +2202,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. </param>
         /// <param name="keyVaultDetails">
         /// Specifies the Azure Key Vault settings. These are used when
-        ///                          a) retrieving the bucket server certificate, and
-        ///                          b) storing the bucket credentials
-        ///                         
-        ///                          Notes:
-        ///                         
-        ///                          1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
-        ///                          2. These properties are mutually exclusive with the server.certificateObject property.
+        ///                                      a) retrieving the bucket server certificate, and
+        ///                                      b) storing the bucket credentials
+        ///                                     
+        ///                                      Notes:
+        ///                                     
+        ///                                      1. If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.
+        ///                                      2. These properties are mutually exclusive with the server.certificateObject property.
         /// </param>
         /// <returns> A new <see cref="Models.NetAppBucketPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2394,9 +2394,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                         Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                         OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                         Never - No client-driven data is pulled from cool tier to standard storage.
+        ///                                     Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        ///                                     OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        ///                                     Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -2609,9 +2609,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                         Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                         OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                         Never - No client-driven data is pulled from cool tier to standard storage.
+        ///                                     Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        ///                                     OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        ///                                     Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="coolAccessTieringPolicy"> coolAccessTieringPolicy determines which cold data blocks are moved to cool tier. The possible values for this field are: Auto - Moves cold user data blocks in both the Snapshot copies and the active file system to the cool tier tier. This policy is the default. SnapshotOnly - Moves user data blocks of the Volume Snapshot copies that are not associated with the active file system to the cool tier. </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
@@ -2952,9 +2952,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                         Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                         OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                         Never - No client-driven data is pulled from cool tier to standard storage.
+        ///                                     Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        ///                                     OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        ///                                     Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
         /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>
@@ -3091,9 +3091,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="coolnessPeriod"> Specifies the number of days after which data that is not accessed by clients will be tiered. </param>
         /// <param name="coolAccessRetrievalPolicy">
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
-        ///                         Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
-        ///                         OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
-        ///                         Never - No client-driven data is pulled from cool tier to standard storage.
+        ///                                     Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
+        ///                                     OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
+        ///                                     Never - No client-driven data is pulled from cool tier to standard storage.
         /// </param>
         /// <param name="unixPermissions"> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </param>
         /// <param name="cloneProgress"> When a volume is being restored from another volume's snapshot, will show the percentage completion of this cloning process. When this value is empty/null there is no cloning process currently happening on this volume. This value will update every 5 minutes during cloning. </param>

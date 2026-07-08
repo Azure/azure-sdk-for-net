@@ -110,6 +110,10 @@ namespace Azure.Provisioning.Batch
             _storageAccountId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountId), new string[] { "storageAccountId" }, isRequired: true);
             _authenticationMode = DefineProperty<BatchAutoStorageAuthenticationMode>(nameof(AuthenticationMode), new string[] { "authenticationMode" });
             _nodeIdentity = DefineModelProperty<ComputeNodeIdentityReference>(nameof(NodeIdentity), new string[] { "nodeIdentityReference" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountAutoStorageConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

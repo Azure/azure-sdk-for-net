@@ -57,6 +57,10 @@ namespace Azure.Provisioning.CostManagement
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _percentage = DefineProperty<float>(nameof(Percentage), new string[] { "percentage" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CostAllocationProportion that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

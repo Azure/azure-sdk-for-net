@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(IpVersionType))
+            if (Optional.IsDefined(IPVersionType))
             {
                 writer.WritePropertyName("ipVersionType"u8);
-                writer.WriteStringValue(IpVersionType.Value.ToString());
+                writer.WriteStringValue(IPVersionType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(PrivateLinkServiceConnections))
             {
@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpConfigurations))
+            if (Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (PrivateEndpointIPConfiguration item in IpConfigurations)
+                foreach (PrivateEndpointIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

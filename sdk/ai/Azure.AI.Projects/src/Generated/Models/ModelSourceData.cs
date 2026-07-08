@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Source information for the model. </summary>
+    [Experimental("AAIP001")]
     internal partial class ModelSourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

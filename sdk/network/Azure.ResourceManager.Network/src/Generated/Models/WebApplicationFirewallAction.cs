@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> JSChallenge. </summary>
         private const string JSChallengeValue = "JSChallenge";
         /// <summary> CAPTCHA. </summary>
-        private const string CAPTCHAValue = "CAPTCHA";
+        private const string CaptchaValue = "CAPTCHA";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallAction"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
         public static WebApplicationFirewallAction JSChallenge { get; } = new WebApplicationFirewallAction(JSChallengeValue);
 
         /// <summary> CAPTCHA. </summary>
-        public static WebApplicationFirewallAction CAPTCHA { get; } = new WebApplicationFirewallAction(CAPTCHAValue);
+        public static WebApplicationFirewallAction Captcha { get; } = new WebApplicationFirewallAction(CaptchaValue);
 
         /// <summary> Determines if two <see cref="WebApplicationFirewallAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

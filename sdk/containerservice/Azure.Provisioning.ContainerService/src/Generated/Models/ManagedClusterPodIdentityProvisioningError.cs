@@ -39,6 +39,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _errorDetail = DefineModelProperty<ManagedClusterPodIdentityProvisioningErrorDetail>(nameof(ErrorDetail), new string[] { "error" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentityProvisioningError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

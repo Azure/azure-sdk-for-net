@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> List of all IPs configured on the gateway. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<VpnGatewayIPConfiguration> IpConfigurations
+        public IReadOnlyList<VpnGatewayIPConfiguration> IPConfigurations
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VpnGatewayProperties();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 

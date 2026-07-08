@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 PoolAssociationList result = PoolAssociationList.FromResponse(response);
-                yield return Page<IpamPoolAssociation>.FromValues((IReadOnlyList<IpamPoolAssociation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<IpamPoolAssociation>.FromValues((IReadOnlyList<IpamPoolAssociation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

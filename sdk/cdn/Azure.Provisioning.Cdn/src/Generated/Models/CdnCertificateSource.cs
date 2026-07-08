@@ -40,6 +40,10 @@ namespace Azure.Provisioning.Cdn
             base.DefineProvisionableProperties();
             DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "CdnCertificateSourceParameters");
             _certificateType = DefineProperty<CdnManagedCertificateType>(nameof(CertificateType), new string[] { "certificateType" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CdnCertificateSource that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

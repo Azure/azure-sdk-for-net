@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 DeletedRunbookListResult result = DeletedRunbookListResult.FromResponse(response);
-                yield return Page<DeletedRunbook>.FromValues((IReadOnlyList<DeletedRunbook>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DeletedRunbook>.FromValues((IReadOnlyList<DeletedRunbook>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRuleAddIncidentTaskAction : IUtf8JsonSerializable, IJsonModel<AutomationRuleAddIncidentTaskAction>
+    /// <summary> Describes an automation rule action to add a task to an incident. </summary>
+    public partial class AutomationRuleAddIncidentTaskAction : SecurityInsightsAutomationRuleAction, IJsonModel<AutomationRuleAddIncidentTaskAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRuleAddIncidentTaskAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AutomationRuleAddIncidentTaskAction"/> for deserialization. </summary>
+        internal AutomationRuleAddIncidentTaskAction()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityInsightsAutomationRuleAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutomationRuleAddIncidentTaskAction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRuleAddIncidentTaskAction)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRuleAddIncidentTaskAction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutomationRuleAddIncidentTaskAction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationRuleAddIncidentTaskAction IPersistableModel<AutomationRuleAddIncidentTaskAction>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutomationRuleAddIncidentTaskAction)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutomationRuleAddIncidentTaskAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutomationRuleAddIncidentTaskAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutomationRuleAddIncidentTaskAction)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ActionConfiguration))
             {
@@ -43,146 +87,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        AutomationRuleAddIncidentTaskAction IJsonModel<AutomationRuleAddIncidentTaskAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutomationRuleAddIncidentTaskAction IJsonModel<AutomationRuleAddIncidentTaskAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AutomationRuleAddIncidentTaskAction)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityInsightsAutomationRuleAction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutomationRuleAddIncidentTaskAction)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutomationRuleAddIncidentTaskAction(document.RootElement, options);
         }
 
-        internal static AutomationRuleAddIncidentTaskAction DeserializeAutomationRuleAddIncidentTaskAction(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutomationRuleAddIncidentTaskAction DeserializeAutomationRuleAddIncidentTaskAction(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AddIncidentTaskActionProperties actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AddIncidentTaskActionProperties actionConfiguration = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("actionConfiguration"u8))
+                if (prop.NameEquals("order"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    order = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("actionType"u8))
+                {
+                    actionType = new ActionType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("actionConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    actionConfiguration = AddIncidentTaskActionProperties.DeserializeAddIncidentTaskActionProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("order"u8))
-                {
-                    order = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("actionType"u8))
-                {
-                    actionType = new ActionType(property.Value.GetString());
+                    actionConfiguration = AddIncidentTaskActionProperties.DeserializeAddIncidentTaskActionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AutomationRuleAddIncidentTaskAction(order, actionType, serializedAdditionalRawData, actionConfiguration);
+            return new AutomationRuleAddIncidentTaskAction(order, actionType, additionalBinaryDataProperties, actionConfiguration);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  actionConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ActionConfiguration))
-                {
-                    builder.Append("  actionConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ActionConfiguration, options, 2, false, "  actionConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  order: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  order: ");
-                builder.AppendLine($"{Order}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  actionType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  actionType: ");
-                builder.AppendLine($"'{ActionType.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AutomationRuleAddIncidentTaskAction>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AutomationRuleAddIncidentTaskAction)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutomationRuleAddIncidentTaskAction IPersistableModel<AutomationRuleAddIncidentTaskAction>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutomationRuleAddIncidentTaskAction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutomationRuleAddIncidentTaskAction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutomationRuleAddIncidentTaskAction)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutomationRuleAddIncidentTaskAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

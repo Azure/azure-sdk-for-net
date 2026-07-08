@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Dns
                     yield break;
                 }
                 RecordSetListResult result = RecordSetListResult.FromResponse(response);
-                yield return Page<DnsRecordData>.FromValues((IReadOnlyList<DnsRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DnsRecordData>.FromValues((IReadOnlyList<DnsRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

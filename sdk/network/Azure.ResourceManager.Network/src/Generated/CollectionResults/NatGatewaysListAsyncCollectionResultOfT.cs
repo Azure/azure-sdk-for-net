@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NatGatewayListResult result = NatGatewayListResult.FromResponse(response);
-                yield return Page<NatGatewayData>.FromValues((IReadOnlyList<NatGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NatGatewayData>.FromValues((IReadOnlyList<NatGatewayData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

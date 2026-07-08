@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 PrivateLinkServiceListResult result = PrivateLinkServiceListResult.FromResponse(response);
-                yield return Page<PrivateLinkServiceData>.FromValues((IReadOnlyList<PrivateLinkServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PrivateLinkServiceData>.FromValues((IReadOnlyList<PrivateLinkServiceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

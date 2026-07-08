@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> DNAT. </summary>
-        private const string DNATValue = "DNAT";
+        private const string DnatValue = "DNAT";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyNatRuleCollectionActionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> DNAT. </summary>
-        public static FirewallPolicyNatRuleCollectionActionType DNAT { get; } = new FirewallPolicyNatRuleCollectionActionType(DNATValue);
+        public static FirewallPolicyNatRuleCollectionActionType Dnat { get; } = new FirewallPolicyNatRuleCollectionActionType(DnatValue);
 
         /// <summary> Determines if two <see cref="FirewallPolicyNatRuleCollectionActionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

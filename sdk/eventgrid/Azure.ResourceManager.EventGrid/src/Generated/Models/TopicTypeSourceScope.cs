@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The TopicTypeSourceScope. </summary>
+    /// <summary></summary>
     public readonly partial struct TopicTypeSourceScope : IEquatable<TopicTypeSourceScope>
     {
         private readonly string _value;
+        /// <summary> Resource. </summary>
+        private const string ResourceValue = "Resource";
+        /// <summary> ResourceGroup. </summary>
+        private const string ResourceGroupValue = "ResourceGroup";
+        /// <summary> AzureSubscription. </summary>
+        private const string AzureSubscriptionValue = "AzureSubscription";
+        /// <summary> ManagementGroup. </summary>
+        private const string ManagementGroupValue = "ManagementGroup";
 
         /// <summary> Initializes a new instance of <see cref="TopicTypeSourceScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TopicTypeSourceScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ResourceValue = "Resource";
-        private const string ResourceGroupValue = "ResourceGroup";
-        private const string AzureSubscriptionValue = "AzureSubscription";
-        private const string ManagementGroupValue = "ManagementGroup";
+            _value = value;
+        }
 
         /// <summary> Resource. </summary>
         public static TopicTypeSourceScope Resource { get; } = new TopicTypeSourceScope(ResourceValue);
+
         /// <summary> ResourceGroup. </summary>
         public static TopicTypeSourceScope ResourceGroup { get; } = new TopicTypeSourceScope(ResourceGroupValue);
+
         /// <summary> AzureSubscription. </summary>
         public static TopicTypeSourceScope AzureSubscription { get; } = new TopicTypeSourceScope(AzureSubscriptionValue);
+
         /// <summary> ManagementGroup. </summary>
         public static TopicTypeSourceScope ManagementGroup { get; } = new TopicTypeSourceScope(ManagementGroupValue);
+
         /// <summary> Determines if two <see cref="TopicTypeSourceScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TopicTypeSourceScope left, TopicTypeSourceScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TopicTypeSourceScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TopicTypeSourceScope left, TopicTypeSourceScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TopicTypeSourceScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TopicTypeSourceScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TopicTypeSourceScope(string value) => new TopicTypeSourceScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TopicTypeSourceScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TopicTypeSourceScope?(string value) => value == null ? null : new TopicTypeSourceScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TopicTypeSourceScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TopicTypeSourceScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

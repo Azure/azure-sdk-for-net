@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class StaticSiteLinkedBackendCollection : ArmCollection, IEnumerable<StaticSiteLinkedBackendResource>, IAsyncEnumerable<StaticSiteLinkedBackendResource>
     {
-        private readonly ClientDiagnostics _staticSiteLinkedBackendStaticSitesClientDiagnostics;
-        private readonly StaticSitesRestOperations _staticSiteLinkedBackendStaticSitesRestClient;
+        private readonly ClientDiagnostics _staticSiteLinkedBackendARMResourcesClientDiagnostics;
+        private readonly StaticSiteLinkedBackendARMResources _staticSiteLinkedBackendARMResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteLinkedBackendCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StaticSiteLinkedBackendCollection for mocking. </summary>
         protected StaticSiteLinkedBackendCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StaticSiteLinkedBackendCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StaticSiteLinkedBackendCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StaticSiteLinkedBackendCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _staticSiteLinkedBackendStaticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteLinkedBackendResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(StaticSiteLinkedBackendResource.ResourceType, out string staticSiteLinkedBackendStaticSitesApiVersion);
-            _staticSiteLinkedBackendStaticSitesRestClient = new StaticSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteLinkedBackendStaticSitesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(StaticSiteLinkedBackendResource.ResourceType, out string staticSiteLinkedBackendApiVersion);
+            _staticSiteLinkedBackendARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteLinkedBackendResource.ResourceType.Namespace, Diagnostics);
+            _staticSiteLinkedBackendARMResourcesRestClient = new StaticSiteLinkedBackendARMResources(_staticSiteLinkedBackendARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteLinkedBackendApiVersion ?? "2026-03-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != StaticSiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StaticSiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Link backend to a static site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_LinkBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_LinkBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<StaticSiteLinkedBackendResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _staticSiteLinkedBackendStaticSitesRestClient.LinkBackendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendOperationSource(Client), _staticSiteLinkedBackendStaticSitesClientDiagnostics, Pipeline, _staticSiteLinkedBackendStaticSitesRestClient.CreateLinkBackendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateLinkBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation<StaticSiteLinkedBackendResource> operation = new AppServiceArmOperation<StaticSiteLinkedBackendResource>(
+                    new StaticSiteLinkedBackendResourceOperationSource(Client),
+                    _staticSiteLinkedBackendARMResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.AppService
         /// Link backend to a static site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_LinkBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_LinkBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="data"> A JSON representation of the linked backend request properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<StaticSiteLinkedBackendResource> CreateOrUpdate(WaitUntil waitUntil, string linkedBackendName, StaticSiteLinkedBackendData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _staticSiteLinkedBackendStaticSitesRestClient.LinkBackend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendOperationSource(Client), _staticSiteLinkedBackendStaticSitesClientDiagnostics, Pipeline, _staticSiteLinkedBackendStaticSitesRestClient.CreateLinkBackendRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateLinkBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, StaticSiteLinkedBackendData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation<StaticSiteLinkedBackendResource> operation = new AppServiceArmOperation<StaticSiteLinkedBackendResource>(
+                    new StaticSiteLinkedBackendResourceOperationSource(Client),
+                    _staticSiteLinkedBackendARMResourcesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.AppService
         /// Returns the details of a linked backend linked to a static site by name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<StaticSiteLinkedBackendResource>> GetAsync(string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Get");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Get");
             scope.Start();
             try
             {
-                var response = await _staticSiteLinkedBackendStaticSitesRestClient.GetLinkedBackendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteLinkedBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.AppService
         /// Returns the details of a linked backend linked to a static site by name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<StaticSiteLinkedBackendResource> Get(string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Get");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Get");
             scope.Start();
             try
             {
-                var response = _staticSiteLinkedBackendStaticSitesRestClient.GetLinkedBackend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteLinkedBackendData> response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteLinkedBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.AppService
         /// Returns details of all backends linked to a static site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackends</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackends. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StaticSiteLinkedBackendResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StaticSiteLinkedBackendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StaticSiteLinkedBackendResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StaticSiteLinkedBackendResource(Client, StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(e)), _staticSiteLinkedBackendStaticSitesClientDiagnostics, Pipeline, "StaticSiteLinkedBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StaticSiteLinkedBackendData, StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendARMResourcesGetLinkedBackendsAsyncCollectionResultOfT(
+                _staticSiteLinkedBackendARMResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StaticSiteLinkedBackendCollection.GetAll"), data => new StaticSiteLinkedBackendResource(Client, data));
         }
 
         /// <summary>
         /// Returns details of all backends linked to a static site
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackends</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackends. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteLinkedBackendResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StaticSiteLinkedBackendResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _staticSiteLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _staticSiteLinkedBackendStaticSitesRestClient.CreateGetLinkedBackendsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StaticSiteLinkedBackendResource(Client, StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(e)), _staticSiteLinkedBackendStaticSitesClientDiagnostics, Pipeline, "StaticSiteLinkedBackendCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StaticSiteLinkedBackendData, StaticSiteLinkedBackendResource>(new StaticSiteLinkedBackendARMResourcesGetLinkedBackendsCollectionResultOfT(
+                _staticSiteLinkedBackendARMResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StaticSiteLinkedBackendCollection.GetAll"), data => new StaticSiteLinkedBackendResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Exists");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _staticSiteLinkedBackendStaticSitesRestClient.GetLinkedBackendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteLinkedBackendData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.AppService
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Exists");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.Exists");
             scope.Start();
             try
             {
-                var response = _staticSiteLinkedBackendStaticSitesRestClient.GetLinkedBackend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteLinkedBackendData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<StaticSiteLinkedBackendResource>> GetIfExistsAsync(string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.GetIfExists");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _staticSiteLinkedBackendStaticSitesRestClient.GetLinkedBackendAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StaticSiteLinkedBackendData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteLinkedBackendResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteLinkedBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.AppService
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/linkedBackends/{linkedBackendName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StaticSites_GetLinkedBackend</description>
+        /// <term> Operation Id. </term>
+        /// <description> StaticSiteLinkedBackendARMResources_GetLinkedBackend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StaticSiteLinkedBackendResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedBackendName"> Name of the linked backend that should be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedBackendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedBackendName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<StaticSiteLinkedBackendResource> GetIfExists(string linkedBackendName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(linkedBackendName, nameof(linkedBackendName));
 
-            using var scope = _staticSiteLinkedBackendStaticSitesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.GetIfExists");
+            using DiagnosticScope scope = _staticSiteLinkedBackendARMResourcesClientDiagnostics.CreateScope("StaticSiteLinkedBackendCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _staticSiteLinkedBackendStaticSitesRestClient.GetLinkedBackend(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkedBackendName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _staticSiteLinkedBackendARMResourcesRestClient.CreateGetLinkedBackendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, linkedBackendName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StaticSiteLinkedBackendData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StaticSiteLinkedBackendData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StaticSiteLinkedBackendData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StaticSiteLinkedBackendResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StaticSiteLinkedBackendResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.AppService
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StaticSiteLinkedBackendResource> IAsyncEnumerable<StaticSiteLinkedBackendResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

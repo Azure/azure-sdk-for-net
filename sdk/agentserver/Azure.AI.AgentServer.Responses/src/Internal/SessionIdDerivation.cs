@@ -24,8 +24,6 @@ internal static class SessionIdDerivation
     /// </summary>
     private const int SessionIdLength = 63;
 
-    private const string DefaultAgentName = "server-default-agent";
-
     /// <summary>
     /// Derives a session ID from conversational context and agent identity.
     /// </summary>
@@ -72,13 +70,13 @@ internal static class SessionIdDerivation
     {
         if (agentReference is null)
         {
-            return (DefaultAgentName, "");
+            return (DerivationDefaults.DefaultAgentName, "");
         }
 
         var name = agentReference.Name;
         var version = agentReference.Version;
         return (
-            string.IsNullOrEmpty(name) ? DefaultAgentName : name,
+            string.IsNullOrEmpty(name) ? DerivationDefaults.DefaultAgentName : name,
             version ?? ""
         );
     }

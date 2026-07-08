@@ -77,6 +77,10 @@
 # Client Libraries
 ####################
 
+/sdk/ai/Azure.AI.Extensions.OpenAI/    @rhurey
+
+/sdk/ai/Azure.AI.Projects.Agents/    @rhurey
+
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
@@ -93,7 +97,7 @@
 # ServiceOwners: @dargilco @glharper @trangevi
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @trangevi @trrwilson
+/sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi @trrwilson
 
 # ServiceLabel: %AI Projects
 # ServiceOwners: @dargilco @nick863 @trangevi
@@ -897,6 +901,9 @@
 /**/*Management*/                                                  @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Mgmt
+/sdk/**/ci.mgmt.yml                                                @ArcturusZhang @ArthurMa1978 @live1206
+
+# PRLabel: %Mgmt
 /**/Azure.ResourceManager*/                                        @ArcturusZhang @ArthurMa1978 @live1206
 
 # PRLabel: %Provisioning
@@ -1182,15 +1189,18 @@
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @benbp
+/eng/                                                              @danieljurek @benbp @raych1
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
-/eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @raych1 @benbp
+
+# Add owners for overrides and suppressions
+/eng/analyzerallowlist/                                            @Azure/azure-sdk-write-net-core @jsquire
+/eng/apicompatbaselines/                                           @Azure/azure-sdk-write-net-core @jsquire
 
 # Add owners for package dependency changes
 /eng/centralpackagemanagement                                           @Azure/azure-sdk-write-net-core @jsquire

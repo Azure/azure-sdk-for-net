@@ -82,6 +82,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _created = DefineProperty<DateTimeOffset>(nameof(Created), new string[] { "created" }, isOutput: true);
             _updated = DefineProperty<DateTimeOffset>(nameof(Updated), new string[] { "updated" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ItemAttributes that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

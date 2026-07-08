@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 InstanceFailoverGroupListResult result = InstanceFailoverGroupListResult.FromResponse(response);
-                yield return Page<InstanceFailoverGroupData>.FromValues((IReadOnlyList<InstanceFailoverGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<InstanceFailoverGroupData>.FromValues((IReadOnlyList<InstanceFailoverGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

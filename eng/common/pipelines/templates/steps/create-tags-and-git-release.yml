@@ -8,7 +8,7 @@ parameters:
   ScriptDirectory: eng/common/scripts
   NpmConfigUserConfig: ''
   NpmConfigRegistry: ''
-  AuthToken: $(azuresdk-github-pat)
+  AuthToken: ''
 
 steps:
 - ${{ if eq(parameters.AuthToken, '') }}:

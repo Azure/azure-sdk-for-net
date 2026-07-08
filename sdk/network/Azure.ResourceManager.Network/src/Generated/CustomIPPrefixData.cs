@@ -130,38 +130,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </summary>
-        [WirePath("properties.customIpPrefixParent")]
-        public ResourceIdentifier CustomIpPrefixParent
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CustomIpPrefixParent;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomIpPrefixPropertiesFormat();
-                }
-                Properties.CustomIpPrefixParent = value;
-            }
-        }
-
-        /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
-        [WirePath("properties.childCustomIpPrefixes")]
-        public IReadOnlyList<NetworkSubResource> ChildCustomIpPrefixes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomIpPrefixPropertiesFormat();
-                }
-                return Properties.ChildCustomIpPrefixes;
-            }
-        }
-
         /// <summary> The commissioned state of the Custom IP Prefix. </summary>
         [WirePath("properties.commissionedState")]
         public CommissionedState? CommissionedState
@@ -249,20 +217,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new CustomIpPrefixPropertiesFormat();
                 }
                 Properties.PrefixType = value;
-            }
-        }
-
-        /// <summary> The list of all referenced PublicIpPrefixes. </summary>
-        [WirePath("properties.publicIpPrefixes")]
-        public IReadOnlyList<NetworkSubResource> PublicIpPrefixes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomIpPrefixPropertiesFormat();
-                }
-                return Properties.PublicIpPrefixes;
             }
         }
 

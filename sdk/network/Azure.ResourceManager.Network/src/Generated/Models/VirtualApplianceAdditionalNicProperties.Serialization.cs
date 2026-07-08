@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(HasPublicIp))
+            if (Optional.IsDefined(HasPublicIP))
             {
                 writer.WritePropertyName("hasPublicIp"u8);
-                writer.WriteBooleanValue(HasPublicIp.Value);
+                writer.WriteBooleanValue(HasPublicIP.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            bool? hasPublicIp = default;
+            bool? hasPublicIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    hasPublicIp = prop.Value.GetBoolean();
+                    hasPublicIP = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualApplianceAdditionalNicProperties(name, hasPublicIp, additionalBinaryDataProperties);
+            return new VirtualApplianceAdditionalNicProperties(name, hasPublicIP, additionalBinaryDataProperties);
         }
     }
 }

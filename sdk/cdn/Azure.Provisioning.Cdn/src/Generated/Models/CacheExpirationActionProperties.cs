@@ -75,6 +75,10 @@ namespace Azure.Provisioning.Cdn
             _cacheBehavior = DefineProperty<CacheBehaviorSetting>(nameof(CacheBehavior), new string[] { "cacheBehavior" }, isRequired: true);
             _cacheType = DefineProperty<CdnCacheLevel>(nameof(CacheType), new string[] { "cacheType" }, isRequired: true);
             _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CacheExpirationActionProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

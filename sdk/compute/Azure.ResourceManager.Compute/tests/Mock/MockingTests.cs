@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var setId = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName);
             var setData = ArmComputeModelFactory.AvailabilitySetData(setId, setName, default, default, default, default, (int?)default, platformFaultDomainCount: 10);
             var vmId = VirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmName);
-            var vmData = ArmComputeModelFactory.VirtualMachineData(vmId, vmName, default, default, default, default, (VirtualMachineHardwareProfile)null, availabilitySetId: setId);
+            var vmData = ArmComputeModelFactory.VirtualMachineData(id: vmId, name: vmName, hardwareProfile: null, availabilitySetId: setId, interconnectBlockId: null);
             #endregion
 
             #region mocking setup
