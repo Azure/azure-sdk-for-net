@@ -694,7 +694,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var filters = new FilterSet();
 
-                // even if supplied sessionId is null, we need to add the Session filter if it is a session receiver
+                // even if the supplied sessionId is null, a session receiver needs a session filter on the link:
+                // the plain session filter for an exclusive session, or the composite non-exclusive session filter otherwise.
                 if (isSessionReceiver)
                 {
                     if (isSessionExclusive)
