@@ -909,6 +909,9 @@
 # PRLabel: %Provisioning
 /**/Azure.Provisioning*/                                           @ArcturusZhang @ArthurMa1978 @m-nash
 
+# ServiceLabel: %Provisioning
+# AzureSdkOwners:                                                  @ArcturusZhang @ArthurMa1978
+
 # -----------------------------------------------------------------
 # IMPORTANT NOTE:
 #   This block acts as a catch-all, assigning Arthur triage for
