@@ -406,8 +406,8 @@ namespace Azure.Generator.Management.Providers
 
             static RequestPathSegment StripQueryString(RequestPathSegment segment)
             {
-                var queryIndex = segment.Value.IndexOf('?');
-                return queryIndex < 0 ? segment : new RequestPathSegment(segment.Value[..queryIndex]);
+                var pathWithoutQuery = RequestPathPattern.StripQueryString(segment.Value);
+                return pathWithoutQuery == segment.Value ? segment : new RequestPathSegment(pathWithoutQuery);
             }
 
             static string EscapeFormatLiteral(string value)

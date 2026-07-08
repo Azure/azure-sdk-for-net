@@ -543,7 +543,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (client, [responseModel, patchModel]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchBodyAfterNonContextualPathParameters()
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourcePatchBodyAfterNonContextualPathParameters(bool includeQueryInUpdatePath = false)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -573,9 +573,10 @@ namespace Azure.Generator.Management.Tests.Common
             var dataOpParameter = InputFactory.BodyParameter("data", responseModel, isRequired: true);
             var patchOpParameter = InputFactory.BodyParameter("patch", patchModel, isRequired: true);
             var operationPath = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}";
+            var updatePath = includeQueryInUpdatePath ? operationPath + "?disambiguation_dummy" : operationPath;
             var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: operationPath);
             var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: operationPath, httpMethod: "PUT");
-            var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, patchOpParameter], path: operationPath, httpMethod: "PATCH");
+            var updateOperation = InputFactory.Operation(name: "update", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, patchOpParameter], path: updatePath, httpMethod: "PATCH");
             var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);

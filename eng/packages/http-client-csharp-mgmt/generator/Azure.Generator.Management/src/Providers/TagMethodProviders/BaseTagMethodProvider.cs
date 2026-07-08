@@ -62,7 +62,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _getMethodProvider = getMethod;
             _operationContext = operationContext;
             _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(getMethod.Operation.Path));
-            _updatePath = new RequestPathPattern(updateMethodProvider.ServiceMethod.Operation.Path);
+            _updatePath = new RequestPathPattern(RequestPathPattern.StripQueryString(updateMethodProvider.ServiceMethod.Operation.Path));
             _updateParameterMappings = operationContext.BuildParameterMapping(_updatePath);
             _enclosingType = resource;
             _updateRestClient = updateRestClientInfo.RestClientProvider;
