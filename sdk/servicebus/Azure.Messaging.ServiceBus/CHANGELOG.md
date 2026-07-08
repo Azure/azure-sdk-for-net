@@ -2,17 +2,17 @@
 
 ## 7.21.0-beta.1 (Unreleased)
 
+### Features Added
+
+- Added opt-in support for non-exclusive session locking on `ServiceBusSessionReceiver`, allowing a session to be cooperatively taken over by another receiver.
+
+## 7.20.2 (2026-07-08)
+
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
-
-### Features Added
-
-- Added opt-in support for non-exclusive session locking on `ServiceBusSessionReceiver`, allowing a session to be cooperatively taken over by another receiver.
-
-### Breaking Changes
 
 ### Bugs Fixed
 
