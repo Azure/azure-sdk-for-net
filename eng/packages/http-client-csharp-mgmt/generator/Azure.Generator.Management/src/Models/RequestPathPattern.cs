@@ -48,8 +48,10 @@ namespace Azure.Generator.Management.Models
             };
         }
 
-        private string _path;
-        private IReadOnlyList<RequestPathSegment> _segments;
+        private readonly string _path;
+        private readonly IReadOnlyList<RequestPathSegment> _segments;
+        private ResourceTypePattern? _resourceType;
+        private bool _resourceTypeCalculated;
 
         /// <summary> Initializes a new instance of <see cref="RequestPathPattern"/> from a raw path string. </summary>
         /// <param name="path">The raw request path string.</param>
@@ -78,34 +80,46 @@ namespace Azure.Generator.Management.Models
         /// <summary> Gets the serialized string representation of this request path. </summary>
         public string SerializedPath => _path;
 
-        /// <summary> Gets the ARM resource type segments represented by this request path. </summary>
-        public IReadOnlyList<RequestPathSegment> ResourceTypeSegments
+        /// <summary> Gets the ARM resource type represented by this request path. </summary>
+        public ResourceTypePattern? ResourceType
         {
             get
             {
-                var providerIndex = -1;
-                for (int i = Count - 1; i >= 0; i--)
+                if (_resourceTypeCalculated)
                 {
-                    if (_segments[i].IsProvidersSegment)
-                    {
-                        providerIndex = i;
-                        break;
-                    }
+                    return _resourceType;
                 }
 
-                if (providerIndex < 0)
-                {
-                    return [];
-                }
-
-                var result = new List<RequestPathSegment>();
-                result.Add(_segments[providerIndex + 1]);
-                for (int i = providerIndex + 2; i < Count; i += 2)
-                {
-                    result.Add(_segments[i]);
-                }
-                return result;
+                _resourceType = BuildResourceType();
+                _resourceTypeCalculated = true;
+                return _resourceType;
             }
+        }
+
+        private ResourceTypePattern? BuildResourceType()
+        {
+            var providerIndex = -1;
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                if (_segments[i].IsProvidersSegment)
+                {
+                    providerIndex = i;
+                    break;
+                }
+            }
+
+            if (providerIndex < 0)
+            {
+                return null;
+            }
+
+            var result = new List<RequestPathSegment>();
+            result.Add(_segments[providerIndex + 1]);
+            for (int i = providerIndex + 2; i < Count; i += 2)
+            {
+                result.Add(_segments[i]);
+            }
+            return new ResourceTypePattern(result);
         }
 
         /// <summary> Gets the <see cref="RequestPathSegment"/> at the specified index. </summary>

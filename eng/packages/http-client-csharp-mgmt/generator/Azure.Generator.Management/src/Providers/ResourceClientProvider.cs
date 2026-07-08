@@ -404,7 +404,8 @@ namespace Azure.Generator.Management.Providers
             return new MethodProvider(signature, bodyStatements, this);
         }
 
-        internal string ResourceTypeValue => _resourceMetadata.ResourceType;
+        internal ResourceTypePattern ResourceType => _resourceMetadata.ResourceType;
+        internal string ResourceTypeValue => ResourceType.SerializedResourceType;
 
         protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 

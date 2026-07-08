@@ -213,11 +213,15 @@ namespace Azure.Generator.Management.Providers
 
         internal IReadOnlyList<ParameterContextMapping> GetResourceTypeSegmentParameterMappings(RequestPathPattern operationPath)
         {
-            var resourceTypeSegments = _resource.ResourceTypeValue.Split('/').Select(segment => new RequestPathSegment(segment)).ToArray();
-            var operationTypeSegments = operationPath.ResourceTypeSegments;
+            var resourceTypeSegments = _resource.ResourceType;
+            var operationTypeSegments = operationPath.ResourceType;
+            if (operationTypeSegments is null)
+            {
+                return [];
+            }
             var mappings = new List<ParameterContextMapping>();
 
-            for (int i = 0; i < operationTypeSegments.Count && i < resourceTypeSegments.Length; i++)
+            for (int i = 0; i < operationTypeSegments.Count && i < resourceTypeSegments.Count; i++)
             {
                 var operationSegment = operationTypeSegments[i];
                 var resourceSegment = resourceTypeSegments[i];
