@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The types of deadlines supported by Bulkactions. </summary>
-    public readonly partial struct ScheduledActionDeadlineType : IEquatable<ScheduledActionDeadlineType>
+    public readonly partial struct BulkActionDeadlineKind : IEquatable<BulkActionDeadlineKind>
     {
         private readonly string _value;
         /// <summary> Default value of Unknown. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Complete the operation by the given deadline. </summary>
         private const string CompleteByValue = "CompleteBy";
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionDeadlineType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkActionDeadlineKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ScheduledActionDeadlineType(string value)
+        public BulkActionDeadlineKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Default value of Unknown. </summary>
-        public static ScheduledActionDeadlineType Unknown { get; } = new ScheduledActionDeadlineType(UnknownValue);
+        public static BulkActionDeadlineKind Unknown { get; } = new BulkActionDeadlineKind(UnknownValue);
 
         /// <summary> Initiate the operation at the given deadline. </summary>
-        public static ScheduledActionDeadlineType InitiateAt { get; } = new ScheduledActionDeadlineType(InitiateAtValue);
+        public static BulkActionDeadlineKind InitiateAt { get; } = new BulkActionDeadlineKind(InitiateAtValue);
 
         /// <summary> Complete the operation by the given deadline. </summary>
-        public static ScheduledActionDeadlineType CompleteBy { get; } = new ScheduledActionDeadlineType(CompleteByValue);
+        public static BulkActionDeadlineKind CompleteBy { get; } = new BulkActionDeadlineKind(CompleteByValue);
 
-        /// <summary> Determines if two <see cref="ScheduledActionDeadlineType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BulkActionDeadlineKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ScheduledActionDeadlineType left, ScheduledActionDeadlineType right) => left.Equals(right);
+        public static bool operator ==(BulkActionDeadlineKind left, BulkActionDeadlineKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ScheduledActionDeadlineType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BulkActionDeadlineKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ScheduledActionDeadlineType left, ScheduledActionDeadlineType right) => !left.Equals(right);
+        public static bool operator !=(BulkActionDeadlineKind left, BulkActionDeadlineKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ScheduledActionDeadlineType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BulkActionDeadlineKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionDeadlineType(string value) => new ScheduledActionDeadlineType(value);
+        public static implicit operator BulkActionDeadlineKind(string value) => new BulkActionDeadlineKind(value);
 
-        /// <summary> Converts a string to a <see cref="ScheduledActionDeadlineType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BulkActionDeadlineKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ScheduledActionDeadlineType?(string value) => value == null ? null : new ScheduledActionDeadlineType(value);
+        public static implicit operator BulkActionDeadlineKind?(string value) => value == null ? null : new BulkActionDeadlineKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ScheduledActionDeadlineType other && Equals(other);
+        public override bool Equals(object obj) => obj is BulkActionDeadlineKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ScheduledActionDeadlineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BulkActionDeadlineKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
