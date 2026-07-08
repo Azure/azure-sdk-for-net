@@ -500,13 +500,12 @@ namespace Azure.Generator.Provisioning.Providers
                 var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
-                // For singleton resources, the "name" property is output-only with a default value
+                // For singleton resources, the "name" property has one fixed default value and is not settable.
                 string? defaultValue = null;
                 if (isResourceName
                     && _resourceProjection?.SingletonResourceName is string singletonResourceName)
                 {
                     defaultValue = singletonResourceName;
-                    isOutput = true;
                     isSettable = false;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
