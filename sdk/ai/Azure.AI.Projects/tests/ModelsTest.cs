@@ -176,7 +176,7 @@ public class ModelsTest : ProjectsClientTestBase
             return;
         await Delay(5000);
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
         List<string> modelNames = await projectClient.Models.GetLatestModelVersionsAsync().Where(x => x.Name.StartsWith("cs-model-name")).Select(x => x.Name).ToListAsync();
         foreach (string modelName in modelNames)
         {
