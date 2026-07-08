@@ -75,11 +75,11 @@ namespace Azure.Provisioning.Search
     public partial class SearchNetworkSecurityProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchNetworkSecurityProfile() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterAccessRule> AccessRules { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> AccessRulesVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> DiagnosticSettingsVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> EnabledLogCategories { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterAccessRule> AccessRules { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> AccessRulesVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> DiagnosticSettingsVersion { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> EnabledLogCategories { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SearchPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
@@ -226,16 +226,16 @@ namespace Azure.Provisioning.Search
     public partial class SearchServiceNetworkSecurityPerimeter : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkSecurityPerimeter() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> PerimeterGuid { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> PerimeterGuid { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SearchServiceNetworkSecurityPerimeterAccessRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkSecurityPerimeterAccessRule() { }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterAccessRuleProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SearchServiceNetworkSecurityPerimeterAccessRuleDirection
@@ -246,20 +246,20 @@ namespace Azure.Provisioning.Search
     public partial class SearchServiceNetworkSecurityPerimeterAccessRuleProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkSecurityPerimeterAccessRuleProperties() { }
-        public Azure.Provisioning.BicepList<string> AddressPrefixes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterAccessRuleDirection> Direction { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> FullyQualifiedDomainNames { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> PhoneNumbers { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterInboundRuleSubscription> Subscriptions { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> AddressPrefixes { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterAccessRuleDirection> Direction { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> FullyQualifiedDomainNames { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> PhoneNumbers { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterInboundRuleSubscription> Subscriptions { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SearchServiceNetworkSecurityPerimeterConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal SearchServiceNetworkSecurityPerimeterConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Search.SearchService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterConfigurationProperties Properties { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -273,11 +273,11 @@ namespace Azure.Provisioning.Search
     public partial class SearchServiceNetworkSecurityPerimeterConfigurationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkSecurityPerimeterConfigurationProperties() { }
-        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } set { } }
-        public Azure.Provisioning.Search.SearchNetworkSecurityProfile Profile { get { throw null; } set { } }
+        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
+        public Azure.Provisioning.Search.SearchNetworkSecurityProfile Profile { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get { throw null; } set { } }
+        public Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterResourceAssociation ResourceAssociation { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState
@@ -293,7 +293,7 @@ namespace Azure.Provisioning.Search
     public partial class SearchServiceNetworkSecurityPerimeterInboundRuleSubscription : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkSecurityPerimeterInboundRuleSubscription() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class SearchServiceNetworkSecurityPerimeterProvisioningIssue : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -328,8 +328,8 @@ namespace Azure.Provisioning.Search
     public partial class SearchServiceNetworkSecurityPerimeterResourceAssociation : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SearchServiceNetworkSecurityPerimeterResourceAssociation() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode> AccessMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Search.SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode> AccessMode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode
