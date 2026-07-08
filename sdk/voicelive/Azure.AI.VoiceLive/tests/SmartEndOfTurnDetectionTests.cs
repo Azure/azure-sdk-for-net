@@ -11,71 +11,49 @@ namespace Azure.AI.VoiceLive.Tests
     public class SmartEndOfTurnDetectionTests
     {
         [Test]
-        public void SmartEndOfTurnDetection_SerializesWithCorrectDiscriminator()
+        public void AzureSemanticEouDetection_SerializesWithCorrectDiscriminator()
         {
-            var eou = new SmartEndOfTurnDetection
+            var eou = new AzureSemanticEouDetection
             {
                 ThresholdLevel = EouThresholdLevel.High,
-                TimeoutMs = 500,
             };
 
             var json = TestUtilities.SerializeViaIJsonModel(eou);
             using var doc = JsonDocument.Parse(json);
 
-            Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("smart_end_of_turn_detection"));
+            Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("semantic_detection_v1"));
             Assert.That(doc.RootElement.GetProperty("threshold_level").GetString(), Is.EqualTo("high"));
-            Assert.That(doc.RootElement.GetProperty("timeout_ms").GetInt32(), Is.EqualTo(500));
         }
 
         [Test]
-        public void SmartEndOfTurnDetection_OptionalPropertiesOmittedWhenNull()
+        public void AzureSemanticEouDetectionEn_UsesEnglishDiscriminator()
         {
-            var eou = new SmartEndOfTurnDetection();
+            var eou = new AzureSemanticEouDetectionEn();
             var json = TestUtilities.SerializeViaIJsonModel(eou);
             using var doc = JsonDocument.Parse(json);
 
-            Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("smart_end_of_turn_detection"));
-            Assert.That(doc.RootElement.TryGetProperty("threshold_level", out _), Is.False);
-            Assert.That(doc.RootElement.TryGetProperty("timeout_ms", out _), Is.False);
+            Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("semantic_detection_v1_en"));
         }
 
         [Test]
-        public void SmartEndOfTurnDetection_Polymorphic_DeserializesFromJson()
+        public void AzureSemanticEouDetection_Polymorphic_DeserializesFromJson()
         {
             var eou = TestUtilities.DeserializeViaIJsonModel<EouDetection>(
-                """{"model":"smart_end_of_turn_detection","threshold_level":"medium","timeout_ms":800}""",
-                new SmartEndOfTurnDetection());
+                """{"model":"semantic_detection_v1","threshold_level":"medium"}""",
+                new AzureSemanticEouDetection());
 
-            Assert.That(eou, Is.TypeOf<SmartEndOfTurnDetection>());
-            var smart = (SmartEndOfTurnDetection)eou;
-            Assert.That(smart.ThresholdLevel, Is.EqualTo(EouThresholdLevel.Medium));
-            Assert.That(smart.TimeoutMs, Is.EqualTo(800));
+            Assert.That(eou, Is.TypeOf<AzureSemanticEouDetection>());
+            var semantic = (AzureSemanticEouDetection)eou;
+            Assert.That(semantic.ThresholdLevel, Is.EqualTo(EouThresholdLevel.Medium));
         }
 
         [Test]
-        public void SmartEndOfTurnDetection_RoundTrip()
+        public void AzureSemanticEouDetectionMultilingual_UsesMultilingualDiscriminator()
         {
-            var original = new SmartEndOfTurnDetection
-            {
-                ThresholdLevel = EouThresholdLevel.High,
-                TimeoutMs = 1500,
-            };
-
-            // Verify serialized JSON has correct TypeSpec wire keys
-            var json = TestUtilities.SerializeViaIJsonModel(original);
+            var json = TestUtilities.SerializeViaIJsonModel(new AzureSemanticEouDetectionMultilingual());
             using var doc = JsonDocument.Parse(json);
-            Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("smart_end_of_turn_detection"));
-            Assert.That(doc.RootElement.GetProperty("threshold_level").GetString(), Is.EqualTo("high"));
-            Assert.That(doc.RootElement.GetProperty("timeout_ms").GetInt32(), Is.EqualTo(1500));
 
-            // Verify deserialization from known TypeSpec wire JSON
-            var fromWire = TestUtilities.DeserializeViaIJsonModel<EouDetection>(
-                """{"model":"smart_end_of_turn_detection","threshold_level":"high","timeout_ms":1500}""",
-                new SmartEndOfTurnDetection());
-            Assert.That(fromWire, Is.TypeOf<SmartEndOfTurnDetection>());
-            var smart = (SmartEndOfTurnDetection)fromWire;
-            Assert.That(smart.ThresholdLevel, Is.EqualTo(EouThresholdLevel.High));
-            Assert.That(smart.TimeoutMs, Is.EqualTo(1500));
+            Assert.That(doc.RootElement.GetProperty("model").GetString(), Is.EqualTo("semantic_detection_v1_multilingual"));
         }
     }
 }
