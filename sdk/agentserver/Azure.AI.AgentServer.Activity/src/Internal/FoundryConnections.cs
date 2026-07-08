@@ -4,6 +4,7 @@
 using Azure.Identity;
 using Microsoft.Agents.Authentication;
 using Microsoft.Agents.Core.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
@@ -30,16 +31,16 @@ internal sealed class FoundryConnections : IConnections
     /// <summary>Exposed for diagnostics logging.</summary>
     public string? Scope { get; }
 
-    public FoundryConnections(ILogger<FoundryConnections> logger)
+    public FoundryConnections(ILogger<FoundryConnections> logger, IConfiguration configuration)
     {
         _logger = logger;
 
-        var clientId = Environment.GetEnvironmentVariable(ConnectionEnvironment.ClientId) ?? "";
-        var tenantId = Environment.GetEnvironmentVariable(ConnectionEnvironment.TenantId) ?? "";
-        var scope = Environment.GetEnvironmentVariable(ConnectionEnvironment.Scope0) ?? "";
+        var clientId = configuration[ConnectionEnvironment.ClientId] ?? "";
+        var tenantId = configuration[ConnectionEnvironment.TenantId] ?? "";
+        var scope = configuration[ConnectionEnvironment.Scope0] ?? "";
 
         _logger.LogInformation(
-            "[FoundryConnections] Initialized | clientId={ClientId} | tenantId={TenantId} | scope_from_env={Scope}",
+            "[FoundryConnections] Initialized | clientId={ClientId} | tenantId={TenantId} | scope_from_config={Scope}",
             clientId.Length > 8 ? clientId[..8] + "..." : clientId,
             tenantId.Length > 8 ? tenantId[..8] + "..." : tenantId,
             scope);

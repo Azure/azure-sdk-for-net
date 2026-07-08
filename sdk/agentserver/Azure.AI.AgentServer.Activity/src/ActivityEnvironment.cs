@@ -1,27 +1,34 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.AgentServer.Core;
+using System.Collections.Generic;
 using Azure.AI.AgentServer.Activity.Internal;
+using Azure.AI.AgentServer.Core;
 
 namespace Azure.AI.AgentServer.Activity;
 
 /// <summary>
-/// Initializes connection-related environment variables used by the M365 Agents SDK
-/// when running inside a Foundry hosted container. Call
-/// <see cref="InitializeEnvironment()"/> early in your application startup (before
-/// creating any M365 SDK types) to bridge Foundry-native environment variables
-/// to the connection format expected by the M365 SDK.
+/// Resolves the Microsoft 365 Agents SDK connection settings (the
+/// <c>CONNECTIONS__*</c> / <c>CONNECTIONSMAP__*</c> keys) from the Foundry-native
+/// identity and returns them as a plain configuration map.
 /// </summary>
 /// <remarks>
-/// <para>Precedence order:</para>
+/// <para>
+/// <see cref="GetHostedAgentConfiguration()"/> is a <b>pure function</b>: it reads the
+/// current environment at call time and <b>never mutates it</b>. Feed the returned map
+/// into a configuration builder (for example
+/// <c>new ConfigurationBuilder().AddEnvironmentVariables().AddInMemoryCollection(config)</c>)
+/// so the M365 Agents SDK can read the settings — or inspect it directly to see the
+/// effective values the host will use.
+/// </para>
+/// <para>Each setting is resolved with the following precedence:</para>
 /// <list type="number">
-///   <item>Existing explicit connection env vars (never overwritten).</item>
-///   <item>Values derived from Foundry-native env vars.</item>
-///   <item>Static defaults for non-critical options.</item>
+///   <item>An existing explicit connection value in the environment (never overridden).</item>
+///   <item>A value derived from the Foundry-native identity.</item>
+///   <item>A static default for non-critical options.</item>
 /// </list>
 /// <para>
-/// The defaults differ by auth model:
+/// The identity source differs by auth model:
 /// <list type="bullet">
 ///   <item><b>Simple</b> (<c>digitalWorker: false</c>, default): the <em>instance</em>
 ///     identity (<c>FOUNDRY_AGENT_INSTANCE_CLIENT_ID</c>) mints the Bot Connector
@@ -34,33 +41,31 @@ namespace Azure.AI.AgentServer.Activity;
 /// </remarks>
 public static class ActivityEnvironment
 {
-    private static bool _digitalWorkerMode;
-
     /// <summary>
-    /// Gets whether the digital worker auth model is active.
+    /// Resolves the M365 SDK connection settings for the <b>simple agent</b> auth model
+    /// (default) as a configuration map. Does not mutate the process environment.
     /// </summary>
-    public static bool IsDigitalWorkerMode => _digitalWorkerMode;
+    /// <returns>
+    /// The effective connection settings (existing environment value where present,
+    /// otherwise the derived value) keyed by their M365 configuration names.
+    /// </returns>
+    public static IReadOnlyDictionary<string, string?> GetHostedAgentConfiguration()
+        => GetHostedAgentConfiguration(digitalWorker: false);
 
     /// <summary>
-    /// Initializes M365 SDK connection environment variables from Foundry-native
-    /// environment variables using the <b>simple agent</b> auth model (default).
-    /// Safe to call multiple times — existing values are never overwritten.
-    /// </summary>
-    public static void InitializeEnvironment() => InitializeEnvironment(digitalWorker: false);
-
-    /// <summary>
-    /// Initializes M365 SDK connection environment variables from Foundry-native
-    /// environment variables. Safe to call multiple times — existing values are
-    /// never overwritten.
+    /// Resolves the M365 SDK connection settings as a configuration map.
+    /// Does not mutate the process environment.
     /// </summary>
     /// <param name="digitalWorker">
     /// <c>false</c> (default) for the simple agent-instance-identity model.
     /// <c>true</c> for the digital-worker (blueprint + FMI exchange) model.
     /// </param>
-    public static void InitializeEnvironment(bool digitalWorker)
+    /// <returns>
+    /// The effective connection settings (existing environment value where present,
+    /// otherwise the derived value) keyed by their M365 configuration names.
+    /// </returns>
+    public static IReadOnlyDictionary<string, string?> GetHostedAgentConfiguration(bool digitalWorker)
     {
-        _digitalWorkerMode = digitalWorker;
-
         string scope;
         string clientIdEnvVar;
 
@@ -77,41 +82,49 @@ public static class ActivityEnvironment
             clientIdEnvVar = ConnectionEnvironment.FoundryInstanceClientId;
         }
 
-        // Static defaults for M365 connection settings
-        SetIfMissing(ConnectionEnvironment.AuthType, ConnectionEnvironment.DefaultAuthType);
-        SetIfMissing(ConnectionEnvironment.Scope0, scope);
-        SetIfMissing(ConnectionEnvironment.ConnectionMapServiceUrl, ConnectionEnvironment.DefaultServiceUrl);
-        SetIfMissing(ConnectionEnvironment.ConnectionMapConnection, ConnectionEnvironment.DefaultConnectionName);
+        var settings = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
 
-        // Derive client ID from the appropriate Foundry env var
+        // Records the effective value for a setting: an existing explicit environment
+        // value takes precedence; otherwise the derived value is used. Empty values are
+        // omitted. The process environment is never modified.
+        void Resolve(string name, string? derived)
+        {
+            var effective = GetNonEmpty(name) ?? Trimmed(derived);
+            if (!string.IsNullOrEmpty(effective))
+            {
+                settings[name] = effective;
+            }
+        }
+
+        // Static defaults for M365 connection settings
+        Resolve(ConnectionEnvironment.AuthType, ConnectionEnvironment.DefaultAuthType);
+        Resolve(ConnectionEnvironment.Scope0, scope);
+        Resolve(ConnectionEnvironment.ConnectionMapServiceUrl, ConnectionEnvironment.DefaultServiceUrl);
+        Resolve(ConnectionEnvironment.ConnectionMapConnection, ConnectionEnvironment.DefaultConnectionName);
+
+        // Client id and tenant id derived from the Foundry-native identity.
         var clientId = GetNonEmpty(clientIdEnvVar)
             ?? (digitalWorker ? FoundryEnvironment.AgentBlueprintClientId : FoundryEnvironment.AgentInstanceClientId);
         var tenantId = GetNonEmpty(ConnectionEnvironment.FoundryTenantId)
             ?? FoundryEnvironment.AgentTenantId;
 
-        if (!string.IsNullOrEmpty(clientId))
+        Resolve(ConnectionEnvironment.ClientId, clientId);
+
+        var effectiveTenantId = GetNonEmpty(ConnectionEnvironment.TenantId) ?? Trimmed(tenantId);
+        if (!string.IsNullOrEmpty(effectiveTenantId))
         {
-            SetIfMissing(ConnectionEnvironment.ClientId, clientId);
+            settings[ConnectionEnvironment.TenantId] = effectiveTenantId;
+            Resolve(ConnectionEnvironment.Authority, ConnectionEnvironment.AuthorityFor(effectiveTenantId));
         }
 
-        if (!string.IsNullOrEmpty(tenantId))
-        {
-            SetIfMissing(ConnectionEnvironment.TenantId, tenantId);
-            SetIfMissing(ConnectionEnvironment.Authority, ConnectionEnvironment.AuthorityFor(tenantId));
-        }
+        return settings;
     }
 
-    private static string? GetNonEmpty(string name)
-    {
-        var value = Environment.GetEnvironmentVariable(name)?.Trim();
-        return string.IsNullOrEmpty(value) ? null : value;
-    }
+    private static string? GetNonEmpty(string name) => Trimmed(Environment.GetEnvironmentVariable(name));
 
-    private static void SetIfMissing(string name, string value)
+    private static string? Trimmed(string? value)
     {
-        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(name)?.Trim()))
-        {
-            Environment.SetEnvironmentVariable(name, value);
-        }
+        var trimmed = value?.Trim();
+        return string.IsNullOrEmpty(trimmed) ? null : trimmed;
     }
 }

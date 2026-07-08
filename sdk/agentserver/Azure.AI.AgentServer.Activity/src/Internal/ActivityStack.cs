@@ -50,9 +50,11 @@ internal static class ActivityStack
 
     private static ServiceProvider BuildProvider(ActivityServerOptions options)
     {
-        // Bridge Foundry-native environment variables to the M365 CONNECTIONS__* format
-        // before any M365 connection manager is constructed.
-        ActivityEnvironment.InitializeEnvironment(options.DigitalWorker);
+        // Resolve the M365 CONNECTIONS__* settings from the Foundry-native identity as a
+        // configuration map — without mutating any process environment variables. The map
+        // is layered onto the environment-variable configuration below so the M365 SDK reads
+        // the derived values while any explicit environment values continue to win.
+        var connectionConfig = ActivityEnvironment.GetHostedAgentConfiguration(options.DigitalWorker);
 
         var services = new ServiceCollection();
 
@@ -64,7 +66,10 @@ internal static class ActivityStack
         services.AddHttpClient();
 
         services.AddSingleton<IConfiguration>(
-            new ConfigurationBuilder().AddEnvironmentVariables().Build());
+            new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .AddInMemoryCollection(connectionConfig)
+                .Build());
 
         // In-memory storage for local/testing; a durable backend can be injected by the caller
         // via the injected-AgentApplication construction mode.

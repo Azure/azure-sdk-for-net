@@ -34,6 +34,7 @@ internal sealed class AspNetCoreCloudAdapter
 {
     private readonly IChannelAdapter _adapter;
     private readonly bool _digitalWorker;
+    private readonly string? _botAppId;
 
     /// <summary>Initializes the adapter around the M365 channel adapter.</summary>
     /// <param name="adapter">The M365 channel adapter that runs the turn pipeline.</param>
@@ -45,6 +46,11 @@ internal sealed class AspNetCoreCloudAdapter
     {
         _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
         _digitalWorker = digitalWorker;
+
+        // Resolve the Bot Connector client id from the connection config (never from a mutated
+        // environment variable). Only needed for the simple model's authenticated claims.
+        var config = ActivityEnvironment.GetHostedAgentConfiguration(digitalWorker);
+        _botAppId = config.TryGetValue(ConnectionEnvironment.ClientId, out var clientId) ? clientId : null;
     }
 
     /// <summary>
@@ -102,9 +108,7 @@ internal sealed class AspNetCoreCloudAdapter
             return new ClaimsIdentity();
         }
 
-        var botAppId = Environment
-            .GetEnvironmentVariable(ConnectionEnvironment.ClientId)?
-            .Trim();
+        var botAppId = _botAppId?.Trim();
 
         if (string.IsNullOrEmpty(botAppId))
         {

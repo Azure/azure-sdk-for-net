@@ -3,6 +3,7 @@
 
 using System;
 using Azure.AI.AgentServer.Activity.Internal;
+using Azure.AI.AgentServer.Core;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Activity.Tests;
@@ -31,6 +32,7 @@ public class ActivityEnvironmentTests
         {
             Environment.SetEnvironmentVariable(name, null);
         }
+        FoundryEnvironment.Reload();
     }
 
     [SetUp]
@@ -40,102 +42,111 @@ public class ActivityEnvironmentTests
     public void TearDown() => ClearVars();
 
     [Test]
-    public void InitializeEnvironment_Default_SetsSimpleModeDefaults()
+    public void GetHostedAgentConfiguration_Default_ReturnsSimpleModeDefaults()
     {
-        ActivityEnvironment.InitializeEnvironment();
+        var config = ActivityEnvironment.GetHostedAgentConfiguration();
 
         Assert.Multiple(() =>
         {
-            Assert.That(ActivityEnvironment.IsDigitalWorkerMode, Is.False);
-            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.AuthType),
-                Is.EqualTo(ConnectionEnvironment.DefaultAuthType));
-            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.Scope0),
-                Is.EqualTo(ConnectionEnvironment.BotConnectorScope));
-            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.ConnectionMapServiceUrl),
-                Is.EqualTo(ConnectionEnvironment.DefaultServiceUrl));
-            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.ConnectionMapConnection),
-                Is.EqualTo(ConnectionEnvironment.DefaultConnectionName));
+            Assert.That(config[ConnectionEnvironment.AuthType], Is.EqualTo(ConnectionEnvironment.DefaultAuthType));
+            Assert.That(config[ConnectionEnvironment.Scope0], Is.EqualTo(ConnectionEnvironment.BotConnectorScope));
+            Assert.That(config[ConnectionEnvironment.ConnectionMapServiceUrl], Is.EqualTo(ConnectionEnvironment.DefaultServiceUrl));
+            Assert.That(config[ConnectionEnvironment.ConnectionMapConnection], Is.EqualTo(ConnectionEnvironment.DefaultConnectionName));
         });
     }
 
     [Test]
-    public void InitializeEnvironment_DigitalWorker_SetsDigitalWorkerScope()
+    public void GetHostedAgentConfiguration_DoesNotMutateEnvironment()
     {
-        ActivityEnvironment.InitializeEnvironment(digitalWorker: true);
+        _ = ActivityEnvironment.GetHostedAgentConfiguration();
 
         Assert.Multiple(() =>
         {
-            Assert.That(ActivityEnvironment.IsDigitalWorkerMode, Is.True);
-            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.Scope0),
-                Is.EqualTo(ConnectionEnvironment.DigitalWorkerScope));
+            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.AuthType), Is.Null.Or.Empty);
+            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.Scope0), Is.Null.Or.Empty);
+            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.ConnectionMapServiceUrl), Is.Null.Or.Empty);
         });
     }
 
     [Test]
-    public void InitializeEnvironment_SimpleMode_DerivesClientIdFromInstanceVar()
+    public void GetHostedAgentConfiguration_DigitalWorker_UsesDigitalWorkerScope()
+    {
+        var config = ActivityEnvironment.GetHostedAgentConfiguration(digitalWorker: true);
+
+        Assert.That(config[ConnectionEnvironment.Scope0], Is.EqualTo(ConnectionEnvironment.DigitalWorkerScope));
+    }
+
+    [Test]
+    public void GetHostedAgentConfiguration_SimpleMode_DerivesClientIdFromInstanceVar()
     {
         Environment.SetEnvironmentVariable(ConnectionEnvironment.FoundryInstanceClientId, "instance-client-id");
 
-        ActivityEnvironment.InitializeEnvironment(digitalWorker: false);
+        var config = ActivityEnvironment.GetHostedAgentConfiguration(digitalWorker: false);
 
-        Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.ClientId),
-            Is.EqualTo("instance-client-id"));
+        Assert.That(config[ConnectionEnvironment.ClientId], Is.EqualTo("instance-client-id"));
     }
 
     [Test]
-    public void InitializeEnvironment_DigitalWorker_DerivesClientIdFromBlueprintVar()
+    public void GetHostedAgentConfiguration_DigitalWorker_DerivesClientIdFromBlueprintVar()
     {
         Environment.SetEnvironmentVariable(ConnectionEnvironment.FoundryBlueprintClientId, "blueprint-client-id");
 
-        ActivityEnvironment.InitializeEnvironment(digitalWorker: true);
+        var config = ActivityEnvironment.GetHostedAgentConfiguration(digitalWorker: true);
 
-        Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.ClientId),
-            Is.EqualTo("blueprint-client-id"));
+        Assert.That(config[ConnectionEnvironment.ClientId], Is.EqualTo("blueprint-client-id"));
     }
 
     [Test]
-    public void InitializeEnvironment_SetsTenantIdAndAuthority_FromTenantVar()
+    public void GetHostedAgentConfiguration_SetsTenantIdAndAuthority_FromTenantVar()
     {
         Environment.SetEnvironmentVariable(ConnectionEnvironment.FoundryTenantId, "tenant-123");
 
-        ActivityEnvironment.InitializeEnvironment();
+        var config = ActivityEnvironment.GetHostedAgentConfiguration();
 
         Assert.Multiple(() =>
         {
-            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.TenantId), Is.EqualTo("tenant-123"));
-            Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.Authority),
+            Assert.That(config[ConnectionEnvironment.TenantId], Is.EqualTo("tenant-123"));
+            Assert.That(config[ConnectionEnvironment.Authority],
                 Is.EqualTo(ConnectionEnvironment.AuthorityFor("tenant-123")));
         });
     }
 
     [Test]
-    public void InitializeEnvironment_NeverOverwrites_ExistingValue()
+    public void GetHostedAgentConfiguration_ExistingExplicitValue_TakesPrecedence()
     {
         Environment.SetEnvironmentVariable(ConnectionEnvironment.Scope0, "explicit-scope");
 
-        ActivityEnvironment.InitializeEnvironment();
+        var config = ActivityEnvironment.GetHostedAgentConfiguration();
 
-        Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.Scope0), Is.EqualTo("explicit-scope"));
+        Assert.That(config[ConnectionEnvironment.Scope0], Is.EqualTo("explicit-scope"));
     }
 
     [Test]
-    public void InitializeEnvironment_IsIdempotent()
+    public void GetHostedAgentConfiguration_NoClientIdSource_OmitsClientId()
     {
-        Environment.SetEnvironmentVariable(ConnectionEnvironment.FoundryInstanceClientId, "id-1");
-        ActivityEnvironment.InitializeEnvironment();
+        var config = ActivityEnvironment.GetHostedAgentConfiguration();
 
-        // A second call with a different derived client id must not overwrite the first.
-        Environment.SetEnvironmentVariable(ConnectionEnvironment.FoundryInstanceClientId, "id-2");
-        ActivityEnvironment.InitializeEnvironment();
-
-        Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.ClientId), Is.EqualTo("id-1"));
+        Assert.That(config.ContainsKey(ConnectionEnvironment.ClientId), Is.False);
     }
 
     [Test]
-    public void InitializeEnvironment_NoClientIdSource_DoesNotSetClientId()
+    public void GetHostedAgentConfiguration_NoTenantIdSource_OmitsTenantAndAuthority()
     {
-        ActivityEnvironment.InitializeEnvironment();
+        var config = ActivityEnvironment.GetHostedAgentConfiguration();
 
-        Assert.That(Environment.GetEnvironmentVariable(ConnectionEnvironment.ClientId), Is.Null.Or.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(config.ContainsKey(ConnectionEnvironment.TenantId), Is.False);
+            Assert.That(config.ContainsKey(ConnectionEnvironment.Authority), Is.False);
+        });
+    }
+
+    [Test]
+    public void GetHostedAgentConfiguration_ReturnsFreshMap_OnEachCall()
+    {
+        var first = ActivityEnvironment.GetHostedAgentConfiguration();
+        var second = ActivityEnvironment.GetHostedAgentConfiguration();
+
+        Assert.That(first, Is.Not.SameAs(second));
     }
 }

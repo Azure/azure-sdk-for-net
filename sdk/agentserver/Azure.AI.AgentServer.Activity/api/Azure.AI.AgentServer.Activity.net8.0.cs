@@ -2,9 +2,8 @@ namespace Azure.AI.AgentServer.Activity
 {
     public static partial class ActivityEnvironment
     {
-        public static bool IsDigitalWorkerMode { get { throw null; } }
-        public static void InitializeEnvironment() { }
-        public static void InitializeEnvironment(bool digitalWorker) { }
+        public static System.Collections.Generic.IReadOnlyDictionary<string, string?> GetHostedAgentConfiguration() { throw null; }
+        public static System.Collections.Generic.IReadOnlyDictionary<string, string?> GetHostedAgentConfiguration(bool digitalWorker) { throw null; }
     }
     public static partial class ActivityServer
     {
