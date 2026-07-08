@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Security.Claims;
 using Azure.AI.AgentServer.Activity.Internal;
 using Azure.AI.AgentServer.Core;
 using Microsoft.Agents.Builder;
 using Microsoft.Agents.Builder.App;
-using Microsoft.Agents.Core.Models;
 using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -39,8 +37,8 @@ public sealed class ActivityServerHost
 {
     private readonly AgentApplication? _agentApp;
     private readonly IAgentHttpAdapter? _adapter;
+    private readonly AspNetCoreCloudAdapter? _cloudAdapter;
     private readonly RequestDelegate? _requestHandler;
-    private readonly bool _digitalWorker;
     private Action<AgentHostBuilder>? _configure;
 
     /// <summary>Route paths the host exposes for inbound activities.</summary>
@@ -51,7 +49,7 @@ public sealed class ActivityServerHost
     {
         _agentApp = agentApp ?? throw new ArgumentNullException(nameof(agentApp));
         _adapter = adapter ?? throw new ArgumentNullException(nameof(adapter));
-        _digitalWorker = digitalWorker;
+        _cloudAdapter = new AspNetCoreCloudAdapter((IChannelAdapter)adapter, digitalWorker);
     }
 
     /// <summary>Initializes a host that owns the request pipeline (no M365 stack).</summary>
@@ -135,74 +133,8 @@ public sealed class ActivityServerHost
             return;
         }
 
-        // Parse the inbound activity from the request body.
-        var activity = await HttpHelper.ReadRequestAsync<Microsoft.Agents.Core.Models.Activity>(context.Request).ConfigureAwait(false);
-        if (activity is null)
-        {
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            return;
-        }
-
-        // Synthesize the outbound claims for this turn. The Foundry gateway is a trusted,
-        // network-isolated proxy — inbound requests are NOT Bot Framework channel JWTs — so we
-        // do not rely on inbound authentication. This mirrors the Python bridge's
-        // _build_outbound_claims and lets the connector mint the outbound reply token.
-        var claims = BuildOutboundClaims();
-
-        // Run the turn synchronously in-request via ProcessActivityAsync. This intentionally
-        // bypasses CloudAdapter.ProcessAsync, which (for normal-delivery messages) queues the
-        // activity to a background HostedActivityService that is not running in this host —
-        // the turn would never execute. Replies are delivered to the channel by the connector
-        // during the turn; an InvokeResponse (invoke / expectReplies) is written to the response.
-        var invokeResponse = await ((IChannelAdapter)_adapter!)
-            .ProcessActivityAsync(claims, activity, _agentApp!.OnTurnAsync, cancellationToken)
-            .ConfigureAwait(false);
-
-        if (invokeResponse is not null)
-        {
-            context.Response.StatusCode = invokeResponse.Status ?? StatusCodes.Status200OK;
-            if (invokeResponse.Body is not null)
-            {
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsJsonAsync(invokeResponse.Body, cancellationToken).ConfigureAwait(false);
-            }
-        }
-        else
-        {
-            context.Response.StatusCode = StatusCodes.Status202Accepted;
-        }
-    }
-
-    /// <summary>
-    /// Builds the outbound <see cref="ClaimsIdentity"/> for a turn. Mirrors the Python bridge's
-    /// <c>_build_outbound_claims</c>: the digital-worker model uses anonymous claims (the FMI
-    /// patch supplies the token); the simple model presents authenticated claims whose
-    /// <c>appid</c>/<c>aud</c> match the agent-instance client id so the connector uses the
-    /// managed-identity connection for the outbound reply.
-    /// </summary>
-    private ClaimsIdentity BuildOutboundClaims()
-    {
-        if (_digitalWorker)
-        {
-            return new ClaimsIdentity();
-        }
-
-        var botAppId = Environment
-            .GetEnvironmentVariable("CONNECTIONS__SERVICE_CONNECTION__SETTINGS__CLIENTID")?
-            .Trim();
-
-        if (string.IsNullOrEmpty(botAppId))
-        {
-            // Local development with no Bot Connector credential: anonymous outbound auth.
-            return new ClaimsIdentity();
-        }
-
-        return new ClaimsIdentity(
-            new[]
-            {
-                new Claim("appid", botAppId),
-                new Claim("aud", botAppId),
-            },
-            "Bearer");
+        // Delegate to the ASP.NET Core CloudAdapter (mirrors the Python StarletteCloudAdapter):
+        // read the activity, synthesize claims, run the turn inline, and write the response.
+        await _cloudAdapter!.ProcessAsync(context, _agentApp!, cancellationToken).ConfigureAwait(false);
     }
 }
