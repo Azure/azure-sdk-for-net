@@ -6,22 +6,22 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Image generation call. </summary>
-    public partial class ItemImageGenToolCall : Item
+    public partial class ItemImageGenToolCall : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemImageGenToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ItemImageGenToolCall(string id, ItemImageGenToolCallStatus status, string result) : base(ItemType.ImageGenerationCall)
+        internal ItemImageGenToolCall(string id, ItemImageGenToolCallStatus status, string result) : base(ItemType.ImageGenerationCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
             Status = status;
             Result = result;
@@ -29,24 +29,25 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemImageGenToolCall"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal ItemImageGenToolCall(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemImageGenToolCallStatus status, string result) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ItemImageGenToolCall(ItemType @type, string id, ItemImageGenToolCallStatus status, string result, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             Status = status;
             Result = result;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the image generation call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The status of the image generation call. </summary>
-        public ItemImageGenToolCallStatus Status { get; set; }
+        public ItemImageGenToolCallStatus Status { get; }
 
-        /// <summary> Gets or sets the Result. </summary>
-        public string Result { get; set; }
+        /// <summary> Gets the Result. </summary>
+        public string Result { get; }
     }
 }

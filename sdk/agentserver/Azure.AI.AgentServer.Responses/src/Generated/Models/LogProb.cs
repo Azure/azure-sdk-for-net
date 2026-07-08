@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -22,13 +21,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="logprob"></param>
         /// <param name="bytes"></param>
         /// <param name="topLogprobs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="bytes"/> or <paramref name="topLogprobs"/> is null. </exception>
-        public LogProb(string token, double logprob, IEnumerable<long> bytes, IEnumerable<TopLogProb> topLogprobs)
+        internal LogProb(string token, double logprob, IEnumerable<long> bytes, IEnumerable<TopLogProb> topLogprobs)
         {
-            Argument.AssertNotNull(token, nameof(token));
-            Argument.AssertNotNull(bytes, nameof(bytes));
-            Argument.AssertNotNull(topLogprobs, nameof(topLogprobs));
-
             Token = token;
             Logprob = logprob;
             Bytes = bytes.ToList();
@@ -50,11 +44,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Token. </summary>
-        public string Token { get; set; }
+        /// <summary> Gets the Token. </summary>
+        public string Token { get; }
 
-        /// <summary> Gets or sets the Logprob. </summary>
-        public double Logprob { get; set; }
+        /// <summary> Gets the Logprob. </summary>
+        public double Logprob { get; }
 
         /// <summary> Gets the Bytes. </summary>
         public IList<long> Bytes { get; }

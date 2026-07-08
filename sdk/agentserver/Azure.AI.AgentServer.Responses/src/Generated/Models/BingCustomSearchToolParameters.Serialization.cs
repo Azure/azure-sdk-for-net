@@ -78,16 +78,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(BingCustomSearchToolParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             writer.WritePropertyName("search_configurations"u8);
             writer.WriteStartArray();
             foreach (BingCustomSearchConfiguration item in SearchConfigurations)
@@ -137,22 +127,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            string name = default;
-            string description = default;
             IList<BingCustomSearchConfiguration> searchConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("search_configurations"u8))
                 {
                     List<BingCustomSearchConfiguration> array = new List<BingCustomSearchConfiguration>();
@@ -168,7 +146,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BingCustomSearchToolParameters(name, description, searchConfigurations, additionalBinaryDataProperties);
+            return new BingCustomSearchToolParameters(searchConfigurations, additionalBinaryDataProperties);
         }
     }
 }

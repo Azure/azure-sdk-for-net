@@ -6,53 +6,54 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The ToolSearchCallItemParam. </summary>
-    public partial class ToolSearchCallItemParam : Item
+    public partial class ToolSearchCallItemParam : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ToolSearchCallItemParam"/>. </summary>
         /// <param name="arguments"> The arguments supplied to the tool search call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arguments"/> is null. </exception>
-        public ToolSearchCallItemParam(EmptyModelParam arguments) : base(ItemType.ToolSearchCall)
+        internal ToolSearchCallItemParam(EmptyModelParam arguments) : base(ItemType.ToolSearchCall)
         {
-            Argument.AssertNotNull(arguments, nameof(arguments));
-
             Arguments = arguments;
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolSearchCallItemParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"></param>
         /// <param name="callId"></param>
         /// <param name="execution"> Whether tool search was executed by the server or by the client. </param>
         /// <param name="arguments"> The arguments supplied to the tool search call. </param>
         /// <param name="status"></param>
-        internal ToolSearchCallItemParam(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ToolSearchExecutionType? execution, EmptyModelParam arguments, FunctionCallItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ToolSearchCallItemParam(ItemType @type, string id, string callId, ToolSearchExecutionType? execution, EmptyModelParam arguments, FunctionCallItemStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             CallId = callId;
             Execution = execution;
             Arguments = arguments;
             Status = status;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
-        /// <summary> Gets or sets the CallId. </summary>
-        public string CallId { get; set; }
+        /// <summary> Gets the CallId. </summary>
+        public string CallId { get; }
 
         /// <summary> Whether tool search was executed by the server or by the client. </summary>
-        public ToolSearchExecutionType? Execution { get; set; }
+        public ToolSearchExecutionType? Execution { get; }
 
         /// <summary> The arguments supplied to the tool search call. </summary>
-        public EmptyModelParam Arguments { get; set; }
+        public EmptyModelParam Arguments { get; }
 
-        /// <summary> Gets or sets the Status. </summary>
-        public FunctionCallItemStatus? Status { get; set; }
+        /// <summary> Gets the Status. </summary>
+        public FunctionCallItemStatus? Status { get; }
     }
 }

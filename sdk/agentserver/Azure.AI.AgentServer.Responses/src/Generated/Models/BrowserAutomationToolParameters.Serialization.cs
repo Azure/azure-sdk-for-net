@@ -78,16 +78,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(BrowserAutomationToolParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             writer.WritePropertyName("connection"u8);
             writer.WriteObjectValue(Connection, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -132,22 +122,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            string name = default;
-            string description = default;
             BrowserAutomationToolConnectionParameters connection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("connection"u8))
                 {
                     connection = BrowserAutomationToolConnectionParameters.DeserializeBrowserAutomationToolConnectionParameters(prop.Value, options);
@@ -158,7 +136,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationToolParameters(name, description, connection, additionalBinaryDataProperties);
+            return new BrowserAutomationToolParameters(connection, additionalBinaryDataProperties);
         }
     }
 }

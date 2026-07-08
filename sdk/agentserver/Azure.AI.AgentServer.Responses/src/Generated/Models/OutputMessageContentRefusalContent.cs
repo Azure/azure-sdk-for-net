@@ -9,11 +9,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    internal partial class OutputMessageContentRefusalContent : OutputMessageContent
+    /// <summary> Refusal. </summary>
+    public partial class OutputMessageContentRefusalContent : OutputMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>
-        public OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
+        internal OutputMessageContentRefusalContent(string refusal) : base("refusal")
         {
             Refusal = refusal;
         }
@@ -28,6 +29,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The refusal explanation from the model. </summary>
-        public string Refusal { get; set; }
+        public string Refusal { get; }
     }
 }

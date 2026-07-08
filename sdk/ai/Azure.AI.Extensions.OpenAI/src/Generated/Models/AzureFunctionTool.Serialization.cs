@@ -135,7 +135,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ResponseToolKind(prop.Value.GetString());
+                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tool_configs"u8))

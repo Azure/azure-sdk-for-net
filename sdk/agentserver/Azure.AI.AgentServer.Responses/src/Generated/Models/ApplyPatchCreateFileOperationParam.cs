@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -16,12 +15,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ApplyPatchCreateFileOperationParam"/>. </summary>
         /// <param name="path"> Path of the file to create relative to the workspace root. </param>
         /// <param name="diff"> Unified diff content to apply when creating the file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="diff"/> is null. </exception>
-        public ApplyPatchCreateFileOperationParam(string path, string diff) : base(ApplyPatchOperationParamType.CreateFile)
+        internal ApplyPatchCreateFileOperationParam(string path, string diff) : base("create_file")
         {
-            Argument.AssertNotNull(path, nameof(path));
-            Argument.AssertNotNull(diff, nameof(diff));
-
             Path = path;
             Diff = diff;
         }
@@ -38,9 +33,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Path of the file to create relative to the workspace root. </summary>
-        public string Path { get; set; }
+        public string Path { get; }
 
         /// <summary> Unified diff content to apply when creating the file. </summary>
-        public string Diff { get; set; }
+        public string Diff { get; }
     }
 }

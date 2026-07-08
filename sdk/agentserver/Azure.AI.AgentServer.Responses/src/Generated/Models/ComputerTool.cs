@@ -6,22 +6,27 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Computer. </summary>
-    public partial class ComputerTool : Tool
+    public partial class ComputerTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ComputerTool"/>. </summary>
-        public ComputerTool() : base(ToolType.Computer)
+        internal ComputerTool() : base("computer")
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputerTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal ComputerTool(ResponseToolKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

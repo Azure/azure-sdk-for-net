@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,11 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputImage"/>. </summary>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public CodeInterpreterOutputImage(Uri url)
+        internal CodeInterpreterOutputImage(Uri url)
         {
-            Argument.AssertNotNull(url, nameof(url));
-
             Url = url;
         }
 
@@ -41,6 +37,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "image";
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
     }
 }

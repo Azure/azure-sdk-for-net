@@ -9,18 +9,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The environment to execute the shell commands in.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/> and <see cref="FunctionShellCallItemParamEnvironmentContainerReferenceParam"/>.
-    /// </summary>
-    public abstract partial class FunctionShellCallItemParamEnvironment
+    /// <summary> The environment to execute the shell commands in. </summary>
+    public partial class FunctionShellCallItemParamEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironment"/>. </summary>
         /// <param name="type"></param>
-        private protected FunctionShellCallItemParamEnvironment(FunctionShellCallItemParamEnvironmentType @type)
+        internal FunctionShellCallItemParamEnvironment(FunctionShellCallItemParamEnvironmentType @type)
         {
             Type = @type;
         }

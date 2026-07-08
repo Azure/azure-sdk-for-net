@@ -6,17 +6,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The environment to execute the shell commands in.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallItemParamEnvironmentLocalEnvironmentParam"/> and <see cref="FunctionShellCallItemParamEnvironmentContainerReferenceParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownFunctionShellCallItemParamEnvironment))]
-    public abstract partial class FunctionShellCallItemParamEnvironment : IJsonModel<FunctionShellCallItemParamEnvironment>
+    /// <summary> The environment to execute the shell commands in. </summary>
+    public partial class FunctionShellCallItemParamEnvironment : IJsonModel<FunctionShellCallItemParamEnvironment>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallItemParamEnvironment"/> for deserialization. </summary>
         internal FunctionShellCallItemParamEnvironment()
@@ -125,17 +122,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            FunctionShellCallItemParamEnvironmentType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "local":
-                        return FunctionShellCallItemParamEnvironmentLocalEnvironmentParam.DeserializeFunctionShellCallItemParamEnvironmentLocalEnvironmentParam(element, options);
-                    case "container_reference":
-                        return FunctionShellCallItemParamEnvironmentContainerReferenceParam.DeserializeFunctionShellCallItemParamEnvironmentContainerReferenceParam(element, options);
+                    @type = new FunctionShellCallItemParamEnvironmentType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownFunctionShellCallItemParamEnvironment.DeserializeUnknownFunctionShellCallItemParamEnvironment(element, options);
+            return new FunctionShellCallItemParamEnvironment(@type, additionalBinaryDataProperties);
         }
     }
 }

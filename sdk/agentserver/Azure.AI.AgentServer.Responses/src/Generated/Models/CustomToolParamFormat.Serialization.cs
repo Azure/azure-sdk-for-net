@@ -6,17 +6,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The input format for the custom tool. Default is unconstrained text.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomTextFormatParam"/> and <see cref="CustomGrammarFormatParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownCustomToolParamFormat))]
-    public abstract partial class CustomToolParamFormat : IJsonModel<CustomToolParamFormat>
+    /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
+    public partial class CustomToolParamFormat : IJsonModel<CustomToolParamFormat>
     {
         /// <summary> Initializes a new instance of <see cref="CustomToolParamFormat"/> for deserialization. </summary>
         internal CustomToolParamFormat()
@@ -125,17 +122,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            CustomToolParamFormatType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "text":
-                        return CustomTextFormatParam.DeserializeCustomTextFormatParam(element, options);
-                    case "grammar":
-                        return CustomGrammarFormatParam.DeserializeCustomGrammarFormatParam(element, options);
+                    @type = new CustomToolParamFormatType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownCustomToolParamFormat.DeserializeUnknownCustomToolParamFormat(element, options);
+            return new CustomToolParamFormat(@type, additionalBinaryDataProperties);
         }
     }
 }

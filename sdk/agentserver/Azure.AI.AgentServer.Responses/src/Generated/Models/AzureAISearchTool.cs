@@ -7,42 +7,50 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
-    public partial class AzureAISearchTool : Tool
+    public partial class AzureAISearchTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureAiSearch"/> is null. </exception>
-        public AzureAISearchTool(AzureAISearchToolResource azureAiSearch) : base(ToolType.AzureAiSearch)
+        internal AzureAISearchTool(AzureAISearchToolResource azureAiSearch) : base("azure_ai_search")
         {
-            Argument.AssertNotNull(azureAiSearch, nameof(azureAiSearch));
-
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureAiSearch = azureAiSearch;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        internal AzureAISearchTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, AzureAISearchToolResource azureAiSearch) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureAISearchTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, AzureAISearchToolResource azureAiSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
             AzureAiSearch = azureAiSearch;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; }
 
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The azure ai search index resource. </summary>
-        public AzureAISearchToolResource AzureAiSearch { get; set; }
+        public AzureAISearchToolResource AzureAiSearch { get; }
     }
 }

@@ -7,32 +7,50 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    public partial class CaptureStructuredOutputsTool : Tool
+    public partial class CaptureStructuredOutputsTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputs"/> is null. </exception>
-        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
+        internal CaptureStructuredOutputsTool(StructuredOutputDefinition outputs) : base("capture_structured_outputs")
         {
-            Argument.AssertNotNull(outputs, nameof(outputs));
-
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             Outputs = outputs;
         }
 
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CaptureStructuredOutputsTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, StructuredOutputDefinition outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
             Outputs = outputs;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+
         /// <summary> The structured outputs to capture from the model. </summary>
-        public StructuredOutputDefinition Outputs { get; set; }
+        public StructuredOutputDefinition Outputs { get; }
     }
 }

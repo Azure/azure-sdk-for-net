@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -55,7 +56,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="Item"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="ResponseItem"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

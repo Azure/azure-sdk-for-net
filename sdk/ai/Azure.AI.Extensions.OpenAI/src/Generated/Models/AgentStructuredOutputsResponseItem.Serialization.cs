@@ -133,7 +133,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ResponseItemKind(prop.Value.GetString());
+                    @type = ModelReaderWriter.Read<ResponseItemKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

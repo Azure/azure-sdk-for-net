@@ -7,11 +7,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    internal partial class ItemOutputMessage : Item
+    /// <summary> Output message. </summary>
+    public partial class ItemOutputMessage : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemOutputMessage"/>. </summary>
         /// <param name="id"> The unique ID of the output message. </param>
         /// <param name="content"> The content of the output message. </param>
@@ -19,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        public ItemOutputMessage(string id, IEnumerable<OutputMessageContent> content, ItemOutputMessageStatus status) : base(ItemType.OutputMessage)
+        internal ItemOutputMessage(string id, IEnumerable<OutputMessageContent> content, ItemOutputMessageStatus status) : base(ItemType.OutputMessage)
         {
             Id = id;
             Content = content.ToList();
@@ -28,7 +33,6 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemOutputMessage"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the output message. </param>
         /// <param name="role"> The role of the output message. Always `assistant`. </param>
         /// <param name="content"> The content of the output message. </param>
@@ -37,31 +41,33 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal ItemOutputMessage(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string role, IList<OutputMessageContent> content, MessagePhase? phase, ItemOutputMessageStatus status) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ItemOutputMessage(ItemType @type, string id, string role, IList<OutputMessageContent> content, MessagePhase? phase, ItemOutputMessageStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             Role = role;
             Content = content;
             Phase = phase;
             Status = status;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the output message. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The role of the output message. Always `assistant`. </summary>
-        public string Role { get; } = "assistant";
+        internal string Role { get; } = "assistant";
 
         /// <summary> The content of the output message. </summary>
         public IList<OutputMessageContent> Content { get; }
 
-        /// <summary> Gets or sets the Phase. </summary>
-        public MessagePhase? Phase { get; set; }
+        /// <summary> Gets the Phase. </summary>
+        public MessagePhase? Phase { get; }
 
         /// <summary>
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public ItemOutputMessageStatus Status { get; set; }
+        public ItemOutputMessageStatus Status { get; }
     }
 }

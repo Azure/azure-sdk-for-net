@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class ScreenshotParam : ComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ScreenshotParam"/>. </summary>
-        public ScreenshotParam() : base(ComputerActionType.Screenshot)
+        internal ScreenshotParam() : base(ComputerActionType.Screenshot)
         {
         }
 

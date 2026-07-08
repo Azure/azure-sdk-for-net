@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -19,12 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="WebSearchActionFind"/>. </summary>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="pattern"/> is null. </exception>
-        public WebSearchActionFind(Uri url, string pattern)
+        internal WebSearchActionFind(Uri url, string pattern)
         {
-            Argument.AssertNotNull(url, nameof(url));
-            Argument.AssertNotNull(pattern, nameof(pattern));
-
             Url = url;
             Pattern = pattern;
         }
@@ -46,9 +41,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "find_in_page";
 
         /// <summary> The URL of the page searched for the pattern. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
 
         /// <summary> The pattern or text to search for within the page. </summary>
-        public string Pattern { get; set; }
+        public string Pattern { get; }
     }
 }

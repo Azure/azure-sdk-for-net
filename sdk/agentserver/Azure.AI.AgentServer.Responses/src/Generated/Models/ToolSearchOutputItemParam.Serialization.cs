@@ -9,11 +9,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The ToolSearchOutputItemParam. </summary>
-    public partial class ToolSearchOutputItemParam : Item, IJsonModel<ToolSearchOutputItemParam>
+    public partial class ToolSearchOutputItemParam : ResponseItem, IJsonModel<ToolSearchOutputItemParam>
     {
         /// <summary> Initializes a new instance of <see cref="ToolSearchOutputItemParam"/> for deserialization. </summary>
         internal ToolSearchOutputItemParam()
@@ -22,7 +23,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Item PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolSearchOutputItemParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -96,8 +97,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (Tool item in Tools)
+            foreach (ResponseTool item in Tools)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -105,6 +111,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -114,7 +135,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Item JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolSearchOutputItemParam>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -134,12 +155,12 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             ItemType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
             ToolSearchExecutionType? execution = default;
-            IList<Tool> tools = default;
+            IList<ResponseTool> tools = default;
             FunctionCallItemStatus? status = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -178,10 +199,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<Tool> array = new List<Tool>();
+                    List<ResponseTool> array = new List<ResponseTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Tool.DeserializeTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     tools = array;
                     continue;
@@ -203,12 +231,12 @@ namespace Azure.AI.AgentServer.Responses.Models
             }
             return new ToolSearchOutputItemParam(
                 @type,
-                additionalBinaryDataProperties,
                 id,
                 callId,
                 execution,
                 tools,
-                status);
+                status,
+                additionalBinaryDataProperties);
         }
     }
 }

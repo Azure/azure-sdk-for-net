@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
+    <ProjectReference Include="..\..\..\ai\Azure.AI.Extensions.OpenAI\src\Azure.AI.Extensions.OpenAI.csproj" />
   </ItemGroup>
 
   <!-- Exclude TypeSpec compilation output (used only for copy to Generated/) -->

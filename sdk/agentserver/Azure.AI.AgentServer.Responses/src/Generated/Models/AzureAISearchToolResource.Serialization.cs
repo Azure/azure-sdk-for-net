@@ -78,16 +78,6 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(AzureAISearchToolResource)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             writer.WritePropertyName("indexes"u8);
             writer.WriteStartArray();
             foreach (AISearchIndexResource item in Indexes)
@@ -137,22 +127,10 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            string name = default;
-            string description = default;
             IList<AISearchIndexResource> indexes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("indexes"u8))
                 {
                     List<AISearchIndexResource> array = new List<AISearchIndexResource>();
@@ -168,7 +146,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAISearchToolResource(name, description, indexes, additionalBinaryDataProperties);
+            return new AzureAISearchToolResource(indexes, additionalBinaryDataProperties);
         }
     }
 }

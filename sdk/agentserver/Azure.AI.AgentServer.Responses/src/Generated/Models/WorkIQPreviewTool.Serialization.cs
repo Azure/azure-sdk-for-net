@@ -9,11 +9,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A WorkIQ server-side tool. </summary>
-    public partial class WorkIQPreviewTool : Tool, IJsonModel<WorkIQPreviewTool>
+    public partial class WorkIQPreviewTool : ResponseTool, IJsonModel<WorkIQPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/> for deserialization. </summary>
         internal WorkIQPreviewTool()
@@ -22,7 +23,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Tool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<WorkIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -79,8 +80,23 @@ namespace Azure.AI.AgentServer.Responses.Models
                 throw new FormatException($"The model {nameof(WorkIQPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("work_iq_preview"u8);
-            writer.WriteObjectValue(WorkIqPreview, options);
+            writer.WritePropertyName("project_connection_id"u8);
+            writer.WriteStringValue(ProjectConnectionId);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -89,7 +105,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Tool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<WorkIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,19 +124,19 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ToolType @type = default;
+            ResponseToolKind @type = "work_iq_preview";
+            string projectConnectionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            WorkIQPreviewToolParameters workIqPreview = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("work_iq_preview"u8))
+                if (prop.NameEquals("project_connection_id"u8))
                 {
-                    workIqPreview = WorkIQPreviewToolParameters.DeserializeWorkIQPreviewToolParameters(prop.Value, options);
+                    projectConnectionId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkIQPreviewTool(@type, additionalBinaryDataProperties, workIqPreview);
+            return new WorkIQPreviewTool(@type, projectConnectionId, additionalBinaryDataProperties);
         }
     }
 }

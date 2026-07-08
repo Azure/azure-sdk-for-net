@@ -6,48 +6,49 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Custom tool. </summary>
-    public partial class CustomToolParam : Tool
+    public partial class CustomToolParam : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CustomToolParam"/>. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public CustomToolParam(string name) : base(ToolType.Custom)
+        internal CustomToolParam(string name) : base("custom")
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomToolParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
         /// <param name="deferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        internal CustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, CustomToolParamFormat format, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomToolParam(ResponseToolKind @type, string name, string description, CustomToolParamFormat format, bool? deferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             Format = format;
             DeferLoading = deferLoading;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional description of the custom tool, used to provide more context. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary> The input format for the custom tool. Default is unconstrained text. </summary>
-        public CustomToolParamFormat Format { get; set; }
+        public CustomToolParamFormat Format { get; }
 
         /// <summary> Whether this tool should be deferred and discovered via tool search. </summary>
-        public bool? DeferLoading { get; set; }
+        public bool? DeferLoading { get; }
     }
 }

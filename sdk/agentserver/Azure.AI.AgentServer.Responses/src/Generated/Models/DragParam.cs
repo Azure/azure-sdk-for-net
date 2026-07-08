@@ -24,11 +24,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   ]
         ///   ```
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public DragParam(IEnumerable<CoordParam> path) : base(ComputerActionType.Drag)
+        internal DragParam(IEnumerable<CoordParam> path) : base(ComputerActionType.Drag)
         {
-            Argument.AssertNotNull(path, nameof(path));
-
             Path = path.ToList();
             Keys = new ChangeTrackingList<string>();
         }
@@ -63,7 +60,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </summary>
         public IList<CoordParam> Path { get; }
 
-        /// <summary> Gets or sets the Keys. </summary>
-        public IList<string> Keys { get; set; }
+        /// <summary> Gets the Keys. </summary>
+        public IList<string> Keys { get; }
     }
 }

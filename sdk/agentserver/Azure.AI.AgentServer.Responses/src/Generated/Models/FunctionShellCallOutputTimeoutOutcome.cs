@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class FunctionShellCallOutputTimeoutOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputTimeoutOutcome"/>. </summary>
-        public FunctionShellCallOutputTimeoutOutcome() : base(FunctionShellCallOutputOutcomeType.Timeout)
+        internal FunctionShellCallOutputTimeoutOutcome() : base(FunctionShellCallOutputOutcomeType.Timeout)
         {
         }
 

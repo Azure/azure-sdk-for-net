@@ -6,13 +6,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    [PersistableModelProxy(typeof(UnknownOutputMessageContent))]
-    internal abstract partial class OutputMessageContent : IJsonModel<OutputMessageContent>
+    /// <summary> The OutputMessageContent. </summary>
+    public partial class OutputMessageContent : IJsonModel<OutputMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContent"/> for deserialization. </summary>
         internal OutputMessageContent()
@@ -121,17 +122,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            OutputMessageContentType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "output_text":
-                        return OutputMessageContentOutputTextContent.DeserializeOutputMessageContentOutputTextContent(element, options);
-                    case "refusal":
-                        return OutputMessageContentRefusalContent.DeserializeOutputMessageContentRefusalContent(element, options);
+                    @type = new OutputMessageContentType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownOutputMessageContent.DeserializeUnknownOutputMessageContent(element, options);
+            return new OutputMessageContent(@type, additionalBinaryDataProperties);
         }
     }
 }

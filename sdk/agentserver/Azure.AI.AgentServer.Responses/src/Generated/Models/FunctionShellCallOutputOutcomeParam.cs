@@ -9,18 +9,15 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Shell call outcome
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputTimeoutOutcomeParam"/> and <see cref="FunctionShellCallOutputExitOutcomeParam"/>.
-    /// </summary>
-    public abstract partial class FunctionShellCallOutputOutcomeParam
+    /// <summary> Shell call outcome. </summary>
+    public partial class FunctionShellCallOutputOutcomeParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputOutcomeParam"/>. </summary>
         /// <param name="type"></param>
-        private protected FunctionShellCallOutputOutcomeParam(FunctionShellCallOutputOutcomeParamType @type)
+        internal FunctionShellCallOutputOutcomeParam(FunctionShellCallOutputOutcomeParamType @type)
         {
             Type = @type;
         }
