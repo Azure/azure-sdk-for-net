@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The kind of bulk operation that can be performed on resources using Bulkactions API. </summary>
-    public readonly partial struct ComputeBulkOperationType : IEquatable<ComputeBulkOperationType>
+    public readonly partial struct ComputeBulkOperationKind : IEquatable<ComputeBulkOperationKind>
     {
         private readonly string _value;
         /// <summary> The default value for this enum type. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Delete operations on the resources. </summary>
         private const string DeleteValue = "Delete";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeBulkOperationType(string value)
+        public ComputeBulkOperationKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The default value for this enum type. </summary>
-        public static ComputeBulkOperationType Unknown { get; } = new ComputeBulkOperationType(UnknownValue);
+        public static ComputeBulkOperationKind Unknown { get; } = new ComputeBulkOperationKind(UnknownValue);
 
         /// <summary> Start operations on the resources. </summary>
-        public static ComputeBulkOperationType Start { get; } = new ComputeBulkOperationType(StartValue);
+        public static ComputeBulkOperationKind Start { get; } = new ComputeBulkOperationKind(StartValue);
 
         /// <summary> Deallocate operations on the resources. </summary>
-        public static ComputeBulkOperationType Deallocate { get; } = new ComputeBulkOperationType(DeallocateValue);
+        public static ComputeBulkOperationKind Deallocate { get; } = new ComputeBulkOperationKind(DeallocateValue);
 
         /// <summary> Hibernate operations on the resources. </summary>
-        public static ComputeBulkOperationType Hibernate { get; } = new ComputeBulkOperationType(HibernateValue);
+        public static ComputeBulkOperationKind Hibernate { get; } = new ComputeBulkOperationKind(HibernateValue);
 
         /// <summary> Create operations on the resources. </summary>
-        public static ComputeBulkOperationType Create { get; } = new ComputeBulkOperationType(CreateValue);
+        public static ComputeBulkOperationKind Create { get; } = new ComputeBulkOperationKind(CreateValue);
 
         /// <summary> Delete operations on the resources. </summary>
-        public static ComputeBulkOperationType Delete { get; } = new ComputeBulkOperationType(DeleteValue);
+        public static ComputeBulkOperationKind Delete { get; } = new ComputeBulkOperationKind(DeleteValue);
 
-        /// <summary> Determines if two <see cref="ComputeBulkOperationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeBulkOperationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeBulkOperationType left, ComputeBulkOperationType right) => left.Equals(right);
+        public static bool operator ==(ComputeBulkOperationKind left, ComputeBulkOperationKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeBulkOperationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeBulkOperationKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeBulkOperationType left, ComputeBulkOperationType right) => !left.Equals(right);
+        public static bool operator !=(ComputeBulkOperationKind left, ComputeBulkOperationKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeBulkOperationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeBulkOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkOperationType(string value) => new ComputeBulkOperationType(value);
+        public static implicit operator ComputeBulkOperationKind(string value) => new ComputeBulkOperationKind(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeBulkOperationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeBulkOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeBulkOperationType?(string value) => value == null ? null : new ComputeBulkOperationType(value);
+        public static implicit operator ComputeBulkOperationKind?(string value) => value == null ? null : new ComputeBulkOperationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeBulkOperationType other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeBulkOperationKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeBulkOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeBulkOperationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
