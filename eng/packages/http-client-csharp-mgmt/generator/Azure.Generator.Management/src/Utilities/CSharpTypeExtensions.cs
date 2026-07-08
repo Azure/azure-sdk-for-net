@@ -64,6 +64,8 @@ namespace Azure.Generator.Management.Utilities
 
         public static string GetXmlDocTypeName(this CSharpType type)
         {
+            // TODO: Remove this workaround when the base C# generator supports formatting generated methods as XML doc cref elements.
+            // https://github.com/microsoft/typespec/issues/11202
             var typeName = GetTypeName(type);
             if (type.Arguments.Count > 0)
             {
