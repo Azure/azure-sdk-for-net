@@ -79,6 +79,42 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateNamespaceWithIPAddressType()
+        {
+            IgnoreTestInLiveMode();
+            // Validates the 2026-01-01 'ipAddressType' property (replaces the legacy 'ipV6Enabled' boolean).
+            // Mirrors the multi-enum-value coverage used for other properties (e.g. RetentionDescription.CleanupPolicy):
+            // exercise both DualStack (IPv4 + IPv6) and IPv4-only and assert each round-trips through the SDK.
+            _resourceGroup = await CreateResourceGroupAsync();
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+
+            // 1) DualStack (IPv4 + IPv6)
+            string dualStackName = await CreateValidNamespaceName(namespacePrefix);
+            var dualStackParameters = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                IpAddressType = IpAddressType.DualStack
+            };
+            ServiceBusNamespaceResource dualStackNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, dualStackName, dualStackParameters)).Value;
+            VerifyNamespaceProperties(dualStackNamespace, false);
+            Assert.AreEqual(IpAddressType.DualStack, dualStackNamespace.Data.IpAddressType);
+            // re-fetch to confirm the value is persisted on the service
+            dualStackNamespace = await namespaceCollection.GetAsync(dualStackName);
+            Assert.AreEqual(IpAddressType.DualStack, dualStackNamespace.Data.IpAddressType);
+            await dualStackNamespace.DeleteAsync(WaitUntil.Completed);
+
+            // 2) IPv4 (IPv4-only)
+            string ipv4Name = await CreateValidNamespaceName(namespacePrefix);
+            var ipv4Parameters = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                IpAddressType = IpAddressType.IPv4
+            };
+            ServiceBusNamespaceResource ipv4Namespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, ipv4Name, ipv4Parameters)).Value;
+            Assert.AreEqual(IpAddressType.IPv4, ipv4Namespace.Data.IpAddressType);
+            await ipv4Namespace.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task CreateNamespaceWithPremiumPartitionCount()
         {
             IgnoreTestInLiveMode();
