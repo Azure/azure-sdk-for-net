@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Deprecated the generic `TrafficManagerEndpointResource` and `TrafficManagerEndpointCollection` APIs. Use the endpoint-specific Azure, External, or Nested Traffic Manager endpoint resource and collection APIs instead.
+
 ## 1.2.0-beta.3 (2026-06-30)
 
 ### Other Changes
