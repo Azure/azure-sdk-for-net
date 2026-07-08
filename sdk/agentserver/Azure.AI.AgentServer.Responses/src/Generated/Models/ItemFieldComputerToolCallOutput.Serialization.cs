@@ -136,7 +136,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string callId = default;
             IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks = default;
             ComputerScreenshotImage output = default;
-            OutputItemComputerToolCallOutputStatus? status = default;
+            ItemFieldComputerToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -179,7 +179,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemComputerToolCallOutputStatus();
+                    status = prop.Value.GetString().ToItemFieldComputerToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")

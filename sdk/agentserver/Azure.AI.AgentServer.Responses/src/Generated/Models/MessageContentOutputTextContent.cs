@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,13 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="annotations"/> or <paramref name="logprobs"/> is null. </exception>
-        public MessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base(MessageContentType.OutputText)
+        internal MessageContentOutputTextContent(string text, IEnumerable<Annotation> annotations, IEnumerable<LogProb> logprobs) : base(MessageContentType.OutputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(annotations, nameof(annotations));
-            Argument.AssertNotNull(logprobs, nameof(logprobs));
-
             Text = text;
             Annotations = annotations.ToList();
             Logprobs = logprobs.ToList();
@@ -44,7 +38,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The text output from the model. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
 
         /// <summary> The annotations of the text output. </summary>
         public IList<Annotation> Annotations { get; }

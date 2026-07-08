@@ -20,11 +20,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public Error(string code, string message)
+        internal Error(string code, string message)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Code = code;
             Message = message;
             Details = new ChangeTrackingList<Error>();
@@ -53,17 +50,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Code. </summary>
-        public string Code { get; set; }
+        /// <summary> Gets the Code. </summary>
+        public string Code { get; }
 
-        /// <summary> Gets or sets the Message. </summary>
-        public string Message { get; set; }
+        /// <summary> Gets the Message. </summary>
+        public string Message { get; }
 
-        /// <summary> Gets or sets the Param. </summary>
-        public string Param { get; set; }
+        /// <summary> Gets the Param. </summary>
+        public string Param { get; }
 
-        /// <summary> Gets or sets the Type. </summary>
-        public string Type { get; set; }
+        /// <summary> Gets the Type. </summary>
+        public string Type { get; }
 
         /// <summary> Gets the Details. </summary>
         public IList<Error> Details { get; }

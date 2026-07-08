@@ -7,22 +7,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Function. </summary>
-    public partial class FunctionTool : Tool
+    public partial class FunctionTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="FunctionTool"/>. </summary>
         /// <param name="name"> The name of the function to call. </param>
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FunctionTool(string name, IDictionary<string, BinaryData> parameters, bool? strict) : base(ToolType.Function)
+        internal FunctionTool(string name, IDictionary<string, BinaryData> parameters, bool? strict) : base("function")
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
             Parameters = parameters;
             Strict = strict;
@@ -30,29 +30,30 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="FunctionTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the function to call. </param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
         /// <param name="deferLoading"> Whether this function is deferred and loaded via tool search. </param>
-        internal FunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionTool(ResponseToolKind @type, string name, string description, IDictionary<string, BinaryData> parameters, bool? strict, bool? deferLoading, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
             Strict = strict;
             DeferLoading = deferLoading;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the function to call. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
         /// <summary>
-        /// Gets or sets the Parameters.
+        /// Gets the Parameters.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -77,12 +78,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; set; }
+        public IDictionary<string, BinaryData> Parameters { get; }
 
-        /// <summary> Gets or sets the Strict. </summary>
-        public bool? Strict { get; set; }
+        /// <summary> Gets the Strict. </summary>
+        public bool? Strict { get; }
 
         /// <summary> Whether this function is deferred and loaded via tool search. </summary>
-        public bool? DeferLoading { get; set; }
+        public bool? DeferLoading { get; }
     }
 }

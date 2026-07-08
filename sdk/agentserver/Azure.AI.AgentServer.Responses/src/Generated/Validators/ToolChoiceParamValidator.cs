@@ -90,6 +90,7 @@ internal static partial class ToolChoiceParamValidator
         "function" => ToolChoiceFunctionValidator.Validate(element),
         "image_generation" => ToolChoiceImageGenerationValidator.Validate(element),
         "mcp" => ToolChoiceMCPValidator.Validate(element),
+        "remote_tool" => RemoteToolChoiceParamValidator.Validate(element),
         "shell" => SpecificFunctionShellParamValidator.Validate(element),
         "web_search_preview" => ToolChoiceWebSearchPreviewValidator.Validate(element),
         "web_search_preview_2025_03_11" => ToolChoiceWebSearchPreview20250311Validator.Validate(element),

@@ -7,36 +7,41 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Web search preview. </summary>
-    public partial class WebSearchPreviewTool : Tool
+    public partial class WebSearchPreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="WebSearchPreviewTool"/>. </summary>
-        public WebSearchPreviewTool() : base(ToolType.WebSearchPreview)
+        internal WebSearchPreviewTool() : base("web_search_preview")
         {
             SearchContentTypes = new ChangeTrackingList<SearchContentType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebSearchPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
         /// <param name="searchContentTypes"></param>
-        internal WebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<SearchContentType> searchContentTypes) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebSearchPreviewTool(ResponseToolKind @type, ApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<SearchContentType> searchContentTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
             SearchContentTypes = searchContentTypes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the UserLocation. </summary>
-        public ApproximateLocation UserLocation { get; set; }
+        /// <summary> Gets the UserLocation. </summary>
+        public ApproximateLocation UserLocation { get; }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
-        public SearchContextSize? SearchContextSize { get; set; }
+        public SearchContextSize? SearchContextSize { get; }
 
         /// <summary> Gets the SearchContentTypes. </summary>
         public IList<SearchContentType> SearchContentTypes { get; }

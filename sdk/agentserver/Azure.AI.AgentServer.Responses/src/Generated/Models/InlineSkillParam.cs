@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -17,13 +16,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="source"/> is null. </exception>
-        public InlineSkillParam(string name, string description, InlineSkillSourceParam source) : base(ContainerSkillType.Inline)
+        internal InlineSkillParam(string name, string description, InlineSkillSourceParam source) : base("inline")
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(source, nameof(source));
-
             Name = name;
             Description = description;
             Source = source;
@@ -43,12 +37,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The name of the skill. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The description of the skill. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary> Inline skill payload. </summary>
-        public InlineSkillSourceParam Source { get; set; }
+        public InlineSkillSourceParam Source { get; }
     }
 }

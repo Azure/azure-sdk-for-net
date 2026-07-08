@@ -6,17 +6,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The FunctionShellToolParamEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ContainerAutoParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownFunctionShellToolParamEnvironment))]
-    public abstract partial class FunctionShellToolParamEnvironment : IJsonModel<FunctionShellToolParamEnvironment>
+    /// <summary> The FunctionShellToolParamEnvironment. </summary>
+    public partial class FunctionShellToolParamEnvironment : IJsonModel<FunctionShellToolParamEnvironment>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironment"/> for deserialization. </summary>
         internal FunctionShellToolParamEnvironment()
@@ -125,19 +122,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            FunctionShellToolParamEnvironmentType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "local":
-                        return FunctionShellToolParamEnvironmentLocalEnvironmentParam.DeserializeFunctionShellToolParamEnvironmentLocalEnvironmentParam(element, options);
-                    case "container_reference":
-                        return FunctionShellToolParamEnvironmentContainerReferenceParam.DeserializeFunctionShellToolParamEnvironmentContainerReferenceParam(element, options);
-                    case "container_auto":
-                        return ContainerAutoParam.DeserializeContainerAutoParam(element, options);
+                    @type = new FunctionShellToolParamEnvironmentType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownFunctionShellToolParamEnvironment.DeserializeUnknownFunctionShellToolParamEnvironment(element, options);
+            return new FunctionShellToolParamEnvironment(@type, additionalBinaryDataProperties);
         }
     }
 }

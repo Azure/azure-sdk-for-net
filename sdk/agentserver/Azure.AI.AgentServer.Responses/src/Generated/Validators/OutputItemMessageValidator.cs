@@ -54,10 +54,8 @@ internal static partial class OutputItemMessageValidator
             }
         }
 
-        // Required: id
-        if (!element.TryGetProperty("id", out var idProp))
-            errors.Add(new ValidationError("$.id", "Required property 'id' is missing"));
-        else
+        // Optional: id
+        if (element.TryGetProperty("id", out var idProp))
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
@@ -83,10 +81,8 @@ internal static partial class OutputItemMessageValidator
                 errors.Add(new ValidationError("$.role", $"Value '{roleProp.GetString()}' is not valid. Allowed: unknown, user, assistant, system, critic, discriminator, developer, tool"));
         }
 
-        // Required: status
-        if (!element.TryGetProperty("status", out var statusProp))
-            errors.Add(new ValidationError("$.status", "Required property 'status' is missing"));
-        else
+        // Optional: status
+        if (element.TryGetProperty("status", out var statusProp))
         {
             if (statusProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.status", $"Expected string, got {statusProp.ValueKind}"));

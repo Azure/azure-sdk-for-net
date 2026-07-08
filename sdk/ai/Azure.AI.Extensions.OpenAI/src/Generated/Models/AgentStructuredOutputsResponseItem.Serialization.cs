@@ -124,7 +124,6 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseItemKind @type = "structured_outputs";
-            string id = default;
             AgentReference agentReference = default;
             string responseId = default;
             BinaryData output = default;
@@ -134,11 +133,6 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = ModelReaderWriter.Read<ResponseItemKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -165,13 +159,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentStructuredOutputsResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                output,
-                additionalBinaryDataProperties);
+            return new AgentStructuredOutputsResponseItem(@type, agentReference, responseId, output, additionalBinaryDataProperties);
         }
     }
 }

@@ -123,7 +123,6 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             ResponseItemKind @type = "azure_function_call";
-            string id = default;
             AgentReference agentReference = default;
             string responseId = default;
             string callId = default;
@@ -136,11 +135,6 @@ namespace Azure.AI.Extensions.OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = ModelReaderWriter.Read<ResponseItemKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("agent_reference"u8))
@@ -184,7 +178,6 @@ namespace Azure.AI.Extensions.OpenAI
             }
             return new AzureFunctionToolCall(
                 @type,
-                id,
                 agentReference,
                 responseId,
                 callId,

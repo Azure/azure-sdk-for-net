@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,11 +14,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="TypeParam"/>. </summary>
         /// <param name="text"> The text to type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public TypeParam(string text) : base(ComputerActionType.Type)
+        internal TypeParam(string text) : base(ComputerActionType.Type)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 
@@ -33,6 +29,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The text to type. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

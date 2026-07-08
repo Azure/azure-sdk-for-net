@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -20,13 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="path"> The path to the directory containing the skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="path"/> is null. </exception>
-        public LocalSkillParam(string name, string description, string path)
+        internal LocalSkillParam(string name, string description, string path)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(path, nameof(path));
-
             Name = name;
             Description = description;
             Path = path;
@@ -46,12 +40,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The name of the skill. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The description of the skill. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary> The path to the directory containing the skill. </summary>
-        public string Path { get; set; }
+        public string Path { get; }
     }
 }

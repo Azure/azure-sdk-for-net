@@ -6,33 +6,34 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Item reference. </summary>
-    public partial class ItemReferenceParam : Item
+    public partial class ItemReferenceParam : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/>. </summary>
         /// <param name="id"> The ID of the item to reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ItemReferenceParam(string id) : base(ItemType.ItemReference)
+        internal ItemReferenceParam(string id) : base(ItemType.ItemReference)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The ID of the item to reference. </param>
-        internal ItemReferenceParam(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ItemReferenceParam(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the item to reference. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

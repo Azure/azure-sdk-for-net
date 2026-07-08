@@ -132,7 +132,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string callId = default;
             BinaryData output = default;
-            OutputItemFunctionToolCallOutputStatus? status = default;
+            ItemFieldFunctionToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -161,7 +161,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToOutputItemFunctionToolCallOutputStatus();
+                    status = prop.Value.GetString().ToItemFieldFunctionToolCallOutputStatus();
                     continue;
                 }
                 if (options.Format != "W")

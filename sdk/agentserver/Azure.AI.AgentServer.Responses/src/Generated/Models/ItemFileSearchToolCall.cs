@@ -8,12 +8,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> File search tool call. </summary>
-    public partial class ItemFileSearchToolCall : Item
+    public partial class ItemFileSearchToolCall : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemFileSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the file search tool call. </param>
         /// <param name="status">
@@ -21,12 +25,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         ///   `searching`, `incomplete` or `failed`,
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="queries"/> is null. </exception>
-        public ItemFileSearchToolCall(string id, ItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(ItemType.FileSearchCall)
+        internal ItemFileSearchToolCall(string id, ItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(ItemType.FileSearchCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(queries, nameof(queries));
-
             Id = id;
             Status = status;
             Queries = queries.ToList();
@@ -35,7 +35,6 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemFileSearchToolCall"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the file search tool call. </param>
         /// <param name="status">
         /// The status of the file search tool call. One of `in_progress`,
@@ -43,27 +42,29 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal ItemFileSearchToolCall(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ItemFileSearchToolCall(ItemType @type, string id, ItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             Status = status;
             Queries = queries;
             Results = results;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the file search tool call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary>
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public ItemFileSearchToolCallStatus Status { get; set; }
+        public ItemFileSearchToolCallStatus Status { get; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }
 
-        /// <summary> Gets or sets the Results. </summary>
-        public IList<FileSearchToolCallResults> Results { get; set; }
+        /// <summary> Gets the Results. </summary>
+        public IList<FileSearchToolCallResults> Results { get; }
     }
 }

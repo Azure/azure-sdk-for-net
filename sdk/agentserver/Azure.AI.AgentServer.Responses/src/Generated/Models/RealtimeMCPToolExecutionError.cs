@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,11 +14,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPToolExecutionError"/>. </summary>
         /// <param name="message"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public RealtimeMCPToolExecutionError(string message) : base(RealtimeMcpErrorType.ToolExecutionError)
+        internal RealtimeMCPToolExecutionError(string message) : base(RealtimeMcpErrorType.ToolExecutionError)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Message = message;
         }
 
@@ -32,7 +28,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             Message = message;
         }
 
-        /// <summary> Gets or sets the Message. </summary>
-        public string Message { get; set; }
+        /// <summary> Gets the Message. </summary>
+        public string Message { get; }
     }
 }

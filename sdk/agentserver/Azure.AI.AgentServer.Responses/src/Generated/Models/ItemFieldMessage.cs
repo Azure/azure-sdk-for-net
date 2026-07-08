@@ -14,14 +14,10 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class ItemFieldMessage : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/>. </summary>
-        /// <param name="id"> The unique ID of the message. </param>
-        /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
         /// <param name="content"> The content of the message. </param>
-        internal ItemFieldMessage(string id, MessageStatus status, MessageRole role, IEnumerable<MessageContent> content) : base(ItemFieldType.Message)
+        internal ItemFieldMessage(MessageRole role, IEnumerable<MessageContent> content) : base(ItemFieldType.Message)
         {
-            Id = id;
-            Status = status;
             Role = role;
             Content = content.ToList();
         }
@@ -29,25 +25,19 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> The unique ID of the message. </param>
-        /// <param name="status"> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </param>
         /// <param name="role"> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </param>
         /// <param name="content"> The content of the message. </param>
         /// <param name="phase"></param>
-        internal ItemFieldMessage(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, MessageStatus status, MessageRole role, IList<MessageContent> content, MessagePhase? phase) : base(@type, additionalBinaryDataProperties)
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        internal ItemFieldMessage(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, IList<MessageContent> content, MessagePhase? phase, string id, MessageStatus? status) : base(@type, additionalBinaryDataProperties)
         {
-            Id = id;
-            Status = status;
             Role = role;
             Content = content;
             Phase = phase;
+            Id = id;
+            Status = status;
         }
-
-        /// <summary> The unique ID of the message. </summary>
-        public string Id { get; }
-
-        /// <summary> The status of item. One of `in_progress`, `completed`, or `incomplete`. Populated when items are returned via API. </summary>
-        public MessageStatus Status { get; }
 
         /// <summary> The role of the message. One of `unknown`, `user`, `assistant`, `system`, `critic`, `discriminator`, `developer`, or `tool`. </summary>
         public MessageRole Role { get; }
@@ -57,5 +47,11 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the Phase. </summary>
         public MessagePhase? Phase { get; }
+
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
+
+        /// <summary> Gets the Status. </summary>
+        public MessageStatus? Status { get; }
     }
 }

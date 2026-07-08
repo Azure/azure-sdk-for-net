@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -22,13 +21,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="strict"> Whether to enforce strict validation. Default `true`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="schema"/> is null. </exception>
-        public StructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict)
+        internal StructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? strict)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(schema, nameof(schema));
-
             Name = name;
             Description = description;
             Schema = schema;
@@ -51,10 +45,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The name of the structured output. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of the output to emit. Used by the model to determine when to emit the output. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// The JSON schema for the structured output.
@@ -85,6 +79,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         public IDictionary<string, BinaryData> Schema { get; }
 
         /// <summary> Whether to enforce strict validation. Default `true`. </summary>
-        public bool? Strict { get; set; }
+        public bool? Strict { get; }
     }
 }

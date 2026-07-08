@@ -26,6 +26,10 @@
     Only regenerates validators from the previously compiled OpenAPI spec.
     Requires a prior full run to have produced the spec at tsp-output/.
 
+.PARAMETER LocalSpecRepoPath
+    Path to a local azure-rest-api-specs checkout or TypeSpec project directory
+    to pass through to tsp-client sync.
+
 .EXAMPLE
     # Full regeneration
     ./scripts/Generate-Contracts.ps1
@@ -35,7 +39,8 @@
 #>
 
 param(
-    [switch]$ValidatorsOnly
+    [switch]$ValidatorsOnly,
+    [string]$LocalSpecRepoPath
 )
 
 $ErrorActionPreference = 'Stop'
@@ -52,9 +57,27 @@ $ValidatorsDir = Join-Path $PackageRoot "src" "Generated" "Validators"
 $OverlayYaml = Join-Path $PackageRoot "src" "Validation" "validation-overlay.yaml"
 $ValidatorsNamespace = "Azure.AI.AgentServer.Responses.Validators"
 $GenerateValidatorsScript = Join-Path $AgentServerRoot "scripts" "generate-validators.py"
+$TspLocationYaml = Join-Path $PackageRoot "tsp-location.yaml"
 
 # OpenAPI spec produced by tsp compile (includes client.tsp customizations)
 $OpenApiYaml = Join-Path $TspOut "openapi.virtual-public-preview.yaml"
+
+function Get-TspLocationValue {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Key,
+        [string]$DefaultValue = ""
+    )
+
+    $pattern = "^\s*$([regex]::Escape($Key))\s*:\s*(.+?)\s*$"
+    foreach ($line in Get-Content $TspLocationYaml) {
+        if ($line -match $pattern) {
+            return $Matches[1].Trim().Trim('"').Trim("'")
+        }
+    }
+
+    return $DefaultValue
+}
 
 # Ensure pyyaml is available
 Write-Host "Checking Python dependencies..."
@@ -83,7 +106,20 @@ try {
         }
 
         Write-Host "Syncing upstream TypeSpec sources..."
-        npx --prefix $TspClientDir --no -- tsp-client sync --no-prompt --output-dir $PackageRoot
+        $tspClientArgs = @(
+            "--prefix", $TspClientDir,
+            "--no",
+            "--",
+            "tsp-client",
+            "sync",
+            "--no-prompt",
+            "--output-dir", $PackageRoot
+        )
+        if ($LocalSpecRepoPath) {
+            $resolvedLocalSpecRepoPath = (Resolve-Path $LocalSpecRepoPath).Path
+            $tspClientArgs += @("--local-spec-repo", $resolvedLocalSpecRepoPath)
+        }
+        npx @tspClientArgs
         $TempTypeSpecDir = Join-Path $PackageRoot "TempTypeSpecFiles"
         if ($LASTEXITCODE -ne 0) {
             # Verify sync at least downloaded the source files
@@ -112,13 +148,17 @@ try {
 
         # Step 2: Compile TypeSpec (produces C# models + OpenAPI spec via client.tsp)
         Write-Host "Compiling TypeSpec -> C# models + OpenAPI spec..."
-        $EntrypointTsp = Join-Path $TempTypeSpecDir "sdk-service-agentserver-contracts/client.tsp"
+        $TypespecDirectory = Get-TspLocationValue "directory"
+        $TypespecProjectName = Split-Path $TypespecDirectory -Leaf
+        $EntrypointFile = Get-TspLocationValue "entrypointFile" "client.tsp"
+        $TypespecProjectDir = Join-Path $TempTypeSpecDir $TypespecProjectName
+        $EntrypointTsp = Join-Path $TypespecProjectDir $EntrypointFile
         if (-not (Test-Path $EntrypointTsp)) {
             throw "Entrypoint client.tsp not found at $EntrypointTsp. Check tsp-client sync and tsp-location.yaml."
         }
         Push-Location $TempTypeSpecDir
         try {
-            npx tsp compile $EntrypointTsp --output-dir "$TspOut"
+            npx tsp compile $EntrypointTsp --config $TypespecProjectDir --output-dir "$TspOut"
             if ($LASTEXITCODE -ne 0) { throw "tsp compile failed" }
         } finally {
             Pop-Location

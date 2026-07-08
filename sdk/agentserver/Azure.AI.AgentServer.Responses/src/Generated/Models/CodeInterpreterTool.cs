@@ -7,40 +7,52 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Code interpreter. </summary>
-    public partial class CodeInterpreterTool : Tool
+    public partial class CodeInterpreterTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterTool"/>. </summary>
-        public CodeInterpreterTool() : base(ToolType.CodeInterpreter)
+        internal CodeInterpreterTool() : base("code_interpreter")
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="container">
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal CodeInterpreterTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData container) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CodeInterpreterTool(ResponseToolKind @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, BinaryData container, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
             Container = container;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Name { get; }
 
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public string Description { get; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary>
         /// The code interpreter container. Can be a container ID or an object that
@@ -84,6 +96,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Container { get; set; }
+        public BinaryData Container { get; }
     }
 }

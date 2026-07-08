@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,13 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="updatedAt"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="memoryId"/>, <paramref name="scope"/> or <paramref name="content"/> is null. </exception>
-        public UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, MemoryItemKind.UserProfile)
+        internal UserProfileMemoryItem(string memoryId, DateTimeOffset updatedAt, string scope, string content) : base(memoryId, updatedAt, scope, content, MemoryItemKind.UserProfile)
         {
-            Argument.AssertNotNull(memoryId, nameof(memoryId));
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNull(content, nameof(content));
-
         }
 
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/>. </summary>

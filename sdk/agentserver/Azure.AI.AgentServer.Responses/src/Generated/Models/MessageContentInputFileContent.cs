@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     public partial class MessageContentInputFileContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputFileContent"/>. </summary>
-        public MessageContentInputFileContent() : base(MessageContentType.InputFile)
+        internal MessageContentInputFileContent() : base(MessageContentType.InputFile)
         {
         }
 
@@ -32,16 +32,16 @@ namespace Azure.AI.AgentServer.Responses.Models
             FileUrl = fileUrl;
         }
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
 
         /// <summary> The name of the file to be sent to the model. </summary>
-        public string Filename { get; set; }
+        public string Filename { get; }
 
         /// <summary> The content of the file to be sent to the model. </summary>
-        public string FileData { get; set; }
+        public string FileData { get; }
 
         /// <summary> The URL of the file to be sent to the model. </summary>
-        public Uri FileUrl { get; set; }
+        public Uri FileUrl { get; }
     }
 }

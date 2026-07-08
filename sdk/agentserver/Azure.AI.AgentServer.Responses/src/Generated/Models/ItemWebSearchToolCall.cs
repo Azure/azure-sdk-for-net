@@ -7,13 +7,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Web search tool call. </summary>
-    public partial class ItemWebSearchToolCall : Item
+    public partial class ItemWebSearchToolCall : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemWebSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the web search tool call. </param>
         /// <param name="status"> The status of the web search tool call. </param>
@@ -21,12 +24,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="action"/> is null. </exception>
-        public ItemWebSearchToolCall(string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(ItemType.WebSearchCall)
+        internal ItemWebSearchToolCall(string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(ItemType.WebSearchCall)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(action, nameof(action));
-
             Id = id;
             Status = status;
             Action = action;
@@ -34,25 +33,26 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemWebSearchToolCall"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the web search tool call. </param>
         /// <param name="status"> The status of the web search tool call. </param>
         /// <param name="action">
         /// An object describing the specific action taken in this web search call.
         ///   Includes details on how the model used the web (search, open_page, find_in_page).
         /// </param>
-        internal ItemWebSearchToolCall(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemWebSearchToolCallStatus status, BinaryData action) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ItemWebSearchToolCall(ItemType @type, string id, ItemWebSearchToolCallStatus status, BinaryData action, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             Status = status;
             Action = action;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the web search tool call. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The status of the web search tool call. </summary>
-        public ItemWebSearchToolCallStatus Status { get; set; }
+        public ItemWebSearchToolCallStatus Status { get; }
 
         /// <summary>
         /// An object describing the specific action taken in this web search call.
@@ -97,6 +97,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Action { get; set; }
+        public BinaryData Action { get; }
     }
 }

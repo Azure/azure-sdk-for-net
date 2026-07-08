@@ -14,6 +14,22 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
+        /// <param name="id"></param>
+        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
+        /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="internalConsentLink"/> or <paramref name="serverLabel"/> is null. </exception>
+        public OAuthConsentRequestResponseItem(string id, string internalConsentLink, string serverLabel) : base("oauth_consent_request")
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(internalConsentLink, nameof(internalConsentLink));
+            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
+
+            Id = id;
+            InternalConsentLink = internalConsentLink;
+            ServerLabel = serverLabel;
+        }
+
         /// <summary> The server label for the OAuth consent request. </summary>
         public string ServerLabel { get; set; }
     }

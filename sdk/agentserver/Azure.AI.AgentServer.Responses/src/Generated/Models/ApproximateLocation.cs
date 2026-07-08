@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApproximateLocation"/>. </summary>
-        public ApproximateLocation()
+        internal ApproximateLocation()
         {
         }
 
@@ -38,18 +38,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The type of location approximation. Always `approximate`. </summary>
-        public string Type { get; } = "approximate";
+        internal string Type { get; } = "approximate";
 
-        /// <summary> Gets or sets the Country. </summary>
-        public string Country { get; set; }
+        /// <summary> Gets the Country. </summary>
+        public string Country { get; }
 
-        /// <summary> Gets or sets the Region. </summary>
-        public string Region { get; set; }
+        /// <summary> Gets the Region. </summary>
+        public string Region { get; }
 
-        /// <summary> Gets or sets the City. </summary>
-        public string City { get; set; }
+        /// <summary> Gets the City. </summary>
+        public string City { get; }
 
-        /// <summary> Gets or sets the Timezone. </summary>
-        public string Timezone { get; set; }
+        /// <summary> Gets the Timezone. </summary>
+        public string Timezone { get; }
     }
 }

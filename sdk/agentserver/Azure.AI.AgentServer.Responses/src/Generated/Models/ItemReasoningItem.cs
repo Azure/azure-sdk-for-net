@@ -8,21 +8,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Reasoning. </summary>
-    public partial class ItemReasoningItem : Item
+    public partial class ItemReasoningItem : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemReasoningItem"/>. </summary>
         /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="summary"> Reasoning summary content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
-        public ItemReasoningItem(string id, IEnumerable<SummaryTextContent> summary) : base(ItemType.Reasoning)
+        internal ItemReasoningItem(string id, IEnumerable<SummaryTextContent> summary) : base(ItemType.Reasoning)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(summary, nameof(summary));
-
             Id = id;
             Summary = summary.ToList();
             Content = new ChangeTrackingList<ReasoningTextContent>();
@@ -30,7 +30,6 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemReasoningItem"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique identifier of the reasoning content. </param>
         /// <param name="encryptedContent"></param>
         /// <param name="summary"> Reasoning summary content. </param>
@@ -39,20 +38,22 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemReasoningItem(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string encryptedContent, IList<SummaryTextContent> summary, IList<ReasoningTextContent> content, ItemReasoningItemStatus? status) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ItemReasoningItem(ItemType @type, string id, string encryptedContent, IList<SummaryTextContent> summary, IList<ReasoningTextContent> content, ItemReasoningItemStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             EncryptedContent = encryptedContent;
             Summary = summary;
             Content = content;
             Status = status;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique identifier of the reasoning content. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
-        /// <summary> Gets or sets the EncryptedContent. </summary>
-        public string EncryptedContent { get; set; }
+        /// <summary> Gets the EncryptedContent. </summary>
+        public string EncryptedContent { get; }
 
         /// <summary> Reasoning summary content. </summary>
         public IList<SummaryTextContent> Summary { get; }
@@ -64,6 +65,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public ItemReasoningItemStatus? Status { get; set; }
+        public ItemReasoningItemStatus? Status { get; }
     }
 }

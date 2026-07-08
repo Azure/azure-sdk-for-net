@@ -6,43 +6,34 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
-    public partial class MicrosoftFabricPreviewTool : Tool
+    public partial class MicrosoftFabricPreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricDataagentPreview"/> is null. </exception>
-        public MicrosoftFabricPreviewTool(FabricDataAgentToolParameters fabricDataagentPreview) : base(ToolType.FabricDataagentPreview)
+        internal MicrosoftFabricPreviewTool(FabricDataAgentToolParameters fabricDataagentPreview) : base("fabric_dataagent_preview")
         {
-            Argument.AssertNotNull(fabricDataagentPreview, nameof(fabricDataagentPreview));
-
             FabricDataagentPreview = fabricDataagentPreview;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        internal MicrosoftFabricPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, FabricDataAgentToolParameters fabricDataagentPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MicrosoftFabricPreviewTool(ResponseToolKind @type, FabricDataAgentToolParameters fabricDataagentPreview, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
-            Name = name;
-            Description = description;
             FabricDataagentPreview = fabricDataagentPreview;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
-
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
-
         /// <summary> The fabric data agent tool parameters. </summary>
-        public FabricDataAgentToolParameters FabricDataagentPreview { get; set; }
+        public FabricDataAgentToolParameters FabricDataagentPreview { get; }
     }
 }

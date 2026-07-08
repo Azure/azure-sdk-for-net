@@ -7,24 +7,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> MCP list tools. </summary>
-    public partial class ItemMcpListTools : Item
+    public partial class ItemMcpListTools : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ItemMcpListTools"/>. </summary>
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="serverLabel"/> or <paramref name="tools"/> is null. </exception>
-        public ItemMcpListTools(string id, string serverLabel, IEnumerable<MCPListToolsTool> tools) : base(ItemType.McpListTools)
+        internal ItemMcpListTools(string id, string serverLabel, IEnumerable<MCPListToolsTool> tools) : base(ItemType.McpListTools)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-            Argument.AssertNotNull(tools, nameof(tools));
-
             Id = id;
             ServerLabel = serverLabel;
             Tools = tools.ToList();
@@ -32,29 +30,30 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ItemMcpListTools"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The unique ID of the list. </param>
         /// <param name="serverLabel"> The label of the MCP server. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="error"></param>
-        internal ItemMcpListTools(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string serverLabel, IList<MCPListToolsTool> tools, RealtimeMCPError error) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ItemMcpListTools(ItemType @type, string id, string serverLabel, IList<MCPListToolsTool> tools, RealtimeMCPError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             ServerLabel = serverLabel;
             Tools = tools;
             Error = error;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of the list. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
         /// <summary> The label of the MCP server. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary> The tools available on the server. </summary>
         public IList<MCPListToolsTool> Tools { get; }
 
-        /// <summary> Gets or sets the Error. </summary>
-        public RealtimeMCPError Error { get; set; }
+        /// <summary> Gets the Error. </summary>
+        public RealtimeMCPError Error { get; }
     }
 }

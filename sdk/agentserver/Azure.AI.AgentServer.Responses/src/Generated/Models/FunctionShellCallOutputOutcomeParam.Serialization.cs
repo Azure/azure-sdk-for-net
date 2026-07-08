@@ -6,17 +6,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Shell call outcome
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputTimeoutOutcomeParam"/> and <see cref="FunctionShellCallOutputExitOutcomeParam"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownFunctionShellCallOutputOutcomeParam))]
-    public abstract partial class FunctionShellCallOutputOutcomeParam : IJsonModel<FunctionShellCallOutputOutcomeParam>
+    /// <summary> Shell call outcome. </summary>
+    public partial class FunctionShellCallOutputOutcomeParam : IJsonModel<FunctionShellCallOutputOutcomeParam>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputOutcomeParam"/> for deserialization. </summary>
         internal FunctionShellCallOutputOutcomeParam()
@@ -125,17 +122,21 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            FunctionShellCallOutputOutcomeParamType @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("type"u8))
                 {
-                    case "timeout":
-                        return FunctionShellCallOutputTimeoutOutcomeParam.DeserializeFunctionShellCallOutputTimeoutOutcomeParam(element, options);
-                    case "exit":
-                        return FunctionShellCallOutputExitOutcomeParam.DeserializeFunctionShellCallOutputExitOutcomeParam(element, options);
+                    @type = new FunctionShellCallOutputOutcomeParamType(prop.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownFunctionShellCallOutputOutcomeParam.DeserializeUnknownFunctionShellCallOutputOutcomeParam(element, options);
+            return new FunctionShellCallOutputOutcomeParam(@type, additionalBinaryDataProperties);
         }
     }
 }

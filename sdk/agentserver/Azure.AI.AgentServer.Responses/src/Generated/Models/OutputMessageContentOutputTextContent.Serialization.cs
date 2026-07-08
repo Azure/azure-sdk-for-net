@@ -12,7 +12,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    internal partial class OutputMessageContentOutputTextContent : OutputMessageContent, IJsonModel<OutputMessageContentOutputTextContent>
+    /// <summary> Output text. </summary>
+    public partial class OutputMessageContentOutputTextContent : OutputMessageContent, IJsonModel<OutputMessageContentOutputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/> for deserialization. </summary>
         internal OutputMessageContentOutputTextContent()

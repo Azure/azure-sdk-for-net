@@ -9,11 +9,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
-    public partial class AzureAISearchTool : Tool, IJsonModel<AzureAISearchTool>
+    public partial class AzureAISearchTool : ResponseTool, IJsonModel<AzureAISearchTool>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/> for deserialization. </summary>
         internal AzureAISearchTool()
@@ -22,7 +23,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Tool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,8 +90,34 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("azure_ai_search"u8);
             writer.WriteObjectValue(AzureAiSearch, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -99,7 +126,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Tool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureAISearchTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -118,16 +145,17 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "azure_ai_search";
             string name = default;
             string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             AzureAISearchToolResource azureAiSearch = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = ModelReaderWriter.Read<ResponseToolKind>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -140,6 +168,20 @@ namespace Azure.AI.AgentServer.Responses.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
                     azureAiSearch = AzureAISearchToolResource.DeserializeAzureAISearchToolResource(prop.Value, options);
@@ -150,7 +192,13 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAISearchTool(@type, additionalBinaryDataProperties, name, description, azureAiSearch);
+            return new AzureAISearchTool(
+                @type,
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                azureAiSearch,
+                additionalBinaryDataProperties);
         }
     }
 }

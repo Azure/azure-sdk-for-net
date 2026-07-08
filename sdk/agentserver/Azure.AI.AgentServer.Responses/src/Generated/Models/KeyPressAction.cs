@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -16,11 +15,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>
         /// <param name="keys"> The combination of keys the model is requesting to be pressed. This is an array of strings, each representing a key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keys"/> is null. </exception>
-        public KeyPressAction(IEnumerable<string> keys) : base(ComputerActionType.Keypress)
+        internal KeyPressAction(IEnumerable<string> keys) : base(ComputerActionType.Keypress)
         {
-            Argument.AssertNotNull(keys, nameof(keys));
-
             Keys = keys.ToList();
         }
 

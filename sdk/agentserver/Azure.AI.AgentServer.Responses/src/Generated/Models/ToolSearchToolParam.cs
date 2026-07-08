@@ -6,37 +6,42 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Tool search tool. </summary>
-    public partial class ToolSearchToolParam : Tool
+    public partial class ToolSearchToolParam : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ToolSearchToolParam"/>. </summary>
-        public ToolSearchToolParam() : base(ToolType.ToolSearch)
+        internal ToolSearchToolParam() : base("tool_search")
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolSearchToolParam"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="execution"> Whether tool search is executed by the server or by the client. </param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal ToolSearchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolSearchExecutionType? execution, string description, EmptyModelParam parameters) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ToolSearchToolParam(ResponseToolKind @type, ToolSearchExecutionType? execution, string description, EmptyModelParam parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Execution = execution;
             Description = description;
             Parameters = parameters;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether tool search is executed by the server or by the client. </summary>
-        public ToolSearchExecutionType? Execution { get; set; }
+        public ToolSearchExecutionType? Execution { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
-        /// <summary> Gets or sets the Parameters. </summary>
-        public EmptyModelParam Parameters { get; set; }
+        /// <summary> Gets the Parameters. </summary>
+        public EmptyModelParam Parameters { get; }
     }
 }

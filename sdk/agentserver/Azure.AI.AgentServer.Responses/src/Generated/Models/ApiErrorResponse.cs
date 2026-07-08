@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,11 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/>. </summary>
         /// <param name="error"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        public ApiErrorResponse(Error error)
+        internal ApiErrorResponse(Error error)
         {
-            Argument.AssertNotNull(error, nameof(error));
-
             Error = error;
         }
 
@@ -35,7 +31,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Error. </summary>
-        public Error Error { get; set; }
+        /// <summary> Gets the Error. </summary>
+        public Error Error { get; }
     }
 }

@@ -6,50 +6,51 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> MCP approval response. </summary>
-    public partial class MCPApprovalResponse : Item
+    public partial class MCPApprovalResponse : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="MCPApprovalResponse"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="approvalRequestId"/> is null. </exception>
-        public MCPApprovalResponse(string approvalRequestId, bool approve) : base(ItemType.McpApprovalResponse)
+        internal MCPApprovalResponse(string approvalRequestId, bool approve) : base(ItemType.McpApprovalResponse)
         {
-            Argument.AssertNotNull(approvalRequestId, nameof(approvalRequestId));
-
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
         }
 
         /// <summary> Initializes a new instance of <see cref="MCPApprovalResponse"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"></param>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>
         /// <param name="approve"> Whether the request was approved. </param>
         /// <param name="reason"></param>
-        internal MCPApprovalResponse(ItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string approvalRequestId, bool approve, string reason) : base(@type, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MCPApprovalResponse(ItemType @type, string id, string approvalRequestId, bool approve, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             Id = id;
             ApprovalRequestId = approvalRequestId;
             Approve = approve;
             Reason = reason;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; set; }
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
 
         /// <summary> The ID of the approval request being answered. </summary>
-        public string ApprovalRequestId { get; set; }
+        public string ApprovalRequestId { get; }
 
         /// <summary> Whether the request was approved. </summary>
-        public bool Approve { get; set; }
+        public bool Approve { get; }
 
-        /// <summary> Gets or sets the Reason. </summary>
-        public string Reason { get; set; }
+        /// <summary> Gets the Reason. </summary>
+        public string Reason { get; }
     }
 }

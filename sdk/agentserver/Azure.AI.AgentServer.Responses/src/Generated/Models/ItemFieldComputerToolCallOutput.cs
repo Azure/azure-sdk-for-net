@@ -37,7 +37,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </param>
-        internal ItemFieldComputerToolCallOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, OutputItemComputerToolCallOutputStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal ItemFieldComputerToolCallOutput(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks, ComputerScreenshotImage output, ItemFieldComputerToolCallOutputStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -65,6 +65,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the message input. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when input items are returned via API.
         /// </summary>
-        public OutputItemComputerToolCallOutputStatus? Status { get; }
+        public ItemFieldComputerToolCallOutputStatus? Status { get; }
     }
 }

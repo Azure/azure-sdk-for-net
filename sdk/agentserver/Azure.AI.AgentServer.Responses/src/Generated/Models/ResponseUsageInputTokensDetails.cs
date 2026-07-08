@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseUsageInputTokensDetails"/>. </summary>
         /// <param name="cachedTokens"></param>
-        public ResponseUsageInputTokensDetails(long cachedTokens)
+        internal ResponseUsageInputTokensDetails(long cachedTokens)
         {
             CachedTokens = cachedTokens;
         }
@@ -31,7 +31,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the CachedTokens. </summary>
-        public long CachedTokens { get; set; }
+        /// <summary> Gets the CachedTokens. </summary>
+        public long CachedTokens { get; }
     }
 }

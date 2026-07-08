@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,11 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="FunctionToolParam"/>. </summary>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FunctionToolParam(string name)
+        internal FunctionToolParam(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
@@ -45,22 +41,22 @@ namespace Azure.AI.AgentServer.Responses.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
-        /// <summary> Gets or sets the Parameters. </summary>
-        public EmptyModelParam Parameters { get; set; }
+        /// <summary> Gets the Parameters. </summary>
+        public EmptyModelParam Parameters { get; }
 
-        /// <summary> Gets or sets the Strict. </summary>
-        public bool? Strict { get; set; }
+        /// <summary> Gets the Strict. </summary>
+        public bool? Strict { get; }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "function";
+        internal string Type { get; } = "function";
 
         /// <summary> Whether this function should be deferred and discovered via tool search. </summary>
-        public bool? DeferLoading { get; set; }
+        public bool? DeferLoading { get; }
     }
 }

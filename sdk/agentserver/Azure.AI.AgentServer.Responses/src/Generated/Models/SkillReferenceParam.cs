@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -15,11 +14,8 @@ namespace Azure.AI.AgentServer.Responses.Models
     {
         /// <summary> Initializes a new instance of <see cref="SkillReferenceParam"/>. </summary>
         /// <param name="skillId"> The ID of the referenced skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="skillId"/> is null. </exception>
-        public SkillReferenceParam(string skillId) : base(ContainerSkillType.SkillReference)
+        internal SkillReferenceParam(string skillId) : base("skill_reference")
         {
-            Argument.AssertNotNull(skillId, nameof(skillId));
-
             SkillId = skillId;
         }
 
@@ -35,9 +31,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the referenced skill. </summary>
-        public string SkillId { get; set; }
+        public string SkillId { get; }
 
         /// <summary> Optional skill version. Use a positive integer or 'latest'. Omit for default. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
     }
 }

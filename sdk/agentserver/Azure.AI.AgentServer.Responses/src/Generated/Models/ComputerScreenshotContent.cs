@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
-        public ComputerScreenshotContent(Uri imageUrl, string fileId, ImageDetail detail) : base(MessageContentType.ComputerScreenshot)
+        internal ComputerScreenshotContent(Uri imageUrl, string fileId, ImageDetail detail) : base(MessageContentType.ComputerScreenshot)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
@@ -36,13 +36,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             Detail = detail;
         }
 
-        /// <summary> Gets or sets the ImageUrl. </summary>
-        public Uri ImageUrl { get; set; }
+        /// <summary> Gets the ImageUrl. </summary>
+        public Uri ImageUrl { get; }
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
 
         /// <summary> The detail level of the screenshot image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </summary>
-        public ImageDetail Detail { get; set; }
+        public ImageDetail Detail { get; }
     }
 }

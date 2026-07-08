@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -18,11 +17,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputerCallSafetyCheckParam"/>. </summary>
         /// <param name="id"> The ID of the pending safety check. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ComputerCallSafetyCheckParam(string id)
+        internal ComputerCallSafetyCheckParam(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 
@@ -40,12 +36,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The ID of the pending safety check. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
 
-        /// <summary> Gets or sets the Code. </summary>
-        public string Code { get; set; }
+        /// <summary> Gets the Code. </summary>
+        public string Code { get; }
 
-        /// <summary> Gets or sets the Message. </summary>
-        public string Message { get; set; }
+        /// <summary> Gets the Message. </summary>
+        public string Message { get; }
     }
 }
