@@ -4,6 +4,7 @@
 #nullable enable
 
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json.Nodes;
 using AzureSdkContentUnderstanding.Skills;
 using NUnit.Framework;
@@ -196,6 +197,248 @@ namespace Azure.AI.ContentUnderstanding.Tests
         {
             Assert.Throws<System.InvalidOperationException>(
                 () => CreateAndTestRouterCommand.ParseInnerArg(new[] { "invoice/tmp/inv.json" }));
+        }
+
+        // -------------------------------------------------------------------
+        // VersionSortKey — pure key extractor
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void VersionSortKey_BareAlias_ReturnsGroupZero()
+        {
+            var key = CreateAndTestRouterCommand.VersionSortKey("invoice", "invoice");
+            Assert.That(key.Group, Is.EqualTo(0));
+            Assert.That(key.Version, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void VersionSortKey_VPrefixedNumeric_ReturnsGroupOneWithVersion()
+        {
+            var v9 = CreateAndTestRouterCommand.VersionSortKey("invoice_v9", "invoice");
+            var v10 = CreateAndTestRouterCommand.VersionSortKey("invoice_v10", "invoice");
+            Assert.That(v9.Group, Is.EqualTo(1));
+            Assert.That(v9.Version, Is.EqualTo(9));
+            Assert.That(v10.Group, Is.EqualTo(1));
+            Assert.That(v10.Version, Is.EqualTo(10));
+            // The whole point of the fix: v10 sorts higher than v9.
+            Assert.That(v10, Is.GreaterThan(v9));
+        }
+
+        [Test]
+        public void VersionSortKey_BareNumeric_ReturnsGroupOneWithVersion()
+        {
+            // `<alias>_<N>` without the `v` should also be recognised as a version.
+            var key = CreateAndTestRouterCommand.VersionSortKey("invoice_42", "invoice");
+            Assert.That(key.Group, Is.EqualTo(1));
+            Assert.That(key.Version, Is.EqualTo(42));
+        }
+
+        [Test]
+        public void VersionSortKey_NonNumericSuffix_ReturnsGroupTwoWithSuffix()
+        {
+            var key = CreateAndTestRouterCommand.VersionSortKey("invoice_draft", "invoice");
+            Assert.That(key.Group, Is.EqualTo(2));
+            Assert.That(key.Version, Is.EqualTo(0));
+            Assert.That(key.Lex, Is.EqualTo("draft"));
+        }
+
+        // -------------------------------------------------------------------
+        // DiscoverInnerFromDir — end-to-end filesystem-touching resolution
+        // -------------------------------------------------------------------
+
+        private static string MakeTempDir()
+        {
+            var d = Path.Combine(Path.GetTempPath(), "cu-skill-discover-" + Path.GetRandomFileName());
+            Directory.CreateDirectory(d);
+            return d;
+        }
+
+        private static void WriteEmptyJson(string dir, string name)
+            => File.WriteAllText(Path.Combine(dir, name), "{}");
+
+        private static JsonObject OuterWithAliases(params string?[] aliases)
+        {
+            var categories = new JsonObject();
+            for (var i = 0; i < aliases.Length; i++)
+            {
+                var entry = new JsonObject { ["description"] = "d" };
+                if (aliases[i] is not null)
+                    entry["analyzerId"] = aliases[i];
+                categories[$"cat_{i}"] = entry;
+            }
+            return new JsonObject
+            {
+                ["baseAnalyzerId"] = "prebuilt-document",
+                ["config"] = new JsonObject
+                {
+                    ["enableSegment"] = true,
+                    ["contentCategories"] = categories,
+                },
+            };
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_ResolvesExactMatchStem()
+        {
+            var dir = MakeTempDir();
+            try
+            {
+                WriteEmptyJson(dir, "invoice.json");
+                WriteEmptyJson(dir, "bank_statement.json");
+
+                var outer = OuterWithAliases("invoice", "bank_statement");
+                var resolved = CreateAndTestRouterCommand.DiscoverInnerFromDir(outer, dir);
+
+                Assert.That(resolved, Has.Count.EqualTo(2));
+                Assert.That(resolved["invoice"], Is.EqualTo(Path.Combine(dir, "invoice.json")));
+                Assert.That(resolved["bank_statement"], Is.EqualTo(Path.Combine(dir, "bank_statement.json")));
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_PicksNaturalVersionMaxNotAlphabeticalLast()
+        {
+            // The bug that got shipped: `invoice_v10.json` sorted alphabetically
+            // BEFORE `invoice_v9.json` (because '1' < '9' char-by-char after the
+            // common `invoice_v` prefix), so "alphabetical last" returned v9.
+            // With the natural version sort, v10 wins.
+            var dir = MakeTempDir();
+            try
+            {
+                WriteEmptyJson(dir, "invoice_v1.json");
+                WriteEmptyJson(dir, "invoice_v2.json");
+                WriteEmptyJson(dir, "invoice_v9.json");
+                WriteEmptyJson(dir, "invoice_v10.json");
+
+                var resolved = CreateAndTestRouterCommand.DiscoverInnerFromDir(OuterWithAliases("invoice"), dir);
+                Assert.That(resolved["invoice"], Is.EqualTo(Path.Combine(dir, "invoice_v10.json")));
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_PrefersVersionedOverBareAlias()
+        {
+            // Bare `<alias>.json` is group 0, `<alias>_v<N>.json` is group 1.
+            // A versioned file should always beat the bare file as "newer".
+            var dir = MakeTempDir();
+            try
+            {
+                WriteEmptyJson(dir, "invoice.json");
+                WriteEmptyJson(dir, "invoice_v1.json");
+
+                var resolved = CreateAndTestRouterCommand.DiscoverInnerFromDir(OuterWithAliases("invoice"), dir);
+                Assert.That(resolved["invoice"], Is.EqualTo(Path.Combine(dir, "invoice_v1.json")));
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_SkipsPrebuiltAliases()
+        {
+            // `prebuilt-invoice` is a service-side analyzer; the tool must
+            // NOT require a local file for it. It also shouldn't cause a
+            // "missing alias" failure.
+            var dir = MakeTempDir();
+            try
+            {
+                WriteEmptyJson(dir, "invoice.json");
+
+                var outer = OuterWithAliases("invoice", "prebuilt-invoice");
+                var resolved = CreateAndTestRouterCommand.DiscoverInnerFromDir(outer, dir);
+
+                Assert.That(resolved, Has.Count.EqualTo(1));
+                Assert.That(resolved.ContainsKey("invoice"), Is.True);
+                Assert.That(resolved.ContainsKey("prebuilt-invoice"), Is.False);
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_SkipsCategoriesWithoutAnalyzerId()
+        {
+            // A category with no `analyzerId` is a classification-only bucket
+            // ("other") — no schema file required.
+            var dir = MakeTempDir();
+            try
+            {
+                WriteEmptyJson(dir, "invoice.json");
+
+                var outer = OuterWithAliases("invoice", null);
+                var resolved = CreateAndTestRouterCommand.DiscoverInnerFromDir(outer, dir);
+
+                Assert.That(resolved, Has.Count.EqualTo(1));
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_MissingAliases_ThrowsWithEveryName()
+        {
+            var dir = MakeTempDir();
+            try
+            {
+                WriteEmptyJson(dir, "invoice.json");
+
+                var outer = OuterWithAliases("invoice", "bank_statement", "loan_application");
+                var ex = Assert.Throws<System.InvalidOperationException>(
+                    () => CreateAndTestRouterCommand.DiscoverInnerFromDir(outer, dir));
+
+                Assert.That(ex!.Message, Does.Contain("bank_statement"));
+                Assert.That(ex.Message, Does.Contain("loan_application"));
+                // The resolved alias should NOT appear in the missing list.
+                Assert.That(ex.Message, Does.Not.Contain("[invoice"));
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_UnrelatedJsonFilesIgnored()
+        {
+            var dir = MakeTempDir();
+            try
+            {
+                WriteEmptyJson(dir, "invoice.json");
+                WriteEmptyJson(dir, "notes.json");
+                WriteEmptyJson(dir, "settings.json");
+
+                var resolved = CreateAndTestRouterCommand.DiscoverInnerFromDir(OuterWithAliases("invoice"), dir);
+                Assert.That(resolved, Has.Count.EqualTo(1));
+                Assert.That(resolved["invoice"], Is.EqualTo(Path.Combine(dir, "invoice.json")));
+            }
+            finally
+            {
+                Directory.Delete(dir, recursive: true);
+            }
+        }
+
+        [Test]
+        public void DiscoverInnerFromDir_NonExistentDir_Throws()
+        {
+            var missing = Path.Combine(Path.GetTempPath(), "definitely-not-there-" + Path.GetRandomFileName());
+            var outer = OuterWithAliases("invoice");
+            var ex = Assert.Throws<System.InvalidOperationException>(
+                () => CreateAndTestRouterCommand.DiscoverInnerFromDir(outer, missing));
+            Assert.That(ex!.Message, Does.Contain("--schema-dir is not a directory"));
         }
     }
 }

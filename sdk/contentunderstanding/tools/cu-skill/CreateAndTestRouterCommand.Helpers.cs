@@ -13,8 +13,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace AzureSdkContentUnderstanding.Skills;
 
@@ -92,6 +94,87 @@ internal static partial class CreateAndTestRouterCommand
 
         return (patched, errors);
     }
+
+    // -----------------------------------------------------------------------
+    // Inner-schema discovery from a directory of files.
+    //
+    // Given the outer classifier schema and a directory, find the file that
+    // matches each category's `analyzerId` alias. Matching rule: the file's
+    // stem is exactly `<alias>` (bare) or starts with `<alias>_` (versioned).
+    // When multiple files match, pick the highest-numbered `_v<N>` (or `_<N>`)
+    // suffix so `invoice_v10.json` beats `invoice_v9.json` — plain alphabetical
+    // sort broke as soon as version numbers hit two digits.
+    // -----------------------------------------------------------------------
+
+    internal static Dictionary<string, string> DiscoverInnerFromDir(JsonObject outerSchema, string schemaDir)
+    {
+        if (!Directory.Exists(schemaDir))
+            throw new InvalidOperationException($"--schema-dir is not a directory: {schemaDir}");
+
+        var categories = (outerSchema["config"] as JsonObject)?["contentCategories"] as JsonObject ?? new JsonObject();
+        var aliases = new List<string>();
+        foreach (var (_, catEntry) in categories)
+        {
+            if (catEntry is not JsonObject entry) continue;
+            var alias = entry["analyzerId"]?.GetValue<string?>();
+            if (alias is null || alias.StartsWith("prebuilt-", StringComparison.Ordinal))
+                continue;
+            aliases.Add(alias);
+        }
+
+        var jsonFiles = Directory.EnumerateFiles(schemaDir, "*.json").ToList();
+
+        var resolved = new Dictionary<string, string>(StringComparer.Ordinal);
+        var missing = new List<string>();
+        foreach (var alias in aliases)
+        {
+            var matches = jsonFiles
+                .Where(p =>
+                {
+                    var stem = Path.GetFileNameWithoutExtension(p);
+                    return stem == alias || stem.StartsWith($"{alias}_", StringComparison.Ordinal);
+                })
+                // Order so the LAST element is the "newest" per the version key.
+                .OrderBy(p => VersionSortKey(Path.GetFileNameWithoutExtension(p), alias))
+                .ToList();
+            if (matches.Count == 0)
+            {
+                missing.Add(alias);
+                continue;
+            }
+            resolved[alias] = matches[^1];
+        }
+
+        if (missing.Count > 0)
+        {
+            throw new InvalidOperationException(
+                $"--schema-dir could not resolve inner schemas for: [{string.Join(", ", missing)}]. " +
+                $"Looked in {schemaDir} for files named <alias>.json or <alias>_*.json.");
+        }
+        return resolved;
+    }
+
+    /// <summary>
+    /// Sort key for `<alias>[_suffix]` filenames. Higher tuple = newer.
+    /// Group 0: bare `<alias>` (no suffix).
+    /// Group 1: numeric suffix — `<alias>_v<N>` or `<alias>_<N>` — sorted by N.
+    /// Group 2: any other suffix — sorted lexicographically as a tiebreaker.
+    /// Exposed as internal so it can be exercised directly by tests.
+    /// </summary>
+    internal static (int Group, int Version, string Lex) VersionSortKey(string stem, string alias)
+    {
+        if (stem == alias)
+            return (0, 0, string.Empty);
+        // We only get here for stems that already matched the `<alias>_` filter,
+        // so the underscore is guaranteed to be at index alias.Length.
+        var suffix = stem.Substring(alias.Length + 1);
+        var m = _versionSuffix.Match(suffix);
+        if (m.Success && int.TryParse(m.Groups[1].Value, NumberStyles.None, CultureInfo.InvariantCulture, out var n))
+            return (1, n, string.Empty);
+        return (2, 0, suffix);
+    }
+
+    private static readonly Regex _versionSuffix = new(@"^v?(\d+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
     // -----------------------------------------------------------------------
     // Category-aware stdout summary

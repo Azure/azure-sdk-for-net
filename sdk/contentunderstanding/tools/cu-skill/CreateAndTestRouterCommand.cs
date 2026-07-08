@@ -262,55 +262,10 @@ internal static partial class CreateAndTestRouterCommand
 
     // -----------------------------------------------------------------------
     // Inner / outer wiring (filesystem-touching helpers stay here)
+    //
+    // DiscoverInnerFromDir now lives in CreateAndTestRouterCommand.Helpers.cs
+    // so it can be unit-tested (natural-version sort — invoice_v10 > v9).
     // -----------------------------------------------------------------------
-
-    private static Dictionary<string, string> DiscoverInnerFromDir(JsonObject outerSchema, string schemaDir)
-    {
-        if (!Directory.Exists(schemaDir))
-            throw new InvalidOperationException($"--schema-dir is not a directory: {schemaDir}");
-
-        var categories = (outerSchema["config"] as JsonObject)?["contentCategories"] as JsonObject ?? new JsonObject();
-        var aliases = new List<string>();
-        foreach (var (_, catEntry) in categories)
-        {
-            if (catEntry is not JsonObject entry) continue;
-            var alias = entry["analyzerId"]?.GetValue<string?>();
-            if (alias is null || alias.StartsWith("prebuilt-", StringComparison.Ordinal))
-                continue;
-            aliases.Add(alias);
-        }
-
-        var jsonFiles = Directory.EnumerateFiles(schemaDir, "*.json")
-            .OrderBy(p => p, StringComparer.Ordinal)
-            .ToList();
-
-        var resolved = new Dictionary<string, string>(StringComparer.Ordinal);
-        var missing = new List<string>();
-        foreach (var alias in aliases)
-        {
-            var matches = jsonFiles
-                .Where(p =>
-                {
-                    var stem = Path.GetFileNameWithoutExtension(p);
-                    return stem == alias || stem.StartsWith($"{alias}_", StringComparison.Ordinal);
-                })
-                .ToList();
-            if (matches.Count == 0)
-            {
-                missing.Add(alias);
-                continue;
-            }
-            resolved[alias] = matches[^1]; // alphabetically last = newest version
-        }
-
-        if (missing.Count > 0)
-        {
-            throw new InvalidOperationException(
-                $"--schema-dir could not resolve inner schemas for: [{string.Join(", ", missing)}]. " +
-                $"Looked in {schemaDir} for files named <alias>.json or <alias>_*.json.");
-        }
-        return resolved;
-    }
 
     private static (JsonObject? Outer, Dictionary<string, JsonObject> Inner, bool Failed)
         ValidateAll(string outerSchemaPath, Dictionary<string, string> innerPaths)
