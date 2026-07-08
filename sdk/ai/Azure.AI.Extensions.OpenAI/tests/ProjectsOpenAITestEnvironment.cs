@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Tests.Shared;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 
@@ -12,6 +13,11 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
+        public ProjectsOpenAITestEnvironment()
+        {
+            PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+        }
+
         public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string FOUNDRY_AGENT_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_AGENT_NAME), isSecret: false);
         public string FOUNDRY_MODEL_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_MODEL_NAME), isSecret: false);
@@ -69,7 +75,7 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 
         public override Dictionary<string, string> ParseEnvironmentFile()
         {
-            return new();
+            return AiTestEnvironmentBootstrap.ReadEnvironmentFile(null);
         }
 
         public override Task WaitForEnvironmentAsync()
