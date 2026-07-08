@@ -216,9 +216,19 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
 
     Write-Host "Validating codeowners for package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath)"
 
-    if (!$isPrCheck -and !$pkgProperties.ReleaseStatus) {
-        LogError "Package $($pkgProperties.Name) at $($pkgProperties.DirectoryPath) is missing a ReleaseStatus property."
-        $failedPackages += $pkgProperties.DirectoryPath
+    $hasReleaseStatus = $pkgProperties.PSObject.Properties['ReleaseStatus'] -and
+        ![string]::IsNullOrWhiteSpace([string]$pkgProperties.ReleaseStatus)
+
+    if (!$isPrCheck -and !$hasReleaseStatus) {
+        $responseError = "Package $($pkgProperties.Name) at $($pkgProperties.DirectoryPath) is missing a ReleaseStatus property."
+        LogError $responseError
+        $failedPackages += [PSCustomObject]@{
+            Name = $pkgProperties.Name
+            DirectoryPath = $pkgProperties.DirectoryPath
+            ResponseError = $responseError
+            Issues = @()
+            HasParsedResponse = $false
+        }
         continue
     }
 
