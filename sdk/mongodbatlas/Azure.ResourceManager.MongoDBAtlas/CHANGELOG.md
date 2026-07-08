@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2026-07-12)
 
 ### Features Added
 
@@ -18,10 +18,6 @@
 - Renamed property `Backups` to `IsBackupsEnabled` in `MongoDBAtlasClusterProperties`.
 - Renamed property `FREE` to `Free` in `MongoDBAtlasClusterTier`.
 - Renamed property `FLEX` to `Flex` in `MongoDBAtlasClusterTier`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.1 (2026-04-28)
 
