@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("vpnGatewayScaleUnit"u8);
                 writer.WriteNumberValue(VpnGatewayScaleUnit.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpConfigurations))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (VpnGatewayIPConfiguration item in IpConfigurations)
+                foreach (VpnGatewayIPConfiguration item in IPConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }

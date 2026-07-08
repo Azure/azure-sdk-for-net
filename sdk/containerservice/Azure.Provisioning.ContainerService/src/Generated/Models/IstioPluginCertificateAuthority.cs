@@ -109,6 +109,10 @@ namespace Azure.Provisioning.ContainerService
             _keyObjectName = DefineProperty<string>(nameof(KeyObjectName), new string[] { "keyObjectName" });
             _rootCertObjectName = DefineProperty<string>(nameof(RootCertObjectName), new string[] { "rootCertObjectName" });
             _certChainObjectName = DefineProperty<string>(nameof(CertChainObjectName), new string[] { "certChainObjectName" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for IstioPluginCertificateAuthority that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

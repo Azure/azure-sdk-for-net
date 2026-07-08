@@ -425,6 +425,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="deploymentScope"> DeploymentScope type for HostPool. </param>
         /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
         /// <param name="allowRdpShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
+        /// <param name="conditionalRdpProperty"> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
@@ -432,7 +433,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
-        public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationManagementType? managementType = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, string oboTenantId = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
+        public static HostPoolData HostPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string objectId = default, string friendlyName = default, string description = default, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, string customRdpProperty = default, int? maxSessionLimit = default, HostPoolLoadBalancerType loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfo registrationInfo = default, string vmTemplate = default, IEnumerable<string> applicationGroupReferences = default, IEnumerable<string> appAttachPackageReferences = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = default, bool? isCloudPCResource = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdateProperties agentUpdate = default, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationManagementType? managementType = default, DesktopVirtualizationDeploymentScope? deploymentScope = default, string oboTenantId = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, string conditionalRdpProperty = default, ManagedServiceIdentity identity = default, ETag? eTag = default, string kind = default, ResourceIdentifier managedBy = default, ArmPlan plan = default, DesktopVirtualizationSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -465,6 +466,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     startVmOnConnect,
                     isCloudPCResource,
+                    default,
                     default,
                     default,
                     default,
@@ -572,9 +574,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="publicUdp"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
         /// <param name="relayUdp"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
         /// <param name="allowRdpShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
+        /// <param name="conditionalRdpProperty"> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.HostPoolPatch"/> instance for mocking. </returns>
-        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string friendlyName = default, string description = default, string customRdpProperty = default, int? maxSessionLimit = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, HostPoolLoadBalancerType? loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfoPatch registrationInfo = default, string vmTemplate = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType? preferredAppGroupType = default, bool? startVmOnConnect = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdatePatchProperties agentUpdate = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, ManagedServiceIdentity identity = default)
+        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, string friendlyName = default, string description = default, string customRdpProperty = default, int? maxSessionLimit = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = default, HostPoolLoadBalancerType? loadBalancerType = default, int? ring = default, bool? isValidationEnvironment = default, HostPoolRegistrationInfoPatch registrationInfo = default, string vmTemplate = default, string ssoAdfsAuthority = default, string ssoClientId = default, string ssoClientSecretKeyVaultPath = default, HostPoolSsoSecretType? ssoSecretType = default, PreferredAppGroupType? preferredAppGroupType = default, bool? startVmOnConnect = default, HostPoolPublicNetworkAccess? publicNetworkAccess = default, SessionHostAgentUpdatePatchProperties agentUpdate = default, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp = default, DesktopVirtualizationDirectUdp? directUdp = default, DesktopVirtualizationPublicUdp? publicUdp = default, DesktopVirtualizationRelayUdp? relayUdp = default, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink = default, string conditionalRdpProperty = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -584,7 +587,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                friendlyName is null && description is null && customRdpProperty is null && maxSessionLimit is null && personalDesktopAssignmentType is null && loadBalancerType is null && ring is null && isValidationEnvironment is null && registrationInfo is null && vmTemplate is null && ssoAdfsAuthority is null && ssoClientId is null && ssoClientSecretKeyVaultPath is null && ssoSecretType is null && preferredAppGroupType is null && startVmOnConnect is null && publicNetworkAccess is null && agentUpdate is null && managedPrivateUdp is null && directUdp is null && publicUdp is null && relayUdp is null && allowRdpShortPathWithPrivateLink is null ? default : new HostPoolPatchProperties(
+                friendlyName is null && description is null && customRdpProperty is null && maxSessionLimit is null && personalDesktopAssignmentType is null && loadBalancerType is null && ring is null && isValidationEnvironment is null && registrationInfo is null && vmTemplate is null && ssoAdfsAuthority is null && ssoClientId is null && ssoClientSecretKeyVaultPath is null && ssoSecretType is null && preferredAppGroupType is null && startVmOnConnect is null && publicNetworkAccess is null && agentUpdate is null && managedPrivateUdp is null && directUdp is null && publicUdp is null && relayUdp is null && allowRdpShortPathWithPrivateLink is null && conditionalRdpProperty is null ? default : new HostPoolPatchProperties(
                     friendlyName,
                     description,
                     customRdpProperty,
@@ -608,6 +611,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     publicUdp,
                     relayUdp,
                     allowRdpShortPathWithPrivateLink,
+                    conditionalRdpProperty,
                     default),
                 identity,
                 default);
@@ -1379,11 +1383,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="type"> The security type used by virtual machine in hostpool session host. Default is Standard. </param>
         /// <param name="isSecureBootEnabled"> Whether to use secureBoot on the virtual machine. </param>
-        /// <param name="vTpmEnabled"> Whether to use vTpm on the virtual machine. </param>
+        /// <param name="isVTpmEnabled"> Whether to use vTpm on the virtual machine. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationSecurityInfoProperties"/> instance for mocking. </returns>
-        public static DesktopVirtualizationSecurityInfoProperties DesktopVirtualizationSecurityInfoProperties(DesktopVirtualizationVirtualMachineSecurityType? @type = default, bool? isSecureBootEnabled = default, bool? vTpmEnabled = default)
+        public static DesktopVirtualizationSecurityInfoProperties DesktopVirtualizationSecurityInfoProperties(DesktopVirtualizationVirtualMachineSecurityType? @type = default, bool? isSecureBootEnabled = default, bool? isVTpmEnabled = default)
         {
-            return new DesktopVirtualizationSecurityInfoProperties(@type, isSecureBootEnabled, vTpmEnabled, default);
+            return new DesktopVirtualizationSecurityInfoProperties(@type, isSecureBootEnabled, isVTpmEnabled, default);
         }
 
         /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
@@ -1646,11 +1650,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <param name="type"> The security type used by virtual machine in hostpool session host. Default is Standard. </param>
         /// <param name="isSecureBootEnabled"> Whether to use secureBoot on the virtual machine. </param>
-        /// <param name="vTpmEnabled"> Whether to use vTpm on the virtual machine. </param>
+        /// <param name="isVTpmEnabled"> Whether to use vTpm on the virtual machine. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationSecurityInfoPatchProperties"/> instance for mocking. </returns>
-        public static DesktopVirtualizationSecurityInfoPatchProperties DesktopVirtualizationSecurityInfoPatchProperties(DesktopVirtualizationVirtualMachineSecurityType? @type = default, bool? isSecureBootEnabled = default, bool? vTpmEnabled = default)
+        public static DesktopVirtualizationSecurityInfoPatchProperties DesktopVirtualizationSecurityInfoPatchProperties(DesktopVirtualizationVirtualMachineSecurityType? @type = default, bool? isSecureBootEnabled = default, bool? isVTpmEnabled = default)
         {
-            return new DesktopVirtualizationSecurityInfoPatchProperties(@type, isSecureBootEnabled, vTpmEnabled, default);
+            return new DesktopVirtualizationSecurityInfoPatchProperties(@type, isSecureBootEnabled, isVTpmEnabled, default);
         }
 
         /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
@@ -2153,6 +2157,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 identity,
                 etag,
@@ -2216,6 +2221,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     startVmOnConnect,
                     publicNetworkAccess,
                     agentUpdate,
+                    default,
                     default,
                     default,
                     default,
@@ -2403,6 +2409,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 identity,
                 etag,
@@ -2464,6 +2471,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     startVmOnConnect,
                     default,
                     agentUpdate,
+                    default,
                     default,
                     default,
                     default,
@@ -2666,6 +2674,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     publicNetworkAccess,
                     agentUpdate,
                     (privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>()).ToList(),
+                    default,
                     default,
                     default,
                     default,

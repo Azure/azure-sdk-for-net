@@ -34,7 +34,7 @@ AIProjectClient projectClient = new(endpoint: new(projectEndpoint), tokenProvide
 2. For brevity we will create the method, returning the `CreateAgentVersionFromCodeMetadata` object.
 
 ```C# Snippet:Sample_CodeAgentMetadata_CodeAgent
-private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
+private static AgentVersionFromCodeMetadata GetAgentMetadata()
 {
     HostedAgentDefinition agentDefinition = new(
         cpu: "0.5",
@@ -48,7 +48,7 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
             dependencyResolution: CodeDependencyResolution.RemoteBuild
         ),
     };
-    CreateAgentVersionFromCodeMetadata metadata = new(agentDefinition);
+    AgentVersionFromCodeMetadata metadata = new(agentDefinition);
     metadata.Metadata["enableVnextExperience"] = "true";
     return metadata;
 }

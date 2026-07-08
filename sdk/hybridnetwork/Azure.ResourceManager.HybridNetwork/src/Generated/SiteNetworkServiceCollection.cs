@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HybridNetworkArmOperation<SiteNetworkServiceResource> operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(
-                    new SiteNetworkServiceOperationSource(Client),
+                    new SiteNetworkServiceResourceOperationSource(Client),
                     _siteNetworkServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HybridNetworkArmOperation<SiteNetworkServiceResource> operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(
-                    new SiteNetworkServiceOperationSource(Client),
+                    new SiteNetworkServiceResourceOperationSource(Client),
                     _siteNetworkServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

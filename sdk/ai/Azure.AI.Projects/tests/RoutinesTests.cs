@@ -17,6 +17,13 @@ public class RoutinesTests : ProjectsClientTestBase
     public static readonly string HOSTED_AGENT_PREFIX = "cs-routines-hosted-agent";
     public static readonly string ROUTINE_NAME_PREFIX = "cs-routines";
     private static readonly  int PAGE_SIZE = 3;
+
+    public enum TriggerType
+    {
+        Schedule,
+        Timer,
+        ManualDispatch
+    }
     public RoutinesTests(bool isAsync) : base(isAsync)
     {
     }
@@ -26,7 +33,7 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        RoutineAction action = new AgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name
         };
@@ -41,36 +48,36 @@ public class RoutinesTests : ProjectsClientTestBase
         {
             EventName = "sample-event"
         });
-        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
-            routineName: routineName,
+        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateAsync(
+            name: routineName,
             options: routineOptions);
         Assert.That(created.Name, Is.EqualTo(routineName));
-        Assert.That(created.Enabled, Is.True);
+        Assert.That(created.IsEnabled, Is.True);
         Assert.That(created.Description, Is.EqualTo("Routine created by unit test."));
 
-        ProjectsRoutine disabled = await projectClient.Routines.DisableRoutineAsync(routineName);
+        ProjectsRoutine disabled = await projectClient.Routines.DisableAsync(routineName);
         Assert.That(disabled.Name, Is.EqualTo(routineName));
-        Assert.That(disabled.Enabled, Is.False);
+        Assert.That(disabled.IsEnabled, Is.False);
 
-        ProjectsRoutine fetched = await projectClient.Routines.GetRoutineAsync(routineName);
+        ProjectsRoutine fetched = await projectClient.Routines.GetAsync(routineName);
         Assert.That(fetched.Name, Is.EqualTo(routineName));
-        Assert.That(fetched.Enabled, Is.False);
+        Assert.That(fetched.IsEnabled, Is.False);
 
-        ProjectsRoutine enabled = await projectClient.Routines.EnableRoutineAsync(routineName);
+        ProjectsRoutine enabled = await projectClient.Routines.EnableAsync(routineName);
         Assert.That(enabled.Name, Is.EqualTo(routineName));
-        Assert.That(enabled.Enabled, Is.True);
+        Assert.That(enabled.IsEnabled, Is.True);
 
         List<string> routineNames = await projectClient.Routines.GetRoutinesAsync().Where(x => string.Equals(x.Name, routineName)).Select(x => x.Name).ToListAsync();
         Assert.That(routineNames, Has.Count.EqualTo(1));
         Assert.That(routineNames[0], Is.EqualTo(routineName));
         //InvokeAgentResponsesApiDispatchPayload
 
-        DispatchRoutineResponse response = await projectClient.Routines.DispatchAsyncRoutineAsync(routineName, new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, tell me a joke")));
+        DispatchRoutineResult response = await projectClient.Routines.DispatchAsync(routineName, new AgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, tell me a joke")));
         Assert.That(response.DispatchId, Is.Not.Null);
         Assert.That(response.TaskId, Is.Not.Null);
         Assert.That(response.ActionCorrelationId, Is.Not.Null);
 
-        await projectClient.Routines.DeleteRoutineAsync(routineName);
+        await projectClient.Routines.DeleteAsync(routineName);
         List<ProjectsRoutine> routines = await projectClient.Routines.GetRoutinesAsync().Where(x => string.Equals(x.Name, routineName)).ToListAsync();
         Assert.That(routines, Has.Count.EqualTo(0));
     }
@@ -80,7 +87,7 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        RoutineAction action = new AgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name
         };
@@ -97,8 +104,8 @@ public class RoutinesTests : ProjectsClientTestBase
         {
             ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: false);
             routineOptions.Triggers.Add("manual", trigger);
-            await projectClient.Routines.CreateOrUpdateRoutineAsync(
-                routineName: $"{ROUTINE_NAME_PREFIX}-{i}",
+            await projectClient.Routines.CreateOrUpdateAsync(
+                name: $"{ROUTINE_NAME_PREFIX}-{i}",
                 options: routineOptions);
         }
         List<ProjectsRoutine> records = await projectClient.Routines.GetRoutinesAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
@@ -128,29 +135,30 @@ public class RoutinesTests : ProjectsClientTestBase
         //Assert.That(backwards[1].Name, Is.EqualTo(records[records.Count - 3].Name));
     }
 
-    [TestCase(true)]
-    [TestCase(false)]
+    [TestCase(TriggerType.Timer)]
+    [TestCase(TriggerType.Schedule)]
+    [TestCase(TriggerType.ManualDispatch)]
     [RecordedTest]
-    public async Task TestRoutineE2E(bool isScheduledTask)
+    public async Task TestRoutineE2E(TriggerType triggerType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        RoutineTrigger trigger;
-        if (isScheduledTask)
+        RoutineTrigger trigger = null;
+        if (triggerType == TriggerType.Schedule)
         {
             trigger = new ScheduleRoutineTrigger(
                 cronExpression: "*/5 * * * *",
                 timeZone: "UTC"
             );
         }
-        else
+        else if (triggerType == TriggerType.Timer)
         {
             if (Mode == RecordedTestMode.Playback)
             {
                 // Take the actual time from the recording file.
                 trigger = new TimerRoutineTrigger()
                 {
-                    At = IsAsync ? DateTimeOffset.FromUnixTimeSeconds(1781550024) : DateTimeOffset.FromUnixTimeSeconds(1781549955)
+                    At = IsAsync ? DateTimeOffset.FromUnixTimeSeconds(1782159722) : DateTimeOffset.FromUnixTimeSeconds(1782159326)
                 };
             }
             else
@@ -161,7 +169,15 @@ public class RoutinesTests : ProjectsClientTestBase
                 };
             }
         }
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        else if (triggerType == TriggerType.ManualDispatch)
+        {
+            trigger = new CustomRoutineTrigger(provider: "manual", parameters: new Dictionary<string, BinaryData>());
+        }
+        else
+        {
+            Assert.Fail($"Unsupported trigger type {triggerType}");
+        }
+        RoutineAction action = new AgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name,
             Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
@@ -169,16 +185,21 @@ public class RoutinesTests : ProjectsClientTestBase
         string routineName = $"{ROUTINE_NAME_PREFIX}-0";
         ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: true);
         routineOptions.Triggers.Add("test", trigger);
-        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
-            routineName: routineName,
+        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateAsync(
+            name: routineName,
             options: routineOptions);
+        if (triggerType == TriggerType.ManualDispatch)
+        {
+            DispatchRoutineResult dispatch = await projectClient.Routines.DispatchAsync(name: created.Name, payload: new AgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, Tell me a joke.")));
+            Assert.That(dispatch.TaskId, Is.Not.Null.And.Not.Empty);
+        }
         int minutesWait = 10;
         DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
         RoutineRun completedRun = null;
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
             {
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
@@ -192,6 +213,13 @@ public class RoutinesTests : ProjectsClientTestBase
                 break;
             }
         }
+        // Getting responses is blocked by ADO work item 5375594.
+        // ProjectResponsesClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+        //     apiVersion: "v1"
+        // );
+        // responsesOptions.AgentName = agentVersion.Name;
+        // ProjectResponsesClient oaiClient = CreateProxyFromClient(openAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: responsesOptions));
+        // ResponseResult result = oaiClient.GetResponse(new GetResponseOptions(responseId: completedRun.ResponseId));
         Assert.That(completedRun, Is.Not.Null, $"The run did not complete within {minutesWait} minutes.");
         Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("killed"), "The run was forcefully stopped.");
         Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("failed"), $"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");
@@ -208,7 +236,7 @@ public class RoutinesTests : ProjectsClientTestBase
             cronExpression: "*/5 * * * *",
             timeZone: "UTC"
         );
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        RoutineAction action = new AgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name,
             Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
@@ -216,8 +244,8 @@ public class RoutinesTests : ProjectsClientTestBase
         string routineName = $"{ROUTINE_NAME_PREFIX}-0";
         ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: true);
         routineOptions.Triggers.Add("test", trigger);
-        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
-            routineName: routineName,
+        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateAsync(
+            name: routineName,
             options: routineOptions);
         int minutesWait = 20;
         DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: minutesWait, seconds: 0);
@@ -225,19 +253,19 @@ public class RoutinesTests : ProjectsClientTestBase
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
+            runs = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name).ToListAsync();
             if (runs.Count > PAGE_SIZE)
             {
                 // When we have generated enough run, disable the routine and check pahgination.
-                await projectClient.Routines.DisableRoutineAsync(routineName: created.Name);
+                await projectClient.Routines.DisableAsync(name: created.Name);
                 // Make sure, we have all the runs after the routine was disabled.
-                runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
+                runs = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name).ToListAsync();
                 break;
             }
         }
         Assert.That(runs, Has.Count.GreaterThan(PAGE_SIZE));
         // We cannot know, how many runs we have generated, so we set the new baseline here.
-        List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
+        List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Blocked by the ADO item 5337751
         // Go forward.
@@ -302,7 +330,7 @@ public class RoutinesTests : ProjectsClientTestBase
         List<string> routines = await projectClient.Routines.GetRoutinesAsync().Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).Select(x => x.Name).ToListAsync();
         foreach (string routineName in routines)
         {
-            await projectClient.Routines.DeleteRoutineAsync(routineName);
+            await projectClient.Routines.DeleteAsync(routineName);
         }
         // Remove Agents.
         // This part is commented out because the hosted Agent needs to be assigned "Foundry user" RBAC role and should be reused.

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceConfigurationPropertiesFormat"/>. </summary>
         public ContainerNetworkInterfaceConfigurationPropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<NetworkIPConfigurationProfile>();
+            IPConfigurations = new ChangeTrackingList<NetworkIPConfigurationProfile>();
             ContainerNetworkInterfaces = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerNetworkInterfaceConfigurationPropertiesFormat(IList<NetworkIPConfigurationProfile> ipConfigurations, IList<WritableSubResource> containerNetworkInterfaces, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of ip configurations of the container network interface configuration. </summary>
         [WirePath("ipConfigurations")]
-        public IList<NetworkIPConfigurationProfile> IpConfigurations { get; } = new ChangeTrackingList<NetworkIPConfigurationProfile>();
+        public IList<NetworkIPConfigurationProfile> IPConfigurations { get; } = new ChangeTrackingList<NetworkIPConfigurationProfile>();
 
         /// <summary> A list of container network interfaces created from this container network interface configuration. </summary>
         [WirePath("containerNetworkInterfaces")]

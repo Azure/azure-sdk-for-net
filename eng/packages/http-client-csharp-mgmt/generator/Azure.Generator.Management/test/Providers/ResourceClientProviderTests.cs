@@ -44,12 +44,35 @@ namespace Azure.Generator.Management.Tests.Providers
             var content = new TypeProviderWriter(attributeProvider!).Write().Content;
             Assert.That(content, Does.Contain("internal partial class CodeGenResourceDataAttribute : global::System.Attribute"));
             Assert.That(content, Does.Contain("public CodeGenResourceDataAttribute(global::System.Type dataType)"));
+            Assert.That(content, Does.Contain("public global::System.Type DataType"));
 
             var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
                 "CustomCodeAttributeProviders",
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
                 .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
             Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenResourceDataAttribute"), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_CodeGenTagPatchHookAttributeIsEmitted()
+        {
+            var (_, models) = InputResourceData.ClientWithResource();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models);
+
+            var attributeProvider = plugin.Object.OutputLibrary.TypeProviders
+                .FirstOrDefault(p => p.Name == "CodeGenTagPatchHookAttribute");
+
+            Assert.That(attributeProvider, Is.Not.Null);
+            var content = new TypeProviderWriter(attributeProvider!).Write().Content;
+            Assert.That(content, Does.Contain("internal partial class CodeGenTagPatchHookAttribute : global::System.Attribute"));
+            Assert.That(content, Does.Contain("public CodeGenTagPatchHookAttribute(string methodName)"));
+            Assert.That(content, Does.Contain("public string MethodName"));
+
+            var customCodeAttributeProviders = typeof(CodeModelGenerator).GetProperty(
+                "CustomCodeAttributeProviders",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!
+                .GetValue(plugin.Object) as IReadOnlyList<TypeProvider>;
+            Assert.That(customCodeAttributeProviders!.Any(p => p.Name == "CodeGenTagPatchHookAttribute"), Is.True);
         }
 
         [TestCase]

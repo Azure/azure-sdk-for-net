@@ -90,6 +90,10 @@ namespace Azure.Provisioning.Batch
             _nfsMountConfiguration = DefineModelProperty<BatchNfsMountConfiguration>(nameof(NfsMountConfiguration), new string[] { "nfsMountConfiguration" });
             _cifsMountConfiguration = DefineModelProperty<BatchCifsMountConfiguration>(nameof(CifsMountConfiguration), new string[] { "cifsMountConfiguration" });
             _fileShareConfiguration = DefineModelProperty<BatchFileShareConfiguration>(nameof(FileShareConfiguration), new string[] { "azureFileShareConfiguration" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchMountConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

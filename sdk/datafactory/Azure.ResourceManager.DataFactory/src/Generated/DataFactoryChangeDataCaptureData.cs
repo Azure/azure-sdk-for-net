@@ -7,19 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    /// <summary>
-    /// A class representing the DataFactoryChangeDataCapture data model.
-    /// Change data capture resource type.
-    /// </summary>
+    /// <summary> Change data capture resource type. </summary>
     public partial class DataFactoryChangeDataCaptureData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/>. </summary>
         /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
         /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
@@ -31,102 +31,140 @@ namespace Azure.ResourceManager.DataFactory
             Argument.AssertNotNull(targetConnectionsInfo, nameof(targetConnectionsInfo));
             Argument.AssertNotNull(policy, nameof(policy));
 
-            SourceConnectionsInfo = sourceConnectionsInfo.ToList();
-            TargetConnectionsInfo = targetConnectionsInfo.ToList();
-            Policy = policy;
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            Properties = new Models.ChangeDataCapture(sourceConnectionsInfo, targetConnectionsInfo, policy);
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="folder"> The folder that this CDC is in. If not specified, CDC will appear at the root level. </param>
-        /// <param name="description"> The description of the change data capture. </param>
-        /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
-        /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
-        /// <param name="policy"> CDC policy. </param>
-        /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
-        /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryChangeDataCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChangeDataCaptureFolder folder, string description, IList<MapperSourceConnectionsInfo> sourceConnectionsInfo, IList<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy, bool? allowVnetOverride, string status, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the change data capture. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="additionalProperties"></param>
+        internal DataFactoryChangeDataCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.ChangeDataCapture properties, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
-            Folder = folder;
-            Description = description;
-            SourceConnectionsInfo = sourceConnectionsInfo;
-            TargetConnectionsInfo = targetConnectionsInfo;
-            Policy = policy;
-            AllowVnetOverride = allowVnetOverride;
-            Status = status;
+            Properties = properties;
             ETag = eTag;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/> for deserialization. </summary>
-        internal DataFactoryChangeDataCaptureData()
-        {
-        }
+        /// <summary> Properties of the change data capture. </summary>
+        internal Models.ChangeDataCapture Properties { get; set; }
 
-        /// <summary> The folder that this CDC is in. If not specified, CDC will appear at the root level. </summary>
-        internal ChangeDataCaptureFolder Folder { get; set; }
-        /// <summary> The name of the folder that this CDC is in. </summary>
-        public string FolderName
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
+        public ETag? ETag { get; }
+
+        /// <summary> The description of the change data capture. </summary>
+        public string Description
         {
-            get => Folder is null ? default : Folder.Name;
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
             set
             {
-                if (Folder is null)
-                    Folder = new ChangeDataCaptureFolder();
-                Folder.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new Models.ChangeDataCapture();
+                }
+                Properties.Description = value;
             }
         }
 
-        /// <summary> The description of the change data capture. </summary>
-        public string Description { get; set; }
         /// <summary> List of sources connections that can be used as sources in the CDC. </summary>
-        public IList<MapperSourceConnectionsInfo> SourceConnectionsInfo { get; }
+        public IList<MapperSourceConnectionsInfo> SourceConnectionsInfo
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.ChangeDataCapture();
+                }
+                return Properties.SourceConnectionsInfo;
+            }
+        }
+
         /// <summary> List of target connections that can be used as sources in the CDC. </summary>
-        public IList<MapperTargetConnectionsInfo> TargetConnectionsInfo { get; }
+        public IList<MapperTargetConnectionsInfo> TargetConnectionsInfo
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.ChangeDataCapture();
+                }
+                return Properties.TargetConnectionsInfo;
+            }
+        }
+
         /// <summary> CDC policy. </summary>
-        public MapperPolicy Policy { get; set; }
+        public MapperPolicy Policy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Policy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.ChangeDataCapture();
+                }
+                Properties.Policy = value;
+            }
+        }
+
         /// <summary> A boolean to determine if the vnet configuration needs to be overwritten. </summary>
-        public bool? AllowVnetOverride { get; set; }
+        public bool? AllowVnetOverride
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowVnetOverride;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.ChangeDataCapture();
+                }
+                Properties.AllowVnetOverride = value;
+            }
+        }
+
         /// <summary> Status of the CDC as to if it is running or stopped. </summary>
-        public string Status { get; set; }
-        /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.ChangeDataCapture();
+                }
+                Properties.Status = value;
+            }
+        }
+
+        /// <summary> The name of the folder that this CDC is in. </summary>
+        public string FolderName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FolderName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new Models.ChangeDataCapture();
+                }
+                Properties.FolderName = value;
+            }
+        }
     }
 }

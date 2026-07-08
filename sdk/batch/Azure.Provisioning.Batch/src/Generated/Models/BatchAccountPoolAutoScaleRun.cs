@@ -76,6 +76,10 @@ namespace Azure.Provisioning.Batch
             _evaluationOn = DefineProperty<DateTimeOffset>(nameof(EvaluationOn), new string[] { "evaluationTime" }, isRequired: true);
             _results = DefineProperty<string>(nameof(Results), new string[] { "results" });
             _error = DefineProperty<ResponseError>(nameof(Error), new string[] { "error" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchAccountPoolAutoScaleRun that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

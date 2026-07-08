@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
         /// <summary> Any. </summary>
         private const string AnyValue = "Any";
         /// <summary> ICMP. </summary>
-        private const string ICMPValue = "ICMP";
+        private const string IcmpValue = "ICMP";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleNetworkProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> TCP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol TCP { get; } = new FirewallPolicyRuleNetworkProtocol(TCPValue);
+        public static FirewallPolicyRuleNetworkProtocol Tcp { get; } = new FirewallPolicyRuleNetworkProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol UDP { get; } = new FirewallPolicyRuleNetworkProtocol(UDPValue);
+        public static FirewallPolicyRuleNetworkProtocol Udp { get; } = new FirewallPolicyRuleNetworkProtocol(UdpValue);
 
         /// <summary> Any. </summary>
         public static FirewallPolicyRuleNetworkProtocol Any { get; } = new FirewallPolicyRuleNetworkProtocol(AnyValue);
 
         /// <summary> ICMP. </summary>
-        public static FirewallPolicyRuleNetworkProtocol ICMP { get; } = new FirewallPolicyRuleNetworkProtocol(ICMPValue);
+        public static FirewallPolicyRuleNetworkProtocol Icmp { get; } = new FirewallPolicyRuleNetworkProtocol(IcmpValue);
 
         /// <summary> Determines if two <see cref="FirewallPolicyRuleNetworkProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

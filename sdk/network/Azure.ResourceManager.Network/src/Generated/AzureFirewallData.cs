@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> IP configuration of the Azure Firewall resource. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<AzureFirewallIPConfiguration> IpConfigurations
+        public IList<AzureFirewallIPConfiguration> IPConfigurations
         {
             get
             {
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new AzureFirewallPropertiesFormat();
                 }
-                return Properties.IpConfigurations;
+                return Properties.IPConfigurations;
             }
         }
 
         /// <summary> IP configuration of the Azure Firewall used for management traffic. </summary>
         [WirePath("properties.managementIpConfiguration")]
-        public AzureFirewallIPConfiguration ManagementIpConfiguration
+        public AzureFirewallIPConfiguration ManagementIPConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.ManagementIpConfiguration;
+                return Properties is null ? default : Properties.ManagementIPConfiguration;
             }
             set
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new AzureFirewallPropertiesFormat();
                 }
-                Properties.ManagementIpConfiguration = value;
+                Properties.ManagementIPConfiguration = value;
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> IpGroups associated with AzureFirewall. </summary>
         [WirePath("properties.ipGroups")]
-        public IReadOnlyList<AzureFirewallIPGroups> IpGroups
+        public IReadOnlyList<AzureFirewallIPGroups> IPGroups
         {
             get
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new AzureFirewallPropertiesFormat();
                 }
-                return Properties.IpGroups;
+                return Properties.IPGroups;
             }
         }
 

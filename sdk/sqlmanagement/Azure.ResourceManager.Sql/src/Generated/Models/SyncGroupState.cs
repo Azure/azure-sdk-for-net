@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SyncGroupState : IEquatable<SyncGroupState>
     {
         private readonly string _value;
+        /// <summary> NotReady. </summary>
+        private const string NotReadyValue = "NotReady";
+        /// <summary> Error. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Progressing. </summary>
+        private const string ProgressingValue = "Progressing";
+        /// <summary> Good. </summary>
+        private const string GoodValue = "Good";
 
         /// <summary> Initializes a new instance of <see cref="SyncGroupState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SyncGroupState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotReadyValue = "NotReady";
-        private const string ErrorValue = "Error";
-        private const string WarningValue = "Warning";
-        private const string ProgressingValue = "Progressing";
-        private const string GoodValue = "Good";
+            _value = value;
+        }
 
         /// <summary> NotReady. </summary>
         public static SyncGroupState NotReady { get; } = new SyncGroupState(NotReadyValue);
+
         /// <summary> Error. </summary>
         public static SyncGroupState Error { get; } = new SyncGroupState(ErrorValue);
+
         /// <summary> Warning. </summary>
         public static SyncGroupState Warning { get; } = new SyncGroupState(WarningValue);
+
         /// <summary> Progressing. </summary>
         public static SyncGroupState Progressing { get; } = new SyncGroupState(ProgressingValue);
+
         /// <summary> Good. </summary>
         public static SyncGroupState Good { get; } = new SyncGroupState(GoodValue);
+
         /// <summary> Determines if two <see cref="SyncGroupState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SyncGroupState left, SyncGroupState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SyncGroupState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SyncGroupState left, SyncGroupState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncGroupState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SyncGroupState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SyncGroupState(string value) => new SyncGroupState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SyncGroupState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SyncGroupState?(string value) => value == null ? null : new SyncGroupState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SyncGroupState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SyncGroupState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

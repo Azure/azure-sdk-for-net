@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceIpGroups))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
-                foreach (string item in SourceIpGroups)
+                foreach (string item in SourceIPGroups)
                 {
                     if (item == null)
                     {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<AzureFirewallApplicationRuleProtocol> protocols = default;
             IList<string> targetFqdns = default;
             IList<string> fqdnTags = default;
-            IList<string> sourceIpGroups = default;
+            IList<string> sourceIPGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    sourceIpGroups = array;
+                    sourceIPGroups = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network.Models
                 protocols ?? new ChangeTrackingList<AzureFirewallApplicationRuleProtocol>(),
                 targetFqdns ?? new ChangeTrackingList<string>(),
                 fqdnTags ?? new ChangeTrackingList<string>(),
-                sourceIpGroups ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

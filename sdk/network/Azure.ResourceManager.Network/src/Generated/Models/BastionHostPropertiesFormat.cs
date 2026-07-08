@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormat"/>. </summary>
         public BastionHostPropertiesFormat()
         {
-            IpConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
+            IPConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BastionHostPropertiesFormat"/>. </summary>
@@ -33,16 +33,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
         /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
         /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
-        /// <param name="enableIpConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
+        /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
         /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
         /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
         /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BastionHostPropertiesFormat(IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIpConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BastionHostPropertiesFormat(IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             DnsName = dnsName;
             VirtualNetwork = virtualNetwork;
             NetworkAcls = networkAcls;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             ScaleUnits = scaleUnits;
             DisableCopyPaste = disableCopyPaste;
             EnableFileCopy = enableFileCopy;
-            EnableIpConnect = enableIpConnect;
+            EnableIPConnect = enableIPConnect;
             EnableShareableLink = enableShareableLink;
             EnableTunneling = enableTunneling;
             EnableKerberos = enableKerberos;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> IP configuration of the Bastion Host resource. </summary>
         [WirePath("ipConfigurations")]
-        public IList<BastionHostIPConfiguration> IpConfigurations { get; } = new ChangeTrackingList<BastionHostIPConfiguration>();
+        public IList<BastionHostIPConfiguration> IPConfigurations { get; } = new ChangeTrackingList<BastionHostIPConfiguration>();
 
         /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
         [WirePath("dnsName")]
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Enable/Disable IP Connect feature of the Bastion Host resource. </summary>
         [WirePath("enableIpConnect")]
-        public bool? EnableIpConnect { get; set; }
+        public bool? EnableIPConnect { get; set; }
 
         /// <summary> Enable/Disable Shareable Link of the Bastion Host resource. </summary>
         [WirePath("enableShareableLink")]
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
         [WirePath("networkAcls.ipRules")]
-        public IList<BastionHostIPRule> NetworkAclsIpRules
+        public IList<BastionHostIPRule> NetworkAclsIPRules
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     NetworkAcls = new BastionHostPropertiesFormatNetworkAcls();
                 }
-                return NetworkAcls.IpRules;
+                return NetworkAcls.IPRules;
             }
         }
     }

@@ -95,9 +95,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult PatchAgentObject(string agentName, BinaryContent content, RequestOptions options = null)
+        internal virtual ClientResult PatchAgent(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, options);
+            using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -114,9 +114,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> PatchAgentObjectAsync(string agentName, BinaryContent content, RequestOptions options = null)
+        internal virtual async Task<ClientResult> PatchAgentAsync(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreatePatchAgentObjectRequest(agentName, content, options);
+            using PipelineMessage message = CreatePatchAgentRequest(agentName, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -481,7 +481,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
-        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// enforces session ownership using the provided user identity for session-mutating operations.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -490,20 +490,19 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateSession(string agentName, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        internal virtual ClientResult CreateSession(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, userIsolationKey, options);
+            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
         /// [Protocol Method] Creates a new session for an agent endpoint.
         /// The endpoint resolves the backing agent version from `version_indicator` and
-        /// enforces session ownership using the provided isolation key for session-mutating operations.
+        /// enforces session ownership using the provided user identity for session-mutating operations.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -512,13 +511,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent to create a session for. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, BinaryContent content, string userIsolationKey = default, RequestOptions options = null)
+        internal virtual async Task<ClientResult> CreateSessionAsync(string agentName, BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, userIsolationKey, options);
+            using PipelineMessage message = CreateCreateSessionRequest(agentName, content, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -532,13 +530,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetSession(string agentName, string sessionId, string userIsolationKey, RequestOptions options)
+        internal virtual ClientResult GetSession(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, userIsolationKey, options);
+            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -552,13 +549,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<ClientResult> GetSessionAsync(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, userIsolationKey, options);
+            using PipelineMessage message = CreateGetSessionRequest(agentName, sessionId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -573,13 +569,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult DeleteSession(string agentName, string sessionId, string userIsolationKey, RequestOptions options)
+        internal virtual ClientResult DeleteSession(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, userIsolationKey, options);
+            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -594,13 +589,12 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="agentName"> The name of the agent. </param>
         /// <param name="sessionId"> The session identifier. </param>
-        /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, string userIsolationKey, RequestOptions options)
+        internal virtual async Task<ClientResult> DeleteSessionAsync(string agentName, string sessionId, RequestOptions options)
         {
-            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, userIsolationKey, options);
+            using PipelineMessage message = CreateDeleteSessionRequest(agentName, sessionId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 

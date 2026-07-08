@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VpnGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> The identifier of the IP configuration for a VPN Gateway. </param>
-        /// <param name="publicIpAddress"> The public IP address of this IP configuration. </param>
-        /// <param name="privateIpAddress"> The private IP address of this IP configuration. </param>
+        /// <param name="publicIPAddress"> The public IP address of this IP configuration. </param>
+        /// <param name="privateIPAddress"> The private IP address of this IP configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VpnGatewayIPConfiguration(ResourceIdentifier id, string publicIpAddress, string privateIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VpnGatewayIPConfiguration(ResourceIdentifier id, string publicIPAddress, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The public IP address of this IP configuration. </summary>
         [WirePath("publicIpAddress")]
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
 
         /// <summary> The private IP address of this IP configuration. </summary>
         [WirePath("privateIpAddress")]
-        public string PrivateIpAddress { get; }
+        public string PrivateIPAddress { get; }
     }
 }

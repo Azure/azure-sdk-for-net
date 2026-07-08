@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 NspProfileListResult result = NspProfileListResult.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterProfileData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkSecurityPerimeterProfileData>.FromValues((IReadOnlyList<NetworkSecurityPerimeterProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

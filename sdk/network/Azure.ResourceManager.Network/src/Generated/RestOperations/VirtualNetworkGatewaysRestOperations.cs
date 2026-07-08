@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateSetVpnclientIpsecParametersRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSetVpnclientIPsecParametersRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetVpnclientIpsecParametersRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContext context)
+        internal HttpMessage CreateGetVpnclientIPsecParametersRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

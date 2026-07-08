@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The weight type of the model. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct FoundryModelWeightType : IEquatable<FoundryModelWeightType>
     {
         private readonly string _value;

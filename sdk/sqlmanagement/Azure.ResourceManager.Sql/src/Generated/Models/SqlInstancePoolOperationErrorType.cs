@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlInstancePoolOperationErrorType : IEquatable<SqlInstancePoolOperationErrorType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> User. </summary>
+        private const string UserValue = "User";
 
         /// <summary> Initializes a new instance of <see cref="SqlInstancePoolOperationErrorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlInstancePoolOperationErrorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string UserValue = "User";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SqlInstancePoolOperationErrorType None { get; } = new SqlInstancePoolOperationErrorType(NoneValue);
+
         /// <summary> User. </summary>
         public static SqlInstancePoolOperationErrorType User { get; } = new SqlInstancePoolOperationErrorType(UserValue);
+
         /// <summary> Determines if two <see cref="SqlInstancePoolOperationErrorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlInstancePoolOperationErrorType left, SqlInstancePoolOperationErrorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlInstancePoolOperationErrorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlInstancePoolOperationErrorType left, SqlInstancePoolOperationErrorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlInstancePoolOperationErrorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlInstancePoolOperationErrorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlInstancePoolOperationErrorType(string value) => new SqlInstancePoolOperationErrorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlInstancePoolOperationErrorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlInstancePoolOperationErrorType?(string value) => value == null ? null : new SqlInstancePoolOperationErrorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlInstancePoolOperationErrorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlInstancePoolOperationErrorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

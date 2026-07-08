@@ -862,7 +862,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
 
-            content = content?.WithNoDispose().WithProgress(progressHandler);
             operationName ??= $"{nameof(BlockBlobClient)}.{nameof(Upload)}";
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
@@ -886,37 +885,18 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
-                    // length of the raw stream
-                    long contentLength = (content?.Length - content?.Position) ?? 0;
-                    // length of content within a structured message wrapper
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    if (contentLength > 0 &&
-                        validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = new StructuredMessageEncodingStream(
-                            content,
-                            Constants.StructuredMessage.DefaultSegmentContentLength,
-                            StructuredMessage.Flags.StorageCrc64);
-                        contentLength = content.Length - content.Position;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                    }
+                    // allowStructuredMessage: only when content is non-empty and client-side encryption is not active
+                    bool allowStructuredMessage = (content?.Length - content?.Position) > 0 && ClientSideEncryption == null;
+                    ContentHasher.GetHashResult hashResult;
+                    string structuredBodyType;
+                    long? structuredContentLength;
+                    (content, hashResult, structuredBodyType, structuredContentLength) = await ContentHasher.ApplyUploadEncodingInternal(
+                        content,
+                        validationOptions,
+                        allowStructuredMessage,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
 
@@ -1360,39 +1340,18 @@ namespace Azure.Storage.Blobs.Specialized
 
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    ContentHasher.GetHashResult hashResult = null;
+                    ContentHasher.GetHashResult hashResult;
+                    string structuredBodyType;
+                    long? structuredContentLength;
+                    (content, hashResult, structuredBodyType, structuredContentLength) = await ContentHasher.ApplyUploadEncodingInternal(
+                        content,
+                        validationOptions,
+                        allowStructuredMessage: ClientSideEncryption == null,
+                        progressHandler,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
                     long contentLength = (content?.Length - content?.Position) ?? 0;
-                    long? structuredContentLength = default;
-                    string structuredBodyType = null;
-                    if (validationOptions != null &&
-                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
-                        ClientSideEncryption == null) // don't allow feature combination
-                    {
-                        // report progress in terms of caller bytes, not encoded bytes
-                        structuredContentLength = contentLength;
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                        content = validationOptions.PrecalculatedChecksum.IsEmpty
-                            ? new StructuredMessageEncodingStream(
-                                content,
-                                Constants.StructuredMessage.DefaultSegmentContentLength,
-                                StructuredMessage.Flags.StorageCrc64)
-                            : new StructuredMessagePrecalculatedCrcWrapperStream(
-                                content,
-                                validationOptions.PrecalculatedChecksum.Span);
-                        contentLength = (content?.Length - content?.Position) ?? 0;
-                    }
-                    else
-                    {
-                        // compute hash BEFORE attaching progress handler
-                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                            content,
-                            validationOptions,
-                            async,
-                            cancellationToken).ConfigureAwait(false);
-                        content = content.WithNoDispose().WithProgress(progressHandler);
-                    }
 
                     ResponseWithHeaders<BlockBlobStageBlockHeaders> response;
 
@@ -2845,7 +2804,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Block Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2883,7 +2842,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Block Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -2924,7 +2883,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A stream to write to the Append Blob.
+        /// A stream to write to the Block Blob.
         /// </returns>
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
@@ -3407,7 +3366,7 @@ namespace Azure.Storage.Blobs.Specialized
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                UploadPartitionStreaming = async (stream, offset, blockId, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3420,7 +3379,7 @@ namespace Azure.Storage.Blobs.Specialized
                         };
                     }
                     await client.StageBlockInternal(
-                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            blockId,
                             stream,
                             validationOptions,
                             conditions,
@@ -3428,7 +3387,7 @@ namespace Azure.Storage.Blobs.Specialized
                             async,
                             cancellationToken).ConfigureAwait(false);
                 },
-                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                UploadPartitionBinaryData = async (content, offset, blockId, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3444,7 +3403,7 @@ namespace Azure.Storage.Blobs.Specialized
                     using (var stream = content.ToStream())
                     {
                         await client.StageBlockInternal(
-                                Shared.StorageExtensions.GenerateBlockId(offset),
+                                blockId,
                                 stream,
                                 validationOptions,
                                 conditions,
@@ -3455,7 +3414,7 @@ namespace Azure.Storage.Blobs.Specialized
                 },
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
+                        partitions.Select(partition => partition.BlockId),
                         args?.HttpHeaders,
                         args?.Metadata,
                         args?.Tags,
@@ -3466,7 +3425,8 @@ namespace Azure.Storage.Blobs.Specialized
                         async,
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
-                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}")
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}"),
+                GenerateBlockId = BlobHelpers.GenerateBlockId
             };
         }
         #endregion

@@ -8,6 +8,8 @@ using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -106,6 +108,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 new AzureMonitorExporterOptions { ConnectionString = connectionString });
 
             Assert.Contains(StatsbeatConstants.AttachStatsbeatMeterName, observedMeters);
+        }
+
+        public static TheoryData<string> DistroSdkStatsMeterNames => new()
+        {
+            StatsbeatConstants.DistroFeatureSdkStatsMeterName,
+            StatsbeatConstants.DistroNetworkSdkStatsMeterName,
+        };
+
+        [Theory]
+        [MemberData(nameof(DistroSdkStatsMeterNames))]
+        public void StatsbeatMeterProvider_SubscribesToDistroSdkStatsMeters(string distroMeterName)
+        {
+            // SENTINEL TEST. The Microsoft.OpenTelemetry distro emits distro-owned Feature and
+            // Network SDKStats on dedicated meters (e.g. when running with a non-Azure-Monitor
+            // exporter). The Statsbeat MeterProvider must subscribe to those meters via
+            // .AddMeter(...) so the measurements flow through the existing Statsbeat cadence.
+            //
+            // If this test fails, an .AddMeter(StatsbeatConstants.Distro*SdkStatsMeterName) entry
+            // in AzureMonitorStatsbeat.BuildMeterProvider was removed or the meter constant was
+            // renamed, silently dropping distro-emitted SDKStats.
+
+            var connectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eastus.in.applicationinsights.azure.com/";
+            var connectionStringVars = ConnectionStringParser.GetValues(connectionString);
+
+            using var statsbeat = new AzureMonitorStatsbeat(connectionStringVars, new MockPlatform());
+            Assert.NotNull(statsbeat._statsbeatMeterProvider);
+
+            // Publish an observable instrument on the distro meter. If the Statsbeat
+            // MeterProvider subscribed to this meter, ForceFlush collects the instrument and
+            // invokes the callback; otherwise the callback never runs.
+            using var distroMeter = new Meter(distroMeterName);
+            var callbackInvoked = false;
+            distroMeter.CreateObservableGauge("test.sentinel", () =>
+            {
+                callbackInvoked = true;
+                return new Measurement<long>(1);
+            });
+
+            statsbeat._statsbeatMeterProvider!.ForceFlush();
+
+            Assert.True(callbackInvoked, $"Statsbeat MeterProvider did not subscribe to '{distroMeterName}'.");
         }
     }
 }

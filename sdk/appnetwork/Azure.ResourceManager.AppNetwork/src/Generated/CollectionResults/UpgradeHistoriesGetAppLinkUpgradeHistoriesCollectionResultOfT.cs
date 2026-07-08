@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AppNetwork
                     yield break;
                 }
                 UpgradeHistoryListResult result = UpgradeHistoryListResult.FromResponse(response);
-                yield return Page<AppLinkUpgradeHistory>.FromValues((IReadOnlyList<AppLinkUpgradeHistory>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppLinkUpgradeHistory>.FromValues((IReadOnlyList<AppLinkUpgradeHistory>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

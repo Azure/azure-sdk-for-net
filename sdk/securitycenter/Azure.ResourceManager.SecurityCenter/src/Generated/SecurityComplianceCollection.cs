@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -23,60 +24,64 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class SecurityComplianceCollection : ArmCollection, IEnumerable<SecurityComplianceResource>, IAsyncEnumerable<SecurityComplianceResource>
     {
-        private readonly ClientDiagnostics _securityComplianceCompliancesClientDiagnostics;
-        private readonly CompliancesRestOperations _securityComplianceCompliancesRestClient;
+        private readonly ClientDiagnostics _compliancesClientDiagnostics;
+        private readonly Compliances _compliancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityComplianceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityComplianceCollection for mocking. </summary>
         protected SecurityComplianceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityComplianceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityComplianceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityComplianceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityComplianceCompliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityComplianceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityComplianceResource.ResourceType, out string securityComplianceCompliancesApiVersion);
-            _securityComplianceCompliancesRestClient = new CompliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityComplianceCompliancesApiVersion);
+            TryGetApiVersion(SecurityComplianceResource.ResourceType, out string securityComplianceApiVersion);
+            _compliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityComplianceResource.ResourceType.Namespace, Diagnostics);
+            _compliancesRestClient = new Compliances(_compliancesClientDiagnostics, Pipeline, Endpoint, securityComplianceApiVersion ?? "2017-08-01-preview");
         }
 
         /// <summary>
         /// Details of a specific Compliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances/{complianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityComplianceResource>> GetAsync(string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
-            using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Get");
+            using DiagnosticScope scope = _compliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityComplianceCompliancesRestClient.GetAsync(Id, complianceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _compliancesRestClient.CreateGetRequest(Id.ToString(), complianceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityComplianceData> response = Response.FromValue(SecurityComplianceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityComplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -90,38 +95,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Details of a specific Compliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances/{complianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityComplianceResource> Get(string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
-            using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Get");
+            using DiagnosticScope scope = _compliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityComplianceCompliancesRestClient.Get(Id, complianceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _compliancesRestClient.CreateGetRequest(Id.ToString(), complianceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityComplianceData> response = Response.FromValue(SecurityComplianceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityComplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,50 +144,44 @@ namespace Azure.ResourceManager.SecurityCenter
         /// The Compliance scores of the specific management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityComplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityComplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityComplianceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityComplianceCompliancesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityComplianceData, SecurityComplianceResource>(new CompliancesGetAllAsyncCollectionResultOfT(_compliancesRestClient, Id.ToString(), context, "SecurityComplianceCollection.GetAll"), data => new SecurityComplianceResource(Client, data));
         }
 
         /// <summary>
         /// The Compliance scores of the specific management group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,45 +189,61 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SecurityComplianceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityComplianceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityComplianceCompliancesRestClient.CreateListRequest(Id);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityComplianceCompliancesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityComplianceResource(Client, SecurityComplianceData.DeserializeSecurityComplianceData(e)), _securityComplianceCompliancesClientDiagnostics, Pipeline, "SecurityComplianceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityComplianceData, SecurityComplianceResource>(new CompliancesGetAllCollectionResultOfT(_compliancesRestClient, Id.ToString(), context, "SecurityComplianceCollection.GetAll"), data => new SecurityComplianceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances/{complianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
-            using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Exists");
+            using DiagnosticScope scope = _compliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityComplianceCompliancesRestClient.GetAsync(Id, complianceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _compliancesRestClient.CreateGetRequest(Id.ToString(), complianceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityComplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityComplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityComplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,36 +257,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances/{complianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
-            using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Exists");
+            using DiagnosticScope scope = _compliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityComplianceCompliancesRestClient.Get(Id, complianceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _compliancesRestClient.CreateGetRequest(Id.ToString(), complianceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityComplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityComplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityComplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -281,38 +314,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances/{complianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityComplianceResource>> GetIfExistsAsync(string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
-            using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetIfExists");
+            using DiagnosticScope scope = _compliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityComplianceCompliancesRestClient.GetAsync(Id, complianceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _compliancesRestClient.CreateGetRequest(Id.ToString(), complianceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityComplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityComplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityComplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityComplianceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityComplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,38 +375,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Security/compliances/{complianceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Security/compliances/{complianceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Compliances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Compliances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2017-08-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityComplianceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2017-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="complianceName"> name of the Compliance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="complianceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="complianceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityComplianceResource> GetIfExists(string complianceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(complianceName, nameof(complianceName));
 
-            using var scope = _securityComplianceCompliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetIfExists");
+            using DiagnosticScope scope = _compliancesClientDiagnostics.CreateScope("SecurityComplianceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityComplianceCompliancesRestClient.Get(Id, complianceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _compliancesRestClient.CreateGetRequest(Id.ToString(), complianceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityComplianceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityComplianceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityComplianceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityComplianceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityComplianceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -377,6 +442,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityComplianceResource> IAsyncEnumerable<SecurityComplianceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

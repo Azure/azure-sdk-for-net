@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseImportDefinition : IUtf8JsonSerializable, IJsonModel<DatabaseImportDefinition>
+    /// <summary> Contains the information necessary to perform import operation for new database. </summary>
+    public partial class DatabaseImportDefinition : IJsonModel<DatabaseImportDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseImportDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DatabaseImportDefinition"/> for deserialization. </summary>
+        internal DatabaseImportDefinition()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatabaseImportDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDatabaseImportDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DatabaseImportDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseImportDefinition IPersistableModel<DatabaseImportDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseImportDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="databaseImportDefinition"> The <see cref="DatabaseImportDefinition"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DatabaseImportDefinition databaseImportDefinition)
+        {
+            if (databaseImportDefinition == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(databaseImportDefinition, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseImportDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
@@ -77,15 +133,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,22 +150,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        DatabaseImportDefinition IJsonModel<DatabaseImportDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseImportDefinition IJsonModel<DatabaseImportDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DatabaseImportDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDatabaseImportDefinition(document.RootElement, options);
         }
 
-        internal static DatabaseImportDefinition DeserializeDatabaseImportDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DatabaseImportDefinition DeserializeDatabaseImportDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,75 +186,73 @@ namespace Azure.ResourceManager.Sql.Models
             string administratorLoginPassword = default;
             string authenticationType = default;
             NetworkIsolationSettings networkIsolation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("databaseName"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    databaseName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("edition"u8))
+                if (prop.NameEquals("edition"u8))
                 {
-                    edition = property.Value.GetString();
+                    edition = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceObjectiveName"u8))
+                if (prop.NameEquals("serviceObjectiveName"u8))
                 {
-                    serviceObjectiveName = property.Value.GetString();
+                    serviceObjectiveName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxSizeBytes"u8))
+                if (prop.NameEquals("maxSizeBytes"u8))
                 {
-                    maxSizeBytes = property.Value.GetString();
+                    maxSizeBytes = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageKeyType"u8))
+                if (prop.NameEquals("storageKeyType"u8))
                 {
-                    storageKeyType = new StorageKeyType(property.Value.GetString());
+                    storageKeyType = new StorageKeyType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageKey"u8))
+                if (prop.NameEquals("storageKey"u8))
                 {
-                    storageKey = property.Value.GetString();
+                    storageKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("storageUri"u8))
+                if (prop.NameEquals("storageUri"u8))
                 {
-                    storageUri = new Uri(property.Value.GetString());
+                    storageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (property.NameEquals("administratorLogin"u8))
+                if (prop.NameEquals("administratorLogin"u8))
                 {
-                    administratorLogin = property.Value.GetString();
+                    administratorLogin = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("administratorLoginPassword"u8))
+                if (prop.NameEquals("administratorLoginPassword"u8))
                 {
-                    administratorLoginPassword = property.Value.GetString();
+                    administratorLoginPassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationType"u8))
+                if (prop.NameEquals("authenticationType"u8))
                 {
-                    authenticationType = property.Value.GetString();
+                    authenticationType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkIsolation"u8))
+                if (prop.NameEquals("networkIsolation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value, options);
+                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DatabaseImportDefinition(
                 databaseName,
                 edition,
@@ -206,38 +265,7 @@ namespace Azure.ResourceManager.Sql.Models
                 administratorLoginPassword,
                 authenticationType,
                 networkIsolation,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DatabaseImportDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DatabaseImportDefinition IPersistableModel<DatabaseImportDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDatabaseImportDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DatabaseImportDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

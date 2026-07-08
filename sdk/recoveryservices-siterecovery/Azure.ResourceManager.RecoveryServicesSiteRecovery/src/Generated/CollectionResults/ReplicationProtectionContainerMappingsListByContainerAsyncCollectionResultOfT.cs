@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                     yield break;
                 }
                 ProtectionContainerMappingListResult result = ProtectionContainerMappingListResult.FromResponse(response);
-                yield return Page<ProtectionContainerMappingData>.FromValues((IReadOnlyList<ProtectionContainerMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ProtectionContainerMappingData>.FromValues((IReadOnlyList<ProtectionContainerMappingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

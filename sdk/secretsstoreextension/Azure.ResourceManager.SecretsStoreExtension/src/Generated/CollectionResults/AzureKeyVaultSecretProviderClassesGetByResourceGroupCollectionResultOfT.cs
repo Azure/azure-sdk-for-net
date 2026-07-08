@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                     yield break;
                 }
                 AzureKeyVaultSecretProviderClassListResult result = AzureKeyVaultSecretProviderClassListResult.FromResponse(response);
-                yield return Page<KeyVaultSecretProviderClassData>.FromValues((IReadOnlyList<KeyVaultSecretProviderClassData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<KeyVaultSecretProviderClassData>.FromValues((IReadOnlyList<KeyVaultSecretProviderClassData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -9,6 +9,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples;
+#pragma warning disable AAIP001
 
 [NonParallelizable]
 [LiveOnly]
@@ -30,7 +31,7 @@ public class SamplesRoutineBase : ProjectsClientTestBase
         List<string> routines = await projectClient.Routines.GetRoutinesAsync().Where(x => x.Name.StartsWith(SAMPLE_ROUTINE_NAME_PREFIX)).Select(x => x.Name).ToListAsync();
         foreach (string routineName in routines)
         {
-            await projectClient.Routines.DeleteRoutineAsync(routineName);
+            await projectClient.Routines.DeleteAsync(routineName);
         }
     }
 }

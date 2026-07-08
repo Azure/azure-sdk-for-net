@@ -5187,11 +5187,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 default);
         }
 
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="provisioningState"> A provisioning state of the Fleet. </param>
         /// <returns> A new <see cref="Models.CosmosDBFleetPatch"/> instance for mocking. </returns>
-        public static CosmosDBFleetPatch CosmosDBFleetPatch(CosmosDBStatus? provisioningState = default)
+        public static CosmosDBFleetPatch CosmosDBFleetPatch(IDictionary<string, string> tags = default, CosmosDBStatus? provisioningState = default)
         {
-            return new CosmosDBFleetPatch(provisioningState is null ? default : new FleetResourceProperties(provisioningState, default), default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CosmosDBFleetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), provisioningState is null ? default : new FleetResourceProperties(provisioningState, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteObjectValue(UserDetails, options);
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
+            if (Optional.IsDefined(PerformanceTier))
+            {
+                writer.WritePropertyName("performanceTier"u8);
+                writer.WriteStringValue(PerformanceTier);
+            }
             if (Optional.IsDefined(ClusterLoginUri))
             {
                 writer.WritePropertyName("clusterLoginUrl"u8);
@@ -167,6 +172,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             string storageSkuName = default;
             QumuloUserDetails userDetails = default;
             string delegatedSubnetId = default;
+            string performanceTier = default;
             Uri clusterLoginUri = default;
             IList<IPAddress> privateIPs = default;
             string adminPassword = default;
@@ -201,6 +207,11 @@ namespace Azure.ResourceManager.Qumulo.Models
                 if (prop.NameEquals("delegatedSubnetId"u8))
                 {
                     delegatedSubnetId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("performanceTier"u8))
+                {
+                    performanceTier = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("clusterLoginUrl"u8))
@@ -254,6 +265,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 storageSkuName,
                 userDetails,
                 delegatedSubnetId,
+                performanceTier,
                 clusterLoginUri,
                 privateIPs ?? new ChangeTrackingList<IPAddress>(),
                 adminPassword,

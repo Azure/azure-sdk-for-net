@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.Chaos
                     yield break;
                 }
                 ActionVersionListResult result = ActionVersionListResult.FromResponse(response);
-                yield return Page<ChaosActionVersionData>.FromValues((IReadOnlyList<ChaosActionVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ChaosActionVersionData>.FromValues((IReadOnlyList<ChaosActionVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

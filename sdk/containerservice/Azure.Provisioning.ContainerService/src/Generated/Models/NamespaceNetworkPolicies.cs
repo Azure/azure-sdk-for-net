@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _ingress = DefineProperty<NamespaceNetworkPolicyRule>(nameof(Ingress), new string[] { "ingress" });
             _egress = DefineProperty<NamespaceNetworkPolicyRule>(nameof(Egress), new string[] { "egress" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NamespaceNetworkPolicies that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

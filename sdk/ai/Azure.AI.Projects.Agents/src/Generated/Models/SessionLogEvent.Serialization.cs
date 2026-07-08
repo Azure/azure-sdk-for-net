@@ -137,14 +137,14 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            SessionLogEventType @event = default;
+            SessionLogEventKind @event = default;
             string data = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("event"u8))
                 {
-                    @event = new SessionLogEventType(prop.Value.GetString());
+                    @event = new SessionLogEventKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("data"u8))

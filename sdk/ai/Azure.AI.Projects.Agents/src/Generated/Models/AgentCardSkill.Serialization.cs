@@ -84,11 +84,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
-                foreach (string item in Tags)
+                foreach (string item in Labels)
                 {
                     if (item == null)
                     {
@@ -159,7 +159,7 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             string name = default;
             string description = default;
-            IList<string> tags = default;
+            IList<string> labels = default;
             IList<string> examples = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.AI.Projects.Agents
                             array.Add(item.GetString());
                         }
                     }
-                    tags = array;
+                    labels = array;
                     continue;
                 }
                 if (prop.NameEquals("examples"u8))
@@ -230,7 +230,7 @@ namespace Azure.AI.Projects.Agents
                 id,
                 name,
                 description,
-                tags ?? new ChangeTrackingList<string>(),
+                labels ?? new ChangeTrackingList<string>(),
                 examples ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

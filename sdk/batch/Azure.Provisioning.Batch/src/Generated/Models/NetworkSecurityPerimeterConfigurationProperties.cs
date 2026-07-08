@@ -98,6 +98,10 @@ namespace Azure.Provisioning.Batch
             _networkSecurityPerimeter = DefineModelProperty<NetworkSecurityPerimeter>(nameof(NetworkSecurityPerimeter), new string[] { "networkSecurityPerimeter" });
             _resourceAssociation = DefineModelProperty<BatchResourceAssociation>(nameof(ResourceAssociation), new string[] { "resourceAssociation" });
             _profile = DefineModelProperty<NetworkSecurityProfile>(nameof(Profile), new string[] { "profile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for NetworkSecurityPerimeterConfigurationProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 ListUsagesResult result = ListUsagesResult.FromResponse(response);
-                yield return Page<ComputeUsage>.FromValues((IReadOnlyList<ComputeUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ComputeUsage>.FromValues((IReadOnlyList<ComputeUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

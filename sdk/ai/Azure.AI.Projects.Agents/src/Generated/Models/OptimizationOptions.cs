@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -27,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationOptions(int? maxCandidates, IDictionary<string, BinaryData> optimizationConfig, string evalModel, string optimizationModel, EvaluationLevel? evaluationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationOptions(int? maxCandidates, IDictionary<string, BinaryData> optimizationConfig, string evalModel, string optimizationModel, AgentsEvaluationLevel? evaluationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxCandidates = maxCandidates;
             OptimizationConfig = optimizationConfig;
@@ -75,6 +77,6 @@ namespace Azure.AI.Projects.Agents
         public string OptimizationModel { get; set; }
 
         /// <summary> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </summary>
-        public EvaluationLevel? EvaluationLevel { get; set; }
+        public AgentsEvaluationLevel? EvaluationLevel { get; set; }
     }
 }

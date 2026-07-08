@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 Models.AppResiliencyCollection result = Models.AppResiliencyCollection.FromResponse(response);
-                yield return Page<AppResiliencyData>.FromValues((IReadOnlyList<AppResiliencyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AppResiliencyData>.FromValues((IReadOnlyList<AppResiliencyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="LifecycleHooksProfile"/>. </summary>
         public LifecycleHooksProfile()
         {
-            LifecycleHooks = new ChangeTrackingList<LifecycleHook>();
+            LifecycleHooks = new ChangeTrackingList<VirtualMachineScaleSetLifecycleHook>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LifecycleHooksProfile"/>. </summary>
         /// <param name="lifecycleHooks"> Specifies the lifecycle hooks configured for the virtual machine scale set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LifecycleHooksProfile(IList<LifecycleHook> lifecycleHooks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LifecycleHooksProfile(IList<VirtualMachineScaleSetLifecycleHook> lifecycleHooks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LifecycleHooks = lifecycleHooks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the lifecycle hooks configured for the virtual machine scale set. </summary>
-        public IList<LifecycleHook> LifecycleHooks { get; }
+        public IList<VirtualMachineScaleSetLifecycleHook> LifecycleHooks { get; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
     public readonly partial struct ProjectsAgentProtocol : IEquatable<ProjectsAgentProtocol>
     {
         private readonly string _value;
-        private const string ActivityProtocolValue = "activity_protocol";
+        private const string ActivityProtocolValue = "activity";
         private const string ResponsesValue = "responses";
         private const string A2aValue = "a2a";
         private const string McpValue = "mcp";

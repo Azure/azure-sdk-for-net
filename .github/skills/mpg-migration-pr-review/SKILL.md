@@ -71,14 +71,15 @@ Migration PRs can show many additive public APIs after regeneration. Classify ea
 |----------|-------------|---------------|
 | Real service/API-version addition | Exists only in newer TypeSpec input/API version; no equivalent in previous GA swagger/API surface | Keep; mention significant additions in summary. |
 | Rename of existing API | Same operation id, route, resource type, model semantics, or member semantics as previous GA API | Request changes: restore shipped name/shape with `@@clientName`, other decorators, or minimal SDK shim. |
-| Generator convenience/drift | New overload/grouping/resource method/pageable/collection method appears because MPG grouped or named the same REST operation differently | Investigate; if duplicate semantics, request rename/compatibility fix. |
+| Generator convenience/drift | New overload/grouping/resource method/pageable/collection method appears because MPG grouped or named the same REST operation differently | Investigate; request a rename/decorator fix only when the generated API can be renamed in TypeSpec or otherwise expressed by a supported spec-level customization. If the API is the correct generated shape from TypeSpec and cannot be renamed in spec, keep it and preserve the previous GA shape with the smallest compatibility shim needed for ApiCompat. |
 
-Use operation IDs, generated XML docs, request paths, resource type/parent hierarchy, and previous GA API listings to distinguish real additions from renamed existing APIs. Do not keep both old and new names unless there is an approved deliberate reason.
+Use operation IDs, generated XML docs, request paths, resource type/parent hierarchy, and previous GA API listings to distinguish real additions from renamed existing APIs. When a spec-level rename or decorator can produce the shipped API shape, do not keep both old and new names unless there is an approved deliberate reason. When the new API is the correct generated shape from TypeSpec and cannot be renamed in spec, keep it and preserve the old GA API shape for compatibility.
 
 Duplicate API detection:
 - Scan for duplicate model/type shapes (`Foo`, `FooResource`, `FooData`, `FooGenerated`, `FooContent`), duplicate extensible enums with the same wire values or case-only members, and duplicate methods/overloads for the same operation ID, route, resource type, and wire parameters.
-- Compare each suspected duplicate with the previous GA API. Baseline duplicates may be acceptable, but new migration-only duplicates should be cleaned up unless deliberately retained with a customization/TypeSpec justification.
-- Prefer renaming/suppressing the generated shape so only the shipped or approved C# API remains public. Use `@@clientName(..., "csharp")`, `[CodeGenType]`, `[CodeGenMember]`, or `[CodeGenSuppress]` as appropriate.
+- Compare each suspected duplicate with the previous GA API and the TypeSpec source. Post a duplicate-API alarm only when the extra public API can be removed by renaming the TypeSpec-defined element with `@@clientName(..., "csharp")` or another supported spec-level decorator.
+- Do not alarm on duplicates that are the correct generated shape from TypeSpec but cannot be renamed in spec. In those cases, honor the generated code from the spec and keep the previous GA shape through minimal compatibility customizations so ApiCompat remains satisfied.
+- Prefer spec-level renames for TypeSpec-defined duplicates. Use SDK customizations such as `[CodeGenType]`, `[CodeGenMember]`, or `[CodeGenSuppress]` only for generated C# artifacts that are not directly expressible in TypeSpec or for the GA compatibility shim.
 
 ## Output Format
 
