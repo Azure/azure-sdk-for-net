@@ -1,0 +1,28 @@
+parameters:
+  AzureSDKEmailUri: '$(AzureSDKEmailerSasURL)'
+  PullRequestNumber: 0
+  Repository: '$(Build.Repository.Name)'
+  GitHubUser: ''
+  ReleasePlanLink: ''
+  SpecPullRequestUrl: ''
+  SourceRootPath: $(Build.SourcesDirectory)
+
+steps:
+  - task: AzureCLI@2
+    displayName: Notify release plan owner
+    condition: and(succeeded(), ne(variables['Skip.NotifyReleasePlanOwner'], 'true'))
+    continueOnError: true
+    env:
+      GH_TOKEN: $(GH_TOKEN)
+    inputs:
+      azureSubscription: opensource-api-connection
+      scriptType: pscore
+      scriptLocation: scriptPath
+      scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Notify-ReleasePlanOwner.ps1
+      arguments: >
+        -AzureSDKEmailUri "${{ parameters.AzureSDKEmailUri }}"
+        -PullRequestNumber ${{ parameters.PullRequestNumber }}
+        -Repository "${{ parameters.Repository }}"
+        -GitHubUser "${{ parameters.GitHubUser }}"
+        -ReleasePlanLink "${{ parameters.ReleasePlanLink }}"
+        -SpecPullRequestUrl "${{ parameters.SpecPullRequestUrl }}"
