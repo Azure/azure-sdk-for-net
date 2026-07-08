@@ -206,6 +206,11 @@ namespace Azure.Generator.Management.Providers
 
         private ParameterContextRegistry BuildParameterMapping(RequestPathPattern operationPath)
         {
+            // A collection represents one concrete child resource type, while a shared REST
+            // operation can still describe the child resource type as a path parameter
+            // (for example, DNS record sets use {recordType} and Traffic Manager endpoints
+            // use {endpointType}). Treat those fixed resource-type segments as contextual
+            // values so the public collection method only asks for the resource name.
             return _operationContext
                 .BuildParameterMapping(operationPath)
                 .WithContextualParameterOverrides(GetResourceTypeSegmentParameterMappings(operationPath));
@@ -217,6 +222,10 @@ namespace Azure.Generator.Management.Providers
             var operationTypeSegments = operationPath.ResourceType;
             var mappings = new List<ParameterContextMapping>();
 
+            // Compare only resource type segments, not the full request path. Parent scope
+            // and resource name parameters still come from OperationContext; this override is
+            // only for operation variables that correspond to fixed segments in the concrete
+            // collection resource type.
             for (int i = 0; i < operationTypeSegments.Count && i < resourceTypeSegments.Count; i++)
             {
                 var operationSegment = operationTypeSegments[i];
