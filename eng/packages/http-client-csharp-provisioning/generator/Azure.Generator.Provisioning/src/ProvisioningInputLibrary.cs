@@ -97,6 +97,9 @@ namespace Azure.Generator.Provisioning
         /// Collects the input models and enums reachable from the resource models'
         /// property graphs. The same traversal dyes models reachable from settable
         /// resources through non-output properties as settable.
+        /// Provisioning settable analysis is similar to TCGC usage analysis, but
+        /// provisioning emits only a subset of operations, so TCGC usage cannot be
+        /// used directly here.
         /// </summary>
         private static (IReadOnlyList<InputModelType> Models, IReadOnlyList<InputEnumType> Enums, Dictionary<InputModelType, bool> ModelSettableUsage) CollectReachableTypes(
             IReadOnlyList<ProvisioningResourceProjection> resourceProjections,
