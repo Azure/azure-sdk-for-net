@@ -85,10 +85,11 @@ safe-outputs:
               const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
 
               let headSha = (process.env.TARGET_HEAD_SHA || '').trim();
-              if (headSha && headSha !== pr.head.sha) {
-                core.info(`Completed check run SHA ${headSha} no longer matches current PR head ${pr.head.sha}; publishing the review check on the current head.`);
+              if (!headSha) {
+                headSha = pr.head.sha;
+              } else if (headSha !== pr.head.sha) {
+                core.info(`Completed check run SHA ${headSha} no longer matches current PR head ${pr.head.sha}; publishing the review check on the completed check run SHA.`);
               }
-              headSha = pr.head.sha;
 
               const checkName = 'Azure .NET Provisioning SDK PR Review';
               const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
