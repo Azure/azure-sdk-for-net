@@ -79,6 +79,20 @@ public class ChainIdDerivationTests
     }
 
     [Test]
+    public void Derive_LegacyFormatId_NormalizesPartitionKeyToMatchNewFormat()
+    {
+        // Legacy-format IDs embed a 16-char partition key at the end (48-char body). It must be
+        // padded to the 18-char form ("00" suffix) so a chain mixing legacy and new-format IDs
+        // resolves to the same partition key. This legacy id's embedded key is "abcdef0123456789",
+        // which normalizes to ParentId's partition key "abcdef012345678900".
+        const string legacyId = "caresp_0123456789abcdefghijklmnopqrstuvabcdef0123456789";
+        var fromLegacy = ChainIdDerivation.Derive(null, null, legacyId, Agent(), "sess-1");
+
+        Assert.That(fromLegacy, Is.EqualTo(RchainNative),
+            "A legacy 16-char partition key must be padded to 18 chars to match the new format");
+    }
+
+    [Test]
     public void Derive_RawConversationId_UsesDeterministicFallbackPartition()
     {
         // A raw conversation ID (not in canonical ID format) has no embedded partition key,

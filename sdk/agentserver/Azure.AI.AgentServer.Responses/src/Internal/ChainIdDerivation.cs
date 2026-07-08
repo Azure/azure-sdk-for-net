@@ -29,8 +29,9 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </list>
 /// <c>scope</c> is a deterministic 32-char alphanumeric digest of <c>agentName</c> +
 /// <c>sessionId</c> (both are too long / too arbitrary to embed, so they are hashed). The
-/// digest fills the native "entropy" slot; because <c>agentName</c> cannot contain the
-/// <c>\x1f</c> separator, the <c>(agent, session)</c> pair encodes injectively even when
+/// digest fills the native "entropy" slot; a <c>\x1f</c> unit separator delimits the two
+/// fields. For the expected DNS-style <c>agentName</c> (which contains no control characters),
+/// placing it first makes the <c>(agent, session)</c> pair an injective encoding even when
 /// <c>sessionId</c> contains arbitrary bytes. The prefix (<c>cchain_</c> vs <c>rchain_</c> vs
 /// the response's own <c>caresp_</c>) namespaces the chain kinds so they never collide.
 /// </para>
@@ -41,7 +42,9 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// <para>
 /// Known limitation: the chain identity is derived from framework-generated IDs. A client
 /// that supplies its own response ID / conversation ID carrying a mismatched embedded
-/// partition can shift the chain identity for subsequent turns.
+/// partition can shift the chain identity for subsequent turns. Likewise, an <c>agentName</c>
+/// that contains the <c>\x1f</c> separator (not expected for DNS-style names) would weaken the
+/// injective <c>(agent, session)</c> encoding.
 /// </para>
 /// </summary>
 internal static class ChainIdDerivation
@@ -49,7 +52,7 @@ internal static class ChainIdDerivation
     /// <summary>Prefix for a conversation-scoped chain id (native <see cref="IdGenerator"/> convention).</summary>
     private const string ConversationChainPrefix = "cchain";
 
-    /// <summary>Prefix for a steerable response-linkage chain id.</summary>
+    /// <summary>Prefix for a response-linkage chain id.</summary>
     private const string ResponseChainPrefix = "rchain";
 
     /// <summary>Width of the deterministic (agent, session) scope trailer, matching the native <see cref="IdGenerator"/> entropy slot.</summary>
@@ -119,7 +122,14 @@ internal static class ChainIdDerivation
     {
         try
         {
-            return IdGenerator.ExtractPartitionKey(sourceId);
+            var extracted = IdGenerator.ExtractPartitionKey(sourceId);
+
+            // Legacy-format IDs embed a 16-char partition key; new-format IDs embed 18 (16 hex + "00").
+            // Normalize a legacy key the same way IdGenerator.NewId does, so a chain that mixes legacy
+            // and new-format IDs resolves to one stable partition key.
+            return extracted.Length == PartitionKeyHexLength
+                ? string.Concat(extracted, PartitionKeySuffix)
+                : extracted;
         }
         catch (ArgumentException)
         {
