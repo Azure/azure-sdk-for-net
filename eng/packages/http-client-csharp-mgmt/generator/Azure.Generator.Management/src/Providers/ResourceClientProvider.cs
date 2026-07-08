@@ -430,9 +430,10 @@ namespace Azure.Generator.Management.Providers
 
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
+                    var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
                     // Use PageableOperationMethodProvider for InputPagingServiceMethod
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
-                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, true, parameterMappings, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
+                    operationMethods.Add(new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingMethod, false, parameterMappings, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
 
                     continue;
                 }
@@ -506,10 +507,10 @@ namespace Azure.Generator.Management.Providers
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
-                return new ArrayResponseOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), methodName);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
+            return new ResourceOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), methodName, forceLro: isFakeLro);
         }
 
         private (bool IsPatch, ResourceMethod? UpdateMethod) PopulateUpdateMethod()

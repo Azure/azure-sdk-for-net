@@ -28,9 +28,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             restClientInfo,
             method,
             isAsync,
+            parameterMappings,
             methodName: isAsync ? "GetIfExistsAsync" : "GetIfExists",
-            description: $"Tries to get details for this resource from the service.",
-            parameterMappings: parameterMappings)
+            description: $"Tries to get details for this resource from the service.")
     {
         // Use collection's resource if _returnBodyResourceClient is null (handles cases where data type doesn't match exactly)
         private ResourceClientProvider EffectiveResourceClient => _returnBodyResourceClient ?? collection.Resource;

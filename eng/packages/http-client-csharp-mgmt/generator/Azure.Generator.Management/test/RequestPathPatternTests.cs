@@ -169,8 +169,7 @@ namespace Azure.Generator.Management.Tests
 
             var resourceType = path.ResourceType;
 
-            Assert.That(resourceType, Is.Not.Null);
-            Assert.That(resourceType!.SerializedResourceType, Is.EqualTo("Microsoft.Storage/storageAccounts/blobServices/containers"));
+            Assert.That(resourceType.SerializedResourceType, Is.EqualTo("Microsoft.Storage/storageAccounts/blobServices/containers"));
             Assert.That(resourceType.Select(segment => segment.Value), Is.EqualTo(new[] { "Microsoft.Storage", "storageAccounts", "blobServices", "containers" }));
             Assert.That(path.ResourceType, Is.SameAs(resourceType));
         }
@@ -180,7 +179,8 @@ namespace Azure.Generator.Management.Tests
         {
             var path = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
 
-            Assert.That(path.ResourceType, Is.Null);
+            Assert.That(path.ResourceType.Count, Is.EqualTo(0));
+            Assert.That(path.ResourceType.SerializedResourceType, Is.Empty);
         }
 
         [Test]

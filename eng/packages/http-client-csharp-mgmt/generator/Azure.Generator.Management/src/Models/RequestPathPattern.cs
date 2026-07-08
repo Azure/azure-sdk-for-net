@@ -17,6 +17,7 @@ namespace Azure.Generator.Management.Models
     {
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
         private const string FeaturePath = "/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features";
+        private static readonly ResourceTypePattern EmptyResourceType = new([]);
 
         /// <summary> The request path pattern for a management group resource. </summary>
         public static readonly RequestPathPattern ManagementGroup = new("/providers/Microsoft.Management/managementGroups/{managementGroupId}");
@@ -51,7 +52,6 @@ namespace Azure.Generator.Management.Models
         private readonly string _path;
         private readonly IReadOnlyList<RequestPathSegment> _segments;
         private ResourceTypePattern? _resourceType;
-        private bool _resourceTypeCalculated;
 
         /// <summary> Initializes a new instance of <see cref="RequestPathPattern"/> from a raw path string. </summary>
         /// <param name="path">The raw request path string.</param>
@@ -81,22 +81,9 @@ namespace Azure.Generator.Management.Models
         public string SerializedPath => _path;
 
         /// <summary> Gets the ARM resource type represented by this request path. </summary>
-        public ResourceTypePattern? ResourceType
-        {
-            get
-            {
-                if (_resourceTypeCalculated)
-                {
-                    return _resourceType;
-                }
+        public ResourceTypePattern ResourceType => _resourceType ??= BuildResourceType();
 
-                _resourceType = BuildResourceType();
-                _resourceTypeCalculated = true;
-                return _resourceType;
-            }
-        }
-
-        private ResourceTypePattern? BuildResourceType()
+        private ResourceTypePattern BuildResourceType()
         {
             var providerIndex = -1;
             for (int i = Count - 1; i >= 0; i--)
@@ -110,7 +97,15 @@ namespace Azure.Generator.Management.Models
 
             if (providerIndex < 0)
             {
-                return null;
+                return EmptyResourceType;
+            }
+
+            if (providerIndex + 1 >= Count)
+            {
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    code: "general-warning",
+                    message: $"The request path '{_path}' does not contain a resource provider namespace segment.");
+                return EmptyResourceType;
             }
 
             var result = new List<RequestPathSegment>();

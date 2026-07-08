@@ -27,9 +27,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             restClientInfo,
             method,
             isAsync,
+            parameterMappings,
             methodName: isAsync ? "ExistsAsync" : "Exists",
-            description: $"Checks to see if the resource exists in azure.",
-            parameterMappings: parameterMappings)
+            description: $"Checks to see if the resource exists in azure.")
     {
         protected override bool ShouldApplyLroHandling => false;
 

@@ -64,31 +64,31 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
         /// <param name="method">The input service method that we are building from. </param>
         /// <param name="isAsync">Whether this method is an async method. </param>
+        /// <param name="parameterMappings">The parameter mappings to use for the operation. </param>
         /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
         /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
         /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         /// <param name="explicitResourceClient">Explicit resource client to use when multiple resources share the same model. </param>
         /// <param name="scopeParameter">Optional scope parameter for extension-scoped non-resource methods. When provided, contextual parameters are extracted from this scope instead of Id.</param>
-        /// <param name="parameterMappings">Optional precomputed parameter mappings to use for the operation. </param>
         public ResourceOperationMethodProvider(
             TypeProvider enclosingType,
             OperationContext operationContext,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
+            ParameterContextRegistry parameterMappings,
             string? methodName = null,
             FormattableString? description = null,
             bool forceLro = false,
             ResourceClientProvider? explicitResourceClient = null,
-            ParameterProvider? scopeParameter = null,
-            ParameterContextRegistry? parameterMappings = null)
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
             _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _parameterMappings = parameterMappings ?? operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+            _parameterMappings = parameterMappings;
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
