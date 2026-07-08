@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Warning code for model artifacts. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct FoundryModelWarningCode : IEquatable<FoundryModelWarningCode>
     {
         private readonly string _value;

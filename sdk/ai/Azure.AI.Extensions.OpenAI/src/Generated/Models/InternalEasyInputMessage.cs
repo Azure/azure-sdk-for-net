@@ -69,7 +69,7 @@ namespace OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InputContent"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="Azure.AI.Extensions.OpenAI.InputContent"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
