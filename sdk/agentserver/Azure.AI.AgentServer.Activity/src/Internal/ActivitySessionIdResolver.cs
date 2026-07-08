@@ -57,28 +57,4 @@ internal static class ActivitySessionIdResolver
         // 4. Generate UUID
         return Guid.NewGuid().ToString();
     }
-
-    /// <summary>
-    /// Resolves the session ID when only an IActivity is available (adapter path).
-    /// Falls back to environment variable or generated UUID.
-    /// </summary>
-    internal static string ResolveFromActivity(Microsoft.Agents.Core.Models.IActivity activity)
-    {
-        // Use conversation ID as session proxy if available
-        var convId = activity.Conversation?.Id;
-        if (!string.IsNullOrEmpty(convId))
-        {
-            return convId;
-        }
-
-        // Environment variable
-        var envValue = FoundryEnvironment.SessionId;
-        if (!string.IsNullOrEmpty(envValue))
-        {
-            return envValue;
-        }
-
-        // Generate UUID
-        return Guid.NewGuid().ToString();
-    }
 }

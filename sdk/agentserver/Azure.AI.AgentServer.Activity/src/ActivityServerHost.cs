@@ -107,9 +107,14 @@ public sealed class ActivityServerHost
 
     private void MapActivityEndpoints(IEndpointRouteBuilder endpoints)
     {
+        // Typed as Func<HttpContext, Task> (not RequestDelegate) so MapPost binds to the
+        // minimal-API Delegate overload that returns a RouteHandlerBuilder, which supports
+        // AddEndpointFilter for the error-source classification filter.
+        Func<HttpContext, Task> handler = HandleActivityAsync;
         foreach (var path in s_activityPaths)
         {
-            endpoints.MapPost(path, HandleActivityAsync);
+            endpoints.MapPost(path, handler)
+                .AddEndpointFilter<ActivityErrorSourceFilter>();
         }
     }
 
@@ -118,22 +123,34 @@ public sealed class ActivityServerHost
         var cancellationToken = context.RequestAborted;
 
         // Resolve the session id and stamp the required response header before the
-        // adapter (or custom handler) starts writing the response.
-        var sessionId = ActivitySessionIdResolver.Resolve(context.Request);
+        // adapter (or custom handler) starts writing the response. Sanitize it first so a
+        // malicious or malformed value cannot be reflected into the response header
+        // (header-injection defense).
+        var sessionId = ActivityIdSanitizer.Sanitize(ActivitySessionIdResolver.Resolve(context.Request));
         context.Response.Headers[PlatformHeaders.SessionId] = sessionId;
 
         // Promote correlation baggage onto the current request span for downstream spans/logs.
         var tracing = context.RequestServices.GetService<ActivityProtocolActivitySource>();
         tracing?.PropagateActivityBaggage(sessionId, sessionId, null, context.Request.Headers);
 
-        if (_requestHandler is not null)
+        try
         {
-            await _requestHandler(context).ConfigureAwait(false);
-            return;
-        }
+            if (_requestHandler is not null)
+            {
+                await _requestHandler(context).ConfigureAwait(false);
+                return;
+            }
 
-        // Delegate to the ASP.NET Core CloudAdapter: read the activity, synthesize claims,
-        // run the turn inline, and write the response.
-        await _cloudAdapter!.ProcessAsync(context, _agentApp!, cancellationToken).ConfigureAwait(false);
+            // Delegate to the ASP.NET Core CloudAdapter: read the activity, synthesize claims,
+            // run the turn inline, and write the response.
+            await _cloudAdapter!.ProcessAsync(context, _agentApp!, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            // Record the exception on the current tracing span before it propagates to the
+            // error-source endpoint filter (which sets x-platform-error-source) and the pipeline.
+            ActivityExceptionFilter.RecordException(System.Diagnostics.Activity.Current, ex);
+            throw;
+        }
     }
 }

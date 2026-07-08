@@ -4,7 +4,6 @@
 using System;
 using Azure.AI.AgentServer.Activity.Internal;
 using Azure.AI.AgentServer.Core;
-using Microsoft.Agents.Core.Models;
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
@@ -112,40 +111,5 @@ public class ActivitySessionIdResolverTests
         var second = ActivitySessionIdResolver.Resolve(context.Request);
 
         Assert.That(first, Is.Not.EqualTo(second));
-    }
-
-    [Test]
-    public void ResolveFromActivity_UsesConversationId_WhenPresent()
-    {
-        var activity = new Microsoft.Agents.Core.Models.Activity
-        {
-            Conversation = new ConversationAccount { Id = "conv-42" },
-        };
-
-        var result = ActivitySessionIdResolver.ResolveFromActivity(activity);
-
-        Assert.That(result, Is.EqualTo("conv-42"));
-    }
-
-    [Test]
-    public void ResolveFromActivity_UsesEnvVar_WhenConversationIdMissing()
-    {
-        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "env-session");
-        FoundryEnvironment.Reload();
-        var activity = new Microsoft.Agents.Core.Models.Activity();
-
-        var result = ActivitySessionIdResolver.ResolveFromActivity(activity);
-
-        Assert.That(result, Is.EqualTo("env-session"));
-    }
-
-    [Test]
-    public void ResolveFromActivity_GeneratesGuid_WhenConversationAndEnvMissing()
-    {
-        var activity = new Microsoft.Agents.Core.Models.Activity();
-
-        var result = ActivitySessionIdResolver.ResolveFromActivity(activity);
-
-        Assert.That(Guid.TryParse(result, out _), Is.True);
     }
 }

@@ -195,8 +195,6 @@ internal sealed class FoundryAccessTokenProvider : IAccessTokenProvider
 
     public Azure.Core.TokenCredential GetTokenCredential()
     {
-        _logger.LogInformation("[FoundryToken] GetTokenCredential() called — returning ManagedIdentityCredential(clientId={ClientId})",
-            _clientId.Length > 8 ? _clientId[..8] + "..." : _clientId);
         return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(_clientId));
     }
 }

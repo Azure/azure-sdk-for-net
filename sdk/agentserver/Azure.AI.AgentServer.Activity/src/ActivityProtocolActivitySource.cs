@@ -23,20 +23,11 @@ internal class ActivityProtocolActivitySource
     // Span attribute keys
     internal const string AttrSpanSessionId = "azure.ai.agentserver.activity.session_id";
     internal const string AttrSpanProtocol = "azure.ai.agentserver.activity.protocol";
-    internal const string AttrSpanErrorCode = "azure.ai.agentserver.activity.error.code";
-    internal const string AttrSpanErrorMessage = "azure.ai.agentserver.activity.error.message";
 
     /// <summary>
     /// Initializes a new instance of <see cref="ActivityProtocolActivitySource"/>.
     /// </summary>
     public ActivityProtocolActivitySource()
-    {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="ActivityProtocolActivitySource"/> (for subclass testability).
-    /// </summary>
-    protected ActivityProtocolActivitySource(string? name)
     {
     }
 
