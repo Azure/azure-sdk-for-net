@@ -370,7 +370,7 @@ namespace Azure.Generator.Provisioning.Tests
             var propertyInfo = ((IProvisioningPropertyInfo)provider).GetProvisioningPropertyInfo(nameProperty);
 
             Assert.That(propertyInfo, Is.Not.Null);
-            Assert.That(propertyInfo!.IsOutput, Is.True);
+            Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.False);
             Assert.That(propertyInfo.DefaultValue, Is.EqualTo("default"));
         }
