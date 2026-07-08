@@ -25,6 +25,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         internal readonly BlobServiceClient _blobServiceClient;
         internal readonly long? _maxTransferSize;
         internal readonly bool _includeNonFinalizedEvents;
+        internal readonly ShareChangeFeedResetPolicy? _resetPolicy;
 
         // Lazily resolved after the first call to DiscoverContainerNameAsync.
         private string _containerName;
@@ -46,6 +47,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
+            _resetPolicy = changeFeedOptions?.ResetPolicy;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(connectionString);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -68,6 +70,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw new ArgumentNullException(nameof(shareName));
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
+            _resetPolicy = changeFeedOptions?.ResetPolicy;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri, credential);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -93,6 +96,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
+            _resetPolicy = changeFeedOptions?.ResetPolicy;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri, credential);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -117,6 +121,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
+            _resetPolicy = changeFeedOptions?.ResetPolicy;
 
             ShareServiceClient shareServiceClient = new ShareServiceClient(fileServiceUri);
             _shareClient = shareServiceClient.GetShareClient(shareName);
@@ -144,8 +149,35 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             _shareClient = shareClient;
             _maxTransferSize = changeFeedOptions?.MaximumTransferSize;
             _includeNonFinalizedEvents = changeFeedOptions?.IncludeNonFinalizedEvents ?? false;
+            _resetPolicy = changeFeedOptions?.ResetPolicy;
         }
         #endregion ctors
+
+        /// <summary>
+        /// Resolves the effective <see cref="ShareChangeFeedResetPolicy"/> for a given API.
+        /// When <see cref="ShareChangeFeedClientOptions.ResetPolicy"/> was set explicitly, that
+        /// value is used for every method; otherwise a smart per-API default is applied:
+        /// batched APIs default to <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/> and
+        /// streaming APIs default to <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>.
+        /// </summary>
+        /// <param name="isBatched">
+        /// <c>true</c> for the batched APIs (<c>GetChanges(start, end)</c>,
+        /// <c>GetChangesBetweenSnapshots(begin, end)</c>, and their continuation-token /
+        /// async counterparts), <c>false</c> for the streaming APIs
+        /// (<c>GetChanges()</c> and <c>GetChanges(continuationToken)</c>).
+        /// </param>
+        /// <returns>The effective policy to enforce for the call.</returns>
+        internal ShareChangeFeedResetPolicy ResolveEffectivePolicy(bool isBatched)
+        {
+            if (_resetPolicy.HasValue)
+            {
+                return _resetPolicy.Value;
+            }
+
+            return isBatched
+                ? ShareChangeFeedResetPolicy.ThrowOnReset
+                : ShareChangeFeedResetPolicy.ContinueOnReset;
+        }
 
         /// <summary>
         /// Discovers the change feed blob container (lazily, once) and returns the <see cref="BlobContainerClient"/>.
@@ -170,14 +202,40 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// Returns all change feed events for the file share.
         /// </summary>
+        /// <remarks>
+        /// When a reset marker is discovered on the change feed, this streaming API defaults to
+        /// <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>: the reset is yielded in-band
+        /// as a <see cref="ShareChangeFeedResetEvent"/> at its position in the ordered stream.
+        /// Explicitly setting <see cref="ShareChangeFeedClientOptions.ResetPolicy"/> overrides
+        /// this default; when configured with <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>
+        /// the enumeration throws <see cref="ShareChangeFeedResetException"/> at the reset
+        /// boundary.
+        /// </remarks>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges()
-            => new ShareChangeFeedPageable(this, _maxTransferSize, _includeNonFinalizedEvents);
+            => new ShareChangeFeedPageable(
+                this,
+                _maxTransferSize,
+                _includeNonFinalizedEvents,
+                ResolveEffectivePolicy(isBatched: false));
 
         /// <summary>
         /// Returns all change feed events for the file share.
         /// </summary>
+        /// <remarks>
+        /// When a reset marker is discovered on the change feed, this streaming API defaults to
+        /// <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>: the reset is yielded in-band
+        /// as a <see cref="ShareChangeFeedResetEvent"/> at its position in the ordered stream.
+        /// Explicitly setting <see cref="ShareChangeFeedClientOptions.ResetPolicy"/> overrides
+        /// this default; when configured with <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>
+        /// the enumeration throws <see cref="ShareChangeFeedResetException"/> at the reset
+        /// boundary.
+        /// </remarks>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync()
-            => new ShareChangeFeedAsyncPageable(this, _maxTransferSize, _includeNonFinalizedEvents);
+            => new ShareChangeFeedAsyncPageable(
+                this,
+                _maxTransferSize,
+                _includeNonFinalizedEvents,
+                ResolveEffectivePolicy(isBatched: false));
 
         /// <summary>
         /// Returns change feed events within the specified time range.
@@ -186,7 +244,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Events near the <paramref name="start"/> and <paramref name="end"/> boundaries
         /// may be missing or unexpectedly included due to clock skew between the storage
         /// service and the client.
+        ///
+        /// This batched API defaults to <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>:
+        /// if a reset marker falls inside the requested range, the enumeration throws
+        /// <see cref="ShareChangeFeedResetException"/> before yielding any events.
         /// </remarks>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker is discovered inside the
+        /// requested range and the effective policy is
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>.
+        /// </exception>
         public virtual Pageable<ShareChangeFeedEvent> GetChanges(
             DateTimeOffset? start,
             DateTimeOffset? end)
@@ -196,6 +263,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
+                ResolveEffectivePolicy(isBatched: true),
                 startTime: start,
                 endTime: end);
         }
@@ -207,7 +275,16 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Events near the <paramref name="start"/> and <paramref name="end"/> boundaries
         /// may be missing or unexpectedly included due to clock skew between the storage
         /// service and the client.
+        ///
+        /// This batched API defaults to <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>:
+        /// if a reset marker falls inside the requested range, the enumeration throws
+        /// <see cref="ShareChangeFeedResetException"/> before yielding any events.
         /// </remarks>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker is discovered inside the
+        /// requested range and the effective policy is
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>.
+        /// </exception>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesAsync(
             DateTimeOffset? start,
             DateTimeOffset? end)
@@ -217,6 +294,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
+                ResolveEffectivePolicy(isBatched: true),
                 startTime: start,
                 endTime: end);
         }
@@ -244,6 +322,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// is enabled. Resumption is not supported in non-finalized mode because pages
         /// produced in that mode never carry a continuation token.
         /// </exception>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker that is newer than the one
+        /// captured on the token is discovered and the effective policy is
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>. Streaming APIs default to
+        /// <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>.
+        /// </exception>
         /// <remarks>
         /// To resume from a saved position, the client must be configured with
         /// <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/> set to <c>false</c>.
@@ -256,6 +340,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
+                ResolveEffectivePolicy(isBatched: false),
                 continuation: continuationToken);
         }
 
@@ -272,6 +357,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// is enabled. Resumption is not supported in non-finalized mode because pages
         /// produced in that mode never carry a continuation token.
         /// </exception>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker that is newer than the one
+        /// captured on the token is discovered and the effective policy is
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>. Streaming APIs default to
+        /// <see cref="ShareChangeFeedResetPolicy.ContinueOnReset"/>.
+        /// </exception>
         /// <remarks>
         /// To resume from a saved position, the client must be configured with
         /// <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/> set to <c>false</c>.
@@ -284,6 +375,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 this,
                 _maxTransferSize,
                 _includeNonFinalizedEvents,
+                ResolveEffectivePolicy(isBatched: false),
                 continuation: continuationToken);
         }
 
@@ -308,24 +400,48 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// <summary>
         /// Returns change feed events between two snapshots, filtered by container version ID.
         /// </summary>
+        /// <remarks>
+        /// This batched API defaults to <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>:
+        /// if a reset marker falls between the two snapshot timestamps, the enumeration throws
+        /// <see cref="ShareChangeFeedResetException"/> before yielding any events. Consumers
+        /// receiving this exception must treat the snapshot diff as unreliable and re-baseline.
+        /// </remarks>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker falls between
+        /// <paramref name="beginSnapshot"/> and <paramref name="endSnapshot"/> and the effective
+        /// policy is <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>.
+        /// </exception>
         public virtual Pageable<ShareChangeFeedEvent> GetChangesBetweenSnapshots(
             string beginSnapshot,
             string endSnapshot)
             => new ShareChangeFeedSnapshotPageable(
                 this,
                 _maxTransferSize,
+                ResolveEffectivePolicy(isBatched: true),
                 beginSnapshot,
                 endSnapshot);
 
         /// <summary>
         /// Returns change feed events between two snapshots, filtered by container version ID.
         /// </summary>
+        /// <remarks>
+        /// This batched API defaults to <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>:
+        /// if a reset marker falls between the two snapshot timestamps, the enumeration throws
+        /// <see cref="ShareChangeFeedResetException"/> before yielding any events. Consumers
+        /// receiving this exception must treat the snapshot diff as unreliable and re-baseline.
+        /// </remarks>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker falls between
+        /// <paramref name="beginSnapshot"/> and <paramref name="endSnapshot"/> and the effective
+        /// policy is <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>.
+        /// </exception>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesBetweenSnapshotsAsync(
             string beginSnapshot,
             string endSnapshot)
             => new ShareChangeFeedSnapshotAsyncPageable(
                 this,
                 _maxTransferSize,
+                ResolveEffectivePolicy(isBatched: true),
                 beginSnapshot,
                 endSnapshot);
 
@@ -344,11 +460,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Thrown when the token is malformed, was issued against a different storage
         /// account, or uses an unsupported cursor version.
         /// </exception>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker that is newer than the one
+        /// captured on the token is discovered and the effective policy is
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>. Batched APIs default to
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>.
+        /// </exception>
         public virtual Pageable<ShareChangeFeedEvent> GetChangesBetweenSnapshots(
             string continuationToken)
             => new ShareChangeFeedSnapshotPageable(
                 this,
                 _maxTransferSize,
+                ResolveEffectivePolicy(isBatched: true),
                 continuation: continuationToken);
 
         /// <summary>
@@ -366,11 +489,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Thrown when the token is malformed, was issued against a different storage
         /// account, or uses an unsupported cursor version.
         /// </exception>
+        /// <exception cref="ShareChangeFeedResetException">
+        /// Thrown at the start of enumeration when a reset marker that is newer than the one
+        /// captured on the token is discovered and the effective policy is
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>. Batched APIs default to
+        /// <see cref="ShareChangeFeedResetPolicy.ThrowOnReset"/>.
+        /// </exception>
         public virtual AsyncPageable<ShareChangeFeedEvent> GetChangesBetweenSnapshotsAsync(
             string continuationToken)
             => new ShareChangeFeedSnapshotAsyncPageable(
                 this,
                 _maxTransferSize,
+                ResolveEffectivePolicy(isBatched: true),
                 continuation: continuationToken);
         #endregion GetChangesBetweenSnapshots
 
@@ -510,7 +640,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Resolves the change feed container and builds a <see cref="BlobContainerClient"/>
         /// and <see cref="ChangeFeedConfiguration{ShareChangeFeedEvent}"/>. Called by pageables.
         /// </summary>
-        internal async Task<(BlobContainerClient ContainerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> Config)>
+        /// <remarks>
+        /// Declared <c>virtual</c> so mocked unit tests can inject a pre-built
+        /// <see cref="BlobContainerClient"/> without going through
+        /// <see cref="ShareClient.GetPropertiesAsync(System.Threading.CancellationToken)"/>.
+        /// </remarks>
+        internal virtual async Task<(BlobContainerClient ContainerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> Config)>
             ResolveContainerAsync(bool async, CancellationToken cancellationToken)
         {
             BlobContainerClient containerClient = await GetContainerClientAsync(async, cancellationToken).ConfigureAwait(false);

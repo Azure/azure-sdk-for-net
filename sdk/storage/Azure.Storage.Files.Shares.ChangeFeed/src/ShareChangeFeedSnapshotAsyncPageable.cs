@@ -15,34 +15,59 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private readonly string _beginSnapshot;
         private readonly string _endSnapshot;
         private readonly string _continuation;
+        private readonly ShareChangeFeedResetPolicy _policy;
 
         internal ShareChangeFeedSnapshotAsyncPageable(
             ShareChangeFeedClient client,
             long? maxTransferSize,
+            ShareChangeFeedResetPolicy policy,
             string beginSnapshot,
             string endSnapshot)
         {
             SnapshotInputValidator.ValidateInputStrings(beginSnapshot, endSnapshot);
             _client = client;
             _maxTransferSize = maxTransferSize;
+            _policy = policy;
             _beginSnapshot = beginSnapshot;
             _endSnapshot = endSnapshot;
             _continuation = null;
         }
 
+        // Backwards-compat overload for existing tests that build the pageable directly
+        // without specifying a reset policy. Defaults to the batched-API smart default.
         internal ShareChangeFeedSnapshotAsyncPageable(
             ShareChangeFeedClient client,
             long? maxTransferSize,
+            string beginSnapshot,
+            string endSnapshot)
+            : this(client, maxTransferSize, ShareChangeFeedResetPolicy.ThrowOnReset, beginSnapshot, endSnapshot)
+        {
+        }
+
+        internal ShareChangeFeedSnapshotAsyncPageable(
+            ShareChangeFeedClient client,
+            long? maxTransferSize,
+            ShareChangeFeedResetPolicy policy,
             string continuation)
         {
             if (string.IsNullOrEmpty(continuation))
                 throw new ArgumentNullException(nameof(continuation));
             _client = client;
             _maxTransferSize = maxTransferSize;
+            _policy = policy;
             _continuation = continuation;
             // beginSnapshot/endSnapshot are recovered from the cursor envelope at enumeration time.
             _beginSnapshot = null;
             _endSnapshot = null;
+        }
+
+        // Backwards-compat overload for existing tests. Defaults to the batched-API smart default.
+        internal ShareChangeFeedSnapshotAsyncPageable(
+            ShareChangeFeedClient client,
+            long? maxTransferSize,
+            string continuation)
+            : this(client, maxTransferSize, ShareChangeFeedResetPolicy.ThrowOnReset, continuation)
+        {
         }
 
         public override async IAsyncEnumerable<Page<ShareChangeFeedEvent>> AsPages(
@@ -69,7 +94,54 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 cancellationToken: default)
                 .ConfigureAwait(false);
 
+            // Reset detection: read the pointer once. Range for snapshot APIs is
+            // [BeginSnapshotTimestamp, EndSnapshotTimestamp] on fresh enumerations; on resume,
+            // use last-seen FILETIME as the comparison anchor.
+            ShareChangeFeedResetPointer pointer = await ResetMarkerReader.TryReadPointerAsync(
+                containerClient,
+                async: true,
+                cancellationToken: default)
+                .ConfigureAwait(false);
+
+            ShareChangeFeedResetEvent resetToEmit = null;
+            DateTimeOffset resetTime = default;
+
+            if (pointer != null)
+            {
+                resetTime = pointer.LatestResetTimeUtc;
+                bool resetIsNewer = !iter.LastSeenResetFileTime.HasValue
+                    || pointer.LatestResetFileTime > iter.LastSeenResetFileTime.Value;
+
+                bool resetInSnapshotRange = iter.BeginSnapshotTimestamp.HasValue
+                    && iter.EndSnapshotTimestamp.HasValue
+                    && resetTime >= iter.BeginSnapshotTimestamp.Value
+                    && resetTime <= iter.EndSnapshotTimestamp.Value;
+
+                bool shouldSurface = resetIsNewer && (
+                    resetInSnapshotRange
+                    || (!iter.BeginSnapshotTimestamp.HasValue && !iter.EndSnapshotTimestamp.HasValue));
+
+                if (shouldSurface)
+                {
+                    ShareChangeFeedResetMarker perEvent = await ResetMarkerReader.ReadPerEventAsync(
+                        containerClient,
+                        pointer.LatestMarkerPath,
+                        async: true,
+                        cancellationToken: default)
+                        .ConfigureAwait(false);
+
+                    resetToEmit = ResetMarkerReader.BuildResetEvent(pointer, perEvent);
+
+                    if (_policy == ShareChangeFeedResetPolicy.ThrowOnReset)
+                    {
+                        throw new ShareChangeFeedResetException(resetToEmit);
+                    }
+                }
+            }
+
+            bool resetEmitted = false;
             int pageSize = pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize;
+
             while (iter.ChangeFeed.HasNext())
             {
                 Page<ShareChangeFeedEvent> rawPage = await iter.ChangeFeed
@@ -80,14 +152,44 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 foreach (ShareChangeFeedEvent evt in rawPage.Values)
                 {
                     if (SnapshotEventFilter.IsInRange(evt, iter.BeginCvId, iter.EndCvId))
+                    {
+                        if (!resetEmitted && resetToEmit != null && evt.EventTime >= resetTime)
+                        {
+                            filtered.Add(resetToEmit);
+                            resetEmitted = true;
+                        }
+
                         filtered.Add(evt);
+                    }
                 }
 
                 if (filtered.Count > 0)
                 {
-                    string outerToken = iter.WrapInnerCursor(containerClient, iter.ChangeFeed.GetCursor());
+                    Guid? nextId = resetEmitted
+                        ? pointer?.LatestResetId ?? iter.LastSeenResetId
+                        : iter.LastSeenResetId;
+                    long? nextFileTime = resetEmitted
+                        ? pointer?.LatestResetFileTime ?? iter.LastSeenResetFileTime
+                        : iter.LastSeenResetFileTime;
+
+                    string outerToken = iter.WrapInnerCursor(
+                        containerClient,
+                        iter.ChangeFeed.GetCursor(),
+                        nextId,
+                        nextFileTime);
                     yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(filtered, outerToken);
                 }
+            }
+
+            if (!resetEmitted && resetToEmit != null)
+            {
+                List<ShareChangeFeedEvent> tail = new List<ShareChangeFeedEvent> { resetToEmit };
+                string outerToken = iter.WrapInnerCursor(
+                    containerClient,
+                    innerCursor: null,
+                    pointer.LatestResetId,
+                    pointer.LatestResetFileTime);
+                yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(tail, outerToken);
             }
         }
     }

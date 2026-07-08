@@ -152,7 +152,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     .Returns((GetBlobsByHierarchyOptions opts, CancellationToken _) =>
                     {
                         callCount++;
-                        if (callCount == 1) return new MockAsyncPageable((_, _) => Task.FromResult(YearListing()));
+                        if (callCount == 1)
+                            return new MockAsyncPageable((_, _) => Task.FromResult(YearListing()));
                         requestedSegmentPrefixes.Add(opts.Prefix);
                         return new MockAsyncPageable((_, _) => Task.FromResult(EmptyListing()));
                     });
@@ -163,7 +164,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     .Returns((GetBlobsByHierarchyOptions opts, CancellationToken _) =>
                     {
                         callCount++;
-                        if (callCount == 1) return new MockSyncPageable((_, _) => YearListing());
+                        if (callCount == 1)
+                            return new MockSyncPageable((_, _) => YearListing());
                         requestedSegmentPrefixes.Add(opts.Prefix);
                         return new MockSyncPageable((_, _) => EmptyListing());
                     });
@@ -178,7 +180,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             DateTimeOffset startTime = new DateTimeOffset(2024, 6, 15, 0, 0, 0, TimeSpan.Zero);
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
                 startTime: startTime, endTime: null, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
-            while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+            while (changeFeed.HasNext())
+                await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
             // 2023/ should NOT appear (year is rounded down to 2023, which is before startTime's year 2024).
             CollectionAssert.DoesNotContain(requestedSegmentPrefixes, "idx/segments/2023/");
@@ -205,7 +208,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             DateTimeOffset endTime = new DateTimeOffset(2024, 1, 15, 8, 45, 0, TimeSpan.Zero);
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
                 startTime: null, endTime: endTime, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
-            while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+            while (changeFeed.HasNext())
+                await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
             // With IncludeNonFinalizedEvents=true and user endTime=08:45, segments at 08:00, 08:15, 08:30,
             // 08:45 should be visited; segment at 09:00 should NOT be visited (past user's endTime).
@@ -231,7 +235,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             DateTimeOffset endTime = new DateTimeOffset(2024, 1, 15, 8, 45, 0, TimeSpan.Zero);
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed = await factory.BuildChangeFeed(
                 startTime: null, endTime: endTime, continuation: null, async: IsAsync, cancellationToken: CancellationToken.None);
-            while (changeFeed.HasNext()) await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
+            while (changeFeed.HasNext())
+                await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None);
 
             // With IncludeNonFinalizedEvents=false, MinDateTime(lastConsumable=08:30, endTime=08:45) = 08:30
             // caps the effective endTime.

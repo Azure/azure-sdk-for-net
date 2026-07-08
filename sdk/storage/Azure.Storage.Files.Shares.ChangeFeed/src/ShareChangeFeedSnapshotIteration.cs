@@ -25,18 +25,50 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public long BeginCvId { get; }
         public long EndCvId { get; }
 
+        /// <summary>
+        /// UTC timestamp captured from the begin snapshot's meta.json (<c>snapshotTimestamp</c>).
+        /// Null on a resumed enumeration where the snapshot metas are not re-downloaded.
+        /// </summary>
+        public DateTimeOffset? BeginSnapshotTimestamp { get; }
+
+        /// <summary>
+        /// UTC timestamp captured from the end snapshot's meta.json (<c>snapshotTimestamp</c>).
+        /// Null on a resumed enumeration where the snapshot metas are not re-downloaded.
+        /// </summary>
+        public DateTimeOffset? EndSnapshotTimestamp { get; }
+
+        /// <summary>
+        /// Last-seen reset id carried on the resumed <see cref="ShareChangeFeedSnapshotCursor"/>,
+        /// or <c>null</c> on a fresh enumeration.
+        /// </summary>
+        public Guid? LastSeenResetId { get; }
+
+        /// <summary>
+        /// Last-seen reset FILETIME carried on the resumed <see cref="ShareChangeFeedSnapshotCursor"/>,
+        /// or <c>null</c> on a fresh enumeration.
+        /// </summary>
+        public long? LastSeenResetFileTime { get; }
+
         private ShareChangeFeedSnapshotIteration(
             ChangeFeedBase<ShareChangeFeedEvent> changeFeed,
             string beginSnapshot,
             string endSnapshot,
             long beginCvId,
-            long endCvId)
+            long endCvId,
+            DateTimeOffset? beginSnapshotTimestamp,
+            DateTimeOffset? endSnapshotTimestamp,
+            Guid? lastSeenResetId,
+            long? lastSeenResetFileTime)
         {
             ChangeFeed = changeFeed;
             BeginSnapshot = beginSnapshot;
             EndSnapshot = endSnapshot;
             BeginCvId = beginCvId;
             EndCvId = endCvId;
+            BeginSnapshotTimestamp = beginSnapshotTimestamp;
+            EndSnapshotTimestamp = endSnapshotTimestamp;
+            LastSeenResetId = lastSeenResetId;
+            LastSeenResetFileTime = lastSeenResetFileTime;
         }
 
         /// <summary>
@@ -62,6 +94,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ChangeFeedCursor innerCursor;
             DateTimeOffset? startTime = null;
             DateTimeOffset? endTime = null;
+            DateTimeOffset? beginSnapshotTs = null;
+            DateTimeOffset? endSnapshotTs = null;
+            Guid? lastSeenResetId = null;
+            long? lastSeenResetFileTime = null;
 
             if (continuation != null)
             {
@@ -95,6 +131,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 beginCvId = cursor.BeginCvId;
                 endCvId = cursor.EndCvId;
                 innerCursor = cursor.InnerCursor;
+                lastSeenResetId = cursor.LastSeenResetId;
+                lastSeenResetFileTime = cursor.LastSeenResetFileTime;
                 // startTime/endTime stay null: the inner cursor encodes its own position and the
                 // typed BuildChangeFeed overload derives both from it.
             }
@@ -121,6 +159,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 beginCvId = beginMeta.CvId;
                 endCvId = endMeta.CvId;
                 innerCursor = null;
+                beginSnapshotTs = beginMeta.SnapshotTimestamp;
+                endSnapshotTs = endMeta.SnapshotTimestamp;
 
                 // The log-window times bound only which Avro segments are read. Rows inside those
                 // segments are filtered solely by container version id (see SnapshotEventFilter):
@@ -161,7 +201,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 effectiveBegin,
                 effectiveEnd,
                 beginCvId,
-                endCvId);
+                endCvId,
+                beginSnapshotTs,
+                endSnapshotTs,
+                lastSeenResetId,
+                lastSeenResetFileTime);
         }
 
         /// <summary>
@@ -170,7 +214,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// then serializes it for use as the outer page's continuation token. Returns <c>null</c>
         /// when <paramref name="innerCursor"/> is null (terminal page).
         /// </summary>
-        public string WrapInnerCursor(BlobContainerClient containerClient, ChangeFeedCursor innerCursor)
+        public string WrapInnerCursor(
+            BlobContainerClient containerClient,
+            ChangeFeedCursor innerCursor,
+            Guid? lastSeenResetId,
+            long? lastSeenResetFileTime)
         {
             if (innerCursor == null)
                 return null;
@@ -181,7 +229,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 endSnapshot: EndSnapshot,
                 beginCvId: BeginCvId,
                 endCvId: EndCvId,
-                innerCursor: innerCursor);
+                innerCursor: innerCursor,
+                lastSeenResetId: lastSeenResetId,
+                lastSeenResetFileTime: lastSeenResetFileTime);
 
             return SnapshotCursorSerializer.Serialize(envelope);
         }

@@ -69,5 +69,38 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 EntraObjectId = entraObjectId,
                 SecurityIdentifier = securityIdentifier,
             };
+
+        /// <summary>
+        /// Creates a new <see cref="ShareChangeFeedResetEvent"/> instance for mocking.
+        /// </summary>
+        /// <param name="resetId">Server-generated GUID identifying this reset event.</param>
+        /// <param name="resetFileTime">Windows FILETIME ticks (100 ns since 1601 UTC) at emit time.</param>
+        /// <param name="resetTimeUtc">Human-readable UTC timestamp corresponding to <paramref name="resetFileTime"/>.</param>
+        /// <param name="accountName">Unversioned account name.</param>
+        /// <param name="containerName">Unversioned share (container) name.</param>
+        /// <param name="resetReason">Free-form human-readable cause recorded on the reset marker.</param>
+        /// <param name="schemaVersion">Schema version of the reset marker (defaults to 1).</param>
+        public static ShareChangeFeedResetEvent ShareChangeFeedResetEvent(
+            Guid resetId = default,
+            long resetFileTime = default,
+            DateTimeOffset resetTimeUtc = default,
+            string accountName = default,
+            string containerName = default,
+            string resetReason = default,
+            long schemaVersion = 1)
+            => new ShareChangeFeedResetEvent
+            {
+                SchemaVersion = schemaVersion,
+                Reason = ShareChangeFeedReasonType.Reset,
+                EventTime = resetTimeUtc,
+                Id = resetId.ToString(),
+                ContainerVersionNumber = 0,
+                EventData = null,
+                ResetId = resetId,
+                ResetFileTime = resetFileTime,
+                AccountName = accountName,
+                ContainerName = containerName,
+                ResetReason = resetReason,
+            };
     }
 }

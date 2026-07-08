@@ -27,6 +27,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public ShareChangeFeedClientOptions() { }
         public bool IncludeNonFinalizedEvents { get { throw null; } set { } }
         public long? MaximumTransferSize { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy? ResetPolicy { get { throw null; } set { } }
     }
     public partial class ShareChangeFeedEvent
     {
@@ -69,6 +70,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent ShareChangeFeedEvent(long schemaVersion = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType reason = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType), Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol protocol = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol), System.DateTimeOffset eventTime = default(System.DateTimeOffset), string id = null, long containerVersionNumber = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData eventData = null) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData ShareChangeFeedEventData(string fileId = null, string parentFileId = null, Azure.ETag? eTag = default(Azure.ETag?), string fileName = null, string fullFilePath = null, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity identity = null, string description = null, string initiator = null, bool isDirectory = false) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity ShareChangeFeedEventIdentity(string entraObjectId = null, string securityIdentifier = null) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent ShareChangeFeedResetEvent(System.Guid resetId = default(System.Guid), long resetFileTime = (long)0, System.DateTimeOffset resetTimeUtc = default(System.DateTimeOffset), string accountName = null, string containerName = null, string resetReason = null, long schemaVersion = (long)1) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ShareChangeFeedProtocol : System.IEquatable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol>
@@ -94,6 +96,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public ShareChangeFeedReasonType(string value) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType AsyncCopyFile { get { throw null; } }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType ControlEvent { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType Reset { get { throw null; } }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestCreate { get { throw null; } }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestCreateTruncate { get { throw null; } }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestDelete { get { throw null; } }
@@ -117,6 +120,28 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType (string value) { throw null; }
         public static bool operator !=(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ShareChangeFeedResetEvent : Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent
+    {
+        internal ShareChangeFeedResetEvent() { }
+        public string AccountName { get { throw null; } }
+        public string ContainerName { get { throw null; } }
+        public long ResetFileTime { get { throw null; } }
+        public System.Guid ResetId { get { throw null; } }
+        public string ResetReason { get { throw null; } }
+        public override string ToString() { throw null; }
+    }
+    public partial class ShareChangeFeedResetException : System.Exception
+    {
+        public ShareChangeFeedResetException(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent resetEvent) { }
+        public ShareChangeFeedResetException(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent resetEvent, string message) { }
+        public ShareChangeFeedResetException(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent resetEvent, string message, System.Exception innerException) { }
+        public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent ResetEvent { get { throw null; } }
+    }
+    public enum ShareChangeFeedResetPolicy
+    {
+        ThrowOnReset = 0,
+        ContinueOnReset = 1,
     }
     public enum ShareChangeFeedSnapshotStatus
     {
