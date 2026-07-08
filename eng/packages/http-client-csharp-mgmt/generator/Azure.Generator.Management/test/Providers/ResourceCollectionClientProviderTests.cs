@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Providers;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.ResourceManager;
@@ -69,7 +68,6 @@ namespace Azure.Generator.Management.Tests.Providers
                 .SingleOrDefault(p => p.Name == "AzureEndpointCollection");
             Assert.That(collection, Is.Not.Null);
             var azureEndpointCollection = collection!;
-            Assert.That(azureEndpointCollection.GetResourceTypeSegmentParameterMappings(new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}")).Single().ParameterName, Is.EqualTo("endpointType"));
 
             var getMethod = azureEndpointCollection.Methods.Single(m => m.Signature.Name == "Get");
             Assert.That(getMethod.Signature.Parameters.Select(p => p.Name), Does.Not.Contain("endpointType"));

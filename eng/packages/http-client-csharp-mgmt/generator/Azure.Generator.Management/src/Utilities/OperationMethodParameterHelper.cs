@@ -15,6 +15,10 @@ namespace Azure.Generator.Management.Utilities
 {
     internal static class OperationMethodParameterHelper
     {
+        /// <summary>
+        /// Builds the operation method parameters by taking parameters from the convenience method
+        /// and filtering out contextual parameters that can be derived from the resource identifier.
+        /// </summary>
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
             MethodProvider convenienceMethod,

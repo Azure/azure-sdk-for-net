@@ -211,7 +211,7 @@ namespace Azure.Generator.Management.Providers
                 .WithContextualParameterOverrides(GetResourceTypeSegmentParameterMappings(operationPath));
         }
 
-        internal IReadOnlyList<ParameterContextMapping> GetResourceTypeSegmentParameterMappings(RequestPathPattern operationPath)
+        private IReadOnlyList<ParameterContextMapping> GetResourceTypeSegmentParameterMappings(RequestPathPattern operationPath)
         {
             var resourceTypeSegments = _resource.ResourceType;
             var operationTypeSegments = operationPath.ResourceType;
