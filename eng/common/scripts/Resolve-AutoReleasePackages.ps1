@@ -79,7 +79,7 @@ if (-not (Get-Command 'Get-GitHubAutoReleasePullRequestForCommit' -ErrorAction S
   . (Join-Path $PSScriptRoot "AutoRelease-Operations.ps1")
 }
 
-# Parse the declared artifacts for this pipeline.
+# Parse the declared artifacts.
 $declaredArtifacts = @()
 try {
   $parsed = $Artifacts | ConvertFrom-Json
@@ -201,11 +201,11 @@ function Invoke-AutoReleaseResolution {
   }
 
   if ($matchedArtifacts.Count -gt 0) {
-    Set-PipelineVariable -Name 'HasAutoReleaseArtifacts' -Value 'true' -IsOutput
     # Pipe (not -InputObject) with -AsArray so a single match still serializes as a JSON array, '[{...}]'.
     $artifactsJson = $matchedArtifacts | ConvertTo-Json -Depth 100 -Compress -AsArray
     Set-PipelineVariable -Name 'AutoReleaseArtifactsJson' -Value $artifactsJson -IsOutput
     Write-Host "Auto-release packages from PR #$($pr.number): $((@($matchedArtifacts | ForEach-Object { $_.name })) -join ', ')"
+    Set-PipelineVariable -Name 'HasAutoReleaseArtifacts' -Value 'true' -IsOutput
   }
   else {
     Write-Host "PR #$($pr.number) changed no releasable package in this pipeline."
@@ -216,7 +216,18 @@ try {
   Invoke-AutoReleaseResolution
 }
 catch {
+  # Re-emit the fail-closed defaults so a failure after any positive signal was set (e.g. after
+  # AutoReleaseLabelPresent or a ReleaseArtifact_<safeName> flag was flipped to 'true') cannot leak a
+  # partial "release" decision to downstream stages, regardless of how each consumer gates on the outputs.
   Write-Host "##[warning]Auto-release resolution failed; skipping auto-release. $($_.Exception.Message)"
+  Set-PipelineVariable -Name 'AutoReleaseLabelPresent' -Value 'false' -IsOutput
+  Set-PipelineVariable -Name 'HasAutoReleaseArtifacts' -Value 'false' -IsOutput
+  Set-PipelineVariable -Name 'AutoReleaseArtifactsJson' -Value '[]' -IsOutput
+  foreach ($artifact in $declaredArtifacts) {
+    if ($artifact.PSObject.Properties['safeName'] -and $artifact.safeName) {
+      Set-PipelineVariable -Name "ReleaseArtifact_$($artifact.safeName)" -Value 'false' -IsOutput
+    }
+  }
 }
 
 exit 0
