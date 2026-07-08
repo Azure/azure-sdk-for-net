@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Databricks
                     yield break;
                 }
                 PrivateEndpointConnectionsList result = PrivateEndpointConnectionsList.FromResponse(response);
-                yield return Page<DatabricksPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DatabricksPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatabricksPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DatabricksPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

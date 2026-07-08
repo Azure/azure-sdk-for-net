@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.Databricks.Models
         /// <summary> Initializes a new instance of <see cref="AccessConnectorProperties"/>. </summary>
         public AccessConnectorProperties()
         {
-            ReferedBy = new ChangeTrackingList<string>();
+            ReferredBy = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AccessConnectorProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning status of the Access Connector. </param>
-        /// <param name="referedBy"> List of workspaces referring this Access Connector. </param>
+        /// <param name="referredBy"> List of workspaces referring this Access Connector. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessConnectorProperties(ProvisioningState? provisioningState, IReadOnlyList<string> referedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessConnectorProperties(ProvisioningState? provisioningState, IReadOnlyList<string> referredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            ReferedBy = referedBy;
+            ReferredBy = referredBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Databricks.Models
         public ProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of workspaces referring this Access Connector. </summary>
-        public IReadOnlyList<string> ReferedBy { get; }
+        public IReadOnlyList<string> ReferredBy { get; }
     }
 }

@@ -365,13 +365,13 @@ namespace Azure.ResourceManager.Databricks.Models
         }
 
         /// <param name="provisioningState"> Provisioning status of the Access Connector. </param>
-        /// <param name="referedBy"> List of workspaces referring this Access Connector. </param>
+        /// <param name="referredBy"> List of workspaces referring this Access Connector. </param>
         /// <returns> A new <see cref="Models.AccessConnectorProperties"/> instance for mocking. </returns>
-        public static AccessConnectorProperties AccessConnectorProperties(ProvisioningState? provisioningState = default, IEnumerable<string> referedBy = default)
+        public static AccessConnectorProperties AccessConnectorProperties(ProvisioningState? provisioningState = default, IEnumerable<string> referredBy = default)
         {
-            referedBy ??= new ChangeTrackingList<string>();
+            referredBy ??= new ChangeTrackingList<string>();
 
-            return new AccessConnectorProperties(provisioningState, (referedBy ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new AccessConnectorProperties(provisioningState, (referredBy ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="tags"> Resource tags. </param>

@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Databricks.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReferedBy))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReferredBy))
             {
                 writer.WritePropertyName("referedBy"u8);
                 writer.WriteStartArray();
-                foreach (string item in ReferedBy)
+                foreach (string item in ReferredBy)
                 {
                     if (item == null)
                     {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Databricks.Models
                 return null;
             }
             ProvisioningState? provisioningState = default;
-            IReadOnlyList<string> referedBy = default;
+            IReadOnlyList<string> referredBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Databricks.Models
                             array.Add(item.GetString());
                         }
                     }
-                    referedBy = array;
+                    referredBy = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessConnectorProperties(provisioningState, referedBy ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AccessConnectorProperties(provisioningState, referredBy ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

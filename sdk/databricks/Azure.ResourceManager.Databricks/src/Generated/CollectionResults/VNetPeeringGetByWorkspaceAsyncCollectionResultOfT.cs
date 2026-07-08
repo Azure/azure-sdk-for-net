@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Databricks
                     yield break;
                 }
                 VirtualNetworkPeeringList result = VirtualNetworkPeeringList.FromResponse(response);
-                yield return Page<VirtualNetworkPeeringData>.FromValues((IReadOnlyList<VirtualNetworkPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<VirtualNetworkPeeringData>.FromValues((IReadOnlyList<VirtualNetworkPeeringData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

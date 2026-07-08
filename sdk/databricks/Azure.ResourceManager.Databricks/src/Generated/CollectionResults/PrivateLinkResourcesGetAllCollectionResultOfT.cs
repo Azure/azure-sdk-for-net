@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Databricks
                     yield break;
                 }
                 PrivateLinkResourcesList result = PrivateLinkResourcesList.FromResponse(response);
-                yield return Page<DatabricksPrivateLinkResourceData>.FromValues((IReadOnlyList<DatabricksPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DatabricksPrivateLinkResourceData>.FromValues((IReadOnlyList<DatabricksPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;
