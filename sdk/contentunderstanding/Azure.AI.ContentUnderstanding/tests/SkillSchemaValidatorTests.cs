@@ -373,6 +373,38 @@ namespace Azure.AI.ContentUnderstanding.Tests
             }
         }
 
+        [Test]
+        public void ValidateFileSource_CatchClauseCoversNonIOExceptions()
+        {
+            // File.ReadAllText can raise more than IOException — perms
+            // (UnauthorizedAccessException), invalid path (ArgumentException),
+            // unsupported OS FS features (NotSupportedException), and code-
+            // access-security failures (System.Security.SecurityException).
+            // If the catch clause is ever narrowed back to `catch (IOException)`
+            // the validator will start throwing instead of returning a
+            // structured error — regressing the "fail fast with actionable
+            // error message" contract in about.md. Actually simulating each
+            // exception portably is fragile (chmod-based tests break on
+            // Windows CI), so we assert on the source instead.
+            var sourcePath = LocateSchemaValidatorSource();
+            Assert.IsTrue(File.Exists(sourcePath), $"SchemaValidator.cs not found at {sourcePath}");
+
+            var source = File.ReadAllText(sourcePath);
+            foreach (var required in new[]
+            {
+                "IOException",
+                "UnauthorizedAccessException",
+                "SecurityException",
+                "ArgumentException",
+                "NotSupportedException",
+            })
+            {
+                Assert.That(source, Does.Contain(required),
+                    $"SchemaValidator.cs must catch `{required}` in ValidateFile — " +
+                    "see the Copilot review comment on PR #60394.");
+            }
+        }
+
         // -------------------------------------------------------------------
         // Allow-list surface
         // -------------------------------------------------------------------

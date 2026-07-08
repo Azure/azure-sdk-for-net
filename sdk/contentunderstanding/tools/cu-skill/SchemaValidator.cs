@@ -139,7 +139,19 @@ public static class SchemaValidator
         {
             text = File.ReadAllText(path);
         }
-        catch (IOException ex)
+        // File.ReadAllText can raise a small handful of exceptions besides
+        // IOException (perms, security, invalid path, unsupported OS FS,
+        // etc.). Catch the whole documented set so the validator always
+        // returns a structured ValidationResult instead of throwing —
+        // otherwise callers have to duplicate this try/catch to get the
+        // "fail fast with actionable error message" behaviour advertised
+        // in about.md. Genuinely unexpected exceptions (e.g. OOM) still
+        // propagate.
+        catch (Exception ex) when (ex is IOException
+            or UnauthorizedAccessException
+            or System.Security.SecurityException
+            or ArgumentException
+            or NotSupportedException)
         {
             return new ValidationResult(false, new[] { $"failed to read schema file {path}: {ex.Message}" });
         }
