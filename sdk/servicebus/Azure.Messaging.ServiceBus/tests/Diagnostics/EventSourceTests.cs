@@ -1431,7 +1431,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
-                    It.IsAny<CancellationToken>()))
+                    It.IsAny<CancellationToken>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>()))
                 .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken, bool, Guid?>(
                     (_, _, _, count, _, _, _, _, _, _, _) =>
                     {
